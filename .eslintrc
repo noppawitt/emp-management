@@ -15,7 +15,8 @@
         }],
         "react/no-did-mount-set-state": "off",
         "brace-style": ["error", "stroustrup", { "allowSingleLine": true }],
-        "no-unused-vars": ["error", { "argsIgnorePattern": "next|store" }]
+        "no-unused-vars": ["error", { "argsIgnorePattern": "next|store" }],
+        "max-len": ["error", 200, { "ignoreStrings": true }]
     },
     "plugins": [
         "import",

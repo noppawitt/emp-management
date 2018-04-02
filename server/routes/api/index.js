@@ -1,9 +1,6 @@
 const router = require('express').Router();
+const employeeInfo = require('./employeeInfo');
 
-router.get('/hello', (req, res) => {
-  res.json({
-    text: 'hello'
-  });
-});
+router.use('/employee-info', employeeInfo);
 
 module.exports = router;
