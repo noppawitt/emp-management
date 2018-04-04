@@ -7,6 +7,7 @@ import Signup from '../containers/Signup';
 import Timesheet from '../components/Timesheet';
 import LeaveRequest from '../components/LeaveRequest';
 import TodoContainer from '../containers/TodoContainer';
+import ProfileContainer from '../containers/ProfileContainer';
 
 const Routes = () => (
   <Router history={history}>
@@ -18,6 +19,7 @@ const Routes = () => (
         <Route path="/timesheet" component={Timesheet} />
         <Route path="/leave-request" component={LeaveRequest} />
         <Route path="/project" component={TodoContainer} />
+        <Route path="/profile" component={ProfileContainer} />
       </Switch>
     </AppContainer>
   </Router>

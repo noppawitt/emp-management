@@ -48,4 +48,15 @@ api.hello = () => (
   callApi('/api/hello')
 );
 
+const profile = {
+  id: 1,
+  name: 'Noppawit'
+};
+
+api.fetchProfile = () => new Promise((resolve) => {
+  setTimeout(() => {
+    resolve(profile);
+  }, 1000);
+});
+
 export default api;

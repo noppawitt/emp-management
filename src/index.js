@@ -6,6 +6,7 @@ import configureStore from './store/configureStore';
 import Routes from './routes';
 import './styles/main.scss';
 
+
 const store = configureStore();
 
 ReactDOM.render(

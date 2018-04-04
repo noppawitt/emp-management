@@ -3,7 +3,7 @@ const db = require('../db');
 const User = {};
 
 User.create = user => (
-  db.one(
+  db.none(
     'INSERT INTO users (id, username, password, created_user, updated_user, type) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, username',
     [user.id, user.username, user.password, 1, 1, 'admin']
   )

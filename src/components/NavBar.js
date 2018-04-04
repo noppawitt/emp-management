@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, NavLink } from 'react-router-dom';
-import { Menu, Dropdown } from 'semantic-ui-react';
+import { Menu, Dropdown, Image } from 'semantic-ui-react';
+import logo from '../images/logo.png';
 
-const Navbar = ({ auth, onLogout }) => (
-  <Menu size="huge">
+const Navbar = ({ username, onLogout }) => (
+  <Menu stackable size="huge">
+    <Menu.Item>
+      <Image src={logo} size="tiny" />
+    </Menu.Item>
     <Menu.Item as={NavLink} to="/timesheet" name="timesheet">
       Timesheet
     </Menu.Item>
@@ -18,7 +22,7 @@ const Navbar = ({ auth, onLogout }) => (
       Report
     </Menu.Item>
     <Menu.Menu position="right">
-      <Dropdown item text={auth.username}>
+      <Dropdown item text={username}>
         <Dropdown.Menu>
           <Dropdown.Item text="Profile" as={Link} to="/profile" />
           <Dropdown.Item text="Log out" onClick={onLogout} />
@@ -29,13 +33,8 @@ const Navbar = ({ auth, onLogout }) => (
 );
 
 Navbar.propTypes = {
-  auth: PropTypes.shape({
-    isFetching: PropTypes.bool,
-    isAuthenticated: PropTypes.bool,
-    id: PropTypes.number,
-    username: PropTypes.string,
-  }).isRequired,
-  onLogout: PropTypes.func.isRequired,
+  username: PropTypes.string.isRequired,
+  onLogout: PropTypes.func.isRequired
 };
 
 export default Navbar;

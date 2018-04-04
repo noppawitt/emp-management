@@ -1,10 +1,10 @@
-import jwtDecode from 'jwt-decode';
+import jwt from 'jsonwebtoken';
 import * as actionTypes from '../constants/actionTypes';
 
 let initialState;
 const token = localStorage.getItem('token');
 if (token) {
-  const user = jwtDecode(token);
+  const user = jwt.decode(token);
   initialState = {
     isFetching: false,
     isAuthenticated: true,
