@@ -22,8 +22,8 @@ class ProfileContainer extends Component {
 
 ProfileContainer.propTypes = {
   id: PropTypes.number.isRequired,
-  fetchProfile: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  fetchProfile: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

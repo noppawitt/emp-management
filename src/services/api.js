@@ -50,7 +50,15 @@ api.hello = () => (
 
 const profile = {
   id: 1,
-  name: 'Noppawit'
+  firstName: 'Noppawit',
+  lastName: 'Thairungroj',
+  nickName: 'Pee',
+  citizenId: '99999999999',
+  mobileNo: '0896614462',
+  lineId: 'im.p',
+  email: 'noppawit.trr@gmail.com',
+  facebook: 'Noppawit Thairungroj',
+  pictureSrc: '../images/image.png'
 };
 
 api.fetchProfile = () => new Promise((resolve) => {
