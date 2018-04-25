@@ -2,7 +2,7 @@ const EmployeeInfo = require('../models/EmployeeInfo');
 
 exports.create = (req, res, next) => {
   const newEmployeeInfo = req.body.employeeInfo;
-  EmployeeInfo.create(newEmployeeInfo)
+  EmployeeInfo.create(newEmployeeInfo, req.user.id)
     .then((createdEmployeeInfo) => {
       res.json(createdEmployeeInfo);
     })

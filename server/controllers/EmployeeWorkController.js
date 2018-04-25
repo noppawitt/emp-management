@@ -3,7 +3,7 @@ const EmployeeWork = require('../models/EmployeeWork');
 exports.create = (req, res, next) => {
   const newEmployeeWork = req.body.employeeWork;
   console.log(newEmployeeWork);
-  EmployeeWork.create(newEmployeeWork)
+  EmployeeWork.create(newEmployeeWork, req.user.id)
     .then((createdEmployeeWork) => {
       res.json(createdEmployeeWork);
     })

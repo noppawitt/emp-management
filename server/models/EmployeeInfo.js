@@ -3,7 +3,7 @@ const moment = require('moment');
 
 const EmployeeInfo = {};
 
-EmployeeInfo.create = employeeInfo => (
+EmployeeInfo.create = (employeeInfo, id) => (
   db.one(
     'INSERT INTO employee_info (user_id, firstname, lastname, nickname, mobile_number, line_id, email, facebook_id, picture, birthday, citizen_id, created_user, updated_user, address) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING 1',
     [
@@ -18,8 +18,8 @@ EmployeeInfo.create = employeeInfo => (
       employeeInfo.picture,
       employeeInfo.birthday,
       employeeInfo.citizen_id,
-      1,
-      1,
+      id,
+      id,
       employeeInfo.address
     ]
   )
