@@ -17,4 +17,8 @@ User.findByUsername = username => (
   db.oneOrNone('SELECT * FROM users WHERE username = $1', [username])
 );
 
+User.findAll = () => (
+  db.oneOrNone('SELECT * FROM users WHERE status = $1', ['Active'])
+);
+
 module.exports = User;

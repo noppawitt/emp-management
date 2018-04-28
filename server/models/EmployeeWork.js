@@ -3,7 +3,7 @@ const moment = require('moment');
 
 const EmployeeWork = {};
 
-EmployeeWork.create = employeeWork => (
+EmployeeWork.create = (employeeWork, id) => (
   db.one(
     'INSERT INTO employee_work (user_id, department_id, contract_id, position_id, level_id, created_user, updated_user, start_date, probation_date, end_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING 1',
     [
@@ -12,8 +12,8 @@ EmployeeWork.create = employeeWork => (
       employeeWork.contract_id,
       employeeWork.position_id,
       employeeWork.level_id,
-      1,
-      1,
+      id,
+      id,
       employeeWork.start_date,
       employeeWork.probation_date,
       employeeWork.end_date
