@@ -5,22 +5,25 @@ import { Menu, Container, Dropdown, Image } from 'semantic-ui-react';
 import logo from '../images/logo.png';
 
 const Navbar = ({ username, onLogout }) => (
-  <Menu fixed borderless stackable size="huge" color="blue" inverted>
+  <Menu borderless stackable size="huge" color="blue" inverted>
     <Container>
       <Menu.Item>
         <Image src={logo} size="tiny" />
       </Menu.Item>
       <Menu.Item as={NavLink} to="/timesheet" name="timesheet">
-      Timesheet
+        Timesheet
       </Menu.Item>
       <Menu.Item as={NavLink} to="/leave-request" name="leaveRequest">
-      Leave Request
+        Leave Request
       </Menu.Item>
       <Menu.Item as={NavLink} to="/project" name="project">
-      Project
+        Project
       </Menu.Item>
       <Menu.Item as={NavLink} to="/report" name="report">
-      Report
+        Report
+      </Menu.Item>
+      <Menu.Item as={NavLink} to="/employee" name="employee">
+        Employee
       </Menu.Item>
       <Menu.Menu position="right">
         <Dropdown item pointing text={username}>

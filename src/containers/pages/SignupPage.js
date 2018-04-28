@@ -1,19 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Segment, Form, Checkbox, Button } from 'semantic-ui-react';
+import { Grid, Segment, Form, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { loginRequest } from '../actions/auth';
+import { signup } from '../../actions/auth';
 
-const Login = ({ dispatch }) => {
+const SignupPage = ({ dispatch }) => {
+  let id;
   let username;
   let password;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginRequest({
-      username: username.value,
-      password: password.value
+    dispatch(signup({
+      user: {
+        id: id.value,
+        username: username.value,
+        password: password.value
+      }
     }));
+    id.value = '';
     username.value = '';
     password.value = '';
   };
@@ -25,6 +30,11 @@ const Login = ({ dispatch }) => {
           <Segment>
             <Form onSubmit={handleSubmit}>
               <Form.Field>
+                <label htmlFor="id">ID
+                  <input id="id" placeholder="ID" ref={(node) => { id = node; }} />
+                </label>
+              </Form.Field>
+              <Form.Field>
                 <label htmlFor="username">Username
                   <input id="username" placeholder="Username" ref={(node) => { username = node; }} />
                 </label>
@@ -33,9 +43,6 @@ const Login = ({ dispatch }) => {
                 <label htmlFor="password">Password
                   <input id="password" type="password" placeholder="Password" ref={(node) => { password = node; }} />
                 </label>
-              </Form.Field>
-              <Form.Field>
-                <Checkbox label="Remember me" />
               </Form.Field>
               <Button type="submit">Submit</Button>
             </Form>
@@ -46,8 +53,8 @@ const Login = ({ dispatch }) => {
   );
 };
 
-Login.propTypes = {
+SignupPage.propTypes = {
   dispatch: PropTypes.func.isRequired
 };
 
-export default connect()(Login);
+export default connect()(SignupPage);
