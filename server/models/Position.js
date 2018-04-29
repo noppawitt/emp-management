@@ -31,7 +31,7 @@ Position.update = (position, id) => (
 );
 
 Position.findAll = () => (
-  db.oneOrNone('SELECT * FROM positions WHERE status = $1', ['Active'])
+  db.manyOrNone('SELECT * FROM positions WHERE status = $1', ['Active'])
 );
 
 module.exports = Position;
