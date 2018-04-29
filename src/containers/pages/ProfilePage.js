@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchProfileRequest } from '../actions/profile';
-import Profile from '../components/Profile';
+import { fetchProfileRequest } from '../../actions/profile';
+import Profile from '../../components/Profile';
 
-class ProfileContainer extends Component {
+class ProfilePage extends Component {
   componentDidMount() {
     const { id, fetchProfile } = this.props;
     fetchProfile(id);
@@ -20,7 +20,7 @@ class ProfileContainer extends Component {
   }
 }
 
-ProfileContainer.propTypes = {
+ProfilePage.propTypes = {
   id: PropTypes.number.isRequired,
   profile: PropTypes.object.isRequired,
   fetchProfile: PropTypes.func.isRequired
@@ -35,4 +35,4 @@ const mapDispatchToProps = dispatch => ({
   fetchProfile: id => dispatch(fetchProfileRequest(id))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
