@@ -14,6 +14,8 @@ const asset = require('./asset');
 const certificate = require('./certificate');
 const degree = require('./degree');
 const faculty = require('./faculty');
+const major = require('./major');
+const university = require('./university');
 
 router.use('/employee-info', employeeInfo);
 
@@ -44,5 +46,9 @@ router.use('/certificates', certificate);
 router.use('/degrees', degree);
 
 router.use('/faculties', faculty);
+
+router.use('/majors', major);
+
+router.use('/universities', university);
 
 module.exports = router;
