@@ -5,19 +5,19 @@ const EmployeeInfo = {};
 
 EmployeeInfo.create = (employeeInfo, id) => (
   db.one(
-    'INSERT INTO employee_info (user_id, firstname, lastname, nickname, mobile_number, line_id, email, facebook_id, picture, birthday, citizen_id, created_user, updated_user, address) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING 1',
+    'INSERT INTO employee_info (user_id, first_name, last_name, nick_name, mobile_number, line_id, email, facebook_id, picture, birthday, citizen_id, created_user, updated_user, address) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING 1',
     [
-      employeeInfo.user_id,
-      employeeInfo.firstname,
-      employeeInfo.lastname,
-      employeeInfo.nickname,
-      employeeInfo.mobile_number,
-      employeeInfo.line_id,
+      employeeInfo.userId,
+      employeeInfo.firstName,
+      employeeInfo.lastName,
+      employeeInfo.nickName,
+      employeeInfo.mobileNumber,
+      employeeInfo.lineId,
       employeeInfo.email,
-      employeeInfo.facebook_id,
+      employeeInfo.facebookId,
       employeeInfo.picture,
       employeeInfo.birthday,
-      employeeInfo.citizen_id,
+      employeeInfo.citizenId,
       id,
       id,
       employeeInfo.address

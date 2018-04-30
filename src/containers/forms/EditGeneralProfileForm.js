@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { Field, reduxForm } from 'redux-form';
 import { Form } from 'semantic-ui-react';
 import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
@@ -44,7 +45,12 @@ const mapDispatchToProps = dispatch => ({
   updateProfile: (id, form) => dispatch(updateProfileRequest(id, form))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
-  form: 'editGeneralProfile',
-  validate
-})(EditGeneralProfileForm));
+const enhance = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  reduxForm({
+    form: 'editGeneralProfile',
+    validate
+  })
+);
+
+export default enhance(EditGeneralProfileForm);
