@@ -26,25 +26,42 @@ EmployeeInfo.create = (employeeInfo, id) => (
 );
 
 EmployeeInfo.update = (employeeInfo, id) => (
-  db.none(
-    'UPDATE employee_info SET firstname = $1, lastname = $2, nickname = $3, mobile_number = $4, line_id = $5, email = $6, facebook_id = $7, picture = $8, birthday = $9, citizen_id = $10, updated_user = $11, address = $12, updated_date = $13 WHERE user_id = $14',
+  db.one(
+    `UPDATE employee_info
+    SET
+    first_name = $1,
+    last_name = $2,
+    nick_name = $3,
+    mobile_number = $4,
+    line_id = $5,
+    email = $6,
+    facebook_id = $7,
+    picture = $8,
+    birthday = $9,
+    citizen_id = $10,
+    updated_user = $11,
+    address = $12,
+    updated_date = $13
+    WHERE user_id = $14
+    RETURNING user_id`,
     [
-      employeeInfo.firstname,
-      employeeInfo.lastname,
-      employeeInfo.nickname,
-      employeeInfo.mobile_number,
-      employeeInfo.line_id,
+      employeeInfo.firstName,
+      employeeInfo.lastName,
+      employeeInfo.nickName,
+      employeeInfo.mobileNumber,
+      employeeInfo.lineId,
       employeeInfo.email,
-      employeeInfo.facebook_id,
+      employeeInfo.facebookId,
       employeeInfo.picture,
       employeeInfo.birthday,
-      employeeInfo.citizen_id,
+      employeeInfo.citizenId,
       id,
       employeeInfo.address,
       moment().format('YYYY-MM-DD HH:mm:ss'),
-      employeeInfo.user_id
+      employeeInfo.userId
     ]
   )
+    .then(result => db.one(`SELECT * FROM employee_info WHERE user_id = $1`, [result.userId]))
 );
 
 EmployeeInfo.findById = id => (

@@ -1,32 +1,43 @@
 import * as actionTypes from '../constants/actionTypes';
 
-const initialState = {
-  isFetching: false,
-  page: 'general'
-};
-
-const profile = (state = initialState, action) => {
+const profile = (state = {}, action) => {
   switch (action.type) {
     case actionTypes.PROFILE_FETCH_REQUEST:
       return {
         ...state,
         isFetching: true,
-        id: action.id
+        id: action.payload.id
       };
     case actionTypes.PROFILE_FETCH_SUCCESS:
       return {
         ...state,
         isFetching: false,
-        id: action.profile.id,
-        firstName: action.profile.firstName,
-        lastName: action.profile.lastName,
-        nickName: action.profile.nickName,
-        citizenId: action.profile.citizenId,
-        mobileNo: action.profile.mobileNo,
-        email: action.profile.email,
-        facebook: action.profile.facebook,
-        lineId: action.profile.lineId,
-        pictureSrc: action.profile.pictureSrc
+        ...action.payload.profile
+      };
+    case actionTypes.PROFILE_FETCH_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        message: action.payload.message
+      };
+    case actionTypes.PROFILE_UPDATE_REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+        id: action.payload.id,
+        form: action.payload.form
+      };
+    case actionTypes.PROFILE_UPDATE_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        ...action.payload.profile
+      };
+    case actionTypes.PROFILE_UPDATE_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        message: action.payload.message
       };
     default:
       return state;

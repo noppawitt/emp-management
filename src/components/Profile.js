@@ -54,11 +54,11 @@ const renderProfileBox = (title, EditModal, profile) => {
             </EditProfileModal>
           </Header>
           <h2>{profile.firstName} {profile.lastName} ({profile.nickName})</h2>
-          <h4>CitizenId: {profile.citizenId}</h4>
-          <h4>Mobile: {profile.mobileNo}</h4>
+          <h4>Citizen ID: {profile.citizenId}</h4>
+          <h4>Mobile No.: {profile.mobileNumber}</h4>
           <h4>Email: {profile.email}</h4>
-          <h4>Facebook: {profile.facebook}</h4>
-          <h4>Line: {profile.lineId}</h4>
+          <h4>Facebook: {profile.facebookId}</h4>
+          <h4>Line ID: {profile.lineId}</h4>
         </Segment>
       </Segment.Group>
     );

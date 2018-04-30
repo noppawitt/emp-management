@@ -19,7 +19,9 @@
         "max-len": ["error", 200, { "ignoreStrings": true }],
         "react/forbid-prop-types": "off",
         "jsx-a11y/label-has-for": "off",
-        "object-curly-newline": "off"
+        "object-curly-newline": "off",
+        "quotes": ["error", "single", { "allowTemplateLiterals": true }],
+        "no-param-reassign": "off"
     },
     "plugins": [
         "import",

@@ -5,33 +5,45 @@ import history from '../routes/history';
 // Login
 export const loginRequest = form => ({
   type: actionTypes.LOGIN_REQUEST,
-  form
+  payload: {
+    form
+  }
 });
 
 export const loginSuccess = user => ({
   type: actionTypes.LOGIN_SUCCESS,
-  user
+  payload: {
+    user
+  }
 });
 
 export const loginFailure = message => ({
   type: actionTypes.LOGIN_FAILURE,
-  message
+  payload: {
+    message
+  }
 });
 
 // Signup
 export const signupRequest = form => ({
   type: actionTypes.SIGNUP_REQUEST,
-  form
+  payload: {
+    form
+  }
 });
 
 export const signupSuccess = user => ({
   type: actionTypes.SIGNUP_SUCCESS,
-  user
+  payload: {
+    user
+  }
 });
 
 export const signupFailure = message => ({
   type: actionTypes.SIGNUP_FAILURE,
-  message
+  payload: {
+    message
+  }
 });
 
 export const signup = form => (dispatch) => {
