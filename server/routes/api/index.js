@@ -11,6 +11,9 @@ const hasCertificate = require('./hasCertificate');
 const hasAsset = require('./hasAsset');
 const assetType = require('./assetType');
 const asset = require('./asset');
+const certificate = require('./certificate');
+const degree = require('./degree');
+const faculty = require('./faculty');
 
 router.use('/employee-info', employeeInfo);
 
@@ -35,5 +38,11 @@ router.use('/has-assets', hasAsset);
 router.use('/asset-types', assetType);
 
 router.use('/assets', asset);
+
+router.use('/certificates', certificate);
+
+router.use('/degrees', degree);
+
+router.use('/faculties', faculty);
 
 module.exports = router;
