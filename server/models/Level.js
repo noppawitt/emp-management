@@ -10,7 +10,7 @@ Level.create = (level, id) => (
       level.name,
       level.description,
       level.status,
-      level.annual_leave,
+      level.annualLeave,
       id,
       id
     ]
@@ -24,7 +24,7 @@ Level.update = (level, id) => (
       level.name,
       level.description,
       level.status,
-      level.annual_leave,
+      level.annualLeave,
       id,
       moment().format('YYYY-MM-DD HH:mm:ss'),
       level.id
