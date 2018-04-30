@@ -9,6 +9,8 @@ const contract = require('./contract');
 const educate = require('./educate');
 const hasCertificate = require('./hasCertificate');
 const hasAsset = require('./hasAsset');
+const assetType = require('./assetType');
+const asset = require('./asset');
 
 router.use('/employee-info', employeeInfo);
 
@@ -29,5 +31,9 @@ router.use('/educates', educate);
 router.use('/has-certificates', hasCertificate);
 
 router.use('/has-assets', hasAsset);
+
+router.use('/asset-types', assetType);
+
+router.use('/assets', asset);
 
 module.exports = router;

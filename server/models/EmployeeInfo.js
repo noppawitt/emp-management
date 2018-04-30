@@ -5,7 +5,7 @@ const EmployeeInfo = {};
 
 EmployeeInfo.create = (employeeInfo, id) => (
   db.one(
-    'INSERT INTO employee_info (user_id, firstname, lastname, nickname, mobile_number, line_id, email, facebook_id, picture, birthday, citizen_id, created_user, updated_user, address) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING 1',
+    'INSERT INTO employee_info (user_id, first_name, last_name, nick_name, mobile_number, line_id, email, facebook_id, picture, birthday, citizen_id, created_user, updated_user, address) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING 1',
     [
       employeeInfo.userId,
       employeeInfo.firstName,
@@ -27,7 +27,7 @@ EmployeeInfo.create = (employeeInfo, id) => (
 
 EmployeeInfo.update = (employeeInfo, id) => (
   db.one(
-    'UPDATE employee_info SET firstname = $1, lastname = $2, nickname = $3, mobile_number = $4, line_id = $5, email = $6, facebook_id = $7, picture = $8, birthday = $9, citizen_id = $10, updated_user = $11, address = $12, updated_date = $13 WHERE user_id = $14',
+    'UPDATE employee_info SET first_name = $1, last_name = $2, nick_name = $3, mobile_number = $4, line_id = $5, email = $6, facebook_id = $7, picture = $8, birthday = $9, citizen_id = $10, updated_user = $11, address = $12, updated_date = $13 WHERE user_id = $14',
     [
       employeeInfo.firstName,
       employeeInfo.lastName,
