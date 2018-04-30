@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { compose, withState } from 'recompose';
 import { Modal, Icon, Button } from 'semantic-ui-react';
 
 const EditProfileModal = ({ header, children }) => (
@@ -32,4 +33,6 @@ EditProfileModal.propTypes = {
   children: PropTypes.element.isRequired
 };
 
-export default EditProfileModal;
+const enhance = compose(withState('open', 'setOpen', false));
+
+export default enhance(EditProfileModal);

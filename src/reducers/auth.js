@@ -32,15 +32,15 @@ const auth = (state = initialState, action) => {
         ...state,
         isFetching: false,
         isAuthenticated: true,
-        id: action.user.id,
-        username: action.user.username
+        id: action.payload.user.id,
+        username: action.payload.user.username
       };
     case actionTypes.LOGIN_FAILURE:
       return {
         ...state,
         isFetching: false,
         isAuthenticated: false,
-        error: action.message
+        error: action.payload.message
       };
     case actionTypes.SIGNUP_REQUEST:
       return {
@@ -59,7 +59,7 @@ const auth = (state = initialState, action) => {
         ...state,
         isFetching: false,
         isAuthenticated: false,
-        error: action.message
+        error: action.payload.message
       };
     case actionTypes.LOGOUT:
       return {

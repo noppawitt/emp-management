@@ -48,23 +48,15 @@ api.hello = () => (
   callApi('/api/hello')
 );
 
-const profile = {
-  id: 1,
-  firstName: 'Noppawit',
-  lastName: 'Thairungroj',
-  nickName: 'Pee',
-  citizenId: '99999999999',
-  mobileNo: '0896614462',
-  lineId: 'im.p',
-  email: 'noppawit.trr@gmail.com',
-  facebook: 'Noppawit Thairungroj',
-  pictureSrc: '../images/image.png'
-};
+api.fetchGeneralProfile = () => (
+  callApi('/api/employee-info')
+);
 
-api.fetchProfile = () => new Promise((resolve) => {
-  setTimeout(() => {
-    resolve(profile);
-  }, 1000);
-});
+api.updateGeneralProfile = form => (
+  callApi('/api/employee-info', {
+    method: 'PUT',
+    body: form
+  })
+);
 
 export default api;
