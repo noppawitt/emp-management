@@ -20,8 +20,8 @@ exports.find = (req, res, next) => {
 exports.update = (req, res, next) => {
   const editEmployeeInfo = req.body.employeeInfo;
   EmployeeInfo.update(editEmployeeInfo, req.user.id)
-    .then((result) => {
-      res.json(result);
+    .then((updatedEmployeeInfo) => {
+      res.json(updatedEmployeeInfo);
     })
     .catch(next);
 };
