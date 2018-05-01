@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchProfileRequest } from '../../actions/profile';
+import { openModal } from '../../actions/modal';
+import * as modalNames from '../../constants/modalNames';
 import Profile from '../../components/Profile';
 
 class ProfilePage extends Component {
@@ -11,10 +13,10 @@ class ProfilePage extends Component {
   }
 
   render() {
-    const { profile } = this.props;
+    const { profile, onEditGeneralProfileClick } = this.props;
     return (
       <div>
-        <Profile profile={profile} />
+        <Profile profile={profile} onEditGeneralProfileClick={onEditGeneralProfileClick} />
       </div>
     );
   }
@@ -23,7 +25,8 @@ class ProfilePage extends Component {
 ProfilePage.propTypes = {
   id: PropTypes.number.isRequired,
   profile: PropTypes.object.isRequired,
-  fetchProfile: PropTypes.func.isRequired
+  fetchProfile: PropTypes.func.isRequired,
+  onEditGeneralProfileClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -32,7 +35,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchProfile: id => dispatch(fetchProfileRequest(id))
+  fetchProfile: id => dispatch(fetchProfileRequest(id)),
+  onEditGeneralProfileClick: () => dispatch(openModal(modalNames.EDIT_GENERAL_PROFILE))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);

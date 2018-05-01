@@ -1,6 +1,7 @@
 import { call, put, takeEvery, all } from 'redux-saga/effects';
 import * as actionTypes from '../constants/actionTypes';
 import { fetchProfileSuccess, updateProfileSuccess } from '../actions/profile';
+import { closeModal } from '../actions/modal';
 import api from '../services/api';
 
 export function* fetchProfileTask(action) {
@@ -19,6 +20,7 @@ export function* updateProfileTask(action) {
       employeeInfo: action.payload.form
     });
     yield put(updateProfileSuccess(profile));
+    yield put(closeModal());
   }
   catch (error) {
     console.log(error);

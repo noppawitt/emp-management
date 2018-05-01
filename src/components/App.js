@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { Container } from 'semantic-ui-react';
 
 const App = ({ children }) => (
-  <Container>
-    {children}
-  </Container>
+  <div>
+    <Container>
+      {children}
+    </Container>
+  </div>
 );
 
 App.propTypes = {
