@@ -3,7 +3,7 @@ const EmployeeWorkController = require('../../controllers/EmployeeWorkController
 
 router.post('/', EmployeeWorkController.create);
 
-router.get('/', EmployeeWorkController.find);
+router.get('/', EmployeeWorkController.findByUserId);
 
 router.put('/', EmployeeWorkController.update);
 
