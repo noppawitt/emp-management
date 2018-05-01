@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { Grid, Segment, Image, Header } from 'semantic-ui-react';
 import PageHeader from './PageHeader';
 import image from '../images/cat.jpg';
-import EditProfileModal from './modals/EditProfileModal';
-import EditGeneralProfileForm from '../containers/forms/EditGeneralProfileForm';
+import EditGeneralProfileModal from '../containers/modals/EditGeneralProfileModal';
 
 // const displayInfo = infos => Object.keys(infos).map(key => (
 //   <tr>
@@ -48,11 +47,7 @@ const renderProfileBox = (title, EditModal, profile) => {
           <Image src={image} size="small" centered bordered />
         </Segment>
         <Segment padded textAlign="center" loading={profile.isFetching}>
-          <Header as="h3">
-            <EditProfileModal header="Edit general profile">
-              <EditGeneralProfileForm />
-            </EditProfileModal>
-          </Header>
+          <EditModal />
           <h2>{profile.firstName} {profile.lastName} ({profile.nickName})</h2>
           <h4>Citizen ID: {profile.citizenId}</h4>
           <h4>Mobile No.: {profile.mobileNumber}</h4>
@@ -65,11 +60,9 @@ const renderProfileBox = (title, EditModal, profile) => {
   }
   return (
     <Segment raised padded size="large">
+      <EditModal />
       <Header as="h3">
         {title}
-        <EditModal header={`Edit ${title.toLowerCase()} profile`}>
-          <EditGeneralProfileForm />
-        </EditModal>
       </Header>
       <p>N/A</p>
     </Segment>
@@ -77,21 +70,17 @@ const renderProfileBox = (title, EditModal, profile) => {
 };
 
 const Profile = ({ profile }) => {
-  const renderGeneralProfileBox = renderProfileBox('General', EditProfileModal, profile);
-  const renderWorkProfileBox = renderProfileBox('Work', EditProfileModal, profile);
-  const renderEducationProfileBox = renderProfileBox('Education', EditProfileModal, profile);
-  const renderCertificationProfileBox = renderProfileBox('Certification', EditProfileModal, profile);
-  const renderAssetProfileBox = renderProfileBox('Asset', EditProfileModal, profile);
+  const renderGeneralProfileBox = renderProfileBox('General', EditGeneralProfileModal, profile);
+  // const renderWorkProfileBox = renderProfileBox('Work', EditGeneralProfileModal, profile);
+  // const renderEducationProfileBox = renderProfileBox('Education', EditGeneralProfileModal, profile);
+  // const renderCertificationProfileBox = renderProfileBox('Certification', EditGeneralProfileModal, profile);
+  // const renderAssetProfileBox = renderProfileBox('Asset', EditGeneralProfileModal, profile);
   return (
     <div>
       <PageHeader icon="user" text="Profile" />
       <Grid centered>
         <Grid.Column width={12}>
           {renderGeneralProfileBox}
-          {renderWorkProfileBox}
-          {renderEducationProfileBox}
-          {renderCertificationProfileBox}
-          {renderAssetProfileBox}
         </Grid.Column>
       </Grid>
     </div>
@@ -99,7 +88,7 @@ const Profile = ({ profile }) => {
 };
 
 Profile.propTypes = {
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
 };
 
 export default Profile;

@@ -13,6 +13,10 @@ export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
 // Logout
 export const LOGOUT = 'LOGOUT';
 
+// Modal
+export const OPEN_MODAL = 'OPEN_MODAL';
+export const CLOSE_MODAL = 'CLOSE_MODAL';
+
 // Profile
 export const PROFILE_FETCH_REQUEST = 'PROFILE_FETCH_REQUEST';
 export const PROFILE_FETCH_SUCCESS = 'PROFILE_FETCH_SUCCESS';
