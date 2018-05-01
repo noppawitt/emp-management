@@ -16,6 +16,11 @@ const degree = require('./degree');
 const faculty = require('./faculty');
 const major = require('./major');
 const university = require('./university');
+const file = require('./file');
+const hasProject = require('./hasProject');
+const holiday = require('./holiday');
+const project = require('./project');
+const timesheet = require('./timesheet');
 
 router.use('/employee-info', employeeInfo);
 
@@ -50,5 +55,15 @@ router.use('/faculties', faculty);
 router.use('/majors', major);
 
 router.use('/universities', university);
+
+router.use('/files', file);
+
+router.use('/has-projects', hasProject);
+
+router.use('/holidays', holiday);
+
+router.use('/projects', project);
+
+router.use('/timesheets', timesheet);
 
 module.exports = router;
