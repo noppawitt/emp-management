@@ -39,8 +39,8 @@ EmployeeWork.update = (employeeWork, id) => (
   )
 );
 
-EmployeeWork.findById = id => (
-  db.oneOrNone('SELECT * FROM employee_work WHERE user_id = $1', [id])
+EmployeeWork.findByUserId = userId => (
+  db.oneOrNone('SELECT employee_work.user_id, employee_work.department_id, departments.name AS departments_name, employee_work.contract_id, contracts.name AS contracts_name, employee_work.position_id, positions.name AS positions_name, employee_work.level_id, levels.name AS levels_name, employee_work.start_date, employee_work.probation_date, employee_work.end_date FROM employee_work, departments, contracts, positions, levels WHERE employee_work.department_id=departments.id AND employee_work.contract_id=contracts.id AND employee_work.position_id=positions.id AND employee_work.level_id=levels.id AND user_id = $1', [userId])
 );
 
 module.exports = EmployeeWork;

@@ -10,8 +10,8 @@ exports.create = (req, res, next) => {
     .catch(next);
 };
 
-exports.find = (req, res, next) => {
-  EmployeeWork.findById(req.user.id)
+exports.findByUserId = (req, res, next) => {
+  EmployeeWork.findByUserId(req.user.id)
     .then((employeeWork) => {
       res.json(employeeWork);
     })
