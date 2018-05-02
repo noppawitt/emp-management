@@ -16,7 +16,9 @@ function camelizeColumns(data) {
 
 const options = {
   receive(data) {
-    camelizeColumns(data);
+    if (data.length !== 0) {
+      camelizeColumns(data);
+    }
   }
 };
 
