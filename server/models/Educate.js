@@ -42,7 +42,7 @@ Educate.update = (educate, id) => (
 );
 
 Educate.findByUserId = userId => (
-  db.manyOrNone('SELECT educates.id, educates.user_id, universities.name AS universities_name, faculties.name AS faculties_name, majors.name AS majors_name, degrees.name AS degrees_name, educates.gpax, educates.date_graduation, educates.program, educates.honor_flag FROM educates, universities, faculties, majors, degrees WHERE educates.university_id=universities.id AND educates.faculty_id=faculties.id AND educates.major_id=majors.id AND educates.degree_id=degrees.id AND user_id = $1', [userId])
+  db.manyOrNone('SELECT educates.id, educates.user_id, educates.university_id, universities.name AS universities_name, educates.faculty_id, faculties.name AS faculties_name, educates.major_id, majors.name AS majors_name, educates.degree_id, degrees.name AS degrees_name, educates.gpax, educates.date_graduation, educates.program, educates.honor_flag FROM educates, universities, faculties, majors, degrees WHERE educates.university_id=universities.id AND educates.faculty_id=faculties.id AND educates.major_id=majors.id AND educates.degree_id=degrees.id AND user_id = $1', [userId])
 );
 
 module.exports = Educate;
