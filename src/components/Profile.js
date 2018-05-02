@@ -4,6 +4,7 @@ import { Grid, Segment, Image, Header } from 'semantic-ui-react';
 import PageHeader from './PageHeader';
 import image from '../images/cat.jpg';
 import EditGeneralProfileModal from '../containers/modals/EditGeneralProfileModal';
+import EditWorkProfileModal from '../containers/modals/EditWorkProfileModal';
 
 // const displayInfo = infos => Object.keys(infos).map(key => (
 //   <tr>
@@ -61,17 +62,16 @@ const renderProfileBox = (title, EditModal, profile) => {
   return (
     <Segment raised padded size="large">
       <EditModal />
-      <Header as="h3">
+      <Header as="h3" floated="left">
         {title}
       </Header>
-      <p>N/A</p>
     </Segment>
   );
 };
 
 const Profile = ({ profile }) => {
   const renderGeneralProfileBox = renderProfileBox('General', EditGeneralProfileModal, profile);
-  // const renderWorkProfileBox = renderProfileBox('Work', EditGeneralProfileModal, profile);
+  const renderWorkProfileBox = renderProfileBox('Work', EditWorkProfileModal, profile);
   // const renderEducationProfileBox = renderProfileBox('Education', EditGeneralProfileModal, profile);
   // const renderCertificationProfileBox = renderProfileBox('Certification', EditGeneralProfileModal, profile);
   // const renderAssetProfileBox = renderProfileBox('Asset', EditGeneralProfileModal, profile);
@@ -81,6 +81,7 @@ const Profile = ({ profile }) => {
       <Grid centered>
         <Grid.Column width={12}>
           {renderGeneralProfileBox}
+          {renderWorkProfileBox}
         </Grid.Column>
       </Grid>
     </div>

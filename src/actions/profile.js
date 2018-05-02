@@ -14,10 +14,11 @@ export const fetchProfileSuccess = profile => ({
   }
 });
 
-export const updateProfileRequest = (id, form) => ({
+export const updateProfileRequest = (id, type, form) => ({
   type: actionTypes.PROFILE_UPDATE_REQUEST,
   payload: {
     id,
+    type,
     form
   }
 });

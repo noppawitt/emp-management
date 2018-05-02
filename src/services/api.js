@@ -30,6 +30,8 @@ const callApi = (endpoint, request) => {
 
 const api = {};
 
+// Auth
+
 api.login = form => (
   callApi('/auth/login', {
     method: 'POST',
@@ -48,12 +50,43 @@ api.hello = () => (
   callApi('/api/hello')
 );
 
+// Master table
+
+api.fetchDepartments = () => (
+  callApi('/api/departments')
+);
+
+api.fetchPositions = () => (
+  callApi('/api/positions')
+);
+
+api.fetchLevels = () => (
+  callApi('/api/levels')
+);
+
+api.fetchContracts = () => (
+  callApi('/api/contracts')
+);
+
+// Profile
+
 api.fetchGeneralProfile = () => (
   callApi('/api/employee-info')
 );
 
 api.updateGeneralProfile = form => (
   callApi('/api/employee-info', {
+    method: 'PUT',
+    body: form
+  })
+);
+
+api.fetchWorkProfile = () => (
+  callApi('/api/employee-work')
+);
+
+api.updateWorkProfile = form => (
+  callApi('/api/employee-work', {
     method: 'PUT',
     body: form
   })

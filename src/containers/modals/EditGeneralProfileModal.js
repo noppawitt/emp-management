@@ -35,7 +35,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onOpen: () => dispatch(openModal(modalNames.EDIT_GENERAL_PROFILE)),
   onClose: () => dispatch(closeModal()),
-  onSubmit: values => dispatch(updateProfileRequest(1, values)),
+  onSubmit: values => dispatch(updateProfileRequest(1, 'general', values)),
   onSaveClick: () => dispatch(submit('editGeneralProfile'))
 });
 

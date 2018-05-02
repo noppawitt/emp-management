@@ -4,11 +4,13 @@ import auth from './auth';
 import todo from './todo';
 import modal from './modal';
 import profile from './profile';
+import masterTable from './masterTable';
 
 export default combineReducers({
   form: formReducer,
   auth,
   todo,
   modal,
-  profile
+  profile,
+  masterTable
 });

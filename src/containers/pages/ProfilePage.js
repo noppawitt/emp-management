@@ -1,31 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { compose, lifecycle } from 'recompose';
 import { fetchProfileRequest } from '../../actions/profile';
+import { fetchMasterTableRequest } from '../../actions/masterTable';
 import { openModal } from '../../actions/modal';
 import * as modalNames from '../../constants/modalNames';
 import Profile from '../../components/Profile';
 
-class ProfilePage extends Component {
-  componentDidMount() {
-    const { id, fetchProfile } = this.props;
-    fetchProfile(id);
-  }
-
-  render() {
-    const { profile, onEditGeneralProfileClick } = this.props;
-    return (
-      <div>
-        <Profile profile={profile} onEditGeneralProfileClick={onEditGeneralProfileClick} />
-      </div>
-    );
-  }
-}
+const ProfilePage = ({ profile, onEditGeneralProfileClick }) => (
+  <Profile profile={profile} onEditGeneralProfileClick={onEditGeneralProfileClick} />
+);
 
 ProfilePage.propTypes = {
-  id: PropTypes.number.isRequired,
   profile: PropTypes.object.isRequired,
-  fetchProfile: PropTypes.func.isRequired,
   onEditGeneralProfileClick: PropTypes.func.isRequired
 };
 
@@ -36,7 +24,19 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchProfile: id => dispatch(fetchProfileRequest(id)),
-  onEditGeneralProfileClick: () => dispatch(openModal(modalNames.EDIT_GENERAL_PROFILE))
+  onEditGeneralProfileClick: () => dispatch(openModal(modalNames.EDIT_GENERAL_PROFILE)),
+  fetchMasterTable: () => dispatch(fetchMasterTableRequest())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
+const enhance = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  lifecycle({
+    componentDidMount() {
+      const { id, fetchProfile, fetchMasterTable } = this.props;
+      fetchProfile(id);
+      fetchMasterTable();
+    }
+  })
+);
+
+export default enhance(ProfilePage);
