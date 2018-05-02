@@ -5,7 +5,7 @@ const Asset = {};
 
 Asset.create = (asset, id) => (
   db.one(
-    'INSERT INTO assets (asset_type_id, name, description, own_flag, serial_number, created_user, updated_user) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING 1',
+    'INSERT INTO assets (asset_type_id, name, description, own_flag, serial_number, created_user, updated_user, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING 1',
     [
       asset.assetTypeId,
       asset.name,
@@ -13,14 +13,15 @@ Asset.create = (asset, id) => (
       asset.ownFlag,
       asset.serialNumber,
       id,
-      id
+      id,
+      asset.status
     ]
   )
 );
 
 Asset.update = (asset, id) => (
   db.one(
-    'UPDATE assets SET asset_type_id = $1, name = $2, description = $3, own_flag = $4, serial_number = $5, updated_user = $6, updated_date = $7 WHERE id = $8',
+    'UPDATE assets SET asset_type_id = $1, name = $2, description = $3, own_flag = $4, serial_number = $5, updated_user = $6, updated_date = $7, status = $8 WHERE id = $9',
     [
       asset.assetTypeId,
       asset.name,
@@ -29,7 +30,8 @@ Asset.update = (asset, id) => (
       asset.serialNumber,
       id,
       moment().format('YYYY-MM-DD HH:mm:ss'),
-      asset.id
+      asset.status,
+      asset.id,
     ]
   )
 );
