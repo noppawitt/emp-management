@@ -34,12 +34,14 @@ export function* updateProfileTask(action) {
         });
         break;
       default:
-        console.log('error');
+        action.payload.reject();
     }
     yield put(updateProfileSuccess(profile));
     yield put(closeModal());
+    action.payload.resolve();
   }
   catch (error) {
+    action.payload.reject();
     console.log(error);
   }
 }

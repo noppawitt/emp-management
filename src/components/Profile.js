@@ -48,7 +48,11 @@ const renderProfileBox = (title, EditModal, profile) => {
           <Image src={image} size="small" centered bordered />
         </Segment>
         <Segment padded textAlign="center" loading={profile.isFetching}>
-          <EditModal />
+          <Grid>
+            <Grid.Column floated="right" largeScreen={1} mobile={2}>
+              <EditModal />
+            </Grid.Column>
+          </Grid>
           <h2>{profile.firstName} {profile.lastName} ({profile.nickName})</h2>
           <h4>Citizen ID: {profile.citizenId}</h4>
           <h4>Mobile No.: {profile.mobileNumber}</h4>
@@ -61,10 +65,36 @@ const renderProfileBox = (title, EditModal, profile) => {
   }
   return (
     <Segment raised padded size="large">
-      <EditModal />
-      <Header as="h3" floated="left">
-        {title}
-      </Header>
+      <Grid>
+        <Grid.Row>
+          <Grid.Column floated="left">
+            <Header>{title}</Header>
+          </Grid.Column>
+          <Grid.Column floated="right" largeScreen={1} mobile={2}>
+            <EditModal />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={3}>
+            <p>Level</p>
+            <p>Department</p>
+            <p>Position</p>
+            <p>Contract</p>
+            <p>Start date</p>
+            <p>End date</p>
+            <p>Probation date</p>
+          </Grid.Column>
+          <Grid.Column width={6}>
+            <p>{profile.levelName}</p>
+            <p>{profile.departmentName}</p>
+            <p>{profile.positionName}</p>
+            <p>{profile.contractName}</p>
+            <p>{profile.startDate}</p>
+            <p>{profile.endDate}</p>
+            <p>{profile.probationDate}</p>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     </Segment>
   );
 };
@@ -79,7 +109,7 @@ const Profile = ({ profile }) => {
     <div>
       <PageHeader icon="user" text="Profile" />
       <Grid centered>
-        <Grid.Column width={12}>
+        <Grid.Column largeScreen={12} mobile={16}>
           {renderGeneralProfileBox}
           {renderWorkProfileBox}
         </Grid.Column>

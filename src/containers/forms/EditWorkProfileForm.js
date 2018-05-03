@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { Field, reduxForm } from 'redux-form';
 import { Form } from 'semantic-ui-react';
-import moment from 'moment';
 import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
 import { masterTableToOptions } from '../../utils/helper';
@@ -16,19 +15,24 @@ const validate = (values) => {
   return errors;
 };
 
-const EditWorkProfileForm = ({ masterTable, handleSubmit }) => (
+const EditWorkProfileForm = ({ masterTable, handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="departmentId" as={Form.Select} component={Input} label="Department" placeholder="Department" options={masterTableToOptions(masterTable)} />
+    <Field name="levelId" as={Form.Select} component={Input} label="Level" placeholder="Level" options={masterTableToOptions(masterTable.levels)} disabled={submitting} />
+    <Field name="departmentId" as={Form.Select} component={Input} label="Department" placeholder="Department" options={masterTableToOptions(masterTable.departments)} disabled={submitting} />
+    <Field name="positionId" as={Form.Select} component={Input} label="Position" placeholder="Position" options={masterTableToOptions(masterTable.positions)} disabled={submitting} />
+    <Field name="contractId" as={Form.Select} component={Input} label="Contract" placeholder="Contract" options={masterTableToOptions(masterTable.contracts)} disabled={submitting} />
     <Form.Group widths="equal">
-      <Field name="startDate" as={Form.Input} component={Input} type="date" label="Start date" placeholder="Start date" />
-      <Field name="endDate" as={Form.Input} component={Input} type="date" label="End date" placeholder="End date" />
+      <Field name="startDate" as={Form.Input} component={Input} type="date" label="Start date" placeholder="Start date" disabled={submitting} />
+      <Field name="endDate" as={Form.Input} component={Input} type="date" label="End date" placeholder="End date"disabled={submitting} />
     </Form.Group>
+    <Field name="probationDate" as={Form.Input} component={Input} type="date" label="Probation date" placeholder="Probation date" disabled={submitting} />
   </Form>
 );
 
 EditWorkProfileForm.propTypes = {
-  masterTable: PropTypes.array.isRequired,
-  handleSubmit: PropTypes.func.isRequired
+  masterTable: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -38,9 +42,9 @@ const mapStateToProps = state => ({
     positionId: state.profile.positionId,
     levelId: state.profile.levelId,
     contractId: state.profile.contractId,
-    startDate: moment(state.profile.startDate).format('YYYY-MM-DD'),
-    endDate: moment(state.profile.endDate).format('YYYY-MM-DD'),
-    probationDate: moment(state.profile.probationDate).format('YYYY-MM-DD')
+    startDate: state.profile.startDate,
+    endDate: state.profile.endDate,
+    probationDate: state.profile.probationDate
   }
 });
 

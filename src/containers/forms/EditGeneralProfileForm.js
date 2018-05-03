@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { Field, reduxForm } from 'redux-form';
 import { Form } from 'semantic-ui-react';
-import moment from 'moment';
 import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
 
@@ -54,7 +53,7 @@ const mapStateToProps = state => ({
     email: state.profile.email,
     facebookId: state.profile.facebookId,
     lineId: state.profile.lineId,
-    birthday: moment(state.profile.birthday).format('YYYY-MM-DD'),
+    birthday: state.profile.birthday,
     address: state.profile.address,
     picture: state.profile.picture
   }
