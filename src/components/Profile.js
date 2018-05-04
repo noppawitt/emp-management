@@ -131,12 +131,12 @@ const Profile = ({ profile }) => {
                   <EditGeneralProfileModal />
                 </Grid.Column>
               </Grid>
-              <h2>{profile.firstName} {profile.lastName} ({profile.nickName})</h2>
-              <h4>Citizen ID: {profile.citizenId}</h4>
-              <h4>Mobile No.: {profile.mobileNumber}</h4>
-              <h4>Email: {profile.email}</h4>
-              <h4>Facebook: {profile.facebookId}</h4>
-              <h4>Line ID: {profile.lineId}</h4>
+              <Header size="huge">{profile.firstName} {profile.lastName} ({profile.nickName})</Header>
+              <Header size="small">Citizen ID: {profile.citizenId}</Header>
+              <Header size="small">Mobile No.: {profile.mobileNumber}</Header>
+              <Header size="small">Email: {profile.email}</Header>
+              <Header size="small">Facebook: {profile.facebookId}</Header>
+              <Header size="small">Line ID: {profile.lineId}</Header>
             </Segment>
           </Segment.Group>
           {renderWorkProfileBox}
