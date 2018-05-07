@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Segment, Image, Header, Icon, List } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import PageHeader from './PageHeader';
 import image from '../images/cat.jpg';
-import EditGeneralProfileModal from '../containers/modals/EditGeneralProfileModal';
-import EditWorkProfileModal from '../containers/modals/EditWorkProfileModal';
+import GeneralProfileBox from '../containers/GeneralProfileBox';
+import WorkProfileBox from '../containers/WorkProfileBox';
+// import EducationProfileBox from '../containers/EducationProfileBox';
 
 // const displayInfo = infos => Object.keys(infos).map(key => (
 //   <tr>
@@ -67,84 +68,17 @@ import EditWorkProfileModal from '../containers/modals/EditWorkProfileModal';
 //   </Segment>
 // );
 
-const renderProfileBox = (title, EditModal, icon, profile) => (
-  <Segment raised padded size="large">
-    <Grid>
-      <Grid.Column only="large screen" computer={3}>
-        <Icon name={icon} size="huge" />
-      </Grid.Column>
-      <Grid.Column computer={8} mobile={14}>
-        <Header size="large">{title}</Header>
-        <Grid columns={2}>
-          <Grid.Column>
-            <List>
-              {profile.map(p => (
-                <List.Item key={p.key}>
-                  <List.Header>
-                    {p.title}
-                  </List.Header>
-                </List.Item>
-              ))}
-            </List>
-          </Grid.Column>
-          <Grid.Column>
-            <List>
-              {profile.map(p => (
-                <List.Item key={p.key}>{p.value}</List.Item>
-              ))}
-            </List>
-          </Grid.Column>
-        </Grid>
-      </Grid.Column>
-      <Grid.Column floated="right" computer={1} mobile={2}>
-        <EditModal />
+const Profile = ({ profile }) => (
+  <div>
+    <PageHeader icon="user" text="Profile" />
+    <Grid centered>
+      <Grid.Column computer={12} mobile={16}>
+        <GeneralProfileBox image={image} generalProfile={profile.general} />
+        <WorkProfileBox workProfile={profile.work} />
       </Grid.Column>
     </Grid>
-  </Segment>
+  </div>
 );
-
-const Profile = ({ profile }) => {
-  const renderWorkProfileBox = renderProfileBox('Work', EditWorkProfileModal, 'suitcase', [
-    { key: 'level', title: 'Level', value: profile.levelName },
-    { key: 'department', title: 'Department', value: profile.departmentName },
-    { key: 'position', title: 'Position', value: profile.positionName },
-    { key: 'contract', title: 'Contract', value: profile.contractName },
-    { key: 'startDate', title: 'Start date', value: profile.startDate },
-    { key: 'endDate', title: 'End date', value: profile.endDate },
-    { key: 'probationDate', title: 'Probation date', value: profile.probationDate }
-  ]);
-  // const renderEducationProfileBox = renderProfileBox('Education', EditGeneralProfileModal, profile);
-  // const renderCertificationProfileBox = renderProfileBox('Certification', EditGeneralProfileModal, profile);
-  // const renderAssetProfileBox = renderProfileBox('Asset', EditGeneralProfileModal, profile);
-  return (
-    <div>
-      <PageHeader icon="user" text="Profile" />
-      <Grid centered>
-        <Grid.Column computer={12} mobile={16}>
-          <Segment.Group raised size="large">
-            <Segment padded inverted color="blue">
-              <Image src={image} size="small" centered bordered />
-            </Segment>
-            <Segment padded textAlign="center">
-              <Grid>
-                <Grid.Column floated="right" computer={1} mobile={2}>
-                  <EditGeneralProfileModal />
-                </Grid.Column>
-              </Grid>
-              <Header size="huge">{profile.firstName} {profile.lastName} ({profile.nickName})</Header>
-              <Header size="small">Citizen ID: {profile.citizenId}</Header>
-              <Header size="small">Mobile No.: {profile.mobileNumber}</Header>
-              <Header size="small">Email: {profile.email}</Header>
-              <Header size="small">Facebook: {profile.facebookId}</Header>
-              <Header size="small">Line ID: {profile.lineId}</Header>
-            </Segment>
-          </Segment.Group>
-          {renderWorkProfileBox}
-        </Grid.Column>
-      </Grid>
-    </div>
-  );
-};
 
 Profile.propTypes = {
   profile: PropTypes.object.isRequired,

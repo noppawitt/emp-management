@@ -2,19 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
+import { Dimmer, Loader } from 'semantic-ui-react';
 import { fetchProfileRequest } from '../../actions/profile';
 import { fetchMasterTableRequest } from '../../actions/masterTable';
-import { openModal } from '../../actions/modal';
-import * as modalNames from '../../constants/modalNames';
 import Profile from '../../components/Profile';
 
-const ProfilePage = ({ profile, onEditGeneralProfileClick }) => (
-  <Profile profile={profile} onEditGeneralProfileClick={onEditGeneralProfileClick} />
+const ProfilePage = ({ profile }) => (
+  <div>
+    {profile.isFetching ?
+      <Dimmer active>
+        <Loader />
+      </Dimmer> :
+      <Profile profile={profile} />}
+  </div>
 );
 
 ProfilePage.propTypes = {
-  profile: PropTypes.object.isRequired,
-  onEditGeneralProfileClick: PropTypes.func.isRequired
+  profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -24,7 +28,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchProfile: id => dispatch(fetchProfileRequest(id)),
-  onEditGeneralProfileClick: () => dispatch(openModal(modalNames.EDIT_GENERAL_PROFILE)),
   fetchMasterTable: () => dispatch(fetchMasterTableRequest())
 });
 

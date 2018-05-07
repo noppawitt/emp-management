@@ -1,6 +1,6 @@
 import * as actionTypes from '../constants/actionTypes';
 
-const profile = (state = {}, action) => {
+const profile = (state = { isFetching: true }, action) => {
   switch (action.type) {
     case actionTypes.PROFILE_FETCH_REQUEST:
       return {
@@ -23,20 +23,17 @@ const profile = (state = {}, action) => {
     case actionTypes.PROFILE_UPDATE_REQUEST:
       return {
         ...state,
-        isFetching: true,
         id: action.payload.id,
         form: action.payload.form
       };
     case actionTypes.PROFILE_UPDATE_SUCCESS:
       return {
         ...state,
-        isFetching: false,
         ...action.payload.profile
       };
     case actionTypes.PROFILE_UPDATE_FAILURE:
       return {
         ...state,
-        isFetching: false,
         message: action.payload.message
       };
     default:

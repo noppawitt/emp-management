@@ -23,7 +23,7 @@ const Modal = ({ header, open, onOpen, onClose, onSaveClick, submitting, childre
       {children}
     </SUIModal.Content>
     <SUIModal.Actions>
-      <Button color="blue" loading={submitting} onClick={onSaveClick}>
+      <Button color="blue" loading={submitting} disabled={submitting} onClick={onSaveClick}>
         Save
       </Button>
     </SUIModal.Actions>

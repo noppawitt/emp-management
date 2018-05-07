@@ -1,8 +1,7 @@
 import * as actionTypes from '../constants/actionTypes';
-import * as modalNames from '../constants/modalNames';
 
 const initialState = {
-  name: modalNames.NONE
+  name: null
 };
 
 const modal = (state = initialState, action) => {
