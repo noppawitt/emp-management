@@ -1,4 +1,4 @@
-export const masterTableToOptions = (masterTable) => {
+export const masterTableToOptions = (masterTable = []) => {
   const options = [];
   masterTable.forEach((elem) => {
     const option = {};
@@ -9,3 +9,15 @@ export const masterTableToOptions = (masterTable) => {
   });
   return options;
 };
+
+// export const handleReduxFormSubmit = (onSubmit, value) => (
+//   new Promise((resolve, reject) => (
+//     onSubmit(value, resolve, reject)
+//   ))
+// );
+
+export const handleReduxFormSubmit = (dispatch, action, values, ...args) => (
+  new Promise((resolve, reject) => (
+    dispatch(action(...args, values, resolve, reject))
+  ))
+);
