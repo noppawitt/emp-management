@@ -96,4 +96,10 @@ api.updateWorkProfile = form => (
   })
 );
 
+// Employee
+
+api.fetchEmployee = () => (
+  callApi('/api/users')
+);
+
 export default api;
