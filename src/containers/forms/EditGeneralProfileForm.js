@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { Field, reduxForm } from 'redux-form';
 import { Form } from 'semantic-ui-react';
-import moment from 'moment';
 import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
 
@@ -43,20 +42,20 @@ EditGeneralProfileForm.propTypes = {
 
 const mapStateToProps = state => ({
   initialValues: {
-    userId: state.profile.userId,
-    firstName: state.profile.firstName,
-    lastName: state.profile.lastName,
-    firstNameTh: state.profile.firstNameTh,
-    lastNameTh: state.profile.lastNameTh,
-    nickName: state.profile.nickName,
-    citizenId: state.profile.citizenId,
-    mobileNumber: state.profile.mobileNumber,
-    email: state.profile.email,
-    facebookId: state.profile.facebookId,
-    lineId: state.profile.lineId,
-    birthday: moment(state.profile.birthday).format('YYYY-MM-DD'),
-    address: state.profile.address,
-    picture: state.profile.picture
+    userId: state.profile.general.userId,
+    firstName: state.profile.general.firstName,
+    lastName: state.profile.general.lastName,
+    firstNameTh: state.profile.general.firstNameTh,
+    lastNameTh: state.profile.general.lastNameTh,
+    nickName: state.profile.general.nickName,
+    citizenId: state.profile.general.citizenId,
+    mobileNumber: state.profile.general.mobileNumber,
+    email: state.profile.general.email,
+    facebookId: state.profile.general.facebookId,
+    lineId: state.profile.general.lineId,
+    birthday: state.profile.general.birthday,
+    address: state.profile.general.address,
+    picture: state.profile.general.picture
   }
 });
 

@@ -37,14 +37,14 @@ EditWorkProfileForm.propTypes = {
 
 const mapStateToProps = state => ({
   initialValues: {
-    userId: state.profile.work.userId,
-    departmentId: state.profile.work.departmentId,
-    positionId: state.profile.work.positionId,
-    levelId: state.profile.work.levelId,
-    contractId: state.profile.work.contractId,
-    startDate: state.profile.work.startDate,
-    endDate: state.profile.work.endDate,
-    probationDate: state.profile.work.probationDate
+    userId: state.profile.userId,
+    departmentId: state.profile.departmentId,
+    positionId: state.profile.positionId,
+    levelId: state.profile.levelId,
+    contractId: state.profile.contractId,
+    startDate: state.profile.startDate,
+    endDate: state.profile.endDate,
+    probationDate: state.profile.probationDate
   }
 });
 

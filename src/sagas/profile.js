@@ -6,9 +6,10 @@ import api from '../services/api';
 
 export function* fetchProfileTask(action) {
   try {
-    const generalProfile = yield call(api.fetchGeneralProfile, action.payload.id);
-    const workProfile = yield call(api.fetchWorkProfile);
-    const profile = Object.assign({}, generalProfile, workProfile);
+    const profile = {};
+    profile.general = yield call(api.fetchGeneralProfile, action.payload.id);
+    profile.work = yield call(api.fetchWorkProfile);
+    profile.educations = yield call(api.fetchEducationProfile);
     yield put(fetchProfileSuccess(profile));
   }
   catch (error) {
@@ -18,28 +19,27 @@ export function* fetchProfileTask(action) {
 
 export function* updateProfileTask(action) {
   try {
-    // const profile = yield call(api.updateGeneralProfile, {
-    //   employeeInfo: action.payload.form
-    // });
-    let profile;
+    const profile = {};
     switch (action.payload.type) {
       case 'general':
-        profile = yield call(api.updateGeneralProfile, {
+        profile.general = yield call(api.updateGeneralProfile, {
           employeeInfo: action.payload.form
         });
         break;
       case 'work':
-        profile = yield call(api.updateWorkProfile, {
+        profile.work = yield call(api.updateWorkProfile, {
           employeeWork: action.payload.form
         });
         break;
       default:
-        console.log('error');
+        action.payload.reject();
     }
     yield put(updateProfileSuccess(profile));
     yield put(closeModal());
+    action.payload.resolve();
   }
   catch (error) {
+    action.payload.reject();
     console.log(error);
   }
 }

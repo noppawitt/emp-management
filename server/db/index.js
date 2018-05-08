@@ -1,6 +1,6 @@
 const humps = require('humps');
 
-function camelizeColumns(data) {
+const camelizeColumns = (data) => {
   const names = Object.keys(data[0]);
   const camels = names.map(n => humps.camelize(n));
   data.forEach((d) => {
@@ -12,15 +12,19 @@ function camelizeColumns(data) {
       }
     });
   });
-}
+};
 
 const options = {
   receive(data) {
-    camelizeColumns(data);
+    if (data.length !== 0) {
+      camelizeColumns(data);
+    }
   }
 };
 
 const pgp = require('pg-promise')(options);
+
+pgp.pg.types.setTypeParser(1082, value => value);
 
 const db = pgp(process.env.DATABASE_URL);
 

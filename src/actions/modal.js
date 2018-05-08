@@ -1,9 +1,10 @@
 import * as actionTypes from '../constants/actionTypes';
 
-export const openModal = name => ({
+export const openModal = (name, props) => ({
   type: actionTypes.OPEN_MODAL,
   payload: {
-    name
+    name,
+    props
   }
 });
 

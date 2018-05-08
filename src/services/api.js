@@ -74,6 +74,14 @@ api.fetchGeneralProfile = () => (
   callApi('/api/employee-info')
 );
 
+api.fetchWorkProfile = () => (
+  callApi('/api/employee-work')
+);
+
+api.fetchEducationProfile = () => (
+  callApi('/api/educates')
+);
+
 api.updateGeneralProfile = form => (
   callApi('/api/employee-info', {
     method: 'PUT',
@@ -81,15 +89,17 @@ api.updateGeneralProfile = form => (
   })
 );
 
-api.fetchWorkProfile = () => (
-  callApi('/api/employee-work')
-);
-
 api.updateWorkProfile = form => (
   callApi('/api/employee-work', {
     method: 'PUT',
     body: form
   })
+);
+
+// Employee
+
+api.fetchEmployee = () => (
+  callApi('/api/users')
 );
 
 export default api;

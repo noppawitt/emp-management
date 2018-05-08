@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal as SUIModal, Button, Icon } from 'semantic-ui-react';
 
-const Modal = ({ header, open, onOpen, onClose, onSaveClick, children }) => (
+const Modal = ({ header, open, onOpen, onClose, onSaveClick, submitting, children }) => (
   <SUIModal
     dimmer="blurring"
     size="small"
@@ -11,7 +11,6 @@ const Modal = ({ header, open, onOpen, onClose, onSaveClick, children }) => (
       name="edit"
       size="large"
       link
-      style={{ float: 'right' }}
     />}
     open={open}
     onOpen={onOpen}
@@ -24,7 +23,7 @@ const Modal = ({ header, open, onOpen, onClose, onSaveClick, children }) => (
       {children}
     </SUIModal.Content>
     <SUIModal.Actions>
-      <Button color="blue" onClick={onSaveClick}>
+      <Button color="blue" loading={submitting} disabled={submitting} onClick={onSaveClick}>
         Save
       </Button>
     </SUIModal.Actions>
@@ -37,6 +36,7 @@ Modal.propTypes = {
   onOpen: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   onSaveClick: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired,
   children: PropTypes.element.isRequired
 };
 

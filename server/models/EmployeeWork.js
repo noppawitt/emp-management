@@ -37,7 +37,7 @@ EmployeeWork.update = (employeeWork, id) => (
       employeeWork.userId
     ]
   )
-    .then(result => db.one('SELECT * FROM employee_work WHERE user_id = $1', [result.user_id]))
+    .then(result => db.one('SELECT employee_work.user_id, employee_work.department_id, departments.name AS department_name, employee_work.contract_id, contracts.name AS contract_name, employee_work.position_id, positions.name AS position_name, employee_work.level_id, levels.name AS level_name, employee_work.start_date, employee_work.probation_date, employee_work.end_date FROM employee_work, departments, contracts, positions, levels WHERE employee_work.department_id=departments.id AND employee_work.contract_id=contracts.id AND employee_work.position_id=positions.id AND employee_work.level_id=levels.id AND user_id = $1', [result.userId]))
 );
 
 EmployeeWork.findByUserId = userId => (

@@ -5,8 +5,12 @@ import api from '../services/api';
 
 export function* fetchMasterTableTask() {
   try {
-    const departments = yield call(api.fetchDepartments);
-    yield put(fetchMasterTableSucesss(departments));
+    const masterTable = {};
+    masterTable.departments = yield call(api.fetchDepartments);
+    masterTable.positions = yield call(api.fetchPositions);
+    masterTable.levels = yield call(api.fetchLevels);
+    masterTable.contracts = yield call(api.fetchContracts);
+    yield put(fetchMasterTableSucesss(masterTable));
   }
   catch (error) {
     yield put(fetchMasterTableFailure(error));
