@@ -25,3 +25,15 @@ exports.findByUserId = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.delete = (req, res, next) => {
+  HasAsset.delete(req.body.id, req.user.id)
+    .then(() => {
+      HasAsset.findByUserId(req.user.id)
+        .then((hasAssets) => {
+          res.json(hasAssets);
+        })
+        .catch(next);
+    })
+    .catch(next);
+};

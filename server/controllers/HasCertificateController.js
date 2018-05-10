@@ -25,3 +25,15 @@ exports.findByUserId = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.delete = (req, res, next) => {
+  HasCertificate.delete(req.body.id, req.user.id)
+    .then(() => {
+      HasCertificate.findByUserId(req.user.id)
+        .then((hasCertificates) => {
+          res.json(hasCertificates);
+        })
+        .catch(next);
+    })
+    .catch(next);
+};

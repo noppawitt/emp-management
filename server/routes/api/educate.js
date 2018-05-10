@@ -7,4 +7,6 @@ router.put('/', EducateController.update);
 
 router.get('/', EducateController.findByUserId);
 
+router.delete('/', EducateController.delete);
+
 module.exports = router;
