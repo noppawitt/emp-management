@@ -1,5 +1,14 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt-nodejs');
+// const nodemailer = require('nodemailer');
+
+// const transporter = nodemailer.createTransport({
+//   service: 'hotmail',
+//   auth: {
+//     user: 'example@hotmail.com',
+//     pass: 'password'
+//   }
+// });
 
 exports.findAll = (req, res, next) => {
   User.findAll()
@@ -11,18 +20,44 @@ exports.findAll = (req, res, next) => {
 
 exports.create = (req, res, next) => {
   const newUser = req.body.user;
-  User.findByUsername(newUser.username)
-    .then((user) => {
-      if (user) {
-        const err = new Error('User already exist');
+  // const pass = newUser.password;
+  User.findByName(newUser.firstName, newUser.lastName)
+    .then((user1) => {
+      if (user1) {
+        const err = new Error('User already exit');
         err.status = 409;
         next(err);
       }
       else {
-        newUser.password = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync());
-        User.create(newUser, req.user.id)
-          .then((createdUser) => {
-            res.json(createdUser);
+        User.findByUsername(newUser.username)
+          .then((user) => {
+            if (user) {
+              const err = new Error('Username already exist');
+              err.status = 409;
+              next(err);
+            }
+            else {
+              newUser.password = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync());
+              User.create(newUser, req.user.id)
+                .then((createdUser) => {
+                  // const mailOptions = {
+                  //   from: 'tmark_s@hotmail.com',
+                  //   to: 'tmark_s@hotmail.com',
+                  //   subject: 'Hello',
+                  //   html: `<p>${newUser.username} ${pass}</p>`
+                  // };
+                  // transporter.sendMail(mailOptions, (err, info) => {
+                  //   if (err) {
+                  //     console.log(err);
+                  //   }
+                  //   else {
+                  //     console.log(info);
+                  //   }
+                  // });
+                  res.json(createdUser);
+                })
+                .catch(next);
+            }
           })
           .catch(next);
       }
