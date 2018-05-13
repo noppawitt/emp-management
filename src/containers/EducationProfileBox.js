@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Segment } from 'semantic-ui-react';
 import ProfileBox from '../components/ProfileBox';
-import EditGeneralProfileModal from './modals/EditGeneralProfileModal';
 
 const EducationProfileBox = ({ educationsProfile }) => (
   <Segment.Group raised size="large">
@@ -19,7 +18,6 @@ const EducationProfileBox = ({ educationsProfile }) => (
         { key: 'gpax', title: 'Gpax', value: educationsProfile[0].gpax },
         { key: 'graduationDate', title: 'Graduation date', value: educationsProfile[0].graduationDate }
       ]}
-      editModal={EditGeneralProfileModal}
     />
     {[...educationsProfile].slice(1).map(p => (<ProfileBox
       lists={[
@@ -32,7 +30,6 @@ const EducationProfileBox = ({ educationsProfile }) => (
         { key: 'gpax', title: 'Gpax', value: p.gpax },
         { key: 'graduationDate', title: 'Graduation date', value: p.graduationDate },
       ]}
-      editModal={EditGeneralProfileModal}
     />))}
   </Segment.Group>
 );

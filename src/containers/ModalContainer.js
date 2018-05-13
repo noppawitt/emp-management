@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as modalNames from '../constants/modalNames';
 import EditGeneralProfileModal from './modals/EditGeneralProfileModal';
 import EditWorkProfileModal from './modals/EditWorkProfileModal';
+import CreateEmployeeModal from './modals/CreateEmployeeModal';
 
 const ModalContainer = ({ name }) => {
   switch (name) {
@@ -11,6 +12,8 @@ const ModalContainer = ({ name }) => {
       return <EditGeneralProfileModal />;
     case modalNames.EDIT_WORK_PROFILE:
       return <EditWorkProfileModal />;
+    case modalNames.CREATE_EMPLOYEE:
+      return <CreateEmployeeModal />;
     default:
       return <div />;
   }

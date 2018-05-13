@@ -5,7 +5,7 @@ import PageHeader from './PageHeader';
 import image from '../images/cat.jpg';
 import GeneralProfileBox from '../containers/GeneralProfileBox';
 import WorkProfileBox from '../containers/WorkProfileBox';
-// import EducationProfileBox from '../containers/EducationProfileBox';
+import EducationProfileBox from '../containers/EducationProfileBox';
 
 const Profile = ({ profile }) => (
   <div>
@@ -14,6 +14,7 @@ const Profile = ({ profile }) => (
       <Grid.Column computer={12} mobile={16}>
         <GeneralProfileBox image={image} generalProfile={profile.general} />
         <WorkProfileBox workProfile={profile.work} />
+        <EducationProfileBox educationsProfile={profile.educations} />
       </Grid.Column>
     </Grid>
   </div>

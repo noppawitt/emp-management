@@ -5,6 +5,7 @@ import todo from './todo';
 import modal from './modal';
 import profile from './profile';
 import masterTable from './masterTable';
+import employee from './employee';
 
 export default combineReducers({
   form: formReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
   todo,
   modal,
   profile,
-  masterTable
+  masterTable,
+  employee
 });

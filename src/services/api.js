@@ -98,6 +98,13 @@ api.updateWorkProfile = form => (
 
 // Employee
 
+api.createEmployee = form => (
+  callApi('/api/users', {
+    method: 'POST',
+    body: form
+  })
+);
+
 api.fetchEmployee = () => (
   callApi('/api/users')
 );

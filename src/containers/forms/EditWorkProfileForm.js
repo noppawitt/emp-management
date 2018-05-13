@@ -23,7 +23,7 @@ const EditWorkProfileForm = ({ masterTable, handleSubmit, submitting }) => (
     <Field name="contractId" as={Form.Select} component={Input} label="Contract" placeholder="Contract" options={masterTableToOptions(masterTable.contracts)} disabled={submitting} />
     <Form.Group widths="equal">
       <Field name="startDate" as={Form.Input} component={Input} type="date" label="Start date" placeholder="Start date" disabled={submitting} />
-      <Field name="endDate" as={Form.Input} component={Input} type="date" label="End date" placeholder="End date"disabled={submitting} />
+      <Field name="endDate" as={Form.Input} component={Input} type="date" label="End date" placeholder="End date" disabled={submitting} />
     </Form.Group>
     <Field name="probationDate" as={Form.Input} component={Input} type="date" label="Probation date" placeholder="Probation date" disabled={submitting} />
   </Form>
