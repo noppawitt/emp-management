@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Segment } from 'semantic-ui-react';
 import ProfileBox from '../components/ProfileBox';
+import { openModal } from '../actions/modal';
+import * as modalNames from '../constants/modalNames';
 
-const EducationProfileBox = ({ educationsProfile }) => (
+const EducationProfileBox = ({ educationsProfile, onEditClick }) => (
   <Segment.Group raised size="large">
     <ProfileBox
       title="Education"
@@ -18,8 +21,10 @@ const EducationProfileBox = ({ educationsProfile }) => (
         { key: 'gpax', title: 'Gpax', value: educationsProfile[0].gpax },
         { key: 'graduationDate', title: 'Graduation date', value: educationsProfile[0].graduationDate }
       ]}
+      onEditClick={() => onEditClick(educationsProfile[0].id)}
     />
     {[...educationsProfile].slice(1).map(p => (<ProfileBox
+      key={p.id}
       lists={[
         { key: 'universityName', title: 'University', value: p.universityName },
         { key: 'degree', title: 'Degree', value: p.degreeName },
@@ -30,12 +35,18 @@ const EducationProfileBox = ({ educationsProfile }) => (
         { key: 'gpax', title: 'Gpax', value: p.gpax },
         { key: 'graduationDate', title: 'Graduation date', value: p.graduationDate },
       ]}
+      onEditClick={() => onEditClick(p.id)}
     />))}
   </Segment.Group>
 );
 
 EducationProfileBox.propTypes = {
-  educationsProfile: PropTypes.array.isRequired
+  educationsProfile: PropTypes.array.isRequired,
+  onEditClick: PropTypes.func.isRequired
 };
 
-export default EducationProfileBox;
+const mapDispatchToProps = dispatch => ({
+  onEditClick: id => dispatch(openModal(modalNames.EDIT_EDUCATION_PROFILE, { id }))
+});
+
+export default connect(null, mapDispatchToProps)(EducationProfileBox);

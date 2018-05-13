@@ -19,7 +19,7 @@ exports.update = (req, res, next) => {
 };
 
 exports.findByUserId = (req, res, next) => {
-  Educate.findByUserId(req.user.id)
+  Educate.findByUserId(req.query.id)
     .then((educates) => {
       res.json(educates);
     })

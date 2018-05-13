@@ -15,45 +15,47 @@ const validate = (values) => {
   return errors;
 };
 
-const EditWorkProfileForm = ({ masterTable, handleSubmit, submitting }) => (
+const EditEducationProfileForm = ({ masterTable, handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="levelId" as={Form.Select} component={Input} label="Level" placeholder="Level" options={masterTableToOptions(masterTable.levels)} disabled={submitting} />
-    <Field name="departmentId" as={Form.Select} component={Input} label="Department" placeholder="Department" options={masterTableToOptions(masterTable.departments)} disabled={submitting} />
-    <Field name="positionId" as={Form.Select} component={Input} label="Position" placeholder="Position" options={masterTableToOptions(masterTable.positions)} disabled={submitting} />
-    <Field name="contractId" as={Form.Select} component={Input} label="Contract" placeholder="Contract" options={masterTableToOptions(masterTable.contracts)} disabled={submitting} />
-    <Form.Group widths="equal">
-      <Field name="startDate" as={Form.Input} component={Input} type="date" label="Start date" placeholder="Start date" disabled={submitting} />
-      <Field name="endDate" as={Form.Input} component={Input} type="date" label="End date" placeholder="End date"disabled={submitting} />
-    </Form.Group>
-    <Field name="probationDate" as={Form.Input} component={Input} type="date" label="Probation date" placeholder="Probation date" disabled={submitting} />
+    <Field name="universityId" as={Form.Select} component={Input} label="University" placeholder="University" options={masterTableToOptions(masterTable.universities)} disabled={submitting} />
+    <Field name="degreeId" as={Form.Select} component={Input} label="Degree" placeholder="Degree" options={masterTableToOptions(masterTable.degrees)} disabled={submitting} />
+    <Field name="facultyId" as={Form.Select} component={Input} label="Faculty" placeholder="Faculty" options={masterTableToOptions(masterTable.faculties)} disabled={submitting} />
+    <Field name="majorId" as={Form.Select} component={Input} label="Major" placeholder="Major" options={masterTableToOptions(masterTable.majors)} disabled={submitting} />
+    <Field name="program" as={Form.Input} component={Input} label="Program" placeholder="Program" disabled={submitting} />
+    <Field name="honorFlag" as={Form.Input} component={Input} label="Honor" placeholder="Honor" disabled={submitting} />
+    <Field name="gpax" as={Form.Input} component={Input} label="Gpax" placeholder="Gpax" disabled={submitting} />
+    <Field name="graduateDate" as={Form.Input} component={Input} type="date" label="Graduation date" placeholder="Graduation date" disabled={submitting} />
   </Form>
 );
 
-EditWorkProfileForm.propTypes = {
+EditEducationProfileForm.propTypes = {
   masterTable: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = state => ({
-  initialValues: {
-    userId: state.profile.userId,
-    departmentId: state.profile.departmentId,
-    positionId: state.profile.positionId,
-    levelId: state.profile.levelId,
-    contractId: state.profile.contractId,
-    startDate: state.profile.startDate,
-    endDate: state.profile.endDate,
-    probationDate: state.profile.probationDate
-  }
-});
+const mapStateToProps = (state, { id }) => {
+  const education = state.profile.educations.find(e => e.id === id);
+  return {
+    initialValues: {
+      universityId: education.universityId,
+      degreeId: education.degreeId,
+      facultyId: education.facultyId,
+      majorId: education.majorId,
+      program: education.program,
+      honorFlag: education.honorFlag,
+      gpax: education.gpax,
+      graduateDate: education.graduateDate
+    }
+  };
+};
 
 const enhance = compose(
   connect(mapStateToProps),
   reduxForm({
-    form: 'editWorkProfile',
+    form: 'editEducationProfile',
     validate
   })
 );
 
-export default enhance(EditWorkProfileForm);
+export default enhance(EditEducationProfileForm);

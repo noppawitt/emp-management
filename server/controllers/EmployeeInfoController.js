@@ -10,7 +10,7 @@ exports.create = (req, res, next) => {
 };
 
 exports.find = (req, res, next) => {
-  EmployeeInfo.findById(req.body.userId)
+  EmployeeInfo.findById(req.query.id)
     .then((employeeInfo) => {
       res.json(employeeInfo);
     })

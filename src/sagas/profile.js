@@ -8,8 +8,8 @@ export function* fetchProfileTask(action) {
   try {
     const profile = {};
     profile.general = yield call(api.fetchGeneralProfile, action.payload.id);
-    profile.work = yield call(api.fetchWorkProfile);
-    profile.educations = yield call(api.fetchEducationProfile);
+    profile.work = yield call(api.fetchWorkProfile, action.payload.id);
+    profile.educations = yield call(api.fetchEducationProfile, action.payload.id);
     yield put(fetchProfileSuccess(profile));
   }
   catch (error) {
@@ -29,6 +29,11 @@ export function* updateProfileTask(action) {
       case 'work':
         profile.work = yield call(api.updateWorkProfile, {
           employeeWork: action.payload.form
+        });
+        break;
+      case 'education':
+        profile.educations = yield call(api.updateEducationProfile, {
+          educate: action.payload.form
         });
         break;
       default:
