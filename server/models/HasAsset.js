@@ -33,4 +33,8 @@ HasAsset.findByUserId = userId => (
   db.manyOrNone('SELECT * FROM has_assets WHERE user_id = $1', [userId])
 );
 
+HasAsset.delete = (id, userId) => (
+  db.none('DELETE FROM has_assets WHERE id = $1 AND user_id = $2', [id, userId])
+);
+
 module.exports = HasAsset;
