@@ -33,4 +33,8 @@ Major.findByFacultyId = facultyId => (
   db.manyOrNone('SELECT * FROM majors WHERE faculty_id = $1', [facultyId])
 );
 
+Major.findAll = () => (
+  db.manyOrNone('SELECT * FROM majors')
+);
+
 module.exports = Major;

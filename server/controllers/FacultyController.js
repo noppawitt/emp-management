@@ -30,5 +30,6 @@ exports.findAll = (req, res, next) => {
   Faculty.findAll()
     .then((faculties) => {
       res.json(faculties);
-    });
+    })
+    .catch(next);
 };
