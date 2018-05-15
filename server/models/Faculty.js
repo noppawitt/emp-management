@@ -33,4 +33,8 @@ Faculty.findByUniversityId = universityId => (
   db.manyOrNone('SELECT * FROM faculties WHERE university_id = $1', [universityId])
 );
 
+Faculty.findAll = () => (
+  db.manyOrNone('SELECT * FROM faculties')
+);
+
 module.exports = Faculty;

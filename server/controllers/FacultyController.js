@@ -25,3 +25,11 @@ exports.findByUniversityId = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.findAll = (req, res, next) => {
+  Faculty.findAll()
+    .then((faculties) => {
+      res.json(faculties);
+    })
+    .catch(next);
+};

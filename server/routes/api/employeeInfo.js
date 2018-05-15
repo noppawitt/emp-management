@@ -7,6 +7,4 @@ router.get('/', EmployeeInfoController.find);
 
 router.put('/', EmployeeInfoController.update);
 
-// router.delete('/:id', EmployeeInfoController.update);
-
 module.exports = router;

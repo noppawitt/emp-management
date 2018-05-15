@@ -5,6 +5,6 @@ router.post('/', FacultyController.create);
 
 router.put('/', FacultyController.update);
 
-router.get('/', FacultyController.findByUniversityId);
+router.get('/', FacultyController.findAll);
 
 module.exports = router;
