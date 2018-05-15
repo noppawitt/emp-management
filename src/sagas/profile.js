@@ -21,17 +21,22 @@ export function* updateProfileTask(action) {
   try {
     const profile = {};
     switch (action.payload.type) {
-      case 'general':
+      case 'editGeneralProfile':
         profile.general = yield call(api.updateGeneralProfile, {
           employeeInfo: action.payload.form
         });
         break;
-      case 'work':
+      case 'editWorkProfile':
         profile.work = yield call(api.updateWorkProfile, {
           employeeWork: action.payload.form
         });
         break;
-      case 'education':
+      case 'editEducationProfile':
+        profile.educations = yield call(api.updateEducationProfile, {
+          educate: action.payload.form
+        });
+        break;
+      case 'addEducationProfile':
         profile.educations = yield call(api.updateEducationProfile, {
           educate: action.payload.form
         });

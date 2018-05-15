@@ -1,29 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Grid, Header, Icon } from 'semantic-ui-react';
 import ProfileBox from '../components/ProfileBox';
 import { openModal } from '../actions/modal';
 import * as modalNames from '../constants/modalNames';
 
-const EducationProfileBox = ({ educationsProfile, onEditClick }) => (
+const EducationProfileBox = ({ educationsProfile, onEditClick, onAddClick }) => (
   <Segment.Group raised size="large">
-    <ProfileBox
-      title="Education"
-      icon="graduation"
-      lists={[
-        { key: 'universityName', title: 'University', value: educationsProfile[0].universityName },
-        { key: 'degree', title: 'Degree', value: educationsProfile[0].degreeName },
-        { key: 'faculty', title: 'Faculty', value: educationsProfile[0].facultyName },
-        { key: 'major', title: 'Major', value: educationsProfile[0].majorName },
-        { key: 'program', title: 'Program', value: educationsProfile[0].program },
-        { key: 'honor', title: 'Honor', value: educationsProfile[0].honorFlag },
-        { key: 'gpax', title: 'Gpax', value: educationsProfile[0].gpax },
-        { key: 'graduationDate', title: 'Graduation date', value: educationsProfile[0].graduationDate }
-      ]}
-      onEditClick={() => onEditClick(educationsProfile[0].id)}
-    />
-    {[...educationsProfile].slice(1).map(p => (<ProfileBox
+    <Segment padded>
+      <Grid>
+        <Grid.Column>
+          <Header as="h2">
+            <Icon name="graduation" />
+            <Header.Content>
+              Education
+            </Header.Content>
+          </Header>
+        </Grid.Column>
+        <Grid.Column floated="right" computer={1} mobile={2}>
+          <Icon name="add" link size="large" onClick={onAddClick} />
+        </Grid.Column>
+      </Grid>
+    </Segment>
+    {educationsProfile.map(p => (<ProfileBox
       key={p.id}
       lists={[
         { key: 'universityName', title: 'University', value: p.universityName },
@@ -42,11 +42,13 @@ const EducationProfileBox = ({ educationsProfile, onEditClick }) => (
 
 EducationProfileBox.propTypes = {
   educationsProfile: PropTypes.array.isRequired,
-  onEditClick: PropTypes.func.isRequired
+  onEditClick: PropTypes.func.isRequired,
+  onAddClick: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
-  onEditClick: id => dispatch(openModal(modalNames.EDIT_EDUCATION_PROFILE, { id }))
+  onEditClick: id => dispatch(openModal(modalNames.EDIT_EDUCATION_PROFILE, { id })),
+  onAddClick: id => dispatch(openModal(modalNames.ADD_EDUCATION_PROFILE, { id }))
 });
 
 export default connect(null, mapDispatchToProps)(EducationProfileBox);

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Segment, Header, Icon } from 'semantic-ui-react';
 import ProfileBox from '../components/ProfileBox';
 import { openModal } from '../actions/modal';
 import * as modalNames from '../constants/modalNames';
@@ -16,7 +17,17 @@ const WorkProfileBox = ({ workProfile, onEditClick }) => {
     { key: 'probationDate', title: 'Probation date', value: workProfile.probationDate }
   ];
   return (
-    <ProfileBox title="Work" icon="suitcase" lists={lists} onEditClick={onEditClick} />
+    <Segment.Group raised size="large">
+      <Segment padded>
+        <Header as="h2">
+          <Icon name="suitcase" />
+          <Header.Content>
+            Work
+          </Header.Content>
+        </Header>
+      </Segment>
+      <ProfileBox title="Work" icon="suitcase" lists={lists} onEditClick={onEditClick} />
+    </Segment.Group>
   );
 };
 

@@ -6,6 +6,7 @@ import EditGeneralProfileModal from './modals/EditGeneralProfileModal';
 import EditWorkProfileModal from './modals/EditWorkProfileModal';
 import EditEducationProfileModal from './modals/EditEducationProfileModal';
 import CreateEmployeeModal from './modals/CreateEmployeeModal';
+import AddEducationProfileModal from './modals/AddEducationProfileModal';
 
 const ModalContainer = ({ name, props }) => {
   switch (name) {
@@ -17,6 +18,8 @@ const ModalContainer = ({ name, props }) => {
       return <EditEducationProfileModal {...props} />;
     case modalNames.CREATE_EMPLOYEE:
       return <CreateEmployeeModal {...props} />;
+    case modalNames.ADD_EDUCATION_PROFILE:
+      return <AddEducationProfileModal {...props} />;
     default:
       return <div />;
   }
