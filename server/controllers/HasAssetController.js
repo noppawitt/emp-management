@@ -12,8 +12,11 @@ exports.create = (req, res, next) => {
 exports.update = (req, res, next) => {
   const editHasAsset = req.body.hasAsset;
   HasAsset.update(editHasAsset, req.user.id)
-    .then((updatedHasAsset) => {
-      res.json(updatedHasAsset);
+    .then(() => {
+      HasAsset.findByUserId(req.user.id)
+        .then((hasAssets) => {
+          res.json(hasAssets);
+        });
     })
     .catch(next);
 };

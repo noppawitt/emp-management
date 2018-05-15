@@ -22,8 +22,8 @@ EmployeeWork.create = (employeeWork, id) => (
 );
 
 EmployeeWork.update = (employeeWork, id) => (
-  db.one(
-    'UPDATE employee_work SET department_id = $1, contract_id = $2, position_id = $3, level_id = $4, updated_user = $5, start_date = $6, probation_date = $7, end_date = $8, updated_date = $9 WHERE user_id = $10 RETURNING user_id',
+  db.none(
+    'UPDATE employee_work SET department_id = $1, contract_id = $2, position_id = $3, level_id = $4, updated_user = $5, start_date = $6, probation_date = $7, end_date = $8, updated_date = $9 WHERE user_id = $10',
     [
       employeeWork.departmentId,
       employeeWork.contractId,
@@ -37,7 +37,6 @@ EmployeeWork.update = (employeeWork, id) => (
       employeeWork.userId
     ]
   )
-    .then(result => db.one('SELECT employee_work.user_id, employee_work.department_id, departments.name AS department_name, employee_work.contract_id, contracts.name AS contract_name, employee_work.position_id, positions.name AS position_name, employee_work.level_id, levels.name AS level_name, employee_work.start_date, employee_work.probation_date, employee_work.end_date FROM employee_work, departments, contracts, positions, levels WHERE employee_work.department_id=departments.id AND employee_work.contract_id=contracts.id AND employee_work.position_id=positions.id AND employee_work.level_id=levels.id AND user_id = $1', [result.userId]))
 );
 
 EmployeeWork.findByUserId = userId => (

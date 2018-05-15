@@ -10,11 +10,11 @@ exports.create = (req, res, next) => {
 };
 
 exports.update = (req, res, next) => {
+  console.log(req.body);
   const editEducate = req.body.educate;
   Educate.update(editEducate, req.user.id)
-    .then((updatedEducate) => {
-      res.json(updatedEducate);
-    })
+    .then(() => Educate.findByUserId(req.user.id))
+    .then(educates => res.json(educates))
     .catch(next);
 };
 
