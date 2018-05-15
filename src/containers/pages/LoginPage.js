@@ -19,7 +19,7 @@ const LoginPage = ({ dispatch }) => {
   };
 
   return (
-    <Grid centered columns={3} verticalAlign="middle" style={{ height: '80vh' }}>
+    <Grid centered columns={3} verticalAlign="middle">
       <Grid.Row>
         <Grid.Column>
           <Segment>

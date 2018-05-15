@@ -10,6 +10,10 @@ export function* fetchMasterTableTask() {
     masterTable.positions = yield call(api.fetchPositions);
     masterTable.levels = yield call(api.fetchLevels);
     masterTable.contracts = yield call(api.fetchContracts);
+    masterTable.universities = yield call(api.fetchUniversities);
+    masterTable.degrees = yield call(api.fetchDegrees);
+    masterTable.faculties = yield call(api.fetchFaculties);
+    masterTable.majors = yield call(api.fetchMajors);
     yield put(fetchMasterTableSucesss(masterTable));
   }
   catch (error) {

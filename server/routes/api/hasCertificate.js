@@ -7,4 +7,6 @@ router.put('/', HasCertificateController.update);
 
 router.get('/', HasCertificateController.findByUserId);
 
+router.delete('/', HasCertificateController.delete);
+
 module.exports = router;

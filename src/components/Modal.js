@@ -1,19 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal as SUIModal, Button, Icon } from 'semantic-ui-react';
+import { Modal as SUIModal, Button } from 'semantic-ui-react';
 
-const Modal = ({ header, open, onOpen, onClose, onSaveClick, submitting, children }) => (
+const Modal = ({ header, buttonName, onClose, onClick, submitting, children }) => (
   <SUIModal
     dimmer="blurring"
     size="small"
     closeIcon
-    trigger={<Icon
-      name="edit"
-      size="large"
-      link
-    />}
-    open={open}
-    onOpen={onOpen}
+    open
     onClose={onClose}
   >
     <SUIModal.Header>
@@ -23,19 +17,22 @@ const Modal = ({ header, open, onOpen, onClose, onSaveClick, submitting, childre
       {children}
     </SUIModal.Content>
     <SUIModal.Actions>
-      <Button color="blue" loading={submitting} disabled={submitting} onClick={onSaveClick}>
-        Save
+      <Button color="blue" loading={submitting} disabled={submitting} onClick={onClick}>
+        {buttonName}
       </Button>
     </SUIModal.Actions>
   </SUIModal>
 );
 
+Modal.defaultProps = {
+  buttonName: 'Save'
+};
+
 Modal.propTypes = {
   header: PropTypes.string.isRequired,
-  open: PropTypes.bool.isRequired,
-  onOpen: PropTypes.func.isRequired,
+  buttonName: PropTypes.string,
   onClose: PropTypes.func.isRequired,
-  onSaveClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
   children: PropTypes.element.isRequired
 };

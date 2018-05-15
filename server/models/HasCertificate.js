@@ -35,4 +35,8 @@ HasCertificate.findByUserId = userId => (
   db.manyOrNone('SELECT * FROM has_certificates WHERE user_id = $1', [userId])
 );
 
+HasCertificate.delete = (id, userId) => (
+  db.none('DELETE FROM has_certificates WHERE id = $1 AND user_id = $2', [id, userId])
+);
+
 module.exports = HasCertificate;

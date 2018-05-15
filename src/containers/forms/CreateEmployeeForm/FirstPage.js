@@ -1,21 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { compose } from 'recompose';
 import { Field, reduxForm } from 'redux-form';
 import { Form } from 'semantic-ui-react';
-import Input from '../../components/Input';
-import * as validator from '../../utils/validator';
+import Input from '../../../components/Input';
 
-const validate = (values) => {
-  const errors = {};
-  errors.firstName = validator.required(values.firstName);
-  errors.lastName = validator.required(values.lastName);
-  errors.email = validator.email(values.email);
-  return errors;
-};
-
-const EditGeneralProfileForm = ({ handleSubmit }) => (
+const FirstPage = ({ handleSubmit }) => (
   <Form onSubmit={handleSubmit}>
     <Form.Group widths="equal">
       <Field name="firstName" component={Input} as={Form.Input} label="First name" placeholder="First name" />
@@ -36,35 +25,12 @@ const EditGeneralProfileForm = ({ handleSubmit }) => (
   </Form>
 );
 
-EditGeneralProfileForm.propTypes = {
+FirstPage.propTypes = {
   handleSubmit: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-  initialValues: {
-    userId: state.profile.general.userId,
-    firstName: state.profile.general.firstName,
-    lastName: state.profile.general.lastName,
-    firstNameTh: state.profile.general.firstNameTh,
-    lastNameTh: state.profile.general.lastNameTh,
-    nickName: state.profile.general.nickName,
-    citizenId: state.profile.general.citizenId,
-    mobileNumber: state.profile.general.mobileNumber,
-    email: state.profile.general.email,
-    facebookId: state.profile.general.facebookId,
-    lineId: state.profile.general.lineId,
-    birthday: state.profile.general.birthday,
-    address: state.profile.general.address,
-    picture: state.profile.general.picture
-  }
-});
-
-const enhance = compose(
-  connect(mapStateToProps),
-  reduxForm({
-    form: 'editGeneralProfile',
-    validate
-  })
-);
-
-export default enhance(EditGeneralProfileForm);
+export default reduxForm({
+  form: 'createEmployee',
+  destroyOnUnmount: false,
+  forceUnregisterOnUnmount: true
+})(FirstPage);

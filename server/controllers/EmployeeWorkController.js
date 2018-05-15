@@ -11,7 +11,7 @@ exports.create = (req, res, next) => {
 };
 
 exports.findByUserId = (req, res, next) => {
-  EmployeeWork.findByUserId(req.user.id)
+  EmployeeWork.findByUserId(req.query.id)
     .then((employeeWork) => {
       res.json(employeeWork);
     })

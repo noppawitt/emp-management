@@ -68,35 +68,65 @@ api.fetchContracts = () => (
   callApi('/api/contracts')
 );
 
+api.fetchUniversities = () => (
+  callApi('/api/universities')
+);
+
+api.fetchDegrees = () => (
+  callApi('/api/degrees')
+);
+
+api.fetchFaculties = () => (
+  callApi('/api/faculties')
+);
+
+api.fetchMajors = () => (
+  callApi('/api/majors')
+);
+
 // Profile
 
-api.fetchGeneralProfile = () => (
-  callApi('/api/employee-info')
+api.fetchGeneralProfile = id => (
+  callApi(`/api/employee-info?id=${id}`)
 );
 
-api.fetchWorkProfile = () => (
-  callApi('/api/employee-work')
+api.fetchWorkProfile = id => (
+  callApi(`/api/employee-work?id=${id}`)
 );
 
-api.fetchEducationProfile = () => (
-  callApi('/api/educates')
+api.fetchEducationProfile = id => (
+  callApi(`/api/educates?id=${id}`)
 );
 
-api.updateGeneralProfile = form => (
+api.updateGeneralProfile = body => (
   callApi('/api/employee-info', {
     method: 'PUT',
-    body: form
+    body
   })
 );
 
-api.updateWorkProfile = form => (
+api.updateWorkProfile = body => (
   callApi('/api/employee-work', {
     method: 'PUT',
-    body: form
+    body
+  })
+);
+
+api.updateEducationProfile = body => (
+  callApi('/api/educates', {
+    method: 'PUT',
+    body
   })
 );
 
 // Employee
+
+api.createEmployee = body => (
+  callApi('/api/users', {
+    method: 'POST',
+    body
+  })
+);
 
 api.fetchEmployee = () => (
   callApi('/api/users')
