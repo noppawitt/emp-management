@@ -24,7 +24,7 @@ const EditEducationProfileForm = ({ masterTable, handleSubmit, submitting }) => 
     <Field name="program" as={Form.Input} component={Input} label="Program" placeholder="Program" disabled={submitting} />
     <Field name="honorFlag" as={Form.Input} component={Input} label="Honor" placeholder="Honor" disabled={submitting} />
     <Field name="gpax" as={Form.Input} component={Input} label="Gpax" placeholder="Gpax" disabled={submitting} />
-    <Field name="graduateDate" as={Form.Input} component={Input} type="date" label="Graduation date" placeholder="Graduation date" disabled={submitting} />
+    <Field name="graduationDate" as={Form.Input} component={Input} type="date" label="Graduation date" placeholder="Graduation date" disabled={submitting} />
   </Form>
 );
 
@@ -38,6 +38,7 @@ const mapStateToProps = (state, { id }) => {
   const education = state.profile.educations.find(e => e.id === id);
   return {
     initialValues: {
+      id: education.id,
       universityId: education.universityId,
       degreeId: education.degreeId,
       facultyId: education.facultyId,
@@ -45,7 +46,7 @@ const mapStateToProps = (state, { id }) => {
       program: education.program,
       honorFlag: education.honorFlag,
       gpax: education.gpax,
-      graduateDate: education.graduateDate
+      graduationDate: education.graduationDate
     }
   };
 };
