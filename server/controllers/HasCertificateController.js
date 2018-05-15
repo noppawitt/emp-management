@@ -12,8 +12,11 @@ exports.create = (req, res, next) => {
 exports.update = (req, res, next) => {
   const editHasCertificate = req.body.hasCertificate;
   HasCertificate.update(editHasCertificate, req.user.id)
-    .then((updatedHasCertificate) => {
-      res.json(updatedHasCertificate);
+    .then(() => {
+      HasCertificate.findByUserId(req.user.id)
+        .then((hasCertificates) => {
+          res.json(hasCertificates);
+        });
     })
     .catch(next);
 };
