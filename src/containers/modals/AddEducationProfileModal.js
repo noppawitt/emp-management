@@ -8,20 +8,19 @@ import Modal from '../../components/Modal';
 import AddEducationProfileForm from '../forms/AddEducationProfileForm';
 import { handleReduxFormSubmit } from '../../utils/helper';
 
-const AddEducationProfileModal = ({ id, masterTable, onClose, onSubmit, submitting, onClick }) => (
+const AddEducationProfileModal = ({ id, onClose, onSubmit, submitting, onClick }) => (
   <Modal
     header="Add education profile"
     onClose={onClose}
     onClick={onClick}
     submitting={submitting}
   >
-    <AddEducationProfileForm id={id} masterTable={masterTable} onSubmit={values => onSubmit(values)} />
+    <AddEducationProfileForm id={id} onSubmit={values => onSubmit(values)} />
   </Modal>
 );
 
 AddEducationProfileModal.propTypes = {
   id: PropTypes.number.isRequired,
-  masterTable: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
