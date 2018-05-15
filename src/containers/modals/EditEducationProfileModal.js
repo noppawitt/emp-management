@@ -8,20 +8,19 @@ import Modal from '../../components/Modal';
 import EditEducationProfileForm from '../forms/EditEducationProfileForm';
 import { handleReduxFormSubmit } from '../../utils/helper';
 
-const EditEducationProfileModal = ({ id, masterTable, onClose, onSubmit, submitting, onClick }) => (
+const EditEducationProfileModal = ({ id, onClose, onSubmit, submitting, onClick }) => (
   <Modal
     header="Edit education profile"
     onClose={onClose}
     onClick={onClick}
     submitting={submitting}
   >
-    <EditEducationProfileForm id={id} masterTable={masterTable} onSubmit={values => onSubmit(values)} />
+    <EditEducationProfileForm id={id} onSubmit={values => onSubmit(values)} />
   </Modal>
 );
 
 EditEducationProfileModal.propTypes = {
   id: PropTypes.number.isRequired,
-  masterTable: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
@@ -30,13 +29,12 @@ EditEducationProfileModal.propTypes = {
 
 const mapStateToProps = state => ({
   modalName: state.modal.name,
-  masterTable: state.masterTable,
   submitting: isSubmitting('editEducationProfile')(state)
 });
 
 const mapDispatchToProps = dispatch => ({
   onClose: () => dispatch(closeModal()),
-  onSubmit: values => handleReduxFormSubmit(dispatch, updateProfileRequest, values, 'education'),
+  onSubmit: values => handleReduxFormSubmit(dispatch, updateProfileRequest, values, 'editEducationProfile'),
   onClick: () => dispatch(submit('editEducationProfile'))
 });
 

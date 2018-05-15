@@ -3,8 +3,11 @@ const Educate = require('../models/Educate');
 exports.create = (req, res, next) => {
   const newEducate = req.body.educate;
   Educate.create(newEducate, req.user.id)
-    .then((createdEducate) => {
-      res.json(createdEducate);
+    .then(() => {
+      Educate.findByUserId(req.user.id)
+        .then((educates) => {
+          res.json(educates);
+        });
     })
     .catch(next);
 };
@@ -12,9 +15,8 @@ exports.create = (req, res, next) => {
 exports.update = (req, res, next) => {
   const editEducate = req.body.educate;
   Educate.update(editEducate, req.user.id)
-    .then((updatedEducate) => {
-      res.json(updatedEducate);
-    })
+    .then(() => Educate.findByUserId(req.user.id))
+    .then(educates => res.json(educates))
     .catch(next);
 };
 

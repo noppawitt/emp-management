@@ -1,15 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Segment, Header, Icon, List } from 'semantic-ui-react';
+import { Grid, Segment, Icon, List } from 'semantic-ui-react';
 
-const ProfileBox = ({ title, icon, lists, onEditClick }) => (
+const ProfileBox = ({ lists, onEditClick }) => (
   <Segment raised padded size="large">
     <Grid>
-      <Grid.Column only="large screen" computer={3}>
-        <Icon name={icon} size="huge" />
-      </Grid.Column>
       <Grid.Column computer={8} mobile={14}>
-        <Header size="large">{title}</Header>
         <Grid columns={2}>
           <Grid.Column>
             <List>
@@ -39,15 +35,8 @@ const ProfileBox = ({ title, icon, lists, onEditClick }) => (
 );
 
 ProfileBox.propTypes = {
-  title: PropTypes.string,
-  icon: PropTypes.string,
   lists: PropTypes.array.isRequired,
   onEditClick: PropTypes.func.isRequired
-};
-
-ProfileBox.defaultProps = {
-  title: null,
-  icon: null,
 };
 
 export default ProfileBox;

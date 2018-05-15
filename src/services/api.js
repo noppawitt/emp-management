@@ -119,6 +119,13 @@ api.updateEducationProfile = body => (
   })
 );
 
+api.createEducationProfile = body => (
+  callApi('/api/educates', {
+    method: 'POST',
+    body
+  })
+);
+
 // Employee
 
 api.createEmployee = body => (

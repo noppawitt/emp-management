@@ -7,7 +7,6 @@ import { Form } from 'semantic-ui-react';
 import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
 import { masterTableToOptions, getFacultiesByUniversityId, getMajorsByFacultyId } from '../../utils/helper';
-import { getEducationProfile } from '../../selectors/profile';
 
 const validate = (values) => {
   const errors = {};
@@ -16,7 +15,7 @@ const validate = (values) => {
   return errors;
 };
 
-const EditEducationProfileForm = ({ masterTable, universityId, facultyId, handleSubmit, submitting }) => (
+const AddEducationProfileForm = ({ masterTable, universityId, facultyId, handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Field name="universityId" as={Form.Select} component={Input} label="University" placeholder="University" options={masterTableToOptions(masterTable.universities)} disabled={submitting} />
     <Field name="degreeId" as={Form.Select} component={Input} label="Degree" placeholder="Degree" options={masterTableToOptions(masterTable.degrees)} disabled={submitting} />
@@ -29,12 +28,12 @@ const EditEducationProfileForm = ({ masterTable, universityId, facultyId, handle
   </Form>
 );
 
-EditEducationProfileForm.defaultProps = {
+AddEducationProfileForm.defaultProps = {
   universityId: null,
   facultyId: null
 };
 
-EditEducationProfileForm.propTypes = {
+AddEducationProfileForm.propTypes = {
   masterTable: PropTypes.object.isRequired,
   universityId: PropTypes.string,
   facultyId: PropTypes.string,
@@ -42,31 +41,23 @@ EditEducationProfileForm.propTypes = {
   submitting: PropTypes.bool.isRequired
 };
 
-const selector = formValueSelector('editEducationProfile');
+const selector = formValueSelector('addEducationProfile');
 
-const mapStateToProps = (state, { id }) => ({
+const mapStateToProps = state => ({
   masterTable: state.masterTable,
   universityId: selector(state, 'universityId'),
   facultyId: selector(state, 'facultyId'),
   initialValues: {
-    id: getEducationProfile(state, id).id,
-    universityId: getEducationProfile(state, id).universityId,
-    degreeId: getEducationProfile(state, id).degreeId,
-    facultyId: getEducationProfile(state, id).facultyId,
-    majorId: getEducationProfile(state, id).majorId,
-    program: getEducationProfile(state, id).program,
-    honorFlag: getEducationProfile(state, id).honorFlag,
-    gpax: getEducationProfile(state, id).gpax,
-    graduationDate: getEducationProfile(state, id).graduationDate
+    userId: state.profile.id
   }
 });
 
 const enhance = compose(
   connect(mapStateToProps),
   reduxForm({
-    form: 'editEducationProfile',
+    form: 'addEducationProfile',
     validate
   })
 );
 
-export default enhance(EditEducationProfileForm);
+export default enhance(AddEducationProfileForm);

@@ -21,8 +21,11 @@ exports.findByUserId = (req, res, next) => {
 exports.update = (req, res, next) => {
   const editEmployeeWork = req.body.employeeWork;
   EmployeeWork.update(editEmployeeWork, req.user.id)
-    .then((updatedEmployeeWork) => {
-      res.json(updatedEmployeeWork);
+    .then(() => {
+      EmployeeWork.findByUserId(req.user.id)
+        .then((employeeWorks) => {
+          res.json(employeeWorks);
+        });
     })
     .catch(next);
 };

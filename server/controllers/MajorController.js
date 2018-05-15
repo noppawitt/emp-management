@@ -25,3 +25,11 @@ exports.findByFaculyId = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.findAll = (req, res, next) => {
+  Major.findAll()
+    .then((majors) => {
+      res.json(majors);
+    })
+    .catch(next);
+};

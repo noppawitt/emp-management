@@ -1,4 +1,5 @@
 import React from 'react';
+<<<<<<< HEAD
 import { Card, Icon, Grid, Image, Item, Label, Row, Container, Segment} from 'semantic-ui-react';
 import PageHeader from './PageHeader';
 import image from '../images/cat.jpg';
@@ -17,10 +18,16 @@ const items = () => (
     </Item.Content>
   </Item>
 );
+=======
+import { Card, Image } from 'semantic-ui-react';
+import PageHeader from './PageHeader';
+import defaultProfileImage from '../images/profile.jpg';
+>>>>>>> 14d11850e817e274dcff16b44b40cf124bcb79e8
 
 const Employee = () => (
   <div>
     <PageHeader icon="users" text="Employee" />
+<<<<<<< HEAD
     <div>
       <Grid>
         <Grid.Row >
@@ -77,6 +84,66 @@ const Employee = () => (
         {items()}
       </Item.Group> */}
     </div>
+=======
+    <Card.Group centered>
+      <Card>
+        <Image circular size="small" src={defaultProfileImage} />
+        <Card.Content>
+          <Card.Header>Phatchara Chokdurong</Card.Header>
+          <Card.Meta>E-mail: j_pcr@hotmail.com</Card.Meta>
+          <Card.Meta>Line: lnwjay</Card.Meta>
+        </Card.Content>
+      </Card>
+      <Card>
+        <Image src={defaultProfileImage} />
+        <Card.Content>
+          <Card.Header>Phatchara Chokdurong</Card.Header>
+          <Card.Meta>E-mail: j_pcr@hotmail.com</Card.Meta>
+          <Card.Meta>Line: lnwjay</Card.Meta>
+        </Card.Content>
+      </Card>
+      <Card>
+        <Image src={defaultProfileImage} />
+        <Card.Content>
+          <Card.Header>Phatchara Chokdurong</Card.Header>
+          <Card.Meta>E-mail: j_pcr@hotmail.com</Card.Meta>
+          <Card.Meta>Line: lnwjay</Card.Meta>
+        </Card.Content>
+      </Card>
+      <Card>
+        <Image src={defaultProfileImage} />
+        <Card.Content>
+          <Card.Header>Phatchara Chokdurong</Card.Header>
+          <Card.Meta>E-mail: j_pcr@hotmail.com</Card.Meta>
+          <Card.Meta>Line: lnwjay</Card.Meta>
+        </Card.Content>
+      </Card>
+      <Card>
+        <Image src={defaultProfileImage} />
+        <Card.Content>
+          <Card.Header>Phatchara Chokdurong</Card.Header>
+          <Card.Meta>E-mail: j_pcr@hotmail.com</Card.Meta>
+          <Card.Meta>Line: lnwjay</Card.Meta>
+        </Card.Content>
+      </Card>
+      <Card>
+        <Image src={defaultProfileImage} />
+        <Card.Content>
+          <Card.Header>Phatchara Chokdurong</Card.Header>
+          <Card.Meta>E-mail: j_pcr@hotmail.com</Card.Meta>
+          <Card.Meta>Line: lnwjay</Card.Meta>
+        </Card.Content>
+      </Card>
+      <Card>
+        <Image src={defaultProfileImage} />
+        <Card.Content>
+          <Card.Header>Phatchara Chokdurong</Card.Header>
+          <Card.Meta>E-mail: j_pcr@hotmail.com</Card.Meta>
+          <Card.Meta>Line: lnwjay</Card.Meta>
+        </Card.Content>
+      </Card>
+    </Card.Group>
+>>>>>>> 14d11850e817e274dcff16b44b40cf124bcb79e8
   </div>
 );
 

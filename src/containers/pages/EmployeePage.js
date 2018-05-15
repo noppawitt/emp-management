@@ -8,21 +8,14 @@ import { openModal } from '../../actions/modal';
 import * as modalNames from '../../constants/modalNames';
 import Loader from '../../components/Loader';
 
-const EmployeePage = ({ employee, onClick }) => (
+const EmployeePage = ({ employee }) => (
   <div>
-    {employee.isFetching ?
-      <Loader /> :
-      <div>
-        <Employee />
-        <button onClick={onClick}>create user</button>
-        {employee.lists.map(e => <p>{e.firstName} {e.lastName} {e.mobileNumber}</p>)}
-      </div>}
+    {employee.isFetching ? <Loader /> : <Employee />}
   </div>
 );
 
 EmployeePage.propTypes = {
-  employee: PropTypes.object.isRequired,
-  onClick: PropTypes.func.isRequired
+  employee: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({

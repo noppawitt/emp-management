@@ -20,7 +20,7 @@ Asset.create = (asset, id) => (
 );
 
 Asset.update = (asset, id) => (
-  db.one(
+  db.none(
     'UPDATE assets SET asset_type_id = $1, name = $2, description = $3, own_flag = $4, serial_number = $5, updated_user = $6, updated_date = $7, status = $8 WHERE id = $9',
     [
       asset.assetTypeId,

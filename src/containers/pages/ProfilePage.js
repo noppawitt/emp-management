@@ -35,8 +35,8 @@ const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
-      const { id, fetchProfile, fetchMasterTable } = this.props;
-      fetchProfile(id);
+      const { id, fetchProfile, fetchMasterTable, match: { params } } = this.props;
+      fetchProfile(params.id || id);
       fetchMasterTable();
     }
   })

@@ -5,22 +5,22 @@ import { submit, isSubmitting } from 'redux-form';
 import { closeModal } from '../../actions/modal';
 import { updateProfileRequest } from '../../actions/profile';
 import Modal from '../../components/Modal';
-import EditWorkProfileForm from '../forms/EditWorkProfileForm';
+import AddEducationProfileForm from '../forms/AddEducationProfileForm';
 import { handleReduxFormSubmit } from '../../utils/helper';
 
-const EditWorkProfileModal = ({ masterTable, onClose, onSubmit, submitting, onClick }) => (
+const AddEducationProfileModal = ({ id, onClose, onSubmit, submitting, onClick }) => (
   <Modal
-    header="Edit work profile"
+    header="Add education profile"
     onClose={onClose}
     onClick={onClick}
     submitting={submitting}
   >
-    <EditWorkProfileForm masterTable={masterTable} onSubmit={values => onSubmit(values)} />
+    <AddEducationProfileForm id={id} onSubmit={values => onSubmit(values)} />
   </Modal>
 );
 
-EditWorkProfileModal.propTypes = {
-  masterTable: PropTypes.object.isRequired,
+AddEducationProfileModal.propTypes = {
+  id: PropTypes.number.isRequired,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
@@ -30,13 +30,13 @@ EditWorkProfileModal.propTypes = {
 const mapStateToProps = state => ({
   modalName: state.modal.name,
   masterTable: state.masterTable,
-  submitting: isSubmitting('editWorkProfile')(state)
+  submitting: isSubmitting('addEducationProfile')(state)
 });
 
 const mapDispatchToProps = dispatch => ({
   onClose: () => dispatch(closeModal()),
-  onSubmit: values => handleReduxFormSubmit(dispatch, updateProfileRequest, values, 'editWorkProfile'),
-  onClick: () => dispatch(submit('editWorkProfile'))
+  onSubmit: values => handleReduxFormSubmit(dispatch, updateProfileRequest, values, 'addEducationProfile'),
+  onClick: () => dispatch(submit('addEducationProfile'))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditWorkProfileModal);
+export default connect(mapStateToProps, mapDispatchToProps)(AddEducationProfileModal);

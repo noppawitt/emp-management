@@ -7,7 +7,7 @@ import bigLogo from '../images/big-logo.jpg';
 const Navbar = ({ username, onLogout }) => (
   <div>
     <Image src={bigLogo} />
-    <Menu attached borderless inverted size="huge">
+    <Menu stackable attached borderless inverted size="huge">
       <Container>
         <Menu.Item as={NavLink} to="/timesheet" name="timesheet">
           Timesheet
