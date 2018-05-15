@@ -37,7 +37,7 @@ export function* updateProfileTask(action) {
         });
         break;
       case 'addEducationProfile':
-        profile.educations = yield call(api.updateEducationProfile, {
+        profile.educations = yield call(api.createEducationProfile, {
           educate: action.payload.form
         });
         break;

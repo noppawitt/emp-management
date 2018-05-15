@@ -112,16 +112,16 @@ api.updateWorkProfile = body => (
   })
 );
 
-api.createEducationProfile = body => (
+api.updateEducationProfile = body => (
   callApi('/api/educates', {
     method: 'PUT',
     body
   })
 );
 
-api.updateEducationProfile = body => (
+api.createEducationProfile = body => (
   callApi('/api/educates', {
-    method: 'PUT',
+    method: 'POST',
     body
   })
 );

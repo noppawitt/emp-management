@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import { Field, reduxForm } from 'redux-form';
 import { Form } from 'semantic-ui-react';
 import Input from '../../components/Input';
@@ -32,7 +34,18 @@ AddEducationProfileForm.propTypes = {
   submitting: PropTypes.bool.isRequired
 };
 
-export default reduxForm({
-  form: 'addEducationProfile',
-  validate
-})(AddEducationProfileForm);
+const mapStateToProps = state => ({
+  initialValues: {
+    userId: state.profile.id
+  }
+});
+
+const enhance = compose(
+  connect(mapStateToProps),
+  reduxForm({
+    form: 'addEducationProfile',
+    validate
+  })
+);
+
+export default enhance(AddEducationProfileForm);

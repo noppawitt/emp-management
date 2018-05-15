@@ -20,7 +20,7 @@ const Routes = () => (
         <Route path="/timesheet" component={Timesheet} />
         <Route path="/leave-request" component={LeaveRequest} />
         <Route path="/project" component={TodoContainer} />
-        <Route path="/profile" component={ProfilePage} />
+        <Route path="/profile/:id?" component={ProfilePage} />
         <Route path="/employee" component={EmployeePage} />
       </Switch>
     </AppContainer>
