@@ -36,7 +36,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onClose: () => dispatch(closeModal()),
-  onSubmit: values => handleReduxFormSubmit(dispatch, updateProfileRequest, values, 'education'),
+  onSubmit: values => handleReduxFormSubmit(dispatch, updateProfileRequest, values, 'editEducationProfile'),
   onClick: () => dispatch(submit('editEducationProfile'))
 });
 

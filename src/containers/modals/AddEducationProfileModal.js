@@ -16,7 +16,7 @@ const validate = (values) => {
   return errors;
 };
 
-const EditEducationProfileForm = ({ masterTable, handleSubmit, submitting }) => (
+const AddEducationProfileForm = ({ masterTable, handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Field name="universityId" as={Form.Select} component={Input} label="University" placeholder="University" options={masterTableToOptions(masterTable.universities)} disabled={submitting} />
     <Field name="degreeId" as={Form.Select} component={Input} label="Degree" placeholder="Degree" options={masterTableToOptions(masterTable.degrees)} disabled={submitting} />
@@ -29,7 +29,7 @@ const EditEducationProfileForm = ({ masterTable, handleSubmit, submitting }) => 
   </Form>
 );
 
-EditEducationProfileForm.propTypes = {
+AddEducationProfileForm.propTypes = {
   masterTable: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired
@@ -37,24 +37,16 @@ EditEducationProfileForm.propTypes = {
 
 const mapStateToProps = (state, { id }) => ({
   initialValues: {
-    id: getEducationProfile(state, id).id,
-    universityId: getEducationProfile(state, id).universityId,
-    degreeId: getEducationProfile(state, id).degreeId,
-    facultyId: getEducationProfile(state, id).facultyId,
-    majorId: getEducationProfile(state, id).majorId,
-    program: getEducationProfile(state, id).program,
-    honorFlag: getEducationProfile(state, id).honorFlag,
-    gpax: getEducationProfile(state, id).gpax,
-    graduationDate: getEducationProfile(state, id).graduationDate
+    id: getEducationProfile(state, id).id
   }
 });
 
 const enhance = compose(
   connect(mapStateToProps),
   reduxForm({
-    form: 'editEducationProfile',
+    form: 'addEducationProfile',
     validate
   })
 );
 
-export default enhance(EditEducationProfileForm);
+export default enhance(AddEducationProfileForm);
