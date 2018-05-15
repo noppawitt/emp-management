@@ -24,7 +24,7 @@ Educate.create = (educate, id) => (
 
 Educate.update = (educate, id) => (
   db.one(
-    'UPDATE educates SET university_id = $1, faculty_id = $2, major_id = $3, degree_id = $4, gpax = $5, graduation_date = $6, program = $7, honor_flag = $8, updated_date = $9, updated_user = $10 WHERE id = $11',
+    'UPDATE educates SET university_id = $1, faculty_id = $2, major_id = $3, degree_id = $4, gpax = $5, graduation_date = $6, program = $7, honor_flag = $8, updated_date = $9, updated_user = $10 WHERE id = $11 RETURNING id',
     [
       educate.universityId,
       educate.facultyId,
@@ -39,6 +39,7 @@ Educate.update = (educate, id) => (
       educate.id
     ]
   )
+    .then(result => db.one('SELECT educates.id, educates.user_id, educates.university_id, universities.name AS university_name, educates.faculty_id, faculties.name AS faculty_name, educates.major_id, majors.name AS major_name, educates.degree_id, degrees.name AS degree_name, educates.gpax, educates.graduation_date, educates.program, educates.honor_flag FROM educates, universities, faculties, majors, degrees WHERE educates.university_id = universities.id AND educates.faculty_id = faculties.id AND educates.major_id = majors.id AND educates.degree_id = degrees.id AND educates.id = $1', [result.id]))
 );
 
 Educate.findByUserId = userId => (
