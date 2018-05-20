@@ -6,6 +6,8 @@ import image from '../images/cat.jpg';
 import GeneralProfileBox from '../containers/GeneralProfileBox';
 import WorkProfileBox from '../containers/WorkProfileBox';
 import EducationProfileBox from '../containers/EducationProfileBox';
+import CertificateProfilxBox from '../containers/CertificateProfileBox';
+import AssetProfileBox from '../containers/AssetProfileBox';
 
 const Profile = ({ profile }) => (
   <div>
@@ -15,6 +17,8 @@ const Profile = ({ profile }) => (
         <GeneralProfileBox image={image} generalProfile={profile.general} />
         <WorkProfileBox workProfile={profile.work} />
         <EducationProfileBox educationsProfile={profile.educations} />
+        <CertificateProfilxBox certificatesProfile={profile.certificates} />
+        <AssetProfileBox assetsProfile={profile.assets} />
       </Grid.Column>
     </Grid>
   </div>
