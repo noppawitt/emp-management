@@ -175,4 +175,17 @@ api.fetchEmployee = () => (
   callApi('/api/users')
 );
 
+// Project
+
+api.fetchProject = () => (
+  callApi('/api/projects')
+);
+
+api.createProject = body => (
+  callApi('/api/projects', {
+    method: 'POST',
+    body
+  })
+);
+
 export default api;
