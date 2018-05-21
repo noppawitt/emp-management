@@ -15,13 +15,17 @@ ProjectPage.propTypes = {
   onAddClick: PropTypes.func.isRequired
 };
 
+const mapStateToProps = state => ({
+  projects: state.project.lists
+});
+
 const mapDispatchToProps = dispatch => ({
   fetchProject: id => dispatch(fetchProjectRequest(id)),
   onAddClick: () => dispatch(openModal(modalNames.ADD_PROJECT))
 });
 
 const enhance = compose(
-  connect(null, mapDispatchToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
       const { fetchProject } = this.props;

@@ -31,7 +31,7 @@ const AddProjectForm = ({ handleSubmit, submitting }) => (
       <Field name="from" as={Form.Input} component={Input} label="From" placeholder="From" disabled={submitting} />
       <Field name="to" as={Form.Input} component={Input} label="To" placeholder="To" disabled={submitting} />
     </Form.Group>
-    <Field name="descriotion" as={Form.TextArea} component={Input} label="Description" placeholder="Description" disabled={submitting} autoHeight />
+    <Field name="description" as={Form.TextArea} component={Input} label="Description" placeholder="Description" disabled={submitting} autoHeight />
   </Form>
 );
 
@@ -42,6 +42,11 @@ AddProjectForm.propTypes = {
 
 const enhance = compose(reduxForm({
   form: 'addProject',
+  initialValues: {
+    from: null,
+    to: null,
+    description: null
+  },
   validate
 }));
 
