@@ -5,9 +5,9 @@ import { Grid, Segment, Icon, List } from 'semantic-ui-react';
 const ProfileBox = ({ lists, onEditClick }) => (
   <Segment raised padded size="large">
     <Grid>
-      <Grid.Column computer={8} mobile={14}>
+      <Grid.Column computer={15} mobile={14}>
         <Grid columns={2}>
-          <Grid.Column>
+          <Grid.Column computer={4} >
             <List>
               {lists.map(l => (
                 <List.Item key={l.key}>
@@ -21,7 +21,7 @@ const ProfileBox = ({ lists, onEditClick }) => (
           <Grid.Column>
             <List>
               {lists.map(l => (
-                <List.Item key={l.key}>{l.value ? l.value : '-'}</List.Item>
+                <List.Item key={l.key}>{l.value || '-'}</List.Item>
               ))}
             </List>
           </Grid.Column>

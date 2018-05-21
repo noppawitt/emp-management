@@ -2,7 +2,8 @@ import * as actionTypes from '../constants/actionTypes';
 
 const initialState = {
   isFetching: true,
-  lists: []
+  lists: [],
+  filter: ''
 };
 
 const employee = (state = initialState, action) => {
@@ -21,6 +22,11 @@ const employee = (state = initialState, action) => {
         ...state,
         isFetching: false,
         message: action.payload.message
+      };
+    case actionTypes.FILTER_EMPLOYEE:
+      return {
+        ...state,
+        filter: action.payload.text
       };
     default:
       return state;

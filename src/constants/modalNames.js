@@ -1,12 +1,13 @@
-// Edit profile modal
+// Profile
 export const EDIT_GENERAL_PROFILE = 'EDIT_GENERAL_PROFILE';
 export const EDIT_WORK_PROFILE = 'EDIT_WORK_PROFILE';
 export const EDIT_EDUCATION_PROFILE = 'EDIT_EDUCATION_PROFILE';
 export const EDIT_CERTIFICATION_PROFILE = 'EDIT_CERTIFICATION_PROFILE';
 export const EDIT_ASSET_PROFILE = 'EDIT_ASSET_PROFILE';
-
-// Add profile
 export const ADD_EDUCATION_PROFILE = 'ADD_EDUCATION_PROFILE';
 
-// Create employee modal
+// Employee
 export const CREATE_EMPLOYEE = 'CREATE_EMPLOYEE';
+
+// Project
+export const ADD_PROJECT = 'ADD_PROJECT';
