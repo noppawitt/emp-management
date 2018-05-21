@@ -15,19 +15,19 @@ const validate = (values) => {
 
 const AddProjectForm = ({ handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
-    <Form.Group>
+    <Form.Group widths="equal">
       <Field name="id" as={Form.Input} component={Input} label="Project No." placeholder="Project No." disabled={submitting} />
       <Field name="name" as={Form.Input} component={Input} label="Name" placeholder="Name" disabled={submitting} />
     </Form.Group>
-    <Form.Group>
+    <Form.Group widths="equal">
       <Field name="quitationId" as={Form.Input} component={Input} label="Quotation No." placeholder="Quotation No." disabled={submitting} />
       <Field name="customer" as={Form.Input} component={Input} label="Customer" placeholder="Customer" disabled={submitting} />
     </Form.Group>
-    <Form.Group>
+    <Form.Group widths="equal">
       <Field name="purchasedOrder" as={Form.Input} component={Input} label="Purchesed order No." placeholder="Purchesed order No." disabled={submitting} />
       <Field name="amount" as={Form.Input} component={Input} label="amount" placeholder="amount" disabled={submitting} />
     </Form.Group>
-    <Form.Group>
+    <Form.Group widths="equal">
       <Field name="from" as={Form.Input} component={Input} label="From" placeholder="From" disabled={submitting} />
       <Field name="to" as={Form.Input} component={Input} label="To" placeholder="To" disabled={submitting} />
     </Form.Group>

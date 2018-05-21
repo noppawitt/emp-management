@@ -1,10 +1,14 @@
 import React from 'react';
-import { Segment, Input, Table, Menu, Label, Icon } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import { Segment, Input, Table, Menu, Label, Button, Icon } from 'semantic-ui-react';
 
-const Project = () => (
-  <Segment.Group>
+const Project = ({ onAddClick }) => (
+  <Segment.Group raised>
     <Segment>
       <Input icon="search" placeholder="Search projects..." />
+      <Button icon floated="right" onClick={onAddClick}>
+        <Icon name="add" />
+      </Button>
     </Segment>
     <Segment>
       <Table celled>
@@ -58,5 +62,9 @@ const Project = () => (
     </Segment>
   </Segment.Group>
 );
+
+Project.propTypes = {
+  onAddClick: PropTypes.func.isRequired
+};
 
 export default Project;
