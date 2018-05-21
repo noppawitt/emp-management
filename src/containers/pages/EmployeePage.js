@@ -3,28 +3,33 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import Employee from '../../components/Employee';
-import { fetchEmployeeRequest } from '../../actions/employee';
+import { fetchEmployeeRequest, filterEmployee } from '../../actions/employee';
 import { openModal } from '../../actions/modal';
 import * as modalNames from '../../constants/modalNames';
 import Loader from '../../components/Loader';
+import { getFilteredEmployee } from '../../selectors/employee';
 
-const EmployeePage = ({ employee }) => (
+const EmployeePage = ({ isFetching, employees, onChange }) => (
   <div>
-    {employee.isFetching ? <Loader /> : <Employee />}
+    {isFetching ? <Loader /> : <Employee employees={employees} onChange={onChange} />}
   </div>
 );
 
 EmployeePage.propTypes = {
-  employee: PropTypes.object.isRequired
+  isFetching: PropTypes.bool.isRequired,
+  employees: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  employee: state.employee
+  isFetching: state.employee.isFetching,
+  employees: getFilteredEmployee(state.employee.lists, state.employee.filter)
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchEmployee: () => dispatch(fetchEmployeeRequest()),
-  onClick: () => dispatch(openModal(modalNames.CREATE_EMPLOYEE))
+  onClick: () => dispatch(openModal(modalNames.CREATE_EMPLOYEE)),
+  onChange: e => dispatch(filterEmployee(e.target.value))
 });
 
 const enhance = compose(

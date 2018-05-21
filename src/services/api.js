@@ -98,6 +98,14 @@ api.fetchEducationProfile = id => (
   callApi(`/api/educates?id=${id}`)
 );
 
+api.fetchCertificateProfile = id => (
+  callApi(`/api/certificates?id=${id}`)
+);
+
+api.fetchAssetProfile = id => (
+  callApi(`/api/assets?id=${id}`)
+);
+
 api.updateGeneralProfile = body => (
   callApi('/api/employee-info', {
     method: 'PUT',
@@ -112,16 +120,44 @@ api.updateWorkProfile = body => (
   })
 );
 
-api.createEducationProfile = body => (
+api.updateEducationProfile = body => (
   callApi('/api/educates', {
     method: 'PUT',
     body
   })
 );
 
-api.updateEducationProfile = body => (
-  callApi('/api/educates', {
+api.updateCertificateProfile = body => (
+  callApi('/api/certificates', {
     method: 'PUT',
+    body
+  })
+);
+
+api.updateAssetProfile = body => (
+  callApi('/api/assets', {
+    method: 'PUT',
+    body
+  })
+);
+
+api.createEducationProfile = body => (
+  callApi('/api/educates', {
+    method: 'POST',
+    body
+  })
+);
+
+api.createCertificateProfile = body => (
+  callApi('/api/certificates', {
+    method: 'POST',
+    body
+  })
+);
+
+api.createAssetProfile = body => (
+  callApi('/api/assets', {
+    method: 'POST',
     body
   })
 );

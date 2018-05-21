@@ -38,3 +38,10 @@ export const fetchEmployeeFailure = message => ({
     message
   }
 });
+
+export const filterEmployee = text => ({
+  type: actionTypes.FILTER_EMPLOYEE,
+  payload: {
+    text
+  }
+});

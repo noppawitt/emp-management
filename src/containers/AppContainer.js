@@ -13,6 +13,7 @@ const AppContainer = ({ auth, children }) => (
   <div>
     {auth.isAuthenticated && <NavBarContainer username={auth.username} />}
     <App>
+      <br />
       {children}
     </App>
   </div>

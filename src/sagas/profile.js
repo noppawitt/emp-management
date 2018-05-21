@@ -10,6 +10,8 @@ export function* fetchProfileTask(action) {
     profile.general = yield call(api.fetchGeneralProfile, action.payload.id);
     profile.work = yield call(api.fetchWorkProfile, action.payload.id);
     profile.educations = yield call(api.fetchEducationProfile, action.payload.id);
+    profile.certificates = yield call(api.fetchCertificateProfile, action.payload.id);
+    profile.assets = yield call(api.fetchAssetProfile, action.payload.id);
     yield put(fetchProfileSuccess(profile));
   }
   catch (error) {
@@ -36,9 +38,29 @@ export function* updateProfileTask(action) {
           educate: action.payload.form
         });
         break;
+      case 'editCertificateProfile':
+        profile.certificates = yield call(api.updateCertificateProfile, {
+          certificate: action.payload.form
+        });
+        break;
+      case 'editAssetProfile':
+        profile.assets = yield call(api.updateAssetProfile, {
+          asset: action.payload.form
+        });
+        break;
       case 'addEducationProfile':
-        profile.educations = yield call(api.updateEducationProfile, {
+        profile.educations = yield call(api.createEducationProfile, {
           educate: action.payload.form
+        });
+        break;
+      case 'addCertificateProfile':
+        profile.certificates = yield call(api.createCertificateProfile, {
+          certificate: action.payload.form
+        });
+        break;
+      case 'addAssetProfile':
+        profile.assets = yield call(api.createAssetProfile, {
+          asset: action.payload.form
         });
         break;
       default:
