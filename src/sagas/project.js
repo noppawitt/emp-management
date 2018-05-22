@@ -21,9 +21,10 @@ export function* fetchProjectTask(action) {
 export function* createProjectTask(action) {
   try {
     console.log(action.form);
-    const projects = yield call(api.createProject, {
+    yield call(api.createProject, {
       project: action.payload.form
     });
+    const projects = yield call(api.fetchProject, action.payload.id);
     yield put(createProjectSuccess(projects));
   }
   catch (error) {

@@ -20,8 +20,8 @@ const paymentTypeOptions = [
 ];
 
 const workingDayOptions = [
-  { key: '22 days per month', value: '22 days per month', text: '22 days per month' },
-  { key: '20 days per month', value: '20 days per month', text: '20 days per month' },
+  { key: 22, value: 22, text: '22 days per month' },
+  { key: 20, value: 20, text: '20 days per month' },
 ];
 
 const AddProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType }) => (
@@ -49,7 +49,7 @@ const AddProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType }
       label="Payment type"
       placeholder="Payment type"
       options={paymentTypeOptions}
-      onChange={(event, newValue) => setWorkingDay(newValue === 'Man-month' ? '22 days per month' : null)}
+      onChange={(event, newValue) => setWorkingDay(newValue === 'Man-month' ? 22 : null)}
       disabled={submitting}
     />
     {paymentType === 'Man-month' && <Field name="workingDay" as={Form.Select} component={Input} label="Working day" placeholder="Working day" options={workingDayOptions} disabled={submitting} />}
