@@ -21,10 +21,12 @@ export const fetchProjectFailure = message => ({
   }
 });
 
-export const createProjectRequest = project => ({
+export const createProjectRequest = (form, resolve, reject) => ({
   type: actionTypes.PROJECT_CREATE_REQUEST,
   payload: {
-    project
+    form,
+    resolve,
+    reject
   }
 });
 

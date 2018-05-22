@@ -7,6 +7,7 @@ import EditWorkProfileModal from './modals/EditWorkProfileModal';
 import EditEducationProfileModal from './modals/EditEducationProfileModal';
 import CreateEmployeeModal from './modals/CreateEmployeeModal';
 import AddEducationProfileModal from './modals/AddEducationProfileModal';
+import AddProjectModal from './modals/AddProjectModal';
 
 const ModalContainer = ({ name, props }) => {
   switch (name) {
@@ -20,6 +21,8 @@ const ModalContainer = ({ name, props }) => {
       return <CreateEmployeeModal {...props} />;
     case modalNames.ADD_EDUCATION_PROFILE:
       return <AddEducationProfileModal {...props} />;
+    case modalNames.ADD_PROJECT:
+      return <AddProjectModal {...props} />;
     default:
       return <div />;
   }

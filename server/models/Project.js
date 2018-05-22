@@ -5,44 +5,58 @@ const Project = {};
 
 Project.create = (project, id) => (
   db.one(
-    'INSERT INTO projects (name, description, customer, quatation_id, purchased_order, amount, from, to, created_user, updated_user) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING 1',
+    'INSERT INTO projects (id, name, description, customer, quotation_id, purchased_order, amount, start_date, end_date, created_user, updated_user, payment_type, working_day) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING 1',
     [
+      project.id,
       project.name,
       project.description,
       project.customer,
-      project.quatationId,
+      project.quotationId,
       project.purchasedOrder,
       project.amount,
-      project.from,
-      project.to,
+      project.startDate,
+      project.endDate,
       id,
-      id
+      id,
+      project.paymentType,
+      project.workingDay
     ]
   )
 );
 
 Project.update = (project, id) => (
   db.one(
-    'UPDATE projects SET name = $1, description = $2, customer = $3, quatation_id = $4, purchased_order = $5, amount = $6, from = $7, to = $8, updated_user = $9, updated_date = $10, status = $11 WHERE id = $12',
+    'UPDATE projects SET id = $1, name = $2, description = $3, customer = $4, quotation_id = $5, purchased_order = $6, amount = $7, start_date = $8, end_date = $9, updated_user = $10, updated_date = $11, status = $12, payment_type = $13, working_day = $14 WHERE id = $15',
     [
+      project.id,
       project.name,
       project.description,
       project.customer,
-      project.quatationId,
+      project.quotationId,
       project.purchasedOrder,
       project.amount,
-      project.from,
-      project.to,
+      project.startDate,
+      project.endDate,
       id,
       moment().format('YYYY-MM-DD HH:mm:ss'),
       project.status,
+      project.paymentType,
+      project.workingDay,
       project.id
     ]
   )
 );
 
 Project.findAll = () => (
-  db.manyOrNone('SELECT projects.id, projects.name, projects.customer, projects.quatation_id, projects.from, projects.to, projects.status  FROM projects WHERE status = $1', ['In Progress'])
+  db.manyOrNone('SELECT projects.id, projects.name, projects.customer, projects.quotation_id, projects.start_date, projects.end_date, projects.status  FROM projects WHERE status = $1', ['In Progress'])
+);
+
+Project.findById = id => (
+  db.one('SELECT * FROM projects WHERE id = $1', [id])
+);
+
+Project.findMemberProject = id => (
+  db.manyOrNone('SELECT has_projects.user_id, employee_info.first_name, employee_info.last_name, employee_work.position, has_projects.role FROM has_projects, employee_info, employee_work WHERE has_projects.user_id = employee_info.user_id AND has_projects.user_id = employee_work.user_id AND has_projects.id = $1', [id])
 );
 
 module.exports = Project;

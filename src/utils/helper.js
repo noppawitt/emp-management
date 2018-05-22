@@ -26,6 +26,6 @@ export const getMajorsByFacultyId = (majors, facultyId = '') => {
 
 export const handleReduxFormSubmit = (dispatch, action, values, ...args) => (
   new Promise((resolve, reject) => (
-    dispatch(action(...args, values, resolve, reject))
+    dispatch(action(values, resolve, reject, ...args))
   ))
 );

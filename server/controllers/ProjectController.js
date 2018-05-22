@@ -25,3 +25,16 @@ exports.findAll = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.findById = (req, res, next) => {
+  Project.findById(req.query.id)
+    .then((project) => {
+      Project.findMemberProject(req.query.id)
+        .then((members) => {
+          project.members = members;
+          res.json(project);
+        })
+        .catch(next);
+    })
+    .catch(next);
+};
