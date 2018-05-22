@@ -26,12 +26,12 @@ const LoginPage = ({ dispatch }) => {
     backgroundImage: `url(${image})`,
     backgroundSize: 'cover',
     // maxWidth: '1229px',
-    minHeight: '750px'
+    minHeight: '747px'
   };
 
   return (
     <div style={style}>
-      <Grid columns={3} >
+      <Grid columns={3} textAlign="center">
         <Grid.Row >
           <Grid.Column floated="right" style={{ paddingTop: '20%', paddingRight: '10%' }}>
             <Form onSubmit={handleSubmit}>
@@ -45,15 +45,12 @@ const LoginPage = ({ dispatch }) => {
                   <input style={{ borderRadius: '15px' }} id="password" type="password" placeholder="Password" ref={(node) => { password = node; }} />
                 </label>
               </Form.Field>
-              <Form.Field>
-                <Checkbox label="Remember me" />
-              </Form.Field>
-              <Button type="submit">Submit</Button>
+              <Button primary type="submit">Submit</Button>
             </Form>
           </Grid.Column>
         </Grid.Row>
         <Grid.Row >
-          <Grid.Column floated="left" style={{ paddingLeft: '3%' }}>
+          <Grid.Column floated="left" style={{ paddingTop: '2%', paddingLeft: '3%' }}>
             <Feed size="large">
               <Feed.Event>
                 <Feed.Label>
