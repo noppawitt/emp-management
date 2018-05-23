@@ -43,3 +43,18 @@ export const createProjectFailure = message => ({
     message
   }
 });
+
+export const filterProject = text => ({
+  type: actionTypes.FILTER_PROJECT,
+  payload: {
+    searchText: text
+  }
+});
+
+export const sortProject = (sortKey, direction) => ({
+  type: actionTypes.SORT_PROJECT,
+  payload: {
+    sortKey,
+    direction
+  }
+});

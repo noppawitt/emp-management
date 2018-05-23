@@ -6,6 +6,7 @@ import {
   createProjectSuccess,
   createProjectFailure,
 } from '../actions/project';
+import { closeModal } from '../actions/modal';
 import api from '../services/api';
 
 export function* fetchProjectTask(action) {
@@ -26,9 +27,12 @@ export function* createProjectTask(action) {
     });
     const projects = yield call(api.fetchProject, action.payload.id);
     yield put(createProjectSuccess(projects));
+    yield put(closeModal());
+    action.resolve();
   }
   catch (error) {
     yield put(createProjectFailure(error));
+    action.reject();
   }
 }
 

@@ -1,6 +1,10 @@
 import * as actionTypes from '../constants/actionTypes';
 
-const profile = (state = { isFetching: true }, action) => {
+const initialState = {
+  isFetching: false
+};
+
+const profile = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.PROFILE_FETCH_REQUEST:
       return {
