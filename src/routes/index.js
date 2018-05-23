@@ -12,18 +12,18 @@ import ProjectPage from '../containers/pages/ProjectPage';
 
 const Routes = () => (
   <Router history={history}>
-    <AppContainer>
-      <Switch>
+    <Switch>
+      <Route path="/login" component={LoginPage} />
+      <AppContainer>
         <Route exact path="/" render={() => <Redirect to="/timesheet" />} />
-        <Route path="/login" component={LoginPage} />
         <Route path="/signup" component={SignupPage} />
         <Route path="/timesheet" component={Timesheet} />
         <Route path="/leave-request" component={LeaveRequest} />
         <Route path="/project" component={ProjectPage} />
         <Route path="/profile/:id?" component={ProfilePage} />
         <Route path="/employee" component={EmployeePage} />
-      </Switch>
-    </AppContainer>
+      </AppContainer>
+    </Switch>
   </Router>
 );
 
