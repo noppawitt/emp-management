@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Form, Checkbox, Button, Feed, Image } from 'semantic-ui-react';
+import { Grid, Form, Button, Feed, Image } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { loginRequest } from '../../actions/auth';
 import image from '../../images/Timesheet_Home.jpg';
@@ -25,13 +25,14 @@ const LoginPage = ({ dispatch }) => {
   const style = {
     backgroundImage: `url(${image})`,
     backgroundSize: 'cover',
-    // maxWidth: '1229px',
-    minHeight: '747px'
+    position: 'fixed',
+    minHeight: '100%',
+    width: '100%'
   };
 
   return (
     <div style={style}>
-      <Grid columns={3} textAlign="center">
+      <Grid padded columns={3} textAlign="center">
         <Grid.Row >
           <Grid.Column floated="right" style={{ paddingTop: '20%', paddingRight: '10%' }}>
             <Form onSubmit={handleSubmit}>

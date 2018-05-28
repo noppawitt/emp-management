@@ -1,11 +1,9 @@
-import { getToken } from './auth';
-
 const callApi = (endpoint, request) => {
   if (request && request.body) {
     request.body = JSON.stringify(request.body);
   }
 
-  const token = getToken();
+  const token = localStorage.getItem('token');
 
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -184,6 +182,19 @@ api.fetchProject = () => (
 api.createProject = body => (
   callApi('/api/projects', {
     method: 'POST',
+    body
+  })
+);
+
+// Leave
+
+api.fetchLeave = () => (
+  callApi('/api/leave-request')
+);
+
+api.updateLeave = body => (
+  callApi('/api/leave-request', {
+    method: 'PUT',
     body
   })
 );
