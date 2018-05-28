@@ -188,6 +188,13 @@ api.createProject = body => (
 
 // Leave
 
+api.createLeave = body => (
+  callApi('/api/leave-request', {
+    method: 'POST',
+    body
+  })
+);
+
 api.fetchLeave = () => (
   callApi('/api/leave-request')
 );

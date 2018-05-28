@@ -8,6 +8,7 @@ import EditEducationProfileModal from './modals/EditEducationProfileModal';
 import CreateEmployeeModal from './modals/CreateEmployeeModal';
 import AddEducationProfileModal from './modals/AddEducationProfileModal';
 import AddProjectModal from './modals/AddProjectModal';
+import CreateLeaveRequestModal from './modals/CreateLeaveRequestModal';
 
 const ModalContainer = ({ name, props }) => {
   switch (name) {
@@ -23,6 +24,8 @@ const ModalContainer = ({ name, props }) => {
       return <AddEducationProfileModal {...props} />;
     case modalNames.ADD_PROJECT:
       return <AddProjectModal {...props} />;
+    case modalNames.CREATE_LEAVE_REQUEST:
+      return <CreateLeaveRequestModal {...props} />;
     default:
       return <div />;
   }
