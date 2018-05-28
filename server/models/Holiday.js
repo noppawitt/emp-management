@@ -32,4 +32,8 @@ Holiday.findAll = () => (
   db.manyOrNone('SELECT * FROM holidays')
 );
 
+Holiday.findByYear = year => (
+  db.manyOrNone('SELECT * FROM holidays WHERE EXTRACT(YEAR FROM date) = $1', [year])
+);
+
 module.exports = Holiday;

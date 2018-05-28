@@ -68,4 +68,8 @@ EmployeeInfo.findById = id => (
   db.oneOrNone('SELECT * FROM employee_info WHERE user_id = $1', [id])
 );
 
+EmployeeInfo.updateProfileImg = (path, id) => (
+  db.none('UPDATE employee_info SET picture = $1 WHERE user_id = $2', [path, id])
+);
+
 module.exports = EmployeeInfo;
