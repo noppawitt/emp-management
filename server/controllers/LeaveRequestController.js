@@ -14,6 +14,7 @@ exports.create = (req, res, next) => {
         }
       }
       newLeaveRequest.leaveDate = m;
+      newLeaveRequest.totalhours = newLeaveRequest.endTime.diff(newLeaveRequest.startTime, 'hours');
       LeaveRequest.create(newLeaveRequest, req.user.id)
         .then((createdLeaveRequest) => {
           res.json(createdLeaveRequest);
