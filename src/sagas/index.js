@@ -4,6 +4,7 @@ import profileSaga from './profile';
 import masterTableSaga from './masterTable';
 import employeeSaga from './employee';
 import projectSaga from './project';
+import leaveSaga from './leave';
 
 export default function* rootSaga() {
   yield all([
@@ -11,6 +12,7 @@ export default function* rootSaga() {
     profileSaga(),
     masterTableSaga(),
     employeeSaga(),
-    projectSaga()
+    projectSaga(),
+    leaveSaga()
   ]);
 }
