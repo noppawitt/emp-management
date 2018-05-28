@@ -12,8 +12,8 @@ const Navbar = ({ username, onLogout }) => (
         <Menu.Item as={NavLink} to="/timesheet" name="timesheet">
           Timesheet
         </Menu.Item>
-        <Menu.Item as={NavLink} to="/leave-request" name="leaveRequest">
-          Leave Request
+        <Menu.Item as={NavLink} to="/leave" name="leave">
+          Leave
         </Menu.Item>
         <Menu.Item as={NavLink} to="/project" name="project">
           Project

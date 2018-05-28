@@ -24,7 +24,7 @@ const mapDispatchToProps = dispatch => ({
 const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
-    componendDidMount() {
+    componentDidMount() {
       const { fetchLeave } = this.props;
       fetchLeave();
     }
