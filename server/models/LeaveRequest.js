@@ -35,4 +35,8 @@ LeaveRequest.update = (leaveRequest, id) => (
   )
 );
 
+LeaveRequest.findByUserId = userId => (
+  db.manyOrNone('SELECT * FROM leave_requests WHERE user_id = $1 AND status != $2', [userId, 'Cancel'])
+);
+
 module.exports = LeaveRequest;
