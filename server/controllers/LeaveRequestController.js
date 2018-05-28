@@ -31,3 +31,11 @@ exports.update = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.findByUserId = (req, res, next) => {
+  LeaveRequest.findByUserId(req.user.id)
+    .then((leaveRequests) => {
+      res.json(leaveRequests);
+    })
+    .catch(next);
+};
