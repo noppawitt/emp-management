@@ -7,4 +7,6 @@ router.put('/', LeaveRequestController.update);
 
 router.get('/', LeaveRequestController.findByUserId);
 
+router.get('/all-request', LeaveRequestController.findAll);
+
 module.exports = router;
