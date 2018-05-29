@@ -11,3 +11,6 @@ export const CREATE_EMPLOYEE = 'CREATE_EMPLOYEE';
 
 // Project
 export const ADD_PROJECT = 'ADD_PROJECT';
+
+// Leave
+export const CREATE_LEAVE_REQUEST = 'CREATE_LEAVE_REQUEST';

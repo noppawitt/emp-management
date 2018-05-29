@@ -5,7 +5,7 @@ import AppContainer from '../containers/AppContainer';
 import LoginPage from '../containers/pages/LoginPage';
 import SignupPage from '../containers/pages/SignupPage';
 import Timesheet from '../components/Timesheet';
-import LeaveRequest from '../components/LeaveRequest';
+import LeavePage from '../containers/pages/LeavePage';
 import ProfilePage from '../containers/pages/ProfilePage';
 import EmployeePage from '../containers/pages/EmployeePage';
 import ProjectPage from '../containers/pages/ProjectPage';
@@ -18,7 +18,7 @@ const Routes = () => (
         <Route exact path="/" render={() => <Redirect to="/timesheet" />} />
         <Route path="/signup" component={SignupPage} />
         <Route path="/timesheet" component={Timesheet} />
-        <Route path="/leave-request" component={LeaveRequest} />
+        <Route path="/leave" component={LeavePage} />
         <Route path="/project" component={ProjectPage} />
         <Route path="/profile/:id?" component={ProfilePage} />
         <Route path="/employee" component={EmployeePage} />

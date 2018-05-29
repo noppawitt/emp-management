@@ -21,6 +21,7 @@ const hasProject = require('./hasProject');
 const holiday = require('./holiday');
 const project = require('./project');
 const timesheet = require('./timesheet');
+const leaveRequest = require('./leaveRequest');
 
 router.use('/employee-info', employeeInfo);
 
@@ -65,5 +66,7 @@ router.use('/holidays', holiday);
 router.use('/projects', project);
 
 router.use('/timesheets', timesheet);
+
+router.use('/leave-request', leaveRequest);
 
 module.exports = router;

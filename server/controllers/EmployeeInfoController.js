@@ -25,3 +25,10 @@ exports.update = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.updateProfileImg = (req, res, next) => {
+  EmployeeInfo.updateProfileImg(`${req.file.destination}/${req.file.filename}`, req.user.id)
+    .then(() => {
+      res.json('upload complete!!!');
+    });
+};

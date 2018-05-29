@@ -7,6 +7,7 @@ import profile from './profile';
 import masterTable from './masterTable';
 import employee from './employee';
 import project from './project';
+import leave from './leave';
 
 export default combineReducers({
   form: formReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
   profile,
   masterTable,
   employee,
-  project
+  project,
+  leave
 });
