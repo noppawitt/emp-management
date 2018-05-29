@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Segment, Button, Icon, Table, Menu, Select } from 'semantic-ui-react';
+import { Segment, Button, Icon, Table, Menu, Grid, Select } from 'semantic-ui-react';
 
 const months = [
   { key: 0, value: 0, text: 'All' },
@@ -26,11 +26,19 @@ for (let y = 2018; y <= 2118; y += 1) {
 const Leave = ({ leaves, onAddClick }) => (
   <Segment.Group raised>
     <Segment>
-      <Select label="Year" placeholder="Year" options={years} />
-      <Select label="Month" placeholder="Month" options={months} />
-      <Button icon floated="right" onClick={onAddClick}>
-        <Icon name="add" />
-      </Button>
+      <Grid>
+        <Grid.Column width={3}>
+          <Select placeholder="Year" options={years} />
+        </Grid.Column>
+        <Grid.Column width={3}>
+          <Select placeholder="Month" options={months} />
+        </Grid.Column>
+        <Grid.Column width={10}>
+          <Button icon floated="right" onClick={onAddClick}>
+            <Icon name="add" />
+          </Button>
+        </Grid.Column>
+      </Grid>
     </Segment>
     <Segment>
       <Table fixed striped selectable celled>
@@ -48,7 +56,7 @@ const Leave = ({ leaves, onAddClick }) => (
 
         <Table.Body>
           {leaves.map(leave => (
-            <Table.Row key={leave.id} style={{ cursor: 'pointer' }}>
+            <Table.Row key={leave.id}>
               <Table.Cell>{leave.leaveType}</Table.Cell>
               <Table.Cell>{leave.leaveFrom}</Table.Cell>
               <Table.Cell>{leave.leaveTo}</Table.Cell>

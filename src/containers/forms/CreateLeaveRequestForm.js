@@ -35,8 +35,10 @@ const remark = `1. พนักงานจะใช้สิทธิ์ลา�
 const CreateLeaveRequestForm = ({ handleSubmit, submitting, duration, resetStartTime, resetEndTime }) => (
   <Form onSubmit={handleSubmit}>
     <Field name="leaveType" as={Form.Select} component={Input} label="Leave type" placeholder="Leave type" options={leaveTypes} disabled={submitting} />
-    <Field name="leaveFrom" as={Form.Input} component={Input} type="date" label="From" placeholder="From" disabled={submitting} />
-    <Field name="leaveTo" as={Form.Input} component={Input} type="date" label="To" placeholder="To" disabled={submitting} />
+    <Form.Group widths="equal">
+      <Field name="leaveFrom" as={Form.Input} component={Input} type="date" label="From" placeholder="From" disabled={submitting} />
+      <Field name="leaveTo" as={Form.Input} component={Input} type="date" label="To" placeholder="To" disabled={submitting} />
+    </Form.Group>
     <Field
       name="duration"
       as={Form.Select}
@@ -71,8 +73,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  resetStartTime: () => dispatch(change('createLeaveRequest', 'startTime', '09:00')),
-  resetEndTime: () => dispatch(change('createLeaveRequest', 'endTime', '18:00')),
+  resetStartTime: () => dispatch(change('createLeaveRequest', 'startTime', '09:00:00')),
+  resetEndTime: () => dispatch(change('createLeaveRequest', 'endTime', '18:00:00')),
 });
 
 const enhance = compose(
@@ -82,8 +84,8 @@ const enhance = compose(
     validate,
     initialValues: {
       duration: 'Full day',
-      startTime: '09:00',
-      endTime: '18:00'
+      startTime: '09:00:00',
+      endTime: '18:00:00'
     }
   })
 );
