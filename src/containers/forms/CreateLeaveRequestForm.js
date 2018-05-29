@@ -26,6 +26,12 @@ const durations = [
   { key: 'Specific time', value: 'Specific time', text: 'Specific time' }
 ];
 
+const remark = `1. พนักงานจะใช้สิทธิ์ลาได้ เมื่อผู้บังคับบัญชาอนุมัติก่อนเท่านั้น โดยต้องปฏิบัติตามระเบียบข้อบังคับของบริษัทอย่างเคร่งครัด
+
+2. การลากิจทุกประเภทและลาพักร้อนต้องลาล่วงหน้าอย่างน้อย 3 วัน (ยกเว้นกรณีฉุกเฉิน คือ งานศพบิดา มารดา คู่สมรส บุตร ที่สามารถแจ้งขออนุมัติ ผู้บังคับบัญชาก่อนแล้วต้องเขียนใบลาทันทีที่กลับมาเริ่มงาน)
+
+3. โปรดระบุเหตุผลที่ขอลาให้ชัดเจนว่ามีธุรกิจจำเป็นเรื่องอะไร จำเป็นมากน้อยเพียงใด`;
+
 const CreateLeaveRequestForm = ({ handleSubmit, submitting, duration, resetStartTime, resetEndTime }) => (
   <Form onSubmit={handleSubmit}>
     <Field name="leaveType" as={Form.Select} component={Input} label="Leave type" placeholder="Leave type" options={leaveTypes} disabled={submitting} />
@@ -41,9 +47,12 @@ const CreateLeaveRequestForm = ({ handleSubmit, submitting, duration, resetStart
       onChange={() => { resetStartTime(); resetEndTime(); }}
       disabled={submitting}
     />
-    {duration === 'Specific time' && <Field name="startTime" as={Form.Input} component={Input} type="time" label="Start time" placeholder="Start time" disabled={submitting} />}
-    {duration === 'Specific time' && <Field name="endTime" as={Form.Input} component={Input} type="time" label="End time" placeholder="End time" disabled={submitting} />}
-    <Field name="purpose" as={Form.TextArea} component={Input} autoHeight label="Purpose" placeholder="Purpose" disabled={submitting} />
+    {duration === 'Specific time' &&
+    <Form.Group widths="equal">
+      <Field name="startTime" as={Form.Input} component={Input} type="time" label="Start time" placeholder="Start time" disabled={submitting} />
+      <Field name="endTime" as={Form.Input} component={Input} type="time" label="End time" placeholder="End time" disabled={submitting} />
+    </Form.Group>}
+    <Form.TextArea autoHeight readOnly label="Remark" value={remark} />
   </Form>
 );
 
