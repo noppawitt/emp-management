@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Form, Checkbox, Button, Feed, Image } from 'semantic-ui-react';
+import { Grid, Form, Button, Feed, Image } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { loginRequest } from '../../actions/auth';
 import image from '../../images/Timesheet_Home.jpg';
@@ -25,32 +25,44 @@ const LoginPage = ({ dispatch }) => {
   const style = {
     backgroundImage: `url(${image})`,
     backgroundSize: 'cover',
-    // maxWidth: '1229px',
-    minHeight: '747px'
+    // position: 'absolute',
+    // top: '0',
+    // left: '0',
+    // right: '0',
+    // bottom: '0',
+    // margin: 'auto',
+    // minWidth: '50%',
+    minHeight: '100%',
+    position: 'fixed',
+    width: '100%',
+    height: 'auto'
   };
 
   return (
     <div style={style}>
-      <Grid columns={3} textAlign="center">
+      <Grid columns={3} textAlign="center" padded>
         <Grid.Row >
           <Grid.Column floated="right" style={{ paddingTop: '20%', paddingRight: '10%' }}>
             <Form onSubmit={handleSubmit}>
               <Form.Field >
-                <label htmlFor="username">Username
+                <br />
+                <label htmlFor="username">
                   <input style={{ borderRadius: '15px' }} id="username" placeholder="Username" ref={(node) => { username = node; }} />
                 </label>
               </Form.Field>
               <Form.Field>
-                <label htmlFor="password">Password
+                <br />
+                <label htmlFor="password">
                   <input style={{ borderRadius: '15px' }} id="password" type="password" placeholder="Password" ref={(node) => { password = node; }} />
                 </label>
               </Form.Field>
+              <br />
               <Button primary type="submit">Submit</Button>
             </Form>
           </Grid.Column>
         </Grid.Row>
         <Grid.Row >
-          <Grid.Column floated="left" style={{ paddingTop: '2%', paddingLeft: '3%' }}>
+          <Grid.Column floated="left" >
             <Feed size="large">
               <Feed.Event>
                 <Feed.Label>
