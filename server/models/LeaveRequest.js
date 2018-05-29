@@ -39,4 +39,8 @@ LeaveRequest.findByUserId = userId => (
   db.manyOrNone('SELECT DISTINCT (leave_from), (leave_to), user_id, purpose, leave_type, code, status FROM leave_requests WHERE user_id = $1 AND status != $2', [userId, 'Cancel'])
 );
 
+LeaveRequest.findAll = () => (
+  db.manyOrNone('SELECT DISTINCT (leave_from), (leave_to), user_id, purpose, leave_type, code, status FROM leave_requests WHERE status = $1', ['Pending'])
+);
+
 module.exports = LeaveRequest;

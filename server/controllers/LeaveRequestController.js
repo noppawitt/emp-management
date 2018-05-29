@@ -41,3 +41,11 @@ exports.findByUserId = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.findAll = (req, res, next) => {
+  LeaveRequest.findAll()
+    .then((leaveRequests) => {
+      res.json(leaveRequests);
+    })
+    .catch(next);
+};
