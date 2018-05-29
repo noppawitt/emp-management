@@ -54,6 +54,7 @@ const CreateLeaveRequestForm = ({ handleSubmit, submitting, duration, resetStart
       <Field name="startTime" as={Form.Input} component={Input} type="time" label="Start time" placeholder="Start time" disabled={submitting} />
       <Field name="endTime" as={Form.Input} component={Input} type="time" label="End time" placeholder="End time" disabled={submitting} />
     </Form.Group>}
+    <Field name="purpose" as={Form.TextArea} component={Input} label="Purpose" placeholder="Purpose" disabled={submitting} />
     <Form.TextArea autoHeight readOnly label="Remark" value={remark} />
   </Form>
 );
