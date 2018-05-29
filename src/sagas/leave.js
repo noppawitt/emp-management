@@ -10,9 +10,10 @@ import api from '../services/api';
 
 export function* createLeaveTask(action) {
   try {
-    const leaves = yield call(api.createLeave, {
+    yield call(api.createLeave, {
       leaveRequest: action.payload.form
     });
+    const leaves = yield call(api.fetchLeave);
     yield put(createLeaveSuccess(leaves));
     action.resolve();
   }
