@@ -160,6 +160,27 @@ api.createAssetProfile = body => (
   })
 );
 
+api.deleteEducationProfile = body => (
+  callApi('/api/educates', {
+    method: 'DELETE',
+    body
+  })
+);
+
+api.deleteCertificateProfile = body => (
+  callApi('/api/certificates', {
+    method: 'DELETE',
+    body
+  })
+);
+
+api.deleteAssetProfile = body => (
+  callApi('/api/assets', {
+    method: 'DELETE',
+    body
+  })
+);
+
 // Employee
 
 api.createEmployee = body => (

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal as SUIModal, Button } from 'semantic-ui-react';
 
-const Modal = ({ header, buttonName, onClose, onClick, submitting, children, confirm }) => (
+const Modal = ({ header, buttonName, onClose, onClick, submitting, children, confirm, deleted, onDelete }) => (
   <SUIModal
     dimmer="blurring"
     size="small"
@@ -17,15 +17,18 @@ const Modal = ({ header, buttonName, onClose, onClick, submitting, children, con
       {children}
     </SUIModal.Content>
     <SUIModal.Actions>
+      {deleted && <Button inverted color="red" floated="left" loading={submitting} submitting={submitting} onClick={onDelete}>Delete</Button>}
       <Button color="blue" loading={submitting} disabled={submitting} onClick={onClick}>{buttonName}</Button>
-      {confirm && <Button disabled={submitting} onClick={onClose}>No</Button>}
+      {confirm && <Button loading={submitting} disabled={submitting} onClick={onClose}>No</Button>}
     </SUIModal.Actions>
   </SUIModal>
 );
 
 Modal.defaultProps = {
   buttonName: 'Save',
-  confirm: false
+  confirm: false,
+  deleted: false,
+  onDelete: () => {}
 };
 
 Modal.propTypes = {
@@ -35,7 +38,9 @@ Modal.propTypes = {
   onClick: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
   children: PropTypes.element.isRequired,
-  confirm: PropTypes.bool
+  confirm: PropTypes.bool,
+  deleted: PropTypes.bool,
+  onDelete: PropTypes.func
 };
 
 export default Modal;

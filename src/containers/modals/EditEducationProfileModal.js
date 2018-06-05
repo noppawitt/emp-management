@@ -14,6 +14,7 @@ const EditEducationProfileModal = ({ id, onClose, onSubmit, submitting, onClick 
     onClose={onClose}
     onClick={onClick}
     submitting={submitting}
+    deleted
   >
     <EditEducationProfileForm id={id} onSubmit={values => onSubmit(values)} />
   </Modal>

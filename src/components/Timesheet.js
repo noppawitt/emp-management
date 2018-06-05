@@ -1,5 +1,4 @@
 import React from 'react';
-import withAuth from '../containers/HOCs/withAuth';
 
 class Timesheet extends React.Component {
   constructor(props) {
@@ -18,4 +17,4 @@ class Timesheet extends React.Component {
   }
 }
 
-export default withAuth(Timesheet);
+export default Timesheet;

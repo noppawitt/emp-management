@@ -1,6 +1,13 @@
 import { call, put, takeEvery, all } from 'redux-saga/effects';
 import * as actionTypes from '../constants/actionTypes';
-import { fetchProfileSuccess, updateProfileSuccess } from '../actions/profile';
+import {
+  fetchProfileSuccess,
+  fetchProfileFailure,
+  updateProfileSuccess,
+  updateProfileFailure,
+  deleteProfileSuccess,
+  deleteProfileFailure
+} from '../actions/profile';
 import { closeModal } from '../actions/modal';
 import api from '../services/api';
 
@@ -15,7 +22,7 @@ export function* fetchProfileTask(action) {
     yield put(fetchProfileSuccess(profile));
   }
   catch (error) {
-    console.log(error);
+    yield put(fetchProfileFailure(error));
   }
 }
 
@@ -71,8 +78,38 @@ export function* updateProfileTask(action) {
     action.payload.resolve();
   }
   catch (error) {
+    yield put(updateProfileFailure(error));
     action.payload.reject();
-    console.log(error);
+  }
+}
+
+export function* deleteProfileTask(action) {
+  try {
+    const profile = {};
+    switch (action.payload.profileType) {
+      case 'educationProfile':
+        yield call(api.deleteEducationProfile, {
+          id: action.payload.profileId
+        });
+        break;
+      case 'certificateProfile':
+        yield call(api.deleteCertificateProfile, {
+          id: action.payload.profileId
+        });
+        break;
+      case 'assetProfile':
+        yield call(api.deleteAssetProfile, {
+          id: action.payload.profileId
+        });
+        break;
+      default:
+        yield put(deleteProfileFailure('Something gone wrong'));
+    }
+    yield put(deleteProfileSuccess(profile));
+    yield put(closeModal());
+  }
+  catch (error) {
+    yield put(deleteProfileFailure(error));
   }
 }
 

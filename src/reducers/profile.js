@@ -40,6 +40,22 @@ const profile = (state = initialState, action) => {
         ...state,
         message: action.payload.message
       };
+    case actionTypes.PROFILE_DELETE_REQUEST:
+      return {
+        ...state,
+        profileType: action.payload.profileType,
+        profileId: action.payload.profileId
+      };
+    case actionTypes.PROFILE_DELETE_SUCCESS:
+      return {
+        ...state,
+        ...action.payload.profile
+      };
+    case actionTypes.PROFILE_DELETE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
     default:
       return state;
   }
