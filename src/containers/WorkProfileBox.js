@@ -31,8 +31,12 @@ const WorkProfileBox = ({ workProfile, onEditClick }) => {
   );
 };
 
+WorkProfileBox.defaultProps = {
+  workProfile: null
+};
+
 WorkProfileBox.propTypes = {
-  workProfile: PropTypes.object.isRequired,
+  workProfile: PropTypes.object,
   onEditClick: PropTypes.func.isRequired
 };
 

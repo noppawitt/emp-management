@@ -6,6 +6,7 @@ import {
   fetchLeaveSuccess,
   fetchLeaveFailure
 } from '../actions/leave';
+import { closeModal } from '../actions/modal';
 import api from '../services/api';
 
 export function* createLeaveTask(action) {
@@ -15,11 +16,12 @@ export function* createLeaveTask(action) {
     });
     const leaves = yield call(api.fetchLeave);
     yield put(createLeaveSuccess(leaves));
-    action.resolve();
+    yield put(closeModal());
+    action.payload.resolve();
   }
   catch (error) {
     yield put(createLeaveFailure(error));
-    action.reject();
+    action.payload.reject();
   }
 }
 

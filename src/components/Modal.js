@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal as SUIModal, Button } from 'semantic-ui-react';
 
-const Modal = ({ header, buttonName, onClose, onClick, submitting, children }) => (
+const Modal = ({ header, buttonName, onClose, onClick, submitting, children, confirm }) => (
   <SUIModal
     dimmer="blurring"
     size="small"
@@ -17,15 +17,15 @@ const Modal = ({ header, buttonName, onClose, onClick, submitting, children }) =
       {children}
     </SUIModal.Content>
     <SUIModal.Actions>
-      <Button color="blue" loading={submitting} disabled={submitting} onClick={onClick}>
-        {buttonName}
-      </Button>
+      <Button color="blue" loading={submitting} disabled={submitting} onClick={onClick}>{buttonName}</Button>
+      {confirm && <Button disabled={submitting} onClick={onClose}>No</Button>}
     </SUIModal.Actions>
   </SUIModal>
 );
 
 Modal.defaultProps = {
-  buttonName: 'Save'
+  buttonName: 'Save',
+  confirm: false
 };
 
 Modal.propTypes = {
@@ -34,7 +34,8 @@ Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
+  confirm: PropTypes.bool
 };
 
 export default Modal;

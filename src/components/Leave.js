@@ -23,7 +23,7 @@ for (let y = 2018; y <= 2118; y += 1) {
   years.push({ key: y, value: y, text: y });
 }
 
-const Leave = ({ leaves, onAddClick }) => (
+const Leave = ({ leaves, onAddClick, onCancelClick }) => (
   <Segment.Group raised>
     <Segment>
       <Grid>
@@ -63,7 +63,7 @@ const Leave = ({ leaves, onAddClick }) => (
               <Table.Cell>{leave.purpose}</Table.Cell>
               <Table.Cell>{leave.total}</Table.Cell>
               <Table.Cell>{leave.status}</Table.Cell>
-              <Table.Cell>Cancel</Table.Cell>
+              <Table.Cell><Button inverted color="red" onClick={onCancelClick}>Cancel</Button></Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
@@ -93,7 +93,8 @@ const Leave = ({ leaves, onAddClick }) => (
 
 Leave.propTypes = {
   leaves: PropTypes.array.isRequired,
-  onAddClick: PropTypes.func.isRequired
+  onAddClick: PropTypes.func.isRequired,
+  onCancelClick: PropTypes.func.isRequired
 };
 
 export default Leave;

@@ -38,6 +38,21 @@ const leave = (state = initialState, action) => {
         isFetching: false,
         message: action.payload.message
       };
+    case actionTypes.LEAVE_UPDATE_REQUEST:
+      return {
+        ...state,
+        leave: action.payload.leave
+      };
+    case actionTypes.LEAVE_UPDATE_SUCCESS:
+      return {
+        ...state,
+        leaves: action.payload.leaves
+      };
+    case actionTypes.LEAVE_UPDATE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
     default:
       return state;
   }

@@ -40,3 +40,24 @@ export const fetchLeaveFailure = message => ({
     message
   }
 });
+
+export const updateLeaveRequest = leave => ({
+  type: actionTypes.LEAVE_UPDATE_REQUEST,
+  payload: {
+    leave
+  }
+});
+
+export const updateLeaveSuccess = leaves => ({
+  type: actionTypes.LEAVE_UPDATE_SUCCESS,
+  payload: {
+    leaves
+  }
+});
+
+export const updateLeaveFailure = message => ({
+  type: actionTypes.LEAVE_UPDATE_FAILURE,
+  payload: {
+    message
+  }
+});
