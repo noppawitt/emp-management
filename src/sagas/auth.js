@@ -2,7 +2,7 @@ import { call, put, takeEvery, all } from 'redux-saga/effects';
 import * as actionTypes from '../constants/actionTypes';
 import { loginSuccess, loginFailure } from '../actions/auth';
 import api from '../services/api';
-import history from '../routes/history';
+import history from '../history';
 
 export function* loginTask(action) {
   try {

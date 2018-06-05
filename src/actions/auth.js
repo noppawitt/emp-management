@@ -1,6 +1,6 @@
 import * as actionTypes from '../constants/actionTypes';
 import api from '../services/api';
-import history from '../routes/history';
+import history from '../history';
 
 // Login
 export const loginRequest = form => ({
