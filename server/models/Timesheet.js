@@ -7,7 +7,7 @@ Timesheet.create = (timesheet, id) => (
   db.one(
     'INSERT INTO timesheets (user_id, date, project_id, time_in, time_out, totalhours, created_user, updated_user) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING 1',
     [
-      timesheet.user_id,
+      timesheet.userId,
       timesheet.date,
       timesheet.projectId,
       timesheet.timeIn,

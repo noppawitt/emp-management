@@ -25,12 +25,14 @@ LeaveRequest.create = (leaveRequest, id) => (
 
 LeaveRequest.update = (leaveRequest, id) => (
   db.none(
-    'UPDATE leave_requests SET status = $1, updated_user = $2, updated_date = $3 WHERE id = $4',
+    'UPDATE leave_requests SET status = $1, updated_user = $2, updated_date = $3 WHERE leave_from = $4 AND leave_to = $5 AND user_id = $6',
     [
       leaveRequest.status,
       id,
       moment().format('YYYY-MM-DD HH:mm:ss'),
-      leaveRequest.id
+      leaveRequest.leaveFrom,
+      leaveRequest.leaveTo,
+      leaveRequest.userId
     ]
   )
 );
