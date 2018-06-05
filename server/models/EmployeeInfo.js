@@ -41,8 +41,10 @@ EmployeeInfo.update = (employeeInfo, id) => (
     citizen_id = $10,
     updated_user = $11,
     address = $12,
-    updated_date = $13
-    WHERE user_id = $14
+    updated_date = $13,
+    first_name_th = $14,
+    last_name_th = $15
+    WHERE user_id = $16
     RETURNING user_id`,
     [
       employeeInfo.firstName,
@@ -58,6 +60,8 @@ EmployeeInfo.update = (employeeInfo, id) => (
       id,
       employeeInfo.address,
       moment().format('YYYY-MM-DD HH:mm:ss'),
+      employeeInfo.firstNameTh,
+      employeeInfo.lastNameTh,
       employeeInfo.userId
     ]
   )

@@ -1,7 +1,7 @@
 import * as actionTypes from '../constants/actionTypes';
 
 const initialState = {
-  isFetching: false
+  isFetching: true
 };
 
 const profile = (state = initialState, action) => {

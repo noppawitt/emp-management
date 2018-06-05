@@ -2,18 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
-import { Dimmer, Loader } from 'semantic-ui-react';
 import { fetchProfileRequest } from '../../actions/profile';
 import { fetchMasterTableRequest } from '../../actions/masterTable';
 import Profile from '../../components/Profile';
+import Loader from '../../components/Loader';
 
 const ProfilePage = ({ profile }) => (
   <div>
-    {profile.isFetching ?
-      <Dimmer active>
-        <Loader />
-      </Dimmer> :
-      <Profile profile={profile} />}
+    {profile.isFetching ? <Loader /> : <Profile profile={profile} />}
   </div>
 );
 

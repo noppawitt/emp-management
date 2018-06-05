@@ -9,6 +9,7 @@ import CreateEmployeeModal from './modals/CreateEmployeeModal';
 import AddEducationProfileModal from './modals/AddEducationProfileModal';
 import AddProjectModal from './modals/AddProjectModal';
 import CreateLeaveRequestModal from './modals/CreateLeaveRequestModal';
+import ConfirmModal from './modals/ConfirmModal';
 
 const ModalContainer = ({ name, props }) => {
   switch (name) {
@@ -26,6 +27,8 @@ const ModalContainer = ({ name, props }) => {
       return <AddProjectModal {...props} />;
     case modalNames.CREATE_LEAVE_REQUEST:
       return <CreateLeaveRequestModal {...props} />;
+    case modalNames.CONFIRM:
+      return <ConfirmModal {...props} />;
     default:
       return <div />;
   }

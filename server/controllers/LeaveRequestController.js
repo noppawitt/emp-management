@@ -26,12 +26,19 @@ exports.create = (req, res, next) => {
 };
 
 exports.update = (req, res, next) => {
-  const editLeaveRequest = req.body.leaveRequest;
-  LeaveRequest.update(editLeaveRequest, req.user.id)
-    .then((updatedLeaveRequest) => {
-      res.json(updatedLeaveRequest);
-    })
-    .catch(next);
+  const editLeaveRequestArray = req.body.leaveRequests;
+  editLeaveRequestArray.forEach((leaveRequest) => {
+    const editLeaveRequest = {};
+    editLeaveRequest.status = leaveRequest.status;
+    editLeaveRequest.leaveFrom = leaveRequest.leaveFrom;
+    editLeaveRequest.leaveTo = leaveRequest.leaveTo;
+    editLeaveRequest.userId = leaveRequest.userId;
+    LeaveRequest.update(editLeaveRequest, req.user.id)
+      .then((updatedLeaveRequest) => {
+        res.json(updatedLeaveRequest);
+      })
+      .catch(next);
+  });
 };
 
 exports.findByUserId = (req, res, next) => {
