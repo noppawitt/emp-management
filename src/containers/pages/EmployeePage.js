@@ -9,16 +9,17 @@ import * as modalNames from '../../constants/modalNames';
 import Loader from '../../components/Loader';
 import { getFilteredEmployee } from '../../selectors/employee';
 
-const EmployeePage = ({ isFetching, employees, onChange }) => (
+const EmployeePage = ({ isFetching, employees, onChange, onClick }) => (
   <div>
-    {isFetching ? <Loader /> : <Employee employees={employees} onChange={onChange} />}
+    {isFetching ? <Loader /> : <Employee employees={employees} onChange={onChange} onClick={onClick} />}
   </div>
 );
 
 EmployeePage.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   employees: PropTypes.array.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -28,7 +29,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchEmployee: () => dispatch(fetchEmployeeRequest()),
-  onClick: () => dispatch(openModal(modalNames.CREATE_EMPLOYEE)),
+  onClick: () => dispatch(openModal(modalNames.ADD_EMPLOYEE)),
   onChange: e => dispatch(filterEmployee(e.target.value))
 });
 

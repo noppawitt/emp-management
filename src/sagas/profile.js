@@ -85,19 +85,18 @@ export function* updateProfileTask(action) {
 
 export function* deleteProfileTask(action) {
   try {
-    const profile = {};
     switch (action.payload.profileType) {
-      case 'educationProfile':
+      case 'education':
         yield call(api.deleteEducationProfile, {
           id: action.payload.profileId
         });
         break;
-      case 'certificateProfile':
+      case 'certificate':
         yield call(api.deleteCertificateProfile, {
           id: action.payload.profileId
         });
         break;
-      case 'assetProfile':
+      case 'asset':
         yield call(api.deleteAssetProfile, {
           id: action.payload.profileId
         });
@@ -105,7 +104,7 @@ export function* deleteProfileTask(action) {
       default:
         yield put(deleteProfileFailure('Something gone wrong'));
     }
-    yield put(deleteProfileSuccess(profile));
+    yield put(deleteProfileSuccess(action.payload.profileType, action.payload.profileId));
     yield put(closeModal());
   }
   catch (error) {
@@ -121,9 +120,14 @@ export function* watchUpdateProfileRequest() {
   yield takeEvery(actionTypes.PROFILE_UPDATE_REQUEST, updateProfileTask);
 }
 
+export function* watchDeleteProfileRequest() {
+  yield takeEvery(actionTypes.PROFILE_DELETE_REQUEST, deleteProfileTask);
+}
+
 export default function* profileSaga() {
   yield all([
     watchFetchProfileRequest(),
-    watchUpdateProfileRequest()
+    watchUpdateProfileRequest(),
+    watchDeleteProfileRequest()
   ]);
 }
