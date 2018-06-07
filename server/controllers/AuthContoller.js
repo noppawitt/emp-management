@@ -45,7 +45,7 @@ exports.signup = (req, res, next) => {
       }
       else {
         newUser.password = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync());
-        User.create(newUser)
+        User.createAdmin(newUser)
           .then((createdUser) => {
             res.json(createdUser);
           })
