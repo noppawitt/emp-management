@@ -34,4 +34,8 @@ Contract.findAll = () => (
   db.manyOrNone('SELECT * FROM contracts WHERE status = $1', ['Active'])
 );
 
+Contract.findById = id => (
+  id ? db.oneOrNone('SELECT * FROM contracts WHERE id = $1', [id]) : ''
+);
+
 module.exports = Contract;

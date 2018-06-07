@@ -32,4 +32,8 @@ Department.findAll = () => (
   db.manyOrNone('SELECT * FROM departments WHERE status = $1', ['Active'])
 );
 
+Department.findById = id => (
+  db.oneOrNone('SELECT * FROM departments WHERE id = $1', [id])
+);
+
 module.exports = Department;

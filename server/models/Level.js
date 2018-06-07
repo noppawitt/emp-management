@@ -36,4 +36,8 @@ Level.findAll = () => (
   db.manyOrNone('SELECT * FROM levels WHERE status = $1', ['Active'])
 );
 
+Level.findById = id => (
+  db.oneOrNone('SELECT * FROM levels WHERE id = $1', [id])
+);
+
 module.exports = Level;
