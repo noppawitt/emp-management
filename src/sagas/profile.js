@@ -47,12 +47,12 @@ export function* updateProfileTask(action) {
         break;
       case 'editCertificateProfile':
         profile.certificates = yield call(api.updateCertificateProfile, {
-          certificate: action.payload.form
+          hasCertificate: action.payload.form
         });
         break;
       case 'editAssetProfile':
         profile.assets = yield call(api.updateAssetProfile, {
-          asset: action.payload.form
+          hasAsset: action.payload.form
         });
         break;
       case 'addEducationProfile':
@@ -62,12 +62,12 @@ export function* updateProfileTask(action) {
         break;
       case 'addCertificateProfile':
         profile.certificates = yield call(api.createCertificateProfile, {
-          certificate: action.payload.form
+          hasCertificate: action.payload.form
         });
         break;
       case 'addAssetProfile':
         profile.assets = yield call(api.createAssetProfile, {
-          asset: action.payload.form
+          hasAsset: action.payload.form
         });
         break;
       default:
