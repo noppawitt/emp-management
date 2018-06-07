@@ -34,4 +34,8 @@ Position.findAll = () => (
   db.manyOrNone('SELECT * FROM positions WHERE status = $1', ['Active'])
 );
 
+Position.findById = id => (
+  id ? db.oneOrNone('SELECT * FROM positions WHERE id = $1', [id]) : ''
+);
+
 module.exports = Position;

@@ -32,7 +32,7 @@ HasCertificate.update = (hasCertificate, id) => (
 );
 
 HasCertificate.findByUserId = userId => (
-  db.manyOrNone('SELECT * FROM has_certificates WHERE user_id = $1', [userId])
+  db.manyOrNone('SELECT has_certificates.user_id AS user_id, has_certificates.certificate_id AS certificate_id, has_certificates.certificate_date AS certificate_date, has_certificates.score AS score, has_certificates.id AS id, certificates.name AS name FROM has_certificates, certificates WHERE has_certificates.certificate_id = certificates.id AND has_certificates.user_id = $1', [userId])
 );
 
 HasCertificate.delete = (id, userId) => (
