@@ -45,16 +45,6 @@ export function* updateProfileTask(action) {
           educate: action.payload.form
         });
         break;
-      case 'editCertificateProfile':
-        profile.certificates = yield call(api.updateCertificateProfile, {
-          hasCertificate: action.payload.form
-        });
-        break;
-      case 'editAssetProfile':
-        profile.assets = yield call(api.updateAssetProfile, {
-          hasAsset: action.payload.form
-        });
-        break;
       case 'addEducationProfile':
         profile.educations = yield call(api.createEducationProfile, {
           educate: action.payload.form
