@@ -1,8 +1,5 @@
 import React from 'react';
-<<<<<<< HEAD
 import { Icon, Table, Label, Grid, Segment } from 'semantic-ui-react';
-=======
->>>>>>> 2de7d3147248d7098b163ee68e6ec0003164e1d7
 
 class Timesheet extends React.Component {
   constructor(props) {
@@ -13,7 +10,6 @@ class Timesheet extends React.Component {
       days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     };
   }
-
   render() {
     const colorSunSat = 'rgb(221, 225, 230)';
     const date = new Date();
