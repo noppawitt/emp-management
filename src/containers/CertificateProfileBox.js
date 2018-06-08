@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import { Segment, Grid, Header, Icon } from 'semantic-ui-react';
 import ProfileBox from '../components/ProfileBox';
 import { openModal } from '../actions/modal';
+import { deleteProfileRequest } from '../actions/profile';
 import * as modalNames from '../constants/modalNames';
 
-const CertificateProfileBox = ({ certificatesProfile, onEditClick, onAddClick }) => (
+const CertificateProfileBox = ({ certificatesProfile, onAddClick, onDeleteClick }) => (
   <Segment.Group raised size="large">
     <Segment padded>
       <Grid>
@@ -31,20 +32,24 @@ const CertificateProfileBox = ({ certificatesProfile, onEditClick, onAddClick })
         { key: 'score', title: 'Score', value: p.score },
         { key: 'description', title: 'Description', value: p.description },
       ]}
-      onEditClick={() => onEditClick(p.id)}
+      onDeleteClick={() => onDeleteClick(p.id)}
     />))}
   </Segment.Group>
 );
 
 CertificateProfileBox.propTypes = {
   certificatesProfile: PropTypes.array.isRequired,
-  onEditClick: PropTypes.func.isRequired,
-  onAddClick: PropTypes.func.isRequired
+  onAddClick: PropTypes.func.isRequired,
+  onDeleteClick: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
-  onEditClick: id => dispatch(openModal(modalNames.EDIT_EDUCATION_PROFILE, { id })),
-  onAddClick: () => dispatch(openModal(modalNames.ADD_CERTIFICATE_PROFILE))
+  onAddClick: () => dispatch(openModal(modalNames.ADD_CERTIFICATE_PROFILE)),
+  onDeleteClick: profileId => dispatch(openModal(modalNames.CONFIRM, {
+    header: 'Delete confirmation',
+    description: 'Are you sure to delete certification profile?',
+    onConfirm: () => dispatch(deleteProfileRequest('certificate', profileId))
+  }))
 });
 
 export default connect(null, mapDispatchToProps)(CertificateProfileBox);

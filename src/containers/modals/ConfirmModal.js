@@ -13,7 +13,7 @@ const ConfirmModal = ({ onClose, onConfirm, header, description }) => (
     buttonName="Yes"
     confirm
   >
-    {description}
+    <p>{description}</p>
   </Modal>
 );
 

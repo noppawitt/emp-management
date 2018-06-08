@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import { Segment, Grid, Header, Icon } from 'semantic-ui-react';
 import ProfileBox from '../components/ProfileBox';
 import { openModal } from '../actions/modal';
+import { deleteProfileRequest } from '../actions/profile';
 import * as modalNames from '../constants/modalNames';
 
-const AssetProfileBox = ({ assetsProfile, onEditClick, onAddClick }) => (
+const AssetProfileBox = ({ assetsProfile, onAddClick, onDeleteClick }) => (
   <Segment.Group raised size="large">
     <Segment padded>
       <Grid>
@@ -31,20 +32,24 @@ const AssetProfileBox = ({ assetsProfile, onEditClick, onAddClick }) => (
         { key: 'status', title: 'Status', value: p.status },
         { key: 'description', title: 'Description', value: p.description },
       ]}
-      onEditClick={() => onEditClick(p.id)}
+      onDeleteClick={() => onDeleteClick(p.id)}
     />))}
   </Segment.Group>
 );
 
 AssetProfileBox.propTypes = {
   assetsProfile: PropTypes.array.isRequired,
-  onEditClick: PropTypes.func.isRequired,
-  onAddClick: PropTypes.func.isRequired
+  onAddClick: PropTypes.func.isRequired,
+  onDeleteClick: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
-  onEditClick: id => dispatch(openModal(modalNames.EDIT_EDUCATION_PROFILE, { id })),
-  onAddClick: id => dispatch(openModal(modalNames.ADD_EDUCATION_PROFILE, { id }))
+  onAddClick: id => dispatch(openModal(modalNames.ADD_EDUCATION_PROFILE, { id })),
+  onDeleteClick: profileId => dispatch(openModal(modalNames.CONFIRM, {
+    header: 'Delete confirmation',
+    description: 'Are you sure to delete asset profile?',
+    onConfirm: () => dispatch(deleteProfileRequest('asset', profileId))
+  }))
 });
 
 export default connect(null, mapDispatchToProps)(AssetProfileBox);
