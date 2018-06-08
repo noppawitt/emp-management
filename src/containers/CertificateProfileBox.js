@@ -28,6 +28,7 @@ const CertificateProfileBox = ({ certificatesProfile, onEditClick, onAddClick })
       lists={[
         { key: 'name', title: 'Name', value: p.name },
         { key: 'institute', title: 'Institute', value: p.institute },
+        { key: 'score', title: 'Score', value: p.score },
         { key: 'description', title: 'Description', value: p.description },
       ]}
       onEditClick={() => onEditClick(p.id)}
@@ -43,7 +44,7 @@ CertificateProfileBox.propTypes = {
 
 const mapDispatchToProps = dispatch => ({
   onEditClick: id => dispatch(openModal(modalNames.EDIT_EDUCATION_PROFILE, { id })),
-  onAddClick: id => dispatch(openModal(modalNames.ADD_EDUCATION_PROFILE, { id }))
+  onAddClick: () => dispatch(openModal(modalNames.ADD_CERTIFICATE_PROFILE))
 });
 
 export default connect(null, mapDispatchToProps)(CertificateProfileBox);

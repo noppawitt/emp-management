@@ -48,7 +48,7 @@ EducationProfileBox.propTypes = {
 
 const mapDispatchToProps = dispatch => ({
   onEditClick: id => dispatch(openModal(modalNames.EDIT_EDUCATION_PROFILE, { id })),
-  onAddClick: id => dispatch(openModal(modalNames.ADD_EDUCATION_PROFILE, { id }))
+  onAddClick: () => dispatch(openModal(modalNames.ADD_EDUCATION_PROFILE))
 });
 
 export default connect(null, mapDispatchToProps)(EducationProfileBox);

@@ -14,6 +14,8 @@ export function* fetchMasterTableTask() {
     masterTable.degrees = yield call(api.fetchDegrees);
     masterTable.faculties = yield call(api.fetchFaculties);
     masterTable.majors = yield call(api.fetchMajors);
+    masterTable.certificates = yield call(api.fetchCertificates);
+    masterTable.assets = yield call(api.fetchAssets);
     yield put(fetchMasterTableSucesss(masterTable));
   }
   catch (error) {

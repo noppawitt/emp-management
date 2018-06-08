@@ -82,6 +82,14 @@ api.fetchMajors = () => (
   callApi('/api/majors')
 );
 
+api.fetchCertificates = () => (
+  callApi('/api/certificates')
+);
+
+api.fetchAssets = () => (
+  callApi('/api/assets')
+);
+
 // Profile
 
 api.fetchGeneralProfile = id => (
@@ -97,11 +105,11 @@ api.fetchEducationProfile = id => (
 );
 
 api.fetchCertificateProfile = id => (
-  callApi(`/api/certificates?id=${id}`)
+  callApi(`/api/has-certificates?id=${id}`)
 );
 
 api.fetchAssetProfile = id => (
-  callApi(`/api/assets?id=${id}`)
+  callApi(`/api/has-assets?id=${id}`)
 );
 
 api.updateGeneralProfile = body => (
@@ -126,14 +134,14 @@ api.updateEducationProfile = body => (
 );
 
 api.updateCertificateProfile = body => (
-  callApi('/api/certificates', {
+  callApi('/api/has-certificates', {
     method: 'PUT',
     body
   })
 );
 
 api.updateAssetProfile = body => (
-  callApi('/api/assets', {
+  callApi('/api/has-assets', {
     method: 'PUT',
     body
   })
@@ -147,15 +155,36 @@ api.createEducationProfile = body => (
 );
 
 api.createCertificateProfile = body => (
-  callApi('/api/certificates', {
+  callApi('/api/has-certificates', {
     method: 'POST',
     body
   })
 );
 
 api.createAssetProfile = body => (
-  callApi('/api/assets', {
+  callApi('/api/has-assets', {
     method: 'POST',
+    body
+  })
+);
+
+api.deleteEducationProfile = body => (
+  callApi('/api/educates', {
+    method: 'DELETE',
+    body
+  })
+);
+
+api.deleteCertificateProfile = body => (
+  callApi('/api/has-certificates', {
+    method: 'DELETE',
+    body
+  })
+);
+
+api.deleteAssetProfile = body => (
+  callApi('/api/has-assets', {
+    method: 'DELETE',
     body
   })
 );

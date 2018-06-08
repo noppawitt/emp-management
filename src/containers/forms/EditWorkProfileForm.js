@@ -36,6 +36,7 @@ EditWorkProfileForm.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  masterTable: state.masterTable,
   initialValues: {
     userId: state.profile.work.userId,
     departmentId: state.profile.work.departmentId,

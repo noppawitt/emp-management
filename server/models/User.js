@@ -57,4 +57,19 @@ User.findByName = (firstName, lastName) => (
   db.oneOrNone('SELECT * FROM employee_info WHERE first_name = $1 AND last_name = $2', [firstName, lastName])
 );
 
+// User.createAdmin = user => (
+//   db.one(
+//     'INSERT INTO users (username, password, created_user, updated_user, type, status, id) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+//     [
+//       user.username,
+//       user.password,
+//       10000,
+//       10000,
+//       1,
+//       'Active',
+//       10000
+//     ]
+//   )
+// );
+
 module.exports = User;

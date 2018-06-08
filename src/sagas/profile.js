@@ -1,6 +1,13 @@
 import { call, put, takeEvery, all } from 'redux-saga/effects';
 import * as actionTypes from '../constants/actionTypes';
-import { fetchProfileSuccess, updateProfileSuccess } from '../actions/profile';
+import {
+  fetchProfileSuccess,
+  fetchProfileFailure,
+  updateProfileSuccess,
+  updateProfileFailure,
+  deleteProfileSuccess,
+  deleteProfileFailure
+} from '../actions/profile';
 import { closeModal } from '../actions/modal';
 import api from '../services/api';
 
@@ -15,7 +22,7 @@ export function* fetchProfileTask(action) {
     yield put(fetchProfileSuccess(profile));
   }
   catch (error) {
-    console.log(error);
+    yield put(fetchProfileFailure(error));
   }
 }
 
@@ -38,16 +45,6 @@ export function* updateProfileTask(action) {
           educate: action.payload.form
         });
         break;
-      case 'editCertificateProfile':
-        profile.certificates = yield call(api.updateCertificateProfile, {
-          certificate: action.payload.form
-        });
-        break;
-      case 'editAssetProfile':
-        profile.assets = yield call(api.updateAssetProfile, {
-          asset: action.payload.form
-        });
-        break;
       case 'addEducationProfile':
         profile.educations = yield call(api.createEducationProfile, {
           educate: action.payload.form
@@ -55,12 +52,12 @@ export function* updateProfileTask(action) {
         break;
       case 'addCertificateProfile':
         profile.certificates = yield call(api.createCertificateProfile, {
-          certificate: action.payload.form
+          hasCertificate: action.payload.form
         });
         break;
       case 'addAssetProfile':
         profile.assets = yield call(api.createAssetProfile, {
-          asset: action.payload.form
+          hasAsset: action.payload.form
         });
         break;
       default:
@@ -71,8 +68,37 @@ export function* updateProfileTask(action) {
     action.payload.resolve();
   }
   catch (error) {
+    yield put(updateProfileFailure(error));
     action.payload.reject();
-    console.log(error);
+  }
+}
+
+export function* deleteProfileTask(action) {
+  try {
+    switch (action.payload.profileType) {
+      case 'education':
+        yield call(api.deleteEducationProfile, {
+          id: action.payload.profileId
+        });
+        break;
+      case 'certificate':
+        yield call(api.deleteCertificateProfile, {
+          id: action.payload.profileId
+        });
+        break;
+      case 'asset':
+        yield call(api.deleteAssetProfile, {
+          id: action.payload.profileId
+        });
+        break;
+      default:
+        yield put(deleteProfileFailure('Something gone wrong'));
+    }
+    yield put(deleteProfileSuccess(action.payload.profileType, action.payload.profileId));
+    yield put(closeModal());
+  }
+  catch (error) {
+    yield put(deleteProfileFailure(error));
   }
 }
 
@@ -84,9 +110,14 @@ export function* watchUpdateProfileRequest() {
   yield takeEvery(actionTypes.PROFILE_UPDATE_REQUEST, updateProfileTask);
 }
 
+export function* watchDeleteProfileRequest() {
+  yield takeEvery(actionTypes.PROFILE_DELETE_REQUEST, deleteProfileTask);
+}
+
 export default function* profileSaga() {
   yield all([
     watchFetchProfileRequest(),
-    watchUpdateProfileRequest()
+    watchUpdateProfileRequest(),
+    watchDeleteProfileRequest()
   ]);
 }

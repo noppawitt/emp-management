@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt-nodejs');
+const moment = require('moment');
 // const nodemailer = require('nodemailer');
 
 // const transporter = nodemailer.createTransport({
@@ -38,6 +39,7 @@ exports.create = (req, res, next) => {
             }
             else {
               newUser.password = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync());
+              newUser.probationDate = moment(newUser.startDate).add(120, 'days');
               User.create(newUser, req.user.id)
                 .then((createdUser) => {
                   // const mailOptions = {
