@@ -25,33 +25,37 @@ const LoginPage = ({ dispatch }) => {
   const style = {
     backgroundImage: `url(${image})`,
     backgroundSize: 'cover',
-    position: 'fixed',
     minHeight: '100%',
-    width: '100%'
+    position: 'fixed',
+    width: '100%',
+    height: 'auto'
   };
 
   return (
     <div style={style}>
-      <Grid padded columns={3} textAlign="center">
+      <Grid columns={3} textAlign="center" padded>
         <Grid.Row >
           <Grid.Column floated="right" style={{ paddingTop: '20%', paddingRight: '10%' }}>
             <Form onSubmit={handleSubmit}>
               <Form.Field >
-                <label htmlFor="username">Username
+                <br />
+                <label htmlFor="username">
                   <input style={{ borderRadius: '15px' }} id="username" placeholder="Username" ref={(node) => { username = node; }} />
                 </label>
               </Form.Field>
               <Form.Field>
-                <label htmlFor="password">Password
+                <br />
+                <label htmlFor="password">
                   <input style={{ borderRadius: '15px' }} id="password" type="password" placeholder="Password" ref={(node) => { password = node; }} />
                 </label>
               </Form.Field>
+              <br />
               <Button primary type="submit">Submit</Button>
             </Form>
           </Grid.Column>
         </Grid.Row>
         <Grid.Row >
-          <Grid.Column floated="left" style={{ paddingTop: '2%', paddingLeft: '3%' }}>
+          <Grid.Column floated="left" >
             <Feed size="large">
               <Feed.Event>
                 <Feed.Label>

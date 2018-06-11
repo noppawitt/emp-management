@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Item, Segment, Input } from 'semantic-ui-react';
+import { Grid, Item, Segment, Input, Button, Icon } from 'semantic-ui-react';
 import PageHeader from './PageHeader';
 import image from '../images/cat.jpg';
 
 const items = employee => (
-  <Grid.Column width={7}>
+  <Grid.Column width={8}>
     <Segment raised>
       <Item.Group>
         <Item>
@@ -21,19 +21,34 @@ const items = employee => (
   </Grid.Column>
 );
 
-const Employee = ({ employees, onChange }) => (
+const Employee = ({ employees, onChange, onClick }) => (
   <div>
     <PageHeader icon="users" text="Employee" />
-    <Input placeholder="Search..." onChange={onChange} />
-    <Grid columns={2} textAlign="left">
-      {employees.map(employee => items(employee))}
-    </Grid>
+    <Segment.Group>
+      <Segment>
+        <Input icon="search" placeholder="Search employees..." onChange={onChange} />
+        <Button icon labelPosition="left" color="blue" floated="right" onClick={onClick}>
+          <Icon name="add user" />
+          Add new employee
+        </Button>
+      </Segment>
+      <Segment>
+        <Grid>
+          <Grid.Column width={16}>
+            <Grid columns={2}>
+              {employees.map(employee => items(employee))}
+            </Grid>
+          </Grid.Column>
+        </Grid>
+      </Segment>
+    </Segment.Group>
   </div>
 );
 
 Employee.propTypes = {
   employees: PropTypes.array.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default Employee;

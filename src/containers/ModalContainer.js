@@ -5,8 +5,9 @@ import * as modalNames from '../constants/modalNames';
 import EditGeneralProfileModal from './modals/EditGeneralProfileModal';
 import EditWorkProfileModal from './modals/EditWorkProfileModal';
 import EditEducationProfileModal from './modals/EditEducationProfileModal';
-import CreateEmployeeModal from './modals/CreateEmployeeModal';
+import AddEmployeeModal from './modals/AddEmployeeModal';
 import AddEducationProfileModal from './modals/AddEducationProfileModal';
+import AddCertificateProfileModal from './modals/AddCertificateProfileModal';
 import AddProjectModal from './modals/AddProjectModal';
 import CreateLeaveRequestModal from './modals/CreateLeaveRequestModal';
 import ConfirmModal from './modals/ConfirmModal';
@@ -19,8 +20,10 @@ const ModalContainer = ({ name, props }) => {
       return <EditWorkProfileModal {...props} />;
     case modalNames.EDIT_EDUCATION_PROFILE:
       return <EditEducationProfileModal {...props} />;
-    case modalNames.CREATE_EMPLOYEE:
-      return <CreateEmployeeModal {...props} />;
+    case modalNames.ADD_CERTIFICATE_PROFILE:
+      return <AddCertificateProfileModal />;
+    case modalNames.ADD_EMPLOYEE:
+      return <AddEmployeeModal {...props} />;
     case modalNames.ADD_EDUCATION_PROFILE:
       return <AddEducationProfileModal {...props} />;
     case modalNames.ADD_PROJECT:
