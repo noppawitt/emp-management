@@ -3,7 +3,7 @@ const HasCertificateController = require('../../controllers/HasCertificateContro
 
 router.post('/', HasCertificateController.create);
 
-router.put('/', HasCertificateController.update);
+// router.put('/', HasCertificateController.update);
 
 router.get('/', HasCertificateController.findByUserId);
 
