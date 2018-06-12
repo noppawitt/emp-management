@@ -44,7 +44,7 @@ AssetProfileBox.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  onAddClick: id => dispatch(openModal(modalNames.ADD_EDUCATION_PROFILE, { id })),
+  onAddClick: id => dispatch(openModal(modalNames.ADD_ASSET_PROFILE, { id })),
   onDeleteClick: profileId => dispatch(openModal(modalNames.CONFIRM, {
     header: 'Delete confirmation',
     description: 'Are you sure to delete asset profile?',

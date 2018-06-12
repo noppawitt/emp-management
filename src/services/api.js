@@ -90,6 +90,10 @@ api.fetchAssets = () => (
   callApi('/api/assets')
 );
 
+api.fetchAssetTypes = () => (
+  callApi('/api/asset-types')
+);
+
 // Profile
 
 api.fetchGeneralProfile = id => (
@@ -233,6 +237,12 @@ api.updateLeave = body => (
     method: 'PUT',
     body
   })
+);
+
+// Timesheet
+
+api.fetchTimesheet = id => (
+  callApi(`/api/timesheets/?id=${id}`)
 );
 
 export default api;

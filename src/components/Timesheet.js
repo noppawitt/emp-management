@@ -10,6 +10,7 @@ class Timesheet extends React.Component {
       days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     };
   }
+
   render() {
     const colorSunSat = 'rgb(221, 225, 230)';
     const date = new Date();
