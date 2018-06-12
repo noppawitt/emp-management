@@ -31,7 +31,12 @@ exports.create = (req, res, next) => {
       .then((createdHasAsset) => {
         res.json(createdHasAsset);
       })
-      .catch(next);
+      .then(() => {
+        HasAsset.findByUserId(req.user.id)
+          .then((hasAssets) => {
+            res.json(hasAssets);
+          });
+      });
   }
 };
 
