@@ -56,9 +56,7 @@ export function* updateProfileTask(action) {
         });
         break;
       case 'addAssetProfile':
-        profile.assets = yield call(api.createAssetProfile, {
-          hasAsset: action.payload.form
-        });
+        profile.assets = yield call(api.createAssetProfile, action.payload.form);
         break;
       default:
         action.payload.reject();

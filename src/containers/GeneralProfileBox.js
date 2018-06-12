@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Segment, Image, Grid, Header, Icon } from 'semantic-ui-react';
+import { Segment, Grid, Header, Icon } from 'semantic-ui-react';
 import { openModal } from '../actions/modal';
 import * as modalNames from '../constants/modalNames';
+import ProfileImage from '../components/ProfileImage';
 
 const GeneralProfileBox = ({ image, generalProfile, onEditClick }) => (
   <Segment.Group raised size="large">
     <Segment padded inverted color="blue">
-      <Image src={image} size="small" centered bordered />
+      {/* <Image src={image} size="small" centered bordered /> */}
+      <ProfileImage image={image} />
     </Segment>
     <Segment padded textAlign="center">
       <Grid>
