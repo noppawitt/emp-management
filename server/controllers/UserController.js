@@ -1,15 +1,19 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt-nodejs');
 const moment = require('moment');
-// const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer');
+const smtpTransport = require('nodemailer-smtp-transport');
 
-// const transporter = nodemailer.createTransport({
-//   service: 'hotmail',
-//   auth: {
-//     user: 'example@hotmail.com',
-//     pass: 'password'
-//   }
-// });
+const transporter = nodemailer.createTransport(smtpTransport({
+  host: process.env.MAIL_HOST,
+  port: process.env.MAIL_PORT,
+  auth: {
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASS
+  },
+  secure: true
+}));
+
 
 exports.findAll = (req, res, next) => {
   User.findAll()
@@ -21,7 +25,7 @@ exports.findAll = (req, res, next) => {
 
 exports.create = (req, res, next) => {
   const newUser = req.body.user;
-  // const pass = newUser.password;
+  const pass = newUser.password;
   User.findByName(newUser.firstName, newUser.lastName)
     .then((user1) => {
       if (user1) {
@@ -42,20 +46,20 @@ exports.create = (req, res, next) => {
               newUser.probationDate = moment(newUser.startDate).add(120, 'days');
               User.create(newUser, req.user.id)
                 .then((createdUser) => {
-                  // const mailOptions = {
-                  //   from: 'tmark_s@hotmail.com',
-                  //   to: 'tmark_s@hotmail.com',
-                  //   subject: 'Hello',
-                  //   html: `<p>${newUser.username} ${pass}</p>`
-                  // };
-                  // transporter.sendMail(mailOptions, (err, info) => {
-                  //   if (err) {
-                  //     console.log(err);
-                  //   }
-                  //   else {
-                  //     console.log(info);
-                  //   }
-                  // });
+                  const mailOptions = {
+                    from: process.env.MAIL_USER,
+                    to: newUser.email,
+                    subject: 'Hello',
+                    html: `<p>${newUser.username} ${pass}</p>`
+                  };
+                  transporter.sendMail(mailOptions, (err, info) => {
+                    if (err) {
+                      console.log(err);
+                    }
+                    else {
+                      console.log(info);
+                    }
+                  });
                   res.json(createdUser);
                 })
                 .catch(next);
