@@ -13,24 +13,18 @@ exports.create = (req, res, next) => {
       })
       .then(() => {
         HasAsset.create(newHasAsset, req.user.id)
-          .then((createdHasAsset) => {
-            res.json(createdHasAsset);
+          .then(() => {
+            HasAsset.findByUserId(req.user.id)
+              .then((hasAssets) => {
+                res.json(hasAssets);
+              });
           })
           .catch(next);
-      })
-      .then(() => {
-        HasAsset.findByUserId(req.user.id)
-          .then((hasAssets) => {
-            res.json(hasAssets);
-          });
       });
   }
   else {
     const newHasAsset = req.body;
     HasAsset.create(newHasAsset, req.user.id)
-      .then((createdHasAsset) => {
-        res.json(createdHasAsset);
-      })
       .then(() => {
         HasAsset.findByUserId(req.user.id)
           .then((hasAssets) => {
