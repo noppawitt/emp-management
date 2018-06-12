@@ -5,7 +5,7 @@ const Asset = {};
 
 Asset.create = (asset, id) => (
   db.one(
-    'INSERT INTO assets (asset_type_id, name, description, own_flag, serial_number, created_user, updated_user, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING 1',
+    'INSERT INTO assets (asset_type_id, name, description, own_flag, serial_number, created_user, updated_user, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id',
     [
       asset.assetTypeId,
       asset.name,
