@@ -32,7 +32,9 @@ const AddAssetProfileForm = ({ masterTable, handleSubmit, submitting, ownFlag })
       <Field name="serialNumber" as={Form.Input} component={Input} label="Serial No." placeholder="Serial No." disabled={submitting} />
     }
     <Field name="assetDate" as={Form.Input} component={Input} type="date" label="Date" placeholder="Date" disabled={submitting} />
-    <Field name="description" as={Form.TextArea} component={Input} autoHeight label="Description" placeholder="Description" disabled={submitting} />
+    {ownFlag &&
+      <Field name="description" as={Form.TextArea} component={Input} autoHeight label="Description" placeholder="Description" disabled={submitting} />
+    }
   </Form>
 );
 

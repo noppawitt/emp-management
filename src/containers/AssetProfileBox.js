@@ -27,10 +27,10 @@ const AssetProfileBox = ({ assetsProfile, onAddClick, onDeleteClick }) => (
     {assetsProfile.map(p => (<ProfileBox
       key={p.id}
       lists={[
-        { key: 'name', title: 'Name', value: p.name },
-        { key: 'serialNumber', title: 'Serial No.', value: p.description },
-        { key: 'status', title: 'Status', value: p.status },
-        { key: 'description', title: 'Description', value: p.description },
+        { key: 'assetName', title: 'Name', value: p.assetName },
+        { key: 'serialNumber', title: 'Serial No.', value: p.serialNumber },
+        { key: 'date', title: 'Date', value: p.assetDate },
+        { key: 'description', title: 'Description', value: p.description }
       ]}
       onDeleteClick={() => onDeleteClick(p.id)}
     />))}
