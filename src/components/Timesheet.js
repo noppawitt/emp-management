@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Table, Label, Grid, Segment } from 'semantic-ui-react';
+import { Icon, Table, Label, Grid } from 'semantic-ui-react';
 
 class Timesheet extends React.Component {
   constructor(props) {
