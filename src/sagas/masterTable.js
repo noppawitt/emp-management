@@ -16,6 +16,7 @@ export function* fetchMasterTableTask() {
     masterTable.majors = yield call(api.fetchMajors);
     masterTable.certificates = yield call(api.fetchCertificates);
     masterTable.assets = yield call(api.fetchAssets);
+    masterTable.assetTypes = yield call(api.fetchAssetTypes);
     yield put(fetchMasterTableSucesss(masterTable));
   }
   catch (error) {

@@ -8,6 +8,7 @@ import EditEducationProfileModal from './modals/EditEducationProfileModal';
 import AddEmployeeModal from './modals/AddEmployeeModal';
 import AddEducationProfileModal from './modals/AddEducationProfileModal';
 import AddCertificateProfileModal from './modals/AddCertificateProfileModal';
+import AddAssetProfileModal from './modals/AddAssetProfileModal';
 import AddProjectModal from './modals/AddProjectModal';
 import CreateLeaveRequestModal from './modals/CreateLeaveRequestModal';
 import ConfirmModal from './modals/ConfirmModal';
@@ -20,12 +21,14 @@ const ModalContainer = ({ name, props }) => {
       return <EditWorkProfileModal {...props} />;
     case modalNames.EDIT_EDUCATION_PROFILE:
       return <EditEducationProfileModal {...props} />;
-    case modalNames.ADD_CERTIFICATE_PROFILE:
-      return <AddCertificateProfileModal />;
-    case modalNames.ADD_EMPLOYEE:
-      return <AddEmployeeModal {...props} />;
     case modalNames.ADD_EDUCATION_PROFILE:
       return <AddEducationProfileModal {...props} />;
+    case modalNames.ADD_CERTIFICATE_PROFILE:
+      return <AddCertificateProfileModal />;
+    case modalNames.ADD_ASSET_PROFILE:
+      return <AddAssetProfileModal />;
+    case modalNames.ADD_EMPLOYEE:
+      return <AddEmployeeModal {...props} />;
     case modalNames.ADD_PROJECT:
       return <AddProjectModal {...props} />;
     case modalNames.CREATE_LEAVE_REQUEST:
