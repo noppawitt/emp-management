@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Table, Label, Grid } from 'semantic-ui-react';
+import { Icon, Table, Label, Grid, Progress, Button, Modal } from 'semantic-ui-react';
 
 class Timesheet extends React.Component {
   constructor(props) {
@@ -17,8 +17,12 @@ class Timesheet extends React.Component {
     const oneDayCell = () => {
       return <div><Table.Cell style={{ textAlign: 'right' }}>1 <Icon name="checkmark" /> </Table.Cell></div>;
     };
+    const progressBar = () =>{
+      return <div> <Progress percent={60} active color="teal" progress /> <Progress percent={40} active color="blue" progress /> </div>;
+    }
     return (
       <div>
+        {progressBar()}
         <Table celled structured>
           <Table.Header>
             <Table.Row textAlign="center">
@@ -403,6 +407,7 @@ class Timesheet extends React.Component {
             </Table.Row>
           </Table.Body>
         </Table>
+        <Modal trigger={<Button>New Task</Button>} />
       </div>
     );
   }
