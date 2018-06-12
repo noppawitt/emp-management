@@ -1,12 +1,32 @@
 const HasAsset = require('../models/HasAsset');
+const Asset = require('../models/Asset');
 
 exports.create = (req, res, next) => {
-  const newHasAsset = req.body.hasAsset;
-  HasAsset.create(newHasAsset, req.user.id)
-    .then((createdHasAsset) => {
-      res.json(createdHasAsset);
-    })
-    .catch(next);
+  if (req.body.own) {
+    const newAsset = req.body;
+    const newHasAsset = {};
+    Asset.create(newAsset, req.user.id)
+      .then((id) => {
+        newHasAsset.userId = req.body.userId;
+        newHasAsset.assetId = id;
+        newHasAsset.assetDate = req.body.assetDate;
+      })
+      .then(() => {
+        HasAsset.create(newHasAsset, req.user.id)
+          .then((createdHasAsset) => {
+            res.json(createdHasAsset);
+          })
+          .catch(next);
+      });
+  }
+  else {
+    const newHasAsset = req.body;
+    HasAsset.create(newHasAsset, req.user.id)
+      .then((createdHasAsset) => {
+        res.json(createdHasAsset);
+      })
+      .catch(next);
+  }
 };
 
 exports.update = (req, res, next) => {
