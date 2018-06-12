@@ -8,6 +8,7 @@ import masterTable from './masterTable';
 import employee from './employee';
 import project from './project';
 import leave from './leave';
+import timesheet from './timesheet';
 
 export default combineReducers({
   form: formReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
   masterTable,
   employee,
   project,
-  leave
+  leave,
+  timesheet
 });
