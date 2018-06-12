@@ -9,7 +9,6 @@ import ProfileImage from '../components/ProfileImage';
 const GeneralProfileBox = ({ image, generalProfile, onEditClick }) => (
   <Segment.Group raised size="large">
     <Segment padded inverted color="blue">
-      {/* <Image src={image} size="small" centered bordered /> */}
       <ProfileImage image={image} />
     </Segment>
     <Segment padded textAlign="center">
