@@ -7,10 +7,10 @@ import * as modalNames from '../constants/modalNames';
 import ProfileImage from '../components/ProfileImage';
 
 const GeneralProfileBox = ({ image, generalProfile, onEditClick }) => (
-  <Segment.Group raised size="large">
-    <Segment padded inverted color="blue">
+  <Segment.Group raised size="large" >
+    <Segment padded inverted color="blue" >
       {/* <Image src={image} size="small" centered bordered /> */}
-      <ProfileImage image={image} />
+      <ProfileImage style={{ marginLeft: 'auto', marginRight: 'auto', width: '50%'}}image={image} />
     </Segment>
     <Segment padded textAlign="center">
       <Grid>
