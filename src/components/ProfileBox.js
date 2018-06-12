@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Segment, Icon, List } from 'semantic-ui-react';
+import { Grid, Segment, List, Dropdown } from 'semantic-ui-react';
 
-const ProfileBox = ({ lists, onEditClick }) => (
+const ProfileBox = ({ lists, onEditClick, onDeleteClick }) => (
   <Segment raised padded size="large">
     <Grid>
       <Grid.Column computer={15} mobile={14}>
@@ -28,15 +28,26 @@ const ProfileBox = ({ lists, onEditClick }) => (
         </Grid>
       </Grid.Column>
       <Grid.Column floated="right" computer={1} mobile={2}>
-        <Icon name="edit" link size="large" onClick={onEditClick} />
+        <Dropdown icon="ellipsis horizontal" direction="left">
+          <Dropdown.Menu>
+            {onEditClick && <Dropdown.Item text="Edit" icon="pencil alternate" onClick={onEditClick} />}
+            {onDeleteClick && <Dropdown.Item text="Delete" icon="trash alternate" onClick={onDeleteClick} />}
+          </Dropdown.Menu>
+        </Dropdown>
       </Grid.Column>
     </Grid>
   </Segment>
 );
 
+ProfileBox.defaultProps = {
+  onEditClick: undefined,
+  onDeleteClick: undefined
+};
+
 ProfileBox.propTypes = {
   lists: PropTypes.array.isRequired,
-  onEditClick: PropTypes.func.isRequired
+  onEditClick: PropTypes.func,
+  onDeleteClick: PropTypes.func
 };
 
 export default ProfileBox;

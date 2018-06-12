@@ -27,7 +27,6 @@ const profile = (state = initialState, action) => {
     case actionTypes.PROFILE_UPDATE_REQUEST:
       return {
         ...state,
-        id: action.payload.id,
         form: action.payload.form
       };
     case actionTypes.PROFILE_UPDATE_SUCCESS:
