@@ -51,7 +51,8 @@ exports.create = (req, res, next) => {
 };
 
 exports.update = (req, res, next) => {
-  const editLeaveRequestArray = req.body.leaveRequests;
+  const editLeave = req.body.leaveRequest;
+  const editLeaveRequestArray = LeaveRequest.findByLeave(editLeave.leaveFrom, editLeave.leaveTo, editLeave.userId);
   editLeaveRequestArray.forEach((leaveRequest) => {
     const editLeaveRequest = {};
     editLeaveRequest.status = leaveRequest.status;
