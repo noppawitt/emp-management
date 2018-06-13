@@ -7,6 +7,7 @@ import LeavePage from './pages/LeavePage';
 import ProjectPage from './pages/ProjectPage';
 import ProfilePage from './pages/ProfilePage';
 import EmployeePage from './pages/EmployeePage';
+import Pro from './pages/From';
 
 const Routes = () => (
   <Switch>
@@ -17,6 +18,7 @@ const Routes = () => (
     <PrivateRoute path="/project" component={ProjectPage} />
     <PrivateRoute path="/profile/:id?" component={ProfilePage} />
     <PrivateRoute path="/employee" component={EmployeePage} />
+    <PrivateRoute path="/pro" component={Pro} />
   </Switch>
 );
 
