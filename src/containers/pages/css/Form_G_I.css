@@ -2,9 +2,22 @@
 .Body{
   background-color: white;
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   font-family: 'Prompt', sans-serif;
+}
+.div_logo{
+  position: relative;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  height: 45%;
+}
+.logo{
+  display: inline-block;
+  width: 55%;
+  height: 100%;
 }
 .profile{
   position: relative;
@@ -14,6 +27,7 @@
   padding-bottom: 4%;
   padding-left: 7%;
   padding-right: 7%;
+  margin: auto;
 }
 
 .profile_table{

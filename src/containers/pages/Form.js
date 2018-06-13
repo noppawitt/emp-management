@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as Scroll from 'react-scroll';
 import './css/Form_G_I.css';
-import logo from './pic/mfec_logo.png'
+import logo from './pic/download.png'
 import cmark from './pic/mark.png'
 
 let scroll     = Scroll.animateScroll;
@@ -169,7 +169,7 @@ class Form_G_I extends Component {
     return (
         <div className="Body">
           <div className="profile">
-            <h1><img src={logo} /> </h1>
+            <div className="div_logo" align="center"><img src={logo} className="logo"/> </div>
             <div>
               <table className="profile_table">
                 <tr>
