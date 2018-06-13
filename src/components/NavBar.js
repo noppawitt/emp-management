@@ -24,6 +24,12 @@ const Navbar = ({ username, onLogout }) => (
         <Menu.Item as={NavLink} to="/employee" name="employee">
           Employee
         </Menu.Item>
+        <Menu.Item as={NavLink} to="/exam" name="exam">
+          Exam
+        </Menu.Item>
+        <Menu.Item as={NavLink} to="/recruitment" name="recruitment">
+          Recruitment
+        </Menu.Item>
         <Menu.Menu position="right">
           <Dropdown item pointing text={username}>
             <Dropdown.Menu>
