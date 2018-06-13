@@ -20,6 +20,7 @@ class Form_G_I extends Component {
           pstart:'',
           pend:'',
           first : '',
+          second:'',
           state : '1',
           mainOption: null,
           option1 : true
@@ -29,7 +30,9 @@ class Form_G_I extends Component {
       this.handle_main_radio_1 = this.handle_main_radio_1.bind(this);
       this.handle_main_radio_2 = this.handle_main_radio_2.bind(this);
       this.First = this.First.bind(this);
+      this.Second = this.Second.bind(this);
       this.changeF = this.changeF.bind(this);
+      this.changeS = this.changeS.bind(this);
       this.handle_submit = this.handle_submit.bind(this);
   }
   componentDidMount(){
@@ -45,6 +48,7 @@ class Form_G_I extends Component {
 
     }
     this.changeF();
+    this.changeS();
   }
   scrollanimation(){
     var elem = document.getElementById('result');
@@ -128,11 +132,20 @@ class Form_G_I extends Component {
     var x=document.getElementsByName('q');
     var w=document.getElementsByName('q_w');
     for(var i=0;i<x.length;i++){
+      total+= parseInt(x[i].value);
+    }
+    this.setState({first: total});
+  }
+  changeS(){
+    var total=0;
+    var x=document.getElementsByName('p');
+    var w=document.getElementsByName('q_w');
+    for(var i=0;i<x.length;i++){
       document.getElementById('f'+i).innerHTML=parseInt(x[i].value)/5*parseInt((w[i].innerHTML))+'.0%';
       total+= parseInt(x[i].value);
     }
     document.getElementById('f_total').innerHTML=((total/30)*100).toFixed(1)+'%'
-    this.setState({first: total});
+    this.setState({second: total});
   }
   First() {
   return (<select name='q' onChange={this.changeF}>
@@ -143,9 +156,17 @@ class Form_G_I extends Component {
         <option value="5" >5</option>
       </select>);
   }
+  Second() {
+  return (<select name='p' onChange={this.changeS}>
+        <option value="1">1</option>
+        <option value="2" >2</option>
+        <option value="3" selected="selected">3</option>
+        <option value="4" >4</option>
+        <option value="5" >5</option>
+      </select>);
+  }
   render() {
     return (
-      <div className="background" id="back">
         <div className="Body">
           <div className="profile">
             <h1><img src={logo} /> </h1>
@@ -196,56 +217,56 @@ class Form_G_I extends Component {
                 </tr>
                 <tr>
                   <td className="No">1</td>
-                  <td>Quality of Work (คุณภาพงาน)</td>
+                  <td className="topic">Quality of Work (คุณภาพงาน)</td>
                   <td className="Weight" name="q1"><this.First/></td>
-                  <td></td>
+                  <td className="Weight" name="p1"><this.Second/></td>
                   <td className="Weight" name='q_w' >20.0%</td>
                   <td className="Weight"><span id='f0'></span></td>
                 </tr>
                 <tr>
                   <td className="No">2</td>
-                  <td>Quantity of Work (ปริมาณงาน)</td>
+                  <td className="topic">Quantity of Work (ปริมาณงาน)</td>
                   <td className="Weight" name="q1"><this.First/></td>
-                  <td></td>
+                  <td className="Weight" name="p1"><this.Second/></td>
                   <td className="Weight" name='q_w'>15.0%</td>
                   <td className="Weight"><span id='f1'></span></td>
                 </tr>
                 <tr>
                   <td className="No">3</td>
-                  <td>Functional Knowledge (ความรู้ในงาน)</td>
+                  <td className="topic">Functional Knowledge (ความรู้ในงาน)</td>
                   <td className="Weight" name="q1"><this.First/></td>
-                  <td></td>
+                  <td className="Weight" name="p1"><this.Second/></td>
                   <td className="Weight" name='q_w'>15.0%</td>
                   <td className="Weight"><span id='f2'></span></td>
                 </tr>
                 <tr>
                   <td className="No">4</td>
-                  <td>Communication Skills (ความสามารถในการสื่อสาร)</td>
+                  <td className="topic">Communication Skills (ความสามารถในการสื่อสาร)</td>
                   <td className="Weight" name="q1"><this.First/></td>
-                  <td></td>
+                  <td className="Weight" name="p1"><this.Second/></td>
                   <td className="Weight" name='q_w'>20.0%</td>
                   <td className="Weight"><span id='f3'></span></td>
                 </tr>
                 <tr>
                   <td className="No">5</td>
-                  <td>Problem Solving (การแก้ไขปัญหา)</td>
+                  <td className="topic">Problem Solving (การแก้ไขปัญหา)</td>
                   <td className="Weight" name="q1"><this.First/></td>
-                  <td></td>
+                  <td className="Weight" name="p1"><this.Second/></td>
                   <td className="Weight" name='q_w'>10.0%</td>
                   <td className="Weight"><span id='f4'></span></td>
                 </tr>
                 <tr>
                   <td className="No">6</td>
-                  <td>Compliance (การปฏิบัติตามระเบียบ/ข้อบังคับ)</td>
+                  <td className="topic">Compliance (การปฏิบัติตามระเบียบ/ข้อบังคับ)</td>
                   <td className="Weight" name="q1"><this.First/></td>
-                  <td></td>
+                  <td className="Weight" name="p1"><this.Second/></td>
                   <td className="Weight" name='q_w'>20.0%</td>
                   <td className="Weight"><span id='f5'></span></td>
                 </tr>
                 <tr>
                   <th colspan="2">Total Performance Score</th>
                   <th><span className="total" id="total">{this.state.first}</span></th>
-                  <th></th>
+                  <th><span className="total" id="total">{this.state.second}</span></th>
                   <th className="Weight">100.0%</th>
                   <th><span id='f_total'></span></th>
                 </tr>
@@ -359,7 +380,6 @@ class Form_G_I extends Component {
             </div>
           </div>
         </div>
-      </div>
     );
   }
 }
