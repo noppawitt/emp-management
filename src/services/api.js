@@ -245,10 +245,4 @@ api.fetchTimesheet = id => (
   callApi(`/api/timesheets/?id=${id}`)
 );
 
-// Probation
-
-api.fetchProbation = id => (
-  callApi(`/api/probation/?id=${id}`)
-);
-
 export default api;
