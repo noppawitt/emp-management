@@ -21,7 +21,8 @@
         "jsx-a11y/label-has-for": "off",
         "object-curly-newline": "off",
         "quotes": ["error", "single", { "allowTemplateLiterals": true }],
-        "no-param-reassign": "off"
+        "no-param-reassign": "off",
+        "linebreak-style": ["error", "windows"]
     },
     "plugins": [
         "import",
