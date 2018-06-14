@@ -18,5 +18,8 @@ export const ADD_PROJECT = 'ADD_PROJECT';
 // Leave
 export const CREATE_LEAVE_REQUEST = 'CREATE_LEAVE_REQUEST';
 
+// Exam
+export const ADD_NEW_EXAM = 'ADD_NEW_EXAM';
+
 // Other
 export const CONFIRM = 'CONFIRM';
