@@ -22,6 +22,9 @@ const holiday = require('./holiday');
 const project = require('./project');
 const timesheet = require('./timesheet');
 const leaveRequest = require('./leaveRequest');
+const probation = require('./probation');
+
+router.use('/probation', probation);
 
 router.use('/employee-info', employeeInfo);
 
