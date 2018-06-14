@@ -1,7 +1,7 @@
 const Probation = require('../models/Probation');
 
 exports.findById = (req, res, next) => {
-    Probation.findById(id)
+    Probation.findById(req.query.id)
         .then((users) => {
             res.json(users);
         })
