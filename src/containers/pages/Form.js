@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import * as Scroll from 'react-scroll';
 import './css/Form_G_I.css';
-import logo from './pic/download.png'
+import logo from './pic/logo.png'
 import cmark from './pic/mark.png'
+import Scoring from './scoring'
 
 let scroll     = Scroll.animateScroll;
 
-class Form_G_I extends Component {
+class Form extends Component {
   constructor(props){
       super(props);
       this.state = {
@@ -19,9 +20,8 @@ class Form_G_I extends Component {
           sup:'',
           pstart:'',
           pend:'',
-          first : '',
-          second:'',
           state : '1',
+          score: [3,3,3,3,3,3],
           mainOption: null,
           option1 : true
       }
@@ -29,72 +29,27 @@ class Form_G_I extends Component {
       this.handle_radio_2 = this.handle_radio_2.bind(this);
       this.handle_main_radio_1 = this.handle_main_radio_1.bind(this);
       this.handle_main_radio_2 = this.handle_main_radio_2.bind(this);
-      this.First = this.First.bind(this);
-      this.Second = this.Second.bind(this);
-      this.changeF = this.changeF.bind(this);
-      this.changeS = this.changeS.bind(this);
-      this.handle_submit = this.handle_submit.bind(this);
+  }
+  componentWillMount(){
+    if(this.props.state=='2') {
+      for(var i=0;i<6;i++){
+        this.state.score[i]=4;
+        console.log(this.state.score)
+      }
+    }
+    this.setState({mainOption: false})
   }
   componentDidMount(){
-
     if(this.props.state=='2') {
       document.getElementById('result').style.display = 'block';
-      this.setState({name:'Wachit Chaisitsak',eid:123456});
-      var x=document.getElementsByName('q');
-      for(var i=0;i<x.length;i++){
-        x[i].value="5";
-        console.log(x[i].nodeName)
-      }
+      if(this.state.mainOption==true){
+        document.getElementById('main1').checked = 'checked';
+      }else   document.getElementById('main2').checked = 'checked';
 
-    }
-    this.changeF();
-    this.changeS();
-  }
-  incFloatAnimation(a,b){
-    var int = setInterval(toDo, 0.1);
-    function toDo() {
-      if(parseFloat(b.innerHTML)==a) {
-        clearInterval(int);
-      }
-      else {
-        if(parseFloat(b.innerHTML)>a){
-          b.innerHTML=(parseFloat(b.innerHTML)-0.1).toFixed(1)+'%';
-        }else{
-          b.innerHTML=(parseFloat(b.innerHTML)+0.1).toFixed(1)+'%';
-        }
-      }
-    }
-  }
-  incIntAnimation(a,b){
-    var int = setInterval(toDo, 35);
-    function toDo() {
-      if(parseInt(b.innerHTML)==a) {
-        clearInterval(int);
-      }
-      else {
-        if(parseInt(b.innerHTML)>a){
-          b.innerHTML=(parseFloat(b.innerHTML)-1);
-        }else{
-          b.innerHTML=(parseFloat(b.innerHTML)+1);
-        }
-      }
     }
   }
   scrollanimation(){
-    var elem = document.getElementById('result');
-    var pos = 5;
-    var check = false;
-    var next;
-    var int = setInterval(frame,5);
-    function frame(){
-      if(elem.offsetTop <= window.pageYOffset || check){
-        clearInterval(int);
-      }else{
-        next = window.pageYOffset+pos;
-        window.scrollTo(0,window.pageYOffset+pos);
-        if(next!=window.pageYOffset)check = true;
-      }
-    }
+    scroll.scrollTo(document.getElementById('result').offsetTop);
   }
 
   handle_radio_1(){
@@ -112,30 +67,6 @@ class Form_G_I extends Component {
       this.setState({mainOption: false,option1 : true});
       console.log(this.state.option1);
     }
-  }
-  handle_submit(){
-    if(parseInt(document.getElementById('f_total').innerHTML)>=60){
-      document.getElementsByName('main_option')[0].checked = 'true'
-      this.setState({mainOption:true});
-    }
-    else {
-      document.getElementsByName('main_option')[1].checked = 'true'
-      this.setState({mainOption:false});
-      console.log(document.getElementsByName('main_option').length)
-
-    }
-    var x = document.getElementsByName('p');
-    var y = document.getElementsByName('q');
-    for(var i=0;i<x.length;i++){
-      x[i].disabled=true;
-      y[i].disabled=true;
-    }
-    document.getElementById('result').style.display = 'block';
-    scroll.scrollTo(document.getElementById('result').offsetTop);
-    document.getElementById('submit-but').disabled=true;
-    document.getElementById('sup-but').disabled=true;
-    document.getElementById('mag-but').disabled=true;
-
   }
   handle_accept1(){
     document.getElementById('emp').innerHTML='Date: '+(new Date()).toString().substr(0,24);
@@ -164,52 +95,28 @@ class Form_G_I extends Component {
     document.getElementById('input2').disabled=false;
     document.getElementById('input1').value='';
   }
-  changeF(){
-    var total=0;
-    var x=document.getElementsByName('q');
-    var w=document.getElementsByName('q_w');
-    for(var i=0;i<x.length;i++){
-      total+= parseInt(x[i].value);
-    }
-    this.incIntAnimation(total,document.getElementById('ftotal'));
-  }
-  changeS(){
-    var total=0;
-    var x=document.getElementsByName('p');
-    var w=document.getElementsByName('q_w');
-    for(var i=0;i<x.length;i++){
-      this.incFloatAnimation((parseInt(x[i].value)/5*parseInt((w[i].innerHTML))).toFixed(1),document.getElementById('f'+i));
-      total+= parseInt(x[i].value);
-    }
-    var a = ((total/30)*100).toFixed(1);
-    var b = (document.getElementById('f_total'));
-    this.incFloatAnimation(a,b);
-
-    this.incIntAnimation(total,document.getElementById('stotal'));
-  }
-  First() {
-  return (<select name='q' onChange={this.changeF}>
-        <option value="1">1</option>
-        <option value="2" >2</option>
-        <option value="3" selected="selected">3</option>
-        <option value="4" >4</option>
-        <option value="5" >5</option>
-      </select>);
-  }
-  Second() {
-  return (<select name='p' onChange={this.changeS}>
-        <option value="1">1</option>
-        <option value="2" >2</option>
-        <option value="3" selected="selected">3</option>
-        <option value="4" >4</option>
-        <option value="5" >5</option>
-      </select>);
-  }
+  // zzz(){
+  //   var int = setInterval(toDo, 500);
+  //   function toDo() {
+  //     var a = window.innerHeight+window.pageYOffset;
+  //     var b = document.getElementById('kkk');
+  //     if(a>b.offsetTop+200) {
+  //       document.getElementById('mark1').style.width='2em';
+  //       console.log(a + ' ' + b.offsetTop);
+  //       clearInterval(int);
+  // 
+  //     }
+  //     else {
+  //       console.log(window.innerHeight);
+  //     }
+  //   }
+  // }
   render() {
     return (
-        <div className="Body">
+        <div className="Body" onMouseMove={this.zzz}>
+
           <div className="profile">
-            <div className="div_logo" align="center"><img src={logo} className="logo"/> </div>
+            <div className="div_logo" align="center"><img className="logo"src={logo}/></div>
             <div>
               <table className="profile_table">
                 <tbody>
@@ -246,82 +153,7 @@ class Form_G_I extends Component {
               </table>
             </div>
 
-            <div>
-              <table className="table_main" id="table_main">
-              <tbody>
-                <tr>
-                  <th colspan="6" className="table_header"><div className="lll"><span className="blue">Performance Appraisal Portion</span></div></th>
-                </tr>
-                <tr>
-                  <th>No.</th>
-                  <th>Appraisal Criteria</th>
-                  <th>Score</th>
-                  <th>Total Average</th>
-                  <th>Weight</th>
-                  <th>Total Point</th>
-                </tr>
-                <tr>
-                  <td className="No">1</td>
-                  <td className="topic">Quality of Work (คุณภาพงาน)</td>
-                  <td className="Weight" name="q1"><this.First/></td>
-                  <td className="Weight" name="p1"><this.Second/></td>
-                  <td className="Weight" name='q_w' >20.0%</td>
-                  <td className="Weight"><span id='f0'>0</span></td>
-                </tr>
-                <tr>
-                  <td className="No">2</td>
-                  <td className="topic">Quantity of Work (ปริมาณงาน)</td>
-                  <td className="Weight" name="q1"><this.First/></td>
-                  <td className="Weight" name="p1"><this.Second/></td>
-                  <td className="Weight" name='q_w'>15.0%</td>
-                  <td className="Weight"><span id='f1'>0</span></td>
-                </tr>
-                <tr>
-                  <td className="No">3</td>
-                  <td className="topic">Functional Knowledge (ความรู้ในงาน)</td>
-                  <td className="Weight" name="q1"><this.First/></td>
-                  <td className="Weight" name="p1"><this.Second/></td>
-                  <td className="Weight" name='q_w'>15.0%</td>
-                  <td className="Weight"><span id='f2'>0</span></td>
-                </tr>
-                <tr>
-                  <td className="No">4</td>
-                  <td className="topic">Communication Skills (ความสามารถในการสื่อสาร)</td>
-                  <td className="Weight" name="q1"><this.First/></td>
-                  <td className="Weight" name="p1"><this.Second/></td>
-                  <td className="Weight" name='q_w'>20.0%</td>
-                  <td className="Weight"><span id='f3'>0</span></td>
-                </tr>
-                <tr>
-                  <td className="No">5</td>
-                  <td className="topic">Problem Solving (การแก้ไขปัญหา)</td>
-                  <td className="Weight" name="q1"><this.First/></td>
-                  <td className="Weight" name="p1"><this.Second/></td>
-                  <td className="Weight" name='q_w'>10.0%</td>
-                  <td className="Weight"><span id='f4'>0</span></td>
-                </tr>
-                <tr>
-                  <td className="No">6</td>
-                  <td className="topic">Compliance (การปฏิบัติตามระเบียบ/ข้อบังคับ)</td>
-                  <td className="Weight" name="q1"><this.First/></td>
-                  <td className="Weight" name="p1"><this.Second/></td>
-                  <td className="Weight" name='q_w'>20.0%</td>
-                  <td className="Weight"><span id='f5'>0</span></td>
-                </tr>
-                <tr>
-                  <th colspan="2">Total Performance Score</th>
-                  <th><span className="total" id="ftotal">0</span></th>
-                  <th><span className="total" id="stotal">0</span></th>
-                  <th className="Weight">100.0%</th>
-                  <th className="th_total"><span id='f_total' className="blue">48</span></th>
-                </tr>
-                <tr>
-                  <th colspan="5"></th>
-                  <th><button id='submit-but' className="Submit-button" onClick={this.handle_submit}> Submit </button></th>
-                </tr>
-                </tbody>
-              </table>
-            </div>
+            <Scoring ref="child" scrollAnimation={this.scrollanimation} score={this.state.score} state={this.props.state}/>
 
             <div className="result" id="result">
             <div>
@@ -332,7 +164,7 @@ class Form_G_I extends Component {
                 </tr>
                 <tr>
                   <td colspan="1"></td>
-                  <td colspan="5"><input type="radio" name='main_option' onClick={this.handle_main_radio_1}></input>Pass probationary period. Effective date on</td>
+                  <td colspan="5"><input id="main1" type="radio" name='main_option' onClick={this.handle_main_radio_1}></input>Pass probationary period. Effective date on</td>
                   <td colspan="4">  </td>
                 </tr>
                 {this.state.mainOption ? (
@@ -367,7 +199,7 @@ class Form_G_I extends Component {
 
                 <tr>
                   <td colspan="1"></td>
-                  <td colspan="5"><input type='radio' name="main_option" onClick={this.handle_main_radio_2}></input>This person does not pass probation period. Action to be taken </td>
+                  <td colspan="5"><input id="main2" type='radio' name="main_option" onClick={this.handle_main_radio_2}></input>This person does not pass probation period. Action to be taken </td>
                   <td colspan="4">  </td>
                 </tr>
                 {this.state.mainOption ? '':
@@ -405,7 +237,7 @@ class Form_G_I extends Component {
               <div>Employee has read this appraisal and discussed the contents with direct supervisor. Signatures identify that employee has been advised on their performance by direct supervisor.</div>
             </div>
 
-            <div>
+            <div id='kkk'>
               <table className="grid">
               <tbody>
                 <tr>
@@ -433,4 +265,4 @@ class Form_G_I extends Component {
   }
 }
 
-export default Form_G_I;
+export default Form;
