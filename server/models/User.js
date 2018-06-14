@@ -5,14 +5,13 @@ const User = {};
 User.create = (user, id) => (
   db.tx((transaction) => {
     const q1 = transaction.one(
-      'INSERT INTO users (username, password, created_user, updated_user, type, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING 1',
+      'INSERT INTO users (username, password, created_user, updated_user, type) VALUES ($1, $2, $3, $4, $5) RETURNING 1',
       [
         user.username,
         user.password,
         id,
         id,
         user.type,
-        user.status
       ]
     );
     const q2 = transaction.one(
