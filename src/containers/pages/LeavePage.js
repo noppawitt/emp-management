@@ -8,9 +8,9 @@ import * as modalNames from '../../constants/modalNames';
 import Leave from '../../components/Leave';
 import Loader from '../../components/Loader';
 
-const LeavePage = ({ isFetching, leaves, onAddClick, onCancelClick }) => (
+const LeavePage = ({ isFetching, leaves, onAddClick, onCancelClick, userId }) => (
   <div>
-    {isFetching ? <Loader /> : <Leave leaves={leaves} onAddClick={onAddClick} onCancelClick={onCancelClick} />}
+    {isFetching ? <Loader /> : <Leave userId={userId} leaves={leaves} onAddClick={onAddClick} onCancelClick={onCancelClick} />}
   </div>
 );
 
@@ -22,21 +22,23 @@ LeavePage.propTypes = {
   isFetching: PropTypes.bool,
   leaves: PropTypes.array.isRequired,
   onAddClick: PropTypes.func.isRequired,
-  onCancelClick: PropTypes.func.isRequired
+  onCancelClick: PropTypes.func.isRequired,
+  userId: PropTypes.number.isRequired
 };
 
 const mapStateToProps = state => ({
   isFetching: state.leave.isFetching,
-  leaves: state.leave.lists
+  leaves: state.leave.lists,
+  userId: state.auth.id
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchLeave: () => dispatch(fetchLeaveRequest()),
   onAddClick: () => dispatch(openModal(modalNames.CREATE_LEAVE_REQUEST)),
-  onCancelClick: () => dispatch(openModal(modalNames.CONFIRM, {
+  onCancelClick: (userId, leave, status) => dispatch(openModal(modalNames.CONFIRM, {
     header: 'Cancel confirmation',
     description: 'Are you sure to cancel this leave request ?',
-    onConfirm: () => dispatch(updateLeaveRequest())
+    onConfirm: () => dispatch(updateLeaveRequest(userId, leave, status))
   }))
 });
 
