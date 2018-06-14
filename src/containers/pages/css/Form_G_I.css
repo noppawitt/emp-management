@@ -99,7 +99,7 @@
   color: #37BFDB;
 }
 .dddddd{
-  //background-color: red;
+  /* background-color: red; */
   padding-top: 2%;
   width: 100%;
 }
@@ -136,12 +136,12 @@ table{
   width: 100%;
 }
 th{
-  //border: 1px solid black;
+  /* border: 1px solid black; */
   padding: 1%;
   text-align: center;
 }
 td{
-  //border: 1px solid black;
+  /* border: 1px solid black; */
   padding: 5px;
 }
 @media screen and (max-width: 9902px) {
