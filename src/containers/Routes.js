@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import TimesheetPage from './pages/TimesheetPage';
 import LeavePage from './pages/LeavePage';
 import ProjectPage from './pages/ProjectPage';
+import ProjectInfo from '../components/ProjectInfo';
 import ProfilePage from './pages/ProfilePage';
 import EmployeePage from './pages/EmployeePage';
 
@@ -14,7 +15,8 @@ const Routes = () => (
     <Route exact path="/" render={() => <Redirect to="/timesheet" />} />
     <PrivateRoute path="/timesheet" component={TimesheetPage} />
     <PrivateRoute path="/leave" component={LeavePage} />
-    <PrivateRoute path="/project" component={ProjectPage} />
+    <PrivateRoute exact path="/project" component={ProjectPage} />
+    <PrivateRoute path="/project/:id" component={ProjectInfo} />
     <PrivateRoute path="/profile/:id?" component={ProfilePage} />
     <PrivateRoute path="/employee" component={EmployeePage} />
   </Switch>

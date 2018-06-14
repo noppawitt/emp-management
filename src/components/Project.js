@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Segment, Input, Table, Menu, Button, Icon } from 'semantic-ui-react';
+import history from '../history';
 
 const Project = ({ projects, onAddClick, onSearchChange, sortKey, direction, handleSort }) => (
   <Segment.Group raised>
@@ -26,7 +27,7 @@ const Project = ({ projects, onAddClick, onSearchChange, sortKey, direction, han
 
         <Table.Body>
           {projects.map(project => (
-            <Table.Row key={project.id} style={{ cursor: 'pointer' }}>
+            <Table.Row key={project.id} style={{ cursor: 'pointer' }} onClick={() => history.push(`/project/${project.id}`)}>
               <Table.Cell>{project.id}</Table.Cell>
               <Table.Cell>{project.name}</Table.Cell>
               <Table.Cell>{project.customer}</Table.Cell>
