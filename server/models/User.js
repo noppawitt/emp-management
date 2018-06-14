@@ -50,7 +50,7 @@ User.findByUsername = username => (
 );
 
 User.findAll = () => (
-  db.manyOrNone('SELECT users.id, employee_info.first_name, employee_info.last_name, employee_info.nick_name, employee_info.mobile_number, employee_info.email, employee_info.picture FROM employee_info, users WHERE users.id = employee_info.user_id AND users.status = $1 ORDER BY users.id ', ['Active'])
+  db.manyOrNone('SELECT users.id, employee_info.user_id, employee_info.first_name, employee_info.last_name, employee_info.nick_name, employee_info.mobile_number, employee_info.email, employee_info.picture FROM employee_info, users WHERE users.id = employee_info.user_id AND status = $1 ORDER BY users.id', ['Active'])
 );
 
 User.findByName = (firstName, lastName) => (
