@@ -53,21 +53,27 @@ exports.create = (req, res, next) => {
 exports.update = (req, res, next) => {
   const editLeave = req.body.leaveRequest;
   const editLeaveRequestArray = LeaveRequest.findByLeave(editLeave.leaveFrom, editLeave.leaveTo, editLeave.userId);
+  let counter = editLeaveRequestArray.length;
+
+  const findLeave = () => {
+    LeaveRequest.findByUserId(req.user.id)
+      .then((leaveRequests) => {
+        res.json(leaveRequests);
+      })
+      .catch(next);
+  };
+
   editLeaveRequestArray.forEach((leaveRequest) => {
+    counter -= 1;
     const editLeaveRequest = {};
     editLeaveRequest.status = leaveRequest.status;
     editLeaveRequest.leaveFrom = leaveRequest.leaveFrom;
     editLeaveRequest.leaveTo = leaveRequest.leaveTo;
     editLeaveRequest.userId = leaveRequest.userId;
-    LeaveRequest.update(editLeaveRequest, req.user.id)
-      .then(() => {
-        LeaveRequest.findByUserId(req.user.id)
-          .then((leaveRequests) => {
-            res.json(leaveRequests);
-          })
-          .catch(next);
-      })
-      .catch(next);
+    LeaveRequest.update(editLeaveRequest, req.user.id);
+    if (counter === 0) {
+      findLeave();
+    }
   });
 };
 
