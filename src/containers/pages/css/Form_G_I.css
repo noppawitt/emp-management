@@ -142,7 +142,10 @@ th{
 }
 td{
   /* border: 1px solid black; */
-  padding: 5px;
+  padding-left: 1%;
+  padding-right: 1%;
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
 }
 @media screen and (max-width: 9902px) {
   h1{
@@ -186,7 +189,7 @@ select-selected{
   width: 0rem;
   top: 50%;
   left: 75%;
-  transition: 0.7s;
+  transition: 0.5s;
 }
 .div_mark2{
   position: absolute;
@@ -195,7 +198,7 @@ select-selected{
   width: 0rem;
   top: 50%;
   left: 75%;
-  transition: 0.7s;
+  transition: 0.5s;
 }
 .div_mark3{
   position: absolute;
@@ -204,7 +207,7 @@ select-selected{
   width: 0rem;
   top: 50%;
   left: 75%;
-  transition: 0.7s;
+  transition: 0.5s;
 }
 .zzz{
   position: fixed;
@@ -214,4 +217,17 @@ select-selected{
   background-color: red;
   width: 200px;
   height: 200px;
+}
+.blue{
+  color:#26AECA;
+  font-size: 1.7em;
+  text-shadow: 0px 3px 1px rgba(0,0,0,0.05);
+
+}
+.th_total{
+  width: 14%;
+}
+.lll{
+  border-bottom: 0.1em solid black;
+  box-shadow: 0px 3px 1px rgba(0,0,0,0.1);
 }
