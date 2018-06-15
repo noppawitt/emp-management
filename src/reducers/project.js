@@ -7,7 +7,7 @@ const initialState = {
   direction: null
 };
 
-const Project = (state = initialState, action) => {
+const project = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.PROJECT_FETCH_REQUEST:
       return {
@@ -57,4 +57,4 @@ const Project = (state = initialState, action) => {
   }
 };
 
-export default Project;
+export default project;

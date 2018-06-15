@@ -219,6 +219,19 @@ api.createProject = body => (
   })
 );
 
+// Project detail
+
+api.fetchProjectDetail = id => (
+  callApi(`/api/projects/?id=${id}`)
+);
+
+api.createMember = body => (
+  callApi(`/api/has-project`, {
+    method: 'POST',
+    body
+  })
+);
+
 // Leave
 
 api.createLeave = body => (
