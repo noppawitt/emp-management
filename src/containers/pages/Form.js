@@ -4,6 +4,8 @@ import './css/Form_G_I.css';
 import logo from './pic/logo.png'
 import cmark from './pic/mark.png'
 import Scoring from './Scoring'
+import api from '../../services/api'
+import Loading from '../../components/Loader'
 
 let scroll = Scroll.animateScroll;
 
@@ -11,19 +13,20 @@ class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      eid: '',
-      dep: '',
-      job: '',
-      level: '',
-      pos: '',
-      sup: '',
-      pstart: '',
-      pend: '',
+      name: 'Loading..',
+      eid: 'Loading..',
+      dep: 'Loading..',
+      job: 'Loading..',
+      level: 'Loading..',
+      pos: 'Loading..',
+      sup: 'Loading..',
+      pstart: 'Loading..',
+      pend: 'Loading..',
       state: '1',
       score: [3, 3, 3, 3, 3, 3],
       mainOption: null,
-      option1: true
+      option1: true,
+      isFetched: false
     }
     this.setMain = this.setMain.bind(this);
     this.handle_radio_1 = this.handle_radio_1.bind(this);
@@ -39,8 +42,22 @@ class Form extends Component {
       }
       this.setState({ mainOption: false })
     }
+    this.setState({ mainOption: false })
 
-
+    api.fetchProbation('10001').then((res) => {
+      console.log(res);
+      this.setState({
+        name: res[0].fullName,
+        dep: res[0].department,
+        level: res[0].level,
+        pos: res[0].position,
+        pstart: res[0].startDate,
+        pend: res[0].probationDate,
+        sup: res[0].supervisor,
+        eid: res[0].userId,
+        isFetched: true
+      });
+    });
   }
   componentDidMount() {
     if (this.props.state == '2') {
@@ -117,165 +134,168 @@ class Form extends Component {
   // }
   render() {
     return (
-      <div className="Body" onMouseMove={this.zzz}>
+      <div>
+        {this.state.isFetched ? '' : <Loading />}
+        <div className="Body" onMouseMove={this.zzz}>
 
-        <div className="profile">
-          <div className="div_logo" align="center"><img className="logo" src={logo} /></div>
-          <div>
-            <table className="profile_table">
-              <tbody>
-                <tr>
-                  <th colspan="4" className="table_header"><div className="lll"><span className="blue">Information</span></div> </th>
-                </tr>
-                <tr>
-                  <td className="topic_1">Name:</td>
-                  <td className="show_1"><span>{this.state.name}</span></td>
-                  <td className="topic_2">Department:</td>
-                  <td className="show_2">{this.state.eid}</td>
-                </tr>
-                <tr>
-                  <td className="topic_1">EmployeeID:</td>
-                  <td className="show_1"><span>{this.state.job}</span></td>
-                  <td className="topic_2">Position:</td>
-                  <td className="show_2"><span>{this.state.level}</span></td>
-
-                </tr>
-                <tr>
-                  <td className="topic_1">Level:</td>
-                  <td className="show_1"><span>{this.state.name}</span></td>
-                  <td className="topic_2">Probation Start Date:</td>
-                  <td className="show_2">{this.state.eid}</td>
-
-                </tr>
-                <tr>
-                  <td className="topic_1">Supervisor:</td>
-                  <td className="show_1"><span>{this.state.job}</span></td>
-                  <td className="topic_2">Probation End Date :</td>
-                  <td className="show_2"><span>{this.state.level}</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <Scoring ref="child" scrollAnimation={this.scrollanimation} score={this.state.score} state={this.props.state} setMain={this.setMain} />
-
-          <div className="result" id="result">
-            <div className="result-table">
-              <table className="grid-res">
-                <tbody>
-                  <tr>
-                    <th colspan="10"><div className="lll"><span className="blue">The Evaluation Result</span></div></th>
-                  </tr>
-                  <tr>
-                    <td colspan="1"></td>
-                    <td colspan="5"><input id="main1" type="radio" name='main_option' onClick={this.handle_main_radio_1}></input>Pass probationary period. Effective date on</td>
-                    <td colspan="4">  </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div className="result-table-hidden" id="main1_option">
-              <table className="grid-res">
-                <tbody>
-                  <tr>
-                    <td colspan="2"></td>
-                    <td colspan="3"><input type="radio" name="option1" id="option1_1" onClick={this.handle_radio_1} ></input>Confirmed By Employment Conditions</td>
-                    <td></td>
-                    <td colspan="4"> <input type="radio" name="option1" id="option1_2" onClick={this.handle_radio_2}></input>Adjust the Salary and Benefits</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div className="result-table-hidden">
-              <table className="grid-res">
-                <tbody>
-                  <tr className="option1_row" id="option1_row">
-                    <td colspan="3"></td>
-                    <td colspan="2">Based Salary</td>
-                    <td><input type='text'></input></td>
-                    <td colspan="2">Mobile</td>
-                    <td><input></input></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div className="result-table-hidden">
-              <table className="grid-res">
-                <tbody>
-                  <tr className="option1_row" id="option1_row">
-                    <td colspan="3"></td>
-                    <td colspan="2">Transporation Allowance</td>
-                    <td><input></input></td>
-                    <td colspan="2">Others Allowance</td>
-                    <td colspan="1"><input></input></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div className="result-table">
-              <table className="grid-res">
-                <tbody>
-                  <tr>
-                    <td colspan="1"></td>
-                    <td colspan="5"><input id="main2" type='radio' name="main_option" onClick={this.handle_main_radio_2}></input>This person does not pass probation period. Action to be taken </td>
-                    <td colspan="4">  </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div className="result-table-hidden" id="main2_option">
-              <table className="grid-res">
-                <tbody>
-                  <tr>
-                    <td colspan="2"></td>
-                    <td colspan="3"><input type="radio" name="option2" onClick={this.handle_input_dis1}></input>Termination Effective</td>
-                    <td colspan="2"><input id='input1' disabled='true'></input></td>
-                    <td colspan="3"></td>
-                  </tr>
-                  <tr>
-                    <td colspan="2"></td>
-                    <td colspan="3"><input type="radio" name="option2" onClick={this.handle_input_dis2}></input>Continued probation untill</td>
-                    <td colspan="2"><input id='input2' disabled='true'></input></td>
-                    <td colspan="3"></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
+          <div className="profile">
+            <div className="div_logo" align="center"><img className="logo" src={logo} /></div>
             <div>
-              <div>Summary Comments by Supervisors:</div>
-              <textarea className="comment"></textarea>
-            </div>
-
-            <div>
-              <div>Employee has read this appraisal and discussed the contents with direct supervisor. Signatures identify that employee has been advised on their performance by direct supervisor.</div>
-            </div>
-
-            <div id='kkk'>
-              <table className="grid">
+              <table className="profile_table">
                 <tbody>
                   <tr>
-                    <th>Employee signature:</th>
-                    <th>Supervisor signature:</th>
-                    <th>Managing Director signature:</th>
+                    <th colspan="4" className="table_header"><div className="lll"><span className="blue">Information</span></div> </th>
                   </tr>
                   <tr>
-                    <th><div className='div_mark' ><button className="Accept-button" id='emp-but' onClick={this.handle_accept1}>Accept</button><div className="div_mark1" id="mark1"><img src={cmark} className="mark"></img></div></div></th>
-                    <th><div className='div_mark' ><button className="Accept-button" id='sup-but' onClick={this.handle_accept2}>Accept</button><div className="div_mark2" id="mark2"><img src={cmark} className="mark"></img></div></div></th>
-                    <th><div className='div_mark' ><button className="Accept-button" id='mag-but' onClick={this.handle_accept3}>Accept</button><div className="div_mark3" id="mark3"><img src={cmark} className="mark"></img></div></div></th>
+                    <td className="topic_1">Name:</td>
+                    <td className="show_1"><span>{this.state.name}</span></td>
+                    <td className="topic_2">Department:</td>
+                    <td className="show_2">{this.state.eid}</td>
                   </tr>
                   <tr>
-                    <th id="emp">Date:</th>
-                    <th id="sup">Date:</th>
-                    <th id="mag">Date:</th>
+                    <td className="topic_1">EmployeeID:</td>
+                    <td className="show_1"><span>{this.state.job}</span></td>
+                    <td className="topic_2">Position:</td>
+                    <td className="show_2"><span>{this.state.level}</span></td>
+
+                  </tr>
+                  <tr>
+                    <td className="topic_1">Level:</td>
+                    <td className="show_1"><span>{this.state.name}</span></td>
+                    <td className="topic_2">Probation Start Date:</td>
+                    <td className="show_2">{this.state.eid}</td>
+
+                  </tr>
+                  <tr>
+                    <td className="topic_1">Supervisor:</td>
+                    <td className="show_1"><span>{this.state.job}</span></td>
+                    <td className="topic_2">Probation End Date :</td>
+                    <td className="show_2"><span>{this.state.level}</span></td>
                   </tr>
                 </tbody>
               </table>
+            </div>
+
+            <Scoring ref="child" scrollAnimation={this.scrollanimation} score={this.state.score} state={this.props.state} setMain={this.setMain} />
+
+            <div className="result" id="result">
+              <div className="result-table">
+                <table className="grid-res">
+                  <tbody>
+                    <tr>
+                      <th colspan="10"><div className="lll"><span className="blue">The Evaluation Result</span></div></th>
+                    </tr>
+                    <tr>
+                      <td colspan="1"></td>
+                      <td colspan="5"><input id="main1" type="radio" name='main_option' onClick={this.handle_main_radio_1}></input>Pass probationary period. Effective date on</td>
+                      <td colspan="4">  </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="result-table-hidden" id="main1_option">
+                <table className="grid-res">
+                  <tbody>
+                    <tr>
+                      <td colspan="2"></td>
+                      <td colspan="3"><input type="radio" name="option1" id="option1_1" onClick={this.handle_radio_1} ></input>Confirmed By Employment Conditions</td>
+                      <td></td>
+                      <td colspan="4"> <input type="radio" name="option1" id="option1_2" onClick={this.handle_radio_2}></input>Adjust the Salary and Benefits</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="result-table-hidden">
+                <table className="grid-res">
+                  <tbody>
+                    <tr className="option1_row" id="option1_row">
+                      <td colspan="3"></td>
+                      <td colspan="2">Based Salary</td>
+                      <td><input type='text'></input></td>
+                      <td colspan="2">Mobile</td>
+                      <td><input></input></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="result-table-hidden">
+                <table className="grid-res">
+                  <tbody>
+                    <tr className="option1_row" id="option1_row">
+                      <td colspan="3"></td>
+                      <td colspan="2">Transporation Allowance</td>
+                      <td><input></input></td>
+                      <td colspan="2">Others Allowance</td>
+                      <td colspan="1"><input></input></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="result-table">
+                <table className="grid-res">
+                  <tbody>
+                    <tr>
+                      <td colspan="1"></td>
+                      <td colspan="5"><input id="main2" type='radio' name="main_option" onClick={this.handle_main_radio_2}></input>This person does not pass probation period. Action to be taken </td>
+                      <td colspan="4">  </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="result-table-hidden" id="main2_option">
+                <table className="grid-res">
+                  <tbody>
+                    <tr>
+                      <td colspan="2"></td>
+                      <td colspan="3"><input type="radio" name="option2" onClick={this.handle_input_dis1}></input>Termination Effective</td>
+                      <td colspan="2"><input id='input1' disabled='true'></input></td>
+                      <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"></td>
+                      <td colspan="3"><input type="radio" name="option2" onClick={this.handle_input_dis2}></input>Continued probation untill</td>
+                      <td colspan="2"><input id='input2' disabled='true'></input></td>
+                      <td colspan="3"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div>
+                <div>Summary Comments by Supervisors:</div>
+                <textarea className="comment"></textarea>
+              </div>
+
+              <div>
+                <div>Employee has read this appraisal and discussed the contents with direct supervisor. Signatures identify that employee has been advised on their performance by direct supervisor.</div>
+              </div>
+
+              <div id='kkk'>
+                <table className="grid">
+                  <tbody>
+                    <tr>
+                      <th>Employee signature:</th>
+                      <th>Supervisor signature:</th>
+                      <th>Managing Director signature:</th>
+                    </tr>
+                    <tr>
+                      <th><div className='div_mark' ><button className="Accept-button" id='emp-but' onClick={this.handle_accept1}>Accept</button><div className="div_mark1" id="mark1"><img src={cmark} className="mark"></img></div></div></th>
+                      <th><div className='div_mark' ><button className="Accept-button" id='sup-but' onClick={this.handle_accept2}>Accept</button><div className="div_mark2" id="mark2"><img src={cmark} className="mark"></img></div></div></th>
+                      <th><div className='div_mark' ><button className="Accept-button" id='mag-but' onClick={this.handle_accept3}>Accept</button><div className="div_mark3" id="mark3"><img src={cmark} className="mark"></img></div></div></th>
+                    </tr>
+                    <tr>
+                      <th id="emp">Date:</th>
+                      <th id="sup">Date:</th>
+                      <th id="mag">Date:</th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
