@@ -124,6 +124,15 @@ class Form extends Component {
     document.getElementById('input2').disabled = false;
     document.getElementById('input1').value = '';
   }
+  toggle_calendar(event){
+    if(document.getElementById('date_input').contains(event.target)){
+      document.getElementsByClassName('react-calendar')[0].style.height = '16em';
+      document.getElementsByClassName('react-calendar')[0].style.borderStyle = 'solid';
+    }else if(!document.getElementById('calendar').contains(event.target)){
+      document.getElementsByClassName('react-calendar')[0].style.height = '0';
+      setTimeout(function(){document.getElementsByClassName('react-calendar')[0].style.borderStyle = 'none'; }, 192);
+    }
+  }
   // zzz(){
   //   var int = setInterval(toDo, 500);
   //   function toDo() {
@@ -144,7 +153,7 @@ class Form extends Component {
     return (
       <div>
         {this.state.isFetched ? '' : <Loading />}
-        <div className="Body" onMouseMove={this.zzz}>
+        <div className="Body" onClick={this.toggle_calendar} onMouseMove={this.zzz}>
 
           <div className="profile">
             <div className="div_logo" align="center"><img className="logo" src={logo} /></div>
@@ -178,10 +187,11 @@ class Form extends Component {
                     <td className="topic_1">Supervisor:</td>
                     <td className="show_1"><span>{this.state.sup}</span></td>
                     <td className="topic_2">Probation End Date :</td>
-                    <td className="show_2"><span>{this.state.pend}</span></td>
+                    <td className="show_2"><input className="date_inpiut" id="date_input" ></input></td>
                   </tr>
                 </tbody>
               </table>
+              <div className="calendar" id="calendar"><Calendar/></div>
             </div>
 
             <Scoring ref="child" scrollAnimation={this.scrollanimation} score={this.state.score} state={this.props.state} setMain={this.setMain} />

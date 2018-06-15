@@ -256,3 +256,23 @@ select-selected{
 .date{
   font-weight:lighter;
 }
+.calendar{
+  position: absolute;
+  overflow: hidden;
+  width: 15%;
+  left: 72.3%;
+  min-width: 252px;
+  transition: 0.2s;
+}
+.date_inpiut{
+  border-top-style: none;
+  border-left-style: none;
+  border-right-style: none;
+  border-bottom: 1px solid black;
+}
+.react-calendar{
+  transition: 0.25s;
+  height: 0em;
+  border-style: none;
+  overflow: hidden;
+}
