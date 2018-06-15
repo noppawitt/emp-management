@@ -5,7 +5,7 @@ import { Image, Icon } from 'semantic-ui-react';
 
 const wrapper = {
   position: 'relative',
-  width: '150px',
+  maxWidth: '150px',
   marginLeft: 'auto',
   marginRight: 'auto'
 };
@@ -21,12 +21,18 @@ const overlay = {
   zIndex: '2', 
   opacity: '0.75',
   backgroundColor: 'black'
-
 };
 
+const stylecon = {
+  position: 'absolute',
+  color: 'white', 
+  zIndex: '2', 
+  width: '100%',
+  marginTop: '10px'
+};
 const ProfileImage = ({ image, isHover, onMouseEnter, onMouseLeave }) => (
   <div style={wrapper}>
-    {isHover && <div style={overlay}><Icon style={{ position: 'absolute', color: 'white', zIndex: '2', width: '100%', marginTop: '10px'}} name="photo">&nbsp; Edit Profile</Icon></div>}
+    {isHover && <div style={overlay}><Icon style={stylecon} name="photo">&nbsp; Edit Profile</Icon></div>}
     <Image style={{ display: 'block' }} src={image} size="small" centered onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} />
   </div>
 );

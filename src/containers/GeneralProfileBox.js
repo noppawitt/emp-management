@@ -6,11 +6,18 @@ import { openModal } from '../actions/modal';
 import * as modalNames from '../constants/modalNames';
 import ProfileImage from '../components/ProfileImage';
 
+const stylebox = {
+  backgroundSize: 'contain 300px 100px',
+  // background: 'MediumTurquoise', 
+  // background: 'rgb(92,151,181)', 
+  background: 'linear-gradient(to bottom right, DarkCyan  , rgb(92,151,181))',
+};
+
 const GeneralProfileBox = ({ image, generalProfile, onEditClick }) => (
   <Segment.Group raised size="large" >
-    <Segment padded inverted color="blue" >
+    <Segment padded inverted style={stylebox} >
       {/* <Image src={image} size="small" centered bordered /> */}
-      <ProfileImage style={{ marginLeft: 'auto', marginRight: 'auto', width: '50%'}}image={image} />
+      <ProfileImage image={image} />
     </Segment>
     <Segment padded textAlign="center">
       <Grid>
