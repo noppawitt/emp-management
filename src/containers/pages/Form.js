@@ -86,8 +86,8 @@ class Form extends Component {
     document.getElementById('main1_option').style.height = '0';
     document.getElementById('main2_option').style.height = '7em';
   }
-  setMain(x){
-    this.setState({mainOption: x});
+  setMain(x) {
+    this.setState({ mainOption: x });
   }
   handle_accept1() {
     document.getElementById('emp').innerHTML = 'Date: ' + (new Date()).toString().substr(0, 24);
@@ -150,27 +150,27 @@ class Form extends Component {
                     <td className="topic_1">Name:</td>
                     <td className="show_1"><span>{this.state.name}</span></td>
                     <td className="topic_2">Department:</td>
-                    <td className="show_2">{this.state.eid}</td>
+                    <td className="show_2">{this.state.dep}</td>
                   </tr>
                   <tr>
                     <td className="topic_1">EmployeeID:</td>
-                    <td className="show_1"><span>{this.state.job}</span></td>
+                    <td className="show_1"><span>{this.state.eid}</span></td>
                     <td className="topic_2">Position:</td>
-                    <td className="show_2"><span>{this.state.level}</span></td>
+                    <td className="show_2"><span>{this.state.pos}</span></td>
 
                   </tr>
                   <tr>
                     <td className="topic_1">Level:</td>
-                    <td className="show_1"><span>{this.state.name}</span></td>
+                    <td className="show_1"><span>{this.state.level}</span></td>
                     <td className="topic_2">Probation Start Date:</td>
-                    <td className="show_2">{this.state.eid}</td>
+                    <td className="show_2">{this.state.pstart}</td>
 
                   </tr>
                   <tr>
                     <td className="topic_1">Supervisor:</td>
-                    <td className="show_1"><span>{this.state.job}</span></td>
+                    <td className="show_1"><span>{this.state.sup}</span></td>
                     <td className="topic_2">Probation End Date :</td>
-                    <td className="show_2"><span>{this.state.level}</span></td>
+                    <td className="show_2"><span>{this.state.pend}</span></td>
                   </tr>
                 </tbody>
               </table>
