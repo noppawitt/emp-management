@@ -43,7 +43,6 @@ exports.create = (req, res, next) => {
             }
             else {
               newUser.password = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync());
-              newUser.probationDate = moment(newUser.startDate).add(120, 'days');
               User.create(newUser, req.user.id)
                 .then((createdUser) => {
                   const mailOptions = {

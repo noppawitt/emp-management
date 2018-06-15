@@ -45,4 +45,8 @@ LeaveRequest.findAll = () => (
   db.manyOrNone('SELECT DISTINCT (leave_from), (leave_to), user_id, purpose, leave_type, code, status FROM leave_requests WHERE status = $1', ['Pending'])
 );
 
+LeaveRequest.findByLeave = (leaveFrom, leaveTo, userId) => (
+  db.oneOrMany('SELECT * FROM leave_requests WHERE leave_from = $1, leave_to = $2, user_id = $3', [leaveFrom, leaveTo, userId])
+);
+
 module.exports = LeaveRequest;

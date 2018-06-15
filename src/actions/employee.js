@@ -7,11 +7,8 @@ export const createEmployeeRequest = form => ({
   }
 });
 
-export const createEmployeeSuccess = employee => ({
-  type: actionTypes.EMPLOYEE_CREATE_SUCCESS,
-  payload: {
-    employee
-  }
+export const createEmployeeSuccess = () => ({
+  type: actionTypes.EMPLOYEE_CREATE_SUCCESS
 });
 
 export const createEmployeeFailure = message => ({

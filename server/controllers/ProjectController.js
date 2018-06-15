@@ -32,6 +32,8 @@ exports.findById = (req, res, next) => {
       Project.findMemberProject(req.query.id)
         .then((members) => {
           project.members = members;
+        })
+        .then(() => {
           res.json(project);
         })
         .catch(next);

@@ -21,12 +21,12 @@ const AddEmployeeForm = ({ handleSubmit, submitting, masterTable }) => (
       <Field name="firstName" as={Form.Input} component={Input} label="First name" placeholder="First name" disabled={submitting} />
       <Field name="lastName" as={Form.Input} component={Input} label="Last name" placeholder="Last name" disabled={submitting} />
     </Form.Group>
-    <Field name="email" as={Form.Input} component={Input} label="E-mail" placeholder="E-mail" disabled={submitting} />
-    <Field name="citizenId" as={Form.Input} component={Input} label="citizenId" placeholder="citizenId" disabled={submitting} />
+    <Field name="username" as={Form.Input} component={Input} label="Username" placeholder="Username" disabled={submitting} />
+    <Field name="citizenId" as={Form.Input} component={Input} label="Citizen ID" placeholder="Citizen ID" disabled={submitting} />
     <Field name="level" as={Form.Select} component={Input} label="Level" placeholder="Level" options={masterTableToOptions(masterTable.levels)} disabled={submitting} />
     <Field name="department" as={Form.Select} component={Input} label="Department" placeholder="Department" options={masterTableToOptions(masterTable.departments)} disabled={submitting} />
-    <Field name="startDate" as={Form.Input} component={Input} label="Start date" placeholder="Start date" disabled={submitting} />
-    <Field name="probationDate" as={Form.Input} component={Input} label="Probation date" placeholder="Probation date" disabled={submitting} />
+    <Field name="startDate" as={Form.Input} component={Input} type="date" label="Start date" placeholder="Start date" disabled={submitting} />
+    <Field name="probationDate" as={Form.Input} component={Input} type="date" label="Probation date" placeholder="Probation date" disabled={submitting} />
   </Form>
 );
 
@@ -39,7 +39,6 @@ AddEmployeeForm.propTypes = {
 // const selector = formValueSelector('addEmployee');
 
 const mapStateToProps = state => ({
-  // paymentType: selector(state, 'paymentType'),
   masterTable: state.masterTable
 });
 
@@ -50,7 +49,7 @@ const mapDispatchToProps = dispatch => ({
 const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   reduxForm({
-    form: 'addProject',
+    form: 'addEmployee',
     validate
   })
 );
