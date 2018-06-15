@@ -212,12 +212,21 @@ api.fetchProject = () => (
   callApi('/api/projects')
 );
 
+api.createProject = body => (
+  callApi('/api/projects', {
+    method: 'POST',
+    body
+  })
+);
+
+// Project detail
+
 api.fetchProjectDetail = id => (
   callApi(`/api/projects/?id=${id}`)
 );
 
-api.createProject = body => (
-  callApi('/api/projects', {
+api.createMember = body => (
+  callApi(`/api/has-project`, {
     method: 'POST',
     body
   })

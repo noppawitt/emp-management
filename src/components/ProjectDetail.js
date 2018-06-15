@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ProjectDetail = ({ match: { params } }) => (
+const ProjectDetail = ({ projectDetail }) => (
   <div>
-    {params.id}
+    {projectDetail.name}
   </div>
 );
 
 ProjectDetail.propTypes = {
-  match: PropTypes.object.isRequired,
+  projectDetail: PropTypes.object.isRequired,
 };
 
 export default ProjectDetail;
