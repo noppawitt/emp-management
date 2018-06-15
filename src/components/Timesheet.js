@@ -6,7 +6,7 @@ class Timesheet extends React.Component {
     super(props);
     this.state = {
       month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      dayOfMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+      // dayOfMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
       days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       // style={{ backgroundColor: 'white' }}
       holidaycolor: 'rgb(221, 225, 230)',

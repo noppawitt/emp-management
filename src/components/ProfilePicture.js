@@ -18,15 +18,15 @@ const overlay = {
   right: '0%',
   height: '25%',
   width: '100%',
-  zIndex: '2', 
+  zIndex: '2',
   opacity: '0.75',
   backgroundColor: 'black'
 };
 
 const stylecon = {
   position: 'absolute',
-  color: 'white', 
-  zIndex: '2', 
+  color: 'white',
+  zIndex: '2',
   width: '100%',
   marginTop: '10px'
 };
