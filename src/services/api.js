@@ -212,6 +212,10 @@ api.fetchProject = () => (
   callApi('/api/projects')
 );
 
+api.fetchProjectDetail = id => (
+  callApi(`/api/projects/?id=${id}`)
+);
+
 api.createProject = body => (
   callApi('/api/projects', {
     method: 'POST',

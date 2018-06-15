@@ -7,6 +7,7 @@ import profile from './profile';
 import masterTable from './masterTable';
 import employee from './employee';
 import project from './project';
+import projectDetail from './projectDetail';
 import leave from './leave';
 import timesheet from './timesheet';
 
@@ -19,6 +20,7 @@ export default combineReducers({
   masterTable,
   employee,
   project,
+  projectDetail,
   leave,
   timesheet
 });
