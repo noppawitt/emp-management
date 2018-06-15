@@ -24,7 +24,7 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => ({
   fetchEmployee: () => dispatch(fetchEmployeeRequest()),
-  onClick: () => dispatch(openModal(modalNames.ADD_EMPLOYEE))
+  onClick: () => dispatch(openModal(modalNames.ADD_NEW_EXAM))
 });
 const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),

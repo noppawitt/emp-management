@@ -12,6 +12,7 @@ import AddAssetProfileModal from './modals/AddAssetProfileModal';
 import AddProjectModal from './modals/AddProjectModal';
 import CreateLeaveRequestModal from './modals/CreateLeaveRequestModal';
 import ConfirmModal from './modals/ConfirmModal';
+import AddExamModal from './modals/AddExamModal';
 
 const ModalContainer = ({ name, props }) => {
   switch (name) {
@@ -35,6 +36,8 @@ const ModalContainer = ({ name, props }) => {
       return <CreateLeaveRequestModal {...props} />;
     case modalNames.CONFIRM:
       return <ConfirmModal {...props} />;
+    case modalNames.ADD_NEW_EXAM:
+      return <AddExamModal {...props} />;
     default:
       return <div />;
   }
