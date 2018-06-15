@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as Scroll from 'react-scroll';
+import Calendar from 'react-calendar';
 import './css/Form_G_I.css';
 import logo from './pic/logo.png'
 import cmark from './pic/mark.png'
