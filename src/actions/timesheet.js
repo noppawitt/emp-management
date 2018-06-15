@@ -13,3 +13,10 @@ export const fetchTimesheetSuccess = timesheets => ({
     timesheets
   }
 });
+
+export const fetchTimesheetFailure = message => ({
+  type: actionTypes.TIMESHHET_FETCH_FAILURE,
+  payload: {
+    message
+  }
+});
