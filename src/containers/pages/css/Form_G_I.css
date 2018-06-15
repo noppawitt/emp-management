@@ -259,9 +259,9 @@ select-selected{
 .calendar{
   position: absolute;
   overflow: hidden;
-  width: 15%;
-  left: 72.3%;
-  min-width: 252px;
+  width: 25%;
+  left: 0%;
+  min-width: 100%;
   transition: 0.2s;
 }
 .date_inpiut{
@@ -275,4 +275,7 @@ select-selected{
   height: 0em;
   border-style: none;
   overflow: hidden;
+}
+.div_ca{
+  position: relative;
 }

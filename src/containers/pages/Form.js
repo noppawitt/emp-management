@@ -188,11 +188,10 @@ class Form extends Component {
                     <td className="topic_1">Supervisor:</td>
                     <td className="show_1"><span>{this.state.sup}</span></td>
                     <td className="topic_2">Probation End Date :</td>
-                    <td className="show_2"><input className="date_inpiut" id="date_input" ></input></td>
+                    <td className="show_2"><div className="div_ca"><input className="date_inpiut" id="date_input" ></input><div className="calendar" id="calendar"><Calendar/></div></div></td>
                   </tr>
                 </tbody>
               </table>
-              <div className="calendar" id="calendar"><Calendar/></div>
             </div>
 
             <Scoring ref="child" scrollAnimation={this.scrollanimation} score={this.state.score} state={this.props.state} setMain={this.setMain} />
