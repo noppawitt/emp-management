@@ -127,7 +127,7 @@ class Form extends Component {
   }
   toggle_calendar(event){
     if(document.getElementById('date_input').contains(event.target)){
-      document.getElementsByClassName('react-calendar')[0].style.height = '16em';
+      document.getElementsByClassName('react-calendar')[0].style.height = '265px';
       document.getElementsByClassName('react-calendar')[0].style.borderStyle = 'solid';
     }else if(!document.getElementById('calendar').contains(event.target)){
       document.getElementsByClassName('react-calendar')[0].style.height = '0';

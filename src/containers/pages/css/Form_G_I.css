@@ -261,7 +261,7 @@ select-selected{
   overflow: hidden;
   width: 25%;
   left: 0%;
-  min-width: 100%;
+  min-width: 270px;
   transition: 0.2s;
 }
 .date_inpiut{
@@ -271,6 +271,7 @@ select-selected{
   border-bottom: 1px solid black;
 }
 .react-calendar{
+  padding: 3%;
   transition: 0.25s;
   height: 0em;
   border-style: none;
