@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import { Segment, Grid, Header, Icon } from 'semantic-ui-react';
 import { openModal } from '../actions/modal';
 import * as modalNames from '../constants/modalNames';
-import ProfileImage from '../components/ProfileImage';
+import ProfilePicture from '../components/ProfilePicture';
 
-const GeneralProfileBox = ({ image, generalProfile, onEditClick }) => (
+const GeneralProfileBox = ({ image, generalProfile, onEditClick, onProfilePictureClick }) => (
   <Segment.Group raised size="large">
     <Segment padded inverted color="blue">
-      <ProfileImage image={image} />
+      <ProfilePicture image={image} onClick={() => onProfilePictureClick(image)} />
     </Segment>
     <Segment padded textAlign="center">
       <Grid>
@@ -30,11 +30,15 @@ const GeneralProfileBox = ({ image, generalProfile, onEditClick }) => (
 GeneralProfileBox.propTypes = {
   image: PropTypes.string.isRequired,
   generalProfile: PropTypes.object.isRequired,
-  onEditClick: PropTypes.func.isRequired
+  onEditClick: PropTypes.func.isRequired,
+  onProfilePictureClick: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
-  onEditClick: () => dispatch(openModal(modalNames.EDIT_GENERAL_PROFILE))
+  onEditClick: () => dispatch(openModal(modalNames.EDIT_GENERAL_PROFILE)),
+  onProfilePictureClick: profilePicture => dispatch(openModal(modalNames.PROFILE_PICTURE, {
+    profilePicture
+  }))
 });
 
 export default connect(null, mapDispatchToProps)(GeneralProfileBox);

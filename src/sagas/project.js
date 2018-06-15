@@ -28,11 +28,11 @@ export function* createProjectTask(action) {
     const projects = yield call(api.fetchProject, action.payload.id);
     yield put(createProjectSuccess(projects));
     yield put(closeModal());
-    action.resolve();
+    action.payload.resolve();
   }
   catch (error) {
     yield put(createProjectFailure(error));
-    action.reject();
+    action.payload.reject();
   }
 }
 

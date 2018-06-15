@@ -4,7 +4,9 @@ import {
   createLeaveSuccess,
   createLeaveFailure,
   fetchLeaveSuccess,
-  fetchLeaveFailure
+  fetchLeaveFailure,
+  updateLeaveFailure,
+  updateLeaveSuccess
 } from '../actions/leave';
 import { closeModal } from '../actions/modal';
 import api from '../services/api';
@@ -35,6 +37,23 @@ export function* fetchLeaveTask() {
   }
 }
 
+export function* updateLeaveTask(action) {
+  try {
+    const leaves = yield call(api.updateLeave, {
+      leaveRequests: {
+        userId: action.payload.userId,
+        status: action.payload.status,
+        leaveFrom: action.payload.leave.leaveFrom,
+        leaveTo: action.payload.leave.leaveTo
+      }
+    });
+    yield put(updateLeaveSuccess(leaves));
+  }
+  catch (error) {
+    yield put(updateLeaveFailure(error));
+  }
+}
+
 export function* watchCreateLeaveRequest() {
   yield takeEvery(actionTypes.LEAVE_CREATE_REQUEST, createLeaveTask);
 }
@@ -43,9 +62,14 @@ export function* watchFetchLeaveRequest() {
   yield takeEvery(actionTypes.LEAVE_FETCH_REQUEST, fetchLeaveTask);
 }
 
+export function* watchUpdateLeaveRequest() {
+  yield takeEvery(actionTypes.LEAVE_UPDATE_REQUEST, updateLeaveTask);
+}
+
 export default function* leaveSaga() {
   yield all([
     watchCreateLeaveRequest(),
-    watchFetchLeaveRequest()
+    watchFetchLeaveRequest(),
+    watchUpdateLeaveRequest()
   ]);
 }
