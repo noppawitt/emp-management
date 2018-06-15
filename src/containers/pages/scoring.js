@@ -103,11 +103,11 @@ class Scoring1 extends Component {
   handle_submit() {
     if (parseInt(document.getElementById('f_total').innerHTML) >= 60) {
       document.getElementsByName('main_option')[0].checked = 'true'
-      this.setState({ mainOption: true });
+      this.props.setMain(true);
     }
     else {
       document.getElementsByName('main_option')[1].checked = 'true'
-      this.setState({ mainOption: false });
+      this.props.setMain(false);
       console.log(document.getElementsByName('main_option').length)
 
     }
@@ -117,6 +117,7 @@ class Scoring1 extends Component {
       x[i].disabled = true;
       y[i].disabled = true;
     }
+        console.log(this.state.mainOption);
     document.getElementById('result').style.display = 'block';
     this.props.scrollAnimation();
     document.getElementById('submit-but').disabled = true;

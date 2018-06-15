@@ -25,6 +25,7 @@ class Form extends Component {
       mainOption: null,
       option1: true
     }
+    this.setMain = this.setMain.bind(this);
     this.handle_radio_1 = this.handle_radio_1.bind(this);
     this.handle_radio_2 = this.handle_radio_2.bind(this);
     this.handle_main_radio_1 = this.handle_main_radio_1.bind(this);
@@ -36,8 +37,10 @@ class Form extends Component {
         this.state.score[i] = 4;
         console.log(this.state.score)
       }
+      this.setState({ mainOption: false })
     }
-    this.setState({ mainOption: false })
+
+
   }
   componentDidMount() {
     if (this.props.state == '2') {
@@ -45,7 +48,6 @@ class Form extends Component {
       if (this.state.mainOption == true) {
         document.getElementById('main1').checked = 'checked';
       } else document.getElementById('main2').checked = 'checked';
-
     }
   }
   scrollanimation() {
@@ -60,13 +62,15 @@ class Form extends Component {
     if (this.state.option1) this.setState({ option1: false });
   }
   handle_main_radio_1() {
-    if (!this.state.mainOption) this.setState({ mainOption: true });
+    document.getElementById('main1_option').style.height = '3.6em';
+    document.getElementById('main2_option').style.height = '0';
   }
   handle_main_radio_2() {
-    if (this.state.mainOption) {
-      this.setState({ mainOption: false, option1: true });
-      console.log(this.state.option1);
-    }
+    document.getElementById('main1_option').style.height = '0';
+    document.getElementById('main2_option').style.height = '7em';
+  }
+  setMain(x){
+    this.setState({mainOption: x});
   }
   handle_accept1() {
     document.getElementById('emp').innerHTML = 'Date: ' + (new Date()).toString().substr(0, 24);
@@ -104,7 +108,7 @@ class Form extends Component {
   //       document.getElementById('mark1').style.width='2em';
   //       console.log(a + ' ' + b.offsetTop);
   //       clearInterval(int);
-  // 
+  //
   //     }
   //     else {
   //       console.log(window.innerHeight);
@@ -153,11 +157,11 @@ class Form extends Component {
             </table>
           </div>
 
-          <Scoring ref="child" scrollAnimation={this.scrollanimation} score={this.state.score} state={this.props.state} />
+          <Scoring ref="child" scrollAnimation={this.scrollanimation} score={this.state.score} state={this.props.state} setMain={this.setMain} />
 
           <div className="result" id="result">
-            <div>
-              <table className="grid">
+            <div className="result-table">
+              <table className="grid-res">
                 <tbody>
                   <tr>
                     <th colspan="10"><div className="lll"><span className="blue">The Evaluation Result</span></div></th>
@@ -167,63 +171,78 @@ class Form extends Component {
                     <td colspan="5"><input id="main1" type="radio" name='main_option' onClick={this.handle_main_radio_1}></input>Pass probationary period. Effective date on</td>
                     <td colspan="4">  </td>
                   </tr>
-                  {this.state.mainOption ? (
-                    <tr>
-                      <td colspan="2"></td>
-                      <td colspan="3"><input type="radio" name="option1" id="option1_1" onClick={this.handle_radio_1} ></input>Confirmed By Employment Conditions</td>
-                      <td></td>
-                      <td colspan="4"> <input type="radio" name="option1" id="option1_2" onClick={this.handle_radio_2}></input>Adjust the Salary and Benefits</td>
-                    </tr>
-                  ) : ''
-                  }
-                  {this.state.option1 || !this.state.mainOption ? '' : (
-                    <tr className="option1_row" id="option1_row">
-                      <td colspan="3"></td>
-                      <td colspan="2">Based Salary</td>
-                      <td><input type='text'></input></td>
-                      <td colspan="2">Mobile</td>
-                      <td><input></input></td>
-                    </tr>
-                  )
-                  }
-                  {this.state.option1 || !this.state.mainOption ? '' : (
-                    <tr className="option1_row" id="option1_row">
-                      <td colspan="3"></td>
-                      <td colspan="2">Transporation Allowance</td>
-                      <td><input></input></td>
-                      <td colspan="2">Others Allowance</td>
-                      <td colspan="1"><input></input></td>
-                    </tr>
-                  )
-                  }
+                </tbody>
+              </table>
+            </div>
 
+            <div className="result-table-hidden" id="main1_option">
+              <table className="grid-res">
+                <tbody>
+                  <tr>
+                    <td colspan="2"></td>
+                    <td colspan="3"><input type="radio" name="option1" id="option1_1" onClick={this.handle_radio_1} ></input>Confirmed By Employment Conditions</td>
+                    <td></td>
+                    <td colspan="4"> <input type="radio" name="option1" id="option1_2" onClick={this.handle_radio_2}></input>Adjust the Salary and Benefits</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="result-table-hidden">
+              <table className="grid-res">
+                <tbody>
+                  <tr className="option1_row" id="option1_row">
+                    <td colspan="3"></td>
+                    <td colspan="2">Based Salary</td>
+                    <td><input type='text'></input></td>
+                    <td colspan="2">Mobile</td>
+                    <td><input></input></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="result-table-hidden">
+              <table className="grid-res">
+                <tbody>
+                  <tr className="option1_row" id="option1_row">
+                    <td colspan="3"></td>
+                    <td colspan="2">Transporation Allowance</td>
+                    <td><input></input></td>
+                    <td colspan="2">Others Allowance</td>
+                    <td colspan="1"><input></input></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="result-table">
+              <table className="grid-res">
+                <tbody>
                   <tr>
                     <td colspan="1"></td>
                     <td colspan="5"><input id="main2" type='radio' name="main_option" onClick={this.handle_main_radio_2}></input>This person does not pass probation period. Action to be taken </td>
                     <td colspan="4">  </td>
                   </tr>
-                  {this.state.mainOption ? '' :
-                    (
-                      <tr>
-                        <td colspan="2"></td>
-                        <td colspan="3"><input type="radio" name="option2" onClick={this.handle_input_dis1}></input>Termination Effective</td>
-                        <td colspan="2"><input id='input1' disabled='true'></input></td>
-                        <td colspan="3"></td>
-                      </tr>
+                </tbody>
+              </table>
+            </div>
 
-                    )
-                  }
-                  {this.state.mainOption ? '' :
-                    (
-                      <tr>
-                        <td colspan="2"></td>
-                        <td colspan="3"><input type="radio" name="option2" onClick={this.handle_input_dis2}></input>Continued probation untill</td>
-                        <td colspan="2"><input id='input2' disabled='true'></input></td>
-                        <td colspan="3"></td>
-                      </tr>
-
-                    )
-                  }
+            <div className="result-table-hidden" id="main2_option">
+              <table className="grid-res">
+                <tbody>
+                  <tr>
+                    <td colspan="2"></td>
+                    <td colspan="3"><input type="radio" name="option2" onClick={this.handle_input_dis1}></input>Termination Effective</td>
+                    <td colspan="2"><input id='input1' disabled='true'></input></td>
+                    <td colspan="3"></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"></td>
+                    <td colspan="3"><input type="radio" name="option2" onClick={this.handle_input_dis2}></input>Continued probation untill</td>
+                    <td colspan="2"><input id='input2' disabled='true'></input></td>
+                    <td colspan="3"></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
