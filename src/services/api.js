@@ -1,3 +1,5 @@
+import { call } from "redux-saga/effects";
+
 const callApi = (endpoint, request) => {
   if (request && request.body) {
     request.body = JSON.stringify(request.body);
@@ -244,5 +246,11 @@ api.updateLeave = body => (
 api.fetchTimesheet = id => (
   callApi(`/api/timesheets/?id=${id}`)
 );
+
+// Probation
+
+api.fetchProbation = id => (
+  callApi(`/api/probation/?id=${id}`)
+)
 
 export default api;

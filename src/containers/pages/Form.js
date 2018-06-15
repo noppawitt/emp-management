@@ -4,6 +4,7 @@ import './css/Form_G_I.css';
 import logo from './pic/logo.png'
 import cmark from './pic/mark.png'
 import Scoring from './Scoring'
+import api from '../../services/api'
 
 let scroll = Scroll.animateScroll;
 
@@ -11,15 +12,15 @@ class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      eid: '',
-      dep: '',
-      job: '',
-      level: '',
-      pos: '',
-      sup: '',
-      pstart: '',
-      pend: '',
+      name: 'Loading..',
+      eid: 'Loading..',
+      dep: 'Loading..',
+      job: 'Loading..',
+      level: 'Loading..',
+      pos: 'Loading..',
+      sup: 'Loading..',
+      pstart: 'Loading..',
+      pend: 'Loading..',
       state: '1',
       score: [3, 3, 3, 3, 3, 3],
       mainOption: null,
@@ -38,6 +39,20 @@ class Form extends Component {
       }
     }
     this.setState({ mainOption: false })
+
+    api.fetchProbation('10001').then((res) => {
+      console.log(res);
+      this.setState({
+        name: res[0].fullName,
+        dep: res[0].department,
+        level: res[0].level,
+        pos: res[0].position,
+        pstart: res[0].startDate,
+        pend: res[0].probationDate,
+        sup: res[0].supervisor,
+        eid: res[0].userId
+      });
+    });
   }
   componentDidMount() {
     if (this.props.state == '2') {
@@ -127,27 +142,27 @@ class Form extends Component {
                   <td className="topic_1">Name:</td>
                   <td className="show_1"><span>{this.state.name}</span></td>
                   <td className="topic_2">Department:</td>
-                  <td className="show_2">{this.state.eid}</td>
+                  <td className="show_2">{this.state.dep}</td>
                 </tr>
                 <tr>
                   <td className="topic_1">EmployeeID:</td>
-                  <td className="show_1"><span>{this.state.job}</span></td>
+                  <td className="show_1"><span>{this.state.eid}</span></td>
                   <td className="topic_2">Position:</td>
-                  <td className="show_2"><span>{this.state.level}</span></td>
+                  <td className="show_2"><span>{this.state.pos}</span></td>
 
                 </tr>
                 <tr>
                   <td className="topic_1">Level:</td>
-                  <td className="show_1"><span>{this.state.name}</span></td>
+                  <td className="show_1"><span>{this.state.level}</span></td>
                   <td className="topic_2">Probation Start Date:</td>
-                  <td className="show_2">{this.state.eid}</td>
+                  <td className="show_2">{this.state.pstart}</td>
 
                 </tr>
                 <tr>
                   <td className="topic_1">Supervisor:</td>
-                  <td className="show_1"><span>{this.state.job}</span></td>
+                  <td className="show_1"><span>{this.state.sup}</span></td>
                   <td className="topic_2">Probation End Date :</td>
-                  <td className="show_2"><span>{this.state.level}</span></td>
+                  <td className="show_2"><span>{this.state.pend}</span></td>
                 </tr>
               </tbody>
             </table>
