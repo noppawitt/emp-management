@@ -253,3 +253,6 @@ select-selected{
   overflow: hidden;
   transition : 0.4s;
 }
+.date{
+  font-weight:lighter;
+}
