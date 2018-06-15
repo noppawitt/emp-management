@@ -72,22 +72,30 @@ class Form extends Component {
   }
 
   handle_radio_1() {
-    if (!this.state.option1) this.setState({ option1: true });
-    console.log(this.state.option1);
+    document.getElementById('salary_option').style.height = '0';
   }
   handle_radio_2() {
-    if (this.state.option1) this.setState({ option1: false });
+    document.getElementById('salary_option').style.height = '5.5em';
   }
   handle_main_radio_1() {
-    document.getElementById('main1_option').style.height = '3.6em';
+    document.getElementById('main1_option').style.height = '3.1em';
     document.getElementById('main2_option').style.height = '0';
+    document.getElementById('option2_1').checked = false;
+    document.getElementById('option2_2').checked = false;
+    document.getElementById('input1').disabled = true;
+    document.getElementById('input2').value = '';
+    document.getElementById('input2').disabled = true;
+    document.getElementById('input1').value = '';
   }
   handle_main_radio_2() {
     document.getElementById('main1_option').style.height = '0';
-    document.getElementById('main2_option').style.height = '7em';
+    document.getElementById('main2_option').style.height = '6em';
+    document.getElementById('salary_option').style.height = '0';
+    document.getElementById('option1_1').checked = false;
+    document.getElementById('option1_2').checked = false;
   }
-  setMain(x) {
-    this.setState({ mainOption: x });
+  setMain(x){
+    this.setState({mainOption: x});
   }
   handle_accept1() {
     document.getElementById('emp').innerHTML = 'Date: ' + (new Date()).toString().substr(0, 24);
@@ -207,29 +215,24 @@ class Form extends Component {
                 </table>
               </div>
 
-              <div className="result-table-hidden">
+              <div className="result-table-hidden" id="salary_option">
                 <table className="grid-res">
                   <tbody>
                     <tr className="option1_row" id="option1_row">
-                      <td colspan="3"></td>
+                      <td colspan="2"></td>
                       <td colspan="2">Based Salary</td>
                       <td><input type='text'></input></td>
                       <td colspan="2">Mobile</td>
-                      <td><input></input></td>
+                      <td colspan="1"><input></input></td>
+                      <td></td>
                     </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <div className="result-table-hidden">
-                <table className="grid-res">
-                  <tbody>
                     <tr className="option1_row" id="option1_row">
-                      <td colspan="3"></td>
+                      <td colspan="2"></td>
                       <td colspan="2">Transporation Allowance</td>
                       <td><input></input></td>
                       <td colspan="2">Others Allowance</td>
                       <td colspan="1"><input></input></td>
+                      <td></td>
                     </tr>
                   </tbody>
                 </table>
@@ -252,13 +255,13 @@ class Form extends Component {
                   <tbody>
                     <tr>
                       <td colspan="2"></td>
-                      <td colspan="3"><input type="radio" name="option2" onClick={this.handle_input_dis1}></input>Termination Effective</td>
+                      <td colspan="3"><input type="radio" name="option2" id="option2_1" onClick={this.handle_input_dis1}></input>Termination Effective</td>
                       <td colspan="2"><input id='input1' disabled='true'></input></td>
                       <td colspan="3"></td>
                     </tr>
                     <tr>
                       <td colspan="2"></td>
-                      <td colspan="3"><input type="radio" name="option2" onClick={this.handle_input_dis2}></input>Continued probation untill</td>
+                      <td colspan="3"><input type="radio" name="option2" id="option2_2" onClick={this.handle_input_dis2}></input>Continued probation untill</td>
                       <td colspan="2"><input id='input2' disabled='true'></input></td>
                       <td colspan="3"></td>
                     </tr>
