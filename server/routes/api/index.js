@@ -23,6 +23,7 @@ const project = require('./project');
 const timesheet = require('./timesheet');
 const leaveRequest = require('./leaveRequest');
 const accessControl = require('./accessControl');
+const report = require('./report');
 
 router.use('/employee-info', employeeInfo);
 
@@ -71,5 +72,7 @@ router.use('/timesheets', timesheet);
 router.use('/leave-request', leaveRequest);
 
 router.use('/access-control', accessControl);
+
+router.use('/report', report);
 
 module.exports = router;

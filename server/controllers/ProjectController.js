@@ -19,6 +19,7 @@ exports.update = (req, res, next) => {
 };
 
 exports.findAll = (req, res, next) => {
+  console.log('gg');
   Project.findAll()
     .then((projects) => {
       res.json(projects);
@@ -27,13 +28,11 @@ exports.findAll = (req, res, next) => {
 };
 
 exports.findById = (req, res, next) => {
-  Project.findById(req.query.id)
+  Project.findById(req.params.id)
     .then((project) => {
-      Project.findMemberProject(req.query.id)
+      Project.findMemberProject(req.params.id)
         .then((members) => {
           project.members = members;
-        })
-        .then(() => {
           res.json(project);
         })
         .catch(next);
