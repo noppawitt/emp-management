@@ -94,6 +94,10 @@ api.fetchAssetTypes = () => (
   callApi('/api/asset-types')
 );
 
+api.fetchAcessTypes = () => (
+  callApi('api/access-control')
+);
+
 // Profile
 
 api.fetchGeneralProfile = id => (

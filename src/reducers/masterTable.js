@@ -7,7 +7,6 @@ const masterTable = (state = {}, action) => {
         isFetching: true
       };
     case actionTypes.MASTER_TABLE_FETCH_SUCCESS:
-      console.log(action.payload);
       return {
         isFetching: false,
         ...action.payload.masterTable
