@@ -25,7 +25,7 @@ exports.create = (req, res, next) => {
 // };
 
 exports.findByUserId = (req, res, next) => {
-  HasCertificate.findByUserId(req.user.id)
+  HasCertificate.findByUserId(req.query.id)
     .then((hasCertificates) => {
       res.json(hasCertificates);
     })
