@@ -84,7 +84,7 @@ class Form extends Component {
     document.getElementById('main2_option').style.overflow = 'hidden';
     document.getElementById('option2_1').checked = false;
     document.getElementById('option2_2').checked = false;
-    document.getElementById('date_input_pass').style.display='block';
+    document.getElementById('date_input_pass').style.display = 'block';
     document.getElementById('input1').style.display = 'none';
     document.getElementById('input2').value = '';
     document.getElementById('input2').style.display = 'none';
@@ -93,15 +93,15 @@ class Form extends Component {
   handle_main_radio_2() {
     document.getElementById('main1_option').style.height = '0';
     document.getElementById('main2_option').style.height = '6em';
-    setTimeout(function(){document.getElementById('main2_option').style.overflow = 'visible'; }, 190);
+    setTimeout(function () { document.getElementById('main2_option').style.overflow = 'visible'; }, 190);
     document.getElementById('salary_option').style.height = '0';
-    document.getElementById('date_input_pass').style.display='none';
-    document.getElementById('date_input_pass').value='';
+    document.getElementById('date_input_pass').style.display = 'none';
+    document.getElementById('date_input_pass').value = '';
     document.getElementById('option1_1').checked = false;
     document.getElementById('option1_2').checked = false;
   }
-  setMain(x){
-    this.setState({mainOption: x});
+  setMain(x) {
+    this.setState({ mainOption: x });
   }
   handle_accept1() {
     document.getElementById('emp').innerHTML = (new Date()).toString().substr(0, 24);
@@ -130,28 +130,28 @@ class Form extends Component {
     document.getElementById('input2').disabled = false;
     document.getElementById('input1').value = '';
   }
-  toggle_calendar(event){
-    if(document.getElementById('date_input').contains(event.target)){
+  toggle_calendar(event) {
+    if (document.getElementById('date_input').contains(event.target)) {
       document.getElementsByClassName('react-calendar')[0].style.height = '265px';
       document.getElementsByClassName('react-calendar')[0].style.borderStyle = 'solid';
-    }else if(document.getElementById('date_input_pass').contains(event.target)){
+    } else if (document.getElementById('date_input_pass').contains(event.target)) {
       document.getElementsByClassName('react-calendar')[1].style.height = '265px';
       document.getElementsByClassName('react-calendar')[1].style.borderStyle = 'solid';
-    }else if(document.getElementById('input1').contains(event.target)){
+    } else if (document.getElementById('input1').contains(event.target)) {
       document.getElementsByClassName('react-calendar')[2].style.height = '265px';
       document.getElementsByClassName('react-calendar')[2].style.borderStyle = 'solid';
-    }else if(document.getElementById('input2').contains(event.target)){
+    } else if (document.getElementById('input2').contains(event.target)) {
       document.getElementsByClassName('react-calendar')[3].style.height = '265px';
       document.getElementsByClassName('react-calendar')[3].style.borderStyle = 'solid';
-    }else if(!document.getElementById('calendar').contains(event.target)){
-      for(var i=0;i<document.getElementsByClassName('react-calendar').length;i++){
+    } else if (!document.getElementById('calendar').contains(event.target)) {
+      for (var i = 0; i < document.getElementsByClassName('react-calendar').length; i++) {
         document.getElementsByClassName('react-calendar')[i].style.height = '0';
-        setTimeout(function(x){document.getElementsByClassName('react-calendar')[x].style.borderStyle = 'none'; }(i), 192);
+        setTimeout(function (x) { document.getElementsByClassName('react-calendar')[x].style.borderStyle = 'none'; }(i), 192);
       }
     }
   }
-  handle_calendar=date => {
-    document.getElementById('date_input').value=date.toString().substr(0, 15);
+  handle_calendar(date) {
+    document.getElementById('date_input').value = date.getFullYear() + "-" + (date.getMonth() < 9 ? "0" : "") + (date.getMonth() + 1) + "-" + (date.getDate() < 10 ? "0" : "") + date.getDate();
   };
   // zzz(){
   //   var int = setInterval(toDo, 500);
@@ -207,7 +207,7 @@ class Form extends Component {
                     <td className="topic_1">Supervisor:</td>
                     <td className="show_1"><span>{this.state.sup}</span></td>
                     <td className="topic_2">Probation End Date :</td>
-                    <td className="show_2"><div className="div_ca"><input className="date_inpiut" id="date_input" ></input><div className="calendar" id="calendar"><Calendar/></div></div></td>
+                    <td className="show_2"><div className="div_ca"><input className="date_input" id="date_input" ></input><div className="calendar" id="calendar"><Calendar onChange={this.handle_calendar} /></div></div></td>
                   </tr>
                 </tbody>
               </table>
@@ -225,8 +225,8 @@ class Form extends Component {
                     <tr>
                       <td colspan="1"></td>
                       <td colspan="5"><input id="main1" type="radio" name='main_option' onClick={this.handle_main_radio_1}></input>Pass probationary period. Effective date on</td>
-                      <td/>
-                      <td colspan="3"><div className="div_ca"><input className="date_input" id="date_input_pass" ></input><div className="calendar" id="calendar"><Calendar/></div></div></td>
+                      <td />
+                      <td colspan="3"><div className="div_ca"><input className="date_input" id="date_input_pass" ></input><div className="calendar" id="calendar"><Calendar /></div></div></td>
                     </tr>
                   </tbody>
                 </table>
@@ -286,13 +286,13 @@ class Form extends Component {
                     <tr>
                       <td colspan="2"></td>
                       <td colspan="3"><input type="radio" name="option2" id="option2_1" onClick={this.handle_input_dis1}></input>Termination Effective</td>
-                      <td colspan="2"><div className="div_ca"><input id='input1' className="date_input1"></input><div className="calendar" id="calendar"><Calendar/></div></div></td>
+                      <td colspan="2"><div className="div_ca"><input id='input1' className="date_input1"></input><div className="calendar" id="calendar"><Calendar /></div></div></td>
                       <td colspan="3"></td>
                     </tr>
                     <tr>
                       <td colspan="2"></td>
                       <td colspan="3"><input type="radio" name="option2" id="option2_2" onClick={this.handle_input_dis2}></input>Continued probation untill</td>
-                      <td colspan="2"><div className="div_ca"><input id='input1' className="date_input1"></input><div className="calendar" id="calendar"><Calendar/></div></div></td>
+                      <td colspan="2"><div className="div_ca"><input id='input2' className="date_input2"></input><div className="calendar" id="calendar"><Calendar /></div></div></td>
                       <td colspan="3"></td>
                     </tr>
                   </tbody>
