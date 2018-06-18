@@ -47,7 +47,7 @@ exports.update = (req, res, next) => {
 };
 
 exports.findByUserId = (req, res, next) => {
-  HasAsset.findByUserId(req.user.id)
+  HasAsset.findByUserId(req.query.id)
     .then((hasAssets) => {
       res.json(hasAssets);
     })

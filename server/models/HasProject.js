@@ -32,4 +32,8 @@ HasProject.findByUserId = userId => (
   db.manyOrNone('SELECT * FROM has_projects WHERE user_id = $1', [userId])
 );
 
+HasProject.findByProjectIdAndUserId = (projectId, userId) => (
+  db.one('SELECT * FROM has_projects WHERE project_id = $1 AND user_id = $2', [projectId, userId])
+);
+
 module.exports = HasProject;
