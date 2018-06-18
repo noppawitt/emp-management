@@ -81,17 +81,22 @@ class Form extends Component {
   handle_main_radio_1() {
     document.getElementById('main1_option').style.height = '3.1em';
     document.getElementById('main2_option').style.height = '0';
+    document.getElementById('main2_option').style.overflow = 'hidden';
     document.getElementById('option2_1').checked = false;
     document.getElementById('option2_2').checked = false;
-    document.getElementById('input1').disabled = true;
+    document.getElementById('date_input_pass').style.display='block';
+    document.getElementById('input1').style.display = 'none';
     document.getElementById('input2').value = '';
-    document.getElementById('input2').disabled = true;
+    document.getElementById('input2').style.display = 'none';
     document.getElementById('input1').value = '';
   }
   handle_main_radio_2() {
     document.getElementById('main1_option').style.height = '0';
     document.getElementById('main2_option').style.height = '6em';
+    setTimeout(function(){document.getElementById('main2_option').style.overflow = 'visible'; }, 190);
     document.getElementById('salary_option').style.height = '0';
+    document.getElementById('date_input_pass').style.display='none';
+    document.getElementById('date_input_pass').value='';
     document.getElementById('option1_1').checked = false;
     document.getElementById('option1_2').checked = false;
   }
@@ -129,11 +134,25 @@ class Form extends Component {
     if(document.getElementById('date_input').contains(event.target)){
       document.getElementsByClassName('react-calendar')[0].style.height = '265px';
       document.getElementsByClassName('react-calendar')[0].style.borderStyle = 'solid';
+    }else if(document.getElementById('date_input_pass').contains(event.target)){
+      document.getElementsByClassName('react-calendar')[1].style.height = '265px';
+      document.getElementsByClassName('react-calendar')[1].style.borderStyle = 'solid';
+    }else if(document.getElementById('input1').contains(event.target)){
+      document.getElementsByClassName('react-calendar')[2].style.height = '265px';
+      document.getElementsByClassName('react-calendar')[2].style.borderStyle = 'solid';
+    }else if(document.getElementById('input2').contains(event.target)){
+      document.getElementsByClassName('react-calendar')[3].style.height = '265px';
+      document.getElementsByClassName('react-calendar')[3].style.borderStyle = 'solid';
     }else if(!document.getElementById('calendar').contains(event.target)){
-      document.getElementsByClassName('react-calendar')[0].style.height = '0';
-      setTimeout(function(){document.getElementsByClassName('react-calendar')[0].style.borderStyle = 'none'; }, 192);
+      for(var i=0;i<document.getElementsByClassName('react-calendar').length;i++){
+        document.getElementsByClassName('react-calendar')[i].style.height = '0';
+        setTimeout(function(x){document.getElementsByClassName('react-calendar')[x].style.borderStyle = 'none'; }(i), 192);
+      }
     }
   }
+  handle_calendar=date => {
+    document.getElementById('date_input').value=date.toString().substr(0, 15);
+  };
   // zzz(){
   //   var int = setInterval(toDo, 500);
   //   function toDo() {
@@ -206,7 +225,8 @@ class Form extends Component {
                     <tr>
                       <td colspan="1"></td>
                       <td colspan="5"><input id="main1" type="radio" name='main_option' onClick={this.handle_main_radio_1}></input>Pass probationary period. Effective date on</td>
-                      <td colspan="4">  </td>
+                      <td/>
+                      <td colspan="3"><div className="div_ca"><input className="date_input" id="date_input_pass" ></input><div className="calendar" id="calendar"><Calendar/></div></div></td>
                     </tr>
                   </tbody>
                 </table>
@@ -266,13 +286,13 @@ class Form extends Component {
                     <tr>
                       <td colspan="2"></td>
                       <td colspan="3"><input type="radio" name="option2" id="option2_1" onClick={this.handle_input_dis1}></input>Termination Effective</td>
-                      <td colspan="2"><input id='input1' disabled='true'></input></td>
+                      <td colspan="2"><div className="div_ca"><input id='input1' className="date_input1"></input><div className="calendar" id="calendar"><Calendar/></div></div></td>
                       <td colspan="3"></td>
                     </tr>
                     <tr>
                       <td colspan="2"></td>
                       <td colspan="3"><input type="radio" name="option2" id="option2_2" onClick={this.handle_input_dis2}></input>Continued probation untill</td>
-                      <td colspan="2"><input id='input2' disabled='true'></input></td>
+                      <td colspan="2"><div className="div_ca"><input id='input1' className="date_input1"></input><div className="calendar" id="calendar"><Calendar/></div></div></td>
                       <td colspan="3"></td>
                     </tr>
                   </tbody>
