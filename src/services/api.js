@@ -245,4 +245,13 @@ api.fetchTimesheet = id => (
   callApi(`/api/timesheets/?id=${id}`)
 );
 
+// Exam
+
+api.addExam = body => (
+  callApi('/api/exam', {
+    method: 'POST',
+    body
+  })
+);
+
 export default api;

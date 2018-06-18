@@ -5,6 +5,23 @@ import { compose } from 'recompose';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { Form } from 'semantic-ui-react';
 import Input from '../../components/Input';
+import * as validator from '../../utils/validator';
+
+const validate = (values) => {
+  const errors = {};
+  errors.examType = validator.required(values.examType);
+  errors.question = validator.required(values.question);
+  errors.answerType = validator.required(values.answerType);
+  if (errors.answerType === undefined) {
+    if (values.answerType === 'Choices') {
+      if (values.ans1 === false && values.ans2 === false && values.ans3 === false && values.ans4 === false && values.ans5 === false) {
+        errors.answer = 'Need answer';
+      }
+    }
+  }
+
+  return errors;
+};
 
 const examTypeOptions = [
   { key: 'English', value: 'English', text: 'English' },
@@ -32,8 +49,9 @@ const AddExamForm = ({ handleSubmit, submitting, answerType, numberOfChoices }) 
       placeholder="-- Exam Type --"
       options={examTypeOptions}
       disabled={submitting}
+      required
     />
-    <Field name="question" as={Form.TextArea} component={Input} label="Question" placeholder="New Question ..." disabled={submitting} />
+    <Field name="question" as={Form.TextArea} component={Input} autoHeight label="Question" placeholder="New Question ..." disabled={submitting} required />
     <Field
       name="answerType"
       as={Form.Select}
@@ -42,6 +60,7 @@ const AddExamForm = ({ handleSubmit, submitting, answerType, numberOfChoices }) 
       placeholder="-- Answer Type --"
       options={answerTypeOptions}
       disabled={submitting}
+      required
     />
     {answerType === 'Choices' &&
       <Field
@@ -98,7 +117,7 @@ AddExamForm.propTypes = {
   numberOfChoices: PropTypes.number.isRequired
 };
 
-const selector = formValueSelector('addNewExam');
+const selector = formValueSelector('addExam');
 
 const mapStateToProps = state => ({
   answerType: selector(state, 'answerType'),
@@ -108,7 +127,8 @@ const mapStateToProps = state => ({
 const enhance = compose(
   connect(mapStateToProps, null),
   reduxForm({
-    form: 'addNewExam'
+    form: 'addExam',
+    validate
   })
 );
 

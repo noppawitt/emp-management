@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
-import Exam from '../../components/Exam';
+import { fetchEmployeeRequest } from '../../actions/employee';
 import { openModal } from '../../actions/modal';
 import * as modalNames from '../../constants/modalNames';
+import Exam from '../../components/Exam';
 import Loader from '../../components/Loader';
-import { fetchEmployeeRequest } from '../../actions/employee';
 
 const ExamPage = ({ isFetching, onClick }) => (
   <div>
