@@ -1,30 +1,32 @@
-const timesheet = require('../models/Timesheet');
+const Timesheet = require('../models/Timesheet');
+const HasProject = require('../models/HasProject');
+const Project = require('../models/Project');
 const Excel = require('exceljs');
-const fs = require('fs');
+
 
 exports.createReport = (req, res, next) => {
-  // const workbook = new Excel.Workbook();
-  // workbook.xlsx.readFile('server/storage/report/excel.xlsx')
-  //   .then(() => {
-  //     const worksheet = workbook.getWorksheet('Sheet1');
-  //     worksheet.getCell('A1').value = '12345';
-  //     return workbook.xlsx.writeFile('server/storage/report/gg.xlsx');
-  //   })
-  //   .then(() => {
-  //     res.download('server/storage/report/gg.xlsx', 'gg.xlsx',() => {
-  //       fs.unlink('server/storage/report/gg.xlsx');
-  //     });
-  //   });
-  const options = {
-    filename: 'server/storage/report/excel.xlsx'  
-  };
-  const workbook = new Excel.stream.xlsx.WorkbookWriter(options);
-  const worksheet = workbook.getWorksheet('Sheet1');
-  worksheet.getCell('A1').value = '12345';
-  worksheet.getRow(1).commit();
-  worksheet.commit();
-  workbook.commit()
+  const excelType = req.report;
+  if (excelType.reportType === 'Timesheet (Normal)') {
+    const workbook = new Excel.Workbook();
+    const project = HasProject.findByProjectIdAndUserId(excelType.projectId, excelType.userId);
+    Project.findById(excelType.projectId)
+      .then((project) => {
+
+      });
+    workbook.xlsx.readFile('server/storage/report/Playtorium_Timesheet_Normal_ver4.xlsx')
+      .then(() => {
+        const worksheet = workbook.getWorksheet('Timesheet');
+        worksheet.getCell('B2').value = `${excelType.firstName} + " " + ${excelType.lastName}`;
+        worksheet.getCell('E2').value = excelType.userId;
+      });
+  }
+  const workbook = new Excel.Workbook();
+  workbook.xlsx.readFile('server/storage/report/excel.xlsx')
     .then(() => {
-      res.send(workbook);
-    });
+      const worksheet = workbook.getWorksheet('Sheet1');
+      worksheet.getCell('A1').value = '12345';
+      res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      workbook.xlsx.writeFile(res);
+    })
+    .catch(next);
 };
