@@ -121,13 +121,13 @@ class Form extends Component {
     document.getElementById('mag-but').disabled = true;
   }
   handle_input_dis1() {
-    document.getElementById('input2').disabled = true;
-    document.getElementById('input1').disabled = false;
+    document.getElementById('input2').style.display = 'none';
+    document.getElementById('input1').style.display = 'block';
     document.getElementById('input2').value = '';
   }
   handle_input_dis2() {
-    document.getElementById('input1').disabled = true;
-    document.getElementById('input2').disabled = false;
+    document.getElementById('input2').style.display = 'block';
+    document.getElementById('input1').style.display = 'none';
     document.getElementById('input1').value = '';
   }
   toggle_calendar(event) {
