@@ -6,7 +6,7 @@ class Timesheet extends React.Component {
     super(props);
     this.state = {
       month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      dayOfMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+      // dayOfMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
       days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       // style={{ backgroundColor: 'white' }}
       holidaycolor: 'rgb(221, 225, 230)',
@@ -58,7 +58,7 @@ class Timesheet extends React.Component {
           <Grid.Row style={{ height: '5em' }} />
           <Grid.Row textAlign="center">
             <Button animated="fade" style={{ borderStyle: 'solid', borderColor: this.state.textWorkcolor, backgroundColor: 'white', borderWidth: '1px' }} >
-              <Button.Content visible><font color={this.state.textWorkcolor}>8 Hour</font></Button.Content>
+              <Button.Content visible><font color={this.state.textWorkcolor}>0 Hour</font></Button.Content>
               <Button.Content hidden > <Icon color="blue" name="pencil alternate" /> </Button.Content>
             </Button>
           </Grid.Row>
@@ -86,7 +86,7 @@ class Timesheet extends React.Component {
     return (
       <div>
         {progressBar(20)}
-        <Table celled structured>
+        <Table celled structured fixed>
           <Table.Header>
             <Table.Row textAlign="center">
               <Table.HeaderCell colSpan="7"><font size="3">{this.state.month[6]}</font> 2018</Table.HeaderCell>
@@ -105,9 +105,9 @@ class Timesheet extends React.Component {
                   </Grid.Row>
                   <Grid.Row style={{ height: '5em' }} />
                   <Grid.Row textAlign="center">
-                    <Button animated="fade" style={{ borderStyle: 'solid', borderColor: this.state.ButtonRedcolor, backgroundColor: 'white', borderWidth: '1px' }} >
-                      <Button.Content visible><font color={this.state.ButtonRedcolor}>8 Hour</font></Button.Content>
-                      <Button.Content hidden><Icon color="red" name="pencil alternate" /></Button.Content>
+                    <Button animated="fade" style={{ borderStyle: 'solid', borderColor: this.state.textWorkcolor, backgroundColor: 'white', borderWidth: '1px' }} >
+                      <Button.Content visible><font color={this.state.textWorkcolor}>8 Hour</font></Button.Content>
+                      <Button.Content hidden><Icon color="blue" name="pencil alternate" /></Button.Content>
                     </Button>
                   </Grid.Row>
                 </Grid.Column>

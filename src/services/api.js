@@ -222,7 +222,7 @@ api.createProject = body => (
 // Project detail
 
 api.fetchProjectDetail = id => (
-  callApi(`/api/projects/?id=${id}`)
+  callApi(`/api/projects/${id}`)
 );
 
 api.createMember = body => (
