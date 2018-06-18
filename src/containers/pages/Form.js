@@ -131,23 +131,19 @@ class Form extends Component {
     document.getElementById('input1').value = '';
   }
   toggle_calendar(event) {
-    if (document.getElementById('date_input').contains(event.target)) {
-      document.getElementsByClassName('react-calendar')[0].style.height = '265px';
-      document.getElementsByClassName('react-calendar')[0].style.borderStyle = 'solid';
-    } else if (document.getElementById('date_input_pass').contains(event.target)) {
-      document.getElementsByClassName('react-calendar')[1].style.height = '265px';
-      document.getElementsByClassName('react-calendar')[1].style.borderStyle = 'solid';
-    } else if (document.getElementById('input1').contains(event.target)) {
-      document.getElementsByClassName('react-calendar')[2].style.height = '265px';
-      document.getElementsByClassName('react-calendar')[2].style.borderStyle = 'solid';
-    } else if (document.getElementById('input2').contains(event.target)) {
-      document.getElementsByClassName('react-calendar')[3].style.height = '265px';
-      document.getElementsByClassName('react-calendar')[3].style.borderStyle = 'solid';
-    } else if (!document.getElementById('calendar').contains(event.target)) {
-      for (var i = 0; i < document.getElementsByClassName('react-calendar').length; i++) {
-        document.getElementsByClassName('react-calendar')[i].style.height = '0';
-        setTimeout(function (x) { document.getElementsByClassName('react-calendar')[x].style.borderStyle = 'none'; }(i), 192);
-      }
+    if(document.getElementById('date_input').contains(event.target)){
+      document.getElementById('calendar').style.height = '265px';
+    }else if(document.getElementById('date_input_pass').contains(event.target)){
+      document.getElementById('calendar1').style.height = '265px';
+    }else if(document.getElementById('input1').contains(event.target)){
+      document.getElementById('calendar2').style.height = '265px';
+    }else if(document.getElementById('input2').contains(event.target)){
+      document.getElementById('calendar3').style.height = '265px';
+    }else if(!document.getElementById('calendar').contains(event.target)){
+      document.getElementById('calendar').style.height = '0';
+      document.getElementById('calendar1').style.height = '0';
+      document.getElementById('calendar2').style.height = '0';
+      document.getElementById('calendar3').style.height = '0';
     }
   }
   handle_calendar(date) {
@@ -226,7 +222,7 @@ class Form extends Component {
                       <td colspan="1"></td>
                       <td colspan="5"><input id="main1" type="radio" name='main_option' onClick={this.handle_main_radio_1}></input>Pass probationary period. Effective date on</td>
                       <td />
-                      <td colspan="3"><div className="div_ca"><input className="date_input" id="date_input_pass" ></input><div className="calendar" id="calendar"><Calendar /></div></div></td>
+                      <td colspan="3"><div className="div_ca"><input className="date_input" id="date_input_pass" ></input><div className="calendar" id="calendar1"><Calendar /></div></div></td>
                     </tr>
                   </tbody>
                 </table>
@@ -286,13 +282,13 @@ class Form extends Component {
                     <tr>
                       <td colspan="2"></td>
                       <td colspan="3"><input type="radio" name="option2" id="option2_1" onClick={this.handle_input_dis1}></input>Termination Effective</td>
-                      <td colspan="2"><div className="div_ca"><input id='input1' className="date_input1"></input><div className="calendar" id="calendar"><Calendar /></div></div></td>
+                      <td colspan="2"><div className="div_ca"><input id='input1' className="date_input1"></input><div className="calendar" id="calendar2"><Calendar /></div></div></td>
                       <td colspan="3"></td>
                     </tr>
                     <tr>
                       <td colspan="2"></td>
                       <td colspan="3"><input type="radio" name="option2" id="option2_2" onClick={this.handle_input_dis2}></input>Continued probation untill</td>
-                      <td colspan="2"><div className="div_ca"><input id='input2' className="date_input2"></input><div className="calendar" id="calendar"><Calendar /></div></div></td>
+                      <td colspan="2"><div className="div_ca"><input id='input2' className="date_input2"></input><div className="calendar" id="calendar3"><Calendar /></div></div></td>
                       <td colspan="3"></td>
                     </tr>
                   </tbody>
