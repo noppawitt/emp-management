@@ -17,14 +17,15 @@ const validate = (values) => {
 
 const AddEmployeeForm = ({ handleSubmit, submitting, masterTable }) => (
   <Form onSubmit={handleSubmit}>
+    <Field name="type" as={Form.Select} component={Input} label="User type" placeholder="User type" options={masterTableToOptions(masterTable.accessTypes)} disabled={submitting} />
     <Form.Group widths="equal">
       <Field name="firstName" as={Form.Input} component={Input} label="First name" placeholder="First name" disabled={submitting} />
       <Field name="lastName" as={Form.Input} component={Input} label="Last name" placeholder="Last name" disabled={submitting} />
     </Form.Group>
     <Field name="username" as={Form.Input} component={Input} label="Username" placeholder="Username" disabled={submitting} />
     <Field name="citizenId" as={Form.Input} component={Input} label="Citizen ID" placeholder="Citizen ID" disabled={submitting} />
-    <Field name="level" as={Form.Select} component={Input} label="Level" placeholder="Level" options={masterTableToOptions(masterTable.levels)} disabled={submitting} />
-    <Field name="department" as={Form.Select} component={Input} label="Department" placeholder="Department" options={masterTableToOptions(masterTable.departments)} disabled={submitting} />
+    <Field name="levelId" as={Form.Select} component={Input} label="Level" placeholder="Level" options={masterTableToOptions(masterTable.levels)} disabled={submitting} />
+    <Field name="departmentId" as={Form.Select} component={Input} label="Department" placeholder="Department" options={masterTableToOptions(masterTable.departments)} disabled={submitting} />
     <Field name="startDate" as={Form.Input} component={Input} type="date" label="Start date" placeholder="Start date" disabled={submitting} />
     <Field name="probationDate" as={Form.Input} component={Input} type="date" label="Probation date" placeholder="Probation date" disabled={submitting} />
   </Form>
