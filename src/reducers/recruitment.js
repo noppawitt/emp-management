@@ -4,8 +4,9 @@ const initialState = {
   // isFetch
   recruitments: [],
   lists: [],
-  yearFilter: '',
-  monthFilter: ''
+  searchText: '',
+  sortKey: null,
+  direction: null
 };
 
 const Recruitment = (state = initialState, action) => {
@@ -27,15 +28,16 @@ const Recruitment = (state = initialState, action) => {
         isFetching: true,
         messege: action.payload.messege
       };
-    case actionTypes.YEAR_FILTER_RECRUITMENT:
+    case actionTypes.FILTER_RECRUITMENT:
       return {
         ...state,
-        yearFilter: action.payload.yearFilter
+        searchText: action.payload.searchText
       };
-    case actionTypes.MONTH_FILTER_RECRUITMENT:
+    case actionTypes.SORT_RECRUITMENT:
       return {
         ...state,
-        monthFilter: action.payload.monthFilter
+        sortKey: action.payload.sortKey,
+        direction: action.payload.direction
       };
     default:
       return state;

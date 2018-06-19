@@ -21,16 +21,17 @@ export const fetchRecruitmentMessege = messege => ({
   }
 });
 
-export const yearFilterRecruitment = yearText => ({
-  type: actionTypes.YEAR_FILTER_RECRUITMENT,
+export const filterRecruitment = searchText => ({
+  type: actionTypes.FILTER_RECRUITMENT,
   payload: {
-    yearFilter: yearText,
+    searchText
   }
 });
 
-export const monthFilterRecruitment = monthText => ({
-  type: actionTypes.MONTH_FILTER_RECRUITMENT,
+export const sortRecruitment = (sortKey, direction) => ({
+  type: actionTypes.SORT_RECRUITMENT,
   payload: {
-    monthFilter: monthText,
+    sortKey,
+    direction
   }
 });
