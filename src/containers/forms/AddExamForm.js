@@ -25,7 +25,7 @@ const renderChoices = ({ fields, submitting, placeHold }) => (
   <div>
     <Header as="h5">Choices</Header>
     {fields.map((choice, index) => {
-      placeHold = 'Choice ' + (index + 1) + '...';
+      placeHold = (('Choice ').concat((index + 1))).concat(' ...');
       return (
         <div>
           <Form.Group>
@@ -51,7 +51,7 @@ renderChoices.propTypes = {
 
 const AddExamForm = ({ handleSubmit, submitting, answerType }) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="examType" as={Form.Input} component={Input} label="Exam Type" placeholder="Exam Type ..." disabled={submitting} required />
+    <Field name="examType" as={Form.Input} component={Input} label="Exam Type" placeholder="e.g. English" disabled={submitting} required />
     <Field name="question" as={Form.TextArea} component={Input} autoHeight label="Question" placeholder="New Question ..." disabled={submitting} required />
     <Field name="answerType" as={Form.Select} component={Input} label="Answer Type" placeholder="-- Answer Type --" options={answerTypeOptions} disabled={submitting} required />
     {answerType === 'Choices' && <FieldArray name="choices" component={renderChoices} />}

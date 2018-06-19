@@ -2,7 +2,9 @@ import { call, put, takeEvery, all } from 'redux-saga/effects';
 import * as actionTypes from '../constants/actionTypes';
 import {
   addExamSuccess,
-  addExamFailure
+  addExamFailure,
+  fetchExamSuccess,
+  fetchExamFailure
 } from '../actions/exam';
 import { closeModal } from '../actions/modal';
 import api from '../services/api';
@@ -12,8 +14,8 @@ export function* addExamTask(action) {
     yield call(api.addExam, {
       exam: action.payload.form
     });
-    // const exam = yield call(api.fetchLeave);
-    yield put(addExamSuccess('Test'));
+    const exams = yield call(api.fetchExam);
+    yield put(addExamSuccess(exams));
     yield put(closeModal());
     action.payload.resolve();
   }
@@ -23,12 +25,27 @@ export function* addExamTask(action) {
   }
 }
 
-export function* watchaddExamRequest() {
+export function* fetchExamTask() {
+  try {
+    const exams = yield call(api.fetchExam);
+    yield put(fetchExamSuccess(exams));
+  }
+  catch (error) {
+    yield put(fetchExamFailure(error));
+  }
+}
+
+export function* watchaddExam() {
   yield takeEvery(actionTypes.ADD_EXAM_REQUEST, addExamTask);
+}
+
+export function* watchFetchExam() {
+  yield takeEvery(actionTypes.EXAM_FETCH_REQUEST, fetchExamTask);
 }
 
 export default function* examSaga() {
   yield all([
-    watchaddExamRequest()
+    watchaddExam(),
+    watchFetchExam()
   ]);
 }

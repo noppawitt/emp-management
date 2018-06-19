@@ -9,3 +9,11 @@ exports.create = (req, res, next) => {
     })
     .catch(next);
 }
+
+exports.findAll = (req, res, next) => {
+  Exam.findAll()
+    .then((exam) => {
+      res.json(exam);
+    })
+    .catch(next);
+};

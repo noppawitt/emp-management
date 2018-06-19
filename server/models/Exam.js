@@ -5,6 +5,7 @@ const Exam = {};
 Exam.create = (exam) => {
   sendChoice = [];
   sendAnswer = [];
+  examType = (exam.examType).toLowerCase();
   question = exam.question.replace(/\r?\n/g, '<br />');
 
   if (exam.answerType === 'Write-Up') {
@@ -28,5 +29,9 @@ Exam.create = (exam) => {
     sendAnswer]
   )
 };
+
+Exam.findAll = () => (
+  db.manyOrNone('SELECT * FROM exams ORDER BY ex_id ASC', ['Pending'])
+);
 
 module.exports = Exam;
