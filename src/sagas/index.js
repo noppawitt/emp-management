@@ -7,6 +7,7 @@ import projectSaga from './project';
 import leaveSaga from './leave';
 import timesheetSaga from './timesheet';
 import recruitmentSaga from './recruitment';
+import examSaga from './exam';
 
 export default function* rootSaga() {
   yield all([
@@ -17,6 +18,7 @@ export default function* rootSaga() {
     projectSaga(),
     leaveSaga(),
     timesheetSaga(),
-    recruitmentSaga()
+    recruitmentSaga(),
+    examSaga()
   ]);
 }

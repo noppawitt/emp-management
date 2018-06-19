@@ -251,4 +251,13 @@ api.fetchAllRecruitment = () => (
   callApi(`/api/recruitments`)
 );
 
+// Exam
+
+api.addExam = body => (
+  callApi('/api/exam', {
+    method: 'POST',
+    body
+  })
+);
+
 export default api;
