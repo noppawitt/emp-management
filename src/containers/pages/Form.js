@@ -131,15 +131,15 @@ class Form extends Component {
     document.getElementById('input1').value = '';
   }
   toggle_calendar(event) {
-    if(document.getElementById('date_input').contains(event.target)){
+    if (document.getElementById('date_input').contains(event.target)) {
       document.getElementById('calendar').style.height = '265px';
-    }else if(document.getElementById('date_input_pass').contains(event.target)){
+    } else if (document.getElementById('date_input_pass').contains(event.target)) {
       document.getElementById('calendar1').style.height = '265px';
-    }else if(document.getElementById('input1').contains(event.target)){
+    } else if (document.getElementById('input1').contains(event.target)) {
       document.getElementById('calendar2').style.height = '265px';
-    }else if(document.getElementById('input2').contains(event.target)){
+    } else if (document.getElementById('input2').contains(event.target)) {
       document.getElementById('calendar3').style.height = '265px';
-    }else if(!document.getElementById('calendar').contains(event.target)){
+    } else if (!document.getElementById('calendar').contains(event.target)) {
       document.getElementById('calendar').style.height = '0';
       document.getElementById('calendar1').style.height = '0';
       document.getElementById('calendar2').style.height = '0';

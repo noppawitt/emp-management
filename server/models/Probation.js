@@ -3,7 +3,7 @@ const db = require('../db/');
 const Probation = {};
 
 Probation.findById = (id) => (
-    db.manyOrNone("SELECT CONCAT(i.first_name, ' ', i.last_name) as full_name, d.name as department, i.user_id, po.name as position, CONCAT(w.level_id, '. ', l.name) as level"
+    db.manyOrNone("SELECT CONCAT(i.first_name, ' ', i.last_name) as full_name, d.name as department, i.user_id, po.name as position, w.level_id"
     + ", w.start_date, w.probation_date, bo.boss_name as supervisor" +
     " FROM public.employee_work w, public.employee_info i, public.departments d, public.positions po, public.levels l, " +
     "(SELECT i.user_id ,CONCAT(i.first_name, ' ', i.last_name) as boss_name FROM public.employee_info i, public.employee_work w WHERE i.user_id = w.boss_id) bo " +
