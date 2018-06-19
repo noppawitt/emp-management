@@ -22,3 +22,21 @@ export const addExamFailure = message => ({
     message
   }
 });
+
+export const fetchExamRequest = () => ({
+  type: actionTypes.EXAM_FETCH_REQUEST
+});
+
+export const fetchExamSuccess = exam => ({
+  type: actionTypes.EXAM_FETCH_SUCCESS,
+  payload: {
+    exam
+  }
+});
+
+export const fetchExamFailure = message => ({
+  type: actionTypes.EXAM_FETCH_FAILURE,
+  payload: {
+    message
+  }
+});

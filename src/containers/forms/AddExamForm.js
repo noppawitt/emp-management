@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { Field, reduxForm, formValueSelector } from 'redux-form';
-import { Form } from 'semantic-ui-react';
+import { Field, reduxForm, formValueSelector, FieldArray } from 'redux-form';
+import { Form, Header, Icon, Button } from 'semantic-ui-react';
 import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
 
@@ -12,101 +12,49 @@ const validate = (values) => {
   errors.examType = validator.required(values.examType);
   errors.question = validator.required(values.question);
   errors.answerType = validator.required(values.answerType);
-  if (errors.answerType === undefined) {
-    if (values.answerType === 'Choices') {
-      if (values.ans1 === false && values.ans2 === false && values.ans3 === false && values.ans4 === false && values.ans5 === false) {
-        errors.answer = 'Need answer';
-      }
-    }
-  }
 
   return errors;
 };
 
-const examTypeOptions = [
-  { key: 'English', value: 'English', text: 'English' },
-  { key: 'Logic', value: 'Logic', text: 'Logic' },
-  { key: 'Skill Proficiency', value: 'Skill Proficiency', text: 'Skill Proficiency' }
-];
 const answerTypeOptions = [
   { key: 'Write-Up', value: 'Write-Up', text: 'Write-Up' },
   { key: 'Choices', value: 'Choices', text: 'Choices' }
 ];
-const numberOfChoicesOptions = [
-  { key: 2, value: 2, text: 2 },
-  { key: 3, value: 3, text: 3 },
-  { key: 4, value: 4, text: 4 },
-  { key: 5, value: 5, text: 5 },
-];
 
-const AddExamForm = ({ handleSubmit, submitting, answerType, numberOfChoices }) => (
+const renderChoices = ({ fields, submitting, placeHold }) => (
+  <div>
+    <Header as="h5">Choices</Header>
+    {fields.map((choice, index) => {
+      placeHold = (('Choice ').concat((index + 1))).concat(' ...');
+      return (
+        <div>
+          <Form.Group>
+            <Field name={`${choice}.data`} as={Form.Input} component={Input} placeholder={placeHold} disabled={submitting} />
+            <Field name={`${choice}.answer`} as={Form.Checkbox} component={Input} label="Correct Answer" disabled={submitting} />
+            <Icon fitted name="ban" color="red" size="large" onClick={() => fields.remove(index)} />
+          </Form.Group>
+          <sbr />
+        </div>
+      );
+    })}
+    <Button type="button" icon labelPosition="left" onClick={() => fields.push({ data: '', answer: false })} basic color="teal" disabled={submitting}>
+      <Icon name="add" />
+      NEW CHOICE
+    </Button>
+  </div>
+);
+renderChoices.propTypes = {
+  fields: Field.isRequired,
+  submitting: PropTypes.bool.isRequired,
+  placeHold: PropTypes.string.isRequired
+};
+
+const AddExamForm = ({ handleSubmit, submitting, answerType }) => (
   <Form onSubmit={handleSubmit}>
-    <Field
-      name="examType"
-      as={Form.Select}
-      component={Input}
-      label="Exam Type"
-      placeholder="-- Exam Type --"
-      options={examTypeOptions}
-      disabled={submitting}
-      required
-    />
+    <Field name="examType" as={Form.Input} component={Input} label="Exam Type" placeholder="e.g. English" disabled={submitting} required />
     <Field name="question" as={Form.TextArea} component={Input} autoHeight label="Question" placeholder="New Question ..." disabled={submitting} required />
-    <Field
-      name="answerType"
-      as={Form.Select}
-      component={Input}
-      label="Answer Type"
-      placeholder="-- Answer Type --"
-      options={answerTypeOptions}
-      disabled={submitting}
-      required
-    />
-    {answerType === 'Choices' &&
-      <Field
-        name="numberOfChoices"
-        as={Form.Select}
-        component={Input}
-        label="Number of choices"
-        placeholder="-- Number of choices --"
-        options={numberOfChoicesOptions}
-        disabled={submitting}
-      />
-    }
-    {(answerType === 'Choices' && numberOfChoices >= 2) ? (
-      <div>
-        <Form.Group widths="equal" className="inline-field">
-          <Field name="choice1" as={Form.Input} component={Input} placeholder="Choice 1 ..." disabled={submitting} />
-          <Field name="ans1" as={Form.Checkbox} component={Input} label="Correct Answer" disabled={submitting} />
-        </Form.Group>
-        <Form.Group widths="equal">
-          <Field name="choice2" as={Form.Input} component={Input} placeholder="Choice 2 ..." disabled={submitting} />
-          <Field name="ans2" as={Form.Checkbox} component={Input} label="Correct Answer" disabled={submitting} />
-        </Form.Group>
-      </div>)
-      : <div />
-    }
-    {(answerType === 'Choices' && numberOfChoices >= 3) ?
-      <Form.Group widths="equal">
-        <Field name="choice3" as={Form.Input} component={Input} placeholder="Choice 3 ..." disabled={submitting} />
-        <Field name="ans3" as={Form.Checkbox} component={Input} label="Correct Answer" disabled={submitting} />
-      </Form.Group>
-      : <div />
-    }
-    {(answerType === 'Choices' && numberOfChoices >= 4) ?
-      <Form.Group widths="equal">
-        <Field name="choice4" as={Form.Input} component={Input} placeholder="Choice 4 ..." disabled={submitting} />
-        <Field name="ans4" as={Form.Checkbox} component={Input} label="Correct Answer" disabled={submitting} />
-      </Form.Group>
-      : <div />
-    }
-    {(answerType === 'Choices' && numberOfChoices >= 5) ?
-      <Form.Group widths="equal">
-        <Field name="choice5" as={Form.Input} component={Input} placeholder="Choice 5 ..." disabled={submitting} />
-        <Field name="ans5" as={Form.Checkbox} component={Input} label="Correct Answer" disabled={submitting} />
-      </Form.Group>
-      : <div />
-    }
+    <Field name="answerType" as={Form.Select} component={Input} label="Answer Type" placeholder="-- Answer Type --" options={answerTypeOptions} disabled={submitting} required />
+    {answerType === 'Choices' && <FieldArray name="choices" component={renderChoices} />}
   </Form>
 );
 
@@ -114,7 +62,6 @@ AddExamForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
   answerType: PropTypes.string.isRequired,
-  numberOfChoices: PropTypes.number.isRequired
 };
 
 const selector = formValueSelector('addExam');
@@ -128,6 +75,9 @@ const enhance = compose(
   connect(mapStateToProps, null),
   reduxForm({
     form: 'addExam',
+    initialValues: {
+      choices: [{ data: '', answer: false }, { data: '', answer: false }]
+    },
     validate
   })
 );

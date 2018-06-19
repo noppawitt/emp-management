@@ -21,6 +21,23 @@ const exam = (state = initialState, action) => {
         ...state,
         message: action.payload.message
       };
+    case actionTypes.EXAM_FETCH_REQUEST:
+      return {
+        ...state,
+        isFetching: true
+      };
+    case actionTypes.EXAM_FETCH_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        lists: action.payload.exams
+      };
+    case actionTypes.EXAM_FETCH_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        message: action.payload.message
+      };
     default:
       return state;
   }

@@ -11,6 +11,7 @@ import { handleReduxFormSubmit } from '../../utils/helper';
 const AddExamModal = ({ onClose, onSubmit, onClick, submitting }) => (
   <Modal
     header="Add new question"
+    buttonName="ADD"
     onClose={onClose}
     onClick={onClick}
     submitting={submitting}

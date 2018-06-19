@@ -260,4 +260,8 @@ api.addExam = body => (
   })
 );
 
+api.fetchExam = () => (
+  callApi('/api/exam')
+);
+
 export default api;
