@@ -1,6 +1,9 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-import { Segment, /* Button, */ Icon, Table, Menu, Grid, Select } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import { Segment, Button, /* Menu, Icon, */ Table, Grid, Select } from 'semantic-ui-react';
+import 'react-dates/initialize';
+import { DateRangePicker } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
 
 const months = [
   { key: 0, value: 0, text: 'All' },
@@ -26,116 +29,89 @@ for (let y = currentYear; y <= currentYear + rangeYear; y += 1) {
   years.push({ key: y, value: y, text: y });
 }
 
-const rowsPerPageList = [
-  { key: 0, value: 0, text: 'All' },
-  { key: 1, value: 10, text: '10' },
-  { key: 2, value: 20, text: '20' },
-  { key: 3, value: 50, text: '50' },
-  { key: 4, value: 100, text: '100' },
-];
+// hgihgig
+const test = (status) => {
+  switch (status) {
+    case 'Pending':
+      return <Button className="primary">Start</Button>;
+    case 'Complete':
+      return <Button className="primary">View Result</Button>;
+    case 'In Progress':
+      return <Button className="primary disabled">Start</Button>;
+    default:
+      return <Button className="primary disabled">Error</Button>;
+  }
+};
 
-// hardcord for loop test
-const tests = [
-  {
-    name: 'ชื่อ นามสกุล',
-    position: [
-      'ตำแหน่ง1',
-      'ตำแหน่ง2'
-    ]
-  },
-  {
-    name: 'Adam Levine',
-    position: [
-      'mid',
-      'feed',
-      'support',
-      'tank',
-      'gank',
-      'core',
-      'nuke'
-    ]
-  },
-  {
-    name: 'narathip threetantipakorn',
-    position: [
-      'noob'
-    ]
-  },
-];
-
-const pageNumber = 1;
-
-// const changeRowsPerPage = (newRowsPerPage) => {
-//   this.setState({
-//     rowPerPage: newRowsPerPage
-//   });
-// };
-
-const Recruitment = (/* { recruitment } */) => (
-  // const Recruitment = ({ recruitment }) => (
+// const Recruitment = ({ recruitments, onYearChange, onMonthChange }) => {
+const Recruitment = ({ recruitments }) => (
   <Segment.Group raised>
     <Segment>
       <Grid>
         <Grid.Column width={3}>
-          <Select placeholder="Year" options={years} />
+          <Select placeholder="Year" options={years} /* onYearChange={yearChange} */ />
         </Grid.Column>
         <Grid.Column width={3}>
-          <Select placeholder="Month" options={months} />
+          <Select placeholder="Month" options={months} /* onMonthChange={monthChange} */ />
         </Grid.Column>
-        <Grid.Column floated="right" width={3}>
-          <Select className="fluid" placeholder="Rows per page" options={rowsPerPageList} /* onChange={changeRowsPerPage} */ />
+        <Grid.Column width={5}>
+          {/* <DateRangePicker small showClearDates /* onDateChange={onDateChange} */ /> */}
+          <DateRangePicker
+            startDate={this.state.startDate} // momentPropTypes.momentObj or null,
+            startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
+            endDate={this.state.endDate} // momentPropTypes.momentObj or null,
+            endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
+            onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
+            focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+            onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+          />
         </Grid.Column>
       </Grid>
     </Segment>
     <Segment>
-      <Table className="selectable celled">
+      <Table className="striped selectable celled">
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell className="one wide center aligned">#</Table.HeaderCell>
-            <Table.HeaderCell className="four wide">Name</Table.HeaderCell>
-            <Table.HeaderCell className="five wide">Position</Table.HeaderCell>
+            <Table.HeaderCell className="three wide">Name</Table.HeaderCell>
+            <Table.HeaderCell className="two wide">Position</Table.HeaderCell>
+            <Table.HeaderCell className="two wide">Appointment</Table.HeaderCell>
+            <Table.HeaderCell className="two wide">Status</Table.HeaderCell>
+            <Table.HeaderCell className="three wide" />
           </Table.Row>
         </Table.Header>
-        {/* for loop here */}
         <Table.Body>
-          {tests.map((test, i) => (
-            <Table.Row key={test.name}>
-              {/* {console.log('>>>> ', this.state)} */}
-              <Table.Cell className="one wide center aligned">{i + 1 /* + ((pageNumber - 1) * this.state.rowPerPage) */}</Table.Cell>
-              <Table.Cell className="four wide">{test.name}</Table.Cell>
-              <Table.Cell className="five wide">
-                {(test.position).map(eachPosition => (
+          {recruitments.map((recruitment, i) => (
+            <Table.Row key={recruitment.userId}>
+              <Table.Cell className="one wide center aligned">{i + 1}</Table.Cell>
+              <Table.Cell className="three wide">
+                {recruitment.firstName} {recruitment.lastName}<br />
+                {recruitment.firstNameTh !== '' ? <div>{recruitment.firstNameTh} {recruitment.lastNameTh}<br /></div> : ''}
+              </Table.Cell>
+              <Table.Cell className="two wide">
+                {(recruitment.position).map(eachPosition => (
                   <div>{eachPosition}<br /></div>
                 ))}
+              </Table.Cell>
+              <Table.Cell className="two wide">{recruitment.appointment}</Table.Cell>
+              <Table.Cell className="two wide">{recruitment.status}</Table.Cell>
+              <Table.Cell className="three wide center aligned">
+                {test(recruitment.status)}
               </Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
-        <Table.Footer>
-          <Table.Row>
-            <Table.HeaderCell colSpan="7">
-              <Menu floated="right" pagination>
-                <Menu.Item as="a" icon>
-                  <Icon name="chevron left" />
-                </Menu.Item>
-                <Menu.Item as="a" className="active">1</Menu.Item>
-                <Menu.Item as="a">2</Menu.Item>
-                <Menu.Item as="a">3</Menu.Item>
-                <Menu.Item as="a">4</Menu.Item>
-                <Menu.Item as="a" icon>
-                  <Icon name="chevron right" />
-                </Menu.Item>
-              </Menu>
-            </Table.HeaderCell>
-          </Table.Row>
-        </Table.Footer>
       </Table>
     </Segment>
   </Segment.Group>
 );
 
-// Recruitment.propTypes = {
-//   recruitments: PropTypes.array.isRequired
-// };
+Recruitment.defaultProps = {
+  recruitments: []
+};
+
+Recruitment.propTypes = {
+  recruitments: PropTypes.array
+};
 
 export default Recruitment;

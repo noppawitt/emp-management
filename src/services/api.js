@@ -245,4 +245,10 @@ api.fetchTimesheet = id => (
   callApi(`/api/timesheets/?id=${id}`)
 );
 
+// Recruitment
+
+api.fetchAllRecruitment = () => (
+  callApi(`/api/recruitments`)
+);
+
 export default api;

@@ -62,9 +62,12 @@
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-big-calendar": "^0.19.1",
+    "react-dates": "^16.7.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
+    "react-with-direction": "1.1.0",
+    "react-with-styles": "3.2.0",
     "recompose": "^0.27.0",
     "redux": "^3.7.2",
     "redux-form": "^7.3.0",
@@ -72,5 +75,7 @@
     "redux-saga": "^0.16.0",
     "redux-thunk": "^2.2.0",
     "semantic-ui-react": "0.79.0"
-  }
+  },
+  "repository": "https://github.com/NothingSOS/emp-management.git",
+  "author": "nihcet <techinkid@gmail.com>"
 }
