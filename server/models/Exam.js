@@ -34,4 +34,8 @@ Exam.findAll = () => (
   db.manyOrNone('SELECT * FROM exams ORDER BY ex_id ASC', ['Pending'])
 );
 
+Exam.delete = id => (
+  db.none('DELETE FROM exams WHERE ex_id = $1', [parseInt(id.id)])
+);
+
 module.exports = Exam;

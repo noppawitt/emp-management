@@ -2,32 +2,39 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Segment, Button, Icon, Grid, Dropdown, Input, Table } from 'semantic-ui-react';
 
-const examTypeOptions = (exams, subjectNoFilter) => {
-  subjectNoFilter.push({ text: 'all subjects', value: 'all subjects' });
-
+const examTypeOptions = (exams, subjectNoFilter, subjectFilter, subjectList) => {
   exams.forEach((element) => {
-    subjectNoFilter.push({ text: element.exType, value: element.exType });
+    subjectNoFilter.push(element.exType);
   });
 
-  return [...new Set(subjectNoFilter)];
+  subjectFilter = [...new Set(subjectNoFilter)];
+
+  subjectList.push({ text: 'all subjects', value: 'all subjects' });
+  subjectFilter.forEach((element) => {
+    subjectList.push({ text: element, value: element });
+  });
+
+  return subjectList;
 };
 examTypeOptions.propTypes = {
-  subjectNoFilter: PropTypes.array.isRequired
+  subjectNoFilter: PropTypes.array.isRequired,
+  subjectFilter: PropTypes.array.isRequired,
+  subjectList: PropTypes.array.isRequired
 };
 
-const Exam = (({ onClick, onFilterChange, exams, examsFilter }) => (
+const Exam = (({ onAddClick, onDeleteClick, onFilterChange, exams, examsFilter }) => (
   <div>
     <Segment.Group raised>
       <Segment>
         <Grid>
           <Grid.Column width={3}>
-            <Dropdown fluid selection options={examTypeOptions(exams, [])} placeholder="-- Search Subject --" onChange={(e, { value }) => onFilterChange('searchType', value)} />
+            <Dropdown fluid selection options={examTypeOptions(exams, [], [], [])} placeholder="-- Search Subject --" onChange={(e, { value }) => onFilterChange('searchType', value)} />
           </Grid.Column>
           <Grid.Column width={4}>
             <Input icon="search" placeholder="Search question ..." onChange={(e, { value }) => onFilterChange('searchText', value)} />
           </Grid.Column>
           <Grid.Column width={9}>
-            <Button icon labelPosition="left" floated="right" color="blue" onClick={onClick}>
+            <Button icon labelPosition="left" floated="right" color="blue" onClick={onAddClick}>
               <Icon name="add" />
               Add new question
             </Button>
@@ -60,7 +67,11 @@ const Exam = (({ onClick, onFilterChange, exams, examsFilter }) => (
                 <div>{ans}</div>
               ))}
               </Table.Cell>
-              <Table.Cell>UNDER CONSTRUCTION</Table.Cell>
+              <Table.Cell textAlign="center">
+                <Button active circular icon="settings" color="blue" size="big" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <Button active circular icon="trash" color="red" size="big" onClick={() => onDeleteClick(exam.exId)} />
+              </Table.Cell>
             </Table.Row>
           ))}
           </Table.Body>
@@ -71,7 +82,8 @@ const Exam = (({ onClick, onFilterChange, exams, examsFilter }) => (
 ));
 
 Exam.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  onAddClick: PropTypes.func.isRequired,
+  onDeleteClick: PropTypes.func.isRequired,
   onFilterChange: PropTypes.func.isRequired,
   exams: PropTypes.array.isRequired,
   examsFilter: PropTypes.array.isRequired

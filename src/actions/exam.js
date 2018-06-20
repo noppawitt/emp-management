@@ -48,3 +48,24 @@ export const filterExams = (key, value) => ({
     value
   }
 });
+
+export const deleteExamRequest = id => ({
+  type: actionTypes.DELETE_EXAM_REQUEST,
+  payload: {
+    id
+  }
+});
+
+export const deleteExamSuccess = id => ({
+  type: actionTypes.DELETE_EXAM_SUCCESS,
+  payload: {
+    id
+  }
+});
+
+export const deleteExamFailure = message => ({
+  type: actionTypes.DELETE_EXAM_FAILURE,
+  payload: {
+    message
+  }
+});

@@ -17,3 +17,15 @@ exports.findAll = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.delete = (req, res, next) => {
+  Exam.delete(req.body.id)
+    .then(() => {
+      Exam.findAll()
+        .then((exams) => {
+          res.json(exams);
+        })
+        .catch(next);
+    })
+    .catch(next);
+};
