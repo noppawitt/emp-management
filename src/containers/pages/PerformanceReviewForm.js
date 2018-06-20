@@ -64,7 +64,7 @@ class PerformanceReviewForm extends React.Component {
                 <h2>Playtorium Solutions Company Limited</h2>
                 <EmployeeInfo {...this.state} />
                 <h2>Performance Appraisal Portion</h2>
-                <ScoreManager questions={questions} numOfQuestion={5} />
+                <ScoreManager questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={[1, 2, 3, 4, 5]} />
             </div>
         );
     }

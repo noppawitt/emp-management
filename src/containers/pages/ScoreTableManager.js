@@ -1,5 +1,13 @@
 import React from 'react';
 
+const DropDown = (props) => {
+    let elements = [];
+    for (let i = 1; i <= (props.numOfElements ? props.numOfElements : 5); i++)
+        elements.push(<option value={i}>{i}</option>);
+
+    return <select id={props.id} value={props.value} onChange={props.onChange}>{elements}</select>;
+};
+
 class ScoreTableManager extends React.Component {
     constructor(props) {
         super(props);
@@ -7,11 +15,55 @@ class ScoreTableManager extends React.Component {
             questions: props.questions,
             expectedScore: props.expectedScore || [3, 3, 3, 3, 3, 3, 3],
             score: props.score || [3, 3, 3, 3, 3, 3, 3],
-            numOfQuestion: props.numOfQuestion || 7
+            weight: props.weight || [15, 10, 10, 15, 10, 20, 20],
+            numOfQuestion: props.numOfQuestion || 7,
+            numOfElements: props.numOfElements || 5,
+            totalPoint: [0, 0, 0, 0, 0, 0, 0]
         }
-        console.log(props);
 
-        this.createTable.bind(this);
+        this.createTable = this.createTable.bind(this);
+        this.updateExpectedScore = this.updateExpectedScore.bind(this);
+        this.updateScore = this.updateScore.bind(this);
+        this.arraySum = this.arraySum.bind(this);
+        this.updateTotalPoint = this.updateTotalPoint.bind(this);
+    }
+
+    componentDidMount() {
+        this.updateTotalPoint();
+    }
+
+    updateExpectedScore() {
+        let values = [];
+        for (let i = 0; i < this.state.numOfQuestion; i++) {
+            let temp = document.getElementById(`expectScore${i}`);
+            values.push(temp.value);
+        }
+        this.setState({ expectedScore: values });
+    }
+
+    updateScore() {
+        let values = [];
+        for (let i = 0; i < this.state.numOfQuestion; i++) {
+            let temp = document.getElementById(`score${i}`);
+            values.push(temp.value);
+        }
+        this.setState({ score: values }, this.updateTotalPoint);
+    }
+
+    updateTotalPoint() {
+        let total = [];
+        for (let i = 0; i < this.state.numOfQuestion; i++) {
+            total.push((this.state.score[i] / this.state.numOfElements * this.state.weight[i]));
+        }
+        this.setState({ totalPoint: total });
+    }
+
+    arraySum(array) {
+        let sum = 0;
+        for (let i = 0; i < this.state.numOfQuestion; i++) {
+            sum += parseInt(array[i]);
+        }
+        return sum;
     }
 
     createTable() {
@@ -20,10 +72,10 @@ class ScoreTableManager extends React.Component {
             table.push(<tr>
                 <td>{i + 1}</td>
                 <td>{this.state.questions[i]}</td>
-                <td>{this.state.expectedScore[i]}</td>
-                <td>{this.state.score[i]}</td>
-                <td>15%</td>
-                <td>9%</td>
+                <td><DropDown id={`expectScore${i}`} value={this.state.expectedScore[i]} onChange={this.updateExpectedScore} numOfElements={this.state.numOfElements} /></td>
+                <td><DropDown id={`score${i}`} value={this.state.score[i]} onChange={this.updateScore} numOfElements={this.state.numOfElements} /></td>
+                <td>{this.state.weight[i]}%</td>
+                <td>{(this.state.totalPoint ? this.state.totalPoint[i] : "N/A")}{(this.state.totalPoint ? "%" : "")}</td>
             </tr>);
         }
         return (
@@ -38,6 +90,13 @@ class ScoreTableManager extends React.Component {
                         <th>Total Point</th>
                     </tr>
                     {table}
+                    <tr>
+                        <td colSpan='2'>Total Performance Score</td>
+                        <td></td>
+                        <td>{this.arraySum(this.state.score)}</td>
+                        <td>{this.arraySum(this.state.weight)}%</td>
+                        <td>{this.arraySum(this.state.totalPoint)}%</td>
+                    </tr>
                 </table>
             </div>
         );
