@@ -1,0 +1,42 @@
+/* For Test */
+
+table, th, tr, td {
+    border: 2px solid;
+}
+
+/* Evaluation Container */
+
+.container {
+    text-align: center;
+}
+
+/* Employee Infomation */
+
+.info-container td {
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.info-container td:nth-child(odd) {
+    font-weight: bolder;
+}
+
+/* Evaluation Table */
+
+.eva-table {
+    margin: auto;
+    width: 80%;
+}
+
+.eva-table th {
+    font-weight: bolder;
+    text-align: center;
+}
+
+.eva-table td {
+    text-align: center;
+}
+
+.eva-table td:nth-child(2) {
+    text-align: left;
+}
