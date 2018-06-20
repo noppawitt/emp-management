@@ -2,6 +2,7 @@ import React from 'react';
 import './css/PerformanceReviewForm.css';
 import ScoreManager from './ScoreTableManager';
 import EmployeeInfo from './components/EmployeeInforComponent';
+import SignatureComponent from './components/SignatureComponent';
 
 const questions = ['ความรู้ในงานและการพัฒนาตัวเอง (Knowledge and Improvement)',
     'คุณภาพงาน (Quality of Work)',
@@ -43,6 +44,7 @@ class PerformanceReviewForm extends React.Component {
                     <h2>Summary Comments by Supervisors:</h2>
                     <textarea className="comment"></textarea>
                 </div>
+                <SignatureComponent />
             </div>
         );
     }
