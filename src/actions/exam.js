@@ -27,10 +27,10 @@ export const fetchExamRequest = () => ({
   type: actionTypes.EXAM_FETCH_REQUEST
 });
 
-export const fetchExamSuccess = exam => ({
+export const fetchExamSuccess = exams => ({
   type: actionTypes.EXAM_FETCH_SUCCESS,
   payload: {
-    exam
+    exams
   }
 });
 

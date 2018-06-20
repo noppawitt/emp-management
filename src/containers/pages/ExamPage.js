@@ -10,7 +10,7 @@ import Loader from '../../components/Loader';
 
 const ExamPage = ({ isFetching, onClick, exams }) => (
   <div>
-    {isFetching ? <Loader /> : <Exam onClick={onClick} exams={exams} />}
+    {isFetching ? <Loader /> : <Exam onClick={() => onClick(exams)} exams={exams} />}
   </div>
 );
 
@@ -30,7 +30,7 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => ({
   fetchExam: () => dispatch(fetchExamRequest()),
-  onClick: () => dispatch(openModal(modalNames.ADD_NEW_EXAM))
+  onClick: exams => dispatch(openModal(modalNames.ADD_NEW_EXAM, { exams }))
 });
 const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
