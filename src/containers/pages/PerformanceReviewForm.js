@@ -43,9 +43,6 @@ class PerformanceReviewForm extends React.Component {
                     <h2>Summary Comments by Supervisors:</h2>
                     <textarea className="comment"></textarea>
                 </div>
-                <div>
-                    <div>Employee has read this appraisal and discussed the contents with direct supervisor. Signatures identify that employee has been advised on their performance by direct supervisor.</div>
-                </div>
             </div>
         );
     }
