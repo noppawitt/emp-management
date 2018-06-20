@@ -40,3 +40,11 @@ export const fetchExamFailure = message => ({
     message
   }
 });
+
+export const filterExams = (key, value) => ({
+  type: actionTypes.FILTER_EXAMS,
+  payload: {
+    key,
+    value
+  }
+});

@@ -15,16 +15,16 @@ examTypeOptions.propTypes = {
   subjectNoFilter: PropTypes.array.isRequired
 };
 
-const Exam = (({ onClick, exams }) => (
+const Exam = (({ onClick, onFilterChange, exams, examsFilter }) => (
   <div>
-    <Segment.Group>
+    <Segment.Group raised>
       <Segment>
         <Grid>
           <Grid.Column width={3}>
-            <Dropdown fluid selection options={examTypeOptions(exams, [])} placeholder="-- Select Subject --" />
+            <Dropdown fluid selection options={examTypeOptions(exams, [])} placeholder="-- Search Subject --" onChange={(e, { value }) => onFilterChange('searchType', value)} />
           </Grid.Column>
           <Grid.Column width={4}>
-            <Input icon="search" placeholder="Search question ..." />
+            <Input icon="search" placeholder="Search question ..." onChange={(e, { value }) => onFilterChange('searchText', value)} />
           </Grid.Column>
           <Grid.Column width={9}>
             <Button icon labelPosition="left" floated="right" color="blue" onClick={onClick}>
@@ -35,7 +35,7 @@ const Exam = (({ onClick, exams }) => (
         </Grid>
       </Segment>
       <Segment>
-        <Table striped selectable celled>
+        <Table striped selectable celled compact>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Question</Table.HeaderCell>
@@ -45,7 +45,7 @@ const Exam = (({ onClick, exams }) => (
               <Table.HeaderCell>&nbsp;</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
-          <Table.Body>{exams.map(exam => (
+          <Table.Body>{examsFilter.map(exam => (
             <Table.Row>
               <Table.Cell>{(exam.exQuestion.split('<br />')).map(choice => (
                 <div>{choice}</div>
@@ -60,7 +60,7 @@ const Exam = (({ onClick, exams }) => (
                 <div>{ans}</div>
               ))}
               </Table.Cell>
-              <Table.Cell>WAIT !!!</Table.Cell>
+              <Table.Cell>UNDER CONSTRUCTION</Table.Cell>
             </Table.Row>
           ))}
           </Table.Body>
@@ -72,7 +72,9 @@ const Exam = (({ onClick, exams }) => (
 
 Exam.propTypes = {
   onClick: PropTypes.func.isRequired,
-  exams: PropTypes.array.isRequired
+  onFilterChange: PropTypes.func.isRequired,
+  exams: PropTypes.array.isRequired,
+  examsFilter: PropTypes.array.isRequired
 };
 
 export default Exam;

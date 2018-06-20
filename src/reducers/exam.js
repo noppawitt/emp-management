@@ -38,6 +38,11 @@ const exam = (state = initialState, action) => {
         isFetching: false,
         message: action.payload.message
       };
+    case actionTypes.FILTER_EXAMS:
+      return {
+        ...state,
+        [action.payload.key]: action.payload.value
+      };
     default:
       return state;
   }
