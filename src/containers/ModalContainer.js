@@ -13,6 +13,7 @@ import AddProjectModal from './modals/AddProjectModal';
 import CreateLeaveRequestModal from './modals/CreateLeaveRequestModal';
 import ConfirmModal from './modals/ConfirmModal';
 import ProfilePictureModal from './modals/ProfilePictureModal';
+import EditProfilePictureModal from './modals/EditProfilePictureModal';
 
 const ModalContainer = ({ name, props }) => {
   switch (name) {
@@ -36,8 +37,12 @@ const ModalContainer = ({ name, props }) => {
       return <CreateLeaveRequestModal {...props} />;
     case modalNames.CONFIRM:
       return <ConfirmModal {...props} />;
-    case modalNames.PROFILE_PICTURE:
+    case modalNames.VIEW_PROFILE_PICTURE:
       return <ProfilePictureModal {...props} />;
+    case modalNames.EDIT_ASSET_PROFILE:
+      return <EditEducationProfileModal {...props} />;
+    case modalNames.EDIT_PROFILE_PICTURE:
+      return <EditProfilePictureModal {...props} />;
     default:
       return <div />;
   }
