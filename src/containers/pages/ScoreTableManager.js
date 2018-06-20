@@ -11,10 +11,10 @@ class ScoreTableManager extends React.Component {
         }
         console.log(props);
 
-        this.CreateTable.bind(this);
+        this.createTable.bind(this);
     }
 
-    CreateTable() {
+    createTable() {
         let table = [];
         for (let i = 0; i < this.state.numOfQuestion; i++) {
             table.push(<tr>
@@ -46,7 +46,7 @@ class ScoreTableManager extends React.Component {
     render() {
         return (
             <div>
-                {this.CreateTable()}
+                {this.createTable()}
             </div>
         );
     }
