@@ -19,11 +19,11 @@ exports.create = (req, res, next) => {
   const holiday = Holiday.findByYear(moment().format('YYYY'));
   for (let m = moment(newLeaveRequest.leaveFrom); m.diff(newLeaveRequest.leaveTo, 'days') <= 0; m.add(1, 'days')) {
     if (m.isoWeekday() !== 6 && m.isoWeekday() !== 7) {
-      for (let i = 0; i < holiday.length; i += 1) {
-        if (moment(holiday[i].date) === m) {
-          break;
-        }
-      }
+      // for (let i = 0; i < holiday.length; i += 1) {
+      //   if (moment(holiday[i].date) === m) {
+      //     break;
+      //   }
+      // }
       newLeaveRequest.leaveDate = m;
       newLeaveRequest.totalhours = moment(newLeaveRequest.endTime, 'HH:mm:ss').diff(moment(newLeaveRequest.startTime, 'HH:mm:ss'), 'hours');
       newLeaveRequest.code = 'playtorium';

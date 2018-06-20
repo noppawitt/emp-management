@@ -9,7 +9,7 @@ exports.create = (req, res, next) => {
     .catch(next);
 };
 
-exports.find = (req, res, next) => {
+exports.findById = (req, res, next) => {
   EmployeeInfo.findById(req.query.id)
     .then((employeeInfo) => {
       res.json(employeeInfo);

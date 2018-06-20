@@ -38,4 +38,8 @@ Timesheet.findByUserId = userId => (
   db.manyOrNone('SELECT * FROM timesheets WHERE user_id = $1', [userId])
 );
 
+Timesheet.findTimesheetInProject = (year, month, projectId, userId) => (
+  db.manyOrNone('SELECT * FROM timesheets WHERE extract(year from date) = $1 AND extract(month from date) = $2 AND project_id = $3 AND user_id = $4 ORDER BY date', [year, month, projectId, userId])
+);
+
 module.exports = Timesheet;

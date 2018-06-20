@@ -55,8 +55,8 @@ Project.findById = id => (
   db.one('SELECT * FROM projects WHERE id = $1', [id])
 );
 
-Project.findMemberProject = id => (
-  db.manyOrNone('SELECT has_projects.user_id, employee_info.first_name, employee_info.last_name, employee_work.position_id, positions.id, positions.name, has_projects.role FROM has_projects, employee_info, employee_work, positions WHERE has_projects.user_id = employee_info.user_id AND has_projects.user_id = employee_work.user_id AND employee_work.position_id = positions.id  AND has_projects.project_id = $1', [id])
+Project.findMemberProject = projectId => (
+  db.manyOrNone('SELECT employee_info.user_id, employee_work.user_id, has_projects.user_id, employee_info.first_name, employee_info.last_name, employee_work.position_id, positions.id, positions.name, has_projects.role FROM has_projects, employee_info, employee_work, positions WHERE has_projects.user_id = employee_info.user_id AND has_projects.user_id = employee_work.user_id AND employee_work.position_id = positions.id  AND has_projects.project_id = $1', [projectId])
 );
 
 module.exports = Project;
