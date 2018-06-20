@@ -53,6 +53,11 @@ const leave = (state = initialState, action) => {
         ...state,
         message: action.payload.message
       };
+    case actionTypes.FILTER_LEAVE:
+      return {
+        ...state,
+        [action.payload.key]: action.payload.value
+      };
     default:
       return state;
   }

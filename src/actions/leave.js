@@ -62,3 +62,11 @@ export const updateLeaveFailure = message => ({
     message
   }
 });
+
+export const filterLeave = (key, value) => ({
+  type: actionTypes.FILTER_LEAVE,
+  payload: {
+    key,
+    value
+  }
+});
