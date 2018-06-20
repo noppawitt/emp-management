@@ -4,7 +4,7 @@ const multer = require('multer');
 
 router.post('/', EmployeeInfoController.create);
 
-router.get('/', EmployeeInfoController.find);
+router.get('/', EmployeeInfoController.findById);
 
 router.put('/', EmployeeInfoController.update);
 
