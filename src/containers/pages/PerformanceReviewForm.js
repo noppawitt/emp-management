@@ -1,37 +1,7 @@
 import React from 'react';
 import './css/PerformanceReviewForm.css';
 import ScoreManager from './ScoreTableManager';
-
-const EmployeeInfo = (info) => {
-    return (
-        <div className='info-container'>
-            <table>
-                <tr>
-                    <td>Name:</td>
-                    <td>{info.name}</td>
-                    <td>Department:</td>
-                    <td>{info.department}</td>
-                </tr>
-                <tr>
-                    <td>Position:</td>
-                    <td>{info.position}</td>
-                    <td>EmployeeID:</td>
-                    <td>{info.employeeID}</td>
-                </tr>
-                <tr>
-                    <td>Level:</td>
-                    <td>{info.level}</td>
-                    <td>Start Date</td>
-                    <td>{info.startDate}</td>
-                </tr>
-                <tr>
-                    <td>Supervisor:</td>
-                    <td>{info.supervisor}</td>
-                </tr>
-            </table>
-        </div>
-    );
-};
+import EmployeeInfo from './components/EmployeeInforComponent';
 
 const questions = ['ความรู้ในงานและการพัฒนาตัวเอง (Knowledge and Improvement)',
     'คุณภาพงาน (Quality of Work)',
@@ -60,11 +30,22 @@ class PerformanceReviewForm extends React.Component {
     render() {
         return (
             <div className='container'>
-                <h1>Employee Performance Review Form</h1>
-                <h2>Playtorium Solutions Company Limited</h2>
-                <EmployeeInfo {...this.state} />
-                <h2>Performance Appraisal Portion</h2>
-                <ScoreManager questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={[1, 2, 3, 4, 5]} />
+                <div>
+                    <h1>Employee Performance Review Form</h1>
+                    <h2>Playtorium Solutions Company Limited</h2>
+                    <EmployeeInfo {...this.state} />
+                </div>
+                <div>
+                    <h2>Performance Appraisal Portion</h2>
+                    <ScoreManager questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={[1, 2, 3, 4, 5]} />
+                </div>
+                <div>
+                    <h2>Summary Comments by Supervisors:</h2>
+                    <textarea className="comment"></textarea>
+                </div>
+                <div>
+                    <div>Employee has read this appraisal and discussed the contents with direct supervisor. Signatures identify that employee has been advised on their performance by direct supervisor.</div>
+                </div>
             </div>
         );
     }
