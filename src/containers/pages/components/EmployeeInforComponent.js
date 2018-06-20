@@ -5,7 +5,7 @@ class EmployeeInfo extends React.Component {
         super(props);
         this.state = props;
     }
-    
+
     render() {
         return (
             <div className='info-container' >
@@ -31,6 +31,8 @@ class EmployeeInfo extends React.Component {
                     <tr>
                         <td>Supervisor:</td>
                         <td>{this.state.supervisor}</td>
+                        <td>{this.state.endProbationDate ? 'Probation End Date' : ''}</td>
+                        <td>{this.state.endProbationDate ? this.state.endProbationDate : ''}</td>
                     </tr>
                 </table>
             </div>

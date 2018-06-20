@@ -38,7 +38,7 @@ class PerformanceReviewForm extends React.Component {
                 </div>
                 <div>
                     <h2>Performance Appraisal Portion</h2>
-                    <ScoreManager questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={[1, 2, 3, 4, 5]} />
+                    <ScoreManager questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} />
                 </div>
                 <div>
                     <h2>Summary Comments by Supervisors:</h2>
