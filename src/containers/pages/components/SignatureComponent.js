@@ -1,5 +1,6 @@
 import React from 'react';
 import cmark from '../pic/mark.png';
+import './css/SignatureComponent.css';
 
 class SignatureComponent extends React.Component {
     handle_accept1() {
@@ -22,9 +23,9 @@ class SignatureComponent extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className='sign-container'>
                 <div>
-                    <div>Employee has read this appraisal and discussed the contents with direct supervisor. Signatures identify that employee has been advised on their performance by direct supervisor.</div>
+                    <div align='left'>Employee has read this appraisal and discussed the contents with direct supervisor. Signatures identify that employee has been advised on their performance by direct supervisor.</div>
                 </div>
                 <div id='kkk'>
                     <table className="grid">

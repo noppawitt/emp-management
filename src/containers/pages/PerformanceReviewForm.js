@@ -37,13 +37,16 @@ class PerformanceReviewForm extends React.Component {
                     <h2>Playtorium Solutions Company Limited</h2>
                 </div>
                 <EmployeeInfo {...this.state} />
+                <br />
                 <div>
                     <ScoreManager questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} />
                 </div>
-                <div>
+                <br />
+                <div className='sup-comment'>
                     <h2>Summary Comments by Supervisors:</h2>
                     <textarea className="comment"></textarea>
                 </div>
+                <br />
                 <SignatureComponent />
             </div>
         );

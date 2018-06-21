@@ -10,10 +10,6 @@
     table-layout: auto;
 }
 
-table, tr, th, td {
-    border: 2px solid;
-}
-
 .eva-container tr th {
     text-align: center;
 }

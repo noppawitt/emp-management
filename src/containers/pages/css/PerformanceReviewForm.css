@@ -40,3 +40,8 @@ table, th, tr, td {
 .eva-table td:nth-child(2) {
     text-align: left;
 }
+
+.sup-comment {
+    width: 75%;
+    margin: auto;
+}
