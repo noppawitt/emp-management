@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Icon, Table, Grid, Progress, Button, Modal } from 'semantic-ui-react';
 import moment from 'moment';
 
@@ -15,45 +16,7 @@ class Timesheet extends React.Component {
       iconBluecolor: 'blue',
       date: moment(),
       holidays: [
-        { date: '2018-06-14', name: 'Compensatory day' } 
-      ],
-
-      monthTimesheet: [
-        { date: '2018-05-27', hour: '8' },
-        { date: '2018-05-28', hour: '8' },
-        { date: '2018-05-29', hour: '8' },
-        { date: '2018-05-30', hour: '8' },
-        { date: '2018-05-31', hour: '8' },
-        { date: '2018-06-01', hour: '8' },
-        { date: '2018-06-02', hour: '0' },
-        { date: '2018-06-03', hour: '0' },
-        { date: '2018-06-04', hour: '8' },
-        { date: '2018-06-05', hour: '8' },
-        { date: '2018-06-06', hour: '8' },
-        { date: '2018-06-07', hour: '8' },
-        { date: '2018-06-08', hour: '8' },
-        { date: '2018-06-09', hour: '0' },
-        { date: '2018-06-10', hour: '0' },
-        { date: '2018-06-11', hour: '8' },
-        { date: '2018-06-12', hour: '8' },
-        { date: '2018-06-13', hour: '8' },
-        { date: '2018-06-14', hour: '0' },
-        { date: '2018-06-15', hour: '8' },
-        { date: '2018-06-16', hour: '0' },
-        { date: '2018-06-17', hour: '0' },
-        { date: '2018-06-18', hour: '8' },
-        { date: '2018-06-19', hour: '8' },
-        { date: '2018-06-20', hour: '0' },
-        { date: '2018-06-21', hour: '0' },
-        { date: '2018-06-22', hour: '0' },
-        { date: '2018-06-23', hour: '0' },
-        { date: '2018-06-24', hour: '0' },
-        { date: '2018-06-25', hour: '0' },
-        { date: '2018-06-26', hour: '0' },
-        { date: '2018-06-27', hour: '0' },
-        { date: '2018-06-28', hour: '0' },
-        { date: '2018-06-29', hour: '0' },
-        { date: '2018-06-30', hour: '0' }
+        { date: '2018-06-14', name: 'Compensatory day' }
       ]
     };
     this.anotherMonthCell = this.anotherMonthCell.bind(this);
@@ -62,6 +25,7 @@ class Timesheet extends React.Component {
     this.drawCell = this.drawCell.bind(this);
     this.addHolidayName = this.addHolidayName.bind(this);
   }
+
   drawCell(date, hour) {
     if (date.format('M') !== this.state.date.format('M')) {
       return (this.anotherMonthCell(date.format('D')));
@@ -159,7 +123,7 @@ class Timesheet extends React.Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {this.state.monthTimesheet.map((oneday, i) => {
+            {/* {this.state.monthTimesheet.map((oneday, i) => {
                 if ((i % 7) === 0) {
                   return (
                     <Table.Row style={{ height: '10em', width: '10em' }} >
@@ -175,6 +139,20 @@ class Timesheet extends React.Component {
                 }
                 return <div />;
               })
+            } */}
+            {
+              this.props.timesheets.map((timesheet, i) => (
+                i % 7 === 0 &&
+                <Table.Row style={{ height: '10em', width: '10em' }} >
+                  {this.drawCell(moment(this.props.timesheets[i].date), this.props.timesheets[i].totalHours)}
+                  {this.drawCell(moment(this.props.timesheets[i + 1].date), this.props.timesheets[i + 1].totalhours)}
+                  {this.drawCell(moment(this.props.timesheets[i + 2].date), this.props.timesheets[i + 2].totalhours)}
+                  {this.drawCell(moment(this.props.timesheets[i + 3].date), this.props.timesheets[i + 3].totalhours)}
+                  {this.drawCell(moment(this.props.timesheets[i + 4].date), this.props.timesheets[i + 4].totalhours)}
+                  {this.drawCell(moment(this.props.timesheets[i + 5].date), this.props.timesheets[i + 5].totalhours)}
+                  {this.drawCell(moment(this.props.timesheets[i + 6].date), this.props.timesheets[i + 6].totalhours)}
+                </Table.Row>
+              ))
             }
           </Table.Body>
         </Table>
@@ -183,5 +161,9 @@ class Timesheet extends React.Component {
     );
   }
 }
+
+Timesheet.propTypes = {
+  timesheets: PropTypes.array.isRequired
+};
 
 export default Timesheet;

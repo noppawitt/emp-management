@@ -11,8 +11,12 @@ export const fillTimesheetsToFullMonth = (state) => {
   // first date of last month
   const date = moment(firstDay).add(-(firstDay.isoWeekday() % 7), 'days');
   for (let i = 0; i < n; i += 1) {
-    timesheets.push(date.format('YYYY-MM-DD'));
+    timesheets.push({ date: date.format('YYYY-MM-DD') });
     date.add(1, 'days');
+  }
+  for (let i = 0; i < state.timesheet.lists.length; i += 1) {
+    const index = timesheets.findIndex(t => t.date === state.timesheet.lists[i].date);
+    timesheets[index] = state.timesheet.lists[i];
   }
   return timesheets;
 };
