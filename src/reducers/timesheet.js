@@ -1,8 +1,6 @@
 import * as actionTypes from '../constants/actionTypes';
 
-const initialState = {
-  lists: [1, 2, 3, 4]
-};
+const initialState = {};
 
 const timesheet = (state = initialState, action) => {
   switch (action.type) {

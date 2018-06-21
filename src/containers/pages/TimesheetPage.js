@@ -4,17 +4,28 @@ import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import { fetchTimesheetRequest } from '../../actions/timesheet';
 import Timesheet from '../../components/Timesheet';
+import Loader from '../../components/Loader';
+import { fillTimesheetsToFullMonth } from '../../selectors/timesheet';
 
-const TimesheetPage = ({ timesheets }) => (
-  <Timesheet timesheets={timesheets} />
+const TimesheetPage = ({ isFetching, timesheets }) => (
+  <div>
+    {isFetching ? <Loader /> : <Timesheet timesheets={timesheets} /> }
+  </div>
 );
 
+TimesheetPage.defaultProps = {
+  isFetching: true
+};
+
 TimesheetPage.propTypes = {
+  isFetching: PropTypes.bool,
   timesheets: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
-  timesheets: state.timesheet.lists
+  isFetching: state.timesheet.isFetching,
+  timesheets: fillTimesheetsToFullMonth(state),
+  userId: state.auth.id
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -25,9 +36,8 @@ const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
-      // const { fetchTimesheet } = this.props;
-      // fetchTimesheet(1);
-      console.log('mount');
+      const { fetchTimesheet, id } = this.props;
+      fetchTimesheet(id);
     }
   })
 );
