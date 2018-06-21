@@ -21,6 +21,17 @@ const answerTypeOptions = [
   { key: 'Choices', value: 'Choices', text: 'Choices' }
 ];
 
+const examTypeOptions = (exams, subjectNoFilter) => {
+  exams.forEach((element) => {
+    subjectNoFilter.push(element.exType);
+  });
+
+  return [...new Set(subjectNoFilter)];
+};
+examTypeOptions.propTypes = {
+  subjectNoFilter: PropTypes.array.isRequired
+};
+
 const renderChoices = ({ fields, submitting, placeHold }) => (
   <div>
     <Header as="h5">Choices</Header>
@@ -49,9 +60,14 @@ renderChoices.propTypes = {
   placeHold: PropTypes.string.isRequired
 };
 
-const AddExamForm = ({ handleSubmit, submitting, answerType }) => (
+const AddExamForm = ({ handleSubmit, submitting, answerType, exams }) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="examType" as={Form.Input} component={Input} label="Exam Type" placeholder="e.g. English" disabled={submitting} required />
+    <Field name="examType" as={Form.Input} component={Input} list="exam_type" label="Exam Type" placeholder="e.g. English" disabled={submitting} required />
+    <datalist id="exam_type">
+      {
+        (examTypeOptions(exams, [])).map(type => (<option value={type} />))
+      }
+    </datalist>
     <Field name="question" as={Form.TextArea} component={Input} autoHeight label="Question" placeholder="New Question ..." disabled={submitting} required />
     <Field name="answerType" as={Form.Select} component={Input} label="Answer Type" placeholder="-- Answer Type --" options={answerTypeOptions} disabled={submitting} required />
     {answerType === 'Choices' && <FieldArray name="choices" component={renderChoices} />}
@@ -62,6 +78,7 @@ AddExamForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
   answerType: PropTypes.string.isRequired,
+  exams: PropTypes.array.isRequired
 };
 
 const selector = formValueSelector('addExam');

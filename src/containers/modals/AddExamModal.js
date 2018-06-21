@@ -8,7 +8,7 @@ import Modal from '../../components/Modal';
 import AddExamForm from '../forms/AddExamForm';
 import { handleReduxFormSubmit } from '../../utils/helper';
 
-const AddExamModal = ({ onClose, onSubmit, onClick, submitting }) => (
+const AddExamModal = ({ onClose, onSubmit, onClick, submitting, exams }) => (
   <Modal
     header="Add new question"
     buttonName="ADD"
@@ -16,11 +16,12 @@ const AddExamModal = ({ onClose, onSubmit, onClick, submitting }) => (
     onClick={onClick}
     submitting={submitting}
   >
-    <AddExamForm onSubmit={values => onSubmit(values)} />
+    <AddExamForm exams={exams} onSubmit={values => onSubmit(values)} />
   </Modal>
 );
 
 AddExamModal.propTypes = {
+  exams: PropTypes.array.isRequired,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,

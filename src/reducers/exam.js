@@ -38,6 +38,26 @@ const exam = (state = initialState, action) => {
         isFetching: false,
         message: action.payload.message
       };
+    case actionTypes.DELETE_EXAM_REQUEST:
+      return {
+        ...state,
+        id: action.payload.id
+      };
+    case actionTypes.DELETE_EXAM_SUCCESS:
+      return {
+        ...state,
+        id: action.payload.id
+      };
+    case actionTypes.DELETE_EXAM_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
+    case actionTypes.FILTER_EXAMS:
+      return {
+        ...state,
+        [action.payload.key]: action.payload.value
+      };
     default:
       return state;
   }

@@ -264,4 +264,11 @@ api.fetchExam = () => (
   callApi('/api/exam')
 );
 
+api.deleteExam = body => (
+  callApi('/api/exam', {
+    method: 'DELETE',
+    body
+  })
+);
+
 export default api;

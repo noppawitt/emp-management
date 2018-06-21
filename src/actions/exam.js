@@ -27,15 +27,44 @@ export const fetchExamRequest = () => ({
   type: actionTypes.EXAM_FETCH_REQUEST
 });
 
-export const fetchExamSuccess = exam => ({
+export const fetchExamSuccess = exams => ({
   type: actionTypes.EXAM_FETCH_SUCCESS,
   payload: {
-    exam
+    exams
   }
 });
 
 export const fetchExamFailure = message => ({
   type: actionTypes.EXAM_FETCH_FAILURE,
+  payload: {
+    message
+  }
+});
+
+export const filterExams = (key, value) => ({
+  type: actionTypes.FILTER_EXAMS,
+  payload: {
+    key,
+    value
+  }
+});
+
+export const deleteExamRequest = id => ({
+  type: actionTypes.DELETE_EXAM_REQUEST,
+  payload: {
+    id
+  }
+});
+
+export const deleteExamSuccess = id => ({
+  type: actionTypes.DELETE_EXAM_SUCCESS,
+  payload: {
+    id
+  }
+});
+
+export const deleteExamFailure = message => ({
+  type: actionTypes.DELETE_EXAM_FAILURE,
   payload: {
     message
   }
