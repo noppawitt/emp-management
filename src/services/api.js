@@ -176,6 +176,14 @@ api.createAssetProfile = body => (
   })
 );
 
+api.uploadProfilePicture = body => (
+  callApi('upload-profile-img', {
+    headers: { 'Content-Type': 'multipart/form-data' },
+    method: 'POST',
+    body
+  })
+);
+
 api.deleteEducationProfile = body => (
   callApi('/api/educates', {
     method: 'DELETE',
