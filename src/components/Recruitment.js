@@ -30,13 +30,13 @@ const Recruitment = ({ recruitments, onSearchChange, handleSort, sortKey, direct
         <DayPickerInput
           placeholder="From"
           value={startDate}
-          onDayChange={value => onStartDateChange(formatDate(value, 'YYYY-M-D'))}
-          // onDayChange={(value) => { console.log(value); onStartDateChange(value); }}
+          onDayChange={value => onStartDateChange(formatDate(value, 'YYYY-MM-DD'))}
+          clickUnselectsDay
         />{' '}-{' '}
         <DayPickerInput
           placeholder="To"
           value={endDate}
-          onDayChange={value => onEndDateChange(formatDate(value, 'YYYY-M-D'))}
+          onDayChange={value => onEndDateChange(formatDate(value, 'YYYY-MM-DD'))}
         />
       </Segment>
       <Segment />

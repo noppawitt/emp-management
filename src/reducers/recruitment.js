@@ -9,6 +9,7 @@ const initialState = {
   direction: null,
   startDate: null,
   endDate: null,
+  isDateFilterChange: false,
 };
 
 const Recruitment = (state = initialState, action) => {
@@ -31,21 +32,22 @@ const Recruitment = (state = initialState, action) => {
         messege: action.payload.messege
       };
     case actionTypes.FILTER_RECRUITMENT:
-      console.log(action.payload.startDate, '<<<', state.startDate);
       return {
         ...state,
         searchText: action.payload.searchText
       };
     case actionTypes.FILTER_START_DATE_RECRUITMENT:
-      console.log(action.payload.startDate, '<<<', state.startDate);
+      console.log('>>', state.startDate, action.payload.startDate);
       return {
         ...state,
-        startDate: action.payload.startDate
+        startDate: action.payload.startDate,
+        isDateFilterChange: true
       };
     case actionTypes.FILTER_END_DATE_RECRUITMENT:
       return {
         ...state,
-        endDate: action.payload.endDate
+        endDate: action.payload.endDate,
+        isDateFilterChange: true
       };
     case actionTypes.SORT_RECRUITMENT:
       return {

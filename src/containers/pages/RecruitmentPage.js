@@ -62,6 +62,7 @@ RecruitmentPage.propTypes = {
   onEndDateChange: PropTypes.func.isRequired,
   startDate: PropTypes.string.isRequired,
   endDate: PropTypes.string.isRequired,
+  // isDateFilterChange: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -71,6 +72,7 @@ const mapStateToProps = state => ({
   sortKey: state.recruitment.sortKey,
   startDate: state.startDate,
   endDate: state.endDate,
+  // isDateFilterChange: state.isDateFilterChange,
 });
 
 const mapDispatchToProps = dispatch => ({

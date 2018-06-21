@@ -9,7 +9,16 @@ export const getVisibleRecruitment = (state) => {
   // ignore special characters
   const regExp = new RegExp(state.recruitment.searchText.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&'), 'i');
 
-  return state.recruitment.lists
+  let tempLists = state.recruitment.lists;
+  if (state.recruitment.isDateFilterChange && state.recruitment.startDate && state.recruitment.endDate) {
+    // filter with date from date picker
+    tempLists = tempLists.filter(recruitment =>
+      state.recruitment.startDate <= recruitment.appointment
+      && recruitment.appointment <= state.recruitment.endDate);
+  }
+  state.recruitment.isDateFilterChange = false;
+
+  return tempLists
     .filter(recruitment => regExp.test(recruitment.citizenId)
       || regExp.test(recruitment.firstName)
       || regExp.test(recruitment.lastName)
