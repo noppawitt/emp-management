@@ -20,6 +20,7 @@ export const CREATE_LEAVE_REQUEST = 'CREATE_LEAVE_REQUEST';
 
 // Exam
 export const ADD_NEW_EXAM = 'ADD_NEW_EXAM';
+export const EDIT_EXAM = 'EDIT_EXAM';
 
 // Other
 export const CONFIRM = 'CONFIRM';

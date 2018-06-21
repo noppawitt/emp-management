@@ -22,7 +22,7 @@ examTypeOptions.propTypes = {
   subjectList: PropTypes.array.isRequired
 };
 
-const Exam = (({ onAddClick, onDeleteClick, onFilterChange, exams, examsFilter }) => (
+const Exam = (({ onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, examsFilter }) => (
   <div>
     <Segment.Group raised>
       <Segment>
@@ -68,7 +68,7 @@ const Exam = (({ onAddClick, onDeleteClick, onFilterChange, exams, examsFilter }
               ))}
               </Table.Cell>
               <Table.Cell textAlign="center">
-                <Button active circular icon="settings" color="blue" size="big" />
+                <Button active circular icon="settings" color="blue" size="big" onClick={() => onEditClick(exams, exam)} />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <Button active circular icon="trash" color="red" size="big" onClick={() => onDeleteClick(exam.exId)} />
               </Table.Cell>
@@ -84,6 +84,7 @@ const Exam = (({ onAddClick, onDeleteClick, onFilterChange, exams, examsFilter }
 Exam.propTypes = {
   onAddClick: PropTypes.func.isRequired,
   onDeleteClick: PropTypes.func.isRequired,
+  onEditClick: PropTypes.func.isRequired,
   onFilterChange: PropTypes.func.isRequired,
   exams: PropTypes.array.isRequired,
   examsFilter: PropTypes.array.isRequired

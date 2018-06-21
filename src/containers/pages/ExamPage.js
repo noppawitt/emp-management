@@ -9,9 +9,13 @@ import Exam from '../../components/Exam';
 import Loader from '../../components/Loader';
 import { getVisibleExams } from '../../selectors/exam';
 
-const ExamPage = ({ isFetching, onAddClick, onDeleteClick, onFilterChange, exams, examsFilter }) => (
+const ExamPage = ({ isFetching, onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, examsFilter }) => (
   <div>
-    {isFetching ? <Loader /> : <Exam onAddClick={() => onAddClick(exams)} onDeleteClick={onDeleteClick} onFilterChange={onFilterChange} exams={exams} examsFilter={examsFilter} />}
+    {
+      isFetching
+      ? <Loader />
+      : <Exam onAddClick={() => onAddClick(exams)} onDeleteClick={onDeleteClick} onEditClick={onEditClick} onFilterChange={onFilterChange} exams={exams} examsFilter={examsFilter} />
+    }
   </div>
 );
 
@@ -23,6 +27,7 @@ ExamPage.propTypes = {
   isFetching: PropTypes.bool,
   onAddClick: PropTypes.func.isRequired,
   onDeleteClick: PropTypes.func.isRequired,
+  onEditClick: PropTypes.func.isRequired,
   onFilterChange: PropTypes.func.isRequired,
   exams: PropTypes.array.isRequired,
   examsFilter: PropTypes.array.isRequired,
@@ -41,7 +46,8 @@ const mapDispatchToProps = dispatch => ({
     header: 'Delete question',
     description: 'Are you sure to delete this question ?',
     onConfirm: () => dispatch(deleteExamRequest({ id }), window.location.reload())
-  }))
+  })),
+  onEditClick: (exams, thisExam) => dispatch(openModal(modalNames.EDIT_EXAM, { exams, thisExam }))
 });
 const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),

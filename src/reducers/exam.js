@@ -53,6 +53,21 @@ const exam = (state = initialState, action) => {
         ...state,
         message: action.payload.message
       };
+    case actionTypes.EDIT_EXAM_REQUEST:
+      return {
+        ...state,
+        form: action.payload.form
+      };
+    case actionTypes.EDIT_EXAM_SUCCESS:
+      return {
+        ...state,
+        lists: action.payload.exam
+      };
+    case actionTypes.EDIT_EXAM_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
     case actionTypes.FILTER_EXAMS:
       return {
         ...state,

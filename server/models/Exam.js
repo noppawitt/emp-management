@@ -2,7 +2,7 @@ const db = require('../db');
 
 const Exam = {};
 
-Exam.create = (exam) => {
+const setFormatToDB = (exam) => {
   sendChoice = [];
   sendAnswer = [];
   examType = (exam.examType).toLowerCase();
@@ -21,12 +21,18 @@ Exam.create = (exam) => {
     });
   }
 
+  return { sendChoice: sendChoice, sendAnswer: sendAnswer, examType: examType, question: question };
+}
+
+Exam.create = (exam) => {
+  examFormatDB = setFormatToDB(exam);
+
   return db.one(
     'INSERT INTO exams (ex_type, ex_question, ex_choices, ex_answer) VALUES ($1, $2, $3, $4) RETURNING 1',
-    [exam.examType,
-    question,
-    sendChoice,
-    sendAnswer]
+    [examFormatDB.examType,
+    examFormatDB.question,
+    examFormatDB.sendChoice,
+    examFormatDB.sendAnswer]
   )
 };
 
@@ -37,5 +43,17 @@ Exam.findAll = () => (
 Exam.delete = id => (
   db.none('DELETE FROM exams WHERE ex_id = $1', [parseInt(id.id)])
 );
+
+Exam.edit = (exam) => {
+  examFormatDB = setFormatToDB(exam);
+  return db.none(
+    'UPDATE exams SET ex_type = $1, ex_question = $2, ex_choices = $3, ex_answer = $4 WHERE ex_id = $5',
+    [examFormatDB.examType,
+    examFormatDB.question,
+    examFormatDB.sendChoice,
+    examFormatDB.sendAnswer,
+    exam.examId]
+  )
+};
 
 module.exports = Exam;

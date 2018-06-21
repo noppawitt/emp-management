@@ -13,6 +13,7 @@ import AddProjectModal from './modals/AddProjectModal';
 import CreateLeaveRequestModal from './modals/CreateLeaveRequestModal';
 import ConfirmModal from './modals/ConfirmModal';
 import AddExamModal from './modals/AddExamModal';
+import EditExamModal from './modals/EditExamModal';
 
 const ModalContainer = ({ name, props }) => {
   switch (name) {
@@ -38,6 +39,8 @@ const ModalContainer = ({ name, props }) => {
       return <ConfirmModal {...props} />;
     case modalNames.ADD_NEW_EXAM:
       return <AddExamModal {...props} />;
+    case modalNames.EDIT_EXAM:
+      return <EditExamModal {...props} />;
     default:
       return <div />;
   }
