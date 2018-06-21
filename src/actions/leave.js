@@ -35,7 +35,7 @@ export const fetchLeaveSuccess = leaves => ({
 });
 
 export const fetchLeaveFailure = message => ({
-  type: actionTypes.LEAVE_FETCH_SUCCESS,
+  type: actionTypes.LEAVE_FETCH_FAILURE,
   payload: {
     message
   }

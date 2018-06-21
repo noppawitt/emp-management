@@ -11,10 +11,10 @@ const stylebox = {
   background: 'linear-gradient(to bottom right, DarkCyan  , rgb(92,151,181))',
 };
 
-const GeneralProfileBox = ({ image, generalProfile, onEditClick, onProfilePictureClick }) => (
+const GeneralProfileBox = ({ image, generalProfile, onEditClick, onProfilePictureClick, onEditProfilePictureClick }) => (
   <Segment.Group raised size="large">
     <Segment padded inverted style={stylebox}>
-      <ProfilePicture image={image} onClick={() => onProfilePictureClick(image)} />
+      <ProfilePicture image={image} onProfilePictureClick={() => onProfilePictureClick(image)} onEditProfilePictureClick={onEditProfilePictureClick} />
     </Segment>
     <Segment padded textAlign="center">
       <Grid>
@@ -36,14 +36,16 @@ GeneralProfileBox.propTypes = {
   image: PropTypes.string.isRequired,
   generalProfile: PropTypes.object.isRequired,
   onEditClick: PropTypes.func.isRequired,
-  onProfilePictureClick: PropTypes.func.isRequired
+  onProfilePictureClick: PropTypes.func.isRequired,
+  onEditProfilePictureClick: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
   onEditClick: () => dispatch(openModal(modalNames.EDIT_GENERAL_PROFILE)),
-  onProfilePictureClick: profilePicture => dispatch(openModal(modalNames.PROFILE_PICTURE, {
+  onProfilePictureClick: profilePicture => dispatch(openModal(modalNames.VIEW_PROFILE_PICTURE, {
     profilePicture
-  }))
+  })),
+  onEditProfilePictureClick: () => dispatch(openModal(modalNames.EDIT_PROFILE_PICTURE))
 });
 
 export default connect(null, mapDispatchToProps)(GeneralProfileBox);
