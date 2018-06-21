@@ -1,4 +1,5 @@
 /* For Test */
+
 /* 
 table, th, tr, td {
     border: 2px solid;
@@ -44,4 +45,19 @@ table, th, tr, td {
 .sup-comment {
     width: 75%;
     margin: auto;
+}
+
+.sup-comment textarea {
+    border-radius: 7px;
+    border-width: thin;
+    padding: 1%;
+    height: 10em;
+    width: 100%;
+    resize: none;
+    overflow: scroll;
+    margin-bottom: 1%;
+}
+
+.sup-comment textarea::-webkit-scrollbar {
+    display: none;
 }

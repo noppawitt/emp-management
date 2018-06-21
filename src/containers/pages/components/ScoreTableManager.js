@@ -97,11 +97,11 @@ class ScoreTableManager extends React.Component {
                     </tr>
                     {table}
                     <tr>
-                        <td colSpan='2'>Total Performance Score</td>
-                        <td></td>
-                        <td>{this.arraySum(this.state.score)}</td>
-                        <td>{this.arraySum(this.state.weight)}%</td>
-                        <td className='blue-text'>{this.arraySum(this.state.totalPoint)}%</td>
+                        <th colSpan='2'>Total Performance Score</th>
+                        <th></th>
+                        <th>{this.arraySum(this.state.score)}</th>
+                        <th>{this.arraySum(this.state.weight)}%</th>
+                        <th className='blue-text'>{this.arraySum(this.state.totalPoint)}%</th>
                     </tr>
                 </table>
             </div>

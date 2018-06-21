@@ -44,7 +44,7 @@ class PerformanceReviewForm extends React.Component {
                 <br />
                 <div className='sup-comment'>
                     <h2>Summary Comments by Supervisors:</h2>
-                    <textarea className="comment"></textarea>
+                    <textarea></textarea>
                 </div>
                 <br />
                 <SignatureComponent />

@@ -25,7 +25,7 @@ class SignatureComponent extends React.Component {
         return (
             <div className='sign-container'>
                 <div>
-                    <div align='left'>Employee has read this appraisal and discussed the contents with direct supervisor. Signatures identify that employee has been advised on their performance by direct supervisor.</div>
+                    <div align='left'>&emsp;&emsp;&emsp;&emsp;Employee has read this appraisal and discussed the contents with direct supervisor. Signatures identify that employee has been advised on their performance by direct supervisor.</div>
                 </div>
                 <div id='kkk'>
                     <table className="grid">
