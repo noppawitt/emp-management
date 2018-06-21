@@ -2,12 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
-import { fetchRecruitmentRequest, sortRecruitment, filterRecruitment } from '../../actions/recruitment';
+import {
+  fetchRecruitmentRequest,
+  sortRecruitment,
+  filterRecruitment,
+  filterStartDateRecruitment,
+  filterEndDateRecruitment,
+} from '../../actions/recruitment';
 import Recruitment from '../../components/Recruitment';
 import Loader from '../../components/Loader';
 import { getVisibleRecruitment } from '../../selectors/recruitment';
 
-const RecruitmentPage = ({ isFetching, recruitments, onSearchChange, sortByKey, sortKey, direction }) => {
+const RecruitmentPage = ({
+  isFetching,
+  recruitments,
+  onSearchChange,
+  sortByKey,
+  sortKey,
+  direction,
+  onStartDateChange,
+  onEndDateChange,
+  startDate,
+  endDate }) => {
   const handleSort = (key) => {
     if (sortKey !== key) {
       sortByKey(key, 'ascending');
@@ -23,38 +39,50 @@ const RecruitmentPage = ({ isFetching, recruitments, onSearchChange, sortByKey, 
         <Recruitment
           recruitments={recruitments}
           onSearchChange={onSearchChange}
+          handleSort={handleSort}
           sortKey={sortKey}
           direction={direction}
-          handleSort={handleSort}
+          onStartDateChange={onStartDateChange}
+          onEndDateChange={onEndDateChange}
+          startDate={startDate}
+          endDate={endDate}
         />}
     </div>
   );
 };
 
-RecruitmentPage.defaultProps = {
-  isFetching: true
-};
-
 RecruitmentPage.propTypes = {
-  isFetching: PropTypes.bool,
+  isFetching: PropTypes.bool.isRequired,
   recruitments: PropTypes.array.isRequired,
-  onSearchChange: PropTypes.func.isRequired,
   direction: PropTypes.string.isRequired,
+  sortKey: PropTypes.string.isRequired,
   sortByKey: PropTypes.func.isRequired,
-  sortKey: PropTypes.string.isRequired
+  onSearchChange: PropTypes.func.isRequired,
+  onStartDateChange: PropTypes.func.isRequired,
+  onEndDateChange: PropTypes.func.isRequired,
+  startDate: PropTypes.string.isRequired,
+  endDate: PropTypes.string.isRequired,
+  // isDateFilterChange: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
   isFetching: state.recruitment.isFetching,
   recruitments: getVisibleRecruitment(state),
   direction: state.recruitment.direction,
-  sortKey: state.recruitment.sortKey
+  sortKey: state.recruitment.sortKey,
+  startDate: state.startDate,
+  endDate: state.endDate,
+  // isDateFilterChange: state.isDateFilterChange,
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchRecruitment: () => dispatch(fetchRecruitmentRequest()),
-  onSearchChange: e => dispatch(filterRecruitment(e.target.value)),
   sortByKey: (key, direction) => dispatch(sortRecruitment(key, direction)),
+  onSearchChange: e => dispatch(filterRecruitment(e.target.value)),
+  // moment use .format({some time format})
+  // instead of .target.value to get value of time
+  onStartDateChange: date => dispatch(filterStartDateRecruitment(date)),
+  onEndDateChange: date => dispatch(filterEndDateRecruitment(date)),
   // add 'Start evaluate' function
 });
 

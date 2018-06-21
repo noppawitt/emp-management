@@ -28,6 +28,20 @@ export const filterRecruitment = searchText => ({
   }
 });
 
+export const filterStartDateRecruitment = startDate => ({
+  type: actionTypes.FILTER_START_DATE_RECRUITMENT,
+  payload: {
+    startDate
+  }
+});
+
+export const filterEndDateRecruitment = endDate => ({
+  type: actionTypes.FILTER_END_DATE_RECRUITMENT,
+  payload: {
+    endDate
+  }
+});
+
 export const sortRecruitment = (sortKey, direction) => ({
   type: actionTypes.SORT_RECRUITMENT,
   payload: {

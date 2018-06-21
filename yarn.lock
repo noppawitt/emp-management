@@ -89,6 +89,78 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.0.tgz#50c1e2260ac0ed9439a181de3725a0168d59c48a"
 
+"@polymer/iron-a11y-announcer@^3.0.0-pre.15":
+  version "3.0.0-pre.19"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-a11y-announcer/-/iron-a11y-announcer-3.0.0-pre.19.tgz#6a3b724df1e1cfda6f1270c359136d3e55ed7363"
+  dependencies:
+    "@polymer/polymer" "^3.0.0"
+
+"@polymer/iron-a11y-keys-behavior@^3.0.0-pre.15", "@polymer/iron-a11y-keys-behavior@^3.0.0-pre.19":
+  version "3.0.0-pre.19"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-a11y-keys-behavior/-/iron-a11y-keys-behavior-3.0.0-pre.19.tgz#4a335111c773af9c4376237be483ee196ab2d966"
+  dependencies:
+    "@polymer/polymer" "^3.0.0"
+
+"@polymer/iron-fit-behavior@^3.0.0-pre.19":
+  version "3.0.0-pre.19"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-fit-behavior/-/iron-fit-behavior-3.0.0-pre.19.tgz#db53546ccd0a9f2861326ff4a2f15387a648f796"
+  dependencies:
+    "@polymer/polymer" "^3.0.0"
+
+"@polymer/iron-flex-layout@^3.0.0-pre.19":
+  version "3.0.0-pre.19"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-flex-layout/-/iron-flex-layout-3.0.0-pre.19.tgz#35f633ab4d4e14e44650722729128e4f5968c1e9"
+  dependencies:
+    "@polymer/polymer" "^3.0.0"
+
+"@polymer/iron-icon@^3.0.0-pre.15":
+  version "3.0.0-pre.19"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-icon/-/iron-icon-3.0.0-pre.19.tgz#8fd150463a36d3851b2b71802ebc22d48dbfa340"
+  dependencies:
+    "@polymer/iron-flex-layout" "^3.0.0-pre.19"
+    "@polymer/iron-meta" "^3.0.0-pre.19"
+    "@polymer/polymer" "^3.0.0"
+
+"@polymer/iron-iconset-svg@^3.0.0-pre.15":
+  version "3.0.0-pre.19"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-iconset-svg/-/iron-iconset-svg-3.0.0-pre.19.tgz#9badb0df72ade7f011e60917ef3274019006cfd0"
+  dependencies:
+    "@polymer/iron-meta" "^3.0.0-pre.19"
+    "@polymer/polymer" "^3.0.0"
+
+"@polymer/iron-media-query@^3.0.0-pre.15":
+  version "3.0.0-pre.19"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-media-query/-/iron-media-query-3.0.0-pre.19.tgz#f98271a879ead7aa6c37f7da6231b38c8f41deca"
+  dependencies:
+    "@polymer/polymer" "^3.0.0"
+
+"@polymer/iron-meta@^3.0.0-pre.19":
+  version "3.0.0-pre.19"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-meta/-/iron-meta-3.0.0-pre.19.tgz#c4a70c235b87679f3487429ca69e071aacc3d002"
+  dependencies:
+    "@polymer/polymer" "^3.0.0"
+
+"@polymer/iron-overlay-behavior@^3.0.0-pre.18":
+  version "3.0.0-pre.19"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-overlay-behavior/-/iron-overlay-behavior-3.0.0-pre.19.tgz#0d15e901c30380e93351132be7b6fc35a93a5444"
+  dependencies:
+    "@polymer/iron-a11y-keys-behavior" "^3.0.0-pre.19"
+    "@polymer/iron-fit-behavior" "^3.0.0-pre.19"
+    "@polymer/iron-resizable-behavior" "^3.0.0-pre.19"
+    "@polymer/polymer" "^3.0.0"
+
+"@polymer/iron-resizable-behavior@^3.0.0-pre.15", "@polymer/iron-resizable-behavior@^3.0.0-pre.19":
+  version "3.0.0-pre.19"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-resizable-behavior/-/iron-resizable-behavior-3.0.0-pre.19.tgz#f36f4a11c48f07c55f4b0a77a9fb7827edf97fef"
+  dependencies:
+    "@polymer/polymer" "^3.0.0"
+
+"@polymer/polymer@^3.0.0", "@polymer/polymer@^3.0.0-pre.12", "@polymer/polymer@^3.0.0-pre.13":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@polymer/polymer/-/polymer-3.0.2.tgz#626e6f9fae9716b0962ce0211e21df242153eab2"
+  dependencies:
+    "@webcomponents/shadycss" "^1.2.0"
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.0.tgz#ecdf48d532c58ea477acfcab80348424f8d0662f"
@@ -98,6 +170,93 @@
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
+
+"@vaadin/vaadin-button@^2.0.0-pre.2":
+  version "2.0.0-pre.4"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-button/-/vaadin-button-2.0.0-pre.4.tgz#00e364819424be795c5dbf8846c88c635b1c6214"
+  dependencies:
+    "@polymer/polymer" "^3.0.0"
+    "@vaadin/vaadin-control-state-mixin" "^2.0.3-pre.3"
+    "@vaadin/vaadin-element-mixin" "^1.0.2-pre.3"
+    "@vaadin/vaadin-lumo-styles" "^1.0.0-pre.6"
+    "@vaadin/vaadin-themable-mixin" "^1.1.5-pre.3"
+
+"@vaadin/vaadin-control-state-mixin@^2.0.3-pre.2", "@vaadin/vaadin-control-state-mixin@^2.0.3-pre.3":
+  version "2.0.3-pre.4"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-control-state-mixin/-/vaadin-control-state-mixin-2.0.3-pre.4.tgz#c04f7eb0456ef2b986a80bb12a486537ae5cbe96"
+  dependencies:
+    "@polymer/polymer" "^3.0.0"
+
+"@vaadin/vaadin-date-picker@^3.0.0-pre.3":
+  version "3.0.0-pre.3"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-date-picker/-/vaadin-date-picker-3.0.0-pre.3.tgz#b51438fdf2ea55ae03a77b64eb90f3032bff7392"
+  dependencies:
+    "@polymer/iron-a11y-announcer" "^3.0.0-pre.15"
+    "@polymer/iron-a11y-keys-behavior" "^3.0.0-pre.15"
+    "@polymer/iron-media-query" "^3.0.0-pre.15"
+    "@polymer/iron-resizable-behavior" "^3.0.0-pre.15"
+    "@polymer/polymer" "^3.0.0-pre.13"
+    "@vaadin/vaadin-button" "^2.0.0-pre.2"
+    "@vaadin/vaadin-control-state-mixin" "^2.0.3-pre.2"
+    "@vaadin/vaadin-element-mixin" "^1.0.2-pre.2"
+    "@vaadin/vaadin-lumo-styles" "^1.0.0-pre.4"
+    "@vaadin/vaadin-overlay" "^3.0.2-pre.1"
+    "@vaadin/vaadin-text-field" "^2.0.1-pre.1"
+    "@vaadin/vaadin-themable-mixin" "^1.1.5-pre.2"
+
+"@vaadin/vaadin-development-mode-detector@^1.0.3-pre.1", "@vaadin/vaadin-development-mode-detector@^1.0.3-pre.4":
+  version "1.0.3-pre.6"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-development-mode-detector/-/vaadin-development-mode-detector-1.0.3-pre.6.tgz#dacef182161d0d3db98df20c498a41ae6a5a2741"
+  dependencies:
+    "@polymer/polymer" "^3.0.0-pre.13"
+
+"@vaadin/vaadin-element-mixin@^1.0.2-pre.2", "@vaadin/vaadin-element-mixin@^1.0.2-pre.3":
+  version "1.0.2-pre.3"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-element-mixin/-/vaadin-element-mixin-1.0.2-pre.3.tgz#3f8f158f913db19e747288c8852af51b72e9df39"
+  dependencies:
+    "@polymer/polymer" "^3.0.0-pre.13"
+    "@vaadin/vaadin-development-mode-detector" "^1.0.3-pre.4"
+    "@vaadin/vaadin-usage-statistics" "^1.0.6-pre.2"
+
+"@vaadin/vaadin-lumo-styles@^1.0.0-pre.4", "@vaadin/vaadin-lumo-styles@^1.0.0-pre.6":
+  version "1.0.0-pre.6"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-lumo-styles/-/vaadin-lumo-styles-1.0.0-pre.6.tgz#a9407f24151c6ccd1e6cba54716f735713841bcf"
+  dependencies:
+    "@polymer/iron-icon" "^3.0.0-pre.15"
+    "@polymer/iron-iconset-svg" "^3.0.0-pre.15"
+    "@polymer/polymer" "^3.0.0-pre.13"
+
+"@vaadin/vaadin-overlay@^3.0.2-pre.1":
+  version "3.0.2-pre.3"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-overlay/-/vaadin-overlay-3.0.2-pre.3.tgz#65a73c47d230107820b06400c29b1a9700837328"
+  dependencies:
+    "@polymer/iron-overlay-behavior" "^3.0.0-pre.18"
+    "@polymer/polymer" "^3.0.0"
+    "@vaadin/vaadin-lumo-styles" "^1.0.0-pre.6"
+    "@vaadin/vaadin-themable-mixin" "^1.1.5-pre.3"
+
+"@vaadin/vaadin-text-field@^2.0.1-pre.1":
+  version "2.0.1-pre.2"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-text-field/-/vaadin-text-field-2.0.1-pre.2.tgz#8cd80226f0b6a4a8177e1456fa9969a214ed58df"
+  dependencies:
+    "@polymer/polymer" "^3.0.0-pre.13"
+    "@vaadin/vaadin-control-state-mixin" "^2.0.3-pre.2"
+    "@vaadin/vaadin-element-mixin" "^1.0.2-pre.2"
+    "@vaadin/vaadin-lumo-styles" "^1.0.0-pre.4"
+    "@vaadin/vaadin-themable-mixin" "^1.1.5-pre.2"
+
+"@vaadin/vaadin-themable-mixin@^1.1.5-pre.2", "@vaadin/vaadin-themable-mixin@^1.1.5-pre.3":
+  version "1.1.5-pre.4"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-themable-mixin/-/vaadin-themable-mixin-1.1.5-pre.4.tgz#625f8ee2f4860180e242ac3391f88e9959dbcf0d"
+  dependencies:
+    "@polymer/polymer" "^3.0.0"
+
+"@vaadin/vaadin-usage-statistics@^1.0.6-pre.2":
+  version "1.0.6-pre.2"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-usage-statistics/-/vaadin-usage-statistics-1.0.6-pre.2.tgz#ef2d7fe40459275d71558ff59098851b1ea9918e"
+  dependencies:
+    "@polymer/polymer" "^3.0.0-pre.12"
+    "@vaadin/vaadin-development-mode-detector" "^1.0.3-pre.1"
 
 "@webassemblyjs/ast@1.5.10":
   version "1.5.10"
@@ -234,6 +393,10 @@
     "@webassemblyjs/wast-parser" "1.5.10"
     long "^3.2.0"
 
+"@webcomponents/shadycss@^1.2.0":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@webcomponents/shadycss/-/shadycss-1.3.1.tgz#9320a7a86c8abfec97d41a41e82691a0dfc3a13a"
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -264,6 +427,12 @@ acorn@^3.0.4:
 acorn@^5.0.0, acorn@^5.5.0:
   version "5.6.2"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.6.2.tgz#b1da1d7be2ac1b4a327fb9eab851702c5045b4e7"
+
+air-datepicker@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/air-datepicker/-/air-datepicker-2.2.3.tgz#9dbb6bc6bc8c9d9db380475091370dad82c2f787"
+  dependencies:
+    jquery ">=2.0.0 <4.0.0"
 
 airbnb-prop-types@^2.8.1:
   version "2.10.0"
@@ -1415,6 +1584,16 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
+bootstrap-datepicker@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/bootstrap-datepicker/-/bootstrap-datepicker-1.8.0.tgz#c63513931e6f09f16ae9f11b62f32d950df3958e"
+  dependencies:
+    jquery ">=1.7.1 <4.0.0"
+
+bootstrap@3.3, bootstrap@^3.3:
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.3.7.tgz#5a389394549f23330875a3b150656574f8a9eb71"
+
 bowser@^1.7.3:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/bowser/-/bowser-1.9.3.tgz#6643ae4d783f31683f6d23156976b74183862162"
@@ -2335,6 +2514,13 @@ dateformat@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-3.0.3.tgz#a6e37499a4d9a9cf85ef5872044d62901c9889ae"
 
+daterangepicker@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/daterangepicker/-/daterangepicker-3.0.3.tgz#fc6c772c1b7921a2bcaaa535a4f0e5c973f0c7f1"
+  dependencies:
+    jquery ">=1.10"
+    moment "^2.9.0"
+
 debug@2.6.9, debug@^2.1.2, debug@^2.2.0, debug@^2.3.3, debug@^2.6.6, debug@^2.6.8, debug@^2.6.9:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
@@ -2661,6 +2847,15 @@ enhanced-resolve@^4.0.0:
 envinfo@^5.7.0:
   version "5.10.0"
   resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-5.10.0.tgz#503a9774ae15b93ea68bdfae2ccd6306624ea6df"
+
+eonasdan-bootstrap-datetimepicker@^4.17.47:
+  version "4.17.47"
+  resolved "https://registry.yarnpkg.com/eonasdan-bootstrap-datetimepicker/-/eonasdan-bootstrap-datetimepicker-4.17.47.tgz#7a49970044065276e7965efd16f822735219e735"
+  dependencies:
+    bootstrap "^3.3"
+    jquery "^1.8.3 || ^2.0 || ^3.0"
+    moment "^2.10"
+    moment-timezone "^0.4.0"
 
 errno@^0.1.3, errno@~0.1.7:
   version "0.1.7"
@@ -4478,6 +4673,21 @@ isurl@^1.0.0-alpha5:
     has-to-string-tag-x "^1.2.0"
     is-object "^1.0.1"
 
+jquery-date-range-picker@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/jquery-date-range-picker/-/jquery-date-range-picker-1.0.4.tgz#b9afae559f099c5216fc8714144315e824de69dc"
+  dependencies:
+    jquery ">=1.3.2"
+    moment ">=2.8.1"
+
+jquery@3.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.0.0.tgz#95a2a9541291a9f819e016f85ba247116d03e4ab"
+
+jquery@>=1.10, jquery@>=1.3.2, "jquery@>=1.7.1 <4.0.0", "jquery@>=2.0.0 <4.0.0", "jquery@^1.8.3 || ^2.0 || ^3.0":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
+
 js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.4.5"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.5.tgz#e293cd3c7c82f070d700fc7a1ca0a2e69f101f92"
@@ -5185,7 +5395,19 @@ mkdirp@0.5.1, mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdi
   dependencies:
     minimist "0.0.8"
 
-moment@>=1.6.0, moment@^2.21.0:
+moment-timezone@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.4.0.tgz#571ec43f5d2fb70ddb601c7d23b284e2f63ddab4"
+  dependencies:
+    moment ">= 2.6.0"
+
+moment-timezone@^0.4.0:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.4.1.tgz#81f598c3ad5e22cdad796b67ecd8d88d0f5baa06"
+  dependencies:
+    moment ">= 2.6.0"
+
+"moment@>= 2.6.0", moment@>=1.6.0, moment@>=2.8.1, moment@^2.10, moment@^2.21.0, moment@^2.9.0:
   version "2.22.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
 
@@ -6039,6 +6261,10 @@ pluralize@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-7.0.0.tgz#298b89df8b93b0221dbf421ad2b1b1ea23fc6777"
 
+popper.js@1.14.3, popper.js@^1.14.1:
+  version "1.14.3"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.14.3.tgz#1438f98d046acf7b4d78cd502bf418ac64d4f095"
+
 portfinder@^1.0.9:
   version "1.0.13"
   resolved "https://registry.yarnpkg.com/portfinder/-/portfinder-1.0.13.tgz#bb32ecd87c27104ae6ee44b5a3ccbf0ebb1aede9"
@@ -6576,6 +6802,15 @@ react-big-calendar@^0.19.1:
     uncontrollable "^4.0.0"
     warning "^2.0.0"
 
+react-datepicker@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-1.5.0.tgz#7eacd9609313189c84a21bb7421486054939a4b2"
+  dependencies:
+    classnames "^2.2.5"
+    prop-types "^15.6.0"
+    react-onclickoutside "^6.7.1"
+    react-popper "^0.9.1"
+
 react-dates@^16.7.0:
   version "16.7.0"
   resolved "https://registry.yarnpkg.com/react-dates/-/react-dates-16.7.0.tgz#3fe554675cd4d4baae9645dce3f73c7d74b2180f"
@@ -6592,6 +6827,12 @@ react-dates@^16.7.0:
     react-portal "^4.1.2"
     react-with-styles "^3.1.0"
     react-with-styles-interface-css "^4.0.1"
+
+react-day-picker@^7.1.9:
+  version "7.1.9"
+  resolved "https://registry.yarnpkg.com/react-day-picker/-/react-day-picker-7.1.9.tgz#04b0d956faf1bf85bb6ec6f9ca7966433be13f36"
+  dependencies:
+    prop-types "^15.6.1"
 
 react-dom@^16.2.0:
   version "16.4.0"
@@ -6627,6 +6868,10 @@ react-moment-proptypes@^1.5.0:
   dependencies:
     moment ">=1.6.0"
 
+react-onclickoutside@^6.7.1:
+  version "6.7.1"
+  resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.7.1.tgz#6a5b5b8b4eae6b776259712c89c8a2b36b17be93"
+
 react-overlays@^0.7.0:
   version "0.7.4"
   resolved "https://registry.yarnpkg.com/react-overlays/-/react-overlays-0.7.4.tgz#ef2ec652c3444ab8aa014262b18f662068e56d5c"
@@ -6636,6 +6881,13 @@ react-overlays@^0.7.0:
     prop-types "^15.5.10"
     prop-types-extra "^1.0.1"
     warning "^3.0.0"
+
+react-popper@^0.9.1:
+  version "0.9.5"
+  resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-0.9.5.tgz#02a24ef3eec33af9e54e8358ab70eb0e331edd05"
+  dependencies:
+    popper.js "^1.14.1"
+    prop-types "^15.6.1"
 
 react-portal@^4.1.2:
   version "4.1.5"
@@ -8237,6 +8489,10 @@ uuid@^3.0.0, uuid@^3.0.1, uuid@^3.1.0:
 v8-compile-cache@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.0.0.tgz#526492e35fc616864284700b7043e01baee09f0a"
+
+vaadin-date-picker@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/vaadin-date-picker/-/vaadin-date-picker-2.0.4.tgz#57d2ee994d0579dd7acbb045924943b13f444687"
 
 validate-npm-package-license@^3.0.1:
   version "3.0.3"
