@@ -32,7 +32,7 @@ const EditGeneralProfileForm = ({ handleSubmit }) => (
     <Field name="email" component={Input} as={Form.Input} label="Email" placeholder="Email" />
     <Field name="facebookId" component={Input} as={Form.Input} label="Facebook" placeholder="Facebook" />
     <Field name="lineId" component={Input} as={Form.Input} label="Line ID" placeholder="Line ID" />
-    <Field name="address" component={Input} as={Form.Input} label="Address" placeholder="Address" />
+    <Field name="address" component={Input} as={Form.TextArea} autoHeight label="Address" placeholder="Address" />
   </Form>
 );
 
