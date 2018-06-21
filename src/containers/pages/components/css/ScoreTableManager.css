@@ -1,0 +1,43 @@
+.eva-container {
+    position: relative;
+    width: 100%;
+    font-family: 'Prompt', sans-serif;
+}
+
+.eva-container table {
+    width: 75%;
+    margin: auto;
+    table-layout: auto;
+}
+
+table, tr, th, td {
+    border: 2px solid;
+}
+
+.eva-container tr th {
+    text-align: center;
+}
+
+.eva-container td:nth-child(2) {
+    text-align: left;
+}
+
+.eva-container tr:first-child th {
+    text-align: left;
+}
+
+.eva-container td {
+    text-align: center;
+}
+
+.blue-text {
+    color: rgb(44, 154, 205);
+    font-size: 1.7em;
+    text-shadow: 0px 3px 1px rgba(0, 0, 0, 0.05);
+}
+
+.underline {
+    padding-bottom: 1%;
+    border-bottom: 0.1em solid #bbbbbb;
+    box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.04);
+}

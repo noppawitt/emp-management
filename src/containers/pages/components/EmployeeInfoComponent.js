@@ -1,4 +1,5 @@
 import React from 'react';
+import './css/EmployeeInfoComponent.css'
 
 class EmployeeInfo extends React.Component {
     constructor(props) {
@@ -10,6 +11,11 @@ class EmployeeInfo extends React.Component {
         return (
             <div className='info-container' >
                 <table>
+                    <tr>
+                        <td colSpan='4' className='underline'>
+                            <span className='blue-text'>Information</span>
+                        </td>
+                    </tr>
                     <tr>
                         <td>Name:</td>
                         <td>{this.state.name}</td>

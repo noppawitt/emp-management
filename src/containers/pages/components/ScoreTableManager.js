@@ -1,4 +1,5 @@
 import React from 'react';
+import './css/ScoreTableManager.css'
 
 const DropDown = (props) => {
     let elements = [];
@@ -79,8 +80,13 @@ class ScoreTableManager extends React.Component {
             </tr>);
         }
         return (
-            <div>
+            <div className='eva-container'>
                 <table>
+                    <tr>
+                        <th colSpan='6' className='underline'>
+                            <span className='blue-text'>Performance Appraisal Portion</span>
+                        </th>
+                    </tr>
                     <tr>
                         <th>No.</th>
                         <th>Appraisal Criteria</th>
@@ -95,7 +101,7 @@ class ScoreTableManager extends React.Component {
                         <td></td>
                         <td>{this.arraySum(this.state.score)}</td>
                         <td>{this.arraySum(this.state.weight)}%</td>
-                        <td>{this.arraySum(this.state.totalPoint)}%</td>
+                        <td className='blue-text'>{this.arraySum(this.state.totalPoint)}%</td>
                     </tr>
                 </table>
             </div>

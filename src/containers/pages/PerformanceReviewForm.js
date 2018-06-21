@@ -1,7 +1,7 @@
 import React from 'react';
 import './css/PerformanceReviewForm.css';
-import ScoreManager from './ScoreTableManager';
-import EmployeeInfo from './components/EmployeeInforComponent';
+import ScoreManager from './components/ScoreTableManager';
+import EmployeeInfo from './components/EmployeeInfoComponent';
 import SignatureComponent from './components/SignatureComponent';
 
 const questions = ['ความรู้ในงานและการพัฒนาตัวเอง (Knowledge and Improvement)',
@@ -24,20 +24,20 @@ class PerformanceReviewForm extends React.Component {
             startDate: '_startDate',
             supervisor: '_supervisor',
             expectedScore: [3, 3, 3, 3, 3, 3, 3],
-            score: [3, 3, 3, 3, 3, 3, 3]
+            score: [3, 3, 3, 3, 3, 3, 3],
+            endProbationDate: '_endProbationDate'
         };
     }
 
     render() {
         return (
-            <div className='container'>
-                <div>
+            <div className='main-container'>
+                <div className='profile'>
                     <h1>Employee Performance Review Form</h1>
                     <h2>Playtorium Solutions Company Limited</h2>
-                    <EmployeeInfo {...this.state} />
                 </div>
+                <EmployeeInfo {...this.state} />
                 <div>
-                    <h2>Performance Appraisal Portion</h2>
                     <ScoreManager questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} />
                 </div>
                 <div>

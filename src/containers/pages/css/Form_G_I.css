@@ -1,13 +1,12 @@
-
-.Body{
+.Body {
   background-color: white;
   position: relative;
   width: 100%;
   height: 100%;
   font-family: 'Prompt', sans-serif;
-
 }
-.div_logo{
+
+.div_logo {
   position: relative;
   text-align: center;
   margin-left: auto;
@@ -15,13 +14,15 @@
   width: 100%;
   height: 45%;
 }
-.logo{
+
+.logo {
   display: inline-block;
   width: 45%;
 }
-.profile{
+
+.profile {
   position: relative;
-  width:86%;
+  width: 86%;
   height: 94%;
   padding-top: 2%;
   padding-bottom: 4%;
@@ -30,59 +31,70 @@
   margin: auto;
 }
 
-.profile_table{
+.profile_table {
   table-layout: fixed;
 }
-.topic{
+
+.topic {
   padding-left: 10%;
 }
-.topic_1{
+
+.topic_1 {
   width: 10%;
 }
-.topic_2{
+
+.topic_2 {
   width: 14%;
 }
-.show_1{
-  width: 33%;
-}
-.show_2{
+
+.show_1 {
   width: 33%;
 }
 
-.table_main{
+.show_2 {
+  width: 33%;
+}
+
+.table_main {
   margin-top: 1%;
 }
-.table_header{
+
+.table_header {
   text-align: left;
 }
-.No{
+
+.No {
   width: 4%;
   text-align: center;
 }
-.Weight{
+
+.Weight {
   text-align: center;
 }
 
-.grid{
+.grid {
   table-layout: fixed;
   margin-bottom: 2%;
 }
-.grid-res{
+
+.grid-res {
   table-layout: fixed;
   margin-bottom: 0.3%;
 }
-.grid tr{
+
+.grid tr {
   height: 50px;
 }
 
-.choice_tr{
+.choice_tr {
   color: white
 }
 
-.option1_row{
+.option1_row {
   display: run-in;
 }
-.Submit-button{
+
+.Submit-button {
   position: relative;
   padding: 10px 15px 10px 15px;
   font-size: 1em;
@@ -92,11 +104,13 @@
   border-radius: 5px;
   z-index: 2;
 }
-.Submit-button:hover{
-  cursor:pointer;
+
+.Submit-button:hover {
+  cursor: pointer;
   color: #37BFDB;
 }
-.Accept-button{
+
+.Accept-button {
   position: relative;
   padding: 10px 15px 10px 15px;
   font-size: 1em;
@@ -105,19 +119,23 @@
   text-decoration: none;
   border-radius: 5px;
 }
-.Accept-button:hover{
-  cursor:pointer;
+
+.Accept-button:hover {
+  cursor: pointer;
   color: #37BFDB;
 }
-.dddddd{
+
+.dddddd {
   /* background-color: red; */
   padding-top: 2%;
   width: 100%;
 }
-.result{
+
+.result {
   display: none;
 }
-.comment{
+
+.comment {
   border-radius: 7px;
   border-width: thin;
   padding: 1%;
@@ -127,73 +145,82 @@
   overflow: scroll;
   margin-bottom: 1%;
 }
-.comment::-webkit-scrollbar{
+
+.comment::-webkit-scrollbar {
   display: none;
 }
 
-h1{
+h1 {
   text-align: center;
   font-size: 4em;
   margin-bottom: -2%;
 }
 
-img{
+img {
   width: 30%;
 }
-table{
+
+table {
   /* border: 1px solid black; */
   background-color: white;
   text-align: left;
   width: 100%;
 }
-th{
+
+th {
   /* border: 1px solid black; */
   padding: 1%;
   text-align: center;
 }
-td{
+
+td {
   /* border: 1px solid black; */
   padding-left: 1%;
   padding-right: 1%;
   padding-top: 0.5%;
   padding-bottom: 0.5%;
 }
-@media screen and (max-width: 9902px) {
-  h1{
 
-  }
+@media screen and (max-width: 9902px) {
+  h1 {}
 }
-input{
+
+input {
   width: 100%;
   box-sizing: border-box;
 }
-input[type='checkbox']{
+
+input[type='checkbox'] {
   margin-right: 1vw;
   width: auto;
   box-sizing: content-box;
 }
-input[type='radio']{
+
+input[type='radio'] {
   margin-right: 1vw;
   width: auto;
   box-sizing: content-box;
 }
-select-selected{
+
+select-selected {
   border-radius: 5px;
   display: none;
 }
-.mark{
+
+.mark {
   position: relative;
   height: 2em;
   width: 2em;
-
   transition: 0.2s;
 }
-.div_mark{
+
+.div_mark {
   position: relative;
   display: inline-block;
   overflow: visible;
 }
-.div_mark1{
+
+.div_mark1 {
   position: absolute;
   display: inline-block;
   overflow: hidden;
@@ -202,7 +229,8 @@ select-selected{
   left: 75%;
   transition: 0.5s;
 }
-.div_mark2{
+
+.div_mark2 {
   position: absolute;
   display: inline-block;
   overflow: hidden;
@@ -211,7 +239,8 @@ select-selected{
   left: 75%;
   transition: 0.5s;
 }
-.div_mark3{
+
+.div_mark3 {
   position: absolute;
   display: inline-block;
   overflow: hidden;
@@ -220,43 +249,50 @@ select-selected{
   left: 75%;
   transition: 0.5s;
 }
-.zzz{
+
+.zzz {
   position: fixed;
   z-index: 2;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   background-color: red;
   width: 200px;
   height: 200px;
 }
-.blue{
-  color: rgb(44,154,205);
-  font-size: 1.7em;
-  text-shadow: 0px 3px 1px rgba(0,0,0,0.05);
 
+.blue {
+  color: rgb(44, 154, 205);
+  font-size: 1.7em;
+  text-shadow: 0px 3px 1px rgba(0, 0, 0, 0.05);
 }
-.th_total{
+
+.th_total {
   width: 14%;
 }
-.lll{
+
+.lll {
   padding-bottom: 1%;
   border-bottom: 0.1em solid #bbbbbb;
-  box-shadow: 0px 3px 1px rgba(0,0,0,0.04);
+  box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.04);
 }
-.result-table-hidden{
+
+.result-table-hidden {
   height: 0;
   overflow: hidden;
-  transition : 0.4s;
+  transition: 0.4s;
 }
-.result-table{
+
+.result-table {
   height: auto;
   overflow: hidden;
-  transition : 0.4s;
+  transition: 0.4s;
 }
-.date{
-  font-weight:lighter;
+
+.date {
+  font-weight: lighter;
 }
-.calendar{
+
+.calendar {
   position: absolute;
   overflow: hidden;
   width: 100%;
@@ -266,16 +302,17 @@ select-selected{
   transition: 0.3s;
   transition-timing-function: ease-in-out;
 }
-.date_input{
+
+.date_input {
   border-top-style: none;
   border-left-style: none;
   border-right-style: none;
   border-bottom: 1px solid black;
-
   position: relative;
   z-index: 0;
 }
-.date_input1{
+
+.date_input1 {
   border-top-style: none;
   border-left-style: none;
   border-right-style: none;
@@ -284,20 +321,23 @@ select-selected{
   display: none;
   z-index: 0;
 }
-.date_input2{
+
+.date_input2 {
   border-top-style: none;
-  display :none;
+  display: none;
   border-left-style: none;
   border-right-style: none;
   border-bottom: 1px solid black;
   position: relative;
   z-index: 0;
 }
-.react-calendar{
+
+.react-calendar {
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
-.div_ca{
+
+.div_ca {
   position: relative;
 }
