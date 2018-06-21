@@ -28,7 +28,7 @@ HeadExam.propTypes = {
   subject: PropTypes.string.isRequired
 };
 
-const Exam = (({ onClick, exams }) => (
+const Exam = (({ onClick /* , exams */ }) => (
   <div>
     <Segment.Group>
       <Segment>
@@ -55,7 +55,7 @@ const Exam = (({ onClick, exams }) => (
 
 Exam.propTypes = {
   onClick: PropTypes.func.isRequired,
-  exams: PropTypes.array.isRequired
+  // exams: PropTypes.array.isRequired
 };
 
 export default Exam;

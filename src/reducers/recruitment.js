@@ -1,12 +1,14 @@
 import * as actionTypes from '../constants/actionTypes';
 
 const initialState = {
-  // isFetch
+  isFetching: true,
   recruitments: [],
   lists: [],
   searchText: '',
   sortKey: null,
-  direction: null
+  direction: null,
+  startDate: null,
+  endDate: null,
 };
 
 const Recruitment = (state = initialState, action) => {
@@ -29,9 +31,21 @@ const Recruitment = (state = initialState, action) => {
         messege: action.payload.messege
       };
     case actionTypes.FILTER_RECRUITMENT:
+      console.log(action.payload.startDate, '<<<', state.startDate);
       return {
         ...state,
         searchText: action.payload.searchText
+      };
+    case actionTypes.FILTER_START_DATE_RECRUITMENT:
+      console.log(action.payload.startDate, '<<<', state.startDate);
+      return {
+        ...state,
+        startDate: action.payload.startDate
+      };
+    case actionTypes.FILTER_END_DATE_RECRUITMENT:
+      return {
+        ...state,
+        endDate: action.payload.endDate
       };
     case actionTypes.SORT_RECRUITMENT:
       return {
