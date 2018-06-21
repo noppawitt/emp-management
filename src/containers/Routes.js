@@ -8,6 +8,7 @@ import ProjectPage from './pages/ProjectPage';
 import ProjectDetailPage from './pages/ProjectDetailPage';
 import ProfilePage from './pages/ProfilePage';
 import EmployeePage from './pages/EmployeePage';
+import ReportPage from './pages/ReportPage';
 
 const Routes = () => (
   <Switch>
@@ -19,6 +20,7 @@ const Routes = () => (
     <PrivateRoute path="/project/:id" component={ProjectDetailPage} />
     <PrivateRoute path="/profile/:id?" component={ProfilePage} />
     <PrivateRoute path="/employee" component={EmployeePage} />
+    <PrivateRoute path="/report" component={ReportPage} />
   </Switch>
 );
 

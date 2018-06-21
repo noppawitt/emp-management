@@ -15,7 +15,7 @@ class Timesheet extends React.Component {
       iconBluecolor: 'blue',
       date: moment(),
       holidays: [
-        { date: '2018-06-14', name: 'Compensatory day' }
+        { date: '2018-06-14', name: 'Compensatory day' } 
       ],
 
       monthTimesheet: [
