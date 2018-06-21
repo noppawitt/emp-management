@@ -50,7 +50,7 @@ LeaveRequest.findByLeave = (leaveFrom, leaveTo, userId) => (
 );
 
 LeaveRequest.findByYearAndMonth = (year, month, userId) => (
-  db.manyOrNone('SELECT * FROM leave_requests WHERE extract(year from leave_date) = $1 AND extract(month from leave_date) = $2 AND user_id = $3', [year, month, userId])
+  db.manyOrNone('SELECT * FROM leave_requests WHERE extract(year from leave_date) = $1 AND extract(month from leave_date) = $2 AND user_id = $3 AND status = $4', [year, month, userId, 'Approve'])
 );
 
 module.exports = LeaveRequest;
