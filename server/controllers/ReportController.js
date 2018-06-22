@@ -4,8 +4,30 @@ const HasProject = require('../models/HasProject');
 const Project = require('../models/Project');
 const EmployeeInfo = require('../models/EmployeeInfo');
 const Holiday = require('../models/Holiday');
+const User = require('../models/User');
 const Excel = require('exceljs');
 const moment = require('moment');
+
+const getProjectDetail = excelType => new Promise(async (resolve, reject) => {
+  try {
+    const project = await HasProject.findByProjectIdAndUserId(excelType.projectId, excelType.userId);
+    project.detail = await Project.findById(excelType.projectId);
+    project.user = await EmployeeInfo.findById(excelType.userId);
+    project.timesheet = await Timesheet.findTimesheetInProject(excelType.year, excelType.month, excelType.projectId, excelType.userId);
+    project.leave = await LeaveRequest.findByYearAndMonth(excelType.year, excelType.month, excelType.userId);
+    project.holiday = await Holiday.findByYearAndMonth(excelType.year, excelType.month);
+    resolve(project);
+  }
+  catch (error) {
+    reject(error);
+  }
+});
+
+const getTimesheetForProject = (projectId, month, year) => new Promise(async (resolve, reject) => {
+  try {
+    
+  }
+})
 
 const fillRow = (worksheet, day) => {
   const column = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
@@ -22,20 +44,6 @@ const fillRow = (worksheet, day) => {
 
 exports.createReport = (req, res, next) => {
   const { excelType } = req.body;
-  const getProjectDetail = new Promise(async (resolve, reject) => {
-    try {
-      const project = await HasProject.findByProjectIdAndUserId(excelType.projectId, excelType.userId);
-      project.detail = await Project.findById(excelType.projectId);
-      project.user = await EmployeeInfo.findById(excelType.userId);
-      project.timesheet = await Timesheet.findTimesheetInProject(excelType.year, excelType.month, excelType.projectId, excelType.userId);
-      project.leave = await LeaveRequest.findByYearAndMonth(excelType.year, excelType.month, excelType.userId);
-      project.holiday = await Holiday.findByYearAndMonth(excelType.year, excelType.month);
-      resolve(project);
-    }
-    catch (error) {
-      reject(error);
-    }
-  });
   if (excelType.reportType === 'Timesheet (Normal)' || excelType.reportType === 'Timesheet (Special)') {
     let filename = '';
     if (excelType.reportType === 'Timesheet (Normal)') {
@@ -44,7 +52,7 @@ exports.createReport = (req, res, next) => {
     else {
       filename = 'server/storage/private/report/Playtorium_Timesheet_Sepecial_ver4.xlsx';
     }
-    getProjectDetail
+    getProjectDetail(excelType)
       .then((project) => {
         const { holiday } = project;
         const { timesheet } = project;
@@ -92,15 +100,40 @@ exports.createReport = (req, res, next) => {
               const day = parseInt(moment(date).format('DD'), 10);
               worksheet.getCell(`B${day + 7}`).value = timesheet[k].task;
               worksheet.getCell(`C${day + 7}`).value = timesheet[k].description;
-              worksheet.getCell(`D${day + 7}`).value = new Date(`${timesheet[k].date} ${timesheet[k].timeIn}`);
-              worksheet.getCell(`E${day + 7}`).value = new Date(`${timesheet[k].date} ${timesheet[k].timeOut}`);
+              worksheet.getCell(`D${day + 7}`).value = timesheet[k].timeIn;
+              worksheet.getCell(`E${day + 7}`).value = timesheet[k].timeOut;
             }
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            res.setHeader('Content-Disposition', `attachment; filename="Timesheet_${excelType.year}_${excelType.month}_${excelType.projectId}.xlsx`);
             workbook.xlsx.write(res);
-          });
+          })
+          .catch(next);
       })
       .catch(next);
   }
+  else if (excelType.reportType === 'Summary Timesheet') {
+    const filename = 'server/storage/private/report/Playtorium_Summary_Timesheet.xlsx';
+    const workbook = new Excel.Workbook();
+    workbook.xlsx.readFile(filename)
+      .then(() => {
+        const worksheet = workbook.getWorksheet('Timesheet');
+        const months = moment.monthsShort();
+        const monthCell = ['F3', 'I3', 'L3', 'N3', 'O3', 'P3', 'Q3', 'R3', 'S3', 'T3', 'U3', 'V3'];
+        for (let i = 0; i < months.length; i += 1) {
+          worksheet.getCell(monthCell[i]).value = `${months[i]}-${moment(excelType.year, 'YYYY').format('YY')}`;
+          
+        }
+        User.findAll()
+          .then((users) => {
+            for (let i = 0; i < users.length; i += 1) {
+
+            }
+          })
+          .catch(next);
+      })
+      .catch(next);
+  }
+}
   // const workbook = new Excel.Workbook();
   // workbook.xlsx.readFile('server/storage/report/excel.xlsx')
   //   .then(() => {
