@@ -6,7 +6,9 @@ import {
   fetchExamSuccess,
   fetchExamFailure,
   deleteExamSuccess,
-  deleteExamFailure
+  deleteExamFailure,
+  editExamSuccess,
+  editExamFailure
 } from '../actions/exam';
 import { closeModal } from '../actions/modal';
 import api from '../services/api';
@@ -51,6 +53,21 @@ export function* deleteExamTask(action) {
   }
 }
 
+export function* editExamTask(action) {
+  try {
+    const exam = yield call(api.editExam, {
+      form: action.payload.form
+    });
+    yield put(editExamSuccess(exam));
+    yield put(closeModal());
+    action.payload.resolve();
+  }
+  catch (error) {
+    yield put(editExamFailure(error));
+    action.payload.reject();
+  }
+}
+
 export function* watchaddExam() {
   yield takeEvery(actionTypes.ADD_EXAM_REQUEST, addExamTask);
 }
@@ -63,10 +80,15 @@ export function* watchDeleteExam() {
   yield takeEvery(actionTypes.DELETE_EXAM_REQUEST, deleteExamTask);
 }
 
+export function* watchEditExam() {
+  yield takeEvery(actionTypes.EDIT_EXAM_REQUEST, editExamTask);
+}
+
 export default function* examSaga() {
   yield all([
     watchaddExam(),
     watchFetchExam(),
-    watchDeleteExam()
+    watchDeleteExam(),
+    watchEditExam()
   ]);
 }

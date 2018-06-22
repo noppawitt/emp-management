@@ -69,3 +69,26 @@ export const deleteExamFailure = message => ({
     message
   }
 });
+
+export const editExamRequest = (form, resolve, reject) => ({
+  type: actionTypes.EDIT_EXAM_REQUEST,
+  payload: {
+    form,
+    resolve,
+    reject
+  }
+});
+
+export const editExamSuccess = exam => ({
+  type: actionTypes.EDIT_EXAM_SUCCESS,
+  payload: {
+    exam
+  }
+});
+
+export const editExamFailure = message => ({
+  type: actionTypes.EDIT_EXAM_FAILURE,
+  payload: {
+    message
+  }
+});

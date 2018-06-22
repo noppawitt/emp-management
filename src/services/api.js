@@ -271,4 +271,11 @@ api.deleteExam = body => (
   })
 );
 
+api.editExam = body => (
+  callApi('/api/exam', {
+    method: 'PUT',
+    body
+  })
+);
+
 export default api;

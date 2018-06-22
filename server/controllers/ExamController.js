@@ -29,3 +29,15 @@ exports.delete = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.edit = (req, res, next) => {
+  Exam.edit(req.body.form)
+    .then(() => {
+      Exam.findAll()
+        .then((exams) => {
+          res.json(exams);
+        })
+        .catch(next);
+    })
+    .catch(next);
+}
