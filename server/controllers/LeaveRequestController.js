@@ -56,19 +56,27 @@ exports.create = (req, res, next) => {
   });
 };
 
+const updateLeave = leaveRequestArray => new Promise((resolve, reject) => {
+  try {
+    for (let i = 0; i < leaveRequestArray.length; i += 1) {
+      const leaveRequests = LeaveRequest.findByLeave(leaveRequestArray[i].leaveFrom, leaveRequestArray[i].leaveTo, leaveRequestArray.userId);
+      for (let j = 0; j < leaveRequests.length; j += 1) {
+        leaveRequests[j].status = leaveRequestArray[i].status;
+        LeaveRequest.update(leaveRequests[j]);
+      }
+    }
+    resolve('Update Finish!');
+  }
+  catch (error) {
+    reject(error);
+  }
+});
+
 exports.update = (req, res, next) => {
   const leaveRequestArray = req.body;
-  for (let i = 0; i < leaveRequestArray.length; i += 1) {
-    const leaveRequests = LeaveRequest.findByLeave(leaveRequestArray[i])
-  }
-  const editLeaveRequest = req.body.leaveRequest;
-  LeaveRequest.update(editLeaveRequest, req.user.id)
+  updateLeave(leaveRequestArray)
     .then(() => {
-      LeaveRequest.findByUserId(req.user.id)
-        .then((leaveRequests) => {
-          res.json(leaveRequests);
-        })
-        .catch(next);
+      res.json('Update Finish!');
     })
     .catch(next);
 };
