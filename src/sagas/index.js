@@ -6,8 +6,9 @@ import employeeSaga from './employee';
 import projectSaga from './project';
 import leaveSaga from './leave';
 import timesheetSaga from './timesheet';
-import recruitmentSaga from './recruitment';
 import examSaga from './exam';
+import recruitmentSaga from './recruitment';
+import examAuthSaga from './examAuth';
 
 export default function* rootSaga() {
   yield all([
@@ -19,6 +20,7 @@ export default function* rootSaga() {
     leaveSaga(),
     timesheetSaga(),
     recruitmentSaga(),
-    examSaga()
+    examSaga(),
+    examAuthSaga(),
   ]);
 }

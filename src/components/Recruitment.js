@@ -8,14 +8,16 @@ import { formatDate } from 'react-day-picker/moment';
 // constant function for change status button
 const actionButtonController = (status) => {
   switch (status) {
+    case 'Wait for Grading':
+      return <Button fluid color="teal">Grade</Button>;
     case 'Pending':
       return <Button fluid primary>Start</Button>;
     case 'Complete':
-      return <Button fluid primary>View Result</Button>;
+      return <Button fluid primary positive>View Result</Button>;
     case 'In Progress':
-      return <Button fluid primary disabled>Pending</Button>;
+      return <Button fluid disabled>Pending</Button>;
     default:
-      return <Button fluid primary disabled>Error</Button>;
+      return <Button fluid primary negative disabled>Error</Button>;
   }
 };
 
@@ -32,14 +34,15 @@ const Recruitment = ({ recruitments, onSearchChange, handleSort, sortKey, direct
           value={startDate}
           onDayChange={value => onStartDateChange(formatDate(value, 'YYYY-MM-DD'))}
           clickUnselectsDay
-        />{' '}-{' '}
+        />
+      </Segment>
+      <Segment>
         <DayPickerInput
           placeholder="To"
           value={endDate}
           onDayChange={value => onEndDateChange(formatDate(value, 'YYYY-MM-DD'))}
         />
       </Segment>
-      <Segment />
     </Segment>
     <Segment>
       <Table striped selectable celled sortable>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
+import ExamRoute from './ExamRoute';
 import LoginPage from './pages/LoginPage';
 import TimesheetPage from './pages/TimesheetPage';
 import LeavePage from './pages/LeavePage';
@@ -9,6 +10,8 @@ import ProfilePage from './pages/ProfilePage';
 import EmployeePage from './pages/EmployeePage';
 import ExamPage from './pages/ExamPage';
 import RecruitmentPage from './pages/RecruitmentPage';
+import ExamLoginPage from './pages/ExamLoginPage';
+import PrepareToExamPage from './pages/PrepareToExamPage';
 
 const Routes = () => (
   <Switch>
@@ -21,6 +24,8 @@ const Routes = () => (
     <PrivateRoute path="/employee" component={EmployeePage} />
     <PrivateRoute path="/exam/*" component={ExamPage} />
     <PrivateRoute path="/recruitment/*" component={RecruitmentPage} />
+    <ExamRoute path="/examlogin" component={ExamLoginPage} />
+    <ExamRoute path="/preparetoexam" component={PrepareToExamPage} />
   </Switch>
 );
 

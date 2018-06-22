@@ -9,8 +9,10 @@ import employee from './employee';
 import project from './project';
 import leave from './leave';
 import timesheet from './timesheet';
-import recruitment from './recruitment';
 import exam from './exam';
+import recruitment from './recruitment';
+import examAuth from './examAuth';
+import prepareToExam from './prepareToExam';
 
 export default combineReducers({
   form: formReducer,
@@ -24,5 +26,7 @@ export default combineReducers({
   leave,
   timesheet,
   recruitment,
-  exam
+  exam,
+  examAuth,
+  prepareToExam,
 });
