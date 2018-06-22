@@ -59,7 +59,7 @@ const Exam = (({ onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, 
                 <div>{choice}</div>
               ))}
               </Table.Cell>
-              <Table.Cell>{exam.exCategory}</Table.Cell>
+              <Table.Cell>{exam.exCategory.charAt(0).toUpperCase().concat(exam.exCategory.slice(1))}</Table.Cell>
               <Table.Cell>{exam.exType}</Table.Cell>
               <Table.Cell>{(exam.exChoice).map(choice => (
                 <div>{choice}</div>
