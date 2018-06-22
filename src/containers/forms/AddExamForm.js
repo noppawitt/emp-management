@@ -32,6 +32,20 @@ examCategoryOptions.propTypes = {
   subjectNoFilter: PropTypes.array.isRequired
 };
 
+const examSubCategoryOptions = (exams, examCategory, subjectNoFilter) => {
+  exams.forEach((element) => {
+    if (element.exCategory.toLowerCase() === examCategory) {
+      subjectNoFilter.push(element.exSubcategory);
+    }
+  });
+
+  return [...new Set(subjectNoFilter)];
+};
+examSubCategoryOptions.propTypes = {
+  subjectNoFilter: PropTypes.array.isRequired,
+  examCategory: PropTypes.string.isRequired
+};
+
 const renderChoices = ({ fields, submitting, placeHold }) => (
   <div>
     <Header as="h5">Choices</Header>
@@ -60,7 +74,7 @@ renderChoices.propTypes = {
   placeHold: PropTypes.string.isRequired
 };
 
-const AddExamForm = ({ handleSubmit, submitting, examType, exams }) => (
+const AddExamForm = ({ handleSubmit, submitting, examType, exams, examCategory }) => (
   <Form onSubmit={handleSubmit}>
     <Field name="examCategory" as={Form.Input} component={Input} list="exam_category" label="Exam Category" placeholder="e.g. English" disabled={submitting} required />
     <datalist id="exam_category">
@@ -68,6 +82,16 @@ const AddExamForm = ({ handleSubmit, submitting, examType, exams }) => (
         (examCategoryOptions(exams, [])).map(type => (<option value={type} />))
       }
     </datalist>
+    {(examCategory !== '' && examCategory !== undefined) &&
+      <div>
+        <Field name="examSubCategory" as={Form.Input} component={Input} list="exam_subCategory" label="Exam Sub-Category" placeholder="Sub-Category ..." disabled={submitting} required />
+        <datalist id="exam_subCategory">
+          {
+            (examSubCategoryOptions(exams, examCategory, [])).map(type => (<option value={type} />))
+          }
+        </datalist>
+      </div>
+    }
     <Field name="question" as={Form.TextArea} component={Input} autoHeight label="Question" placeholder="New Question ..." disabled={submitting} required />
     <Field name="examType" as={Form.Select} component={Input} label="Exam Type" placeholder="-- Exam Type --" options={examTypeOptions} disabled={submitting} required />
     {examType === 'Choices' && <FieldArray name="choices" component={renderChoices} />}
@@ -78,14 +102,15 @@ AddExamForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
   examType: PropTypes.string.isRequired,
-  exams: PropTypes.array.isRequired
+  exams: PropTypes.array.isRequired,
+  examCategory: PropTypes.string.isRequired
 };
 
 const selector = formValueSelector('addExam');
 
 const mapStateToProps = state => ({
   examType: selector(state, 'examType'),
-  numberOfChoices: selector(state, 'numberOfChoices')
+  examCategory: selector(state, 'examCategory'),
 });
 
 const enhance = compose(

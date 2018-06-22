@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Segment, Button, Icon, Grid, Dropdown, Input, Table } from 'semantic-ui-react';
 
-const examTypeOptions = (exams, subjectNoFilter, subjectFilter, subjectList) => {
+const examCategoryOptions = (exams, subjectNoFilter, subjectFilter, subjectList) => {
   exams.forEach((element) => {
     subjectNoFilter.push(element.exCategory);
   });
@@ -16,7 +16,7 @@ const examTypeOptions = (exams, subjectNoFilter, subjectFilter, subjectList) => 
 
   return subjectList;
 };
-examTypeOptions.propTypes = {
+examCategoryOptions.propTypes = {
   subjectNoFilter: PropTypes.array.isRequired,
   subjectFilter: PropTypes.array.isRequired,
   subjectList: PropTypes.array.isRequired
@@ -28,7 +28,7 @@ const Exam = (({ onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, 
       <Segment>
         <Grid>
           <Grid.Column width={3}>
-            <Dropdown fluid selection options={examTypeOptions(exams, [], [], [])} placeholder="-- Search Subject --" onChange={(e, { value }) => onFilterChange('searchType', value)} />
+            <Dropdown name="category" fluid selection options={examCategoryOptions(exams, [], [], [])} placeholder="-- Search Category --" onChange={(e, { value }) => onFilterChange('searchCategory', value)} />
           </Grid.Column>
           <Grid.Column width={4}>
             <Input icon="search" placeholder="Search question ..." onChange={(e, { value }) => onFilterChange('searchText', value)} />
@@ -47,6 +47,7 @@ const Exam = (({ onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, 
             <Table.Row>
               <Table.HeaderCell>Question</Table.HeaderCell>
               <Table.HeaderCell>Category</Table.HeaderCell>
+              <Table.HeaderCell>Sub-Category</Table.HeaderCell>
               <Table.HeaderCell>Type</Table.HeaderCell>
               <Table.HeaderCell>Choice</Table.HeaderCell>
               <Table.HeaderCell>Answer</Table.HeaderCell>
@@ -60,6 +61,7 @@ const Exam = (({ onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, 
               ))}
               </Table.Cell>
               <Table.Cell>{exam.exCategory.charAt(0).toUpperCase().concat(exam.exCategory.slice(1))}</Table.Cell>
+              <Table.Cell>{exam.exSubcategory.charAt(0).toUpperCase().concat(exam.exSubcategory.slice(1))}</Table.Cell>
               <Table.Cell>{exam.exType}</Table.Cell>
               <Table.Cell>{(exam.exChoice).map(choice => (
                 <div>{choice}</div>

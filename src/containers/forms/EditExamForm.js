@@ -21,15 +21,29 @@ const examTypeOptions = [
   { key: 'Choices', value: 'Choices', text: 'Choices' }
 ];
 
-const examCategory = (exams, subjectNoFilter) => {
+const examCategoryOptions = (exams, subjectNoFilter) => {
   exams.forEach((element) => {
     subjectNoFilter.push(element.exCategory);
   });
 
   return [...new Set(subjectNoFilter)];
 };
-examCategory.propTypes = {
+examCategoryOptions.propTypes = {
   subjectNoFilter: PropTypes.array.isRequired
+};
+
+const examSubCategoryOptions = (exams, examCategory, subjectNoFilter) => {
+  exams.forEach((element) => {
+    if (element.exCategory.toLowerCase() === examCategory) {
+      subjectNoFilter.push(element.exSubcategory);
+    }
+  });
+
+  return [...new Set(subjectNoFilter)];
+};
+examSubCategoryOptions.propTypes = {
+  subjectNoFilter: PropTypes.array.isRequired,
+  examCategory: PropTypes.string.isRequired
 };
 
 const renderChoices = ({ fields, placeHold, submitting }) => (
@@ -60,14 +74,24 @@ renderChoices.propTypes = {
   submitting: PropTypes.bool.isRequired
 };
 
-const EditExamForm = ({ handleSubmit, submitting, examType, exams, thisExam }) => (
+const EditExamForm = ({ handleSubmit, submitting, examType, exams, examCategory }) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="examCategory" as={Form.Input} component={Input} list="exam_category" label="Exam Category" placeholder="e.g. English" value={thisExam.exType} disabled={submitting} required />
+    <Field name="examCategory" as={Form.Input} component={Input} list="exam_category" label="Exam Category" placeholder="e.g. English" disabled={submitting} required />
     <datalist id="exam_category">
       {
-        (examCategory(exams, [])).map(type => (<option value={type} />))
+        (examCategoryOptions(exams, [])).map(type => (<option value={type} />))
       }
     </datalist>
+    {(examCategory !== '' && examCategory !== undefined) &&
+      <div>
+        <Field name="examSubCategory" as={Form.Input} component={Input} list="exam_subCategory" label="Exam Sub-Category" placeholder="Sub-Category ..." disabled={submitting} required />
+        <datalist id="exam_subCategory">
+          {
+            (examSubCategoryOptions(exams, examCategory, [])).map(type => (<option value={type} />))
+          }
+        </datalist>
+      </div>
+    }
     <Field name="question" as={Form.TextArea} component={Input} autoHeight label="Question" placeholder="New Question ..." disabled={submitting} required />
     <Field name="examType" as={Form.Select} component={Input} label="Exam Type" placeholder="-- Exam Type --" options={examTypeOptions} disabled={submitting} required />
     {examType === 'Choices' && <FieldArray name="choices" component={renderChoices} disabled={submitting} />}
@@ -80,7 +104,7 @@ EditExamForm.propTypes = {
   submitting: PropTypes.bool.isRequired,
   examType: PropTypes.string.isRequired,
   exams: PropTypes.array.isRequired,
-  thisExam: PropTypes.object.isRequired
+  examCategory: PropTypes.string.isRequired
 };
 
 const selector = formValueSelector('editExam');
@@ -89,6 +113,7 @@ const mapStateToProps = (state, ownProps) => ({
   initialValues: {
     examId: ownProps.thisExam.exId,
     examCategory: ownProps.thisExam.exCategory,
+    examSubCategory: ownProps.thisExam.exSubcategory,
     question: ownProps.thisExam.exQuestion.replace(/<br \/>/g, '\r\n'),
     examType: (ownProps.thisExam.exChoice.toString() === '-') ? 'Write-Up' : 'Choices',
     choices: (ownProps.thisExam.exChoice.toString() === '-')
@@ -99,7 +124,7 @@ const mapStateToProps = (state, ownProps) => ({
       })
   },
   examType: selector(state, 'examType'),
-  numberOfChoices: selector(state, 'numberOfChoices')
+  examCategory: selector(state, 'examCategory')
 });
 
 const enhance = compose(
