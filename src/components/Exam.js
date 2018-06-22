@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Segment, Button, Icon, Grid, Dropdown, Input, Table } from 'semantic-ui-react';
+import { compose, withState } from 'recompose';
 
 const examCategoryOptions = (exams, subjectNoFilter, subjectFilter, subjectList) => {
   exams.forEach((element) => {
@@ -9,7 +10,7 @@ const examCategoryOptions = (exams, subjectNoFilter, subjectFilter, subjectList)
 
   subjectFilter = [...new Set(subjectNoFilter)];
 
-  subjectList.push({ text: 'all subjects', value: 'all subjects' });
+  subjectList.push({ text: 'all categories', value: 'all categories' });
   subjectFilter.forEach((element) => {
     subjectList.push({ text: element, value: element });
   });
@@ -22,18 +23,63 @@ examCategoryOptions.propTypes = {
   subjectList: PropTypes.array.isRequired
 };
 
-const Exam = (({ onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, examsFilter }) => (
+const examSubCategoryOptions = (exams, examCategory, subjectNoFilter, subjectFilter, subjectList) => {
+  exams.forEach((element) => {
+    if (element.exCategory.toLowerCase() === examCategory) {
+      subjectNoFilter.push(element.exSubcategory);
+    }
+  });
+
+  subjectFilter = [...new Set(subjectNoFilter)];
+
+  subjectList.push({ text: 'all sub-categories', value: 'all sub-categories' });
+  subjectFilter.forEach((element) => {
+    subjectList.push({ text: element, value: element });
+  });
+
+  return subjectList;
+};
+examSubCategoryOptions.propTypes = {
+  subjectNoFilter: PropTypes.array.isRequired,
+  subjectFilter: PropTypes.array.isRequired,
+  subjectList: PropTypes.array.isRequired,
+  examCategory: PropTypes.string.isRequired
+};
+
+const Exam = (({ onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, examsFilter, disabled, setDisabled, category, setCategory }) => (
   <div>
     <Segment.Group raised>
       <Segment>
         <Grid>
           <Grid.Column width={3}>
-            <Dropdown name="category" fluid selection options={examCategoryOptions(exams, [], [], [])} placeholder="-- Search Category --" onChange={(e, { value }) => onFilterChange('searchCategory', value)} />
+            <Dropdown
+              fluid
+              selection
+              options={examCategoryOptions(exams, [], [], [])}
+              placeholder="-- Search Category --"
+              onChange={(e, { value }) => {
+                setDisabled(value === 'all categories' || value === '' || value === undefined);
+                setCategory(value);
+                onFilterChange('searchCategory', value);
+              }}
+            />
+          </Grid.Column>
+          <Grid.Column width={4}>
+            <Dropdown
+              fluid
+              selection
+              placeholder="-- Search Sub-Category --"
+              options={examSubCategoryOptions(exams, category, [], [], [])}
+              disabled={disabled}
+              onChange={(e, { value }) => {
+                onFilterChange('searchSubCategory', value);
+              }}
+            />
           </Grid.Column>
           <Grid.Column width={4}>
             <Input icon="search" placeholder="Search question ..." onChange={(e, { value }) => onFilterChange('searchText', value)} />
           </Grid.Column>
-          <Grid.Column width={9}>
+          <Grid.Column width={5}>
             <Button icon labelPosition="left" floated="right" color="blue" onClick={onAddClick}>
               <Icon name="add" />
               Add new question
@@ -91,7 +137,13 @@ Exam.propTypes = {
   onEditClick: PropTypes.func.isRequired,
   onFilterChange: PropTypes.func.isRequired,
   exams: PropTypes.array.isRequired,
-  examsFilter: PropTypes.array.isRequired
+  examsFilter: PropTypes.array.isRequired,
+  disabled: PropTypes.bool.isRequired,
+  setDisabled: PropTypes.func.isRequired,
+  category: PropTypes.string.isRequired,
+  setCategory: PropTypes.func.isRequired,
 };
 
-export default Exam;
+const enhance = compose(withState('disabled', 'setDisabled', true), withState('category', 'setCategory', ''));
+
+export default enhance(Exam);
