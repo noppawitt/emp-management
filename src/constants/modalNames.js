@@ -15,6 +15,8 @@ export const ADD_EMPLOYEE = 'ADD_EMPLOYEE';
 
 // Project
 export const ADD_PROJECT = 'ADD_PROJECT';
+export const EDIT_PROJECT = 'EDIT_PROJECT';
+export const ADD_MEMBER = 'ADD_MEMBER';
 
 // Leave
 export const CREATE_LEAVE_REQUEST = 'CREATE_LEAVE_REQUEST';
