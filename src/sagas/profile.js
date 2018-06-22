@@ -58,6 +58,9 @@ export function* updateProfileTask(action) {
       case 'addAssetProfile':
         profile.assets = yield call(api.createAssetProfile, action.payload.form);
         break;
+      case 'profilePicture':
+        profile.general.picture = yield call(api.uploadProfilePicture, action.payload.form);
+        break;
       default:
         action.payload.reject();
     }
@@ -100,6 +103,10 @@ export function* deleteProfileTask(action) {
   }
 }
 
+export function* uploadProfilePictureTask(action) {
+  yield console.log(action);
+}
+
 export function* watchFetchProfileRequest() {
   yield takeEvery(actionTypes.PROFILE_FETCH_REQUEST, fetchProfileTask);
 }
@@ -110,6 +117,10 @@ export function* watchUpdateProfileRequest() {
 
 export function* watchDeleteProfileRequest() {
   yield takeEvery(actionTypes.PROFILE_DELETE_REQUEST, deleteProfileTask);
+}
+
+export function* watchUploadProfilePictureTask() {
+  yield takeEvery(actionTypes.PROFILE_PICTURE_UPLOAD_REQUEST, uploadProfilePictureTask);
 }
 
 export default function* profileSaga() {
