@@ -3,3 +3,63 @@
     width: 75%;
     margin: auto;
 }
+
+.sign-container .header {
+    text-align: left;
+}
+
+.sign-container table {
+    table-layout: fixed;
+    margin-bottom: 0.3%;
+}
+
+/* Mark */
+
+.mark {
+    position: relative;
+    height: 2em;
+    width: 2em;
+    transition: 0.2s;
+}
+
+.div_mark {
+    position: relative;
+    display: inline-block;
+    overflow: visible;
+}
+
+.div_mark1 {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    width: 0rem;
+    top: 50%;
+    left: 75%;
+    transition: 0.5s;
+}
+
+.div_mark2 {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    width: 0rem;
+    top: 50%;
+    left: 75%;
+    transition: 0.5s;
+}
+
+.div_mark3 {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    width: 0rem;
+    top: 50%;
+    left: 75%;
+    transition: 0.5s;
+}
+
+/* date */
+
+.date {
+    font-weight: lighter;
+}

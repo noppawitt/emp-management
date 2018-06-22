@@ -48,10 +48,10 @@ class SignatureComponent extends React.Component {
         return (
             <div className='sign-container'>
                 <div>
-                    <div align='left'>&emsp;&emsp;&emsp;&emsp;Employee has read this appraisal and discussed the contents with direct supervisor. Signatures identify that employee has been advised on their performance by direct supervisor.</div>
+                    <div className='header'>&emsp;&emsp;&emsp;&emsp;Employee has read this appraisal and discussed the contents with direct supervisor. Signatures identify that employee has been advised on their performance by direct supervisor.</div>
                 </div>
-                <div id='kkk'>
-                    <table className="grid">
+                <div>
+                    <table>
                         <tbody>
                             <tr>
                                 <th>Employee signature:</th>
@@ -79,9 +79,9 @@ class SignatureComponent extends React.Component {
                                 </th>
                             </tr>
                             <tr>
-                                <th>Date: <span className="date">{this.state.employeeSignDate}</span></th>
-                                <th>Date: <span className="date">{this.state.supervisorSignDate}</span></th>
-                                <th>Date: <span className="date">{this.state.MDSignDate}</span></th>
+                                <th>{this.state.employeeSignDate == '' ? '' : 'Date:'} <span className="date">{this.state.employeeSignDate}</span></th>
+                                <th>{this.state.supervisorSignDate == '' ? '' : 'Date:'} <span className="date">{this.state.supervisorSignDate}</span></th>
+                                <th>{this.state.MDSignDate == '' ? '' : 'Date:'} <span className="date">{this.state.MDSignDate}</span></th>
                             </tr>
                         </tbody>
                     </table>
