@@ -1,25 +1,12 @@
-.info-container {
+.eva-result-container {
     position: relative;
-    width: 100%;
+    width: 75%;
+    margin: auto;
     font-family: 'Prompt', sans-serif;
 }
 
-.info-container table {
-    width: 75%;
-    margin: auto;
-    table-layout: fixed;
-}
-
-.info-container td {
+.eva-result-container th {
     text-align: left;
-}
-
-.info-container td:nth-child(odd) {
-    font-weight: bolder;
-}
-
-.info-container tr td:nth-child(odd) {
-    width: 50;
 }
 
 .blue-text {
@@ -32,4 +19,13 @@
     padding-bottom: 1%;
     border-bottom: 0.1em solid #bbbbbb;
     box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.04);
+}
+
+/* table {
+    border: 2px solid;
+} */
+
+.inner-table-second {
+    margin: auto;
+    width: 80%;
 }
