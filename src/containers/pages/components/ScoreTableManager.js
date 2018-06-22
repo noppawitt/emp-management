@@ -19,7 +19,9 @@ class ScoreTableManager extends React.Component {
             weight: props.weight || [15, 10, 10, 15, 10, 20, 20],
             numOfQuestion: props.numOfQuestion || 7,
             numOfElements: props.numOfElements || 5,
-            totalPoint: [0, 0, 0, 0, 0, 0, 0]
+            totalPoint: [0, 0, 0, 0, 0, 0, 0],
+            sumTotalPoint: 0,
+            sumTotalPointForShow: 0
         }
 
         this.createTable = this.createTable.bind(this);
@@ -27,10 +29,29 @@ class ScoreTableManager extends React.Component {
         this.updateScore = this.updateScore.bind(this);
         this.arraySum = this.arraySum.bind(this);
         this.updateTotalPoint = this.updateTotalPoint.bind(this);
+        this.totalPointAnimationManager = this.totalPointAnimationManager.bind(this);
+        this.calculateSumTotalPoint = this.calculateSumTotalPoint.bind(this);
     }
 
     componentDidMount() {
         this.updateTotalPoint();
+    }
+
+    totalPointAnimationManager() {
+        let temp = this.state.sumTotalPointForShow;
+        if (this.state.sumTotalPointForShow < this.state.sumTotalPoint)
+            temp++;
+        else if (this.state.sumTotalPointForShow > this.state.sumTotalPoint)
+            temp--;
+        else
+            clearInterval(this.sumTotalPointAnimatorInterval);
+
+        this.setState({ sumTotalPointForShow: temp });
+    }
+
+    calculateSumTotalPoint() {
+        this.state.sumTotalPoint = this.arraySum(this.state.totalPoint);
+        this.sumTotalPointAnimatorInterval = setInterval(this.totalPointAnimationManager, 30);
     }
 
     updateExpectedScore() {
@@ -56,7 +77,7 @@ class ScoreTableManager extends React.Component {
         for (let i = 0; i < this.state.numOfQuestion; i++) {
             total.push((this.state.score[i] / this.state.numOfElements * this.state.weight[i]));
         }
-        this.setState({ totalPoint: total });
+        this.setState({ totalPoint: total }, this.calculateSumTotalPoint);
     }
 
     arraySum(array) {
@@ -101,7 +122,7 @@ class ScoreTableManager extends React.Component {
                         <th></th>
                         <th>{this.arraySum(this.state.score)}</th>
                         <th>{this.arraySum(this.state.weight)}%</th>
-                        <th className='blue-text'>{this.arraySum(this.state.totalPoint)}%</th>
+                        <th className='blue-text'>{this.state.sumTotalPointForShow}%</th>
                     </tr>
                 </table>
             </div>
