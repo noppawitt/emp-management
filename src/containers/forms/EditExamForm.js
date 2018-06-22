@@ -11,24 +11,24 @@ const validate = (values) => {
   const errors = {};
   errors.examType = validator.required(values.examType);
   errors.question = validator.required(values.question);
-  errors.answerType = validator.required(values.answerType);
+  errors.examCategory = validator.required(values.examCategory);
 
   return errors;
 };
 
-const answerTypeOptions = [
+const examTypeOptions = [
   { key: 'Write-Up', value: 'Write-Up', text: 'Write-Up' },
   { key: 'Choices', value: 'Choices', text: 'Choices' }
 ];
 
-const examTypeOptions = (exams, subjectNoFilter) => {
+const examCategory = (exams, subjectNoFilter) => {
   exams.forEach((element) => {
-    subjectNoFilter.push(element.exType);
+    subjectNoFilter.push(element.exCategory);
   });
 
   return [...new Set(subjectNoFilter)];
 };
-examTypeOptions.propTypes = {
+examCategory.propTypes = {
   subjectNoFilter: PropTypes.array.isRequired
 };
 
@@ -60,17 +60,17 @@ renderChoices.propTypes = {
   submitting: PropTypes.bool.isRequired
 };
 
-const EditExamForm = ({ handleSubmit, submitting, answerType, exams, thisExam }) => (
+const EditExamForm = ({ handleSubmit, submitting, examType, exams, thisExam }) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="examType" as={Form.Input} component={Input} list="exam_type" label="Exam Type" placeholder="e.g. English" value={thisExam.exType} disabled={submitting} required />
-    <datalist id="exam_type">
+    <Field name="examCategory" as={Form.Input} component={Input} list="exam_category" label="Exam Category" placeholder="e.g. English" value={thisExam.exType} disabled={submitting} required />
+    <datalist id="exam_category">
       {
-        (examTypeOptions(exams, [])).map(type => (<option value={type} />))
+        (examCategory(exams, [])).map(type => (<option value={type} />))
       }
     </datalist>
     <Field name="question" as={Form.TextArea} component={Input} autoHeight label="Question" placeholder="New Question ..." disabled={submitting} required />
-    <Field name="answerType" as={Form.Select} component={Input} label="Answer Type" placeholder="-- Answer Type --" options={answerTypeOptions} disabled={submitting} required />
-    {answerType === 'Choices' && <FieldArray name="choices" component={renderChoices} disabled={submitting} />}
+    <Field name="examType" as={Form.Select} component={Input} label="Exam Type" placeholder="-- Exam Type --" options={examTypeOptions} disabled={submitting} required />
+    {examType === 'Choices' && <FieldArray name="choices" component={renderChoices} disabled={submitting} />}
     <Field hidden name="examId" as={Form.Input} component={Input} type="hidden" />
   </Form>
 );
@@ -78,7 +78,7 @@ const EditExamForm = ({ handleSubmit, submitting, answerType, exams, thisExam })
 EditExamForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
-  answerType: PropTypes.string.isRequired,
+  examType: PropTypes.string.isRequired,
   exams: PropTypes.array.isRequired,
   thisExam: PropTypes.object.isRequired
 };
@@ -88,17 +88,17 @@ const selector = formValueSelector('editExam');
 const mapStateToProps = (state, ownProps) => ({
   initialValues: {
     examId: ownProps.thisExam.exId,
-    examType: ownProps.thisExam.exType,
+    examCategory: ownProps.thisExam.exCategory,
     question: ownProps.thisExam.exQuestion.replace(/<br \/>/g, '\r\n'),
-    answerType: (ownProps.thisExam.exChoices.toString() === '-') ? 'Write-Up' : 'Choices',
-    choices: (ownProps.thisExam.exChoices.toString() === '-')
+    examType: (ownProps.thisExam.exChoice.toString() === '-') ? 'Write-Up' : 'Choices',
+    choices: (ownProps.thisExam.exChoice.toString() === '-')
       ? [{ data: '', answer: false }, { data: '', answer: false }]
-      : ownProps.thisExam.exChoices.map((choice) => {
+      : ownProps.thisExam.exChoice.map((choice) => {
         const ans = ownProps.thisExam.exAnswer.includes(choice);
         return { data: choice, answer: ans };
       })
   },
-  answerType: selector(state, 'answerType'),
+  examType: selector(state, 'examType'),
   numberOfChoices: selector(state, 'numberOfChoices')
 });
 

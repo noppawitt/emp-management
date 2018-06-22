@@ -4,7 +4,7 @@ import { Segment, Button, Icon, Grid, Dropdown, Input, Table } from 'semantic-ui
 
 const examTypeOptions = (exams, subjectNoFilter, subjectFilter, subjectList) => {
   exams.forEach((element) => {
-    subjectNoFilter.push(element.exType);
+    subjectNoFilter.push(element.exCategory);
   });
 
   subjectFilter = [...new Set(subjectNoFilter)];
@@ -46,6 +46,7 @@ const Exam = (({ onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, 
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Question</Table.HeaderCell>
+              <Table.HeaderCell>Category</Table.HeaderCell>
               <Table.HeaderCell>Type</Table.HeaderCell>
               <Table.HeaderCell>Choice</Table.HeaderCell>
               <Table.HeaderCell>Answer</Table.HeaderCell>
@@ -58,8 +59,9 @@ const Exam = (({ onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, 
                 <div>{choice}</div>
               ))}
               </Table.Cell>
+              <Table.Cell>{exam.exCategory}</Table.Cell>
               <Table.Cell>{exam.exType}</Table.Cell>
-              <Table.Cell>{(exam.exChoices).map(choice => (
+              <Table.Cell>{(exam.exChoice).map(choice => (
                 <div>{choice}</div>
               ))}
               </Table.Cell>

@@ -5,10 +5,10 @@ const Exam = {};
 const setFormatToDB = (exam) => {
   sendChoice = [];
   sendAnswer = [];
-  examType = (exam.examType).toLowerCase();
+  examCategory = (exam.examCategory).toLowerCase();
   question = exam.question.replace(/\r?\n/g, '<br />');
 
-  if (exam.answerType === 'Write-Up') {
+  if (exam.examType === 'Write-Up') {
     sendChoice.push('-');
     sendAnswer.push('-');
   }
@@ -21,18 +21,19 @@ const setFormatToDB = (exam) => {
     });
   }
 
-  return { sendChoice: sendChoice, sendAnswer: sendAnswer, examType: examType, question: question };
+  return { sendChoice: sendChoice, examCategory: examCategory, sendAnswer: sendAnswer, examType: exam.examType, question: question };
 }
 
 Exam.create = (exam) => {
   examFormatDB = setFormatToDB(exam);
 
   return db.one(
-    'INSERT INTO exams (ex_type, ex_question, ex_choices, ex_answer) VALUES ($1, $2, $3, $4) RETURNING 1',
+    'INSERT INTO exams (ex_type, ex_question, ex_choice, ex_answer, ex_category) VALUES ($1, $2, $3, $4, $5) RETURNING 1',
     [examFormatDB.examType,
     examFormatDB.question,
     examFormatDB.sendChoice,
-    examFormatDB.sendAnswer]
+    examFormatDB.sendAnswer,
+    examFormatDB.examCategory]
   )
 };
 
@@ -47,11 +48,12 @@ Exam.delete = id => (
 Exam.edit = (exam) => {
   examFormatDB = setFormatToDB(exam);
   return db.none(
-    'UPDATE exams SET ex_type = $1, ex_question = $2, ex_choices = $3, ex_answer = $4 WHERE ex_id = $5',
+    'UPDATE exams SET ex_type = $1, ex_question = $2, ex_choice = $3, ex_answer = $4, ex_category = $5 WHERE ex_id = $6',
     [examFormatDB.examType,
     examFormatDB.question,
     examFormatDB.sendChoice,
     examFormatDB.sendAnswer,
+    examFormatDB.examCategory,
     exam.examId]
   )
 };
