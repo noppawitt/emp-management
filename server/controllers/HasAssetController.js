@@ -4,9 +4,9 @@ const Asset = require('../models/Asset');
 const createHasAsset = (newAsset, creatorId) => new Promise(async (resolve, reject) => {
   try {
     const newHasAsset = {};
-    const id = await Asset.create(newAsset, creatorId);
+    const asset = await Asset.create(newAsset, creatorId);
     newHasAsset.userId = newAsset.userId;
-    newHasAsset.assetId = id;
+    newHasAsset.assetId = asset.id;
     newHasAsset.assetDate = newAsset.assetDate;
     const hasAsset = await HasAsset.create(newHasAsset, creatorId);
     resolve(hasAsset);
@@ -20,8 +20,12 @@ exports.create = (req, res, next) => {
   if (req.body.ownFlag) {
     const newAsset = req.body;
     createHasAsset(newAsset, req.user.id)
-      .then((hasAsset) => {
-        res.json(hasAsset);
+      .then(() => {
+        HasAsset.findByUserId(req.user.id)
+          .then((hasAssets) => {
+            res.json(hasAssets);
+          })
+          .catch(next);
       })
       .catch(next);
   }
