@@ -1,26 +1,29 @@
 const HasAsset = require('../models/HasAsset');
 const Asset = require('../models/Asset');
 
+const createHasAsset = (newAsset, creatorId) => new Promise(async (resolve, reject) => {
+  try {
+    const newHasAsset = {};
+    const id = await Asset.create(newAsset, creatorId);
+    newHasAsset.userId = newAsset.userId;
+    newHasAsset.assetId = id;
+    newHasAsset.assetDate = newAsset.assetDate;
+    const hasAsset = await HasAsset.create(newHasAsset, creatorId);
+    resolve(hasAsset);
+  }
+  catch (error) {
+    reject(error);
+  }
+});
+
 exports.create = (req, res, next) => {
   if (req.body.ownFlag) {
     const newAsset = req.body;
-    const newHasAsset = {};
-    Asset.create(newAsset, req.user.id)
-      .then((id) => {
-        newHasAsset.userId = req.body.userId;
-        newHasAsset.assetId = id;
-        newHasAsset.assetDate = req.body.assetDate;
+    createHasAsset(newAsset, req.user.id)
+      .then((hasAsset) => {
+        res.json(hasAsset);
       })
-      .then(() => {
-        HasAsset.create(newHasAsset, req.user.id)
-          .then(() => {
-            HasAsset.findByUserId(req.user.id)
-              .then((hasAssets) => {
-                res.json(hasAssets);
-              });
-          })
-          .catch(next);
-      });
+      .catch(next);
   }
   else {
     const newHasAsset = req.body;
