@@ -23,12 +23,6 @@ const getProjectDetail = excelType => new Promise(async (resolve, reject) => {
   }
 });
 
-const getTimesheetForProject = (projectId, month, year) => new Promise(async (resolve, reject) => {
-  try {
-    
-  }
-})
-
 const fillRow = (worksheet, day) => {
   const column = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
   for (let i = 0; i < column.length; i += 1) {
@@ -38,6 +32,18 @@ const fillRow = (worksheet, day) => {
       type: 'pattern',
       pattern: 'solid',
       fgColor: { argb: 'B8CCE4' }
+    };
+  }
+};
+
+const fillBorderAllRow = (worksheet, row) => {
+  const column = ['B', 'C', 'D', 'F', 'I', 'L', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V'];
+  for (let i = 0; i < column.length; i += 1) {
+    worksheet.getCell(`${column[i]}${row}`).border = {
+      top: { style: 'thin' },
+      left: { style: 'thin' },
+      bottom: { style: 'thin' },
+      right: { style: 'thin' }
     };
   }
 };
@@ -117,30 +123,48 @@ exports.createReport = (req, res, next) => {
     workbook.xlsx.readFile(filename)
       .then(() => {
         const worksheet = workbook.getWorksheet('Timesheet');
+        // Fill each month in year
         const months = moment.monthsShort();
-        const monthCell = ['F3', 'I3', 'L3', 'N3', 'O3', 'P3', 'Q3', 'R3', 'S3', 'T3', 'U3', 'V3'];
+        const monthColumn = ['F', 'I', 'L', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V'];
         for (let i = 0; i < months.length; i += 1) {
-          worksheet.getCell(monthCell[i]).value = `${months[i]}-${moment(excelType.year, 'YYYY').format('YY')}`;
-          
+          worksheet.getCell(`${monthColumn[i]}3`).value = `${months[i]}-${moment(excelType.year, 'YYYY').format('YY')}`;
         }
+        // Fill Each user timesheet
+        let row = 4;
         User.findAll()
-          .then((users) => {
+          .then(async (users) => {
             for (let i = 0; i < users.length; i += 1) {
-
+              // write user
+              const employeeInfo = await EmployeeInfo.findById(users[i].id);
+              worksheet.getCell(`B${row}`).value = employeeInfo.userId;
+              worksheet.getCell(`C${row}`).value = `${employeeInfo.firstName} ${employeeInfo.lastName}`;
+              fillBorderAllRow(worksheet, row);
+              row += 1;
+              // write each project
+              const projects = await HasProject.findByUserIdAndYear(users[i].id, excelType.year);
+              for (let j = 0; j < projects.length; j += 1) {
+                worksheet.getCell(`D${row}`).value = projects[j].id;
+                // write sum day each month
+                for (let k = 1; k <= 12; k += 1) {
+                  const totalDays = await Timesheet.findTimesheetInProject(excelType.year, k, projects[j].id, users[i].id);
+                  worksheet.getCell(`${monthColumn[k - 1]}${row}`).value = totalDays;
+                }
+                fillBorderAllRow(worksheet, row);
+                row += 1;
+              }
             }
           })
           .catch(next);
       })
       .catch(next);
   }
-}
-  // const workbook = new Excel.Workbook();
-  // workbook.xlsx.readFile('server/storage/report/excel.xlsx')
-  //   .then(() => {
-  //     const worksheet = workbook.getWorksheet('Sheet1');
-  //     worksheet.getCell('A1').value = '12345';
-  //     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-  //     workbook.xlsx.write(res);
-  //   })
-  //   .catch(next);
 };
+// const workbook = new Excel.Workbook();
+// workbook.xlsx.readFile('server/storage/report/excel.xlsx')
+//   .then(() => {
+//     const worksheet = workbook.getWorksheet('Sheet1');
+//     worksheet.getCell('A1').value = '12345';
+//     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+//     workbook.xlsx.write(res);
+//   })
+//   .catch(next);
