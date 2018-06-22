@@ -22,7 +22,7 @@ const ownFlagOptions = [
 
 const AddAssetProfileForm = ({ masterTable, handleSubmit, submitting, ownFlag }) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="assetType" as={Form.Select} component={Input} label="Asset type" placeholder="Asset type" options={masterTableToOptions(masterTable.assetTypes)} disabled={submitting} />
+    <Field name="assetTypeId" as={Form.Select} component={Input} label="Asset type" placeholder="Asset type" options={masterTableToOptions(masterTable.assetTypes)} disabled={submitting} />
     <Field name="ownFlag" as={Form.Select} component={Input} label="Owner" placeholder="Owner" options={ownFlagOptions} />
     {ownFlag ?
       <Field name="name" as={Form.Input} component={Input} label="Asset name" placeholder="Asset name" disabled={submitting} /> :

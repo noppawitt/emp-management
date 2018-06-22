@@ -2,7 +2,7 @@ const HasAsset = require('../models/HasAsset');
 const Asset = require('../models/Asset');
 
 exports.create = (req, res, next) => {
-  if (req.body.own) {
+  if (req.body.ownFlag) {
     const newAsset = req.body;
     const newHasAsset = {};
     Asset.create(newAsset, req.user.id)
