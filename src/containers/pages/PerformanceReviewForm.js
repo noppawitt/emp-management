@@ -3,6 +3,7 @@ import './css/PerformanceReviewForm.css';
 import ScoreManager from './components/ScoreTableManager';
 import EmployeeInfo from './components/EmployeeInfoComponent';
 import SignatureComponent from './components/SignatureComponent';
+import SupervisorCommentComponent from './components/SupervisorCommentComponent';
 
 const questions = ['ความรู้ในงานและการพัฒนาตัวเอง (Knowledge and Improvement)',
     'คุณภาพงาน (Quality of Work)',
@@ -42,10 +43,7 @@ class PerformanceReviewForm extends React.Component {
                     <ScoreManager questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} />
                 </div>
                 <br />
-                <div className='sup-comment'>
-                    <h2>Summary Comments by Supervisors:</h2>
-                    <textarea></textarea>
-                </div>
+                <SupervisorCommentComponent />
                 <br />
                 <SignatureComponent />
             </div>

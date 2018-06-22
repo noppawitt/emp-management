@@ -4,6 +4,7 @@ import ScoreManager from './components/ScoreTableManager';
 import EmployeeInfo from './components/EmployeeInfoComponent';
 import SignatureComponent from './components/SignatureComponent';
 import EvaluationResultComponent from './components/EvaluationResultComponent';
+import SupervisorCommentComponent from './components/SupervisorCommentComponent';
 
 const questions = ['ความรู้ในงานและการพัฒนาตัวเอง (Knowledge and Improvement)',
     'คุณภาพงาน (Quality of Work)',
@@ -45,10 +46,7 @@ class ProbationForm extends React.Component {
                 <br />
                 <EvaluationResultComponent />
                 <br />
-                <div className='sup-comment'>
-                    <h2>Summary Comments by Supervisors:</h2>
-                    <textarea></textarea>
-                </div>
+                <SupervisorCommentComponent />
                 <br />
                 <SignatureComponent />
             </div>
