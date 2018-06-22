@@ -21,7 +21,7 @@ class ScoreTableManager extends React.Component {
             numOfElements: props.numOfElements || 5,
             totalPoint: [0, 0, 0, 0, 0, 0, 0],
             sumTotalPoint: 0,
-            sumTotalPointForShow: 0
+            sumTotalPointForShow: 30
         }
 
         this.createTable = this.createTable.bind(this);
@@ -51,7 +51,7 @@ class ScoreTableManager extends React.Component {
 
     calculateSumTotalPoint() {
         this.state.sumTotalPoint = this.arraySum(this.state.totalPoint);
-        this.sumTotalPointAnimatorInterval = setInterval(this.totalPointAnimationManager, 30);
+        this.sumTotalPointAnimatorInterval = setInterval(this.totalPointAnimationManager, 50);
     }
 
     updateExpectedScore() {
