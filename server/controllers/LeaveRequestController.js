@@ -57,6 +57,10 @@ exports.create = (req, res, next) => {
 };
 
 exports.update = (req, res, next) => {
+  const leaveRequestArray = req.body;
+  for (let i = 0; i < leaveRequestArray.length; i += 1) {
+    const leaveRequests = LeaveRequest.findByLeave(leaveRequestArray[i])
+  }
   const editLeaveRequest = req.body.leaveRequest;
   LeaveRequest.update(editLeaveRequest, req.user.id)
     .then(() => {
