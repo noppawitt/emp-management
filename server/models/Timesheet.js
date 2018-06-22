@@ -44,4 +44,12 @@ Timesheet.findTimesheetInProject = (year, month, projectId, userId) => (
   db.manyOrNone('SELECT SUM(totalhours)/$1 FROM timesheets WHERE extract(year from date) = $2 AND extract(month from date) = $3 AND project_id = $4 AND user_id = $5', [8, year, month, projectId, userId])
 );
 
+Timesheet.findSummaryTimesheet = year => (
+  db.manyOrNone(`SELECT users.id, CONCAT(employee_info.first_name, ' ', employee_info.last_name) as name, 
+  timesheets.project_id, EXTRACT(MONTH FROM timesheets.date) as month, SUM(timesheets.totalhours) / $1 as hours
+  FROM users INNER JOIN timesheets ON users.id = timesheets.user_id INNER JOIN employee_info ON users.id = employee_info.user_id
+  WHERE EXTRACT(year from timesheets.date) = $2
+  GROUP BY users.id, timesheets.project_id, month, name`, [8, year])
+);
+
 module.exports = Timesheet;

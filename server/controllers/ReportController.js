@@ -7,6 +7,7 @@ const Holiday = require('../models/Holiday');
 const User = require('../models/User');
 const Excel = require('exceljs');
 const moment = require('moment');
+const _ = require('lodash');
 
 const getProjectDetail = excelType => new Promise(async (resolve, reject) => {
   try {
@@ -130,31 +131,31 @@ exports.createReport = (req, res, next) => {
           worksheet.getCell(`${monthColumn[i]}3`).value = `${months[i]}-${moment(excelType.year, 'YYYY').format('YY')}`;
         }
         // Fill Each user timesheet
-        let row = 4;
-        User.findAll()
-          .then(async (users) => {
-            for (let i = 0; i < users.length; i += 1) {
-              // write user
-              const employeeInfo = await EmployeeInfo.findById(users[i].id);
-              worksheet.getCell(`B${row}`).value = employeeInfo.userId;
-              worksheet.getCell(`C${row}`).value = `${employeeInfo.firstName} ${employeeInfo.lastName}`;
-              fillBorderAllRow(worksheet, row);
-              row += 1;
-              // write each project
-              const projects = await HasProject.findByUserIdAndYear(users[i].id, excelType.year);
-              for (let j = 0; j < projects.length; j += 1) {
-                worksheet.getCell(`D${row}`).value = projects[j].id;
-                // write sum day each month
-                for (let k = 1; k <= 12; k += 1) {
-                  const totalDays = await Timesheet.findTimesheetInProject(excelType.year, k, projects[j].id, users[i].id);
-                  worksheet.getCell(`${monthColumn[k - 1]}${row}`).value = totalDays;
-                }
-                fillBorderAllRow(worksheet, row);
-                row += 1;
-              }
-            }
-          })
-          .catch(next);
+        // let row = 4;
+        // User.findAll()
+        //   .then(async (users) => {
+        //     for (let i = 0; i < users.length; i += 1) {
+        //       // write user
+        //       const employeeInfo = await EmployeeInfo.findById(users[i].id);
+        //       worksheet.getCell(`B${row}`).value = employeeInfo.userId;
+        //       worksheet.getCell(`C${row}`).value = `${employeeInfo.firstName} ${employeeInfo.lastName}`;
+        //       fillBorderAllRow(worksheet, row);
+        //       row += 1;
+        //       // write each project
+        //       const projects = await HasProject.findByUserIdAndYear(users[i].id, excelType.year);
+        //       for (let j = 0; j < projects.length; j += 1) {
+        //         worksheet.getCell(`D${row}`).value = projects[j].id;
+        //         // write sum day each month
+        //         for (let k = 1; k <= 12; k += 1) {
+        //           const totalDays = await Timesheet.findTimesheetInProject(excelType.year, k, projects[j].id, users[i].id);
+        //           worksheet.getCell(`${monthColumn[k - 1]}${row}`).value = totalDays;
+        //         }
+        //         fillBorderAllRow(worksheet, row);
+        //         row += 1;
+        //       }
+        //     }
+        //   })
+        //   .catch(next);
       })
       .catch(next);
   }
