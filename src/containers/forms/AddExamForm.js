@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { Field, reduxForm, formValueSelector, FieldArray } from 'redux-form';
 import { Form, Header, Icon, Button } from 'semantic-ui-react';
+// import ReactDrafts from 'react-drafts';
 import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
+import '../../../node_modules/react-drafts/dist/react-drafts.css';
 
 const validate = (values) => {
   const errors = {};
@@ -74,6 +76,20 @@ renderChoices.propTypes = {
   placeHold: PropTypes.string.isRequired
 };
 
+// const test = () => (
+//   <div>
+//     <header size="small"><strong>Question<label style={{ color: 'red' }}>*</label></strong></header>
+//     <div style={{ borderStyle: 'solid', borderWidth: '1px', borderColor: '#e2e2e2', borderRadius: '5px' }}>
+//       <ReactDrafts
+//         spellcheckEnabled={false}
+//         exportTo="html"
+//         customControls={['headings', 'bold', 'italic', 'underline', 'strikethrough', 'quotes', 'bulletList', 'orderedList', 'alignLeft', 'alignCenter', 'alignRight', 'divider', 'table', 'photo']}
+//       />
+//     </div>
+//     <br />
+//   </div>
+// );
+
 const AddExamForm = ({ handleSubmit, submitting, examType, exams, examCategory }) => (
   <Form onSubmit={handleSubmit}>
     <Field name="examCategory" as={Form.Input} component={Input} list="exam_category" label="Exam Category" placeholder="e.g. English" disabled={submitting} required />
@@ -82,16 +98,15 @@ const AddExamForm = ({ handleSubmit, submitting, examType, exams, examCategory }
         (examCategoryOptions(exams, [])).map(type => (<option value={type} />))
       }
     </datalist>
-    {(examCategory !== '' && examCategory !== undefined) &&
-      <div>
-        <Field name="examSubCategory" as={Form.Input} component={Input} list="exam_subCategory" label="Exam Sub-Category" placeholder="Sub-Category ..." disabled={submitting} required />
-        <datalist id="exam_subCategory">
-          {
-            (examSubCategoryOptions(exams, examCategory, [])).map(type => (<option value={type} />))
-          }
-        </datalist>
-      </div>
-    }
+    <div>
+      <Field name="examSubCategory" as={Form.Input} component={Input} list="exam_subCategory" label="Exam Sub-Category" placeholder="Sub-Category ..." disabled={submitting} required />
+      <datalist id="exam_subCategory">
+        {
+          (examSubCategoryOptions(exams, examCategory, [])).map(type => (<option value={type} />))
+        }
+      </datalist>
+    </div>
+    {/* <Field name="Test" component={test} /> */}
     <Field name="question" as={Form.TextArea} component={Input} autoHeight label="Question" placeholder="New Question ..." disabled={submitting} required />
     <Field name="examType" as={Form.Select} component={Input} label="Exam Type" placeholder="-- Exam Type --" options={examTypeOptions} disabled={submitting} required />
     {examType === 'Choices' && <FieldArray name="choices" component={renderChoices} />}

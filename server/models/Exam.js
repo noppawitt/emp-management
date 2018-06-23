@@ -27,7 +27,6 @@ const setFormatToDB = (exam) => {
 
 Exam.create = (exam) => {
   examFormatDB = setFormatToDB(exam);
-  console.log(examFormatDB);
   return db.one(
     'INSERT INTO exams (ex_type, ex_question, ex_choice, ex_answer, ex_category, ex_subcategory) VALUES ($1, $2, $3, $4, $5, $6) RETURNING 1',
     [examFormatDB.examType,
