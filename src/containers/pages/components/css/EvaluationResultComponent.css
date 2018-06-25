@@ -21,11 +21,21 @@
     box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.04);
 }
 
-/* table {
-    border: 2px solid;
-} */
-
 .inner-table-second {
     margin: auto;
     width: 80%;
+}
+
+.eva-result-container td {
+    padding: 0.2em;
+}
+
+.slide-show {
+    transition: 0.4s;
+    padding: 0;
+    overflow: hidden;
+}
+
+.slide-show td {
+    padding: 0;
 }
