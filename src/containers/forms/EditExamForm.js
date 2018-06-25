@@ -82,16 +82,14 @@ const EditExamForm = ({ handleSubmit, submitting, examType, exams, examCategory 
         (examCategoryOptions(exams, [])).map(type => (<option value={type} />))
       }
     </datalist>
-    {(examCategory !== '' && examCategory !== undefined) &&
-      <div>
-        <Field name="examSubCategory" as={Form.Input} component={Input} list="exam_subCategory" label="Exam Sub-Category" placeholder="Sub-Category ..." disabled={submitting} required />
-        <datalist id="exam_subCategory">
-          {
-            (examSubCategoryOptions(exams, examCategory, [])).map(type => (<option value={type} />))
-          }
-        </datalist>
-      </div>
-    }
+    <div>
+      <Field name="examSubCategory" as={Form.Input} component={Input} list="exam_subCategory" label="Exam Sub-Category" placeholder="Sub-Category ..." disabled={submitting} required />
+      <datalist id="exam_subCategory">
+        {
+          (examSubCategoryOptions(exams, examCategory, [])).map(type => (<option value={type} />))
+        }
+      </datalist>
+    </div>
     <Field name="question" as={Form.TextArea} component={Input} autoHeight label="Question" placeholder="New Question ..." disabled={submitting} required />
     <Field name="examType" as={Form.Select} component={Input} label="Exam Type" placeholder="-- Exam Type --" options={examTypeOptions} disabled={submitting} required />
     {examType === 'Choices' && <FieldArray name="choices" component={renderChoices} disabled={submitting} />}
