@@ -31,7 +31,7 @@ class EmployeeInfo extends React.Component {
                     <tr>
                         <td>Level:</td>
                         <td>{this.state.level}</td>
-                        <td>Start Date</td>
+                        <td>{this.state.endProbationDate ? 'Probatoin ' : ''} Start Date</td>
                         <td>{this.state.startDate}</td>
                     </tr>
                     <tr>
