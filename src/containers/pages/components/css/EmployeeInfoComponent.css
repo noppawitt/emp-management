@@ -34,31 +34,25 @@
     box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.04);
 }
 
-.outer-calendar {
+.calendar-container {
     position: relative;
-    width: 100%;
-}
-
-.inner-calendar {
-    position: absolute;
-    width: auto;
-    height: auto;
     overflow: visible;
-    z-index: 100;
 }
 
-.react-calendar {
-    position: relative;
-    width: 100%;
-    overflow: visible;
-    z-index: 2;
+.react-datepicker-component {
+    position: relative !important;
+    top: 0 !important;
 }
 
-.react-calendar__month-view {
-    background-color: white;
+.react-datepicker-input {
+    position: relative !important;
+    background: white !important;
+    border: 0 !important;
+    font-weight: normal !important;
+    width: 80% !important;
 }
 
-.react-calendar__navigation {
-    background-color: white;
-    margin: 0;
+.react-datepicker-component .react-datepicker-input input {
+    font-weight: normal !important;
+    padding-left: 0 !important;
 }

@@ -1,5 +1,8 @@
 import React from 'react';
 import './css/EvaluationResultComponent.css';
+import { DatePickerInput } from 'rc-datepicker';
+import 'rc-datepicker/lib/style.css';
+import 'moment/locale/es.js'
 
 class EvaluationResultComponent extends React.Component {
     constructor(props) {
@@ -102,7 +105,7 @@ class EvaluationResultComponent extends React.Component {
                                     Pass probationary period. Effective date on
                                 </td>
                                 <td>
-                                    <input type='date' />
+                                    <div className='calendar-container'><DatePickerInput locale='es' value={this.state.endProbationDate} onChange={(date) => this.setState({ endProbationDate: date })} /></div>
                                 </td>
                             </tr>
                             <tr>
