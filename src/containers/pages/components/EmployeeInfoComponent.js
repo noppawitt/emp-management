@@ -1,5 +1,6 @@
 import React from 'react';
 import './css/EmployeeInfoComponent.css'
+import Calendar from 'react-calendar';
 
 class EmployeeInfo extends React.Component {
     constructor(props) {
@@ -38,7 +39,7 @@ class EmployeeInfo extends React.Component {
                         <td>Supervisor:</td>
                         <td>{this.state.supervisor}</td>
                         <td>{this.state.endProbationDate ? 'Probation End Date:' : ''}</td>
-                        <td>{this.state.endProbationDate ? this.state.endProbationDate : ''}</td>
+                        <td>{this.state.endProbationDate ? <div className='outer-calendar'><div className='inner-calendar'><Calendar /></div></div> : ''}</td>
                     </tr>
                 </table>
             </div>
