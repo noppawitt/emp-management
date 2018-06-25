@@ -5,7 +5,7 @@ import { Segment, Grid, Header, Icon, Table, Button } from 'semantic-ui-react';
 const membersDetail = memberDetail => (
   <Table.Row>
     <Table.Cell>{memberDetail.userId || '-'}</Table.Cell>
-    <Table.Cell>{memberDetail.firstName || '-'}{memberDetail.lastName || '-'}</Table.Cell>
+    <Table.Cell>{memberDetail.firstName || '-'}{' '}{memberDetail.lastName || '-'}</Table.Cell>
     <Table.Cell>{memberDetail.name || '-'}</Table.Cell>
     <Table.Cell>{memberDetail.role || '-'}</Table.Cell>
     <Table.Cell>
