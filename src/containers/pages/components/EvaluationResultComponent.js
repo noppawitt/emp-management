@@ -22,10 +22,6 @@ class EvaluationResultComponent extends React.Component {
     }
 
     componentDidMount() {
-        // let elements = document.getElementsByClassName('slide-show');
-        // for (let i = 0; i < elements.length; i++) {
-        //     elements[i].style.height = '0';
-        // }
         this.updateProElements();
     }
 
