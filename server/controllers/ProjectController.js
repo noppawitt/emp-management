@@ -19,7 +19,6 @@ exports.update = (req, res, next) => {
 };
 
 exports.findAll = (req, res, next) => {
-  console.log('gg');
   Project.findAll()
     .then((projects) => {
       res.json(projects);
