@@ -26,7 +26,6 @@ class PerformanceReviewForm extends React.Component {
             supervisor: '_supervisor',
             expectedScore: [3, 3, 3, 3, 3, 3, 3],
             score: [3, 3, 3, 3, 3, 3, 3],
-            endProbationDate: '_endProbationDate'
         };
     }
 
