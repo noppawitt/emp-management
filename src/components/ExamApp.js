@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Container } from 'semantic-ui-react';
-import ExamSideBarContainer from '../containers/ExamSideBarContainer';
+import ExamNavBarContainer from '../containers/ExamNavBarContainer';
 import ModalContainer from '../containers/ModalContainer';
 
 const ExamApp = ({ children }) => (
   <div>
-    <br />
-    <ExamSideBarContainer />
+    <ExamNavBarContainer />
     <Container>
       {children}
     </Container>

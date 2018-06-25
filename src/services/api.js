@@ -279,3 +279,16 @@ api.editExam = body => (
 );
 
 export default api;
+
+// view exam result
+api.fetchExamResult = id => (
+  callApi(`/api/viewResult/?id=${id}`)
+);
+
+//
+api.examLogin = form => (
+  callApi('/examAuth/login', {
+    method: 'POST',
+    body: form
+  })
+);

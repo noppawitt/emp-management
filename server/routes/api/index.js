@@ -24,6 +24,7 @@ const timesheet = require('./timesheet');
 const leaveRequest = require('./leaveRequest');
 const recruitment = require('./recruitment');
 const exam = require('./exam');
+const viewResult = require('./viewResult');
 
 router.use('/employee-info', employeeInfo);
 
@@ -74,5 +75,7 @@ router.use('/leave-request', leaveRequest);
 router.use('/recruitments', recruitment);
 
 router.use('/exam', exam);
+
+router.use('./viewResult', viewResult);
 
 module.exports = router;

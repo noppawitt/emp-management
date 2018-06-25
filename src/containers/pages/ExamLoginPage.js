@@ -20,7 +20,7 @@ const ExamLoginPage = ({ dispatch }) => {
 
   return (
     <div>
-      <Grid.Column>
+      <Grid.Column floated="center">
         <Segment four wide center style={{ width: '300px' }}>
           <Form onSubmit={handleSubmit}>
             <Form.Field>
@@ -38,6 +38,7 @@ const ExamLoginPage = ({ dispatch }) => {
               <label htmlFor="password">
                 <input
                   id="password"
+                  type="password"
                   placeholder="password"
                   style={{ borderRadius: '15px' }}
                   ref={(node) => { password = node; }}

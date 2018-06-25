@@ -3,13 +3,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import { fetchExamListRequest } from '../../actions/prepareToExam';
-import PrepareToExam from '../../components/PrepareToExam';
+import Agreement from '../../components/Agreement';
 
-const PrepareToExamPage = () => (
-  <PrepareToExam />
+const AgreementPage = () => (
+  <Agreement />
 );
 
-PrepareToExamPage.propType = {
+AgreementPage.propType = {
   // validate type here
 };
 
@@ -32,4 +32,4 @@ const enhance = compose(
   })
 );
 
-export default enhance(PrepareToExamPage);
+export default enhance(AgreementPage);

@@ -55,6 +55,16 @@ const Recruitment = (state = initialState, action) => {
         sortKey: action.payload.sortKey,
         direction: action.payload.direction
       };
+    case actionTypes.CHECK_ALIVE_PASSWORD_EXISTENCE:
+      return {
+        ...state,
+        cid: action.payload.cid,
+      };
+    case actionTypes.DISPLAY_PASSWORD:
+      return {
+        ...state,
+        password: action.payload.password,
+      };
     default:
       return state;
   }

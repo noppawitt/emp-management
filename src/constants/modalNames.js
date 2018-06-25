@@ -22,5 +22,8 @@ export const CREATE_LEAVE_REQUEST = 'CREATE_LEAVE_REQUEST';
 export const ADD_NEW_EXAM = 'ADD_NEW_EXAM';
 export const EDIT_EXAM = 'EDIT_EXAM';
 
+// Recruitment
+export const SHOW_PASSWORD = 'SHOW_PASSWORD';
+
 // Other
 export const CONFIRM = 'CONFIRM';

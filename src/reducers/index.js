@@ -12,7 +12,8 @@ import timesheet from './timesheet';
 import exam from './exam';
 import recruitment from './recruitment';
 import examAuth from './examAuth';
-import prepareToExam from './prepareToExam';
+import agreement from './agreement';
+import viewResult from './viewResult';
 
 export default combineReducers({
   form: formReducer,
@@ -28,5 +29,6 @@ export default combineReducers({
   recruitment,
   exam,
   examAuth,
-  prepareToExam,
+  agreement,
+  viewResult,
 });

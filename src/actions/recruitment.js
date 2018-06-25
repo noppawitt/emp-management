@@ -49,3 +49,24 @@ export const sortRecruitment = (sortKey, direction) => ({
     direction
   }
 });
+
+export const isAlivePasswordExist = cid => ({
+  type: actionTypes.CHECK_ALIVE_PASSWORD_EXISTENCE,
+  payload: {
+    citizen_id: cid,
+  }
+});
+
+export const generatePassword = cid => ({
+  type: actionTypes.GENERATE_PASSWORD,
+  payload: {
+    citizen_id: cid,
+  }
+});
+
+export const displayPassword = password => ({
+  type: actionTypes.DISPLAY_PASSWORD,
+  payload: {
+    password,
+  }
+});

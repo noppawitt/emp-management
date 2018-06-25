@@ -4,7 +4,8 @@ const initialState = {
   isFetching: true,
 };
 
-const PrepareToExam = (state = initialState, action) => {
+// edit this
+const agreement = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.FETCH_EXAM_LIST:
       return {
@@ -17,4 +18,4 @@ const PrepareToExam = (state = initialState, action) => {
   }
 };
 
-export default PrepareToExam;
+export default agreement;

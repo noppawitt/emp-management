@@ -14,6 +14,7 @@ import CreateLeaveRequestModal from './modals/CreateLeaveRequestModal';
 import ConfirmModal from './modals/ConfirmModal';
 import AddExamModal from './modals/AddExamModal';
 import EditExamModal from './modals/EditExamModal';
+import GeneratePasswordModal from './modals/GeneratePasswordModal';
 
 const ModalContainer = ({ name, props }) => {
   switch (name) {
@@ -41,6 +42,8 @@ const ModalContainer = ({ name, props }) => {
       return <AddExamModal {...props} />;
     case modalNames.EDIT_EXAM:
       return <EditExamModal {...props} />;
+    case modalNames.GENERATE_PASSWORD:
+      return <GeneratePasswordModal {...props} />;
     default:
       return <div />;
   }

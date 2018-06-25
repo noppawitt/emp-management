@@ -11,7 +11,12 @@ import EmployeePage from './pages/EmployeePage';
 import ExamPage from './pages/ExamPage';
 import RecruitmentPage from './pages/RecruitmentPage';
 import ExamLoginPage from './pages/ExamLoginPage';
-import PrepareToExamPage from './pages/PrepareToExamPage';
+import AgreementPage from './pages/AgreementPage';
+import TakeExamPage from './pages/TakeExamPage';
+
+// build these compenents
+import GradeExamPage from './pages/GradeExamPage';
+import ViewResultPage from './pages/ViewResultPage';
 
 const Routes = () => (
   <Switch>
@@ -24,8 +29,11 @@ const Routes = () => (
     <PrivateRoute path="/employee" component={EmployeePage} />
     <PrivateRoute path="/exam/*" component={ExamPage} />
     <PrivateRoute path="/recruitment/*" component={RecruitmentPage} />
+    <PrivateRoute path="/grade_exam" component={GradeExamPage} />
+    <PrivateRoute path="/view_result" component={ViewResultPage} />
     <ExamRoute path="/examlogin" component={ExamLoginPage} />
-    <ExamRoute path="/preparetoexam" component={PrepareToExamPage} />
+    <ExamRoute path="/preparetoexam" component={AgreementPage} />
+    <ExamRoute path="/takeexam" component={TakeExamPage} />
   </Switch>
 );
 

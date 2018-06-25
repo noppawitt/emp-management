@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Segment, Table, Form, Grid, Checkbox, Button } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
-const PrepareToExam = ({ submit }) => (
+const Agreement = ({ submit }) => (
   <div>
     <Table>
       <Table.Body>
@@ -21,7 +22,6 @@ const PrepareToExam = ({ submit }) => (
           <p>Object he barton no effect played valley afford. Period so to oppose we little seeing or branch.</p>
           <p>Announcing contrasted not imprudence add frequently you possession mrs. Period saw his houses square and misery. Hour had held lain give yet.</p>
           <p>An so vulgar to on points wanted. Not rapturous resolving continued household northward gay.</p>
-          <p>He it otherwise supported instantly. Unfeeling agreeable suffering it on smallness newspaper be.</p>
           <p>By Vangelis Bibakis</p>
         </Segment>
       </Table.Body>
@@ -38,7 +38,7 @@ const PrepareToExam = ({ submit }) => (
                 </Grid.Row>
                 <Grid.Row>
                   <Grid.Column width={2}>
-                    <Button primary type="submit">Accept</Button>
+                    <Button primary type="submit" as={Link} to="/examlogin">Accept</Button>
                   </Grid.Column>
                   <Grid.Column width={2}>
                     <Button type="submit">Logout</Button>
@@ -53,9 +53,9 @@ const PrepareToExam = ({ submit }) => (
   </div>
 );
 
-PrepareToExam.propTypes = {
+Agreement.propTypes = {
   // something here, maybe
   submit: PropTypes.bool.isRequired,
 };
 
-export default PrepareToExam;
+export default Agreement;
