@@ -1,18 +1,7 @@
 const LeaveRequest = require('../models/LeaveRequest');
 const Holiday = require('../models/Holiday');
 const moment = require('moment');
-const nodemailer = require('nodemailer');
-const smtpTransport = require('nodemailer-smtp-transport');
-
-const transporter = nodemailer.createTransport(smtpTransport({
-  host: process.env.MAIL_HOST,
-  port: process.env.MAIL_PORT,
-  auth: {
-    user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASS
-  },
-  secure: true
-}));
+const mail = require('../mail');
 
 const isHoliday = (holidays, date) => {
   for (let i = 0; i < holidays.length; i += 1) {
@@ -46,7 +35,7 @@ exports.create = (req, res, next) => {
     subject: 'Hello',
     html: `<p>Good Morning</p>`
   };
-  transporter.sendMail(mailOptions, (err, info) => {
+  mail.sendMail(mailOptions, (err, info) => {
     if (err) {
       console.log(err);
     }

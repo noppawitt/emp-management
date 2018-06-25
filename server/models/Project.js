@@ -26,9 +26,8 @@ Project.create = (project, id) => (
 
 Project.update = (project, id) => (
   db.one(
-    'UPDATE projects SET id = $1, name = $2, description = $3, customer = $4, quotation_id = $5, purchased_order = $6, amount = $7, start_date = $8, end_date = $9, updated_user = $10, updated_date = $11, status = $12, payment_type = $13, working_day = $14 WHERE id = $15',
+    'UPDATE projects SET  name = $1, description = $2, customer = $3, quotation_id = $4, purchased_order = $5, amount = $6, start_date = $7, end_date = $8, updated_user = $9, updated_date = $10, status = $11, payment_type = $12, working_day = $13 WHERE id = $14',
     [
-      project.id,
       project.name,
       project.description,
       project.customer,

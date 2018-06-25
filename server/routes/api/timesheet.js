@@ -7,4 +7,6 @@ router.put('/', TimesheetController.update);
 
 router.get('/', TimesheetController.findByUserId);
 
+router.delete('/', TimesheetController.delete);
+
 module.exports = router;

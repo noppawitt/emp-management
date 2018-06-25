@@ -4,10 +4,8 @@ const HasProject = require('../models/HasProject');
 const Project = require('../models/Project');
 const EmployeeInfo = require('../models/EmployeeInfo');
 const Holiday = require('../models/Holiday');
-const User = require('../models/User');
 const Excel = require('exceljs');
 const moment = require('moment');
-const _ = require('lodash');
 
 const getProjectDetail = excelType => new Promise(async (resolve, reject) => {
   try {
@@ -63,6 +61,7 @@ exports.createReport = (req, res, next) => {
       .then((project) => {
         const { holiday } = project;
         const { timesheet } = project;
+        console.log(project);
         const { leave } = project;
         const workbook = new Excel.Workbook();
         workbook.xlsx.readFile(filename)
@@ -109,6 +108,7 @@ exports.createReport = (req, res, next) => {
               worksheet.getCell(`C${day + 7}`).value = timesheet[k].description;
               worksheet.getCell(`D${day + 7}`).value = timesheet[k].timeIn;
               worksheet.getCell(`E${day + 7}`).value = timesheet[k].timeOut;
+              worksheet.getCell(`F${day + 7}`).value = timesheet[k].totalhours;
             }
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             res.setHeader('Content-Disposition', `attachment; filename="Timesheet_${excelType.year}_${excelType.month}_${excelType.projectId}.xlsx`);
@@ -131,6 +131,41 @@ exports.createReport = (req, res, next) => {
           worksheet.getCell(`${monthColumn[i]}3`).value = `${months[i]}-${moment(excelType.year, 'YYYY').format('YY')}`;
         }
         // Fill Each user timesheet
+        Timesheet.findSummaryTimesheet(excelType.year)
+          .then((timesheets) => {
+            console.log(timesheets);
+            let user = '';
+            let project = '';
+            let row = 3;
+            timesheets.forEach((timesheet) => {
+              if (timesheet.id === user && timesheet.projectId === project) {
+                worksheet.getCell(`${monthColumn[timesheet.month - 1]}${row}`).value = timesheet.hours;
+              }
+              else if (timesheet.id === user && timesheet.projectId !== project) {
+                row += 1;
+                fillBorderAllRow(worksheet, row);
+                worksheet.getCell(`D${row}`).value = timesheet.projectId;
+                worksheet.getCell(`${monthColumn[timesheet.month - 1]}${row}`).value = timesheet.hours;
+                project = timesheet.projectId;
+              }
+              else if (timesheet.id !== user) {
+                row += 1;
+                fillBorderAllRow(worksheet, row);
+                worksheet.getCell(`B${row}`).value = timesheet.id;
+                worksheet.getCell(`C${row}`).value = timesheet.name;
+                row += 1;
+                fillBorderAllRow(worksheet, row);
+                worksheet.getCell(`D${row}`).value = timesheet.projectId;
+                worksheet.getCell(`${monthColumn[timesheet.month - 1]}${row}`).value = timesheet.hours;
+                user = timesheet.id;
+                project = timesheet.projectId;
+              }
+            });
+            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            res.setHeader('Content-Disposition', `attachment; filename="Timesheet_Summary_${excelType.year}.xlsx`);
+            workbook.xlsx.write(res);
+          })
+          .catch(next);
         // let row = 4;
         // User.findAll()
         //   .then(async (users) => {
