@@ -12,14 +12,17 @@ exports.create = (req, res, next) => {
 exports.update = (req, res, next) => {
   const editProject = req.body.project;
   Project.update(editProject, req.user.id)
-    .then((updatedProject) => {
-      req.json(updatedProject);
+    .then(() => {
+      Project.findById(editProject.id)
+        .then((project) => {
+          res.json(project);
+        })
+        .catch(next);
     })
     .catch(next);
 };
 
 exports.findAll = (req, res, next) => {
-  console.log('gg');
   Project.findAll()
     .then((projects) => {
       res.json(projects);

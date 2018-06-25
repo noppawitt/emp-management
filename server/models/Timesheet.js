@@ -41,7 +41,7 @@ Timesheet.findByUserId = userId => (
 );
 
 Timesheet.findTimesheetInProject = (year, month, projectId, userId) => (
-  db.manyOrNone('SELECT SUM(totalhours)/$1 FROM timesheets WHERE extract(year from date) = $2 AND extract(month from date) = $3 AND project_id = $4 AND user_id = $5', [8, year, month, projectId, userId])
+  db.manyOrNone('SELECT * FROM timesheets WHERE extract(year from date) = $1 AND extract(month from date) = $2 AND project_id = $3 AND user_id = $4', [year, month, projectId, userId])
 );
 
 Timesheet.findSummaryTimesheet = year => (
@@ -49,7 +49,12 @@ Timesheet.findSummaryTimesheet = year => (
   timesheets.project_id, EXTRACT(MONTH FROM timesheets.date) as month, SUM(timesheets.totalhours) / $1 as hours
   FROM users INNER JOIN timesheets ON users.id = timesheets.user_id INNER JOIN employee_info ON users.id = employee_info.user_id
   WHERE EXTRACT(year from timesheets.date) = $2
-  GROUP BY users.id, timesheets.project_id, month, name`, [8, year])
+  GROUP BY users.id, timesheets.project_id, month, name
+  ORDER BY users.id, timesheets.project_id, month`, [8, year])
+);
+
+Timesheet.delete = id => (
+  db.one('DELETE FROM timesheets WHERE id = $1', [id])
 );
 
 module.exports = Timesheet;
