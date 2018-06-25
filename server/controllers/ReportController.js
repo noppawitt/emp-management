@@ -61,6 +61,7 @@ exports.createReport = (req, res, next) => {
       .then((project) => {
         const { holiday } = project;
         const { timesheet } = project;
+        console.log(project);
         const { leave } = project;
         const workbook = new Excel.Workbook();
         workbook.xlsx.readFile(filename)
@@ -107,6 +108,7 @@ exports.createReport = (req, res, next) => {
               worksheet.getCell(`C${day + 7}`).value = timesheet[k].description;
               worksheet.getCell(`D${day + 7}`).value = timesheet[k].timeIn;
               worksheet.getCell(`E${day + 7}`).value = timesheet[k].timeOut;
+              worksheet.getCell(`F${day + 7}`).value = timesheet[k].totalhours;
             }
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             res.setHeader('Content-Disposition', `attachment; filename="Timesheet_${excelType.year}_${excelType.month}_${excelType.projectId}.xlsx`);

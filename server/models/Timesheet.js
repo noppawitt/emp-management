@@ -41,7 +41,7 @@ Timesheet.findByUserId = userId => (
 );
 
 Timesheet.findTimesheetInProject = (year, month, projectId, userId) => (
-  db.manyOrNone('SELECT SUM(totalhours)/$1 FROM timesheets WHERE extract(year from date) = $2 AND extract(month from date) = $3 AND project_id = $4 AND user_id = $5', [8, year, month, projectId, userId])
+  db.manyOrNone('SELECT * FROM timesheets WHERE extract(year from date) = $1 AND extract(month from date) = $2 AND project_id = $3 AND user_id = $4', [year, month, projectId, userId])
 );
 
 Timesheet.findSummaryTimesheet = year => (

@@ -23,7 +23,7 @@ const calTotalHours = (timeIn, timeOut) => new Promise((resolve, reject) => {
       default:
         break;
     }
-    let totalHours = 0;
+    let totalhours = 0;
     const startTime = moment.duration(timeIn, 'HH:mm');
     const endTime = moment.duration(timeOut, 'HH:mm');
     const timeInHour = moment(timeIn, 'HH:mm').hour();
@@ -31,27 +31,27 @@ const calTotalHours = (timeIn, timeOut) => new Promise((resolve, reject) => {
     const diff = endTime.subtract(startTime);
     const min = (diff.minutes() / 60) * 100;
     if (timeInHour <= 12 && timeOutHour <= 12) {
-      totalHours = diff.hours() + min;
+      totalhours = diff.hours() + min;
     }
     else if (timeInHour <= 12 && timeOutHour <= 18) {
       const hour = diff.hours() - 1;
-      totalHours = hour + min;
+      totalhours = hour + min;
     }
     else if (timeInHour <= 12 && timeOutHour >= 19) {
       const hour = diff.hours() - 2;
-      totalHours = hour + min;
+      totalhours = hour + min;
     }
     else if (timeInHour >= 13 && timeOutHour <= 18) {
-      totalHours = diff.hours() + min;
+      totalhours = diff.hours() + min;
     }
     else if (timeInHour >= 13 && timeOutHour >= 19) {
-      const hour = diff.totalHours() - 1;
-      totalHours = hour + min;
+      const hour = diff.hours() - 1;
+      totalhours = hour + min;
     }
     else if (timeInHour >= 19 && timeOutHour >= 19) {
-      totalHours = diff.hours() + min;
+      totalhours = diff.hours() + min;
     }
-    resolve(totalHours);
+    resolve(totalhours);
   }
   catch (error) {
     reject(error);
