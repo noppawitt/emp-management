@@ -237,6 +237,13 @@ api.fetchProjectDetail = id => (
   callApi(`/api/projects/${id}`)
 );
 
+api.updateProjectDetail = body => (
+  callApi('/api/projects', {
+    method: 'PUT',
+    body
+  })
+);
+
 api.createMember = body => (
   callApi(`/api/has-project`, {
     method: 'POST',
@@ -266,8 +273,29 @@ api.updateLeave = body => (
 
 // Timesheet
 
-api.fetchTimesheet = id => (
-  callApi(`/api/timesheets/?id=${id}`)
+api.createTimesheet = body => (
+  callApi('/api/timesheets', {
+    method: 'POST',
+    body
+  })
+);
+
+api.fetchTimesheet = userId => (
+  callApi(`/api/timesheets/?id=${userId}`)
+);
+
+api.updateTimestete = body => (
+  callApi('/api/timesheets', {
+    method: 'PUT',
+    body
+  })
+);
+
+api.deleteTimesheet = body => (
+  callApi('/api/timesheets', {
+    method: 'DELETE',
+    body
+  })
 );
 
 export default api;

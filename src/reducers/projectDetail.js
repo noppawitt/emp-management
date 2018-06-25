@@ -19,6 +19,36 @@ const projectDetail = (state = {}, action) => {
         ...state,
         isFetching: false,
       };
+    case actionTypes.PROJECT_DETAIL_UPDATE_REQUEST:
+      return {
+        ...state,
+        form: action.payload.form
+      };
+    case actionTypes.PROJECT_DETAIL_UPDATE_SUCCESS:
+      return {
+        ...state,
+        ...action.payload.projectDetail
+      };
+    case actionTypes.PROJECT_DETAIL_UPDATE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
+    case actionTypes.MEMBER_CREATE_REQUEST:
+      return {
+        ...state,
+        form: action.payload.form
+      };
+    case actionTypes.MEMBER_CREATE_SUCCESS:
+      return {
+        ...state,
+        members: action.payload.members
+      };
+    case actionTypes.MEMBER_CREATE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
     default:
       return state;
   }

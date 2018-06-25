@@ -14,6 +14,8 @@ import CreateLeaveRequestModal from './modals/CreateLeaveRequestModal';
 import ConfirmModal from './modals/ConfirmModal';
 import ProfilePictureModal from './modals/ProfilePictureModal';
 import EditProfilePictureModal from './modals/EditProfilePictureModal';
+import EditProjectModal from './modals/EditProjectModal';
+import AddMemberModal from './modals/AddMemberModal';
 
 const ModalContainer = ({ name, props }) => {
   switch (name) {
@@ -33,6 +35,10 @@ const ModalContainer = ({ name, props }) => {
       return <AddEmployeeModal {...props} />;
     case modalNames.ADD_PROJECT:
       return <AddProjectModal {...props} />;
+    case modalNames.EDIT_PROJECT:
+      return <EditProjectModal />;
+    case modalNames.ADD_MEMBER:
+      return <AddMemberModal />;
     case modalNames.CREATE_LEAVE_REQUEST:
       return <CreateLeaveRequestModal {...props} />;
     case modalNames.CONFIRM:

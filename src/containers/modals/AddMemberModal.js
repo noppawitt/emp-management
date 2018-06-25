@@ -3,23 +3,23 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { submit, isSubmitting } from 'redux-form';
 import { closeModal } from '../../actions/modal';
-import { updateProjectDetailRequest } from '../../actions/projectDetail';
+import { createProjectRequest } from '../../actions/project';
 import Modal from '../../components/Modal';
-import EditProjectForm from '../forms/EditProjectForm';
+import AddMemberForm from '../forms/AddMemberForm';
 import { handleReduxFormSubmit } from '../../utils/helper';
 
-const EditProjectModal = ({ onClose, onSubmit, submitting, onClick }) => (
+const AddMemberModal = ({ onClose, onSubmit, submitting, onClick }) => (
   <Modal
-    header="Edit project"
+    header="Add member"
     onClose={onClose}
     onClick={onClick}
     submitting={submitting}
   >
-    <EditProjectForm onSubmit={values => onSubmit(values)} />
+    <AddMemberForm onSubmit={values => onSubmit(values)} />
   </Modal>
 );
 
-EditProjectModal.propTypes = {
+AddMemberModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
@@ -28,13 +28,13 @@ EditProjectModal.propTypes = {
 
 const mapStateToProps = state => ({
   modalName: state.modal.name,
-  submitting: isSubmitting('editProject')(state)
+  submitting: isSubmitting('addMember')(state)
 });
 
 const mapDispatchToProps = dispatch => ({
   onClose: () => dispatch(closeModal()),
-  onSubmit: values => handleReduxFormSubmit(dispatch, updateProjectDetailRequest, values),
-  onClick: () => dispatch(submit('editProject'))
+  onSubmit: values => handleReduxFormSubmit(dispatch, createProjectRequest, values),
+  onClick: () => dispatch(submit('addMember'))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditProjectModal);
+export default connect(mapStateToProps, mapDispatchToProps)(AddMemberModal);

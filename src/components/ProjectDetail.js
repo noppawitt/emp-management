@@ -17,7 +17,7 @@ const membersDetail = memberDetail => (
   </Table.Row>
 );
 
-const ProjectDetail = ({ projectDetail }) => (
+const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick }) => (
   <Segment.Group raised size="large" >
     <Segment>
       <Grid padded>
@@ -31,7 +31,7 @@ const ProjectDetail = ({ projectDetail }) => (
             </Header>
           </Grid.Column>
           <Grid.Column floated="right" >
-            <Icon name="edit" size="large" />
+            <Icon link name="edit" size="large" onClick={onEditClick} />
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -39,17 +39,23 @@ const ProjectDetail = ({ projectDetail }) => (
     <Segment>
       <Grid Columns={2} padded>
         <Grid.Column width={1} only="large screen" />
-        <Grid.Column computer={4} mobile={16} tablet={4}><font size="4"><b>Project Number :</b></font></Grid.Column>
+        <Grid.Column computer={4} mobile={16} tablet={4}><font size="4"><b>Project No. :</b></font></Grid.Column>
         <Grid.Column computer={11} mobile={16} tablet={11}>{projectDetail.id || '-'}</Grid.Column>
         <Grid.Column width={1} only="large screen" />
         <Grid.Column computer={4} mobile={16} tablet={4} ><font size="4"><b>Project Name :</b></font></Grid.Column>
         <Grid.Column computer={11} mobile={16} tablet={11} >{projectDetail.name || '-'}</Grid.Column>
         <Grid.Column width={1} only="large screen" />
+        <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>Quotation Number :</b></font></Grid.Column>
+        <Grid.Column computer={11} tablet={11} mobile={16}>{projectDetail.quotationId || '-'}</Grid.Column>
+        <Grid.Column width={1} only="large screen" />
         <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>Customer :</b></font></Grid.Column>
         <Grid.Column computer={11} tablet={11} mobile={16}>{projectDetail.customer || '-'}</Grid.Column>
         <Grid.Column width={1} only="large screen" />
-        <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>Quotation Number :</b></font></Grid.Column>
-        <Grid.Column computer={11} tablet={11} mobile={16}>{projectDetail.quotationId || '-'}</Grid.Column>
+        <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>Purchased Order :</b></font></Grid.Column>
+        <Grid.Column computer={11} tablet={11} mobile={16}>{projectDetail.purchasedOrder || '-'}</Grid.Column>
+        <Grid.Column width={1} only="large screen" />
+        <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>Quotation No. :</b></font></Grid.Column>
+        <Grid.Column computer={11} tablet={11} mobile={16}>{projectDetail.amount || '-'}</Grid.Column>
         <Grid.Column width={1} only="large screen" />
         <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>Form :</b></font></Grid.Column>
         <Grid.Column computer={11} tablet={11} mobile={16}>{projectDetail.startDate || '-'}</Grid.Column>
@@ -79,7 +85,7 @@ const ProjectDetail = ({ projectDetail }) => (
             </Header>
           </Grid.Column>
           <Grid.Column floated="right" >
-            <Icon name="add user" size="large" />
+            <Icon link name="add user" size="large" onClick={onAddMemberClick} />
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -105,6 +111,8 @@ const ProjectDetail = ({ projectDetail }) => (
 
 ProjectDetail.propTypes = {
   projectDetail: PropTypes.object.isRequired,
+  onEditClick: PropTypes.func.isRequired,
+  onAddMemberClick: PropTypes.func.isRequired
 };
 
 export default ProjectDetail;
