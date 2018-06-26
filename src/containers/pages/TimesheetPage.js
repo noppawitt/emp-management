@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import { fetchTimesheetRequest } from '../../actions/timesheet';
+import { openModal } from '../../actions/modal';
 import Timesheet from '../../components/Timesheet';
 import Loader from '../../components/Loader';
 import { fillTimesheetsToFullMonth } from '../../selectors/timesheet';
+import * as modalNames from '../../constants/modalNames';
 
-const TimesheetPage = ({ isFetching, timesheets }) => (
+const TimesheetPage = ({ isFetching, timesheets, onAddClick, onEditClick }) => (
   <div>
-    {isFetching ? <Loader /> : <Timesheet timesheets={timesheets} /> }
+    {isFetching ? <Loader /> : <Timesheet timesheets={timesheets} onAddClick={onAddClick} onEditClick={onEditClick} /> }
   </div>
 );
 
@@ -19,7 +21,9 @@ TimesheetPage.defaultProps = {
 
 TimesheetPage.propTypes = {
   isFetching: PropTypes.bool,
-  timesheets: PropTypes.array.isRequired
+  timesheets: PropTypes.array.isRequired,
+  onAddClick: PropTypes.func.isRequired,
+  onEditClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -29,7 +33,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchTimesheet: id => dispatch(fetchTimesheetRequest(id))
+  fetchTimesheet: id => dispatch(fetchTimesheetRequest(id)),
+  onAddClick: () => dispatch(openModal(modalNames.ADD_TIMESHEET)),
+  onEditClick: () => dispatch(openModal(modalNames.EDIT_TIMESHEET))
 });
 
 const enhance = compose(

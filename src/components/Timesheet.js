@@ -30,7 +30,6 @@ class Timesheet extends React.Component {
       ]
     };
     this.anotherMonthCell = this.anotherMonthCell.bind(this);
-    this.holidayCell = this.holidayCell.bind(this);
     this.workdayCell = this.workdayCell.bind(this);
     this.drawCell = this.drawCell.bind(this);
     this.addHolidayName = this.addHolidayName.bind(this);
@@ -64,10 +63,10 @@ class Timesheet extends React.Component {
     let color = '';
     let iconcolor = '';
     if (hour !== 8) { color = this.state.ButtonRedcolor; iconcolor = this.state.iconRedcolor; }
-    else if (hour === 0) {
+    if (hour === 0) {
       return (
         <Grid.Row textAlign="center">
-          <Button animated="fade" style={{ borderStyle: 'solid', borderColor: color, backgroundColor: 'white', borderWidth: '1px' }} >
+          <Button animated="fade" style={{ borderStyle: 'solid', borderColor: color, backgroundColor: 'white', borderWidth: '1px' }} onClick={this.props.onAddClick} >
             <Button.Content visible><font color={color} >Add new</font></Button.Content>
             <Button.Content hidden > <Icon color={iconcolor} name="pencil alternate" /> </Button.Content>
           </Button>
@@ -75,10 +74,10 @@ class Timesheet extends React.Component {
 
       );
     }
-    else { color = this.state.textWorkcolor; iconcolor = this.state.iconBluecolor; }
+    else if (hour === 8) { color = this.state.textWorkcolor; iconcolor = this.state.iconBluecolor; }
     return (
       <Grid.Row textAlign="center">
-        <Button animated="fade" style={{ borderStyle: 'solid', borderColor: color, backgroundColor: 'white', borderWidth: '1px' }} >
+        <Button animated="fade" style={{ borderStyle: 'solid', borderColor: color, backgroundColor: 'white', borderWidth: '1px' }} onClick={this.props.onEditClick} >
           <Button.Content visible><font color={color} >{hour} Hour</font></Button.Content>
           <Button.Content hidden > <Icon color={iconcolor} name="pencil alternate" /> </Button.Content>
         </Button>
@@ -169,7 +168,7 @@ class Timesheet extends React.Component {
             { this.props.timesheets.map((timesheet, i) => (
                 i % 7 === 0 &&
                 <Table.Row style={{ height: '10em' }} >
-                  {this.drawCell(moment(this.props.timesheets[i].date), this.props.timesheets[i].totalHours)}
+                  {this.drawCell(moment(this.props.timesheets[i].date), this.props.timesheets[i].totalhours)}
                   {this.drawCell(moment(this.props.timesheets[i + 1].date), this.props.timesheets[i + 1].totalhours)}
                   {this.drawCell(moment(this.props.timesheets[i + 2].date), this.props.timesheets[i + 2].totalhours)}
                   {this.drawCell(moment(this.props.timesheets[i + 3].date), this.props.timesheets[i + 3].totalhours)}
@@ -188,7 +187,9 @@ class Timesheet extends React.Component {
 }
 
 Timesheet.propTypes = {
-  timesheets: PropTypes.array.isRequired
+  timesheets: PropTypes.array.isRequired,
+  onAddClick: PropTypes.func.isRequired,
+  onEditClick: PropTypes.func.isRequired
 };
 
 export default Timesheet;
