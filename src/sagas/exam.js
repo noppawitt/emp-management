@@ -16,8 +16,10 @@ import api from '../services/api';
 export function* addExamTask(action) {
   try {
     yield call(api.addExam, {
-      exam: action.payload.form
+      exam: action.payload.form,
+      question: localStorage.getItem('examQuestion')
     });
+    localStorage.removeItem('examQuestion');
     const exams = yield call(api.fetchExam);
     yield put(addExamSuccess(exams));
     yield put(closeModal());
@@ -56,8 +58,10 @@ export function* deleteExamTask(action) {
 export function* editExamTask(action) {
   try {
     const exam = yield call(api.editExam, {
-      form: action.payload.form
+      form: action.payload.form,
+      question: localStorage.getItem('examQuestion')
     });
+    localStorage.removeItem('examQuestion');
     yield put(editExamSuccess(exam));
     yield put(closeModal());
     action.payload.resolve();

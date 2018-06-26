@@ -6,6 +6,7 @@ import { Field, reduxForm, formValueSelector, FieldArray } from 'redux-form';
 import { Form, Header, Icon, Button } from 'semantic-ui-react';
 import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
+import ExamRichTextEditor from '../../components/ExamRichTextEditor';
 
 const validate = (values) => {
   const errors = {};
@@ -74,7 +75,7 @@ renderChoices.propTypes = {
   submitting: PropTypes.bool.isRequired
 };
 
-const EditExamForm = ({ handleSubmit, submitting, examType, exams, examCategory }) => (
+const EditExamForm = ({ handleSubmit, submitting, examType, exams, examCategory, question }) => (
   <Form onSubmit={handleSubmit}>
     <Field name="examCategory" as={Form.Input} component={Input} list="exam_category" label="Exam Category" placeholder="e.g. English" disabled={submitting} required />
     <datalist id="exam_category">
@@ -90,7 +91,7 @@ const EditExamForm = ({ handleSubmit, submitting, examType, exams, examCategory 
         }
       </datalist>
     </div>
-    <Field name="question" as={Form.TextArea} component={Input} autoHeight label="Question" placeholder="New Question ..." disabled={submitting} required />
+    <ExamRichTextEditor quiz={question} />
     <Field name="examType" as={Form.Select} component={Input} label="Exam Type" placeholder="-- Exam Type --" options={examTypeOptions} disabled={submitting} required />
     {examType === 'Choices' && <FieldArray name="choices" component={renderChoices} disabled={submitting} />}
     <Field hidden name="examId" as={Form.Input} component={Input} type="hidden" />
@@ -102,7 +103,8 @@ EditExamForm.propTypes = {
   submitting: PropTypes.bool.isRequired,
   examType: PropTypes.string.isRequired,
   exams: PropTypes.array.isRequired,
-  examCategory: PropTypes.string.isRequired
+  examCategory: PropTypes.string.isRequired,
+  question: PropTypes.string.isRequired
 };
 
 const selector = formValueSelector('editExam');
@@ -112,7 +114,6 @@ const mapStateToProps = (state, ownProps) => ({
     examId: ownProps.thisExam.exId,
     examCategory: ownProps.thisExam.exCategory,
     examSubCategory: ownProps.thisExam.exSubcategory,
-    question: ownProps.thisExam.exQuestion.replace(/<br \/>/g, '\r\n'),
     examType: (ownProps.thisExam.exChoice.toString() === '-') ? 'Write-Up' : 'Choices',
     choices: (ownProps.thisExam.exChoice.toString() === '-')
       ? [{ data: '', answer: false }, { data: '', answer: false }]
@@ -121,6 +122,7 @@ const mapStateToProps = (state, ownProps) => ({
         return { data: choice, answer: ans };
       })
   },
+  question: ownProps.thisExam.exQuestion,
   examType: selector(state, 'examType'),
   examCategory: selector(state, 'examCategory')
 });
