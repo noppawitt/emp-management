@@ -14,6 +14,7 @@ import api from '../services/api';
 export function* createTimesheetTask(action) {
   try {
     const timesheet = yield call(api.createTimesheet, { timesheets: [action.payload.form] });
+    console.log(timesheet);
     yield put(createTimesheetSuccess(timesheet));
     yield put(closeModal());
     action.payload.resolve();
