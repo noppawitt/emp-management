@@ -16,6 +16,8 @@ import ProfilePictureModal from './modals/ProfilePictureModal';
 import EditProfilePictureModal from './modals/EditProfilePictureModal';
 import EditProjectModal from './modals/EditProjectModal';
 import AddMemberModal from './modals/AddMemberModal';
+import AddTimesheetModal from './modals/AddTimesheetModal';
+import EditTimesheetModal from './modals/EditTimesheetModal';
 
 const ModalContainer = ({ name, props }) => {
   switch (name) {
@@ -49,6 +51,10 @@ const ModalContainer = ({ name, props }) => {
       return <EditEducationProfileModal {...props} />;
     case modalNames.EDIT_PROFILE_PICTURE:
       return <EditProfilePictureModal {...props} />;
+    case modalNames.ADD_TIMESHEET:
+      return <AddTimesheetModal {...props} />;
+    case modalNames.EDIT_TIMESHEET:
+      return <EditTimesheetModal {...props} />;
     default:
       return <div />;
   }
