@@ -15,6 +15,7 @@ export default class ExamRichTextEditor extends Component {
   }
 
   handleFileUpload(file) {
+    console.log(file);
     return Promise.resolve({
       src: file.preview,
       name: file.name
@@ -46,11 +47,11 @@ export default class ExamRichTextEditor extends Component {
             ref={(editor) => { this.editor = editor; }}
             content={storedContent}
             onFileUpload={this.handleFileUpload}
-            allowPhotoLink={true}
+            allowPhotoLink={false}
             allowPhotoSizeAdjust={true}
             linkInputAcceptsFiles={true}
             spellcheckEnabled={false}
-            customControls={['bold', 'italic', 'underline', 'quotes', 'bulletList', 'orderedList', 'alignLeft', 'alignCenter', 'alignRight', 'photo']}
+            customControls={['headings', 'bold', 'italic', 'underline', 'quotes', 'bulletList', 'orderedList', 'alignLeft', 'alignCenter', 'alignRight', 'table', 'photo']}
             exportTo="html"
           />
         </div>

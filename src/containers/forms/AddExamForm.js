@@ -85,7 +85,7 @@ const AddExamForm = ({ handleSubmit, submitting, examType, exams, examCategory }
     </datalist>
     <div>
       <Field name="examSubCategory" as={Form.Input} component={Input} list="exam_subCategory" label="Exam Sub-Category" placeholder="Sub-Category ..." disabled={submitting} required />
-      <datalist id="exam_subCategory">
+      <datalist id="exam_subCategory" style={{ zIndex: '1' }}>
         {
           (examSubCategoryOptions(exams, examCategory, [])).map(type => (<option value={type} />))
         }
