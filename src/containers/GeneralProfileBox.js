@@ -4,12 +4,17 @@ import { connect } from 'react-redux';
 import { Segment, Grid, Header, Icon } from 'semantic-ui-react';
 import { openModal } from '../actions/modal';
 import * as modalNames from '../constants/modalNames';
-import ProfileImage from '../components/ProfileImage';
+import ProfilePicture from '../components/ProfilePicture';
 
-const GeneralProfileBox = ({ image, generalProfile, onEditClick }) => (
+const stylebox = {
+  backgroundSize: 'contain 300px 100px',
+  background: 'linear-gradient(to bottom right, DarkCyan  , rgb(92,151,181))',
+};
+
+const GeneralProfileBox = ({ image, generalProfile, onEditClick, onProfilePictureClick, onEditProfilePictureClick }) => (
   <Segment.Group raised size="large">
-    <Segment padded inverted color="blue">
-      <ProfileImage image={image} />
+    <Segment padded inverted style={stylebox}>
+      <ProfilePicture image={image} onProfilePictureClick={() => onProfilePictureClick(image)} onEditProfilePictureClick={onEditProfilePictureClick} />
     </Segment>
     <Segment padded textAlign="center">
       <Grid>
@@ -30,11 +35,17 @@ const GeneralProfileBox = ({ image, generalProfile, onEditClick }) => (
 GeneralProfileBox.propTypes = {
   image: PropTypes.string.isRequired,
   generalProfile: PropTypes.object.isRequired,
-  onEditClick: PropTypes.func.isRequired
+  onEditClick: PropTypes.func.isRequired,
+  onProfilePictureClick: PropTypes.func.isRequired,
+  onEditProfilePictureClick: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
-  onEditClick: () => dispatch(openModal(modalNames.EDIT_GENERAL_PROFILE))
+  onEditClick: () => dispatch(openModal(modalNames.EDIT_GENERAL_PROFILE)),
+  onProfilePictureClick: profilePicture => dispatch(openModal(modalNames.VIEW_PROFILE_PICTURE, {
+    profilePicture
+  })),
+  onEditProfilePictureClick: () => dispatch(openModal(modalNames.EDIT_PROFILE_PICTURE))
 });
 
 export default connect(null, mapDispatchToProps)(GeneralProfileBox);

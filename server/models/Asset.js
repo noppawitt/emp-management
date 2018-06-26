@@ -14,7 +14,7 @@ Asset.create = (asset, id) => (
       asset.serialNumber,
       id,
       id,
-      asset.status
+      'Active'
     ]
   )
 );

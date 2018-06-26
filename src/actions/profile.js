@@ -1,5 +1,12 @@
 import * as actionTypes from '../constants/actionTypes';
 
+export const updateProbationStore = item =>({
+  type: actionTypes.UPDATE_PROBATION_STORE,
+  payload:{
+    item
+  }
+});
+
 export const fetchProfileRequest = id => ({
   type: actionTypes.PROFILE_FETCH_REQUEST,
   payload: {

@@ -1,5 +1,3 @@
-import { call } from "redux-saga/effects";
-
 const callApi = (endpoint, request) => {
   if (request && request.body) {
     request.body = JSON.stringify(request.body);
@@ -96,6 +94,10 @@ api.fetchAssetTypes = () => (
   callApi('/api/asset-types')
 );
 
+api.fetchAcessTypes = () => (
+  callApi('api/access-control')
+);
+
 // Profile
 
 api.fetchGeneralProfile = id => (
@@ -174,6 +176,14 @@ api.createAssetProfile = body => (
   })
 );
 
+api.uploadProfilePicture = body => (
+  callApi('upload-profile-img', {
+    headers: { 'Content-Type': 'multipart/form-data' },
+    method: 'POST',
+    body
+  })
+);
+
 api.deleteEducationProfile = body => (
   callApi('/api/educates', {
     method: 'DELETE',
@@ -221,6 +231,26 @@ api.createProject = body => (
   })
 );
 
+// Project detail
+
+api.fetchProjectDetail = id => (
+  callApi(`/api/projects/${id}`)
+);
+
+api.updateProjectDetail = body => (
+  callApi('/api/projects', {
+    method: 'PUT',
+    body
+  })
+);
+
+api.createMember = body => (
+  callApi(`/api/has-project`, {
+    method: 'POST',
+    body
+  })
+);
+
 // Leave
 
 api.createLeave = body => (
@@ -243,14 +273,46 @@ api.updateLeave = body => (
 
 // Timesheet
 
-api.fetchTimesheet = id => (
-  callApi(`/api/timesheets/?id=${id}`)
+api.createTimesheet = body => (
+  callApi('/api/timesheets', {
+    method: 'POST',
+    body
+  })
 );
 
-// Probation
+api.fetchTimesheet = userId => (
+  callApi(`/api/timesheets/?id=${userId}`)
+);
+
+api.updateTimestete = body => (
+  callApi('/api/timesheets', {
+    method: 'PUT',
+    body
+  })
+);
+
+api.deleteTimesheet = body => (
+  callApi('/api/timesheets', {
+    method: 'DELETE',
+    body
+  })
+);
 
 api.fetchProbation = id => (
   callApi(`/api/probation/?id=${id}`)
 )
 
+api.addProbation = body => (
+  callApi('/api/probation', {
+    method: 'POST',
+    body
+  })
+)
+
+api.updateProbation = body => (
+  callApi('/api/probation', {
+    method: 'PUT',
+    body
+  })
+)
 export default api;

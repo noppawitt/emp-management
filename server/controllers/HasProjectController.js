@@ -1,10 +1,15 @@
 const HasProject = require('../models/HasProject');
+const Project = require('../models/Project');
 
 exports.create = (req, res, next) => {
   const newHasProject = req.body.hasProject;
   HasProject.create(newHasProject, req.user.id)
-    .then((createdHasProject) => {
-      res.json(createdHasProject);
+    .then(() => {
+      Project.findMemberProject(newHasProject.projectId)
+        .then((hasProjects) => {
+          res.json(hasProjects);
+        })
+        .catch(next);
     })
     .catch(next);
 };
@@ -19,7 +24,7 @@ exports.update = (req, res, next) => {
 };
 
 exports.findByUserId = (req, res, next) => {
-  HasProject.findByUserId(req.user.id)
+  HasProject.findByUserId(req.query.id)
     .then((hasProjects) => {
       res.json(hasProjects);
     })

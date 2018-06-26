@@ -5,12 +5,11 @@ import LoginPage from './pages/LoginPage';
 import TimesheetPage from './pages/TimesheetPage';
 import LeavePage from './pages/LeavePage';
 import ProjectPage from './pages/ProjectPage';
+import ProjectDetailPage from './pages/ProjectDetailPage';
 import ProfilePage from './pages/ProfilePage';
 import EmployeePage from './pages/EmployeePage';
-import Pro from './pages/Form'
-import PerformanceReviewForm from './pages/PerformanceReviewForm';
-import ProbationForm from './pages/ProbationForm';
-
+import ReportPage from './pages/ReportPage';
+import AddTaskPage from './pages/AddTaskPage';
 
 const Routes = () => (
   <Switch>
@@ -18,12 +17,12 @@ const Routes = () => (
     <Route exact path="/" render={() => <Redirect to="/timesheet" />} />
     <PrivateRoute path="/timesheet" component={TimesheetPage} />
     <PrivateRoute path="/leave" component={LeavePage} />
-    <PrivateRoute path="/project" component={ProjectPage} />
+    <PrivateRoute exact path="/project" component={ProjectPage} />
+    <PrivateRoute path="/project/:id" component={ProjectDetailPage} />
     <PrivateRoute path="/profile/:id?" component={ProfilePage} />
     <PrivateRoute path="/employee" component={EmployeePage} />
-    <PrivateRoute path="/pro" component={Pro} />
-    <PrivateRoute path="/probation" component={ProbationForm} />
-    <PrivateRoute path="/performance" component={PerformanceReviewForm} />
+    <PrivateRoute path="/report" component={ReportPage} />
+    <PrivateRoute path="/addtask" component={AddTaskPage} />
   </Switch>
 );
 

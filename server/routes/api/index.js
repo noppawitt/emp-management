@@ -22,9 +22,9 @@ const holiday = require('./holiday');
 const project = require('./project');
 const timesheet = require('./timesheet');
 const leaveRequest = require('./leaveRequest');
+const accessControl = require('./accessControl');
+const report = require('./report');
 const probation = require('./probation');
-
-router.use('/probation', probation);
 
 router.use('/employee-info', employeeInfo);
 
@@ -71,5 +71,11 @@ router.use('/projects', project);
 router.use('/timesheets', timesheet);
 
 router.use('/leave-request', leaveRequest);
+
+router.use('/access-control', accessControl);
+
+router.use('/report', report);
+
+router.use('/probation', probation);
 
 module.exports = router;

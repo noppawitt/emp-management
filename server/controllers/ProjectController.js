@@ -12,8 +12,17 @@ exports.create = (req, res, next) => {
 exports.update = (req, res, next) => {
   const editProject = req.body.project;
   Project.update(editProject, req.user.id)
-    .then((updatedProject) => {
-      req.json(updatedProject);
+    .then(() => {
+      Project.findById(editProject.id)
+        .then((project) => {
+          Project.findMemberProject(editProject.id)
+            .then((members) => {
+              project.members = members;
+              res.json(project);
+            })
+            .catch(next);
+        })
+        .catch(next);
     })
     .catch(next);
 };
@@ -27,9 +36,9 @@ exports.findAll = (req, res, next) => {
 };
 
 exports.findById = (req, res, next) => {
-  Project.findById(req.query.id)
+  Project.findById(req.params.id)
     .then((project) => {
-      Project.findMemberProject(req.query.id)
+      Project.findMemberProject(req.params.id)
         .then((members) => {
           project.members = members;
           res.json(project);

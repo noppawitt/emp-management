@@ -4,6 +4,7 @@ import profileSaga from './profile';
 import masterTableSaga from './masterTable';
 import employeeSaga from './employee';
 import projectSaga from './project';
+import projectDetailSaga from './projectDetail';
 import leaveSaga from './leave';
 import timesheetSaga from './timesheet';
 
@@ -14,7 +15,8 @@ export default function* rootSaga() {
     masterTableSaga(),
     employeeSaga(),
     projectSaga(),
+    projectDetailSaga(),
     leaveSaga(),
-    timesheetSaga()
+    timesheetSaga(),
   ]);
 }

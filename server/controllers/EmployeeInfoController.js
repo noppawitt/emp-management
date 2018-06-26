@@ -9,7 +9,7 @@ exports.create = (req, res, next) => {
     .catch(next);
 };
 
-exports.find = (req, res, next) => {
+exports.findById = (req, res, next) => {
   EmployeeInfo.findById(req.query.id)
     .then((employeeInfo) => {
       res.json(employeeInfo);
@@ -27,7 +27,7 @@ exports.update = (req, res, next) => {
 };
 
 exports.updateProfileImg = (req, res, next) => {
-  EmployeeInfo.updateProfileImg(`${req.file.destination}/${req.file.filename}`, req.user.id)
+  EmployeeInfo.updateProfileImg(`/static/${req.file.destination}/${req.file.filename}`, req.user.id)
     .then(() => {
       res.json('upload complete!!!');
     });

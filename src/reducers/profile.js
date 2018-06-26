@@ -6,6 +6,11 @@ const initialState = {
 
 const profile = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.UPDATE_PROBATION_STORE:
+      return {
+        ...state,
+        item: action.payload.item
+      };
     case actionTypes.PROFILE_FETCH_REQUEST:
       return {
         ...state,
@@ -27,16 +32,19 @@ const profile = (state = initialState, action) => {
     case actionTypes.PROFILE_UPDATE_REQUEST:
       return {
         ...state,
+        submitting: true,
         form: action.payload.form
       };
     case actionTypes.PROFILE_UPDATE_SUCCESS:
       return {
         ...state,
+        submitting: false,
         ...action.payload.profile
       };
     case actionTypes.PROFILE_UPDATE_FAILURE:
       return {
         ...state,
+        submitting: false,
         message: action.payload.message
       };
     case actionTypes.PROFILE_DELETE_REQUEST:

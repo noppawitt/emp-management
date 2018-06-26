@@ -5,8 +5,8 @@ router.post('/', ProjectController.create);
 
 router.put('/', ProjectController.update);
 
-router.get('/', ProjectController.findAll);
-
 router.get('/:id', ProjectController.findById);
+
+router.get('/', ProjectController.findAll);
 
 module.exports = router;

@@ -8,6 +8,7 @@ import WorkProfileBox from '../containers/WorkProfileBox';
 import EducationProfileBox from '../containers/EducationProfileBox';
 import CertificateProfilxBox from '../containers/CertificateProfileBox';
 import AssetProfileBox from '../containers/AssetProfileBox';
+import EvaProfileBox from '../containers/EvaProfileBox'
 
 const Profile = ({ profile }) => (
   <div>
@@ -15,6 +16,7 @@ const Profile = ({ profile }) => (
     <Grid centered>
       <Grid.Column computer={12} mobile={16}>
         <GeneralProfileBox image={image} generalProfile={profile.general} />
+        <EvaProfileBox evaProfile={profile.eva}/>
         <WorkProfileBox workProfile={profile.work} />
         <EducationProfileBox educationsProfile={profile.educations} />
         <CertificateProfilxBox certificatesProfile={profile.certificates} />

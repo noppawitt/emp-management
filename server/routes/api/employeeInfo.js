@@ -4,13 +4,13 @@ const multer = require('multer');
 
 router.post('/', EmployeeInfoController.create);
 
-router.get('/', EmployeeInfoController.find);
+router.get('/', EmployeeInfoController.findById);
 
 router.put('/', EmployeeInfoController.update);
 
 const storage = multer.diskStorage({
   destination: (req, res, cb) => {
-    cb(null, 'storage/profile-img');
+    cb(null, 'server/storage/public/profile-img');
   },
   filename: (req, res, cb) => {
     cb(null, String(req.user.id));

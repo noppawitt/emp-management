@@ -1,122 +1,186 @@
 import React, { Component } from 'react';
 import * as Scroll from 'react-scroll';
+import moment from 'moment';
 import Calendar from 'react-calendar';
 import './css/Form_G_I.css';
 import logo from './pic/logo.png'
 import cmark from './pic/mark.png'
 import Scoring from './Scoring'
-import api from '../../services/api'
-import Loading from '../../components/Loader'
-
+import logo2 from './pic/logo2.png'
+import save_icon from './pic/save.png'
 let scroll = Scroll.animateScroll;
+let Element = Scroll.Element;
+let scroller = Scroll.scroller;
 
 class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'Loading..',
-      eid: 'Loading..',
-      dep: 'Loading..',
-      job: 'Loading..',
-      level: 'Loading..',
-      pos: 'Loading..',
-      sup: 'Loading..',
-      pstart: 'Loading..',
-      pend: 'Loading..',
-      state: '1',
-      score: [3, 3, 3, 3, 3, 3],
-      mainOption: null,
-      option1: true,
-      isFetched: false
+      name: '',
+      eid: '',
+      dep: '',
+      level: '',
+      pos: '',
+      sup: '',
+      pstart: '',
+      pend: '',
+      score: [3,3,3,3,3,3,3],
+      passPro: false,
+      option1: null,
+      option2: null,
+      wantChange:'',
+      emp:null,
+      sup:null,
+      mag:null,
+      basedSalary:null,
+      mobile:null,
+      transporationAllowance:null,
+      otherAllowance:null,
     }
-    this.setMain = this.setMain.bind(this);
+    this.handle_accept1 = this.handle_accept1.bind(this);
+    this.handle_accept2 = this.handle_accept2.bind(this);
+    this.handle_accept3 = this.handle_accept3.bind(this);
     this.handle_radio_1 = this.handle_radio_1.bind(this);
     this.handle_radio_2 = this.handle_radio_2.bind(this);
+    this.toggle_calendar = this.toggle_calendar.bind(this);
     this.handle_main_radio_1 = this.handle_main_radio_1.bind(this);
     this.handle_main_radio_2 = this.handle_main_radio_2.bind(this);
   }
-  componentWillMount() {
-    if (this.props.state == '2') {
-      for (var i = 0; i < 6; i++) {
-        this.state.score[i] = 4;
-        console.log(this.state.score)
-      }
-      this.setState({ mainOption: false })
-    }
-    this.setState({ mainOption: false })
+  shouldComponentUpdate(nextProps,nextState){
+    return (nextState.score!=this.state.score ||
+    nextState.passPro!=this.state.passPro ||
+    nextState.option1!=this.state.option1 ||
+    nextState.option2!=this.state.option2 ||
+    nextState.basedSalary != this.state.basedSalary ||
+    nextState.mobile != this.state.mobile ||
+    nextState.transporationAllowance != this.state.transporationAllowance ||
+    nextState.otherAllowance != this.state.otherAllowance
+    )
 
-    api.fetchProbation('10001').then((res) => {
-      console.log(res);
-      this.setState({
-        name: res[0].fullName,
-        dep: res[0].department,
-        level: res[0].level,
-        pos: res[0].position,
-        pstart: res[0].startDate,
-        pend: res[0].probationDate,
-        sup: res[0].supervisor,
-        eid: res[0].userId,
-        isFetched: true
-      });
-    });
+  }
+  componentDidUpdate(){
+    this.props.test(this.state);
+  }
+  componentWillMount() {
+    this.setState({
+      name: this.props.profile.general.firstName + ' ' + this.props.profile.general.lastName,
+      eid: this.props.profile.id,
+      dep: this.props.profile.work.departmentName,
+      level: this.props.profile.work.levelId,
+      pos: this.props.profile.work.positionName,
+      pstart: this.props.profile.work.startDate,
+      pend: this.props.profile.work.probationDate
+    })
+    if(this.props.profile.eva!=null) this.setState({
+      score: this.props.profile.eva.score,
+      passPro: this.props.profile.eva.passPro,
+      option1: this.props.profile.eva.confirmedByEmployment,
+      option2: this.props.profile.eva.continued,
+      basedSalary:this.props.profile.eva.basedSalary,
+      mobile:this.props.profile.eva.mobile,
+      transporationAllowance:this.props.profile.eva.transporationAllowance,
+      otherAllowance:this.props.profile.eva.otherAllowance
+    })
   }
   componentDidMount() {
-    if (this.props.state == '2') {
+    if(this.props.profile.eva != null){
       document.getElementById('result').style.display = 'block';
-      if (this.state.mainOption == true) {
-        document.getElementById('main1').checked = 'checked';
-      } else document.getElementById('main2').checked = 'checked';
+      // if (this.state.passPro == true) {
+      //   document.getElementById('main1').checked = 'checked';
+      // } else document.getElementById('main2').checked = 'checked';
+      if(this.state.passPro){
+        this.handle_main_radio_1();
+        if(this.state.option1){
+          this.handle_radio_1();
+        }else this.handle_radio_2()
+      }else this.handle_main_radio_2();
+
+      console.log('did form '+this.state.passPro);
     }
-  }
-  scrollanimation() {
-    scroll.scrollTo(document.getElementById('result').offsetTop);
   }
 
   handle_radio_1() {
+    this.setState({option1: true});
+    document.getElementById('option1_1').checked = true;
+    document.getElementById('option1_2').checked = false;
     document.getElementById('salary_option').style.height = '0';
   }
   handle_radio_2() {
+    this.setState({option1: false});
+    document.getElementById('option1_1').checked = false;
+    document.getElementById('option1_2').checked = true;
     document.getElementById('salary_option').style.height = '5.5em';
   }
   handle_main_radio_1() {
+    this.setState({passPro: true});
     document.getElementById('main1_option').style.height = '3.1em';
     document.getElementById('main2_option').style.height = '0';
     document.getElementById('main2_option').style.overflow = 'hidden';
     document.getElementById('option2_1').checked = false;
     document.getElementById('option2_2').checked = false;
-    document.getElementById('date_input_pass').style.display = 'block';
+    document.getElementById('date_input_pass').style.display='block';
     document.getElementById('input1').style.display = 'none';
     document.getElementById('input2').value = '';
     document.getElementById('input2').style.display = 'none';
     document.getElementById('input1').value = '';
   }
   handle_main_radio_2() {
+    this.setState({passPro: false});
     document.getElementById('main1_option').style.height = '0';
     document.getElementById('main2_option').style.height = '6em';
-    setTimeout(function () { document.getElementById('main2_option').style.overflow = 'visible'; }, 190);
+    setTimeout(function(){document.getElementById('main2_option').style.overflow = 'visible'; }, 190);
     document.getElementById('salary_option').style.height = '0';
-    document.getElementById('date_input_pass').style.display = 'none';
-    document.getElementById('date_input_pass').value = '';
+    document.getElementById('date_input_pass').style.display='none';
+    document.getElementById('date_input_pass').value='';
     document.getElementById('option1_1').checked = false;
     document.getElementById('option1_2').checked = false;
   }
-  setMain(x) {
-    this.setState({ mainOption: x });
+  setMain(y){
+    this.setState({
+      score: y
+    });
+  }
+  onInputChange(input){
+    this.setState({
+      input: document.getElementById()
+    })
   }
   handle_accept1() {
-    document.getElementById('emp').innerHTML = (new Date()).toString().substr(0, 24);
+    if(this.state.emp==null){
+      var date = (new Date()).toString().substr(0, 24);
+      this.setState({emp: date})
+      document.getElementById('emp').innerHTML = date;
+      if(this.props.state==2){
+        this.accept_db(1,date);
+      }
+    }
+
     document.getElementById('mark1').style.width = '2em';
     document.getElementById('sup-but').disabled = false;
     document.getElementById('emp-but').disabled = true;
   }
   handle_accept2() {
-    document.getElementById('sup').innerHTML = (new Date()).toString().substr(0, 24);
+    if(this.state.sup==null){
+      var date = (new Date()).toString().substr(0, 24);
+      this.setState({sup: date})
+      if(this.props.state==2){
+        this.accept_db(2,date);
+      }
+      document.getElementById('sup').innerHTML = date;
+    }
     document.getElementById('mark2').style.width = '2em';
     document.getElementById('mag-but').disabled = false;
     document.getElementById('sup-but').disabled = true;
   }
   handle_accept3() {
-    document.getElementById('mag').innerHTML = (new Date()).toString().substr(0, 24);
+    if(this.state.mag==null){
+      var date = (new Date()).toString().substr(0, 24);
+      this.setState({mag: date})
+      if(this.props.state==2){
+        this.accept_db(3,date);
+      }
+      document.getElementById('mag').innerHTML = date;
+    }
     document.getElementById('mark3').style.width = '2em';
     document.getElementById('mag-but').disabled = true;
   }
@@ -130,24 +194,36 @@ class Form extends Component {
     document.getElementById('input1').style.display = 'none';
     document.getElementById('input1').value = '';
   }
-  toggle_calendar(event) {
-    if (document.getElementById('date_input').contains(event.target)) {
+  handle_save(){
+    console.log(this.state.option1)
+  }
+  toggle_calendar(event){
+    if(document.getElementById('date_input').contains(event.target)){
       document.getElementById('calendar').style.height = '265px';
-    } else if (document.getElementById('date_input_pass').contains(event.target)) {
+      this.setState({wantChange: document.getElementById('date_input')});
+    }else if(document.getElementById('date_input_pass').contains(event.target)){
       document.getElementById('calendar1').style.height = '265px';
-    } else if (document.getElementById('input1').contains(event.target)) {
+      this.setState({wantChange: document.getElementById('date_input_pass')});
+    }else if(document.getElementById('input1').contains(event.target)){
       document.getElementById('calendar2').style.height = '265px';
-    } else if (document.getElementById('input2').contains(event.target)) {
+      this.setState({wantChange: document.getElementById('input1')});
+    }else if(document.getElementById('input2').contains(event.target)){
       document.getElementById('calendar3').style.height = '265px';
-    } else if (!document.getElementById('calendar').contains(event.target)) {
+      this.setState({wantChange: document.getElementById('input2')});
+    }else if(!document.getElementById('calendar').contains(event.target)){
       document.getElementById('calendar').style.height = '0';
       document.getElementById('calendar1').style.height = '0';
       document.getElementById('calendar2').style.height = '0';
       document.getElementById('calendar3').style.height = '0';
     }
   }
-  handle_calendar(date) {
-    document.getElementById('date_input').value = date.getFullYear() + "-" + (date.getMonth() < 9 ? "0" : "") + (date.getMonth() + 1) + "-" + (date.getDate() < 10 ? "0" : "") + date.getDate();
+
+  handle_calendar(date){
+    var tmp = date.getFullYear() + "-" + (date.getMonth() < 9 ? "0" : "") + (date.getMonth() + 1) + "-" + (date.getDate() < 10 ? "0" : "") + date.getDate();
+    this.state.wantChange.value=tmp;
+    this.setState({pend: tmp});
+    console.log(this.state.pend);
+    //this.props.s.value = date;
   };
   // zzz(){
   //   var int = setInterval(toDo, 500);
@@ -167,167 +243,168 @@ class Form extends Component {
   // }
   render() {
     return (
-      <div>
-        {this.state.isFetched ? '' : <Loading />}
-        <div className="Body" onClick={this.toggle_calendar} onMouseMove={this.zzz}>
+      <div className="Body" onClick={this.toggle_calendar} onMouseMove={this.zzz}>
+        <img className="logo_back" src={logo2} />
+        <div className="profile">
+          <div className="div_logo" align="center"><img className="logo" src={logo} /></div>
+          <div>
+            <table className="profile_table">
+              <tbody>
+                <tr>
+                  <th colSpan="4" className="table_header"><div className="lll"><span className="blue">Information</span></div> </th>
+                </tr>
+                <tr>
+                  <td className="topic_1">Name:</td>
+                  <td className="show_1"><span>{this.state.name}</span></td>
+                  <td className="topic_2">Department:</td>
+                  <td className="show_2">{this.state.dep}</td>
+                </tr>
+                <tr>
+                  <td className="topic_1">EmployeeID:</td>
+                  <td className="show_1"><span>{this.state.eid}</span></td>
+                  <td className="topic_2">Position:</td>
+                  <td className="show_2"><span>{this.state.pos}</span></td>
 
-          <div className="profile">
-            <div className="div_logo" align="center"><img className="logo" src={logo} /></div>
-            <div>
-              <table className="profile_table">
+                </tr>
+                <tr>
+                  <td className="topic_1">Level:</td>
+                  <td className="show_1"><span>{this.state.level}</span></td>
+                  <td className="topic_2">Probation Start Date:</td>
+                  <td className="show_2">{this.state.pstart}</td>
+
+                </tr>
+                <tr>
+                  <td className="topic_1">Supervisor:</td>
+                  <td className="show_1"><span>{this.state.sup}</span></td>
+                  <td className="topic_2">Probation End Date :</td>
+                  <td className="show_2"><div className="div_ca"><input className="date_input" id="date_input" type="date"></input><div className="calendar" id="calendar"></div></div></td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+
+          <Scoring ref="child" scrollAnimation={this.scrollanimation} score={this.state.score} state='2' setMain={this.setMain.bind(this)} setMainCheck1={this.handle_main_radio_1} setMainCheck2={this.handle_main_radio_2} level='1' type='per' editable={true}/>
+
+          <Element name="result">
+          <div className="result" id="result">
+            <div className="result-table">
+              <table className="grid-res">
                 <tbody>
                   <tr>
-                    <th colspan="4" className="table_header"><div className="lll"><span className="blue">Information</span></div> </th>
+                    <th colSpan="10"><div className="lll"><span className="blue">The Evaluation Result</span></div></th>
                   </tr>
                   <tr>
-                    <td className="topic_1">Name:</td>
-                    <td className="show_1"><span>{this.state.name}</span></td>
-                    <td className="topic_2">Department:</td>
-                    <td className="show_2">{this.state.dep}</td>
-                  </tr>
-                  <tr>
-                    <td className="topic_1">EmployeeID:</td>
-                    <td className="show_1"><span>{this.state.eid}</span></td>
-                    <td className="topic_2">Position:</td>
-                    <td className="show_2"><span>{this.state.pos}</span></td>
-
-                  </tr>
-                  <tr>
-                    <td className="topic_1">Level:</td>
-                    <td className="show_1"><span>{this.state.level}</span></td>
-                    <td className="topic_2">Probation Start Date:</td>
-                    <td className="show_2">{this.state.pstart}</td>
-
-                  </tr>
-                  <tr>
-                    <td className="topic_1">Supervisor:</td>
-                    <td className="show_1"><span>{this.state.sup}</span></td>
-                    <td className="topic_2">Probation End Date :</td>
-                    <td className="show_2"><div className="div_ca"><input className="date_input" id="date_input" ></input><div className="calendar" id="calendar"><Calendar onChange={this.handle_calendar} /></div></div></td>
+                    <td colSpan="1"></td>
+                    <td colSpan="5"><input id="main1" type="radio" name='main_option' onClick={this.handle_main_radio_1} checked={this.state.passPro}></input>Pass probationary period. Effective date on</td>
+                    <td colSpan="1">  </td>
+                    <td colSpan="3"><div className="div_ca"><input className="date_input" id="date_input_pass" ></input><div className="calendar" id="calendar1"></div></div></td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <Scoring ref="child" scrollAnimation={this.scrollanimation} score={this.state.score} state={this.props.state} setMain={this.setMain} />
+            <div className="result-table-hidden" id="main1_option">
+              <table className="grid-res">
+                <tbody>
+                  <tr>
+                    <td colSpan="2"></td>
+                    <td colSpan="3"><input type="radio" name="option1" id="option1_1" onClick={this.handle_radio_1} ></input>Confirmed By Employment Conditions</td>
+                    <td></td>
+                    <td colSpan="4"> <input type="radio" name="option1" id="option1_2" onClick={this.handle_radio_2}></input>Adjust the Salary and Benefits</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-            <div className="result" id="result">
-              <div className="result-table">
-                <table className="grid-res">
-                  <tbody>
-                    <tr>
-                      <th colspan="10"><div className="lll"><span className="blue">The Evaluation Result</span></div></th>
-                    </tr>
-                    <tr>
-                      <td colspan="1"></td>
-                      <td colspan="5"><input id="main1" type="radio" name='main_option' onClick={this.handle_main_radio_1}></input>Pass probationary period. Effective date on</td>
-                      <td />
-                      <td colspan="3"><div className="div_ca"><input className="date_input" id="date_input_pass" ></input><div className="calendar" id="calendar1"><Calendar /></div></div></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div className="result-table-hidden" id="salary_option">
+              <table className="grid-res">
+                <tbody>
+                  <tr className="option1_row" id="option1_row">
+                    <td colSpan="2"></td>
+                    <td colSpan="2" >Based Salary</td>
+                    <td><input id="base_salary"type='number' onChange={(event)=> this.setState({basedSalary: event.target.value})} value={this.state.basedSalary}></input></td>
+                    <td colSpan="2">Mobile</td>
+                    <td colSpan="1"><input id="mobile"  onChange={(event)=> this.setState({mobile: event.target.value})} value={this.state.mobile}></input></td>
+                    <td></td>
+                  </tr>
+                  <tr className="option1_row" id="option1_row">
+                    <td colSpan="2"></td>
+                    <td colSpan="2">Transporation Allowance</td>
+                    <td><input id="transporation" type='number' onChange={(event)=> this.setState({transporationAllowance: event.target.value})} value={this.state.transporationAllowance}></input></td>
+                    <td colSpan="2">Others Allowance</td>
+                    <td colSpan="1"><input id="other" type='number' onChange={(event)=> this.setState({otherAllowance: event.target.value})} value={this.state.otherAllowance}></input></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-              <div className="result-table-hidden" id="main1_option">
-                <table className="grid-res">
-                  <tbody>
-                    <tr>
-                      <td colspan="2"></td>
-                      <td colspan="3"><input type="radio" name="option1" id="option1_1" onClick={this.handle_radio_1} ></input>Confirmed By Employment Conditions</td>
-                      <td></td>
-                      <td colspan="4"> <input type="radio" name="option1" id="option1_2" onClick={this.handle_radio_2}></input>Adjust the Salary and Benefits</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div className="result-table">
+              <table className="grid-res">
+                <tbody>
+                  <tr>
+                    <td colSpan="1"></td>
+                    <td colSpan="5"><input id="main2" type='radio' name="main_option" onClick={this.handle_main_radio_2} checked={!this.state.passPro}></input>This person does not pass probation period. Action to be taken </td>
+                    <td colSpan="4">  </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-              <div className="result-table-hidden" id="salary_option">
-                <table className="grid-res">
-                  <tbody>
-                    <tr className="option1_row" id="option1_row">
-                      <td colspan="2"></td>
-                      <td colspan="2">Based Salary</td>
-                      <td><input type='text'></input></td>
-                      <td colspan="2">Mobile</td>
-                      <td colspan="1"><input></input></td>
-                      <td></td>
-                    </tr>
-                    <tr className="option1_row" id="option1_row">
-                      <td colspan="2"></td>
-                      <td colspan="2">Transporation Allowance</td>
-                      <td><input></input></td>
-                      <td colspan="2">Others Allowance</td>
-                      <td colspan="1"><input></input></td>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div className="result-table-hidden" id="main2_option">
+              <table className="grid-res">
+                <tbody>
+                  <tr>
+                    <td colSpan="2"></td>
+                    <td colSpan="3"><input type="radio" name="option2" id="option2_1" onClick={this.handle_input_dis1}></input>Termination Effective</td>
+                    <td colSpan="2"><div className="div_ca"><input id='input1' className="date_input1"></input><div className="calendar" id="calendar2"></div></div></td>
+                    <td colSpan="3"></td>
+                  </tr>
+                  <tr>
+                    <td colSpan="2"></td>
+                    <td colSpan="3"><input type="radio" name="option2" id="option2_2" onClick={this.handle_input_dis2}></input>Continued probation untill</td>
+                    <td colSpan="2" ><div className="div_ca"><input id='input2' className="date_input2"></input><div className="calendar" id="calendar3"></div></div></td>
+                    <td colSpan="3"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-              <div className="result-table">
-                <table className="grid-res">
-                  <tbody>
-                    <tr>
-                      <td colspan="1"></td>
-                      <td colspan="5"><input id="main2" type='radio' name="main_option" onClick={this.handle_main_radio_2}></input>This person does not pass probation period. Action to be taken </td>
-                      <td colspan="4">  </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div>
+              <div>Summary Comments by Supervisors:</div>
+              <textarea className="comment"></textarea>
+            </div>
 
-              <div className="result-table-hidden" id="main2_option">
-                <table className="grid-res">
-                  <tbody>
-                    <tr>
-                      <td colspan="2"></td>
-                      <td colspan="3"><input type="radio" name="option2" id="option2_1" onClick={this.handle_input_dis1}></input>Termination Effective</td>
-                      <td colspan="2"><div className="div_ca"><input id='input1' className="date_input1"></input><div className="calendar" id="calendar2"><Calendar /></div></div></td>
-                      <td colspan="3"></td>
-                    </tr>
-                    <tr>
-                      <td colspan="2"></td>
-                      <td colspan="3"><input type="radio" name="option2" id="option2_2" onClick={this.handle_input_dis2}></input>Continued probation untill</td>
-                      <td colspan="2"><div className="div_ca"><input id='input2' className="date_input2"></input><div className="calendar" id="calendar3"><Calendar /></div></div></td>
-                      <td colspan="3"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div>
+              <div>Employee has read this appraisal and discussed the contents with direct supervisor. Signatures identify that employee has been advised on their performance by direct supervisor.</div>
+            </div>
 
-              <div>
-                <div>Summary Comments by Supervisors:</div>
-                <textarea className="comment"></textarea>
-              </div>
-
-              <div>
-                <div>Employee has read this appraisal and discussed the contents with direct supervisor. Signatures identify that employee has been advised on their performance by direct supervisor.</div>
-              </div>
-
-              <div id='kkk'>
-                <table className="grid">
-                  <tbody>
-                    <tr>
-                      <th>Employee signature:</th>
-                      <th>Supervisor signature:</th>
-                      <th>Managing Director signature:</th>
-                    </tr>
-                    <tr>
-                      <th><div className='div_mark' ><button className="Accept-button" id='emp-but' onClick={this.handle_accept1}>Accept</button><div className="div_mark1" id="mark1"><img src={cmark} className="mark"></img></div></div></th>
-                      <th><div className='div_mark' ><button className="Accept-button" id='sup-but' onClick={this.handle_accept2}>Accept</button><div className="div_mark2" id="mark2"><img src={cmark} className="mark"></img></div></div></th>
-                      <th><div className='div_mark' ><button className="Accept-button" id='mag-but' onClick={this.handle_accept3}>Accept</button><div className="div_mark3" id="mark3"><img src={cmark} className="mark"></img></div></div></th>
-                    </tr>
-                    <tr>
-                      <th>Date: <span id="emp" className="date"></span></th>
-                      <th>Date: <span id="sup" className="date"></span></th>
-                      <th>Date: <span id="mag" className="date"></span></th>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div id='kkk'>
+              <table className="grid">
+                <tbody>
+                  <tr>
+                    <th>Employee signature:</th>
+                    <th>Supervisor signature:</th>
+                    <th>Managing Director signature:</th>
+                  </tr>
+                  <tr>
+                    <th><div className='div_mark' ><button className="Accept-button" id='emp-but' onClick={this.handle_accept1}>Accept</button><div className="div_mark1" id="mark1"><img src={cmark} className="mark"></img></div></div></th>
+                    <th><div className='div_mark' ><button className="Accept-button" id='sup-but' onClick={this.handle_accept2}>Accept</button><div className="div_mark2" id="mark2"><img src={cmark} className="mark"></img></div></div></th>
+                    <th><div className='div_mark' ><button className="Accept-button" id='mag-but' onClick={this.handle_accept3}>Accept</button><div className="div_mark3" id="mark3"><img src={cmark} className="mark"></img></div></div></th>
+                  </tr>
+                  <tr>
+                    <th>Date: <span id="emp" className="date">{this.state.emp}</span></th>
+                    <th>Date: <span id="sup" className="date">{this.state.sup}</span></th>
+                    <th>Date: <span id="mag" className="date">{this.state.mag}</span></th>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
+          </Element>
         </div>
+
       </div>
     );
   }

@@ -43,8 +43,8 @@
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
-    "date-picker": "^0.5.0",
     "dotenv": "^5.0.1",
+    "exceljs": "^1.4.13",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "history": "^4.7.2",
@@ -62,19 +62,18 @@
     "pg-promise": "^8.2.2",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
+    "react-avatar-editor": "^11.0.4",
     "react-big-calendar": "^0.19.1",
-    "react-calendar": "^2.15.2",
-    "react-datepicker": "^1.5.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
-    "react-scroll": "^1.7.9",
     "recompose": "^0.27.0",
     "redux": "^3.7.2",
     "redux-form": "^7.3.0",
     "redux-logger": "^3.0.6",
     "redux-saga": "^0.16.0",
     "redux-thunk": "^2.2.0",
-    "semantic-ui-react": "0.79.0"
+    "semantic-ui-react": "0.79.0",
+    "xlsx": "^0.13.0"
   }
 }

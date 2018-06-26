@@ -10,7 +10,7 @@ import { handleReduxFormSubmit } from '../../utils/helper';
 
 const AddAssetProfileModal = ({ onClose, onSubmit, submitting, onClick }) => (
   <Modal
-    header="Add certificate profile"
+    header="Add asset profile"
     onClose={onClose}
     onClick={onClick}
     submitting={submitting}

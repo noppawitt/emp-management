@@ -12,6 +12,11 @@ import AddAssetProfileModal from './modals/AddAssetProfileModal';
 import AddProjectModal from './modals/AddProjectModal';
 import CreateLeaveRequestModal from './modals/CreateLeaveRequestModal';
 import ConfirmModal from './modals/ConfirmModal';
+import ProfilePictureModal from './modals/ProfilePictureModal';
+import EditProfilePictureModal from './modals/EditProfilePictureModal';
+import EditProjectModal from './modals/EditProjectModal';
+import AddMemberModal from './modals/AddMemberModal';
+import AddProbation from './modals/AddProbation';
 
 const ModalContainer = ({ name, props }) => {
   switch (name) {
@@ -31,10 +36,22 @@ const ModalContainer = ({ name, props }) => {
       return <AddEmployeeModal {...props} />;
     case modalNames.ADD_PROJECT:
       return <AddProjectModal {...props} />;
+    case modalNames.EDIT_PROJECT:
+      return <EditProjectModal />;
+    case modalNames.ADD_MEMBER:
+      return <AddMemberModal />;
     case modalNames.CREATE_LEAVE_REQUEST:
       return <CreateLeaveRequestModal {...props} />;
     case modalNames.CONFIRM:
       return <ConfirmModal {...props} />;
+    case modalNames.VIEW_PROFILE_PICTURE:
+      return <ProfilePictureModal {...props} />;
+    case modalNames.EDIT_ASSET_PROFILE:
+      return <EditEducationProfileModal {...props} />;
+    case modalNames.ADD_PROBATION:
+      return <AddProbation {...props} />;
+    case modalNames.EDIT_PROFILE_PICTURE:
+      return <EditProfilePictureModal {...props} />;
     default:
       return <div />;
   }

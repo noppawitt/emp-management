@@ -7,6 +7,7 @@ export const EDIT_ASSET_PROFILE = 'EDIT_ASSET_PROFILE';
 export const ADD_EDUCATION_PROFILE = 'ADD_EDUCATION_PROFILE';
 export const ADD_CERTIFICATE_PROFILE = 'ADD_CERTIFICATE_PROFILE';
 export const ADD_ASSET_PROFILE = 'ADD_ASSET_PROFILE';
+export const VIEW_PROFILE_PICTURE = 'VIEW_PROFILE_PICTURE';
 export const EDIT_PROFILE_PICTURE = 'EDIT_PROFILE_PICTURE';
 
 // Employee
@@ -14,9 +15,14 @@ export const ADD_EMPLOYEE = 'ADD_EMPLOYEE';
 
 // Project
 export const ADD_PROJECT = 'ADD_PROJECT';
+export const EDIT_PROJECT = 'EDIT_PROJECT';
+export const ADD_MEMBER = 'ADD_MEMBER';
 
 // Leave
 export const CREATE_LEAVE_REQUEST = 'CREATE_LEAVE_REQUEST';
 
 // Other
 export const CONFIRM = 'CONFIRM';
+
+//Probation
+export const ADD_PROBATION = 'ADD_PROBATION';

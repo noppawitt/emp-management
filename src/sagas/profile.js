@@ -19,6 +19,7 @@ export function* fetchProfileTask(action) {
     profile.educations = yield call(api.fetchEducationProfile, action.payload.id);
     profile.certificates = yield call(api.fetchCertificateProfile, action.payload.id);
     profile.assets = yield call(api.fetchAssetProfile, action.payload.id);
+    profile.eva = yield call(api.fetchProbation, action.payload.id);
     yield put(fetchProfileSuccess(profile));
   }
   catch (error) {
@@ -30,6 +31,16 @@ export function* updateProfileTask(action) {
   try {
     const profile = {};
     switch (action.payload.type) {
+      case 'updateProbation':
+        profile.eva = yield call(api.updateProbation, {
+          probationInfo: action.payload.form
+        });
+        break;
+      case 'addProbation':
+        profile.eva = yield call(api.addProbation, {
+          probationInfo: action.payload.form
+        });
+        break;
       case 'editGeneralProfile':
         profile.general = yield call(api.updateGeneralProfile, {
           employeeInfo: action.payload.form
@@ -57,6 +68,9 @@ export function* updateProfileTask(action) {
         break;
       case 'addAssetProfile':
         profile.assets = yield call(api.createAssetProfile, action.payload.form);
+        break;
+      case 'profilePicture':
+        profile.general.picture = yield call(api.uploadProfilePicture, action.payload.form);
         break;
       default:
         action.payload.reject();
@@ -100,6 +114,10 @@ export function* deleteProfileTask(action) {
   }
 }
 
+export function* uploadProfilePictureTask(action) {
+  yield console.log(action);
+}
+
 export function* watchFetchProfileRequest() {
   yield takeEvery(actionTypes.PROFILE_FETCH_REQUEST, fetchProfileTask);
 }
@@ -110,6 +128,10 @@ export function* watchUpdateProfileRequest() {
 
 export function* watchDeleteProfileRequest() {
   yield takeEvery(actionTypes.PROFILE_DELETE_REQUEST, deleteProfileTask);
+}
+
+export function* watchUploadProfilePictureTask() {
+  yield takeEvery(actionTypes.PROFILE_PICTURE_UPLOAD_REQUEST, uploadProfilePictureTask);
 }
 
 export default function* profileSaga() {
