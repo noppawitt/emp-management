@@ -15,7 +15,12 @@ exports.update = (req, res, next) => {
     .then(() => {
       Project.findById(editProject.id)
         .then((project) => {
-          res.json(project);
+          Project.findMemberProject(editProject.id)
+            .then((members) => {
+              project.members = members;
+              res.json(project);
+            })
+            .catch(next);
         })
         .catch(next);
     })
