@@ -83,9 +83,16 @@ const createTimesheet = (newTimesheetArray, id) => new Promise((resolve, reject)
 
 exports.create = (req, res, next) => {
   const newTimesheetArray = req.body.timesheets;
+  const { userId } = newTimesheetArray[0];
+  const month = moment(newTimesheetArray[0], 'YYYY:MM:DD').month() + 1;
+  const year = moment(newTimesheetArray[0], 'YYYY:MM:DD').year();
   createTimesheet(newTimesheetArray, req.user.id)
     .then(() => {
-      res.json('Create Finish!');
+      Timesheet.findByMonthAndYear(month, year, userId)
+        .then((timesheets) => {
+          res.json(timesheets);
+        })
+        .catch(next);
     });
 };
 
