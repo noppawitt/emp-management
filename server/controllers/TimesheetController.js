@@ -67,6 +67,7 @@ const createTimesheet = (newTimesheetArray, id) => new Promise((resolve, reject)
       newTimesheet.projectId = timesheet.projectId;
       newTimesheet.timeIn = timesheet.timeIn;
       newTimesheet.timeOut = timesheet.timeOut;
+      newTimesheet.task = timesheet.task;
       calTotalHours(newTimesheet.timeIn, newTimesheet.timeOut)
         .then((totalhours) => {
           newTimesheet.totalhours = totalhours;
@@ -103,6 +104,14 @@ exports.update = (req, res, next) => {
 
 exports.findByUserId = (req, res, next) => {
   Timesheet.findByUserId(req.user.id)
+    .then((timesheets) => {
+      res.json(timesheets);
+    })
+    .catch(next);
+};
+
+exports.findByMonthAndYear = (req, res, next) => {
+  Timesheet.findByMonthAndYear(req.body.month, req.body.year, req.body.userId)
     .then((timesheets) => {
       res.json(timesheets);
     })
