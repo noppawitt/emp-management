@@ -9,10 +9,10 @@ export const createTimesheetRequest = (form, resolve, reject) => ({
   }
 });
 
-export const createTimesheetSuccess = timesheets => ({
+export const createTimesheetSuccess = timesheet => ({
   type: actionTypes.TIMESHEET_CREATE_SUCCESS,
   payload: {
-    timesheets
+    timesheet
   }
 });
 

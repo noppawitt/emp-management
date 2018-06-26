@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import { Field, reduxForm } from 'redux-form';
 import { Form } from 'semantic-ui-react';
 import Input from '../../components/Input';
@@ -36,7 +38,19 @@ EditTimesheetForm.propTypes = {
   submitting: PropTypes.bool.isRequired
 };
 
-export default reduxForm({
-  form: 'editTimesheet',
-  validate
-})(EditTimesheetForm);
+const mapStateToProps = (state, { date }) => ({
+  initialValue: {
+    userId: state.auth.id,
+    date
+  }
+});
+
+const enhance = compose(
+  connect(mapStateToProps),
+  reduxForm({
+    form: 'editTimesheet',
+    validate
+  })
+);
+
+export default enhance(EditTimesheetForm);

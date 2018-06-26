@@ -8,15 +8,19 @@ import {
   updateTimesheetSuccess,
   updateTimesheetFailure
 } from '../actions/timesheet';
+import { closeModal } from '../actions/modal';
 import api from '../services/api';
 
 export function* createTimesheetTask(action) {
   try {
-    const timesheets = yield call(api.createTimesheet, { timesheets: [action.payload.form] });
-    yield put(createTimesheetSuccess(timesheets));
+    const timesheet = yield call(api.createTimesheet, { timesheets: [action.payload.form] });
+    yield put(createTimesheetSuccess(timesheet));
+    yield put(closeModal());
+    action.payload.resolve();
   }
   catch (error) {
     yield put(createTimesheetFailure(error));
+    action.payload.reject();
   }
 }
 

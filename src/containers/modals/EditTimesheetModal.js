@@ -8,14 +8,14 @@ import Modal from '../../components/Modal';
 import EditTimesheetForm from '../forms/EditTimesheetForm';
 import { handleReduxFormSubmit } from '../../utils/helper';
 
-const EditTimesheetModal = ({ onClose, onSubmit, submitting, onClick }) => (
+const EditTimesheetModal = ({ onClose, onSubmit, submitting, onClick, date }) => (
   <Modal
     header="Edit timesheet"
     onClose={onClose}
     onClick={onClick}
     submitting={submitting}
   >
-    <EditTimesheetForm onSubmit={values => onSubmit(values)} />
+    <EditTimesheetForm date={date} onSubmit={values => onSubmit(values)} />
   </Modal>
 );
 
@@ -23,7 +23,8 @@ EditTimesheetModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  date: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
