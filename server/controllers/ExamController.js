@@ -1,9 +1,7 @@
 const Exam = require('../models/Exam');
 
 exports.create = (req, res, next) => {
-  const newExam = req.body.exam;
-
-  Exam.create(newExam)
+  Exam.create(req.body.exam, req.body.question)
     .then((addExam) => {
       res.json(addExam);
     })
@@ -31,7 +29,7 @@ exports.delete = (req, res, next) => {
 };
 
 exports.edit = (req, res, next) => {
-  Exam.edit(req.body.form)
+  Exam.edit(req.body.form, req.body.question)
     .then(() => {
       Exam.findAll()
         .then((exams) => {

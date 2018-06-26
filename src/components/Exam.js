@@ -46,6 +46,10 @@ examSubCategoryOptions.propTypes = {
   examCategory: PropTypes.string.isRequired
 };
 
+const renderQuestion = question => (
+  <div dangerouslySetInnerHTML={{ __html: question }} />
+);
+
 const Exam = (({ onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, examsFilter, disabled, setDisabled, category, setCategory }) => (
   <div>
     <Segment.Group raised>
@@ -91,36 +95,37 @@ const Exam = (({ onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, 
         <Table striped selectable celled compact>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Question</Table.HeaderCell>
-              <Table.HeaderCell>Category</Table.HeaderCell>
-              <Table.HeaderCell>Sub-Category</Table.HeaderCell>
-              <Table.HeaderCell>Type</Table.HeaderCell>
-              <Table.HeaderCell>Choice</Table.HeaderCell>
-              <Table.HeaderCell>Answer</Table.HeaderCell>
-              <Table.HeaderCell>&nbsp;</Table.HeaderCell>
+              <Table.HeaderCell width={7}>Question</Table.HeaderCell>
+              <Table.HeaderCell width={1}>Category</Table.HeaderCell>
+              <Table.HeaderCell width={2}>Sub-Category</Table.HeaderCell>
+              <Table.HeaderCell width={1}>Type</Table.HeaderCell>
+              <Table.HeaderCell width={2}>Choice</Table.HeaderCell>
+              <Table.HeaderCell width={2}>Answer</Table.HeaderCell>
+              <Table.HeaderCell >&nbsp;</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>{examsFilter.map(exam => (
             <Table.Row>
-              <Table.Cell>{(exam.exQuestion.split('<br />')).map(choice => (
-                <div>{choice}</div>
-              ))}
+              <Table.Cell>
+                <div>
+                  {renderQuestion(exam.exQuestion)}
+                </div>
               </Table.Cell>
               <Table.Cell>{exam.exCategory.charAt(0).toUpperCase().concat(exam.exCategory.slice(1))}</Table.Cell>
               <Table.Cell>{exam.exSubcategory.charAt(0).toUpperCase().concat(exam.exSubcategory.slice(1))}</Table.Cell>
               <Table.Cell>{exam.exType}</Table.Cell>
               <Table.Cell>{(exam.exChoice).map(choice => (
-                <div>{choice}</div>
+                <div>&#9679;{choice}</div>
               ))}
               </Table.Cell>
               <Table.Cell>{(exam.exAnswer).map(ans => (
-                <div>{ans}</div>
+                <div>&#9679;{ans}</div>
               ))}
               </Table.Cell>
-              <Table.Cell textAlign="center">
-                <Button active circular icon="settings" color="blue" size="big" onClick={() => onEditClick(exams, exam)} />
+              <Table.Cell textAlign="center" style={{ cursor: 'default' }}>
+                <Button active circular icon="settings" color="blue" size="big" onClick={() => onEditClick(exams, exam)} style={{ cursor: 'pointer' }} />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <Button active circular icon="trash" color="red" size="big" onClick={() => onDeleteClick(exam.exId)} />
+                <Button active circular icon="trash" color="red" size="big" onClick={() => onDeleteClick(exam.exId)} style={{ cursor: 'pointer' }} />
               </Table.Cell>
             </Table.Row>
           ))}
