@@ -1,18 +1,22 @@
 import React from 'react';
 import './css/EvaluationResultComponent.css';
-import { DatePickerInput } from 'rc-datepicker';
-import 'rc-datepicker/lib/style.css';
-import 'moment/locale/es.js'
+
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 
 class EvaluationResultComponent extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = this.props;
         this.state = {
+            ...this.props,
             passPro: this.props.passPro || true,
             confirmed: this.props.confirmed || true,
-            terminate: this.props.terminate || true
+            terminate: this.props.terminate || true,
+            passProDate: this.props.passPro || '',
+            terminationDate: this.props.terminationDate || '',
+            continuedDate: this.props.continuedDate || ''
         }
 
         this.showProElement1 = this.showProElement1.bind(this);
@@ -105,7 +109,11 @@ class EvaluationResultComponent extends React.Component {
                                     Pass probationary period. Effective date on
                                 </td>
                                 <td>
-                                    <div className='calendar-container'><DatePickerInput locale='es' value={this.state.endProbationDate} onChange={(date) => this.setState({ endProbationDate: date })} /></div>
+                                    <DatePicker selected={this.state.passProDate} onChange={(date) => {
+                                        this.setState({
+                                            passProDate: date
+                                        })
+                                    }} dateFormat='DD/MM/YYYY' disabled={!this.state.passPro} />
                                 </td>
                             </tr>
                             <tr>
@@ -182,7 +190,11 @@ class EvaluationResultComponent extends React.Component {
                                                     Termination Effective
                                                 </td>
                                                 <td>
-                                                    <input type='text' />
+                                                    <DatePicker selected={this.state.terminationDate} onChange={(date) => {
+                                                        this.setState({
+                                                            terminationDate: date
+                                                        })
+                                                    }} dateFormat='DD/MM/YYYY' disabled={!this.state.terminate} />
                                                 </td>
                                             </tr>
                                             <tr>
@@ -191,7 +203,11 @@ class EvaluationResultComponent extends React.Component {
                                                     Continued probation untill
                                                 </td>
                                                 <td>
-                                                    <input type='text' />
+                                                    <DatePicker selected={this.state.continuedDate} onChange={(date) => {
+                                                        this.setState({
+                                                            continuedDate: date
+                                                        })
+                                                    }} dateFormat='DD/MM/YYYY' disabled={this.state.terminate} />
                                                 </td>
                                             </tr>
                                         </table>
