@@ -15,14 +15,14 @@ const Routes = () => (
   <Switch>
     <Route path="/login" component={LoginPage} />
     <Route exact path="/" render={() => <Redirect to="/timesheet" />} />
-    <PrivateRoute path="/timesheet" component={TimesheetPage} />
+    <PrivateRoute exact path="/timesheet" component={TimesheetPage} />
+    <PrivateRoute path="/timesheet/new" component={AddTaskPage} />
     <PrivateRoute path="/leave" component={LeavePage} />
     <PrivateRoute exact path="/project" component={ProjectPage} />
     <PrivateRoute path="/project/:id" component={ProjectDetailPage} />
     <PrivateRoute path="/profile/:id?" component={ProfilePage} />
     <PrivateRoute path="/employee" component={EmployeePage} />
     <PrivateRoute path="/report" component={ReportPage} />
-    <PrivateRoute path="/addtask" component={AddTaskPage} />
   </Switch>
 );
 
