@@ -10,6 +10,8 @@ const initialState = {
   startDate: null,
   endDate: null,
   isDateFilterChange: false,
+  isAlivePasswordExist: null,
+  displayPassword: null,
 };
 
 const Recruitment = (state = initialState, action) => {
@@ -58,12 +60,12 @@ const Recruitment = (state = initialState, action) => {
     case actionTypes.CHECK_ALIVE_PASSWORD_EXISTENCE:
       return {
         ...state,
-        cid: action.payload.cid,
+        isAlivePasswordExist: action.payload.isAlivePasswordExist,
       };
     case actionTypes.DISPLAY_PASSWORD:
       return {
         ...state,
-        password: action.payload.password,
+        displayPassword: action.payload.displayPassword,
       };
     default:
       return state;

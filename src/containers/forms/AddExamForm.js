@@ -7,7 +7,7 @@ import { Form, Header, Icon, Button } from 'semantic-ui-react';
 // import ReactDrafts from 'react-drafts';
 import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
-import '../../../node_modules/react-drafts/dist/react-drafts.css';
+// import '../../../node_modules/react-drafts/dist/react-drafts.css';
 
 const validate = (values) => {
   const errors = {};

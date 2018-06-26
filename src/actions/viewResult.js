@@ -20,3 +20,10 @@ export const fetchExamResultFailure = messege => ({
     messege,
   }
 });
+
+export const changeActiveItemRequest = newActiveItem => ({
+  type: actionTypes.VIEW_RESULT_CHANGE_ACTIVE_ITEM,
+  payload: {
+    newActiveItem,
+  }
+});

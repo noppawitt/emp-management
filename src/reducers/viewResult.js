@@ -2,7 +2,8 @@ import * as actionTypes from '../constants/actionTypes';
 
 const initialState = {
   isFetching: true,
-  results: [],
+  results: [1, 2, 3],
+  activeItem: 'overall',
 };
 
 const ViewResult = (state = initialState, action) => {
@@ -24,6 +25,13 @@ const ViewResult = (state = initialState, action) => {
         ...state,
         isFetching: true,
         messege: action.payload.messege,
+      };
+    case actionTypes.VIEW_RESULT_CHANGE_ACTIVE_ITEM:
+      console.log('>>>', state, '<<<');
+      console.log('>>>', state.activeItem === '1');
+      return {
+        ...state,
+        activeItem: action.payload.newActiveItem,
       };
     default:
       return state;
