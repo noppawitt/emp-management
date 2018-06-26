@@ -54,13 +54,13 @@ exports.create = (req, res, next) => {
     });
 };
 
-const updateLeave = leaveRequestArray => new Promise((resolve, reject) => {
+const updateLeave = (leaveRequestArray, id) => new Promise((resolve, reject) => {
   try {
     for (let i = 0; i < leaveRequestArray.length; i += 1) {
       const leaveRequests = LeaveRequest.findByLeave(leaveRequestArray[i].leaveFrom, leaveRequestArray[i].leaveTo, leaveRequestArray.userId);
       for (let j = 0; j < leaveRequests.length; j += 1) {
         leaveRequests[j].status = leaveRequestArray[i].status;
-        LeaveRequest.update(leaveRequests[j]);
+        LeaveRequest.update(leaveRequests[j], id);
       }
     }
     resolve('Update Finish!');
@@ -72,7 +72,7 @@ const updateLeave = leaveRequestArray => new Promise((resolve, reject) => {
 
 exports.update = (req, res, next) => {
   const leaveRequestArray = req.body;
-  updateLeave(leaveRequestArray)
+  updateLeave(leaveRequestArray, req.user.id)
     .then(() => {
       res.json('Update Finish!');
     })
