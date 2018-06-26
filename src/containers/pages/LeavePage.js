@@ -39,12 +39,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchLeave: () => dispatch(fetchLeaveRequest()),
+  fetchLeave: userId => dispatch(fetchLeaveRequest(userId)),
   onAddClick: () => dispatch(openModal(modalNames.CREATE_LEAVE_REQUEST)),
-  onCancelClick: (userId, leave, status) => dispatch(openModal(modalNames.CONFIRM, {
+  onCancelClick: (userId, leave) => dispatch(openModal(modalNames.CONFIRM, {
     header: 'Cancel confirmation',
     description: 'Are you sure to cancel this leave request ?',
-    onConfirm: () => dispatch(updateLeaveRequest(userId, leave, status))
+    onConfirm: () => dispatch(updateLeaveRequest(userId, { ...leave, status: 'Cancel' }))
   })),
   onFilterChange: (key, value) => dispatch(filterLeave(key, value))
 });
@@ -53,8 +53,8 @@ const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
-      const { fetchLeave } = this.props;
-      fetchLeave();
+      const { fetchLeave, userId } = this.props;
+      fetchLeave(userId);
     }
   })
 );

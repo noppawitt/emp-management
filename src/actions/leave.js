@@ -23,8 +23,11 @@ export const createLeaveFailure = message => ({
   }
 });
 
-export const fetchLeaveRequest = () => ({
-  type: actionTypes.LEAVE_FETCH_REQUEST
+export const fetchLeaveRequest = userId => ({
+  type: actionTypes.LEAVE_FETCH_REQUEST,
+  payload: {
+    userId
+  }
 });
 
 export const fetchLeaveSuccess = leaves => ({

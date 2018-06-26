@@ -13,9 +13,7 @@ import api from '../services/api';
 
 export function* createLeaveTask(action) {
   try {
-    yield call(api.createLeave, {
-      leaveRequest: action.payload.form
-    });
+    yield call(api.createLeave, { leaveRequest: action.payload.form });
     const leaves = yield call(api.fetchLeave);
     yield put(createLeaveSuccess(leaves));
     yield put(closeModal());
@@ -27,9 +25,9 @@ export function* createLeaveTask(action) {
   }
 }
 
-export function* fetchLeaveTask() {
+export function* fetchLeaveTask(action) {
   try {
-    const leaves = yield call(api.fetchLeave);
+    const leaves = yield call(api.fetchLeave, action.payload.userId);
     yield put(fetchLeaveSuccess(leaves));
   }
   catch (error) {
@@ -40,14 +38,15 @@ export function* fetchLeaveTask() {
 export function* updateLeaveTask(action) {
   try {
     const leaves = yield call(api.updateLeave, {
-      leaveRequests: {
+      leaveRequests: [{
         userId: action.payload.userId,
-        status: action.payload.status,
+        status: action.payload.leave.status,
         leaveFrom: action.payload.leave.leaveFrom,
         leaveTo: action.payload.leave.leaveTo
-      }
+      }]
     });
     yield put(updateLeaveSuccess(leaves));
+    yield put(closeModal());
   }
   catch (error) {
     yield put(updateLeaveFailure(error));
