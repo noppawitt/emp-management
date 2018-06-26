@@ -12,15 +12,21 @@ class Timesheet extends React.Component {
       holidaycolor: 'rgb(221, 225, 230)',
       ButtonRedcolor: '#FF0000',
       textWorkcolor: '#2185CD',
-      textHolidaycolor: '#999999',
+      textAnotherDay: '#999999',
       iconRedcolor: 'red',
       iconBluecolor: 'blue',
       date: moment(),
       lastholiday: { date: '', name: '' },
+      lastleaveday: { date: '', status: '' },
       holidays: [
         { date: '2018-06-14', name: 'Compensatory day' },
-        { date: '2018-06-22', name: 'test day' },
-        { date: '2018-06-29', name: 'test 2 day' }
+        { date: '2018-06-22', name: 'official holiday' },
+        { date: '2018-06-29', name: 'National holiday' }
+      ],
+      leavedays: [
+        { date: '2018-06-12', name: 'Compensatory day' },
+        { date: '2018-06-20', name: 'test day' },
+        { date: '2018-06-27', name: 'test 2 day' }
       ]
     };
     this.anotherMonthCell = this.anotherMonthCell.bind(this);
@@ -36,10 +42,10 @@ class Timesheet extends React.Component {
       return (this.anotherMonthCell(date.format('D')));
     }
     else if (this.isHoliday(date)) {
-      return (this.holidayCell(date.format('D'), hour));
+      return (this.holidayCell(date, hour));
     }
     else if (date.format('d') === '0' || date.format('d') === '6') {
-      return (this.holidayCell(date.format('D'), hour));
+      return (this.holidayCell(date, hour));
     }
     return (this.workdayCell(date, hour));
   }
@@ -82,31 +88,31 @@ class Timesheet extends React.Component {
       <Table.Cell style={{ backgroundColor: this.state.holidaycolor }} >
         <Grid.Column>
           <Grid.Row textAlign="right" >
-            <font color={this.state.textHolidaycolor} size="3" ><b>{day}</b></font>
+            <font color={this.state.textAnotherDay} size="3" ><b>{day}</b></font>
           </Grid.Row>
           <Grid.Row style={{ height: '7.5em' }} />
         </Grid.Column>
       </Table.Cell>
     );
   }
-  holidayCell(day, hour) {
+  holidayCell(date, hour) {
     return (
       <Table.Cell style={{ backgroundColor: this.state.holidaycolor, maxWidth: '10em' }} >
         <Grid.Column>
           <Grid.Row textAlign="right" >
-            <font size="3" ><b>{day}</b></font>
+            <font size="3" ><b>{date.format('D')}</b></font>
           </Grid.Row>
-          {this.addHolidayName(day)}
-          {this.buttonOfHoliday(hour)}
+          {this.addHolidayName(date.format('D'))}
+          {this.buttonOfHoliday(date,hour)}
         </Grid.Column>
       </Table.Cell>
     );
   }
-  buttonOfHoliday(hour) {
+  buttonOfHoliday(date, hour) {
     if (hour !== 0) {
       return (
         <Grid.Row textAlign="center">
-          <Button animated="fade" style={{ borderStyle: 'solid', borderColor: this.state.textWorkcolor, backgroundColor: 'white', borderWidth: '1px' }} >
+          <Button animated="fade" style={{ borderStyle: 'solid', borderColor: this.state.textWorkcolor, backgroundColor: 'white', borderWidth: '1px' }} onClick={() => this.props.onEditClick(date.format('YYYY-MM-DD'))} >
             <Button.Content visible><font color={this.state.textWorkcolor}>{hour} Hour</font></Button.Content>
             <Button.Content hidden > <Icon color="blue" name="pencil alternate" /> </Button.Content>
           </Button>
@@ -114,14 +120,19 @@ class Timesheet extends React.Component {
       );
     }
     return (
-      <Grid.Row style={{ height: '2.5em' }} />
+      <Grid.Row textAlign="center">
+        <Button animated="fade" style={{ backgroundColor: this.state.holidaycolor }} onClick={() => this.props.onAddClick(date.format('YYYY-MM-DD'))} >
+          <Button.Content visible><font color={this.state.textAnotherDay}>Add new</font></Button.Content>
+          <Button.Content hidden > <Icon color="grey" name="pencil alternate" /> </Button.Content>
+        </Button>
+      </Grid.Row>
     );
   }
   addHolidayName(day) {
     if (day === moment(this.state.lastholiday.date).format('D')) {
       return (
         <Grid.Row style={{ height: '5em' }}>
-          <font color={this.state.textHolidaycolor}>- {this.state.lastholiday.name}</font>
+          <font color={this.state.textAnotherDay}>- {this.state.lastholiday.name}</font>
         </Grid.Row>
       );
     }
@@ -147,7 +158,7 @@ class Timesheet extends React.Component {
     return (
       <div>
         <PageHeader text="Timesheet" icon="calendar alternate" />
-        {progressBar(20)}
+        {progressBar(70)}
         <Table celled structured fixed>
           <Table.Header>
             <Table.Row textAlign="center">

@@ -67,7 +67,12 @@ const Leave = ({ leaves, onAddClick, onCancelClick, userId, onFilterChange }) =>
                 <Table.Cell>{leave.purpose}</Table.Cell>
                 <Table.Cell>{leave.total}</Table.Cell>
                 <Table.Cell>{leave.status}</Table.Cell>
-                <Table.Cell><Button inverted color="red" onClick={() => onCancelClick(userId, leave, 'Cancel')}>Cancel</Button></Table.Cell>
+                <Table.Cell> {leave.status !== 'Approve' &&
+                  <Button animated="fade" style={{ borderStyle: 'solid', borderColor: '#FF0000', backgroundColor: 'white', borderWidth: '1px' }} onClick={() => onCancelClick(userId, leave, 'Cancel')}>
+                    <Button.Content visible><font color="#FF0000" >Cancel</font></Button.Content>
+                    <Button.Content hidden > <Icon color="red" name="x" /> </Button.Content>
+                  </Button> }
+                </Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>

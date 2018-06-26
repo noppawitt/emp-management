@@ -1,5 +1,6 @@
 import React from 'react';
 import { Segment, Grid, Button } from 'semantic-ui-react';
+import PageHeader from '../../components/PageHeader';
 
 const ButtonExampleConditionals = () => (
   <Button.Group fluid >
@@ -13,7 +14,7 @@ const ButtonExampleConditionals = () => (
 
 const ReportPage = () => (
   <div>
-    <Segment vertical><h1>Report</h1></Segment>
+    <PageHeader text="Report" icon="file powerpoint" />
     <Segment vertical>
       <Grid>
         <Grid.Row>
