@@ -17,10 +17,16 @@ class Timesheet extends React.Component {
       iconBluecolor: 'blue',
       date: moment(),
       lastholiday: { date: '', name: '' },
+      lastleaveday: { date: '', status: '' },
       holidays: [
         { date: '2018-06-14', name: 'Compensatory day' },
         { date: '2018-06-22', name: 'test day' },
         { date: '2018-06-29', name: 'test 2 day' }
+      ],
+      leavedays: [
+        { date: '2018-06-12', name: 'Compensatory day' },
+        { date: '2018-06-20', name: 'test day' },
+        { date: '2018-06-27', name: 'test 2 day' }
       ]
     };
     this.anotherMonthCell = this.anotherMonthCell.bind(this);
@@ -138,7 +144,6 @@ class Timesheet extends React.Component {
           </Grid.Row>
           <Grid.Row style={{ height: '5em' }} />
           {this.editButtonWorkday(hour)}
-          {console.log(hour)}
         </Grid.Column>
       </Table.Cell>
     );
