@@ -22,8 +22,10 @@ const taskOptions = [
 const AddTimesheetForm = ({ handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Field name="projectId" as={Form.Input} component={Input} label="Project" placeholder="Project" disabled={submitting} />
-    <Field name="timeIn" as={Form.Input} component={Input} type="time" label="Time in" placeholder="Time in" disabled={submitting} />
-    <Field name="timeOut" as={Form.Input} component={Input} type="time" label="Time out" placeholder="Time out" disabled={submitting} />
+    <Form.Group widths="equal">
+      <Field name="timeIn" as={Form.Input} component={Input} type="time" label="Time in" placeholder="Time in" disabled={submitting} />
+      <Field name="timeOut" as={Form.Input} component={Input} type="time" label="Time out" placeholder="Time out" disabled={submitting} />
+    </Form.Group>
     <Field name="task" as={Form.Select} component={Input} label="Task" placeholder="Task" options={taskOptions} disabled={submitting} />
     <Field name="description" as={Form.TextArea} component={Input} autoHeight label="Description" placeholder="Description" disabled={submitting} />
   </Form>
