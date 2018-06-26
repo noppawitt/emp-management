@@ -284,7 +284,7 @@ api.fetchTimesheet = userId => (
   callApi(`/api/timesheets/?id=${userId}`)
 );
 
-api.updateTimestete = body => (
+api.updateTimesheet = body => (
   callApi('/api/timesheets', {
     method: 'PUT',
     body

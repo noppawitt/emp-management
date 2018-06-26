@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import { Field, reduxForm } from 'redux-form';
 import { Form } from 'semantic-ui-react';
 import Input from '../../components/Input';
@@ -22,8 +24,10 @@ const taskOptions = [
 const AddTimesheetForm = ({ handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Field name="projectId" as={Form.Input} component={Input} label="Project" placeholder="Project" disabled={submitting} />
-    <Field name="timeIn" as={Form.Input} component={Input} type="time" label="Time in" placeholder="Time in" disabled={submitting} />
-    <Field name="timeOut" as={Form.Input} component={Input} type="time" label="Time out" placeholder="Time out" disabled={submitting} />
+    <Form.Group widths="equal">
+      <Field name="timeIn" as={Form.Input} component={Input} type="time" label="Time in" placeholder="Time in" disabled={submitting} />
+      <Field name="timeOut" as={Form.Input} component={Input} type="time" label="Time out" placeholder="Time out" disabled={submitting} />
+    </Form.Group>
     <Field name="task" as={Form.Select} component={Input} label="Task" placeholder="Task" options={taskOptions} disabled={submitting} />
     <Field name="description" as={Form.TextArea} component={Input} autoHeight label="Description" placeholder="Description" disabled={submitting} />
   </Form>
@@ -34,7 +38,19 @@ AddTimesheetForm.propTypes = {
   submitting: PropTypes.bool.isRequired
 };
 
-export default reduxForm({
-  form: 'addTimesheet',
-  validate
-})(AddTimesheetForm);
+const mapStateToProps = (state, { date }) => ({
+  initialValues: {
+    userId: state.auth.id,
+    date
+  }
+});
+
+const enhance = compose(
+  connect(mapStateToProps),
+  reduxForm({
+    form: 'addTimesheet',
+    validate
+  })
+);
+
+export default enhance(AddTimesheetForm);

@@ -5,8 +5,6 @@ router.post('/', LeaveRequestController.create);
 
 router.put('/', LeaveRequestController.update);
 
-router.get('/', LeaveRequestController.findByUserId);
-
-router.get('/all-request', LeaveRequestController.findAll);
+router.get('/', LeaveRequestController.findLeaveRequest);
 
 module.exports = router;

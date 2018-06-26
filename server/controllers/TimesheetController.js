@@ -58,25 +58,35 @@ const calTotalHours = (timeIn, timeOut) => new Promise((resolve, reject) => {
   }
 });
 
+const createTimesheet = (newTimesheetArray, id) => new Promise((resolve, reject) => {
+  try {
+    newTimesheetArray.forEach((timesheet) => {
+      const newTimesheet = {};
+      newTimesheet.userId = timesheet.userId;
+      newTimesheet.date = timesheet.date;
+      newTimesheet.projectId = timesheet.projectId;
+      newTimesheet.timeIn = timesheet.timeIn;
+      newTimesheet.timeOut = timesheet.timeOut;
+      newTimesheet.task = timesheet.task;
+      calTotalHours(newTimesheet.timeIn, newTimesheet.timeOut)
+        .then((totalhours) => {
+          newTimesheet.totalhours = totalhours;
+          Timesheet.create(newTimesheet, id);
+        });
+    });
+    resolve('Create Finish!');
+  }
+  catch (error) {
+    reject(error);
+  }
+});
+
 exports.create = (req, res, next) => {
   const newTimesheetArray = req.body.timesheets;
-  newTimesheetArray.forEach((timesheet) => {
-    const newTimesheet = {};
-    newTimesheet.userId = timesheet.userId;
-    newTimesheet.date = timesheet.date;
-    newTimesheet.projectId = timesheet.projectId;
-    newTimesheet.timeIn = timesheet.timeIn;
-    newTimesheet.timeOut = timesheet.timeOut;
-    calTotalHours(newTimesheet.timeIn, newTimesheet.timeOut)
-      .then((totalhours) => {
-        newTimesheet.totalhours = totalhours;
-        Timesheet.create(newTimesheet, req.user.id)
-          .then((createdTimesheet) => {
-            res.json(createdTimesheet);
-          })
-          .catch(next);
-      });
-  });
+  createTimesheet(newTimesheetArray, req.user.id)
+    .then(() => {
+      res.json('Create Finish!');
+    });
 };
 
 exports.update = (req, res, next) => {
@@ -94,6 +104,14 @@ exports.update = (req, res, next) => {
 
 exports.findByUserId = (req, res, next) => {
   Timesheet.findByUserId(req.user.id)
+    .then((timesheets) => {
+      res.json(timesheets);
+    })
+    .catch(next);
+};
+
+exports.findByMonthAndYear = (req, res, next) => {
+  Timesheet.findByMonthAndYear(req.body.month, req.body.year, req.body.userId)
     .then((timesheets) => {
       res.json(timesheets);
     })

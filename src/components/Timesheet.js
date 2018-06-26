@@ -47,7 +47,7 @@ class Timesheet extends React.Component {
     else if (date.format('d') === '0' || date.format('d') === '6') {
       return (this.holidayCell(date.format('D'), hour));
     }
-    return (this.workdayCell(date.format('D'), hour));
+    return (this.workdayCell(date, hour));
   }
 
   isHoliday(date) {
@@ -59,25 +59,24 @@ class Timesheet extends React.Component {
     }
     return false;
   }
-  editButtonWorkday(hour) {
+  editButtonWorkday(date, hour) {
     let color = '';
     let iconcolor = '';
     if (hour !== 8) { color = this.state.ButtonRedcolor; iconcolor = this.state.iconRedcolor; }
     if (hour === 0) {
       return (
         <Grid.Row textAlign="center">
-          <Button animated="fade" style={{ borderStyle: 'solid', borderColor: color, backgroundColor: 'white', borderWidth: '1px' }} onClick={this.props.onAddClick} >
+          <Button animated="fade" style={{ borderStyle: 'solid', borderColor: color, backgroundColor: 'white', borderWidth: '1px' }} onClick={() => this.props.onAddClick(date.format('YYYY-MM-DD'))} >
             <Button.Content visible><font color={color} >Add new</font></Button.Content>
             <Button.Content hidden > <Icon color={iconcolor} name="pencil alternate" /> </Button.Content>
           </Button>
         </Grid.Row>
-
       );
     }
     else if (hour === 8) { color = this.state.textWorkcolor; iconcolor = this.state.iconBluecolor; }
     return (
       <Grid.Row textAlign="center">
-        <Button animated="fade" style={{ borderStyle: 'solid', borderColor: color, backgroundColor: 'white', borderWidth: '1px' }} onClick={this.props.onEditClick} >
+        <Button animated="fade" style={{ borderStyle: 'solid', borderColor: color, backgroundColor: 'white', borderWidth: '1px' }} onClick={() => this.props.onEditClick(date.format('YYYY-MM-DD'))} >
           <Button.Content visible><font color={color} >{hour} Hour</font></Button.Content>
           <Button.Content hidden > <Icon color={iconcolor} name="pencil alternate" /> </Button.Content>
         </Button>
@@ -139,15 +138,15 @@ class Timesheet extends React.Component {
     }
     return (<Grid.Row style={{ height: '5em' }} />);
   }
-  workdayCell(day, hour) {
+  workdayCell(date, hour) {
     return (
       <Table.Cell >
         <Grid.Column>
           <Grid.Row textAlign="right" >
-            <font size="3" ><b>{day}</b></font>
+            <font size="3" ><b>{date.format('D')}</b></font>
           </Grid.Row>
           <Grid.Row style={{ height: '5em' }} />
-          {this.editButtonWorkday(hour)}
+          {this.editButtonWorkday(date, hour)}
         </Grid.Column>
       </Table.Cell>
     );
