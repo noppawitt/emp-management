@@ -16,7 +16,7 @@ class Timesheet extends React.Component {
       iconRedcolor: 'red',
       iconBluecolor: 'blue',
       date: moment(),
-      lastholiday: { date: '', name: '' } ,
+      lastholiday: { date: '', name: '' },
       holidays: [
         { date: '2018-06-14', name: 'Compensatory day' },
         { date: '2018-06-22', name: 'test day' },
@@ -58,7 +58,7 @@ class Timesheet extends React.Component {
     let color = '';
     let iconcolor = '';
     if (hour !== 8) { color = this.state.ButtonRedcolor; iconcolor = this.state.iconRedcolor; }
-    else if (hour === 0 ) {
+    else if (hour === 0) {
       return (
         <Grid.Row textAlign="center">
           <Button animated="fade" style={{ borderStyle: 'solid', borderColor: color, backgroundColor: 'white', borderWidth: '1px' }} >
@@ -66,7 +66,7 @@ class Timesheet extends React.Component {
             <Button.Content hidden > <Icon color={iconcolor} name="pencil alternate" /> </Button.Content>
           </Button>
         </Grid.Row>
-        
+
       );
     }
     else { color = this.state.textWorkcolor; iconcolor = this.state.iconBluecolor; }
@@ -172,7 +172,7 @@ class Timesheet extends React.Component {
                   {this.drawCell(moment(this.props.timesheets[i + 5].date), this.props.timesheets[i + 5].totalhours)}
                   {this.drawCell(moment(this.props.timesheets[i + 6].date), this.props.timesheets[i + 6].totalhours)}
                 </Table.Row>
-              )) 
+              ))
             }
           </Table.Body>
         </Table>

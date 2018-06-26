@@ -298,4 +298,8 @@ api.deleteTimesheet = body => (
   })
 );
 
+api.fetchHolidays = (year, month) => (
+  callApi(`/api/holidays?year=${year}&month=${month}`)
+);
+
 export default api;
