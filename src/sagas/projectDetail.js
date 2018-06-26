@@ -8,6 +8,7 @@ import {
   createMemberSuccess,
   createMemberFailure
 } from '../actions/projectDetail';
+import { closeModal } from '../actions/modal';
 import api from '../services/api';
 
 export function* fetchProjectDetailTask(action) {
@@ -24,9 +25,12 @@ export function* updateProjectDetailTask(action) {
   try {
     const projectDetail = yield call(api.updateProjectDetail, { project: action.payload.form });
     yield put(updateProjectDetailSuccess(projectDetail));
+    yield put(closeModal());
+    action.payload.resolve();
   }
   catch (error) {
     yield put(updateProjectDetailFailure(error));
+    action.payload.reject();
   }
 }
 

@@ -42,8 +42,8 @@ const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
-      const { fetchTimesheet, id } = this.props;
-      fetchTimesheet(id);
+      const { fetchTimesheet, userId } = this.props;
+      fetchTimesheet(userId);
     }
   })
 );

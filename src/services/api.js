@@ -260,8 +260,8 @@ api.createLeave = body => (
   })
 );
 
-api.fetchLeave = () => (
-  callApi('/api/leave-request')
+api.fetchLeave = userId => (
+  callApi(`/api/leave-request?userId=${userId}`)
 );
 
 api.updateLeave = body => (

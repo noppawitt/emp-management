@@ -17,17 +17,17 @@ class Timesheet extends React.Component {
       iconBluecolor: 'blue',
       date: moment(),
       lastholiday: { date: '', name: '' },
-      lastleaveday: { date: '', status: '' },
+      // lastleaveday: { date: '', status: '' },
       holidays: [
         { date: '2018-06-14', name: 'Compensatory day' },
         { date: '2018-06-22', name: 'official holiday' },
         { date: '2018-06-29', name: 'National holiday' }
       ],
-      leavedays: [
-        { date: '2018-06-12', name: 'Compensatory day' },
-        { date: '2018-06-20', name: 'test day' },
-        { date: '2018-06-27', name: 'test 2 day' }
-      ]
+      // leavedays: [
+      //   { date: '2018-06-12', name: 'Compensatory day' },
+      //   { date: '2018-06-20', name: 'test day' },
+      //   { date: '2018-06-27', name: 'test 2 day' }
+      // ]
     };
     this.anotherMonthCell = this.anotherMonthCell.bind(this);
     this.workdayCell = this.workdayCell.bind(this);
@@ -77,7 +77,7 @@ class Timesheet extends React.Component {
     return (
       <Grid.Row textAlign="center">
         <Button animated="fade" style={{ borderStyle: 'solid', borderColor: color, backgroundColor: 'white', borderWidth: '1px' }} onClick={() => this.props.onEditClick(date.format('YYYY-MM-DD'))} >
-          <Button.Content visible><font color={color} >{hour} Hour</font></Button.Content>
+          <Button.Content visible><font color={color} >{hour} Hours</font></Button.Content>
           <Button.Content hidden > <Icon color={iconcolor} name="pencil alternate" /> </Button.Content>
         </Button>
       </Grid.Row>
@@ -103,7 +103,7 @@ class Timesheet extends React.Component {
             <font size="3" ><b>{date.format('D')}</b></font>
           </Grid.Row>
           {this.addHolidayName(date.format('D'))}
-          {this.buttonOfHoliday(date,hour)}
+          {this.buttonOfHoliday(date, hour)}
         </Grid.Column>
       </Table.Cell>
     );
@@ -113,7 +113,7 @@ class Timesheet extends React.Component {
       return (
         <Grid.Row textAlign="center">
           <Button animated="fade" style={{ borderStyle: 'solid', borderColor: this.state.textWorkcolor, backgroundColor: 'white', borderWidth: '1px' }} onClick={() => this.props.onEditClick(date.format('YYYY-MM-DD'))} >
-            <Button.Content visible><font color={this.state.textWorkcolor}>{hour} Hour</font></Button.Content>
+            <Button.Content visible><font color={this.state.textWorkcolor}>{hour} Hours</font></Button.Content>
             <Button.Content hidden > <Icon color="blue" name="pencil alternate" /> </Button.Content>
           </Button>
         </Grid.Row>
