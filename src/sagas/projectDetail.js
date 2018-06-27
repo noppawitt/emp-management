@@ -38,9 +38,12 @@ export function* createMemberTask(action) {
   try {
     const members = yield call(api.createMember, { hasProject: action.payload.form });
     yield put(createMemberSuccess(members));
+    yield put(closeModal());
+    action.payload.resolve();
   }
   catch (error) {
     yield put(createMemberFailure(error));
+    action.payload.reject();
   }
 }
 

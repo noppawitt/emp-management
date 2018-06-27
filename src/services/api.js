@@ -245,7 +245,7 @@ api.updateProjectDetail = body => (
 );
 
 api.createMember = body => (
-  callApi(`/api/has-project`, {
+  callApi(`/api/has-projects`, {
     method: 'POST',
     body
   })
