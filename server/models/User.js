@@ -27,7 +27,7 @@ User.create = (user, id) => (
       ]
     );
     const q3 = transaction.one(
-      'INSERT INTO employee_work (department_id, level_id, start_date, probation_date, created_user, updated_user, contract_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING 1',
+      'INSERT INTO employee_work (department_id, level_id, start_date, probation_date, created_user, updated_user, contract_id, engineer) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING 1',
       [
         user.departmentId,
         user.levelId,
@@ -35,7 +35,8 @@ User.create = (user, id) => (
         user.probationDate,
         id,
         id,
-        user.contractId
+        user.contractId,
+        user.engineer
       ]
     );
     return transaction.batch([q1, q2, q3]);
