@@ -103,22 +103,22 @@ class ProbationForm extends React.Component {
         console.log(this.state);
     }
 
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     return (nextState.score != this.state.score ||
-    //         nextState.passPro != this.state.passPro ||
-    //         nextState.option1 != this.state.option1 ||
-    //         nextState.option2 != this.state.option2 ||
-    //         nextState.basedSalary != this.state.basedSalary ||
-    //         nextState.mobile != this.state.mobile ||
-    //         nextState.transporationAllowance != this.state.transporationAllowance ||
-    //         nextState.otherAllowance != this.state.otherAllowance ||
-    //         nextState.endProbationDate != this.state.endProbationDate
-    //     )
-    // }
+    shouldComponentUpdate(nextProps, nextState) {
+        return (nextState.score != this.state.score ||
+            nextState.passPro != this.state.passPro ||
+            nextState.option1 != this.state.option1 ||
+            nextState.option2 != this.state.option2 ||
+            nextState.basedSalary != this.state.basedSalary ||
+            nextState.mobile != this.state.mobile ||
+            nextState.transporationAllowance != this.state.transporationAllowance ||
+            nextState.otherAllowance != this.state.otherAllowance ||
+            nextState.endProbationDate != this.state.endProbationDate
+        )
+    }
 
-    // componentDidUpdate() {
-    //     this.props.test(this.state);
-    // }
+    componentDidUpdate() {
+        this.props.test(this.state);
+    }
 
     render() {
         return (
