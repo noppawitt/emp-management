@@ -61,8 +61,8 @@ exports.createReport = (req, res, next) => {
       .then((project) => {
         const { holiday } = project;
         const { timesheet } = project;
-        console.log(project);
         const { leave } = project;
+        const holidayDates = [];
         const workbook = new Excel.Workbook();
         workbook.xlsx.readFile(filename)
           .then(() => {
@@ -88,10 +88,12 @@ exports.createReport = (req, res, next) => {
             for (let i = 0; i < holiday.length; i += 1) {
               const { date } = holiday[i];
               const day = parseInt(moment(date).format('DD'), 10);
+              holidayDates.push(day);
               fillRow(worksheet, day);
               worksheet.getCell(`C${day + 7}`).value = holiday[i].dateName;
               worksheet.getCell(`B${day + 7}`).value = 'Holiday';
             }
+            console.log(holidayDates);
             // write Leave in Timesheet
             for (let j = 0; j < leave.length; j += 1) {
               const { leaveDate } = leave[j];
@@ -109,6 +111,9 @@ exports.createReport = (req, res, next) => {
               worksheet.getCell(`D${day + 7}`).value = timesheet[k].timeIn;
               worksheet.getCell(`E${day + 7}`).value = timesheet[k].timeOut;
               worksheet.getCell(`F${day + 7}`).value = timesheet[k].totalhours;
+              // if (excelType.reportType === 'Timesheet (Special)') {
+              //   if ()
+              // }
             }
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             res.setHeader('Content-Disposition', `attachment; filename="Timesheet_${excelType.year}_${excelType.month}_${excelType.projectId}.xlsx`);

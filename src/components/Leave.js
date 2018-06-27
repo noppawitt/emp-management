@@ -60,7 +60,7 @@ const Leave = ({ leaves, onAddClick, onCancelClick, userId, onFilterChange }) =>
 
           <Table.Body>
             {leaves.map(leave => (
-              <Table.Row key={leave.id}>
+              <Table.Row key={`${leave.leaveFrom}${leave.leaveTo}`}>
                 <Table.Cell>{leave.leaveType}</Table.Cell>
                 <Table.Cell>{leave.leaveFrom}</Table.Cell>
                 <Table.Cell>{leave.leaveTo}</Table.Cell>

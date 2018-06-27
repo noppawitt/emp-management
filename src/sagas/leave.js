@@ -14,7 +14,7 @@ import api from '../services/api';
 export function* createLeaveTask(action) {
   try {
     yield call(api.createLeave, { leaveRequest: action.payload.form });
-    const leaves = yield call(api.fetchLeave);
+    const leaves = yield call(api.fetchLeave, action.payload.form.userId);
     yield put(createLeaveSuccess(leaves));
     yield put(closeModal());
     action.payload.resolve();
@@ -37,7 +37,7 @@ export function* fetchLeaveTask(action) {
 
 export function* updateLeaveTask(action) {
   try {
-    const leaves = yield call(api.updateLeave, {
+    yield call(api.updateLeave, {
       leaveRequests: [{
         userId: action.payload.userId,
         status: action.payload.leave.status,
@@ -45,6 +45,7 @@ export function* updateLeaveTask(action) {
         leaveTo: action.payload.leave.leaveTo
       }]
     });
+    const leaves = yield call(api.fetchLeave, action.payload.userId);
     yield put(updateLeaveSuccess(leaves));
     yield put(closeModal());
   }

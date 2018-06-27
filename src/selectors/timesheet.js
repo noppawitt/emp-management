@@ -20,3 +20,5 @@ export const fillTimesheetsToFullMonth = (state) => {
   }
   return timesheets;
 };
+
+export const getTimesheetById = (state, id) => state.timesheet.lists.find(t => t.id === id);

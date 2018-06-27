@@ -46,7 +46,7 @@ const leave = (state = initialState, action) => {
     case actionTypes.LEAVE_UPDATE_SUCCESS:
       return {
         ...state,
-        leaves: action.payload.leaves
+        lists: action.payload.leaves
       };
     case actionTypes.LEAVE_UPDATE_FAILURE:
       return {

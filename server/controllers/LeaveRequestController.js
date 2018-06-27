@@ -17,7 +17,7 @@ const createLeaveRequest = (newLeaveRequest, holidays, id) => new Promise((resol
     for (let m = moment(newLeaveRequest.leaveFrom); m.diff(newLeaveRequest.leaveTo, 'days') <= 0; m.add(1, 'days')) {
       if (m.isoWeekday() !== 6 && m.isoWeekday() !== 7) {
         if (!isHoliday(holidays, m)) {
-          newLeaveRequest.leaveDate = m;
+          newLeaveRequest.leaveDate = m.format('YYYY-MM-DD');
           newLeaveRequest.totalhours = moment(newLeaveRequest.endTime, 'HH:mm:ss').diff(moment(newLeaveRequest.startTime, 'HH:mm:ss'), 'hours');
           newLeaveRequest.code = 'playtorium';
           LeaveRequest.create(newLeaveRequest, id);
@@ -54,28 +54,10 @@ exports.create = (req, res, next) => {
     });
 };
 
-const updateLeave = (leaveRequestArray, id) => new Promise((resolve, reject) => {
-  try {
-    for (let i = 0; i < leaveRequestArray.length; i += 1) {
-      const leaveRequests = LeaveRequest.findByLeave(leaveRequestArray[i].leaveFrom, leaveRequestArray[i].leaveTo, leaveRequestArray.userId);
-      for (let j = 0; j < leaveRequests.length; j += 1) {
-        leaveRequests[j].status = leaveRequestArray[i].status;
-        LeaveRequest.update(leaveRequests[j], id);
-      }
-    }
-    resolve('Update Finish!');
-  }
-  catch (error) {
-    reject(error);
-  }
-});
-
 exports.update = (req, res, next) => {
-  const leaveRequestArray = req.body;
-  updateLeave(leaveRequestArray, req.user.id)
-    .then(() => {
-      res.json('Update Finish!');
-    })
+  const leaveRequestArray = req.body.leaveRequests;
+  Promise.all(leaveRequestArray.map(leaveRequest => LeaveRequest.update(leaveRequest, req.user.id)))
+    .then(() => res.json('Update Finish!'))
     .catch(next);
 };
 
