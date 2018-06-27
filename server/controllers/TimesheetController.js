@@ -108,6 +108,7 @@ exports.update = (req, res, next) => {
         .then(() => {
           Timesheet.findByMonthAndYear(month, year, userId)
             .then((timesheets) => {
+              console.log(timesheets);
               res.json(timesheets);
             })
             .catch(next);
