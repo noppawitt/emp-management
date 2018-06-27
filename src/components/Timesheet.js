@@ -165,23 +165,22 @@ class Timesheet extends React.Component {
               <Table.HeaderCell colSpan="7"><font size="3">{this.state.date.format('MMMM')}</font> {this.state.date.format('YYYY')}</Table.HeaderCell>
             </Table.Row>
             <Table.Row textAlign="center">
-              {this.state.days.map(day => <Table.HeaderCell>{day}</Table.HeaderCell>)}
+              {this.state.days.map(day => <Table.HeaderCell key={day}>{day}</Table.HeaderCell>)}
             </Table.Row>
           </Table.Header>
           <Table.Body >
-            { this.props.timesheets.map((timesheet, i) => (
-                i % 7 === 0 &&
-                <Table.Row style={{ height: '10em' }} >
-                  {this.drawCell(moment(this.props.timesheets[i].date), this.props.timesheets[i].totalhours, this.props.timesheets[i].id)}
-                  {this.drawCell(moment(this.props.timesheets[i + 1].date), this.props.timesheets[i + 1].totalhours, this.props.timesheets[i + 1].id)}
-                  {this.drawCell(moment(this.props.timesheets[i + 2].date), this.props.timesheets[i + 2].totalhours, this.props.timesheets[i + 2].id)}
-                  {this.drawCell(moment(this.props.timesheets[i + 3].date), this.props.timesheets[i + 3].totalhours, this.props.timesheets[i + 3].id)}
-                  {this.drawCell(moment(this.props.timesheets[i + 4].date), this.props.timesheets[i + 4].totalhours, this.props.timesheets[i + 4].id)}
-                  {this.drawCell(moment(this.props.timesheets[i + 5].date), this.props.timesheets[i + 5].totalhours, this.props.timesheets[i + 5].id)}
-                  {this.drawCell(moment(this.props.timesheets[i + 6].date), this.props.timesheets[i + 6].totalhours, this.props.timesheets[i + 6].id)}
-                </Table.Row>
-              ))
-            }
+            {this.props.timesheets.map((timesheet, i) => (
+              i % 7 === 0 &&
+              <Table.Row key={timesheet.id} style={{ height: '10em' }} >
+                {this.drawCell(moment(this.props.timesheets[i].date), this.props.timesheets[i].totalhours, this.props.timesheets[i].id)}
+                {this.drawCell(moment(this.props.timesheets[i + 1].date), this.props.timesheets[i + 1].totalhours, this.props.timesheets[i + 1].id)}
+                {this.drawCell(moment(this.props.timesheets[i + 2].date), this.props.timesheets[i + 2].totalhours, this.props.timesheets[i + 2].id)}
+                {this.drawCell(moment(this.props.timesheets[i + 3].date), this.props.timesheets[i + 3].totalhours, this.props.timesheets[i + 3].id)}
+                {this.drawCell(moment(this.props.timesheets[i + 4].date), this.props.timesheets[i + 4].totalhours, this.props.timesheets[i + 4].id)}
+                {this.drawCell(moment(this.props.timesheets[i + 5].date), this.props.timesheets[i + 5].totalhours, this.props.timesheets[i + 5].id)}
+                {this.drawCell(moment(this.props.timesheets[i + 6].date), this.props.timesheets[i + 6].totalhours, this.props.timesheets[i + 6].id)}
+              </Table.Row>
+            ))}
           </Table.Body>
         </Table>
         <Modal trigger={<Button>New Task</Button>} />

@@ -12,7 +12,7 @@ const timesheet = (state = initialState, action) => {
     case actionTypes.TIMESHEET_CREATE_SUCCESS:
       return {
         ...state,
-        lists: [...state.lists, action.payload.timesheet].sort((a, b) => a.date < b.date)
+        lists: action.payload.timesheets
       };
     case actionTypes.TIMESHEET_CREATE_FAILURE:
       return {
