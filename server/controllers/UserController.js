@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt-nodejs');
 const mail = require('../mail');
+const mailAddUser = require('../mail_template/mailAddUser');
 
 exports.findAll = (req, res, next) => {
   User.findAll()
@@ -36,7 +37,7 @@ exports.create = (req, res, next) => {
                     from: process.env.MAIL_USER,
                     to: newUser.email,
                     subject: 'Hello',
-                    html: `<p>${newUser.username} ${pass}</p>`
+                    html: mailAddUser(newUser.username, pass)
                   };
                   mail.sendMail(mailOptions, (err, info) => {
                     if (err) {
