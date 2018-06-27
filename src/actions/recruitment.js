@@ -48,8 +48,8 @@ export const sortRecruitment = (sortKey, direction) => ({
   }
 });
 
-export const isAlivePasswordExist = cid => ({
-  type: actionTypes.CHECK_ALIVE_PASSWORD_EXISTENCE,
+export const isUsablePasswordExist = cid => ({
+  type: actionTypes.CHECK_USABLE_PASSWORD_EXISTENCE,
   payload: {
     isAlivePasswordExist: cid,
   }
@@ -66,5 +66,26 @@ export const displayPassword = password => ({
   type: actionTypes.DISPLAY_PASSWORD,
   payload: {
     displayPassword: password,
+  }
+});
+
+export const activeUserRequest = cid => ({
+  type: actionTypes.RECRUITMENT_ACTIVE_USER_REQUEST,
+  payload: {
+    cid,
+  }
+});
+
+export const activeUserSuccess = passwordStatusObject => ({
+  type: actionTypes.RECRUITMENT_ACTIVE_USER_SUCCESS,
+  payload: {
+    passwordStatusObject,
+  }
+});
+
+export const activeUserFailure = error => ({
+  type: actionTypes.RECRUITMENT_ACTIVE_USER_FAILURE,
+  payload: {
+    error,
   }
 });

@@ -10,8 +10,10 @@ const initialState = {
   startDate: null,
   endDate: null,
   isDateFilterChange: false,
+  // unstable code zone
   isAlivePasswordExist: null,
   displayPassword: null,
+  alivePassword: null,
 };
 
 const Recruitment = (state = initialState, action) => {
@@ -39,7 +41,6 @@ const Recruitment = (state = initialState, action) => {
         searchText: action.payload.searchText
       };
     case actionTypes.FILTER_START_DATE_RECRUITMENT:
-      console.log('>>', state.startDate, action.payload.startDate);
       return {
         ...state,
         startDate: action.payload.startDate,
@@ -57,6 +58,25 @@ const Recruitment = (state = initialState, action) => {
         sortKey: action.payload.sortKey,
         direction: action.payload.direction
       };
+
+    // semi-unstable code zone
+    case actionTypes.RECRUITMENT_ACTIVE_USER_REQUEST:
+      return {
+        ...state,
+        cid: action.payload.cid,
+      };
+    case actionTypes.RECRUITMENT_ACTIVE_USER_SUCCESS:
+      return {
+        ...state,
+        passwordStatusObject: action.payload.passwordStatusObject,
+      };
+    case actionTypes.RECRUITMENT_ACTIVE_USER_FAILURE:
+      return {
+        ...state,
+        messege: action.payload.messege,
+      };
+
+    // unstable code zone
     case actionTypes.CHECK_ALIVE_PASSWORD_EXISTENCE:
       return {
         ...state,

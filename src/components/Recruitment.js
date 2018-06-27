@@ -18,7 +18,7 @@ const actionButtonController = (status, cid, onActivateUser) => {
     case 'Wait for Grading':
       return <Button as={Link} to="/grade_exam" fluid color="teal">Grade</Button>;
     case 'Pending':
-      return <Button onClick={() => onActivateUser(cid)} fluid primary>Activate</Button>;
+      return <Button onClick={() => { console.log('this is place that know value of cid:', cid); onActivateUser(cid); }} fluid primary>Activate</Button>;
     case 'Complete':
       return <Button as={Link} to="/view_result" fluid primary positive>View Result</Button>;
     case 'In Progress':

@@ -251,6 +251,14 @@ api.fetchAllRecruitment = () => (
   callApi(`/api/recruitments`)
 );
 
+api.checkPasswordStatus = cid => (
+  callApi(`/api/recruitments/checkPasswordStatus/?cid=${cid}`)
+);
+
+api.assignNewPassword = cid => (
+  callApi(`/api/recruitments/assignNewPassword/?cid=${cid}`)
+);
+
 // Exam
 
 api.addExam = body => (
@@ -278,17 +286,26 @@ api.editExam = body => (
   })
 );
 
-export default api;
-
 // view exam result
+
 api.fetchExamResult = id => (
   callApi(`/api/viewResult/?id=${id}`)
 );
 
-//
+// Exam Auth
+
+api.signup = form => (
+  callApi('/examAuth/signup', {
+    method: 'POST',
+    body: form
+  })
+);
+
 api.examLogin = form => (
   callApi('/examAuth/login', {
     method: 'POST',
     body: form
   })
 );
+
+export default api;

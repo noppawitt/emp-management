@@ -3,35 +3,39 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { submit, isSubmitting } from 'redux-form';
 import { closeModal } from '../../actions/modal';
-// import GeneratePasswordField from '../forms/GeneratePasswordField';
+import DisplayField from '../forms/DisplayField';
 // import { generatePasswordRequest } from '../../actions/recruitment';
 import ExamModal from '../../components/ExamModal';
 
-const GeneratePasswordModal = ({ onClose, onClick, submitting }) => (
+const ActiveUserModal = ({ onClose, onClick, submitting, passwordStatusObject }) => (
   <ExamModal
-    header="Test: Generate Password"
+    header="Active Candidate User"
     onClose={onClose}
     onClick={onClick}
     submitting={submitting}
   >
-    <generatePasswordField />
+    <DisplayField
+      passwordStatusObject={passwordStatusObject}
+    />
   </ExamModal>
 );
 
-GeneratePasswordModal.propTypes = {
+ActiveUserModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
+  passwordStatusObject: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   modalName: state.modal.name,
   submitting: isSubmitting('someAction')(state),
+  passwordStatusObject: state.recruitment.passwordStatusObject,
 });
 
 const mapDispatchToProps = dispatch => ({
   onClose: () => dispatch(closeModal()),
-  onClink: () => dispatch(submit('someAction')),
+  onClick: () => dispatch(submit('someAction')),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(GeneratePasswordModal);
+export default connect(mapStateToProps, mapDispatchToProps)(ActiveUserModal);

@@ -27,3 +27,24 @@ export const changeActiveItemRequest = newActiveItem => ({
     newActiveItem,
   }
 });
+
+export const filterViewResult = searchText => ({
+  type: actionTypes.FILTER_VIEW_RESULT,
+  payload: {
+    searchText,
+  }
+});
+
+export const filterStartDateViewResult = startDate => ({
+  type: actionTypes.FILTER_START_DATE_VIEW_RESULT,
+  payload: {
+    startDate,
+  }
+});
+
+export const filterEndDateViewResult = endDate => ({
+  type: actionTypes.FILTER_END_DATE_VIEW_RESULT,
+  payload: {
+    endDate,
+  }
+});

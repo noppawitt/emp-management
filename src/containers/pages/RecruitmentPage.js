@@ -8,8 +8,7 @@ import {
   filterRecruitment,
   filterStartDateRecruitment,
   filterEndDateRecruitment,
-  isAlivePasswordExist,
-  generatePassword,
+  activeUserRequest,
 } from '../../actions/recruitment';
 import Recruitment from '../../components/Recruitment';
 import Loader from '../../components/Loader';
@@ -28,7 +27,8 @@ const RecruitmentPage = ({
   onEndDateChange,
   startDate,
   endDate,
-  onActivateUser }) => {
+  onActivateUser,
+  alivePassword }) => {
   const handleSort = (key) => {
     if (sortKey !== key) {
       sortByKey(key, 'ascending');
@@ -52,6 +52,7 @@ const RecruitmentPage = ({
           startDate={startDate}
           endDate={endDate}
           onActivateUser={onActivateUser}
+          alivePassword={alivePassword}
         />}
     </div>
   );
@@ -69,7 +70,7 @@ RecruitmentPage.propTypes = {
   startDate: PropTypes.string.isRequired,
   endDate: PropTypes.string.isRequired,
   onActivateUser: PropTypes.func.isRequired,
-  // isDateFilterChange: PropTypes.bool.isRequired,
+  alivePassword: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -79,7 +80,7 @@ const mapStateToProps = state => ({
   sortKey: state.recruitment.sortKey,
   startDate: state.startDate,
   endDate: state.endDate,
-  // isDateFilterChange: state.isDateFilterChange,
+  alivePassword: state.recruitment.alivePassword,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -96,21 +97,30 @@ const mapDispatchToProps = dispatch => ({
   // -do nothing : generate new password
   // -query that alive password to state
   // -openModal and display it
-  // onActivateUser: cid => dispatch(openModal(modalNames.GENERATE_PASSWORD), { cid }),
   onActivateUser: cid => compose(
-    // check here any password alive and
-    // its Remaining time enought?
-    dispatch(isAlivePasswordExist(cid)) ?
-      // do nothing
-      dispatch(isAlivePasswordExist(cid)) :
-      // generate here!
-      dispatch(generatePassword(cid)),
-    // query to store new password
-    // and set new remaining time
-    dispatch(isAlivePasswordExist(cid)),
-    // show password here
-    dispatch(openModal(modalNames.SHOW_PASSWORD), { cid })
+    dispatch(activeUserRequest(cid)),
+    dispatch(openModal(modalNames.DISPLAY_PASSWORD)),
   ),
+  // check here any password alive and
+  // its Remaining time enought?
+  // now we get api >> fetchCandidatePassword
+  // console.log(cid),
+
+  // (dispatch(checkPasswordStatusSuccess(cid)).password === null ?
+  //   // do nothing
+  //   // dispatch(isUsablePasswordExist(cid)) :
+  //   console.log('Yes, It\'s null', cid) :
+  //   console.log('No, It\'s not null', cid))
+  // console.log('>>> ', dispatch(checkPasswordStatusRequest(cid)))
+  // generate here!
+  // dispatch(generatePassword(cid)),
+
+
+  // query to store new password
+  // and set new remaining time
+  // dispatch(isUsablePasswordExist(cid)),
+  // show password here
+  // dispatch(openModal(modalNames.SHOW_PASSWORD), { cid }) `\n then ),`
 
   // add Grade function
 });
