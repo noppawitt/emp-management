@@ -46,7 +46,7 @@ LeaveRequest.findAll = () => (
 );
 
 LeaveRequest.findByLeave = (leaveFrom, leaveTo, userId) => (
-  db.oneOrMany('SELECT * FROM leave_requests WHERE leave_from = $1, leave_to = $2, user_id = $3', [leaveFrom, leaveTo, userId])
+  db.manyOrNone('SELECT * FROM leave_requests WHERE leave_from = $1 AND leave_to = $2 AND user_id = $3', [leaveFrom, leaveTo, userId])
 );
 
 LeaveRequest.findByYearAndMonth = (year, month, userId) => (
