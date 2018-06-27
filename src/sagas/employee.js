@@ -6,6 +6,7 @@ import {
   createEmployeeSuccess,
   createEmployeeFailure,
 } from '../actions/employee';
+import { closeModal } from '../actions/modal';
 import api from '../services/api';
 
 export function* fetchEmployeeTask() {
@@ -24,9 +25,12 @@ export function* createEmployeeTask(action) {
       user: action.payload.form
     });
     yield put(createEmployeeSuccess());
+    yield put(closeModal());
+    action.payload.resolve();
   }
   catch (error) {
     yield put(createEmployeeFailure(error));
+    action.payload.reject();
   }
 }
 
