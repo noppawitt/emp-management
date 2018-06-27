@@ -25,14 +25,14 @@ Probation.insertProbation = (probationInfo) =>(
     probationInfo.transporationAllowance,
     probationInfo.otherAllowance,
     probationInfo.passPro,
-    probationInfo.option1,
+    probationInfo.confirmed,
     '',
     null,
     null,
     null,
-    probationInfo.option2,
+    probationInfo.continued,
     probationInfo.score,
-    probationInfo.score
+    probationInfo.expectedScore
   ])
 )
 
@@ -46,14 +46,14 @@ Probation.updateProbation = (probationInfo) =>(
       probationInfo.transporationAllowance,
       probationInfo.otherAllowance,
       probationInfo.passPro,
-      probationInfo.option1,
+      probationInfo.confirmed,
       '',
       null,
       null,
       null,
-      probationInfo.option2,
+      probationInfo.continued,
       probationInfo.score,
-      probationInfo.score,
+      probationInfo.expectedScore,
       probationInfo.employeeID
     ])
 )

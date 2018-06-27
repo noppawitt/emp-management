@@ -13,6 +13,7 @@ class ScoreTableManager extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            ...props,
             questions: props.questions,
             expectedScore: props.expectedScore || [3, 3, 3, 3, 3, 3, 3],
             score: props.score || [3, 3, 3, 3, 3, 3, 3],
@@ -32,6 +33,23 @@ class ScoreTableManager extends React.Component {
         this.totalPointAnimationManager = this.totalPointAnimationManager.bind(this);
         this.calculateSumTotalPoint = this.calculateSumTotalPoint.bind(this);
     }
+
+    // componentWillReceiveProps(props) {
+    //     console.log("Receive");
+
+    //     // this.state = {
+    //     //     ...this.state,
+    //     //     expectedScore: props.expectedScore,
+    //     //     score: props.score
+    //     // }
+
+    //     this.setState({
+    //         // expectedScore: props.expectedScore,
+    //         score: props.score
+    //     })
+    //     // console.log(props);
+    //     // console.log(this.state);
+    // }
 
     componentDidUpdate() {
         this.props.onChange(this.state.score, this.state.expectedScore);
@@ -62,7 +80,7 @@ class ScoreTableManager extends React.Component {
         let values = [];
         for (let i = 0; i < this.state.numOfQuestion; i++) {
             let temp = document.getElementById(`expectScore${i}`);
-            values.push(temp.value);
+            values.push(parseInt(temp.value));
         }
         this.setState({ expectedScore: values });
     }
@@ -71,7 +89,7 @@ class ScoreTableManager extends React.Component {
         let values = [];
         for (let i = 0; i < this.state.numOfQuestion; i++) {
             let temp = document.getElementById(`score${i}`);
-            values.push(temp.value);
+            values.push(parseInt(temp.value));
         }
         this.setState({ score: values }, this.updateTotalPoint);
     }

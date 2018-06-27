@@ -1,6 +1,6 @@
 import React from 'react';
 import './css/ProbationForm.css';
-import ScoreManager from './components/ScoreTableManager';
+import ScoreTableManager from './components/ScoreTableManager';
 import EmployeeInfo from './components/EmployeeInfoComponent';
 import SignatureComponent from './components/SignatureComponent';
 import EvaluationResultComponent from './components/EvaluationResultComponent';
@@ -51,18 +51,15 @@ class ProbationForm extends React.Component {
     }
 
     scoreTableStateHandler(newScore, newExpectedScore) {
-        this.state = {
-            ...this.state,
+        this.setState({
             score: newScore,
             expectedScore: newExpectedScore
-        };
+        });
+        console.log("testtesttest");
     }
 
     supervisorCommentHandler(newComment) {
-        this.state = {
-            ...this.state,
-            supervisorComment: newComment
-        }
+        this.setState({ supervisorComment: newComment });
     }
 
     evaluationResultHandler(newPassPro, newConfirmed, newContinued, newEndProbationDate,
@@ -98,26 +95,25 @@ class ProbationForm extends React.Component {
         }
     }
 
-    componentDidUpdate() {
-        console.log("test1");
-        console.log(this.state);
-    }
-
     shouldComponentUpdate(nextProps, nextState) {
         return (nextState.score != this.state.score ||
             nextState.passPro != this.state.passPro ||
-            nextState.option1 != this.state.option1 ||
-            nextState.option2 != this.state.option2 ||
+            nextState.confirmed != this.state.confirmed ||
+            nextState.continued != this.state.continued ||
             nextState.basedSalary != this.state.basedSalary ||
             nextState.mobile != this.state.mobile ||
             nextState.transporationAllowance != this.state.transporationAllowance ||
             nextState.otherAllowance != this.state.otherAllowance ||
-            nextState.endProbationDate != this.state.endProbationDate
+            nextState.endProbationDate != this.state.endProbationDate ||
+            nextState.expectedScore != this.state.expectedScore ||
+            nextState.terminationDate != this.state.terminationDate ||
+            nextState.continuedDate != this.state.continuedDate
         )
     }
 
     componentDidUpdate() {
-        this.props.test(this.state);
+        // this.props.test(this.state);
+        console.log(this.state);
     }
 
     render() {
@@ -130,7 +126,7 @@ class ProbationForm extends React.Component {
                 <EmployeeInfo {...this.state} showEndProDate='true' onChange={this.employeeStateHandler} />
                 <br />
                 <div>
-                    <ScoreManager questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} onChange={this.scoreTableStateHandler} />
+                    <ScoreTableManager {...this.state} questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} onChange={this.scoreTableStateHandler} />
                 </div>
                 <br />
                 <EvaluationResultComponent {...this.state} onChange={this.evaluationResultHandler} />
