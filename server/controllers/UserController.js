@@ -13,7 +13,6 @@ exports.findAll = (req, res, next) => {
 
 exports.create = (req, res, next) => {
   const newUser = req.body.user;
-  const pass = newUser.password;
   User.findByName(newUser.firstName, newUser.lastName)
     .then((user1) => {
       if (user1) {
@@ -37,7 +36,7 @@ exports.create = (req, res, next) => {
                     from: process.env.MAIL_USER,
                     to: newUser.username,
                     subject: 'Playtorium Account Information',
-                    html: mailAddUser(newUser.username, pass)
+                    html: mailAddUser(newUser.username, 'playtorium')
                   };
                   console.log(pass);
                   mail.sendMail(mailOptions, (err, info) => {
