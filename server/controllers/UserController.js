@@ -35,8 +35,8 @@ exports.create = (req, res, next) => {
                 .then((createdUser) => {
                   const mailOptions = {
                     from: process.env.MAIL_USER,
-                    to: newUser.email,
-                    subject: 'Hello',
+                    to: newUser.username,
+                    subject: 'Playtorium Account Information',
                     html: mailAddUser(newUser.username, pass)
                   };
                   mail.sendMail(mailOptions, (err, info) => {
