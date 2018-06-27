@@ -29,7 +29,7 @@ const calTotalHours = (timeIn, timeOut) => new Promise((resolve, reject) => {
     const timeInHour = moment(timeIn, 'HH:mm').hour();
     const timeOutHour = moment(timeOut, 'HH:mm').hour();
     const diff = endTime.subtract(startTime);
-    const min = (diff.minutes() / 60) * 100;
+    const min = (diff.minutes() / 60);
     if (timeInHour <= 12 && timeOutHour <= 12) {
       totalhours = diff.hours() + min;
     }

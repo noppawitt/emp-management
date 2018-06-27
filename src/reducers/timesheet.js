@@ -28,6 +28,21 @@ const timesheet = (state = initialState, action) => {
         isFetching: false,
         lists: action.payload.timesheets
       };
+    case actionTypes.TIMESHEET_UPDATE_REQUEST:
+      return {
+        ...state,
+        form: action.payload.form
+      };
+    case actionTypes.TIMESHEET_UPDATE_SUCCESS:
+      return {
+        ...state,
+        lists: action.payload.timesheets
+      };
+    case actionTypes.TIMESHEET_UPDATE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
     default:
       return state;
   }
