@@ -35,10 +35,15 @@ class ProbationForm extends React.Component {
             mobile: null,
             transporationAllowance: null,
             otherAllowance: null,
+            supervisorComment: '',
+            terminationDate: null,
+            continuedDate: null
         };
 
         this.employeeStateHandler = this.employeeStateHandler.bind(this);
         this.scoreTableStateHandler = this.scoreTableStateHandler.bind(this);
+        this.supervisorCommentHandler = this.supervisorCommentHandler.bind(this);
+        this.evaluationResultHandler = this.evaluationResultHandler.bind(this);
     }
 
     employeeStateHandler(newEndProbationDate) {
@@ -46,13 +51,35 @@ class ProbationForm extends React.Component {
     }
 
     scoreTableStateHandler(newScore, newExpectedScore) {
-        this.state = ({ 
-            ...this.state, 
+        this.state = {
+            ...this.state,
             score: newScore,
             expectedScore: newExpectedScore
-         })
+        };
+    }
 
-        console.log(this.state);
+    supervisorCommentHandler(newComment) {
+        this.state = {
+            ...this.state,
+            supervisorComment: newComment
+        }
+    }
+
+    evaluationResultHandler(newPassPro, newConfirmed, newContinued, newEndProbationDate,
+        newTerminationDate, newContinuedDate, newBasedSalary, newMoblie,
+        newTransporationAllowance, newOtherAllowance) {
+        this.setState({
+            passPro: newPassPro,
+            confirmed: newConfirmed,
+            continued: newContinued,
+            endProbationDate: newEndProbationDate,
+            terminationDate: newTerminationDate,
+            continuedDate: newContinuedDate,
+            basedSalary: newBasedSalary,
+            mobile: newMoblie,
+            transporationAllowance: newTransporationAllowance,
+            otherAllowance: newOtherAllowance
+        });
     }
 
     componentWillMount() {
@@ -69,6 +96,11 @@ class ProbationForm extends React.Component {
                 otherAllowance: this.props.profile.eva.otherAllowance
             })
         }
+    }
+
+    componentDidUpdate() {
+        console.log("test1");
+        console.log(this.state);
     }
 
     // shouldComponentUpdate(nextProps, nextState) {
@@ -101,9 +133,9 @@ class ProbationForm extends React.Component {
                     <ScoreManager questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} onChange={this.scoreTableStateHandler} />
                 </div>
                 <br />
-                <EvaluationResultComponent {...this.state} />
+                <EvaluationResultComponent {...this.state} onChange={this.evaluationResultHandler} />
                 <br />
-                <SupervisorCommentComponent {...this.state} />
+                <SupervisorCommentComponent {...this.state} onChange={this.supervisorCommentHandler} />
                 <br />
                 <SignatureComponent {...this.state} />
             </div>

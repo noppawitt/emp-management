@@ -11,9 +11,9 @@ class EvaluationResultComponent extends React.Component {
 
         this.state = {
             ...this.props,
-            passPro: this.props.passPro!==null ? this.props.passPro : true,
-            confirmed: this.props.confirmed!==null ? this.props.confirmed :true,
-            continued: this.props.continued!==null ? this.props.continued : true,
+            passPro: this.props.passPro !== null ? this.props.passPro : true,
+            confirmed: this.props.confirmed !== null ? this.props.confirmed : true,
+            continued: this.props.continued !== null ? this.props.continued : true,
             passProDate: '',
             terminationDate: this.props.terminationDate || '',
             continuedDate: this.props.continuedDate || ''
@@ -26,6 +26,40 @@ class EvaluationResultComponent extends React.Component {
         this.closeProElement2 = this.closeProElement2.bind(this);
         this.closeProElement3 = this.closeProElement3.bind(this);
         this.updateProElements = this.updateProElements.bind(this);
+        this.updateParentComponent = this.updateParentComponent.bind(this);
+    }
+
+    componentWillReceiveProps(props) {
+        this.setState({
+            passPro: props.passPro,
+            confirmed: props.confirmed,
+            continued: props.continued,
+            passProDate: props.endProbationDate,
+            terminationDate: props.terminationDate,
+            continuedDate: props.continuedDate,
+            basedSalary: props.basedSalary,
+            mobile: props.mobile,
+            transporationAllowance: props.transporationAllowance,
+            otherAllowance: props.otherAllowance
+        })
+    }
+
+    updateParentComponent() {
+        this.props.onChange(
+            this.state.passPro,
+            this.state.confirmed,
+            this.state.continued,
+            this.state.passProDate,
+            this.state.terminationDate,
+            this.state.continuedDate,
+            this.state.basedSalary,
+            this.state.mobile,
+            this.state.transporationAllowance,
+            this.state.otherAllowance
+        );
+
+        console.log("test2");
+        console.log(this.state);
     }
 
     componentDidMount() {
@@ -105,14 +139,16 @@ class EvaluationResultComponent extends React.Component {
                         <table>
                             <tr>
                                 <td>
-                                    <input type='radio' name='pass-pro' onClick={() => this.setState({ passPro: true })} checked={this.state.passPro} />
-                                    Pass probationary period. Effective date on
+                                    <input type='radio' name='pass-pro' onClick={() => {
+                                        this.state = { ...this.state, passPro: true };
+                                        this.updateParentComponent();
+                                    }} checked={this.state.passPro} />
+                                    Pass probationary period.Effective date on
                                 </td>
                                 <td>
                                     <DatePicker selected={this.state.passProDate} onChange={(date) => {
-                                        this.setState({
-                                            passProDate: date
-                                        })
+                                        this.state = { ...this.state, passProDate: date };
+                                        this.updateParentComponent();
                                     }} dateFormat='DD/MM/YYYY' disabled={!this.state.passPro} />
                                 </td>
                             </tr>
@@ -122,11 +158,17 @@ class EvaluationResultComponent extends React.Component {
                                         <table className='inner-table-second'>
                                             <tr>
                                                 <td>
-                                                    <input type='radio' name='confirm-con' onClick={() => this.setState({ confirmed: true })} checked={this.state.confirmed} />
+                                                    <input type='radio' name='confirm-con' onClick={() => {
+                                                        this.state = { ...this.state, confirmed: true };
+                                                        this.updateParentComponent();
+                                                    }} checked={this.state.confirmed} />
                                                     Confirmed By Employment Conditions
                                                 </td>
                                                 <td>
-                                                    <input type='radio' name='confirm-con' onClick={() => this.setState({ confirmed: false })} checked={!this.state.confirmed} />
+                                                    <input type='radio' name='confirm-con' onClick={() => {
+                                                        this.state = { ...this.state, confirmed: false };
+                                                        this.updateParentComponent();
+                                                    }} checked={!this.state.confirmed} />
                                                     Adjust the Salary and Benefits
                                                 </td>
                                             </tr>
@@ -143,13 +185,19 @@ class EvaluationResultComponent extends React.Component {
                                                     Based Salary
                                                 </td>
                                                 <td>
-                                                    <input type='text' />
+                                                    <input type='text' value={this.state.basedSalary} onChange={(event) => {
+                                                        this.state = { ...this.state, basedSalary: event.target.value };
+                                                        this.updateParentComponent();
+                                                    }} />
                                                 </td>
                                                 <td>
                                                     Mobile
                                                 </td>
                                                 <td>
-                                                    <input type='text' />
+                                                    <input type='text' value={this.state.mobile} onChange={(event) => {
+                                                        this.state = { ...this.state, mobile: event.target.value };
+                                                        this.updateParentComponent();
+                                                    }} />
                                                 </td>
                                             </tr>
                                             <tr>
@@ -157,13 +205,19 @@ class EvaluationResultComponent extends React.Component {
                                                     Transporation Allowance
                                                 </td>
                                                 <td>
-                                                    <input type='text' />
+                                                    <input type='text' value={this.state.transporationAllowance} onChange={(event) => {
+                                                        this.state = { ...this.state, transporationAllowance: event.target.value };
+                                                        this.updateParentComponent();
+                                                    }} />
                                                 </td>
                                                 <td>
                                                     Others Allowance
                                                 </td>
                                                 <td>
-                                                    <input type='text' />
+                                                    <input type='text' value={this.state.otherAllowance} onChange={(event) => {
+                                                        this.state = { ...this.state, otherAllowance: event.target.value };
+                                                        this.updateParentComponent();
+                                                    }} />
                                                 </td>
                                             </tr>
                                         </table>
@@ -176,7 +230,10 @@ class EvaluationResultComponent extends React.Component {
                         <table>
                             <tr>
                                 <td>
-                                    <input type='radio' name='pass-pro' onClick={() => this.setState({ passPro: false })} checked={!this.state.passPro} />
+                                    <input type='radio' name='pass-pro' onClick={() => {
+                                        this.state = { ...this.state, passPro: false };
+                                        this.updateParentComponent();
+                                    }} checked={!this.state.passPro} />
                                     This person does not pass probation period. Action to be taken
                                 </td>
                             </tr>
@@ -186,28 +243,32 @@ class EvaluationResultComponent extends React.Component {
                                         <table className='inner-table-second'>
                                             <tr>
                                                 <td>
-                                                    <input type='radio' name='terminate' onClick={() => this.setState({ continued: true })} checked={this.state.continued} />
+                                                    <input type='radio' name='terminate' onClick={() => {
+                                                        this.state = { ...this.state, continued: false };
+                                                        this.updateParentComponent();
+                                                    }} checked={!this.state.continued} />
                                                     Termination Effective
                                                 </td>
                                                 <td>
                                                     <DatePicker selected={this.state.terminationDate} onChange={(date) => {
-                                                        this.setState({
-                                                            terminationDate: date
-                                                        })
-                                                    }} dateFormat='DD/MM/YYYY' disabled={!this.state.terminate} />
+                                                        this.state = { ...this.state, terminationDate: date };
+                                                        this.updateParentComponent();
+                                                    }} dateFormat='DD/MM/YYYY' disabled={this.state.continued} />
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <input type='radio' name='terminate' onClick={() => this.setState({ continued: false })} checked={!this.state.continued} />
+                                                    <input type='radio' name='terminate' onClick={() => {
+                                                        this.state = { continued: true };
+                                                        this.updateParentComponent();
+                                                    }} checked={this.state.continued} />
                                                     Continued probation untill
                                                 </td>
                                                 <td>
                                                     <DatePicker selected={this.state.continuedDate} onChange={(date) => {
-                                                        this.setState({
-                                                            continuedDate: date
-                                                        })
-                                                    }} dateFormat='DD/MM/YYYY' disabled={this.state.continued} />
+                                                        this.state = { ...this.state, continuedDate: date };
+                                                        this.updateParentComponent();
+                                                    }} dateFormat='DD/MM/YYYY' disabled={!this.state.continued} />
                                                 </td>
                                             </tr>
                                         </table>

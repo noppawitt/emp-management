@@ -49,7 +49,7 @@ class EmployeeInfo extends React.Component {
                     <tr>
                         <td>Level:</td>
                         <td>{this.state.level}</td>
-                        <td>{this.state.endProbationDate ? 'Probatoin ' : ''} Start Date</td>
+                        <td>{this.state.showEndProDate ? 'Probatoin ' : ''} Start Date</td>
                         <td>{this.state.startDate.format('DD/MM/YYYY')}</td>
                     </tr>
                     <tr>
