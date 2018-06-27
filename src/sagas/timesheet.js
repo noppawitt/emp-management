@@ -37,8 +37,8 @@ export function* fetchTimesheetTask(action) {
 export function* updateTimesheetTask(action) {
   try {
     const timesheets = yield call(api.updateTimesheet, { timesheet: action.payload.form });
-    yield put(updateTimesheetSuccess(timesheets));
     yield put(closeModal());
+    yield put(updateTimesheetSuccess(timesheets));
     action.payload.resolve();
   }
   catch (error) {
