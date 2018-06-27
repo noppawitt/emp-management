@@ -14,7 +14,7 @@ import api from '../services/api';
 export function* createLeaveTask(action) {
   try {
     yield call(api.createLeave, { leaveRequest: action.payload.form });
-    const leaves = yield call(api.fetchLeave);
+    const leaves = yield call(api.fetchLeave, action.payload.form.userId);
     yield put(createLeaveSuccess(leaves));
     yield put(closeModal());
     action.payload.resolve();
