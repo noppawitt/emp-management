@@ -14,7 +14,6 @@ import api from '../services/api';
 export function* createTimesheetTask(action) {
   try {
     const timesheet = yield call(api.createTimesheet, { timesheets: [action.payload.form] });
-    console.log(timesheet);
     yield put(createTimesheetSuccess(timesheet));
     yield put(closeModal());
     action.payload.resolve();
@@ -39,9 +38,12 @@ export function* updateTimesheetTask(action) {
   try {
     const timesheet = yield call(api.updateTimesheet, { timesheet: action.payload.form });
     yield put(updateTimesheetSuccess(timesheet));
+    yield put(closeModal());
+    action.payload.resolve();
   }
   catch (error) {
     yield put(updateTimesheetFailure(error));
+    action.payload.reject();
   }
 }
 

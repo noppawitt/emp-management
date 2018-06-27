@@ -35,7 +35,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchTimesheet: id => dispatch(fetchTimesheetRequest(id)),
   onAddClick: date => dispatch(openModal(modalNames.ADD_TIMESHEET, { date })),
-  onEditClick: date => dispatch(openModal(modalNames.EDIT_TIMESHEET, { date }))
+  onEditClick: id => dispatch(openModal(modalNames.EDIT_TIMESHEET, { id }))
 });
 
 const enhance = compose(
