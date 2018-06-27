@@ -37,7 +37,7 @@ export function* fetchLeaveTask(action) {
 
 export function* updateLeaveTask(action) {
   try {
-    const leaves = yield call(api.updateLeave, {
+    yield call(api.updateLeave, {
       leaveRequests: [{
         userId: action.payload.userId,
         status: action.payload.leave.status,
@@ -45,6 +45,7 @@ export function* updateLeaveTask(action) {
         leaveTo: action.payload.leave.leaveTo
       }]
     });
+    const leaves = yield call(api.fetchLeave, action.payload.userId);
     yield put(updateLeaveSuccess(leaves));
     yield put(closeModal());
   }
