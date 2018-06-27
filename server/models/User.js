@@ -15,14 +15,15 @@ User.create = (user, id) => (
       ]
     );
     const q2 = transaction.one(
-      'INSERT INTO employee_info (first_name, last_name, citizen_id, created_user, updated_user, email) VALUES ($1, $2, $3, $4, $5, $6) RETURNING 1',
+      'INSERT INTO employee_info (first_name, last_name, citizen_id, created_user, updated_user, email, gender) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING 1',
       [
         user.firstName,
         user.lastName,
         user.citizenId,
         id,
         id,
-        user.username
+        user.username,
+        user.gender
       ]
     );
     const q3 = transaction.one(
