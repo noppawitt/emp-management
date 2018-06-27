@@ -111,9 +111,15 @@ exports.createReport = (req, res, next) => {
               worksheet.getCell(`D${day + 7}`).value = timesheet[k].timeIn;
               worksheet.getCell(`E${day + 7}`).value = timesheet[k].timeOut;
               worksheet.getCell(`F${day + 7}`).value = timesheet[k].totalhours;
-              // if (excelType.reportType === 'Timesheet (Special)') {
-              //   if ()
-              // }
+            }
+
+            // for timesheet special
+            if (excelType.reportType === 'Timesheet (Special)') {
+              for (let i = 0; i < holidayDates.length; i += 1) {
+                if (worksheet.getCell(`D${holidayDates[i] + 7}`).value && worksheet.getCell(`E${holidayDates[i] + 7}`).value) {
+
+                }
+              }
             }
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             res.setHeader('Content-Disposition', `attachment; filename="Timesheet_${excelType.year}_${excelType.month}_${excelType.projectId}.xlsx`);
