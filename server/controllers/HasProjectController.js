@@ -30,3 +30,15 @@ exports.findByUserId = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.delete = (req, res, next) => {
+  HasProject.delete(req.body.userId, req.body.projectId)
+    .then(() => {
+      Project.findMemberProject(req.body.projectId)
+        .then((members) => {
+          res.json(members);
+        })
+        .catch(next);
+    })
+    .catch(next);
+};

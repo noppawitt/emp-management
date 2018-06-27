@@ -47,6 +47,59 @@ const fillBorderAllRow = (worksheet, row) => {
   }
 };
 
+const calHolidayWorkHour = (timeIn, timeOut) => new Promise((resolve, reject) => {
+  try {
+    switch (timeIn) {
+      case '12:30':
+        timeIn = '13:00';
+        break;
+      case '18:30':
+        timeIn = '19:00';
+        break;
+      default:
+        break;
+    }
+    switch (timeOut) {
+      case '12:30':
+        timeOut = '12:00';
+        break;
+      case '18:30':
+        timeOut = '18:00';
+        break;
+      default:
+        break;
+    } 
+    const totalhours = {};
+    const startTime = moment.duration(timeIn, 'HH:mm');
+    let endTime = moment.duration(timeOut, 'HH:mm');
+    const timeInHour = moment(timeIn, 'HH:mm').hour();
+    const timeOutHour = moment(timeOut, 'HH:mm').hour();
+    if (timeOutHour >= 19) {
+      endTime = moment.duration('18:00', 'HH:mm');
+    }
+    else if (timeOutHour <= 18) {
+      const diff = endTime.subtract(startTime);
+      const min = (diff.minutes() / 60);
+      if (timeInHour <= 12 && timeOutHour <= 12) {
+        totalhours.holidayWork = diff.hours() + min;
+        totalhours.holidayNonWork = 0;
+      }
+      else if (timeInHour <= 12 && timeOutHour <= 18) {
+        const hour = diff.hours() - 1;
+        totalhours.holidayWork = hour + min;
+        totalhours.holidayNonWork = 0;
+      }
+      else if (timeInHour >= 13 && timeOutHour <= 18) {
+        totalhours.holidayWork = diff.hours() + min;
+        totalhours.holidayNonWork = 0;
+      }
+    }
+  }
+  catch (error) {
+    reject(error);
+  }
+});
+
 exports.createReport = (req, res, next) => {
   const { excelType } = req.body;
   if (excelType.reportType === 'Timesheet (Normal)' || excelType.reportType === 'Timesheet (Special)') {
@@ -177,31 +230,6 @@ exports.createReport = (req, res, next) => {
             workbook.xlsx.write(res);
           })
           .catch(next);
-        // let row = 4;
-        // User.findAll()
-        //   .then(async (users) => {
-        //     for (let i = 0; i < users.length; i += 1) {
-        //       // write user
-        //       const employeeInfo = await EmployeeInfo.findById(users[i].id);
-        //       worksheet.getCell(`B${row}`).value = employeeInfo.userId;
-        //       worksheet.getCell(`C${row}`).value = `${employeeInfo.firstName} ${employeeInfo.lastName}`;
-        //       fillBorderAllRow(worksheet, row);
-        //       row += 1;
-        //       // write each project
-        //       const projects = await HasProject.findByUserIdAndYear(users[i].id, excelType.year);
-        //       for (let j = 0; j < projects.length; j += 1) {
-        //         worksheet.getCell(`D${row}`).value = projects[j].id;
-        //         // write sum day each month
-        //         for (let k = 1; k <= 12; k += 1) {
-        //           const totalDays = await Timesheet.findTimesheetInProject(excelType.year, k, projects[j].id, users[i].id);
-        //           worksheet.getCell(`${monthColumn[k - 1]}${row}`).value = totalDays;
-        //         }
-        //         fillBorderAllRow(worksheet, row);
-        //         row += 1;
-        //       }
-        //     }
-        //   })
-        //   .catch(next);
       })
       .catch(next);
   }

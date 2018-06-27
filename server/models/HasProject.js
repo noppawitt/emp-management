@@ -40,4 +40,8 @@ HasProject.findByUserIdAndYear = (userId, year) => (
   db.manyOrNone('SELECT * FROM has_projects WHERE user_id = $1 AND extract(year from start_date) = $2', [userId, year])
 );
 
+HasProject.delete = (userId, projectId) => (
+  db.none('DELETE FROM has_projects WHERE user_id = $1 AND project_id = $2', [userId, projectId])
+);
+
 module.exports = HasProject;
