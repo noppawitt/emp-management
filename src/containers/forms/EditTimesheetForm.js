@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { compose } from 'recompose';
+import { compose, lifecycle } from 'recompose';
 import { Field, reduxForm } from 'redux-form';
 import { Form } from 'semantic-ui-react';
 import Input from '../../components/Input';
+import { fetchProjectRequest } from '../../actions/project';
+import { getTimesheetById } from '../../selectors/timesheet';
+import { projectsToOptions } from '../../selectors/project';
 import * as validator from '../../utils/validator';
 
 const validate = (values) => {
@@ -21,9 +24,9 @@ const taskOptions = [
   { key: 'Meeting', value: 'Meeting', text: 'Meeting' }
 ];
 
-const EditTimesheetForm = ({ handleSubmit, submitting }) => (
+const EditTimesheetForm = ({ handleSubmit, submitting, projects }) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="projectId" as={Form.Input} component={Input} label="Project" placeholder="Project" disabled={submitting} />
+    <Field name="projectId" as={Form.Dropdown} component={Input} search selection label="Project" placeholder="Project" options={projects} disabled={submitting} />
     <Form.Group widths="equal">
       <Field name="timeIn" as={Form.Input} component={Input} type="time" label="Time in" placeholder="Time in" disabled={submitting} />
       <Field name="timeOut" as={Form.Input} component={Input} type="time" label="Time out" placeholder="Time out" disabled={submitting} />
@@ -33,20 +36,40 @@ const EditTimesheetForm = ({ handleSubmit, submitting }) => (
   </Form>
 );
 
-EditTimesheetForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired
+EditTimesheetForm.defaultProps = {
+  projects: []
 };
 
-const mapStateToProps = (state, { date }) => ({
-  initialValue: {
+EditTimesheetForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired,
+  projects: PropTypes.array
+};
+
+const mapStateToProps = (state, { id }) => ({
+  initialValues: {
     userId: state.auth.id,
-    date
-  }
+    projectId: getTimesheetById(state, id).projectId,
+    timeIn: getTimesheetById(state, id).timeIn,
+    timeOut: getTimesheetById(state, id).timeOut,
+    task: getTimesheetById(state, id).task,
+    description: getTimesheetById(state, id).description
+  },
+  projects: projectsToOptions(state)
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchProject: () => dispatch(fetchProjectRequest())
 });
 
 const enhance = compose(
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
+  lifecycle({
+    componentDidMount() {
+      const { fetchProject } = this.props;
+      fetchProject();
+    }
+  }),
   reduxForm({
     form: 'editTimesheet',
     validate

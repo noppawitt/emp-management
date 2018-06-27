@@ -37,17 +37,17 @@ class Timesheet extends React.Component {
     this.buttonOfHoliday = this.buttonOfHoliday.bind(this);
   }
 
-  drawCell(date, hour) {
+  drawCell(date, hour, id) {
     if (date.format('M') !== this.state.date.format('M')) {
       return (this.anotherMonthCell(date.format('D')));
     }
     else if (this.isHoliday(date)) {
-      return (this.holidayCell(date, hour));
+      return (this.holidayCell(date, hour, id));
     }
     else if (date.format('d') === '0' || date.format('d') === '6') {
-      return (this.holidayCell(date, hour));
+      return (this.holidayCell(date, hour, id));
     }
-    return (this.workdayCell(date, hour));
+    return (this.workdayCell(date, hour, id));
   }
 
   isHoliday(date) {
@@ -59,7 +59,7 @@ class Timesheet extends React.Component {
     }
     return false;
   }
-  editButtonWorkday(date, hour) {
+  editButtonWorkday(date, hour, id) {
     let color = '';
     let iconcolor = '';
     if (hour !== 8) { color = this.state.ButtonRedcolor; iconcolor = this.state.iconRedcolor; }
@@ -76,7 +76,7 @@ class Timesheet extends React.Component {
     else if (hour === 8) { color = this.state.textWorkcolor; iconcolor = this.state.iconBluecolor; }
     return (
       <Grid.Row textAlign="center">
-        <Button animated="fade" style={{ borderStyle: 'solid', borderColor: color, backgroundColor: 'white', borderWidth: '1px' }} onClick={() => this.props.onEditClick(date.format('YYYY-MM-DD'))} >
+        <Button animated="fade" style={{ borderStyle: 'solid', borderColor: color, backgroundColor: 'white', borderWidth: '1px' }} onClick={() => this.props.onEditClick(id)} >
           <Button.Content visible><font color={color} >{hour} Hours</font></Button.Content>
           <Button.Content hidden > <Icon color={iconcolor} name="pencil alternate" /> </Button.Content>
         </Button>
@@ -95,7 +95,7 @@ class Timesheet extends React.Component {
       </Table.Cell>
     );
   }
-  holidayCell(date, hour) {
+  holidayCell(date, hour, id) {
     return (
       <Table.Cell style={{ backgroundColor: this.state.holidaycolor, maxWidth: '10em' }} >
         <Grid.Column>
@@ -103,16 +103,16 @@ class Timesheet extends React.Component {
             <font size="3" ><b>{date.format('D')}</b></font>
           </Grid.Row>
           {this.addHolidayName(date.format('D'))}
-          {this.buttonOfHoliday(date, hour)}
+          {this.buttonOfHoliday(date, hour, id)}
         </Grid.Column>
       </Table.Cell>
     );
   }
-  buttonOfHoliday(date, hour) {
+  buttonOfHoliday(date, hour, id) {
     if (hour !== 0) {
       return (
         <Grid.Row textAlign="center">
-          <Button animated="fade" style={{ borderStyle: 'solid', borderColor: this.state.textWorkcolor, backgroundColor: 'white', borderWidth: '1px' }} onClick={() => this.props.onEditClick(date.format('YYYY-MM-DD'))} >
+          <Button animated="fade" style={{ borderStyle: 'solid', borderColor: this.state.textWorkcolor, backgroundColor: 'white', borderWidth: '1px' }} onClick={() => this.props.onEditClick(id)} >
             <Button.Content visible><font color={this.state.textWorkcolor}>{hour} Hours</font></Button.Content>
             <Button.Content hidden > <Icon color="blue" name="pencil alternate" /> </Button.Content>
           </Button>
@@ -138,7 +138,7 @@ class Timesheet extends React.Component {
     }
     return (<Grid.Row style={{ height: '5em' }} />);
   }
-  workdayCell(date, hour) {
+  workdayCell(date, hour, id) {
     return (
       <Table.Cell >
         <Grid.Column>
@@ -146,7 +146,7 @@ class Timesheet extends React.Component {
             <font size="3" ><b>{date.format('D')}</b></font>
           </Grid.Row>
           <Grid.Row style={{ height: '5em' }} />
-          {this.editButtonWorkday(date, hour)}
+          {this.editButtonWorkday(date, hour, id)}
         </Grid.Column>
       </Table.Cell>
     );
@@ -172,13 +172,13 @@ class Timesheet extends React.Component {
             { this.props.timesheets.map((timesheet, i) => (
                 i % 7 === 0 &&
                 <Table.Row style={{ height: '10em' }} >
-                  {this.drawCell(moment(this.props.timesheets[i].date), this.props.timesheets[i].totalhours)}
-                  {this.drawCell(moment(this.props.timesheets[i + 1].date), this.props.timesheets[i + 1].totalhours)}
-                  {this.drawCell(moment(this.props.timesheets[i + 2].date), this.props.timesheets[i + 2].totalhours)}
-                  {this.drawCell(moment(this.props.timesheets[i + 3].date), this.props.timesheets[i + 3].totalhours)}
-                  {this.drawCell(moment(this.props.timesheets[i + 4].date), this.props.timesheets[i + 4].totalhours)}
-                  {this.drawCell(moment(this.props.timesheets[i + 5].date), this.props.timesheets[i + 5].totalhours)}
-                  {this.drawCell(moment(this.props.timesheets[i + 6].date), this.props.timesheets[i + 6].totalhours)}
+                  {this.drawCell(moment(this.props.timesheets[i].date), this.props.timesheets[i].totalhours, this.props.timesheets[i].id)}
+                  {this.drawCell(moment(this.props.timesheets[i + 1].date), this.props.timesheets[i + 1].totalhours, this.props.timesheets[i + 1].id)}
+                  {this.drawCell(moment(this.props.timesheets[i + 2].date), this.props.timesheets[i + 2].totalhours, this.props.timesheets[i + 2].id)}
+                  {this.drawCell(moment(this.props.timesheets[i + 3].date), this.props.timesheets[i + 3].totalhours, this.props.timesheets[i + 3].id)}
+                  {this.drawCell(moment(this.props.timesheets[i + 4].date), this.props.timesheets[i + 4].totalhours, this.props.timesheets[i + 4].id)}
+                  {this.drawCell(moment(this.props.timesheets[i + 5].date), this.props.timesheets[i + 5].totalhours, this.props.timesheets[i + 5].id)}
+                  {this.drawCell(moment(this.props.timesheets[i + 6].date), this.props.timesheets[i + 6].totalhours, this.props.timesheets[i + 6].id)}
                 </Table.Row>
               ))
             }

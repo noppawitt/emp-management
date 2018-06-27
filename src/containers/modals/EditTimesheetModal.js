@@ -8,34 +8,34 @@ import Modal from '../../components/Modal';
 import EditTimesheetForm from '../forms/EditTimesheetForm';
 import { handleReduxFormSubmit } from '../../utils/helper';
 
-const EditTimesheetModal = ({ onClose, onSubmit, submitting, onClick, date }) => (
+const EditTimesheetModal = ({ onClose, onSubmit, submitting, onClick, id }) => (
   <Modal
     header="Edit timesheet"
     onClose={onClose}
     onClick={onClick}
     submitting={submitting}
   >
-    <EditTimesheetForm date={date} onSubmit={values => onSubmit(values)} />
+    <EditTimesheetForm id={id} onSubmit={values => onSubmit(values)} />
   </Modal>
 );
 
 EditTimesheetModal.propTypes = {
+  id: PropTypes.number.isRequired,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired,
-  date: PropTypes.string.isRequired
+  onClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   modalName: state.modal.name,
-  submitting: isSubmitting('addTimesheet')(state)
+  submitting: isSubmitting('editTimesheet')(state)
 });
 
 const mapDispatchToProps = dispatch => ({
   onClose: () => dispatch(closeModal()),
   onSubmit: values => handleReduxFormSubmit(dispatch, updateTimesheetRequest, values),
-  onClick: () => dispatch(submit('addTimesheet'))
+  onClick: () => dispatch(submit('editTimesheet'))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditTimesheetModal);

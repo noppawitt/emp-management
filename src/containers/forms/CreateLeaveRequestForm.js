@@ -70,7 +70,13 @@ CreateLeaveRequestForm.propTypes = {
 const selector = formValueSelector('createLeaveRequest');
 
 const mapStateToProps = state => ({
-  duration: selector(state, 'duration')
+  duration: selector(state, 'duration'),
+  initialValues: {
+    userId: state.auth.id,
+    duration: 'Full day',
+    startTime: '09:00:00',
+    endTime: '18:00:00'
+  }
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -82,12 +88,7 @@ const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   reduxForm({
     form: 'createLeaveRequest',
-    validate,
-    initialValues: {
-      duration: 'Full day',
-      startTime: '09:00:00',
-      endTime: '18:00:00'
-    }
+    validate
   })
 );
 
