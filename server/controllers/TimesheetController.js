@@ -98,12 +98,19 @@ exports.create = (req, res, next) => {
 
 exports.update = (req, res, next) => {
   const editTimesheet = req.body.timesheet;
+  const month = moment(editTimesheet.date, 'YYYY-MM-DD').month() + 1;
+  const year = moment(editTimesheet.date, 'YYYY-MM-DD').year();
+  const { userId } = editTimesheet;
   calTotalHours(editTimesheet.timeIn, editTimesheet.timeOut)
     .then((totalhours) => {
       editTimesheet.totalhours = totalhours;
       Timesheet.update(editTimesheet, req.user.id)
-        .then((updatedTimesheet) => {
-          req.json(updatedTimesheet);
+        .then(() => {
+          Timesheet.findByMonthAndYear(month, year, userId)
+            .then((timesheets) => {
+              res.json(timesheets);
+            })
+            .catch(next);
         })
         .catch(next);
     });

@@ -23,7 +23,7 @@ Timesheet.create = (timesheet, id) => (
 
 Timesheet.update = (timesheet, id) => (
   db.one(
-    'UPDATE timesheets SET project_id = $1, time_in = $2, time_out = $3, totalhours = $4, updated_user = $5, updated_date = $6, task = $8 WHERE id = $7',
+    'UPDATE timesheets SET project_id = $1, time_in = $2, time_out = $3, totalhours = $4, updated_user = $5, updated_date = $6, task = $7 WHERE id = $8',
     [
       timesheet.projectId,
       timesheet.timeIn,
