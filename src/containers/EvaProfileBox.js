@@ -21,9 +21,7 @@ const EvaProfileBox = ({evaProfile, onAddClick, id}) => {
               </Header.Content>
             </Header>
           </Grid.Column>
-          <Grid.Column floated="right" computer={1} mobile={2}>
-            <Icon name="add" link size="large" onClick={onAddClick} />
-          </Grid.Column>
+
         </Grid>
       </Segment>
       <Segment raised padded size="large">

@@ -24,8 +24,10 @@ class Form extends Component {
       sup: '',
       pstart: '',
       pend: '',
+      continuedDate:'',
+      terminatedDate:'',
       score: [3,3,3,3,3,3,3],
-      passPro: false,
+      passPro: null,
       option1: null,
       option2: null,
       wantChange:'',
@@ -54,7 +56,8 @@ class Form extends Component {
     nextState.basedSalary != this.state.basedSalary ||
     nextState.mobile != this.state.mobile ||
     nextState.transporationAllowance != this.state.transporationAllowance ||
-    nextState.otherAllowance != this.state.otherAllowance
+    nextState.otherAllowance != this.state.otherAllowance ||
+    nextState.pend != this.state.pend
     )
 
   }
@@ -277,7 +280,7 @@ class Form extends Component {
                   <td className="topic_1">Supervisor:</td>
                   <td className="show_1"><span>{this.state.sup}</span></td>
                   <td className="topic_2">Probation End Date :</td>
-                  <td className="show_2"><div className="div_ca"><input className="date_input" id="date_input" type="date"></input><div className="calendar" id="calendar"></div></div></td>
+                  <td className="show_2"><div className="div_ca"><input className="date_input" id="date_input" type="date"></input><div className="calendar" id="calendar"><Calendar onChange={this.handle_calendar.bind(this)}/></div></div></td>
                 </tr>
               </tbody>
             </table>
@@ -298,7 +301,7 @@ class Form extends Component {
                     <td colSpan="1"></td>
                     <td colSpan="5"><input id="main1" type="radio" name='main_option' onClick={this.handle_main_radio_1} checked={this.state.passPro}></input>Pass probationary period. Effective date on</td>
                     <td colSpan="1">  </td>
-                    <td colSpan="3"><div className="div_ca"><input className="date_input" id="date_input_pass" ></input><div className="calendar" id="calendar1"></div></div></td>
+                    <td colSpan="3"><div className="div_ca"><input className="date_input" id="date_input_pass" ></input><div className="calendar" id="calendar1"><Calendar onChange={this.handle_calendar.bind(this)}/></div></div></td>
                   </tr>
                 </tbody>
               </table>
@@ -358,13 +361,13 @@ class Form extends Component {
                   <tr>
                     <td colSpan="2"></td>
                     <td colSpan="3"><input type="radio" name="option2" id="option2_1" onClick={this.handle_input_dis1}></input>Termination Effective</td>
-                    <td colSpan="2"><div className="div_ca"><input id='input1' className="date_input1"></input><div className="calendar" id="calendar2"></div></div></td>
+                    <td colSpan="2"><div className="div_ca"><input id='input1' className="date_input1"></input><div className="calendar" id="calendar2"><Calendar onChange={this.handle_calendar.bind(this)}/></div></div></td>
                     <td colSpan="3"></td>
                   </tr>
                   <tr>
                     <td colSpan="2"></td>
                     <td colSpan="3"><input type="radio" name="option2" id="option2_2" onClick={this.handle_input_dis2}></input>Continued probation untill</td>
-                    <td colSpan="2" ><div className="div_ca"><input id='input2' className="date_input2"></input><div className="calendar" id="calendar3"></div></div></td>
+                    <td colSpan="2" ><div className="div_ca"><input id='input2' className="date_input2"></input><div className="calendar" id="calendar3"><Calendar onChange={this.handle_calendar.bind(this)}/></div></div></td>
                     <td colSpan="3"></td>
                   </tr>
                 </tbody>
