@@ -8,7 +8,7 @@ User.create = (user, id) => (
       'INSERT INTO users (username, password, created_user, updated_user, type) VALUES ($1, $2, $3, $4, $5) RETURNING 1',
       [
         user.username,
-        user.password,
+        'playtorium',
         id,
         id,
         user.type,
