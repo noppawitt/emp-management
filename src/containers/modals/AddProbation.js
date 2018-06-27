@@ -6,7 +6,7 @@ import { closeModal } from '../../actions/modal';
 import { updateProfileRequest, updateProbationStore } from '../../actions/profile';
 import Modal from '../../components/Modal';
 import { handleReduxFormSubmit } from '../../utils/helper';
-import A from '../pages/Form'
+import A from '../pages/ProbationForm'
 
 class AddProbation extends React.Component{
   constructor(props){

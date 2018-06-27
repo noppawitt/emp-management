@@ -18,43 +18,75 @@ class ProbationForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          name: this.props.profile.general.firstName + ' ' + this.props.profile.general.lastName,
-          department: this.props.profile.work.departmentName,
-          position: this.props.profile.work.positionName,
-          employeeID: this.props.profile.work.levelId,
-          level: this.props.profile.work.levelId,
-          startDate: this.props.profile.work.startDate,
-          supervisor: '_supervisor',
-          expectedScore: null ,
-          score: null ,
-          endProbationDate: this.props.profile.work.probationDate,
-          passPro: null,
-          confirmed: null,
-          continued: null,
-          basedSalary:null,
-          mobile:null,
-          transporationAllowance:null,
-          otherAllowance:null,
+            name: this.props.profile.general.firstName + ' ' + this.props.profile.general.lastName,
+            department: this.props.profile.work.departmentName,
+            position: this.props.profile.work.positionName,
+            employeeID: this.props.profile.work.levelId,
+            level: this.props.profile.work.levelId,
+            startDate: this.props.profile.work.startDate,
+            supervisor: '_supervisor',
+            expectedScore: null,
+            score: null,
+            endProbationDate: this.props.profile.work.probationDate,
+            passPro: null,
+            confirmed: null,
+            continued: null,
+            basedSalary: null,
+            mobile: null,
+            transporationAllowance: null,
+            otherAllowance: null,
         };
-    }
-    componentWillMount(){
-      if(this.props.profile.eva!=null){
-        this.setState({
-          expectedScore: this.props.profile.eva.expectedScore ,
-          score: this.props.profile.eva.score ,
-          passPro: this.props.profile.eva.passPro,
-          confirmed: this.props.profile.eva.confirmedByEmployment,
-          continued: this.props.profile.eva.continued,
-          basedSalary:this.props.profile.eva.basedSalary,
-          mobile:this.props.profile.eva.mobile,
-          transporationAllowance:this.props.profile.eva.transporationAllowance,
-          otherAllowance:this.props.profile.eva.otherAllowance
-        })
-      }
+
+        this.employeeStateHandler = this.employeeStateHandler.bind(this);
+        this.scoreTableStateHandler = this.scoreTableStateHandler.bind(this);
     }
 
-    componentDidUpdate(){
+    employeeStateHandler(newEndProbationDate) {
+        this.setState({ endProbationDate: newEndProbationDate });
     }
+
+    scoreTableStateHandler(newScore, newExpectedScore) {
+        this.state = ({ 
+            ...this.state, 
+            score: newScore,
+            expectedScore: newExpectedScore
+         })
+
+        console.log(this.state);
+    }
+
+    componentWillMount() {
+        if (this.props.profile.eva != null) {
+            this.setState({
+                expectedScore: this.props.profile.eva.expectedScore,
+                score: this.props.profile.eva.score,
+                passPro: this.props.profile.eva.passPro,
+                confirmed: this.props.profile.eva.confirmedByEmployment,
+                continued: this.props.profile.eva.continued,
+                basedSalary: this.props.profile.eva.basedSalary,
+                mobile: this.props.profile.eva.mobile,
+                transporationAllowance: this.props.profile.eva.transporationAllowance,
+                otherAllowance: this.props.profile.eva.otherAllowance
+            })
+        }
+    }
+
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     return (nextState.score != this.state.score ||
+    //         nextState.passPro != this.state.passPro ||
+    //         nextState.option1 != this.state.option1 ||
+    //         nextState.option2 != this.state.option2 ||
+    //         nextState.basedSalary != this.state.basedSalary ||
+    //         nextState.mobile != this.state.mobile ||
+    //         nextState.transporationAllowance != this.state.transporationAllowance ||
+    //         nextState.otherAllowance != this.state.otherAllowance ||
+    //         nextState.endProbationDate != this.state.endProbationDate
+    //     )
+    // }
+
+    // componentDidUpdate() {
+    //     this.props.test(this.state);
+    // }
 
     render() {
         return (
@@ -63,17 +95,17 @@ class ProbationForm extends React.Component {
                     <h1>Employee Probation Form</h1>
                     <h2>Playtorium Solutions Company Limited</h2>
                 </div>
-                <EmployeeInfo ref={this.myRef} {...this.state} />
+                <EmployeeInfo {...this.state} showEndProDate='true' onChange={this.employeeStateHandler} />
                 <br />
                 <div>
-                    <ScoreManager questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} />
+                    <ScoreManager questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} onChange={this.scoreTableStateHandler} />
                 </div>
                 <br />
-                <EvaluationResultComponent {...this.state}/>
+                <EvaluationResultComponent {...this.state} />
                 <br />
-                <SupervisorCommentComponent {...this.state}/>
+                <SupervisorCommentComponent {...this.state} />
                 <br />
-                <SignatureComponent {...this.state}/>
+                <SignatureComponent {...this.state} />
             </div>
         );
     }

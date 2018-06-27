@@ -21,6 +21,10 @@ class EmployeeInfo extends React.Component {
         }
     }
 
+    componentWillReceiveProps(props) {
+        this.setState({ endProbationDate: props.endProbationDate })
+    }
+
     render() {
         return (
             <div className='info-container' >
@@ -53,9 +57,7 @@ class EmployeeInfo extends React.Component {
                         <td>{this.state.supervisor}</td>
                         <td>{this.state.showEndProDate ? 'Probation End Date:' : ''}</td>
                         <td>{this.state.showEndProDate ? <DatePicker selected={this.state.endProbationDate} onChange={(date) => {
-                            this.setState({
-                                endProbationDate: date
-                            })
+                            this.props.onChange(date)
                         }} dateFormat='DD/MM/YYYY' /> : ''}</td>
                     </tr>
                 </table>

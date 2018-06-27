@@ -33,6 +33,10 @@ class ScoreTableManager extends React.Component {
         this.calculateSumTotalPoint = this.calculateSumTotalPoint.bind(this);
     }
 
+    componentDidUpdate() {
+        this.props.onChange(this.state.score, this.state.expectedScore);
+    }
+
     componentDidMount() {
         this.updateTotalPoint();
     }
