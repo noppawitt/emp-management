@@ -186,6 +186,28 @@ const calSumEachColumn = worksheet => new Promise((resolve, reject) => {
   }
 });
 
+const writeSummary = (worksheet, row, monthColumn) => new Promise((resolve, reject) => {
+  try {
+    row += 1;
+    worksheet.mergeCells(`B${row}:D${row}`);
+    worksheet.getCell(`B${row}`).alignment = { horizontal: 'center' };
+    worksheet.getCell(`B${row}`).value = 'summary';
+    console.log(monthColumn);
+    for (let i = 0; i < monthColumn.length; i += 1) {
+      const sum = `SUM(${monthColumn[i]}4:${monthColumn[i]}${row - 2})`;
+      worksheet.getCell(`${monthColumn[i]}${row}`).value = {
+        formula: sum,
+        result: undefined
+      };
+    }
+    fillBorderAllRow(worksheet, row);
+    resolve(row);
+  }
+  catch (error) {
+    reject(error);
+  }
+});
+
 exports.createReport = (req, res, next) => {
   const { excelType } = req.body;
   if (excelType.reportType === 'Timesheet (Normal)' || excelType.reportType === 'Timesheet (Special)') {
@@ -289,7 +311,6 @@ exports.createReport = (req, res, next) => {
         // Fill Each user timesheet
         Timesheet.findSummaryTimesheet(excelType.year)
           .then((timesheets) => {
-            console.log(timesheets);
             let user = '';
             let project = '';
             let row = 3;
@@ -317,9 +338,15 @@ exports.createReport = (req, res, next) => {
                 project = timesheet.projectId;
               }
             });
-            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            res.setHeader('Content-Disposition', `attachment; filename="Timesheet_Summary_${excelType.year}.xlsx`);
-            workbook.xlsx.write(res);
+            row += 1;
+            fillBorderAllRow(worksheet, row);
+            writeSummary(worksheet, row, monthColumn)
+              .then(() => {
+                res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                res.setHeader('Content-Disposition', `attachment; filename="Timesheet_Summary_${excelType.year}.xlsx`);
+                workbook.xlsx.write(res);
+              })
+              .catch(next);
           })
           .catch(next);
       })
