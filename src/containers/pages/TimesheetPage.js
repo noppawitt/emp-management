@@ -42,8 +42,11 @@ const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = date.getMonth();
       const { fetchTimesheet, userId } = this.props;
-      fetchTimesheet(userId);
+      fetchTimesheet(userId, year, month);
     }
   })
 );

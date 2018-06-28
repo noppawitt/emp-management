@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Icon, Table, Grid, Progress, Button, Select } from 'semantic-ui-react';
 import moment from 'moment';
 import PageHeader from './PageHeader';
+import history from '../history';
 
 class Timesheet extends React.Component {
   constructor(props) {
@@ -235,7 +236,7 @@ class Timesheet extends React.Component {
               <Select style={{ marginLeft: '10px' }} placeholder="Month" defaultValue={parseInt(this.state.date.format('M'), 10)} options={this.state.months} onChange={(e, { value }) => this.props.onMonthChange('month', value)} />
             </Grid.Column>
             <Grid.Column floated="right" width={5}>
-              <Button floated="right" onClick={this.props.onMultiAddClick} color="blue" >
+              <Button floated="right" onClick={() => history.push('/timesheet/new')} color="blue" >
                 New Task
               </Button>
             </Grid.Column>
@@ -275,8 +276,7 @@ Timesheet.propTypes = {
   onAddClick: PropTypes.func.isRequired,
   onEditClick: PropTypes.func.isRequired,
   onMonthChange: PropTypes.func.isRequired,
-  onYearChange: PropTypes.func.isRequired,
-  onMultiAddClick: PropTypes.func.isRequired
+  onYearChange: PropTypes.func.isRequired
 };
 
 export default Timesheet;

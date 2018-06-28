@@ -23,10 +23,12 @@ export const createTimesheetFailure = message => ({
   }
 });
 
-export const fetchTimesheetRequest = id => ({
+export const fetchTimesheetRequest = (id, year, month) => ({
   type: actionTypes.TIMESHEET_FETCH_REQUEST,
   payload: {
-    id
+    id,
+    year,
+    month
   }
 });
 
