@@ -1,8 +1,5 @@
 import React from 'react';
 import './css/EmployeeInfoComponent.css'
-
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
 
 class EmployeeInfo extends React.Component {
@@ -12,13 +9,13 @@ class EmployeeInfo extends React.Component {
         this.state = {
             ...props,
             startDate: moment('2016-01-01'),
+            endProbationDate: this.props.endProbationDate || moment(this.props.startDate.format('YYYY-MM-DD')).add(120, 'day').format('YYYY-MM-DD'),
             showEndProDate: props.showEndProDate && true
         };
+    }
 
-        this.state = {
-            ...this.state,
-            endProbationDate: moment(this.state.startDate.format('YYYY-MM-DD')).add(120, 'day')
-        }
+    componentWillReceiveProps(props) {
+        this.setState({ endProbationDate: props.endProbationDate })
     }
 
     render() {
@@ -45,18 +42,14 @@ class EmployeeInfo extends React.Component {
                     <tr>
                         <td>Level:</td>
                         <td>{this.state.level}</td>
-                        <td>{this.state.endProbationDate ? 'Probatoin ' : ''} Start Date</td>
+                        <td>{this.state.showEndProDate ? 'Probatoin ' : ''} Start Date</td>
                         <td>{this.state.startDate.format('DD/MM/YYYY')}</td>
                     </tr>
                     <tr>
                         <td>Supervisor:</td>
                         <td>{this.state.supervisor}</td>
                         <td>{this.state.showEndProDate ? 'Probation End Date:' : ''}</td>
-                        <td>{this.state.showEndProDate ? <DatePicker selected={this.state.endProbationDate} onChange={(date) => {
-                            this.setState({
-                                endProbationDate: date
-                            })
-                        }} dateFormat='DD/MM/YYYY' /> : ''}</td>
+                        <td>{this.state.showEndProDate ? <input type='date' value={this.state.endProbationDate} onChange={(event) => this.props.onChange(event.target.value)} /> : ''}</td>
                     </tr>
                 </table>
             </div>

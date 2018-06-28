@@ -27,10 +27,11 @@ exports.update = (req,res,next) => {
   const newProbationInfo = req.body.probationInfo;
   Probation.updateProbation(newProbationInfo)
     .then(() => {
-      Probation.findProById(req.body.probationInfo.eid)
+      console.log("Test Probation");
+      Probation.findProById(req.body.probationInfo.employeeID)
         .then((probation)=>{
           res.json(probation)
         });
     })
     .catch(next);
-}
+};
