@@ -5,7 +5,7 @@ router.post('/', TimesheetController.create);
 
 router.put('/', TimesheetController.update);
 
-router.get('/', TimesheetController.findByUserId);
+router.get('/', TimesheetController.findByMonthAndYear);
 
 router.delete('/', TimesheetController.delete);
 
