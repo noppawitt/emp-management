@@ -16,7 +16,6 @@ class Timesheet extends React.Component {
       textAnotherDay: '#999999',
       iconRedcolor: 'red',
       iconBluecolor: 'blue',
-      date: moment(),
       lastholiday: { date: '', name: '' },
       lastleaveday: { date: '', status: '' },
       holidays: [
@@ -30,18 +29,18 @@ class Timesheet extends React.Component {
         { date: '2018-06-27', status: 'Sick Leave', timein: '9:00', timeout: '18:00', totalhours: 8 }
       ],
       months: [
-        { key: 1, value: 1, text: 'January' },
-        { key: 2, value: 2, text: 'Fabuary' },
-        { key: 3, value: 3, text: 'March' },
-        { key: 4, value: 4, text: 'April' },
-        { key: 5, value: 5, text: 'May' },
-        { key: 6, value: 6, text: 'June' },
-        { key: 7, value: 7, text: 'July' },
-        { key: 8, value: 8, text: 'August' },
-        { key: 9, value: 9, text: 'September' },
-        { key: 10, value: 10, text: 'October' },
-        { key: 11, value: 11, text: 'Novemver' },
-        { key: 12, value: 12, text: 'December' }
+        { key: 1, value: '01', text: 'January' },
+        { key: 2, value: '02', text: 'Fabuary' },
+        { key: 3, value: '03', text: 'March' },
+        { key: 4, value: '04', text: 'April' },
+        { key: 5, value: '05', text: 'May' },
+        { key: 6, value: '06', text: 'June' },
+        { key: 7, value: '07', text: 'July' },
+        { key: 8, value: '08', text: 'August' },
+        { key: 9, value: '09', text: 'September' },
+        { key: 10, value: '10', text: 'October' },
+        { key: 11, value: '11', text: 'Novemver' },
+        { key: 12, value: '12', text: 'December' }
       ],
       years: [
         { key: 2018, value: 2018, text: '2018' },
@@ -64,7 +63,7 @@ class Timesheet extends React.Component {
     this.leavedayCell = this.leavedayCell.bind(this);
   }
   drawCell(date, hour, id) {
-    if (date.format('M') !== this.state.date.format('M')) {
+    if (date.format('MM') !== this.props.month) {
       return (this.anotherMonthCell(date.format('D')));
     }
     else if (this.isLeaveday(date)) {
@@ -232,8 +231,8 @@ class Timesheet extends React.Component {
         <Grid stackable doubling relaxed >
           <Grid.Row>
             <Grid.Column computer={8} >
-              <Select placeholder="Year" defaultValue={parseInt(this.state.date.format('YYYY'), 10)} options={this.state.years} onChange={(e, { value }) => this.props.onYearChange('year', value)} />
-              <Select style={{ marginLeft: '10px' }} placeholder="Month" defaultValue={parseInt(this.state.date.format('M'), 10)} options={this.state.months} onChange={(e, { value }) => this.props.onMonthChange('month', value)} />
+              <Select placeholder="Year" defaultValue={parseInt(this.props.year, 10)} options={this.state.years} onChange={(e, { value }) => this.props.fetchTimesheet(this.props.userId, value, this.props.month)} />
+              <Select style={{ marginLeft: '10px' }} placeholder="Month" defaultValue={this.props.month} options={this.state.months} onChange={(e, { value }) => this.props.fetchTimesheet(this.props.userId, this.props.year, value)} />
             </Grid.Column>
             <Grid.Column floated="right" width={5}>
               <Button floated="right" onClick={() => history.push('/timesheet/new')} color="blue" >
@@ -245,7 +244,7 @@ class Timesheet extends React.Component {
         <Table celled stackable fixed>
           <Table.Header>
             <Table.Row textAlign="center">
-              <Table.HeaderCell colSpan="7"><font size="3">{this.state.date.format('MMMM')}</font> {this.state.date.format('YYYY')}</Table.HeaderCell>
+              <Table.HeaderCell colSpan="7"><font size="3">{moment.months()[this.props.month - 1]}</font> {this.props.year}</Table.HeaderCell>
             </Table.Row>
             <Table.Row textAlign="center">
               {this.state.days.map(day => <Table.HeaderCell key={day}>{day}</Table.HeaderCell>)}
@@ -273,10 +272,12 @@ class Timesheet extends React.Component {
 
 Timesheet.propTypes = {
   timesheets: PropTypes.array.isRequired,
+  fetchTimesheet: PropTypes.func.isRequired,
+  userId: PropTypes.string.isRequired,
+  year: PropTypes.string.isRequired,
+  month: PropTypes.string.isRequired,
   onAddClick: PropTypes.func.isRequired,
-  onEditClick: PropTypes.func.isRequired,
-  onMonthChange: PropTypes.func.isRequired,
-  onYearChange: PropTypes.func.isRequired
+  onEditClick: PropTypes.func.isRequired
 };
 
 export default Timesheet;
