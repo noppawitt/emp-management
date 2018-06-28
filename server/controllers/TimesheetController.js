@@ -29,7 +29,7 @@ const calTotalHours = (timeIn, timeOut) => new Promise((resolve, reject) => {
     const timeInHour = moment(timeIn, 'HH:mm').hour();
     const timeOutHour = moment(timeOut, 'HH:mm').hour();
     const diff = endTime.subtract(startTime);
-    const min = (diff.minutes() / 60) * 100;
+    const min = (diff.minutes() / 60);
     if (timeInHour <= 12 && timeOutHour <= 12) {
       totalhours = diff.hours() + min;
     }
@@ -98,12 +98,19 @@ exports.create = (req, res, next) => {
 
 exports.update = (req, res, next) => {
   const editTimesheet = req.body.timesheet;
+  const month = moment(editTimesheet.date, 'YYYY-MM-DD').month() + 1;
+  const year = moment(editTimesheet.date, 'YYYY-MM-DD').year();
+  const { userId } = editTimesheet;
   calTotalHours(editTimesheet.timeIn, editTimesheet.timeOut)
     .then((totalhours) => {
       editTimesheet.totalhours = totalhours;
       Timesheet.update(editTimesheet, req.user.id)
-        .then((updatedTimesheet) => {
-          req.json(updatedTimesheet);
+        .then(() => {
+          Timesheet.findByMonthAndYear(month, year, userId)
+            .then((timesheets) => {
+              res.json(timesheets);
+            })
+            .catch(next);
         })
         .catch(next);
     });

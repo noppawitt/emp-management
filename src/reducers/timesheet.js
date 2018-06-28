@@ -12,7 +12,7 @@ const timesheet = (state = initialState, action) => {
     case actionTypes.TIMESHEET_CREATE_SUCCESS:
       return {
         ...state,
-        lists: [...state.lists, action.payload.timesheet].sort((a, b) => a.date < b.date)
+        lists: action.payload.timesheets
       };
     case actionTypes.TIMESHEET_CREATE_FAILURE:
       return {
@@ -27,6 +27,21 @@ const timesheet = (state = initialState, action) => {
       return {
         isFetching: false,
         lists: action.payload.timesheets
+      };
+    case actionTypes.TIMESHEET_UPDATE_REQUEST:
+      return {
+        ...state,
+        form: action.payload.form
+      };
+    case actionTypes.TIMESHEET_UPDATE_SUCCESS:
+      return {
+        ...state,
+        lists: action.payload.timesheets
+      };
+    case actionTypes.TIMESHEET_UPDATE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
       };
     default:
       return state;

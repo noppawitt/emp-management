@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt-nodejs');
 const mail = require('../mail');
+const mailAddUser = require('../mail_template/mailAddUser');
 
 exports.findAll = (req, res, next) => {
   User.findAll()
@@ -12,7 +13,6 @@ exports.findAll = (req, res, next) => {
 
 exports.create = (req, res, next) => {
   const newUser = req.body.user;
-  const pass = newUser.password;
   User.findByName(newUser.firstName, newUser.lastName)
     .then((user1) => {
       if (user1) {
@@ -34,9 +34,9 @@ exports.create = (req, res, next) => {
                 .then((createdUser) => {
                   const mailOptions = {
                     from: process.env.MAIL_USER,
-                    to: newUser.email,
-                    subject: 'Hello',
-                    html: `<p>${newUser.username} ${pass}</p>`
+                    to: newUser.username,
+                    subject: 'Playtorium Account Information',
+                    html: mailAddUser(newUser.username, 'playtorium')
                   };
                   mail.sendMail(mailOptions, (err, info) => {
                     if (err) {

@@ -13,8 +13,8 @@ import api from '../services/api';
 
 export function* createTimesheetTask(action) {
   try {
-    const timesheet = yield call(api.createTimesheet, { timesheets: [action.payload.form] });
-    yield put(createTimesheetSuccess(timesheet));
+    const timesheets = yield call(api.createTimesheet, { timesheets: [action.payload.form] });
+    yield put(createTimesheetSuccess(timesheets));
     yield put(closeModal());
     action.payload.resolve();
   }
@@ -36,8 +36,8 @@ export function* fetchTimesheetTask(action) {
 
 export function* updateTimesheetTask(action) {
   try {
-    const timesheet = yield call(api.updateTimesheet, { timesheet: action.payload.form });
-    yield put(updateTimesheetSuccess(timesheet));
+    const timesheets = yield call(api.updateTimesheet, { timesheet: action.payload.form });
+    yield put(updateTimesheetSuccess(timesheets));
     yield put(closeModal());
     action.payload.resolve();
   }

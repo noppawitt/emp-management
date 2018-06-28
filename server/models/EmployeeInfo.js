@@ -5,7 +5,7 @@ const EmployeeInfo = {};
 
 EmployeeInfo.create = (employeeInfo, id) => (
   db.one(
-    'INSERT INTO employee_info (user_id, first_name, last_name, nick_name, mobile_number, line_id, email, facebook_id, picture, birthday, citizen_id, created_user, updated_user, address) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING 1',
+    'INSERT INTO employee_info (user_id, first_name, last_name, nick_name, mobile_number, line_id, email, facebook_id, picture, birthday, citizen_id, created_user, updated_user, address, gender) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING 1',
     [
       employeeInfo.userId,
       employeeInfo.firstName,
@@ -20,7 +20,8 @@ EmployeeInfo.create = (employeeInfo, id) => (
       employeeInfo.citizenId,
       id,
       id,
-      employeeInfo.address
+      employeeInfo.address,
+      employeeInfo.gender
     ]
   )
 );
@@ -44,7 +45,8 @@ EmployeeInfo.update = (employeeInfo, id) => (
     updated_date = $13,
     first_name_th = $14,
     last_name_th = $15
-    WHERE user_id = $16
+    gender = $16
+    WHERE user_id = $17
     RETURNING user_id`,
     [
       employeeInfo.firstName,
@@ -62,6 +64,7 @@ EmployeeInfo.update = (employeeInfo, id) => (
       moment().format('YYYY-MM-DD HH:mm:ss'),
       employeeInfo.firstNameTh,
       employeeInfo.lastNameTh,
+      employeeInfo.gender,
       employeeInfo.userId
     ]
   )
