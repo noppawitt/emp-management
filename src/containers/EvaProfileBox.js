@@ -5,7 +5,7 @@ import { Segment,Grid , Header, Icon, Button, Dropdown, Container, Divider} from
 import ProfileBox from '../components/ProfileBox';
 import { openModal } from '../actions/modal';
 import * as modalNames from '../constants/modalNames';
-import './pages/css/Form_G_I.css';
+
 
 const options = [
   {

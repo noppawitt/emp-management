@@ -15,8 +15,10 @@
     padding: 1% 0.2% 1% 0.2%;
 }
 
+
 .eva-container td:nth-child(2) {
     text-align: left;
+    padding-left: 3em;
 }
 
 .eva-container tr:first-child th {
