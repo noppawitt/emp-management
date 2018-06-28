@@ -15,6 +15,8 @@ class Timesheet extends React.Component {
       textAnotherDay: '#999999',
       iconRedcolor: 'red',
       iconBluecolor: 'blue',
+      progressColor: 'blue',
+      percent: 0,
       date: moment(),
       lastholiday: { date: '', name: '' },
       lastleaveday: { date: '', status: '' },
@@ -61,6 +63,51 @@ class Timesheet extends React.Component {
     this.addHolidayName = this.addHolidayName.bind(this);
     this.buttonOfHoliday = this.buttonOfHoliday.bind(this);
     this.leavedayCell = this.leavedayCell.bind(this);
+    this.calprogressbar = this.calprogressbar.bind(this);
+  }
+  componentDidMount() {
+    this.calprogressbar();
+  }
+  componentDidUpdate() {
+    // this.calprogressbar();
+  }
+  calprogressbar() {
+    let progressColor = 'red';
+    let countWorkDay = 0;
+    let countFilledTimesheet = 0;
+    for (let i = 0; i < this.props.timesheets.length; i += 1) {
+      const x = this.props.timesheets[i];
+      if (moment(x.date).format('MM') === this.state.date.format('MM')) {
+        continue;
+      }
+      else if (this.isLeaveday(moment(x.date))) {
+        if (this.state.lastleaveday.totalhours < 8) {
+          countWorkDay += 1;
+        }
+        if (x.totalhours > 0) {
+          countFilledTimesheet += 1;
+        }
+      }
+      else if (this.isHoliday(moment(x.date))) {
+        continue;
+      }
+      else if (moment(x.date).format('d') === '0' || moment(x.date).format('d') === '6') {
+        continue;
+      }
+      else {
+        countWorkDay += 1;
+        if (x.totalhours > 0) {
+          countFilledTimesheet += 1;
+        }
+      }
+    }
+    const percent = countFilledTimesheet / countWorkDay;
+    if (percent <= 30) progressColor = 'red';
+    else if (percent <= 60) progressColor = 'yellow';
+    else progressColor = 'blue';
+
+    this.setState({ progressColor });
+    this.setState({ percent });
   }
   drawCell(date, hour, id) {
     if (date.format('M') !== this.state.date.format('M')) {
@@ -88,6 +135,10 @@ class Timesheet extends React.Component {
   }
   addStatusLeaveday(date, hour, id) {
     if (this.state.lastleaveday.totalhours < 8) {
+      // this.setState(prevState => ({
+      //   countWorkDayofmonth: prevState.countWorkDayofmonth + 1
+      // }));
+      // this.state.countWorkDayofmonth += 1;
       return (
         <div>
           <Grid.Row style={{ height: '5em' }}>
@@ -121,6 +172,10 @@ class Timesheet extends React.Component {
     );
   }
   workdayCell(date, hour, id) {
+    // this.setState(prevState => ({
+    //   countWorkDayofmonth: prevState.countWorkDayofmonth + 1
+    // }));
+    // this.state.countWorkDayofmonth += 1;
     return (
       <Table.Cell >
         <Grid.Column>
@@ -147,7 +202,11 @@ class Timesheet extends React.Component {
         </Grid.Row>
       );
     }
-    else if (hour === 8) { color = this.state.textWorkcolor; iconcolor = this.state.iconBluecolor; }
+    else if (hour >= 8) { color = this.state.textWorkcolor; iconcolor = this.state.iconBluecolor; }
+    // this.setState(prevState => ({
+    //   countFilledTimesheet: prevState.countFilledTimesheet + 1
+    // }));
+    // this.state.countFilledTimesheet += 1;
     return (
       <Grid.Row textAlign="center">
         <Button animated="fade" style={{ borderStyle: 'solid', borderColor: color, backgroundColor: 'white', borderWidth: '1px' }} onClick={() => this.props.onEditClick(id)} >
@@ -221,13 +280,23 @@ class Timesheet extends React.Component {
     }
     return (<Grid.Row style={{ height: '5em' }} />);
   }
-  render() {
-    const progressBar = percentWork => <div> <Progress percent={percentWork} active color="blue" progress /> </div>;
+  // calpercent(refresh) {
+  //   if (refresh) {
+  //     this.setState({ percent: this.state.countFilledTimesheet / this.state.countWorkDayofmonth });
+  //     this.setState({ progressColor: 'blue' });
+  //     if (this.state.percent <= 30) { this.setState({ progressColor: 'red' }); }
+  //     else if (this.state.percent <= 60) { this.setState({ progressColor: 'yellow' }); }
+  //     else { this.setState({ progressColor: 'blue' }); }
+  //   }
+  //   this.setState({ refreshcycle: !refresh });
+  // }
 
+
+  render() {
     return (
       <div>
         <PageHeader text="Timesheet" icon="calendar alternate" />
-        {progressBar(70)}
+        <Progress percent={this.state.percent} active color={this.state.progressColor} progress />
         <Grid stackable doubling relaxed >
           <Grid.Row>
             <Grid.Column computer={8} >
