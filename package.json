@@ -44,7 +44,7 @@
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
     "dotenv": "^5.0.1",
-    "exceljs": "^1.4.13",
+    "exceljs": "1.5.1",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "history": "^4.7.2",
@@ -73,6 +73,7 @@
     "redux-logger": "^3.0.6",
     "redux-saga": "^0.16.0",
     "redux-thunk": "^2.2.0",
+    "save": "^2.3.2",
     "semantic-ui-react": "0.79.0",
     "xlsx": "^0.13.0"
   }
