@@ -373,3 +373,7 @@ select-selected{
 .b:hover .text{
   width:10em;
 }
+.buttonGroup{
+  display: inline-flex;
+  margin-right: 5px
+}

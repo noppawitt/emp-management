@@ -1,10 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Segment,Grid , Header, Icon, Button, Dropdown } from 'semantic-ui-react';
+import { Segment,Grid , Header, Icon, Button, Dropdown, Container, Divider} from 'semantic-ui-react';
 import ProfileBox from '../components/ProfileBox';
 import { openModal } from '../actions/modal';
 import * as modalNames from '../constants/modalNames';
+
+const options = [
+  {
+    key: 'user',
+    text: (
+      <span>
+        Year
+      </span>
+    ),
+    disabled: true,
+  },
+  { text: '2018' },
+  { text: '2017' },
+  { text: '2016' },
+
+]
+
+const AngleDownButton = (
+  <Button icon="angle down"></Button>
+)
 
 const EvaProfileBox = ({evaProfile, onAddClick, id}) => {
   console.log(evaProfile);
@@ -25,19 +45,16 @@ const EvaProfileBox = ({evaProfile, onAddClick, id}) => {
         </Grid>
       </Segment>
       <Segment raised padded size="large">
-        <Dropdown text='Performance' icon='angle down' floating labeled button className='icon'>
-          <Dropdown.Menu>
-            <Dropdown.Header icon='tags' content='Year' />
-            <Dropdown.Divider />
-            <Dropdown.Item>2018</Dropdown.Item>
-            <Dropdown.Item>2017</Dropdown.Item>
-            <Dropdown.Item>2016</Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item icon='angle right'>See all</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-        <Button icon labelPosition='left' icon={evaProfile==null ? 'plus':'angle right'} content={evaProfile==null ? 'Create Probation':'View Probation'} onClick={onAddClick} color={evaProfile==null ? 'green':'blue'}/>
+        <div className="buttonGroup">
+            <Button.Group>
+              <Dropdown trigger={AngleDownButton} options={options} />
+              <Button>Performance</Button>
+            </Button.Group>
+        </div>
+            <Button icon labelPosition='left' icon={evaProfile==null ? 'plus':'angle right'} content={evaProfile==null ? 'Create Probation':'View Probation'} onClick={onAddClick} color={evaProfile==null ? 'green':'blue'}/>
       </Segment>
+
+
     </Segment.Group>
 
   );

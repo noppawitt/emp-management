@@ -13,8 +13,10 @@ let Element = Scroll.Element;
 let scroller = Scroll.scroller;
 
 class Form extends Component {
+
   constructor(props) {
     super(props);
+    this.wantChange = '';
     this.state = {
       name: '',
       eid: '',
@@ -30,7 +32,6 @@ class Form extends Component {
       passPro: null,
       option1: null,
       option2: null,
-      wantChange:'',
       emp:null,
       sup:null,
       mag:null,
@@ -72,7 +73,6 @@ class Form extends Component {
       level: this.props.profile.work.levelId,
       pos: this.props.profile.work.positionName,
       pstart: this.props.profile.work.startDate,
-      pend: this.props.profile.work.probationDate
     })
     if(this.props.profile.eva!=null) this.setState({
       score: this.props.profile.eva.score,
@@ -82,7 +82,8 @@ class Form extends Component {
       basedSalary:this.props.profile.eva.basedSalary,
       mobile:this.props.profile.eva.mobile,
       transporationAllowance:this.props.profile.eva.transporationAllowance,
-      otherAllowance:this.props.profile.eva.otherAllowance
+      otherAllowance:this.props.profile.eva.otherAllowance,
+      pend: this.props.profile.eva.passProDate
     })
   }
   componentDidMount() {
@@ -203,7 +204,7 @@ class Form extends Component {
   toggle_calendar(event){
     if(document.getElementById('date_input').contains(event.target)){
       document.getElementById('calendar').style.height = '265px';
-      this.setState({wantChange: document.getElementById('date_input')});
+      this.wantChange = document.getElementById('date_input');
     }else if(document.getElementById('date_input_pass').contains(event.target)){
       document.getElementById('calendar1').style.height = '265px';
       this.setState({wantChange: document.getElementById('date_input_pass')});
@@ -223,7 +224,7 @@ class Form extends Component {
 
   handle_calendar(date){
     var tmp = date.getFullYear() + "-" + (date.getMonth() < 9 ? "0" : "") + (date.getMonth() + 1) + "-" + (date.getDate() < 10 ? "0" : "") + date.getDate();
-    this.state.wantChange.value=tmp;
+    this.wantChange.value=tmp;
     this.setState({pend: tmp});
     console.log(this.state.pend);
     //this.props.s.value = date;
@@ -280,7 +281,7 @@ class Form extends Component {
                   <td className="topic_1">Supervisor:</td>
                   <td className="show_1"><span>{this.state.sup}</span></td>
                   <td className="topic_2">Probation End Date :</td>
-                  <td className="show_2"><div className="div_ca"><input className="date_input" id="date_input" type="date"></input><div className="calendar" id="calendar"><Calendar onChange={this.handle_calendar.bind(this)}/></div></div></td>
+                  <td className="show_2"><div className="div_ca"><input className="date_input" id="date_input" type="date" value={this.state.pend}></input><div className="calendar" id="calendar"><Calendar onChange={this.handle_calendar.bind(this)}/></div></div></td>
                 </tr>
               </tbody>
             </table>
