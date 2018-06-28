@@ -10,7 +10,7 @@ class EvaluationResultComponent extends React.Component {
             passPro: this.props.passPro !== null ? this.props.passPro : true,
             confirmed: this.props.confirmed !== null ? this.props.confirmed : true,
             continued: this.props.continued !== null ? this.props.continued : true,
-            passProDate: '',
+            passProDate: this.props.endProbationDate,
             terminationDate: this.props.terminationDate || '',
             continuedDate: this.props.continuedDate || ''
         }
@@ -53,9 +53,6 @@ class EvaluationResultComponent extends React.Component {
             this.state.transporationAllowance,
             this.state.otherAllowance
         );
-
-        console.log("test2");
-        console.log(this.state);
     }
 
     componentDidMount() {

@@ -58,7 +58,8 @@ class ProbationForm extends React.Component {
     }
 
     supervisorCommentHandler(newComment) {
-        this.setState({ supervisorComment: newComment });
+        this.state = { ...this.state, supervisorComment: newComment };
+        this.props.test(this.state);
     }
 
     evaluationResultHandler(newPassPro, newConfirmed, newContinued, newEndProbationDate,
@@ -111,8 +112,7 @@ class ProbationForm extends React.Component {
     }
 
     componentDidUpdate() {
-        // this.props.test(this.state);
-        console.log(this.state);
+        this.props.test(this.state);
     }
 
     render() {
