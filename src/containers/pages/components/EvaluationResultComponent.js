@@ -1,10 +1,6 @@
 import React from 'react';
 import './css/EvaluationResultComponent.css';
 
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-
-
 class EvaluationResultComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -146,10 +142,10 @@ class EvaluationResultComponent extends React.Component {
                                     Pass probationary period.Effective date on
                                 </td>
                                 <td>
-                                    <DatePicker selected={this.state.passProDate} onChange={(date) => {
-                                        this.state = { ...this.state, passProDate: date };
+                                    <input type='date' value={this.state.passProDate} onChange={(event) => {
+                                        this.state = { ...this.state, passProDate: event.target.value };
                                         this.updateParentComponent();
-                                    }} dateFormat='DD/MM/YYYY' disabled={!this.state.passPro} />
+                                    }} />
                                 </td>
                             </tr>
                             <tr>
@@ -250,10 +246,10 @@ class EvaluationResultComponent extends React.Component {
                                                     Termination Effective
                                                 </td>
                                                 <td>
-                                                    <DatePicker selected={this.state.terminationDate} onChange={(date) => {
-                                                        this.state = { ...this.state, terminationDate: date };
+                                                    <input type='date' value={this.state.terminationDate} onChange={(event) => {
+                                                        this.state = { ...this.state, terminationDate: event.target.value };
                                                         this.updateParentComponent();
-                                                    }} dateFormat='DD/MM/YYYY' disabled={this.state.continued} />
+                                                    }} />
                                                 </td>
                                             </tr>
                                             <tr>
@@ -265,10 +261,10 @@ class EvaluationResultComponent extends React.Component {
                                                     Continued probation untill
                                                 </td>
                                                 <td>
-                                                    <DatePicker selected={this.state.continuedDate} onChange={(date) => {
-                                                        this.state = { ...this.state, continuedDate: date };
+                                                    <input type='date' value={this.state.continuedDate} onChange={(event) => {
+                                                        this.state = { ...this.state, continuedDate: event.target.value };
                                                         this.updateParentComponent();
-                                                    }} dateFormat='DD/MM/YYYY' disabled={!this.state.continued} />
+                                                    }} />
                                                 </td>
                                             </tr>
                                         </table>

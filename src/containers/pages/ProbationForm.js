@@ -55,7 +55,6 @@ class ProbationForm extends React.Component {
             score: newScore,
             expectedScore: newExpectedScore
         });
-        console.log("testtesttest");
     }
 
     supervisorCommentHandler(newComment) {

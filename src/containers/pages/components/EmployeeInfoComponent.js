@@ -1,8 +1,5 @@
 import React from 'react';
 import './css/EmployeeInfoComponent.css'
-
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
 
 class EmployeeInfo extends React.Component {
@@ -17,7 +14,7 @@ class EmployeeInfo extends React.Component {
 
         this.state = {
             ...this.state,
-            endProbationDate: moment(this.state.startDate.format('YYYY-MM-DD')).add(120, 'day')
+            endProbationDate: moment(this.state.startDate.format('YYYY-MM-DD')).add(120, 'day').format('YYYY-MM-DD')
         }
     }
 
@@ -56,9 +53,7 @@ class EmployeeInfo extends React.Component {
                         <td>Supervisor:</td>
                         <td>{this.state.supervisor}</td>
                         <td>{this.state.showEndProDate ? 'Probation End Date:' : ''}</td>
-                        <td>{this.state.showEndProDate ? <DatePicker selected={this.state.endProbationDate} onChange={(date) => {
-                            this.props.onChange(date)
-                        }} dateFormat='DD/MM/YYYY' /> : ''}</td>
+                        <td>{this.state.showEndProDate ? <input type='date' value={this.state.endProbationDate} onChange={(event) => this.props.onChange(event.target.value)} /> : ''}</td>
                     </tr>
                 </table>
             </div>
