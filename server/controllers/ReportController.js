@@ -36,7 +36,7 @@ const fillRow = (worksheet, day) => {
 };
 
 const fillBorderAllRow = (worksheet, row) => {
-  const column = ['B', 'C', 'D', 'F', 'I', 'L', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V'];
+  const column = ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'];
   for (let i = 0; i < column.length; i += 1) {
     worksheet.getCell(`${column[i]}${row}`).border = {
       top: { style: 'thin' },
@@ -282,7 +282,7 @@ exports.createReport = (req, res, next) => {
         const worksheet = workbook.getWorksheet('Timesheet');
         // Fill each month in year
         const months = moment.monthsShort();
-        const monthColumn = ['F', 'I', 'L', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V'];
+        const monthColumn = ['E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'];
         for (let i = 0; i < months.length; i += 1) {
           worksheet.getCell(`${monthColumn[i]}3`).value = `${months[i]}-${moment(excelType.year, 'YYYY').format('YY')}`;
         }
