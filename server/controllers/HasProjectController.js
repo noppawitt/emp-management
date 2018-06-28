@@ -3,6 +3,7 @@ const Project = require('../models/Project');
 
 exports.create = (req, res, next) => {
   const newHasProject = req.body.hasProject;
+  console.log(newHasProject);
   HasProject.create(newHasProject, req.user.id)
     .then(() => {
       Project.findMemberProject(newHasProject.projectId)

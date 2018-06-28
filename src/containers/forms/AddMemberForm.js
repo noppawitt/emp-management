@@ -55,12 +55,7 @@ const enhance = compose(
     }
   }),
   reduxForm({
-    form: 'addProject',
-    initialValues: {
-      from: null,
-      to: null,
-      description: null
-    },
+    form: 'addMember',
     validate
   })
 );
