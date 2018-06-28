@@ -6,7 +6,9 @@ import {
   updateProjectDetailSuccess,
   updateProjectDetailFailure,
   createMemberSuccess,
-  createMemberFailure
+  createMemberFailure,
+  deleteMemberSuccess,
+  deleteMemberFailure
 } from '../actions/projectDetail';
 import { closeModal } from '../actions/modal';
 import api from '../services/api';
@@ -47,6 +49,20 @@ export function* createMemberTask(action) {
   }
 }
 
+export function* deleteMemberTask(action) {
+  try {
+    const members = yield call(api.deleteMember, {
+      userId: action.payload.userId,
+      projectId: action.payload.projectId
+    });
+    yield put(deleteMemberSuccess(members));
+    yield put(closeModal());
+  }
+  catch (error) {
+    yield put(deleteMemberFailure(error));
+  }
+}
+
 export function* watchFetchProjectDetailRequest() {
   yield takeEvery(actionTypes.PROJECT_DETAIL_FETCH_REQUEST, fetchProjectDetailTask);
 }
@@ -59,10 +75,15 @@ export function* watchCreateMemberRequest() {
   yield takeEvery(actionTypes.MEMBER_CREATE_REQUEST, createMemberTask);
 }
 
+export function* watchDeleteMemberRequest() {
+  yield takeEvery(actionTypes.MEMBER_DELETE_REQUEST, deleteMemberTask);
+}
+
 export default function* projectDetailSaga() {
   yield all([
     watchFetchProjectDetailRequest(),
     watchUpdateProjectDetailRequest(),
-    watchCreateMemberRequest()
+    watchCreateMemberRequest(),
+    watchDeleteMemberRequest()
   ]);
 }

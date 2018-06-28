@@ -95,7 +95,7 @@ api.fetchAssetTypes = () => (
 );
 
 api.fetchAcessTypes = () => (
-  callApi('api/access-control')
+  callApi('/api/access-control')
 );
 
 // Profile
@@ -247,6 +247,13 @@ api.updateProjectDetail = body => (
 api.createMember = body => (
   callApi(`/api/has-projects`, {
     method: 'POST',
+    body
+  })
+);
+
+api.deleteMember = body => (
+  callApi(`/api/has-projects`, {
+    method: 'DELETE',
     body
   })
 );

@@ -38,7 +38,6 @@ exports.create = (req, res, next) => {
                     subject: 'Playtorium Account Information',
                     html: mailAddUser(newUser.username, 'playtorium')
                   };
-                  console.log(pass);
                   mail.sendMail(mailOptions, (err, info) => {
                     if (err) {
                       console.log(err);
