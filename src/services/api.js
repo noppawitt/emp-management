@@ -255,8 +255,8 @@ api.checkPasswordStatus = cid => (
   callApi(`/api/recruitments/checkPasswordStatus/?cid=${cid}`)
 );
 
-api.assignNewPassword = cid => (
-  callApi(`/api/recruitments/assignNewPassword/?cid=${cid}`)
+api.generatePassword = (cid, lifetimes) => (
+  callApi(`/api/recruitments/generatePassword/?cid=${cid}&lifetimes=${lifetimes}`)
 );
 
 // Exam

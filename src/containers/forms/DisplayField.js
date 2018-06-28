@@ -2,22 +2,52 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { Segment } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
+import Loader from '../../components/Loader';
 
-const DisplayField = ({ passwordStatusObject }) => (
-  <Segment>
-    {passwordStatusObject && Object.keys(passwordStatusObject).map(key => (
-      <div>{passwordStatusObject[key]}</div>
-    ))}
-  </Segment>
+const DisplayField = ({ isFetching, passwordObject, userStatus, userStatusCode }) => (
+  isFetching ?
+    <Loader /> :
+    <Table celled>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell>User ID</Table.HeaderCell>
+          <Table.HeaderCell>Password</Table.HeaderCell>
+          <Table.HeaderCell>Last created</Table.HeaderCell>
+          <Table.HeaderCell>Approximately lifetimes (day)</Table.HeaderCell>
+          <Table.HeaderCell>Password status</Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell>{passwordObject.userId}</Table.Cell>
+          <Table.Cell>{passwordObject.password}</Table.Cell>
+          <Table.Cell>{new Date(passwordObject.lastestCreatedPasswordTime).toDateString()}</Table.Cell>
+          <Table.Cell>{passwordObject.passwordLifetimes}</Table.Cell>
+          <Table.Cell
+            className={userStatusCode === 200 ? 'positive' : 'negative'}
+            Icon={userStatusCode === 200 ? 'checkmark' : 'close'}
+          >
+            {userStatus.split('@@')[0]}<br />
+            {userStatus.split('@@')[1]}
+          </Table.Cell>
+        </Table.Row>
+      </Table.Body>
+    </Table>
 );
 
 DisplayField.propTypes = {
-  passwordStatusObject: PropTypes.object.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  passwordObject: PropTypes.object.isRequired,
+  userStatus: PropTypes.string.isRequired,
+  userStatusCode: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
-  passwordStatusObject: state.recruitment.passwordStatusObject,
+  isFetching: state.recruitment.isModalFetching,
+  passwordObject: state.recruitment.passwordObject,
+  userStatus: state.recruitment.userStatus,
+  userStatusCode: state.recruitment.userStatusCode,
 });
 
 const mapDispatchToProps = () => ({

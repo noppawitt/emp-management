@@ -17,13 +17,17 @@ exports.checkPasswordStatus = (req, res, next) => {
     .catch(next);
 };
 
-exports.assignNewPassword = (req, res, next) => {
-  const newCid = req.query.cid;
-  const newLifetimes = req.query.lifetimes;
-  const newPassword = Math.random().toString(36).slice(-8);
-  Recruitment.assignNewPassword(newCid, newPassword, newLifetimes)
-    .then((passwordStatusObject) => {
-      res.json(passwordStatusObject);
+exports.generatePassword = (req, res, next) => {
+  const theCid = req.query.cid;
+  let newPassword = (Math.random().toString(36)).slice(-8);
+  let newLifetimes = req.query.lifetimes;
+  if (newLifetimes < 1) {
+    newPassword = null;
+    newLifetimes = 0;
+  }
+  Recruitment.generatePassword(theCid, newPassword, newLifetimes)
+    .then((messege) => {
+      res.json(messege);
     })
     .catch(next);
 };

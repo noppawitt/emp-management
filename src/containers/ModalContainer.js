@@ -14,7 +14,7 @@ import CreateLeaveRequestModal from './modals/CreateLeaveRequestModal';
 import ConfirmModal from './modals/ConfirmModal';
 import AddExamModal from './modals/AddExamModal';
 import EditExamModal from './modals/EditExamModal';
-import ActiveUserModal from './modals/ActiveUserModal';
+import ActivateUserModal from './modals/ActivateUserModal';
 
 const ModalContainer = ({ name, props }) => {
   switch (name) {
@@ -43,7 +43,7 @@ const ModalContainer = ({ name, props }) => {
     case modalNames.EDIT_EXAM:
       return <EditExamModal {...props} />;
     case modalNames.DISPLAY_PASSWORD:
-      return <ActiveUserModal {...props} />;
+      return <ActivateUserModal {...props} />;
     default:
       return <div />;
   }

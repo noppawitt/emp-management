@@ -8,7 +8,7 @@ import {
   filterRecruitment,
   filterStartDateRecruitment,
   filterEndDateRecruitment,
-  activeUserRequest,
+  checkPasswordStatusRequest,
 } from '../../actions/recruitment';
 import Recruitment from '../../components/Recruitment';
 import Loader from '../../components/Loader';
@@ -27,7 +27,7 @@ const RecruitmentPage = ({
   onEndDateChange,
   startDate,
   endDate,
-  onActivateUser,
+  onClickActivate,
   alivePassword }) => {
   const handleSort = (key) => {
     if (sortKey !== key) {
@@ -51,7 +51,7 @@ const RecruitmentPage = ({
           onEndDateChange={onEndDateChange}
           startDate={startDate}
           endDate={endDate}
-          onActivateUser={onActivateUser}
+          onClickActivate={onClickActivate}
           alivePassword={alivePassword}
         />}
     </div>
@@ -69,7 +69,7 @@ RecruitmentPage.propTypes = {
   onEndDateChange: PropTypes.func.isRequired,
   startDate: PropTypes.string.isRequired,
   endDate: PropTypes.string.isRequired,
-  onActivateUser: PropTypes.func.isRequired,
+  onClickActivate: PropTypes.func.isRequired,
   alivePassword: PropTypes.func.isRequired,
 };
 
@@ -97,15 +97,14 @@ const mapDispatchToProps = dispatch => ({
   // -do nothing : generate new password
   // -query that alive password to state
   // -openModal and display it
-  onActivateUser: cid => compose(
-    dispatch(activeUserRequest(cid)),
+  onClickActivate: cid => compose(
+    dispatch(checkPasswordStatusRequest(cid)),
     dispatch(openModal(modalNames.DISPLAY_PASSWORD)),
   ),
   // check here any password alive and
   // its Remaining time enought?
   // now we get api >> fetchCandidatePassword
   // console.log(cid),
-
   // (dispatch(checkPasswordStatusSuccess(cid)).password === null ?
   //   // do nothing
   //   // dispatch(isUsablePasswordExist(cid)) :

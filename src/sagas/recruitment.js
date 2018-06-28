@@ -3,8 +3,12 @@ import * as actionTypes from '../constants/actionTypes';
 import {
   fetchRecruitmentSuccess,
   fetchRecruitmentFailure,
-  activeUserSuccess,
-  activeUserFailure,
+  checkPasswordStatusSuccess,
+  checkPasswordStatusFailure,
+  generatePasswordSuccess,
+  generatePasswordFailure,
+  updateUserStatus,
+  checkPasswordStatusRequest
 } from '../actions/recruitment';
 import api from '../services/api';
 
@@ -22,24 +26,39 @@ export function* fetchRecruitmentTask() {
 export function* checkPasswordStatusTask(action) {
   try {
     // prepare variable
-    const passwordStatusObject = yield call(api.checkPasswordStatus, action.payload.cid);
+    const passwordObject = yield call(api.checkPasswordStatus, action.payload.cid);
     const today = (new Date()).getTime();
-    const expiredDay = new Date(passwordStatusObject.lastestCreatedPasswordTime).getTime();
-    const lifetimes = passwordStatusObject.passwordLifetimes;
-    const oneDay = 1000 * 60 * 24;
-    const isExpired = expiredDay - today < lifetimes * oneDay;
-    // if no password or it expired > request new one
-    if (passwordStatusObject.password === null || isExpired) {
-      console.log('RCM-saga > Flag 3: it\'s null or Password Expired', today, expiredDay);
-      // const something = yield call(api.assignNewPassword, action.payload.cid);
-      // yield put(something);
+    const createdDay = new Date(passwordObject.lastestCreatedPasswordTime).getTime();
+    const lifetimes = passwordObject.passwordLifetimes;
+    const msInDay = 1000 * 60 * 60 * 24;
+    const isExpired = today - createdDay > lifetimes * msInDay;
+    const expireDateString = new Date(createdDay + (lifetimes * msInDay)).toString();
+    if (passwordObject.password === null) {
+      yield put(updateUserStatus('No password in database!', 204));
     }
-    yield put(activeUserSuccess(passwordStatusObject));
+    else if (isExpired) {
+      yield put(updateUserStatus('Password expire@@Since : '.concat(expireDateString), 205));
+    }
+    else {
+      yield put(updateUserStatus('Password alive@@Expire on : '.concat(expireDateString), 200));
+    }
+    yield put(checkPasswordStatusSuccess(passwordObject));
   }
   catch (error) {
-    yield put(activeUserFailure(error));
+    yield put(checkPasswordStatusFailure(error));
   }
-  // catch another error here, don't do the nest try-catch
+}
+
+export function* generatePasswordTask(action) {
+  try {
+    const messege = yield call(api.generatePassword, action.payload.cid, action.payload.passwordLifetimes);
+    yield put(generatePasswordSuccess(messege));
+    // after generation complete lets check and display it
+    yield put(checkPasswordStatusRequest(action.payload.cid));
+  }
+  catch (error) {
+    yield put(generatePasswordFailure(error));
+  }
 }
 
 export function* watchFetchRecruitmentRequest() {
@@ -47,12 +66,17 @@ export function* watchFetchRecruitmentRequest() {
 }
 
 export function* watchCheckPasswordStatusRequest() {
-  yield takeEvery(actionTypes.RECRUITMENT_ACTIVE_USER_REQUEST, checkPasswordStatusTask);
+  yield takeEvery(actionTypes.RECRUITMENT_CHECK_PASSWORD_STATUS_REQUEST, checkPasswordStatusTask);
+}
+
+export function* watchActivateUserRequest() {
+  yield takeEvery(actionTypes.RECRUITMENT_GENERATE_PASSWORD_REQUEST, generatePasswordTask);
 }
 
 export default function* recruitmentSaga() {
   yield all([
     watchFetchRecruitmentRequest(),
     watchCheckPasswordStatusRequest(),
+    watchActivateUserRequest(),
   ]);
 }
