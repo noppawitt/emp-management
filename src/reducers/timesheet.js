@@ -1,6 +1,14 @@
+import moment from 'moment';
+
 import * as actionTypes from '../constants/actionTypes';
 
-const initialState = {};
+const now = moment();
+
+const initialState = {
+  lists: [],
+  year: now.format('YYYY'),
+  month: now.format('MM')
+};
 
 const timesheet = (state = initialState, action) => {
   switch (action.type) {
@@ -21,10 +29,15 @@ const timesheet = (state = initialState, action) => {
       };
     case actionTypes.TIMESHEET_FETCH_REQUEST:
       return {
-        isFetching: true
+        ...state,
+        isFetching: true,
+        userId: action.payload.userId,
+        year: action.payload.year,
+        month: action.payload.month
       };
     case actionTypes.TIMESHHET_FETCH_SUCCESS:
       return {
+        ...state,
         isFetching: false,
         lists: action.payload.timesheets
       };

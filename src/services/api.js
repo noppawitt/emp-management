@@ -287,8 +287,8 @@ api.createTimesheet = body => (
   })
 );
 
-api.fetchTimesheet = userId => (
-  callApi(`/api/timesheets/?id=${userId}`)
+api.fetchTimesheet = (userId, year, month) => (
+  callApi(`/api/timesheets/?userId=${userId}&year=${year}&month=${month}`)
 );
 
 api.updateTimesheet = body => (

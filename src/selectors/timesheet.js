@@ -1,9 +1,7 @@
 import moment from 'moment';
 
 export const fillTimesheetsToFullMonth = (state) => {
-  if (!state.timesheet.lists) return [];
-  const year = moment(state.timesheet.lists[0].date).format('YYYY');
-  const month = moment(state.timesheet.lists[0].date).format('MM');
+  const { year, month } = state.timesheet;
   const firstDay = moment(`${year}-${month}-01`);
   const lastDay = moment(`${year}-${month}-${firstDay.daysInMonth()}`);
   const n = 6 + (firstDay.isoWeekday() % 7) + firstDay.daysInMonth() - (lastDay.isoWeekday() % 7);
