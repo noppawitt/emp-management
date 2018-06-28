@@ -47,7 +47,7 @@ const fillBorderAllRow = (worksheet, row) => {
   }
 };
 
-const calHolidayWorkHour = (timeIn, timeOut) => new Promise((resolve, reject) => {
+const calOT = (timeIn, timeOut) => new Promise((resolve, reject) => {
   try {
     switch (timeIn) {
       case '12:30':
@@ -125,16 +125,20 @@ const calHolidayWorkHour = (timeIn, timeOut) => new Promise((resolve, reject) =>
   }
 });
 
-const writeSpecialTimesheet = (excelType, holidayDates, worksheet) => new Promise((resolve, reject) => {
+const writeSpecialTimesheet = (excelType, holidayDates, worksheet, numberOfDayInMonth) => new Promise((resolve, reject) => {
   try {
     if (excelType.reportType === 'Timesheet (Special)') {
-      for (let i = 0; i < holidayDates.length; i += 1) {
-        if (worksheet.getCell(`D${holidayDates[i] + 7}`).value && worksheet.getCell(`E${holidayDates[i] + 7}`).value) {
-          calHolidayWorkHour(worksheet.getCell(`D${holidayDates[i] + 7}`).value, worksheet.getCell(`E${holidayDates[i] + 7}`).value)
+      for (let day = 1; day <= numberOfDayInMonth; day += 1) {
+        if (worksheet.getCell(`D${day + 7}`).value && worksheet.getCell(`E${day + 7}`).value) {
+          calOT(worksheet.getCell(`D${day + 7}`).value, worksheet.getCell(`E${day + 7}`).value)
             .then((holidayWorkHour) => {
-              console.log(holidayWorkHour);
-              worksheet.getCell(`H${holidayDates[i] + 7}`).value = holidayWorkHour.holidayWork;
-              worksheet.getCell(`I${holidayDates[i] + 7}`).value = holidayWorkHour.holidayNonWork;
+              if (holidayDates.includes(day)) {
+                worksheet.getCell(`H${day + 7}`).value = holidayWorkHour.holidayWork;
+                worksheet.getCell(`I${day + 7}`).value = holidayWorkHour.holidayNonWork;
+              }
+              else {
+                worksheet.getCell(`G${day + 7}`).value = holidayWorkHour.holidayNonWork;
+              }
             });
         }
       }
@@ -143,6 +147,39 @@ const writeSpecialTimesheet = (excelType, holidayDates, worksheet) => new Promis
     else if (excelType.reportType === 'Timesheet (Normal)') {
       resolve(worksheet);
     }
+  }
+  catch (error) {
+    reject(error);
+  }
+});
+
+const calSumEachColumn = worksheet => new Promise((resolve, reject) => {
+  try {
+    worksheet.getCell('F39').value = {
+      formula: 'SUM(F8:F38)',
+      result: undefined
+    };
+    worksheet.getCell('G39').value = {
+      formula: 'SUM(G8:G38)',
+      result: undefined
+    };
+    worksheet.getCell('H39').value = {
+      formula: 'SUM(H8:H38)',
+      result: undefined
+    };
+    worksheet.getCell('I39').value = {
+      formula: 'SUM(I8:I38)',
+      result: undefined
+    };
+    worksheet.getCell('F40').value = {
+      formula: 'SUM(G39:I39)',
+      result: undefined
+    };
+    worksheet.getCell('F41').value = {
+      formula: 'F39/8',
+      result: undefined
+    };
+    resolve(worksheet);
   }
   catch (error) {
     reject(error);
@@ -182,6 +219,7 @@ exports.createReport = (req, res, next) => {
             worksheet.getCell('B3').value = project.role;
             worksheet.getCell('E3').value = `1 - ${numberOfDayInMonth} ${moment(excelType.month, 'MM').format('MMMM')} ${excelType.year}`;
             worksheet.getCell('C4').value = project.detail.customer;
+            worksheet.getCell('C53').value = `${project.user.firstName} ${project.user.lastName}`;
             // write day and Saturday, Sunday in report timesheet
             for (let day = 1; day <= numberOfDayInMonth; day += 1) {
               const date = `${yearMonth}-${day}`;
@@ -215,17 +253,20 @@ exports.createReport = (req, res, next) => {
               const day = parseInt(moment(date).format('DD'), 10);
               worksheet.getCell(`B${day + 7}`).value = timesheet[k].task;
               worksheet.getCell(`C${day + 7}`).value = timesheet[k].description;
-              worksheet.getCell(`D${day + 7}`).value = timesheet[k].timeIn;
-              worksheet.getCell(`E${day + 7}`).value = timesheet[k].timeOut;
+              worksheet.getCell(`D${day + 7}`).value = moment(timesheet[k].timeIn, 'HH:mm:ss').format('HH:mm');
+              worksheet.getCell(`E${day + 7}`).value = moment(timesheet[k].timeOut, 'HH:mm:ss').format('HH:mm');
               worksheet.getCell(`F${day + 7}`).value = timesheet[k].totalhours;
             }
-
-            // for timesheet special
-            writeSpecialTimesheet(excelType, holidayDates, worksheet)
+            // special timesheet
+            writeSpecialTimesheet(excelType, holidayDates, worksheet, numberOfDayInMonth)
               .then(() => {
-                res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-                res.setHeader('Content-Disposition', `attachment; filename="Timesheet_${excelType.year}_${excelType.month}_${excelType.projectId}.xlsx`);
-                workbook.xlsx.write(res);
+                calSumEachColumn(worksheet)
+                  .then(() => {
+                    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                    res.setHeader('Content-Disposition', `attachment; filename="Timesheet_${excelType.year}_${excelType.month}_${excelType.projectId}.xlsx`);
+                    workbook.xlsx.write(res);
+                  })
+                  .catch(next);
               })
               .catch(next);
           })
