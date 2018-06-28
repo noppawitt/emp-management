@@ -33,7 +33,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchTimesheet: id => dispatch(fetchTimesheetRequest(id)),
+  fetchTimesheet: (id, year, month) => dispatch(fetchTimesheetRequest(id, year, month)),
   onAddClick: date => dispatch(openModal(modalNames.ADD_TIMESHEET, { date })),
   onEditClick: id => dispatch(openModal(modalNames.EDIT_TIMESHEET, { id }))
 });
@@ -44,7 +44,7 @@ const enhance = compose(
     componentDidMount() {
       const date = new Date();
       const year = date.getFullYear();
-      const month = date.getMonth();
+      const month = date.getMonth() + 1;
       const { fetchTimesheet, userId } = this.props;
       fetchTimesheet(userId, year, month);
     }
