@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Table, Grid, Progress, Button, Modal } from 'semantic-ui-react';
+import { Icon, Table, Grid, Progress, Button, Select } from 'semantic-ui-react';
 import moment from 'moment';
 import PageHeader from './PageHeader';
 
@@ -17,29 +17,57 @@ class Timesheet extends React.Component {
       iconBluecolor: 'blue',
       date: moment(),
       lastholiday: { date: '', name: '' },
-      // lastleaveday: { date: '', status: '' },
+      lastleaveday: { date: '', status: '' },
       holidays: [
         { date: '2018-06-14', name: 'Compensatory day' },
-        { date: '2018-06-22', name: 'official holiday' },
+        { date: '2018-06-22', name: 'Official holiday' },
         { date: '2018-06-29', name: 'National holiday' }
       ],
-      // leavedays: [
-      //   { date: '2018-06-12', name: 'Compensatory day' },
-      //   { date: '2018-06-20', name: 'test day' },
-      //   { date: '2018-06-27', name: 'test 2 day' }
-      // ]
+      leavedays: [
+        { date: '2018-06-19', status: 'Personal Leave', timein: '9:00', timeout: '12:00', totalhours: 3 },
+        { date: '2018-06-26', status: 'Sick Leave', timein: '9:00', timeout: '18:00', totalhours: 8 },
+        { date: '2018-06-27', status: 'Sick Leave', timein: '9:00', timeout: '18:00', totalhours: 8 }
+      ],
+      months: [
+        { key: 1, value: 1, text: 'January' },
+        { key: 2, value: 2, text: 'Fabuary' },
+        { key: 3, value: 3, text: 'March' },
+        { key: 4, value: 4, text: 'April' },
+        { key: 5, value: 5, text: 'May' },
+        { key: 6, value: 6, text: 'June' },
+        { key: 7, value: 7, text: 'July' },
+        { key: 8, value: 8, text: 'August' },
+        { key: 9, value: 9, text: 'September' },
+        { key: 10, value: 10, text: 'October' },
+        { key: 11, value: 11, text: 'Novemver' },
+        { key: 12, value: 12, text: 'December' }
+      ],
+      years: [
+        { key: 2018, value: 2018, text: '2018' },
+        { key: 2019, value: 2019, text: '2019' },
+        { key: 2020, value: 2020, text: '2020' },
+        { key: 2021, value: 2021, text: '2021' },
+        { key: 2022, value: 2022, text: '2022' },
+        { key: 2023, value: 2023, text: '2023' },
+        { key: 2024, value: 2024, text: '2024' },
+        { key: 2025, value: 2025, text: '2025' },
+        { key: 2026, value: 2026, text: '2026' },
+        { key: 2027, value: 2027, text: '2027' }
+      ]
     };
     this.anotherMonthCell = this.anotherMonthCell.bind(this);
     this.workdayCell = this.workdayCell.bind(this);
     this.drawCell = this.drawCell.bind(this);
     this.addHolidayName = this.addHolidayName.bind(this);
-    this.isHoliday = this.isHoliday.bind(this);
     this.buttonOfHoliday = this.buttonOfHoliday.bind(this);
+    this.leavedayCell = this.leavedayCell.bind(this);
   }
-
   drawCell(date, hour, id) {
     if (date.format('M') !== this.state.date.format('M')) {
       return (this.anotherMonthCell(date.format('D')));
+    }
+    else if (this.isLeaveday(date)) {
+      return (this.leavedayCell(date, hour, id));
     }
     else if (this.isHoliday(date)) {
       return (this.holidayCell(date, hour, id));
@@ -49,15 +77,61 @@ class Timesheet extends React.Component {
     }
     return (this.workdayCell(date, hour, id));
   }
-
-  isHoliday(date) {
-    for (let i = 0; i < this.state.holidays.length; i += 1) {
-      if (moment(date).format('YYYY-MM-DD') === this.state.holidays[i].date) {
-        this.state.lastholiday = this.state.holidays[i];
-        return true;
+  isLeaveday(date) {
+    return this.state.leavedays.some(((leaveDay) => {
+      if (leaveDay.date === date.format('YYYY-MM-DD')) {
+        this.state.lastleaveday = leaveDay;
+        return (true);
       }
+      return (false);
+    }));
+  }
+  addStatusLeaveday(date, hour, id) {
+    if (this.state.lastleaveday.totalhours < 8) {
+      return (
+        <div>
+          <Grid.Row style={{ height: '5em' }}>
+            <font color={this.state.textAnotherDay}>- {this.state.lastleaveday.status}</font>
+            <br />
+            <font color={this.state.textAnotherDay}>{this.state.lastleaveday.timein}-{this.state.lastleaveday.timeout}</font>
+          </Grid.Row>
+          {this.editButtonWorkday(date, hour, id)}
+        </div>
+      );
     }
-    return false;
+    return (
+      <div>
+        <Grid.Row style={{ height: '5em' }}>
+          <font color={this.state.textAnotherDay}>- {this.state.lastleaveday.status}</font>
+        </Grid.Row>
+        {this.buttonOfHoliday(date, hour, id)}
+      </div>
+    );
+  }
+  leavedayCell(date, hour, id) {
+    return (
+      <Table.Cell style={{ backgroundColor: this.state.holidaycolor, maxWidth: '10em' }} >
+        <Grid.Column>
+          <Grid.Row textAlign="right" >
+            <font size="3" ><b>{date.format('D')}</b></font>
+          </Grid.Row>
+          {this.addStatusLeaveday(date, hour, id)}
+        </Grid.Column>
+      </Table.Cell>
+    );
+  }
+  workdayCell(date, hour, id) {
+    return (
+      <Table.Cell >
+        <Grid.Column>
+          <Grid.Row textAlign="right" >
+            <font size="3" ><b>{date.format('D')}</b></font>
+          </Grid.Row>
+          <Grid.Row style={{ height: '5em' }} />
+          {this.editButtonWorkday(date, hour, id)}
+        </Grid.Column>
+      </Table.Cell>
+    );
   }
   editButtonWorkday(date, hour, id) {
     let color = '';
@@ -94,6 +168,15 @@ class Timesheet extends React.Component {
         </Grid.Column>
       </Table.Cell>
     );
+  }
+  isHoliday(date) {
+    for (let i = 0; i < this.state.holidays.length; i += 1) {
+      if (moment(date).format('YYYY-MM-DD') === this.state.holidays[i].date) {
+        this.state.lastholiday = this.state.holidays[i];
+        return true;
+      }
+    }
+    return false;
   }
   holidayCell(date, hour, id) {
     return (
@@ -138,20 +221,6 @@ class Timesheet extends React.Component {
     }
     return (<Grid.Row style={{ height: '5em' }} />);
   }
-  workdayCell(date, hour, id) {
-    return (
-      <Table.Cell >
-        <Grid.Column>
-          <Grid.Row textAlign="right" >
-            <font size="3" ><b>{date.format('D')}</b></font>
-          </Grid.Row>
-          <Grid.Row style={{ height: '5em' }} />
-          {this.editButtonWorkday(date, hour, id)}
-        </Grid.Column>
-      </Table.Cell>
-    );
-  }
-
   render() {
     const progressBar = percentWork => <div> <Progress percent={percentWork} active color="blue" progress /> </div>;
 
@@ -159,7 +228,20 @@ class Timesheet extends React.Component {
       <div>
         <PageHeader text="Timesheet" icon="calendar alternate" />
         {progressBar(70)}
-        <Table celled structured fixed>
+        <Grid stackable doubling relaxed >
+          <Grid.Row>
+            <Grid.Column computer={8} >
+              <Select placeholder="Year" defaultValue={parseInt(this.state.date.format('YYYY'), 10)} options={this.state.years} onChange={(e, { value }) => this.props.onYearChange('year', value)} />
+              <Select style={{ marginLeft: '10px' }} placeholder="Month" defaultValue={parseInt(this.state.date.format('M'), 10)} options={this.state.months} onChange={(e, { value }) => this.props.onMonthChange('month', value)} />
+            </Grid.Column>
+            <Grid.Column floated="right" width={5}>
+              <Button floated="right" onClick={this.props.onMultiAddClick} color="blue" >
+                New Task
+              </Button>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+        <Table celled stackable fixed>
           <Table.Header>
             <Table.Row textAlign="center">
               <Table.HeaderCell colSpan="7"><font size="3">{this.state.date.format('MMMM')}</font> {this.state.date.format('YYYY')}</Table.HeaderCell>
@@ -184,7 +266,6 @@ class Timesheet extends React.Component {
             }
           </Table.Body>
         </Table>
-        <Modal trigger={<Button>New Task</Button>} />
       </div>
     );
   }
@@ -193,7 +274,10 @@ class Timesheet extends React.Component {
 Timesheet.propTypes = {
   timesheets: PropTypes.array.isRequired,
   onAddClick: PropTypes.func.isRequired,
-  onEditClick: PropTypes.func.isRequired
+  onEditClick: PropTypes.func.isRequired,
+  onMonthChange: PropTypes.func.isRequired,
+  onYearChange: PropTypes.func.isRequired,
+  onMultiAddClick: PropTypes.func.isRequired
 };
 
 export default Timesheet;
