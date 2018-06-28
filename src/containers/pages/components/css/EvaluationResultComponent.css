@@ -1,6 +1,6 @@
 .eva-result-container {
     position: relative;
-    width: 75%;
+    width: 100%;
     margin: auto;
     font-family: 'Prompt', sans-serif;
 }
@@ -9,9 +9,20 @@
   width: 100%;
 }
 
-.eva-result-container th {
+.eva-result-container div{
+  margin: 0;
+}
+.outer-table td {
     text-align: left;
 }
+
+.outer-table th, .outer-table td {
+  padding: 0;
+}
+
+/* .outer-table tr {
+  padding: 2em, 0;
+} */
 
 .blue-text {
     color: rgb(44, 154, 205);
@@ -30,20 +41,36 @@
     width: 80%;
 }
 
-.eva-result-container td {
-    padding: 0.2em;
-}
 
 .slide-show {
     transition: 0.4s;
-    padding: 0;
+    padding: 0%;
     overflow: hidden;
+}
+
+.outer-table table tr:nth-child(1) td{
+  padding: 0.3em 0 0.3em 0;
 }
 
 .slide-show td {
     padding: 0;
 }
+#pro-element1 , #pro-element1 td{
+  padding: 0;
+}
+#pro-element3,{
+  padding: 0;
+}
+#pro-element3 td{
+  padding: 0 0 0.5em 0 ;
+}
+#pro-element2 {
+  padding: 0;
+}
+#pro-element2 td{
+  padding: 0.5em 0 0 0 ;
 
+}
 .calendar-container {
     position: relative;
     overflow: visible;

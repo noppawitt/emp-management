@@ -5,13 +5,14 @@
 }
 
 .info-container table {
-    width: 75%;
+    width: 100%;
     margin: auto;
     table-layout: fixed;
 }
 
-.info-container td {
+.info-container td, .info-container th {
     text-align: left;
+    padding: 1% 0.2% 1% 0.2%;
 }
 
 .info-container td:nth-child(odd) {

@@ -89,7 +89,7 @@ class EvaluationResultComponent extends React.Component {
     showProElement2() {
         let elements = document.getElementById('pro-element2').getElementsByClassName('slide-show');
         for (let i = 0; i < elements.length; i++) {
-            elements[i].style.height = '3.5em';
+            elements[i].style.height = '4.5em';
         }
     }
 
@@ -136,7 +136,7 @@ class EvaluationResultComponent extends React.Component {
                                         this.state = { ...this.state, passPro: true };
                                         this.updateParentComponent();
                                     }} checked={this.state.passPro} />
-                                    Pass probationary period.Effective date on
+                                    &nbsp;Pass probationary period.Effective date on
                                 </td>
                                 <td>
                                     <input type='date' value={this.state.passProDate} onChange={(event) => {
@@ -155,14 +155,14 @@ class EvaluationResultComponent extends React.Component {
                                                         this.state = { ...this.state, confirmed: true };
                                                         this.updateParentComponent();
                                                     }} checked={this.state.confirmed} />
-                                                    Confirmed By Employment Conditions
+                                                    &nbsp;Confirmed By Employment Conditions
                                                 </td>
                                                 <td>
                                                     <input type='radio' name='confirm-con' onClick={() => {
                                                         this.state = { ...this.state, confirmed: false };
                                                         this.updateParentComponent();
                                                     }} checked={!this.state.confirmed} />
-                                                    Adjust the Salary and Benefits
+                                                    &nbsp;Adjust the Salary and Benefits
                                                 </td>
                                             </tr>
                                         </table>
@@ -227,7 +227,7 @@ class EvaluationResultComponent extends React.Component {
                                         this.state = { ...this.state, passPro: false };
                                         this.updateParentComponent();
                                     }} checked={!this.state.passPro} />
-                                    This person does not pass probation period. Action to be taken
+                                    &nbsp;This person does not pass probation period. Action to be taken
                                 </td>
                             </tr>
                             <tr>
@@ -240,7 +240,7 @@ class EvaluationResultComponent extends React.Component {
                                                         this.state = { ...this.state, continued: false };
                                                         this.updateParentComponent();
                                                     }} checked={!this.state.continued} />
-                                                    Termination Effective
+                                                    &nbsp;Termination Effective
                                                 </td>
                                                 <td>
                                                     <input type='date' value={this.state.terminationDate} onChange={(event) => {
@@ -255,7 +255,7 @@ class EvaluationResultComponent extends React.Component {
                                                         this.state = { continued: true };
                                                         this.updateParentComponent();
                                                     }} checked={this.state.continued} />
-                                                    Continued probation untill
+                                                    &nbsp;Continued probation untill
                                                 </td>
                                                 <td>
                                                     <input type='date' value={this.state.continuedDate} onChange={(event) => {

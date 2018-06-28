@@ -115,7 +115,7 @@ class ScoreTableManager extends React.Component {
         for (let i = 0; i < this.state.numOfQuestion; i++) {
             table.push(<tr>
                 <td>{i + 1}</td>
-                <td>{this.state.questions[i]}</td>
+                <td colSpan="7">{this.state.questions[i]}</td>
                 <td><DropDown id={`expectScore${i}`} value={this.state.expectedScore[i]} onChange={this.updateExpectedScore} numOfElements={this.state.numOfElements} /></td>
                 <td><DropDown id={`score${i}`} value={this.state.score[i]} onChange={this.updateScore} numOfElements={this.state.numOfElements} /></td>
                 <td>{this.state.weight[i]}%</td>
@@ -126,13 +126,13 @@ class ScoreTableManager extends React.Component {
             <div className='eva-container'>
                 <table>
                     <tr>
-                        <th colSpan='6' className='underline'>
+                        <th colSpan='12' className='underline'>
                             <span className='blue-text'>Performance Appraisal Portion</span>
                         </th>
                     </tr>
                     <tr>
                         <th>No.</th>
-                        <th>Appraisal Criteria</th>
+                        <th colSpan="7">Appraisal Criteria</th>
                         <th>Score</th>
                         <th>Total Average</th>
                         <th>Weight</th>
@@ -140,7 +140,7 @@ class ScoreTableManager extends React.Component {
                     </tr>
                     {table}
                     <tr>
-                        <th colSpan='2'>Total Performance Score</th>
+                        <th colSpan='8'>Total Performance Score</th>
                         <th></th>
                         <th>{this.arraySum(this.state.score)}</th>
                         <th>{this.arraySum(this.state.weight)}%</th>
