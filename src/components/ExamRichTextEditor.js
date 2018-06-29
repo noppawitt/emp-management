@@ -15,7 +15,6 @@ export default class ExamRichTextEditor extends Component {
   }
 
   handleFileUpload(file) {
-    console.log(file);
     return Promise.resolve({
       src: file.preview,
       name: file.name

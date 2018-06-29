@@ -1,6 +1,6 @@
 const callApi = (endpoint, request) => {
   if (request && request.body) {
-    request.body = JSON.stringify(request.body);
+    request.body = request.body instanceof FormData ? request.body : JSON.stringify(request.body);
   }
 
   const token = localStorage.getItem('token');
@@ -260,6 +260,16 @@ api.activatePassword = (id, lifetimes) => (
 );
 
 // Exam
+
+api.uploadImageExam = body => (
+  callApi('/api/upload-image-exam', {
+    headers: {
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAwMDAsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE1MzAyMDM1MDF9.itTYDoWPThpTXhRFfUX2N3TXw3Zyi0qoLc45lTbetBw'
+    },
+    method: 'POST',
+    body
+  })
+);
 
 api.addExam = body => (
   callApi('/api/exam', {

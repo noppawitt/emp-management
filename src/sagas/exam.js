@@ -15,6 +15,32 @@ import api from '../services/api';
 
 export function* addExamTask(action) {
   try {
+    const imageArrayNotClean = localStorage.getItem('examQuestion').split('<img src="');
+    const imageArray = [];
+    const files = [];
+
+    for (let i = 1; i < imageArrayNotClean.length; i += 1) {
+      if ((imageArrayNotClean[i].split('" '))[0].includes('blob:http')) {
+        imageArray.push((imageArrayNotClean[i].split('" '))[0]);
+      }
+    }
+
+    for (let i = 0; i < imageArray.length; i += 1) {
+      yield fetch(imageArray[i])
+        .then(res => (res.blob()))
+        .then((blob) => {
+          files.push(new File([blob], String(new Date())));
+        });
+    }
+
+    for (let i = 0; i < files.length; i += 1) {
+      const imageList = new FormData();
+      imageList.append('image', files[i]);
+      yield call(api.uploadImageExam, {
+        images: files[0]
+      });
+    }
+
     yield call(api.addExam, {
       exam: action.payload.form,
       question: localStorage.getItem('examQuestion')
