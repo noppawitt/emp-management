@@ -1,24 +1,25 @@
 const router = require('express').Router();
 const EmployeeInfoController = require('../../controllers/EmployeeInfoController');
 const multer = require('multer');
-
-router.post('/', EmployeeInfoController.create);
-
-router.get('/', EmployeeInfoController.findById);
-
-router.put('/', EmployeeInfoController.update);
+const mime = require('mime/lite');
 
 const storage = multer.diskStorage({
-  destination: (req, res, cb) => {
+  destination: (req, file, cb) => {
     cb(null, 'server/storage/public/profile-img');
   },
-  filename: (req, res, cb) => {
-    cb(null, String(req.user.id));
+  filename: (req, file, cb) => {
+    cb(null, `${req.user.id}.${mime.getExtension(file.mimetype)}`);
   }
 });
 
 const upload = multer({ storage });
 
-router.post('/upload-profile-img', upload.single('profile'), EmployeeInfoController.updateProfileImg);
+router.post('/upload-profile-img', upload.single('profileImage'), EmployeeInfoController.updateProfileImg);
+
+router.get('/', EmployeeInfoController.findById);
+
+router.post('/', EmployeeInfoController.create);
+
+router.put('/', EmployeeInfoController.update);
 
 module.exports = router;

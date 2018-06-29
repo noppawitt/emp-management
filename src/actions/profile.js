@@ -67,3 +67,24 @@ export const deleteProfileFailure = message => ({
     message
   }
 });
+
+export const updateProfilePictureRequest = picture => ({
+  type: actionTypes.PROFILE_PICTURE_UPDATE_REQUEST,
+  payload: {
+    picture
+  }
+});
+
+export const updateProfilePictureSuccess = pictureURL => ({
+  type: actionTypes.PROFILE_PICTURE_UPDATE_SUCCESS,
+  payload: {
+    pictureURL
+  }
+});
+
+export const updateProfilePictureFailure = message => ({
+  type: actionTypes.PROFILE_PICTURE_UPDATE_FAILURE,
+  payload: {
+    message
+  }
+});

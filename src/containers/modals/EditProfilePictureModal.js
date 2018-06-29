@@ -5,14 +5,15 @@ import { compose, withState } from 'recompose';
 import { Modal, Input, Button } from 'semantic-ui-react';
 import AvatarEditor from 'react-avatar-editor';
 import { closeModal } from '../../actions/modal';
+import { updateProfilePictureRequest } from '../../actions/profile';
 
-const EditProfilePictureModal = ({ onClose, picture, setPicture, scale, setScale }) => {
+const EditProfilePictureModal = ({ onClose, picture, setPicture, scale, setScale, updateProfilePicture }) => {
   let imageEditor;
   const onSaveClick = () => {
     const image = imageEditor.getImage().toDataURL();
     fetch(image)
       .then(res => res.blob())
-      .then(blob => console.log(URL.createObjectURL(blob)));
+      .then(blob => updateProfilePicture(blob));
   };
   return (
     <Modal
@@ -50,11 +51,13 @@ EditProfilePictureModal.propTypes = {
   picture: PropTypes.string.isRequired,
   setPicture: PropTypes.func.isRequired,
   scale: PropTypes.number.isRequired,
-  setScale: PropTypes.func.isRequired
+  setScale: PropTypes.func.isRequired,
+  updateProfilePicture: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
-  onClose: () => dispatch(closeModal())
+  onClose: () => dispatch(closeModal()),
+  updateProfilePicture: blob => dispatch(updateProfilePictureRequest(blob))
 });
 
 const enhance = compose(
