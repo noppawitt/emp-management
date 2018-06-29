@@ -10,6 +10,7 @@ import ProfilePage from './pages/ProfilePage';
 import EmployeePage from './pages/EmployeePage';
 import ReportPage from './pages/ReportPage';
 import AddTaskPage from './pages/AddTaskPage';
+import SelfAssessmentForm from './pages/SelfAssessmentForm';
 
 const Routes = () => (
   <Switch>
@@ -23,6 +24,7 @@ const Routes = () => (
     <PrivateRoute path="/employee" component={EmployeePage} />
     <PrivateRoute path="/report" component={ReportPage} />
     <PrivateRoute path="/addtask" component={AddTaskPage} />
+    <PrivateRoute path="/self" component={SelfAssessmentForm} />
   </Switch>
 );
 

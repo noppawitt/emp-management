@@ -6,9 +6,10 @@ class SignatureComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            employeeSignDate: '',
-            supervisorSignDate: '',
-            MDSignDate: ''
+            employeeSignDate: props.employeeSignDate || '',
+            supervisorSignDate: props.supervisorSignDate || '',
+            MDSignDate: props.MDSignDate || '',
+            role: props.role || ''
         };
 
         this.EmployeeSignHandler = this.EmployeeSignHandler.bind(this);
@@ -21,8 +22,31 @@ class SignatureComponent extends React.Component {
     }
 
     componentDidMount() {
+        // initial conditions
+        this.employeeSignButton.current.disabled = true;
         this.supervisorSignButton.current.disabled = true;
         this.MDSignButton.current.disabled = true;
+
+        if (this.state.role == 'employee')
+            this.employeeSignButton.current.disabled = false;
+        else if (this.state.role == 'supervisor')
+            this.supervisorSignButton.current.disabled = false;
+        else if (this.state.role == 'MD')
+            this.MDSignButton.current.disabled = false;
+        else {
+            this.employeeSignButton.current.disabled = true;
+            this.supervisorSignButton.current.disabled = true;
+            this.MDSignButton.current.disabled = true;
+        }
+
+        if (this.state.employeeSignDate)
+            this.EmployeeSignHandler();
+
+        if (this.state.supervisorSignDate)
+            this.SupervisorSignHandler();
+
+        if (this.state.MDSignDate)
+            this.MDSignHandler();
     }
 
     EmployeeSignHandler() {
