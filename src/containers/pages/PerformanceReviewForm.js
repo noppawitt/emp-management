@@ -1,6 +1,6 @@
 import React from 'react';
 import './css/PerformanceReviewForm.css';
-import ScoreManager from './components/ScoreTableManager';
+import ScoreTableManager from './components/ScoreTableManager';
 import EmployeeInfo from './components/EmployeeInfoComponent';
 import SignatureComponent from './components/SignatureComponent';
 import SupervisorCommentComponent from './components/SupervisorCommentComponent';
@@ -24,9 +24,25 @@ class PerformanceReviewForm extends React.Component {
             level: '_level',
             startDate: '_startDate',
             supervisor: '_supervisor',
-            expectedScore: [3, 3, 3, 3, 3, 3, 3],
-            score: [3, 3, 3, 3, 3, 3, 3],
+            expectedScore: null,
+            score: null,
         };
+
+        this.scoreTableStateHandler = this.scoreTableStateHandler.bind(this);
+        this.supervisorCommentHandler = this.supervisorCommentHandler.bind(this);
+    }
+
+    scoreTableStateHandler(newScore, newExpectedScore) {
+        this.setState({
+            score: newScore,
+            expectedScore: newExpectedScore
+        });
+    }
+
+    supervisorCommentHandler(newComment) {
+        this.state = { ...this.state, supervisorComment: newComment };
+        // this.props.test(this.state);
+        console.log(this.state);
     }
 
     render() {
@@ -36,13 +52,13 @@ class PerformanceReviewForm extends React.Component {
                     <h1>Employee Performance Review Form</h1>
                     <h2>Playtorium Solutions Company Limited</h2>
                 </div>
-                <EmployeeInfo {...this.state} />
+                {/* <EmployeeInfo {...this.state} /> */}
                 <br />
                 <div>
-                    <ScoreManager questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} {...this.state}/>
+                    <ScoreTableManager {...this.state} questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} onChange={this.scoreTableStateHandler} />
                 </div>
                 <br />
-                <SupervisorCommentComponent {...this.state}/>
+                <SupervisorCommentComponent {...this.state} onChange={this.supervisorCommentHandler} />
                 <br />
                 <SignatureComponent {...this.state}/>
             </div>

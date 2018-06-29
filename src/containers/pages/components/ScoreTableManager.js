@@ -34,25 +34,16 @@ class ScoreTableManager extends React.Component {
         this.calculateSumTotalPoint = this.calculateSumTotalPoint.bind(this);
     }
 
-    // componentWillReceiveProps(props) {
-    //     console.log("Receive");
-
-    //     // this.state = {
-    //     //     ...this.state,
-    //     //     expectedScore: props.expectedScore,
-    //     //     score: props.score
-    //     // }
-
-    //     this.setState({
-    //         // expectedScore: props.expectedScore,
-    //         score: props.score
-    //     })
-    //     // console.log(props);
-    //     // console.log(this.state);
-    // }
-
     componentDidUpdate() {
         this.props.onChange(this.state.score, this.state.expectedScore);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return (this.state.score != nextState.score ||
+            this.state.expectedScore != nextState.expectedScore ||
+            this.state.totalPoint != nextState.totalPoint ||
+            this.state.sumTotalPoint != nextState.sumTotalPoint ||
+            this.state.sumTotalPointForShow != nextState.sumTotalPointForShow);
     }
 
     componentDidMount() {
