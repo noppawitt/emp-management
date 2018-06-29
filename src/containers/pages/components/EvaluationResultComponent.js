@@ -61,7 +61,6 @@ class EvaluationResultComponent extends React.Component {
         if (this.props.mode != 'edit') {
             let elements = document.getElementsByTagName('input');
 
-            alert(elements.length);
             for (let i = 0; i < elements.length; i++) {
                 elements[i].disabled = (this.props.mode != 'edit');
             }

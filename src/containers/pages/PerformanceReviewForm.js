@@ -52,7 +52,7 @@ class PerformanceReviewForm extends React.Component {
                     <h1>Employee Performance Review Form</h1>
                     <h2>Playtorium Solutions Company Limited</h2>
                 </div>
-                {/* <EmployeeInfo {...this.state} /> */}
+                <EmployeeInfo {...this.state} />
                 <br />
                 <div>
                     <ScoreTableManager {...this.state} questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} onChange={this.scoreTableStateHandler} />
