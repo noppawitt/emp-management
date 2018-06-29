@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { Field, reduxForm, formValueSelector, FieldArray } from 'redux-form';
-import { Form, Header, Icon, Button } from 'semantic-ui-react';
+import { Form, Header, Icon, Button, Label } from 'semantic-ui-react';
 import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
 import ExamRichTextEditor from '../../components/ExamRichTextEditor';
@@ -11,11 +11,39 @@ import ExamRichTextEditor from '../../components/ExamRichTextEditor';
 const validate = (values) => {
   const errors = {};
   errors.examType = validator.required(values.examType);
-  errors.question = validator.required(values.question);
   errors.examCategory = validator.required(values.examCategory);
+  errors.examSubCategory = validator.required(values.examSubCategory);
 
+  if (values.examType === 'Choices') {
+    let hasAnswer = false;
+    let sameAnswer = false;
+    errors.choices = [];
+    for (let i = 0; i < values.choices.length; i += 1) {
+      for (let j = 0; j < i; j += 1) {
+        if (values.choices[j].data.toLowerCase().trimRight() === values.choices[i].data.toLowerCase().trimRight()) {
+          sameAnswer = !(values.choices[j].data === undefined || values.choices[j].data === '');
+          break;
+        }
+      }
+      if (sameAnswer) {
+        break;
+      }
+      if (values.choices[i].answer === true) {
+        hasAnswer = true;
+      }
+    }
+
+    if (sameAnswer) {
+      errors.choices._error = 'Every choices need to be different';
+    }
+    else if (!hasAnswer) {
+      errors.choices._error = 'ExamType:Choice need answer';
+    }
+  }
   return errors;
 };
+
+const requiredField = value => ((value) ? undefined : 'Required');
 
 const examTypeOptions = [
   { key: 'Write-Up', value: 'Write-Up', text: 'Write-Up' },
@@ -47,15 +75,19 @@ examSubCategoryOptions.propTypes = {
   examCategory: PropTypes.string.isRequired
 };
 
-const renderChoices = ({ fields, placeHold, submitting }) => (
+const renderChoices = ({ fields, placeHold, submitting, meta }) => (
   <div>
-    <Header as="h5">Choices</Header>
+    <Header as="h5">Choices
+      <label style={{ color: 'red' }}>*</label>
+      {meta.dirty && meta.error &&
+        <Label basic color="red" pointing="left" >{meta.error}</Label>}
+    </Header>
     {fields.map((choice, index) => {
       placeHold = (('Choice ').concat((index + 1))).concat(' ...');
       return (
         <div>
           <Form.Group>
-            <Field name={`${choice}.data`} as={Form.Input} component={Input} placeholder={placeHold} disabled={submitting} />
+            <Field name={`${choice}.data`} as={Form.Input} component={Input} placeholder={placeHold} disabled={submitting}  validate={[requiredField]} />
             <Field name={`${choice}.answer`} as={Form.Checkbox} component={Input} label="Correct Answer" disabled={submitting} />
             <Icon fitted name="ban" color="red" size="large" onClick={() => fields.remove(index)} disabled={submitting} />
           </Form.Group>
@@ -72,7 +104,8 @@ const renderChoices = ({ fields, placeHold, submitting }) => (
 renderChoices.propTypes = {
   fields: Field.isRequired,
   placeHold: PropTypes.string.isRequired,
-  submitting: PropTypes.bool.isRequired
+  submitting: PropTypes.bool.isRequired,
+  meta: PropTypes.object.isRequired,
 };
 
 const EditExamForm = ({ handleSubmit, submitting, examType, exams, examCategory, question }) => (
@@ -85,7 +118,7 @@ const EditExamForm = ({ handleSubmit, submitting, examType, exams, examCategory,
     </datalist>
     <div>
       <Field name="examSubCategory" as={Form.Input} component={Input} list="exam_subCategory" label="Exam Sub-Category" placeholder="Sub-Category ..." disabled={submitting} required />
-      <datalist id="exam_subCategory">
+      <datalist id="exam_subCategory" style={{ zIndex: '1' }}>
         {
           (examSubCategoryOptions(exams, examCategory, [])).map(type => (<option value={type} />))
         }
