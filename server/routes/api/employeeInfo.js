@@ -2,12 +2,6 @@ const router = require('express').Router();
 const EmployeeInfoController = require('../../controllers/EmployeeInfoController');
 const multer = require('multer');
 
-router.post('/', EmployeeInfoController.create);
-
-router.get('/', EmployeeInfoController.findById);
-
-router.put('/', EmployeeInfoController.update);
-
 const storage = multer.diskStorage({
   destination: (req, res, cb) => {
     cb(null, 'server/storage/public/profile-img');
@@ -19,6 +13,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post('/upload-profile-img', upload.single('profile'), EmployeeInfoController.updateProfileImg);
+router.post('/upload-profile-img', upload.single('profileImage'), EmployeeInfoController.updateProfileImg);
+
+router.get('/', EmployeeInfoController.findById);
+
+router.post('/', EmployeeInfoController.create);
+
+router.put('/', EmployeeInfoController.update);
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const callApi = (endpoint, request) => {
   if (request && request.body) {
-    request.body = JSON.stringify(request.body);
+    request.body = request.body instanceof FormData ? request.body : JSON.stringify(request.body);
   }
 
   const token = localStorage.getItem('token');
@@ -176,9 +176,11 @@ api.createAssetProfile = body => (
   })
 );
 
-api.uploadProfilePicture = body => (
-  callApi('upload-profile-img', {
-    headers: { 'Content-Type': 'multipart/form-data' },
+api.updateProfilePicture = body => (
+  callApi('/api/employee-info/upload-profile-img', {
+    headers: {
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAwMDAsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE1MzAyMDM1MDF9.itTYDoWPThpTXhRFfUX2N3TXw3Zyi0qoLc45lTbetBw'
+    },
     method: 'POST',
     body
   })
