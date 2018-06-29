@@ -9,7 +9,7 @@ class EmployeeInfo extends React.Component {
         this.state = {
             ...props,
             startDate: moment('2016-01-01'),
-            endProbationDate: this.props.endProbationDate || moment(this.props.startDate.format('YYYY-MM-DD')).add(120, 'day').format('YYYY-MM-DD'),
+            endProbationDate: this.props.endProbationDate,
             showEndProDate: props.showEndProDate && true
         };
     }
