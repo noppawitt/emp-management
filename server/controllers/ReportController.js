@@ -239,6 +239,82 @@ const writeAllProject = (workbook, year) => new Promise(async (resolve, reject) 
   }
 });
 
+const writeAllLeave = (worksheet, leaveRequests, monthColumn, rowColumn) => new Promise((resolve, reject) => {
+  try {
+    let row = 5;
+    let userId = '';
+    for (let i = 0; i < leaveRequests.length; i += 1) {
+      if (leaveRequests[i].id === userId) {
+        if (leaveRequests[i].leaveType === 'Sick Leave') {
+          worksheet.getCell(`${monthColumn[(leaveRequests[i].month - 1) * 4]}${row}`).value = leaveRequests[i].days;
+        }
+        else if (leaveRequests[i].leaveType === 'Personal Leave') {
+          worksheet.getCell(`${monthColumn[((leaveRequests[i].month - 1) * 4) + 1]}${row}`).value = leaveRequests[i].days;
+        }
+        else if (leaveRequests[i].leaveType === 'Annual Leave') {
+          worksheet.getCell(`${monthColumn[((leaveRequests[i].month - 1) * 4) + 2]}${row}`).value = leaveRequests[i].days;
+        }
+        else if (leaveRequests[i].leaveType === 'Ordination Leave') {
+          worksheet.getCell(`${monthColumn[((leaveRequests[i].month - 1) * 4) + 3]}${row}`).value = leaveRequests[i].days;
+        }
+      }
+      else if (leaveRequests[i].id !== userId) {
+        row += 1;
+        worksheet.getCell(`B${row}`).value = leaveRequests[i].id;
+        worksheet.getCell(`C${row}`).value = leaveRequests[i].name;
+        worksheet.getCell(`D${row}`).value = leaveRequests[i].nickName;
+        worksheet.getCell(`E${row}`).value = leaveRequests[i].mobileNumber;
+        worksheet.getCell(`F${row}`).value = leaveRequests[i].startDate;
+        fillBorderFixColumn(worksheet, row, rowColumn);
+        userId = leaveRequests[i].id;
+        if (leaveRequests[i].leaveType === 'Sick Leave') {
+          worksheet.getCell(`${monthColumn[(leaveRequests[i].month - 1) * 4]}${row}`).value = leaveRequests[i].days;
+        }
+        else if (leaveRequests[i].leaveType === 'Personal Leave') {
+          worksheet.getCell(`${monthColumn[((leaveRequests[i].month - 1) * 4) + 1]}${row}`).value = leaveRequests[i].days;
+        }
+        else if (leaveRequests[i].leaveType === 'Annual Leave') {
+          worksheet.getCell(`${monthColumn[((leaveRequests[i].month - 1) * 4) + 2]}${row}`).value = leaveRequests[i].days;
+        }
+        else if (leaveRequests[i].leaveType === 'Ordination Leave') {
+          worksheet.getCell(`${monthColumn[((leaveRequests[i].month - 1) * 4) + 3]}${row}`).value = leaveRequests[i].days;
+        }
+      }
+    }
+    resolve(row);
+  }
+  catch (error) {
+    reject(error);
+  }
+});
+
+const calTotalLeave = (worksheet, row) => new Promise((resolve, reject) => {
+  try {
+    for (let i = 6; i <= row; i += 1) {
+      worksheet.getCell(`G${i}`).value = {
+        formula: `SUM(K${i},O${i},S${i},W${i},AA${i},AE${i},AI${i},AM${i},AQ${i},AU${i},AY${i},BC${i})`,
+        result: undefined
+      };
+      worksheet.getCell(`H${i}`).value = {
+        formula: `SUM(L${i},P${i},T${i},X${i},AB${i},AF${i},AJ${i},AN${i},AR${i},AV${i},AZ${i},BD${i})`,
+        result: undefined
+      };
+      worksheet.getCell(`I${i}`).value = {
+        formula: `SUM(M${i},Q${i},U${i},Y${i},AC${i},AG${i},AK${i},AO${i},AS${i},AW${i},BA${i},BE${i})`,
+        result: undefined
+      };
+      worksheet.getCell(`J${i}`).value = {
+        formula: `SUM(N${i},R${i},V${i},Z${i},AD${i},AH${i},AL${i},AP${i},AT${i},AX${i},BB${i},BF${i})`,
+        result: undefined
+      };
+    }
+    resolve(worksheet);
+  }
+  catch (error) {
+    reject(error);
+  }
+});
+
 exports.createReport = (req, res, next) => {
   const { excelType } = req.body;
   if (excelType.reportType === 'Timesheet (Normal)' || excelType.reportType === 'Timesheet (Special)') {
@@ -393,7 +469,9 @@ exports.createReport = (req, res, next) => {
     workbook.xlsx.readFile(filename)
       .then(() => {
         const worksheet = workbook.getWorksheet('Leave');
-        const months = moment.monthsShort();
+        const rowColumn = ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+          'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ',
+          'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ', 'BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG'];
         const monthColumn = ['K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
           'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ',
           'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ', 'BA', 'BB', 'BC', 'BD', 'BE', 'BF'];
@@ -402,28 +480,17 @@ exports.createReport = (req, res, next) => {
         worksheet.getCell('D2').value = `${time.format('DD/MM/YY')} ${time.format('HH:mm')}`;
         LeaveRequest.findSummaryLeave(excelType.year)
           .then((leaveRequests) => {
-            // let row = 5;
-            // let id = '';
-            // for (let i = 0; i < leaveRequests.length; i += 1) {
-            //   if (leaveRequests[i].id === id) {
-            //     if (leaveRequests[i].leaveType === 'Annual Leave') {
-            //       worksheet.getCell(`${monthColumn[(leaveRequests[i] - 1) * 4]}`)
-            //     }
-            //     else if (leaveRequests[i].leaveType === 'Personal Leave') {
-                  
-            //     }
-            //     else if (leaveRequests[i].leaveType === 'Sick Leave') {
-                  
-            //     }
-            //     else if (leaveRequests[i].leaveType === 'Ordination Leave') {
-                  
-            //     }
-            //   }
-            //   else if (leaveRequests[i].id !== id) {
-            //     row += 1;
-
-            //   }
-            // }
+            writeAllLeave(worksheet, leaveRequests, monthColumn, rowColumn)
+              .then((row) => {
+                calTotalLeave(worksheet, row)
+                  .then(() => {
+                    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                    res.setHeader('Content-Disposition', `attachment; filename="Timesheet_Summary_${excelType.year}.xlsx`);
+                    workbook.xlsx.write(res);
+                  })
+                  .catch(next);
+              })
+              .catch(next);
           })
           .catch(next);
       })

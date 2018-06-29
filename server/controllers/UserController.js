@@ -31,6 +31,12 @@ exports.create = (req, res, next) => {
             }
             else {
               newUser.password = bcrypt.hashSync(pass, bcrypt.genSaltSync());
+              if (newUser.gender === 'Male') {
+                newUser.picture = '/static/profile-img/man.jpg';
+              }
+              else {
+                newUser.picture = '/static/profile-img/woman.jpg';
+              }
               User.create(newUser, req.user.id)
                 .then((createdUser) => {
                   const mailOptions = {
