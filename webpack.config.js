@@ -56,7 +56,7 @@ module.exports = {
     hot: true,
     historyApiFallback: true,
     proxy: [{
-      context: ['/auth', '/examauth', '/api'],
+      context: ['/auth', '/examauth', '/api', '/static'],
       target: 'http://localhost:3000',
     }]
   }
