@@ -2,13 +2,24 @@
     text-align: center;
 }
 .main-container{
+  position: relative;
   width: 100%;
   height: 100%;
-  padding: 0% 3%;
+  padding: 3%;
 }
 .main-container div{
-  margin-top: 1%;
+  margin-top: 2%;
 }
 .main-container table{
   table-layout: fixed;
+}
+.logo_back{
+  width: 25%;
+  height: 100%;
+  position: absolute;
+  z-index: 5;
+  right: 2%;
+  top: 0;
+  opacity: 0.02;
+  pointer-events: none;
 }

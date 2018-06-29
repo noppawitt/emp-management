@@ -9,7 +9,8 @@ const profile = (state = initialState, action) => {
     case actionTypes.UPDATE_PROBATION_STORE:
       return {
         ...state,
-        item: action.payload.item
+        item: action.payload.item,
+        edited: true
       };
     case actionTypes.PROFILE_FETCH_REQUEST:
       return {
@@ -39,6 +40,7 @@ const profile = (state = initialState, action) => {
       return {
         ...state,
         submitting: false,
+        edited:false,
         ...action.payload.profile
       };
     case actionTypes.PROFILE_UPDATE_FAILURE:

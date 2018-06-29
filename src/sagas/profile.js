@@ -12,7 +12,7 @@ import { closeModal } from '../actions/modal';
 import api from '../services/api';
 import jwt from 'jsonwebtoken';
 
-const token = localStorage.getItem('token');
+const token = jwt.decode(localStorage.getItem('token'));
 
 export function* fetchProfileTask(action) {
   try {
@@ -22,7 +22,7 @@ export function* fetchProfileTask(action) {
     profile.educations = yield call(api.fetchEducationProfile, action.payload.id);
     profile.certificates = yield call(api.fetchCertificateProfile, action.payload.id);
     profile.assets = yield call(api.fetchAssetProfile, action.payload.id);
-    profile.eva = yield call(api.fetchProbation, action.payload.id);
+    if(token.type=='admin' || token.id == action.payload.id)profile.eva = yield call(api.fetchProbation, action.payload.id);
     yield put(fetchProfileSuccess(profile));
   }
   catch (error) {

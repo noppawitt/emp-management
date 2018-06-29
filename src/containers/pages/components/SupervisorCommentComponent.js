@@ -14,7 +14,7 @@ class SupervisorCommentComponent extends React.Component {
     render() {
         return (
             <div className='sup-comment'>
-                <h2 className='blue-text'><strong>Summary Comments by Supervisors:</strong></h2>
+                <span className='blue-text'>Summary Comments by Supervisors:</span>
                 <textarea onChange={(event) => this.props.onChange(event.target.value)}>{this.state.supervisorComment}</textarea>
             </div>
         );

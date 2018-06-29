@@ -5,7 +5,7 @@ import EmployeeInfo from './components/EmployeeInfoComponent';
 import SignatureComponent from './components/SignatureComponent';
 import EvaluationResultComponent from './components/EvaluationResultComponent';
 import SupervisorCommentComponent from './components/SupervisorCommentComponent';
-
+import logoBack from './pic/logo2.png'
 const questions = ['ความรู้ในงานและการพัฒนาตัวเอง (Knowledge and Improvement)',
     'คุณภาพงาน (Quality of Work)',
     'ปริมาณงาน (Quantity of Work)',
@@ -28,9 +28,9 @@ class ProbationForm extends React.Component {
             expectedScore: null,
             score: null,
             endProbationDate: this.props.profile.work.probationDate,
-            passPro: null,
-            confirmed: null,
-            continued: null,
+            passPro: true,
+            confirmed: true,
+            continued: false,
             basedSalary: null,
             mobile: null,
             transporationAllowance: null,
@@ -119,20 +119,18 @@ class ProbationForm extends React.Component {
     render() {
         return (
             <div className='main-container'>
+                <img className="logo_back" src={logoBack} />
                 <div className='profile'>
                     <h1>Employee Probation Form</h1>
                     <h2>Playtorium Solutions Company Limited</h2>
                 </div>
                 <EmployeeInfo {...this.state} showEndProDate='true' onChange={this.employeeStateHandler} />
-                <br />
+
                 <div>
                     <ScoreTableManager {...this.state} questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} onChange={this.scoreTableStateHandler} />
                 </div>
-                <br />
                 <EvaluationResultComponent {...this.state} onChange={this.evaluationResultHandler} />
-                <br />
                 <SupervisorCommentComponent {...this.state} onChange={this.supervisorCommentHandler} />
-                <br />
                 <SignatureComponent {...this.state} />
             </div>
         );

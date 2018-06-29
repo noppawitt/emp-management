@@ -13,7 +13,7 @@ class AddProbation extends React.Component{
     this.type = (this.props.profile.eva == null ? 'addProbation':'updateProbation')
   }
   componentDidMount(){
-    console.log(this.state.submitting);
+    console.log(this.state.edited);
   }
   render(){
     return(
@@ -23,6 +23,7 @@ class AddProbation extends React.Component{
         onClick={()=>this.props.onSubmit(this.props.item,(this.props.profile.eva == null ? 'addProbation':'updateProbation'))}
         submitting={this.props.submitting}
         size="large"
+        disable={!this.props.edited}
       >
         <A test={this.props.onChange} profile={this.props.profile}/>
       </Modal>
@@ -31,7 +32,8 @@ class AddProbation extends React.Component{
 }
 
 AddProbation.defaultProps = {
-  submitting: false
+  submitting: false,
+  edited: false
 };
 
 AddProbation.propTypes = {
@@ -45,7 +47,8 @@ const mapStateToProps = state => ({
   item: state.profile.item,
   modalName: state.modal.name,
   profile: state.profile,
-  submitting: state.profile.submitting
+  submitting: state.profile.submitting,
+  edited: state.profile.edited
 });
 
 const mapDispatchToProps = dispatch => ({
