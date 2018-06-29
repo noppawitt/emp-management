@@ -22,7 +22,10 @@ export function* fetchProfileTask(action) {
     profile.educations = yield call(api.fetchEducationProfile, action.payload.id);
     profile.certificates = yield call(api.fetchCertificateProfile, action.payload.id);
     profile.assets = yield call(api.fetchAssetProfile, action.payload.id);
-    if(token.type=='admin' || token.id == action.payload.id)profile.eva = yield call(api.fetchProbation, action.payload.id);
+    if(token.type=='admin' || token.id == action.payload.id){
+      profile.eva = yield call(api.fetchProbation, action.payload.id);
+      profile.perf = yield call(api.fetchPerformance, action.payload.id);
+    }
     yield put(fetchProfileSuccess(profile));
   }
   catch (error) {
@@ -34,6 +37,16 @@ export function* updateProfileTask(action) {
   try {
     const profile = {};
     switch (action.payload.type) {
+      case 'addPerformance' :
+        profile.perf = yield call(api.addPerformance,{
+          performanceInfo: action.payload.form
+        });
+        break;
+      case 'updatePerformance' :
+        profile.perf = yield call(api.updatePerformance,{
+          performanceInfo: action.payload.form
+        });
+        break;
       case 'updateProbation':
         profile.eva = yield call(api.updateProbation, {
           probationInfo: action.payload.form

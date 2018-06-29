@@ -10,9 +10,9 @@ exports.find = (req, res, next) => {
 };
 
 exports.create = (req,res,next) => {
-  console.log('ajsudnasjndkjasndkjasbdkjasbdkj')
+  console.log(req)
   const newProbationInfo = req.body.probationInfo;
-  Probation.insertProbation(newProbationInfo)
+  Probation.insertProbation(newProbationInfo, req.user.id)
     .then(() => {
         Probation.findProById(req.body.probationInfo.employeeID)
           .then((probations)=>{

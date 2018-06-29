@@ -17,12 +17,12 @@ class PerformanceReviewForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "_name",
-            department: '_department',
-            position: '_position',
-            employeeID: '_employeeID',
-            level: '_level',
-            startDate: '_startDate',
+            name: this.props.profile.general.firstName + ' ' + this.props.profile.general.lastName,
+            department: this.props.profile.work.departmentName,
+            position: this.props.profile.work.positionName,
+            employeeID: this.props.profile.work.userId,
+            level: this.props.profile.work.levelId,
+            startDate: this.props.profile.work.startDate,
             supervisor: '_supervisor',
             expectedScore: null,
             score: null,
@@ -39,9 +39,30 @@ class PerformanceReviewForm extends React.Component {
         });
     }
 
+    componentWillMount() {
+        if (this.props.profile.perf[0] != null) {
+            this.setState({
+                expectedScore: this.props.profile.perf[0].expectedScore,
+                score: this.props.profile.perf[0].score,
+                supervisorComment: this.props.profile.perf[0].supComment
+            })
+        }
+    }
+
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return (nextState.score != this.state.score ||
+            nextState.expectedScore != this.state.expectedScore
+        )
+    }
+
+    componentDidUpdate() {
+        this.props.test(this.state);
+    }
+
     supervisorCommentHandler(newComment) {
         this.state = { ...this.state, supervisorComment: newComment };
-        // this.props.test(this.state);
+        this.props.test(this.state);
         console.log(this.state);
     }
 
@@ -52,15 +73,15 @@ class PerformanceReviewForm extends React.Component {
                     <h1>Employee Performance Review Form</h1>
                     <h2>Playtorium Solutions Company Limited</h2>
                 </div>
-                <EmployeeInfo {...this.state} />
+                <EmployeeInfo {...this.state} mode='edit'/>
                 <br />
                 <div>
-                    <ScoreTableManager {...this.state} questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} onChange={this.scoreTableStateHandler} />
+                    <ScoreTableManager {...this.state} questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} onChange={this.scoreTableStateHandler} mode='edit'/>
                 </div>
                 <br />
-                <SupervisorCommentComponent {...this.state} onChange={this.supervisorCommentHandler} />
+                <SupervisorCommentComponent {...this.state} onChange={this.supervisorCommentHandler} mode='edit'/>
                 <br />
-                <SignatureComponent {...this.state}/>
+                <SignatureComponent {...this.state} mode='edit'/>
             </div>
         );
     }

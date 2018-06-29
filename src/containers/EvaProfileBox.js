@@ -7,28 +7,27 @@ import { openModal } from '../actions/modal';
 import * as modalNames from '../constants/modalNames';
 import './pages/css/EvaProfileBox.css'
 
-const options = [
-  {
-    key: 'user',
-    text: (
-      <span>
-        Year
-      </span>
-    ),
-    disabled: true,
-  },
-  { text: '2018' },
-  { text: '2017' },
-  { text: '2016' },
-
-]
-
 const AngleDownButton = (
   <Button icon="angle down"></Button>
 )
 
-const EvaProfileBox = ({evaProfile, onAddProClick, id, onAddPerClick}) => {
+const EvaProfileBox = ({performanceProfile, evaProfile, onAddProClick, id, onAddPerClick, type}) => {
   console.log(evaProfile);
+  const options = [
+    {
+      key: 'user',
+      text: (
+        <span>
+          Year
+        </span>
+      ),
+      disabled: true,
+    },
+    { text: '2018' },
+    { text: '2017' },
+    { text: '2016' },
+
+  ]
   return (
 
     <Segment.Group raised size="large">
@@ -49,10 +48,10 @@ const EvaProfileBox = ({evaProfile, onAddProClick, id, onAddPerClick}) => {
         <div className="buttonGroup">
             <Button.Group>
               <Dropdown trigger={AngleDownButton} options={options} />
-              <Button onClick={onAddPerClick}>Performance</Button>
+              <Button onClick={onAddPerClick} disabled={type!='admin' && performanceProfile.length==0}>{performanceProfile.length==0 ? 'Add Performance' : 'Performance'}</Button>
             </Button.Group>
         </div>
-            <Button icon labelPosition='left' icon={evaProfile==null ? 'plus':'angle right'} content={evaProfile==null ? 'Create Probation':'View Probation'} onClick={onAddProClick} color={evaProfile==null ? 'green':'blue'}/>
+            <Button icon labelPosition='left' disabled={type!='admin' && !evaProfile} icon={evaProfile==null ? 'plus':'angle right'} content={!evaProfile && type=='admin' ? 'Create Probation':'View Probation'} onClick={onAddProClick} color={evaProfile==null ? 'green':'blue'}/>
       </Segment>
 
 
@@ -72,7 +71,7 @@ EvaProfileBox.propTypes = {
 
 const mapStateToProps = state => ({
   id: state.auth.id,
-
+  type: state.auth.type
 })
 
 const mapDispatchToProps = dispatch =>({

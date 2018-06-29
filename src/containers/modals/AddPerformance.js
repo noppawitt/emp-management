@@ -10,7 +10,7 @@ class AddPerformance extends React.Component{
   constructor(props){
     super(props);
     this.state = props;
-    this.type = (this.props.profile.eva == null ? 'addProbation':'updateProbation')
+    this.type = (this.props.profile.eva == null ? 'addPerformance':'updatePerformance')
   }
   componentDidMount(){
     console.log(this.state.submitting);
@@ -18,9 +18,9 @@ class AddPerformance extends React.Component{
   render(){
     return(
       <Modal
-        header={this.props.profile.eva == null ? 'Add Performance':'View Performance'}
+        header={this.props.profile.perf[0] == null ? 'Add Performance':'View Performance'}
         onClose={this.props.onClose}
-        onClick={()=>this.props.onSubmit(this.props.item,(this.props.profile.eva == null ? 'addProbation':'updateProbation'))}
+        onClick={()=>this.props.onSubmit(this.props.item,(this.props.profile.perf[0] == null ? 'addPerformance':'updatePerformance'))}
         submitting={this.props.submitting}
         size="large"
       >

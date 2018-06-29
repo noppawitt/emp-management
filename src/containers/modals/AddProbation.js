@@ -25,7 +25,7 @@ class AddProbation extends React.Component{
         size="large"
         disable={!this.props.edited}
       >
-        <A test={this.props.onChange} profile={this.props.profile}/>
+        <A test={this.props.onChange} profile={this.props.profile} mode={!this.props.profile.eva || (this.props.type=='admin' && !this.props.profile.eva.emSignDate) ? 'edit' : 'view'}/>
       </Modal>
     );
   }
@@ -44,6 +44,7 @@ AddProbation.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  type: state.auth.type,
   item: state.profile.item,
   modalName: state.modal.name,
   profile: state.profile,

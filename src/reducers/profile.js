@@ -41,12 +41,14 @@ const profile = (state = initialState, action) => {
         ...state,
         submitting: false,
         edited:false,
+        item:null,
         ...action.payload.profile
       };
     case actionTypes.PROFILE_UPDATE_FAILURE:
       return {
         ...state,
         submitting: false,
+        item:null,
         message: action.payload.message
       };
     case actionTypes.PROFILE_DELETE_REQUEST:

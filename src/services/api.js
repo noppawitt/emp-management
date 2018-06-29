@@ -302,6 +302,10 @@ api.fetchProbation = id => (
   callApi(`/api/probation/?id=${id}`)
 )
 
+api.fetchPerformance = id => (
+  callApi(`/api/performance/?id=${id}`)
+)
+
 api.addProbation = body => (
   callApi('/api/probation', {
     method: 'POST',
@@ -311,6 +315,20 @@ api.addProbation = body => (
 
 api.updateProbation = body => (
   callApi('/api/probation', {
+    method: 'PUT',
+    body
+  })
+)
+
+api.addPerformance = body => (
+  callApi('/api/performance', {
+    method: 'POST',
+    body
+  })
+)
+
+api.updatePerformance = body => (
+  callApi('/api/performance', {
     method: 'PUT',
     body
   })

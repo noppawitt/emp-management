@@ -25,6 +25,7 @@ const leaveRequest = require('./leaveRequest');
 const accessControl = require('./accessControl');
 const report = require('./report');
 const probation = require('./probation');
+const performance = require('./performance');
 
 router.use('/employee-info', employeeInfo);
 
@@ -77,5 +78,7 @@ router.use('/access-control', accessControl);
 router.use('/report', report);
 
 router.use('/probation', probation);
+
+router.use('/performance', performance);
 
 module.exports = router;
