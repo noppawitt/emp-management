@@ -87,15 +87,15 @@ const renderChoices = ({ fields, submitting, placeHold, meta }) => (
       return (
         <div>
           <Form.Group>
-            <Field name={`${choice}.data`} as={Form.Input} component={Input} placeholder={placeHold} disabled={submitting} validate={[requiredField]} />
-            <Field name={`${choice}.answer`} as={Form.Checkbox} component={Input} label="Correct Answer" disabled={submitting} />
-            <Icon fitted name="ban" color="red" size="large" onClick={() => fields.remove(index)} />
+            <Field name={`${choice}.data`} as={Form.Input} component={Input} placeholder={placeHold} validate={[requiredField]} disabled={meta.submitting} />
+            <Field name={`${choice}.answer`} as={Form.Checkbox} component={Input} label="Correct Answer" disabled={meta.submitting} />
+            <Icon fitted name="ban" color="red" size="large" onClick={() => fields.remove(index)} disabled={meta.submitting} />
           </Form.Group>
           <sbr />
         </div>
       );
     })}
-    <Button type="button" icon labelPosition="left" onClick={() => fields.push({ data: '', answer: false })} basic color="teal" disabled={submitting}>
+    <Button type="button" icon labelPosition="left" onClick={() => fields.push({ data: '', answer: false })} basic color="teal" disabled={meta.submitting}>
       <Icon name="add" />
       NEW CHOICE
     </Button>
