@@ -16,6 +16,10 @@
     text-align: left;
 }
 
+.outer-table th {
+    text-align: left;
+}
+
 .outer-table th, .outer-table td {
   padding: 0;
 }
