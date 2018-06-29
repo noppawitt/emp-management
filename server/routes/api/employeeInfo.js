@@ -1,13 +1,14 @@
 const router = require('express').Router();
 const EmployeeInfoController = require('../../controllers/EmployeeInfoController');
 const multer = require('multer');
+const mime = require('mime/lite');
 
 const storage = multer.diskStorage({
-  destination: (req, res, cb) => {
+  destination: (req, file, cb) => {
     cb(null, 'server/storage/public/profile-img');
   },
-  filename: (req, res, cb) => {
-    cb(null, String(req.user.id));
+  filename: (req, file, cb) => {
+    cb(null, `${req.user.id}.${mime.getExtension(file.mimetype)}`);
   }
 });
 

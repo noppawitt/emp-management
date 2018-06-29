@@ -109,8 +109,9 @@ export function* updateProfilePictureTask(action) {
   try {
     const formData = new FormData();
     formData.append('profileImage', action.payload.picture);
-    yield call(api.updateProfilePicture, formData);
-    yield put(updateProfilePictureSuccess('/state/gg.jpg'));
+    const { path } = yield call(api.updateProfilePicture, formData);
+    yield put(updateProfilePictureSuccess(`${path}?time=${new Date()}`));
+    yield put(closeModal());
   }
   catch (error) {
     yield put(updateProfilePictureFailure(error));
