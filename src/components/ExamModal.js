@@ -37,7 +37,7 @@ const ExamModal = ({
           <input onChange={onLifetimesValueChange} />
           <Select compact options={passwordOptions} defaultValue={1} onChange={(e, { value }) => onLifetimesUnitChange(value)} />
         </Input>
-        <Button primary loading={isFetching} disable={isFetching} onClick={() => onClickActivate(passwordObject.userId, lifetimesValue * lifetimesUnit)}>Activate</Button>
+        <Button primary loading={isFetching} disable={isFetching} onClick={() => onClickActivate(passwordObject.id, lifetimesValue * lifetimesUnit)}>Activate</Button>
         <Button secondary loading={isFetching} disable={isFetching} onClick={onClose}>Close</Button>
       </SUIModal.Actions>
     </SUIModal>

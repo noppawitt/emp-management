@@ -12,8 +12,8 @@ export const fetchRecruitmentSuccess = recruitments => ({
   }
 });
 
-export const fetchRecruitmentMessege = messege => ({
-  type: actionTypes.RECRUITMENT_FETCH_MESSEGE,
+export const fetchRecruitmentFailure = messege => ({
+  type: actionTypes.RECRUITMENT_FETCH_FAILURE,
   payload: {
     messege
   }
@@ -48,32 +48,32 @@ export const sortRecruitment = (sortKey, direction) => ({
   }
 });
 
-export const generatePasswordRequest = (cid, passwordLifetimes) => ({
-  type: actionTypes.RECRUITMENT_GENERATE_PASSWORD_REQUEST,
+export const activatePasswordRequest = (id, activationLifetimes) => ({
+  type: actionTypes.RECRUITMENT_ACTIVATE_REQUEST,
   payload: {
-    cid,
-    passwordLifetimes,
+    id,
+    activationLifetimes,
   }
 });
 
-export const generatePasswordSuccess = messege => ({
-  type: actionTypes.RECRUITMENT_GENERATE_PASSWORD_SUCCESS,
+export const activatePasswordSuccess = messege => ({
+  type: actionTypes.RECRUITMENT_ACTIVATE_SUCCESS,
   payload: {
     messege,
   }
 });
 
-export const generatePasswordFailure = error => ({
-  type: actionTypes.RECRUITMENT_GENERATE_PASSWORD_FAILURE,
+export const activatePasswordFailure = error => ({
+  type: actionTypes.RECRUITMENT_ACTIVATE_FAILURE,
   payload: {
     error,
   }
 });
 
-export const checkPasswordStatusRequest = cid => ({
+export const checkPasswordStatusRequest = id => ({
   type: actionTypes.RECRUITMENT_CHECK_PASSWORD_STATUS_REQUEST,
   payload: {
-    cid,
+    id,
   }
 });
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Segment, Button, Input, Table } from 'semantic-ui-react';
-import DayPickerInput from 'react-day-picker/DayPickerInput';
 import { formatDate } from 'react-day-picker/moment';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
 // import { formatDate, parseDate } from 'react-day-picker/moment';
 import { Link } from 'react-router-dom';
 
@@ -12,13 +12,13 @@ import { Link } from 'react-router-dom';
 // };
 
 // constant function for change status button
-const actionButtonController = (status, cid, onClickActivate) => {
+const actionButtonController = (status, id, onClickActivate) => {
   switch (status) {
     // edit link
     case 'Wait for Grading':
       return <Button as={Link} to="/grade_exam" fluid color="teal">Grade</Button>;
     case 'Pending':
-      return <Button onClick={() => onClickActivate(cid)} fluid primary>Activate</Button>;
+      return <Button onClick={() => onClickActivate(id)} fluid primary>Activate</Button>;
     case 'Complete':
       return <Button as={Link} to="/view_result" fluid primary positive>View Result</Button>;
     case 'In Progress':
@@ -43,7 +43,6 @@ const Recruitment = ({
     <Segment.Group raised>
       <Segment className="horizontal segments">
         <Segment>
-          {/* <Button onClick={onActivateUser} /> */}
           <Input icon="search" placeholder="Search recruitments.." onChange={onSearchChange} />
         </Segment>
         <Segment>

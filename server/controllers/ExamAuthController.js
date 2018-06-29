@@ -5,17 +5,17 @@ const ExamUser = require('../models/ExamUser');
 const jwtSecret = process.env.JWT_SECRET;
 
 exports.signin = (req, res, next) => {
-  ExamUser.findByUsername(req.body.username)
+  ExamUser.findById(req.body.id)
     .then((user) => {
       if (user) {
+        console.log(user);
+        // if (req.body.password === user.password) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
           const token = jwt.sign({
             id: user.id,
-            username: user.username,
           }, jwtSecret);
           res.json({
             id: user.id,
-            username: user.username,
             token,
           });
         }
@@ -36,7 +36,7 @@ exports.signin = (req, res, next) => {
 
 exports.signup = (req, res, next) => {
   const newUser = req.body.user;
-  ExamUser.findByUsername(newUser.username)
+  ExamUser.findByUsername(newUser.userid)
     .then((user) => {
       if (user) {
         const err = new Error('User already exist');

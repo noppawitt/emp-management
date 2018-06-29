@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { closeModal } from '../../actions/modal';
 import {
   // checkPasswordStatusRequest,
-  generatePasswordRequest,
+  activatePasswordRequest,
   updateLifetimesValue,
   updateLifetimesUnit,
 } from '../../actions/recruitment';
@@ -69,7 +69,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onClose: () => dispatch(closeModal()),
-  onClickActivate: (cid, passwordLifetimes) => dispatch(generatePasswordRequest(cid, passwordLifetimes)),
+  onClickActivate: (id, activationLifetimes) => dispatch(activatePasswordRequest(id, activationLifetimes)),
   onLifetimesValueChange: e => dispatch(updateLifetimesValue(e.target.value)),
   onLifetimesUnitChange: unit => dispatch(updateLifetimesUnit(unit)),
 });

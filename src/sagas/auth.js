@@ -6,6 +6,7 @@ import history from '../history';
 
 export function* loginTask(action) {
   try {
+    console.log('>>>>', action.payload);
     const user = yield call(api.login, action.payload.form);
     localStorage.setItem('token', user.token);
     yield put(loginSuccess(user));

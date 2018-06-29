@@ -3,12 +3,12 @@ import * as actionTypes from '../constants/actionTypes';
 import {
   fetchRecruitmentSuccess,
   fetchRecruitmentFailure,
+  checkPasswordStatusRequest,
   checkPasswordStatusSuccess,
   checkPasswordStatusFailure,
-  generatePasswordSuccess,
-  generatePasswordFailure,
+  activatePasswordSuccess,
+  activatePasswordFailure,
   updateUserStatus,
-  checkPasswordStatusRequest
 } from '../actions/recruitment';
 import api from '../services/api';
 
@@ -25,18 +25,14 @@ export function* fetchRecruitmentTask() {
 
 export function* checkPasswordStatusTask(action) {
   try {
-    // prepare variable
-    const passwordObject = yield call(api.checkPasswordStatus, action.payload.cid);
+    const passwordObject = yield call(api.checkPasswordStatus, action.payload.id);
     const today = (new Date()).getTime();
-    const createdDay = new Date(passwordObject.lastestCreatedPasswordTime).getTime();
-    const lifetimes = passwordObject.passwordLifetimes;
+    const createdDay = new Date(passwordObject.lastestActivatedPasswordTime).getTime();
+    const lifetimes = passwordObject.activationLifetimes;
     const msInDay = 1000 * 60 * 60 * 24;
     const isExpired = today - createdDay > lifetimes * msInDay;
     const expireDateString = new Date(createdDay + (lifetimes * msInDay)).toString();
-    if (passwordObject.password === null) {
-      yield put(updateUserStatus('No password in database!', 204));
-    }
-    else if (isExpired) {
+    if (isExpired) {
       yield put(updateUserStatus('Password expire@@Since : '.concat(expireDateString), 205));
     }
     else {
@@ -49,15 +45,15 @@ export function* checkPasswordStatusTask(action) {
   }
 }
 
-export function* generatePasswordTask(action) {
+export function* activatePasswordTask(action) {
   try {
-    const messege = yield call(api.generatePassword, action.payload.cid, action.payload.passwordLifetimes);
-    yield put(generatePasswordSuccess(messege));
+    const messege = yield call(api.activatePassword, action.payload.id, action.payload.activationLifetimes);
+    yield put(activatePasswordSuccess(messege));
     // after generation complete lets check and display it
-    yield put(checkPasswordStatusRequest(action.payload.cid));
+    yield put(checkPasswordStatusRequest(action.payload.id));
   }
   catch (error) {
-    yield put(generatePasswordFailure(error));
+    yield put(activatePasswordFailure(error));
   }
 }
 
@@ -70,7 +66,7 @@ export function* watchCheckPasswordStatusRequest() {
 }
 
 export function* watchActivateUserRequest() {
-  yield takeEvery(actionTypes.RECRUITMENT_GENERATE_PASSWORD_REQUEST, generatePasswordTask);
+  yield takeEvery(actionTypes.RECRUITMENT_ACTIVATE_REQUEST, activatePasswordTask);
 }
 
 export default function* recruitmentSaga() {

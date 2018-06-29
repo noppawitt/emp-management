@@ -87,40 +87,12 @@ const mapDispatchToProps = dispatch => ({
   fetchRecruitment: () => dispatch(fetchRecruitmentRequest()),
   sortByKey: (key, direction) => dispatch(sortRecruitment(key, direction)),
   onSearchChange: e => dispatch(filterRecruitment(e.target.value)),
-  // moment use .format({some time format})
-  // instead of .target.value to get value of time
   onStartDateChange: date => dispatch(filterStartDateRecruitment(date)),
   onEndDateChange: date => dispatch(filterEndDateRecruitment(date)),
-  // code Activate function following this rule or fix it maybe
-  // Activate order is
-  // -is there alive password within have enough time to do exam?
-  // -do nothing : generate new password
-  // -query that alive password to state
-  // -openModal and display it
   onClickActivate: cid => compose(
     dispatch(checkPasswordStatusRequest(cid)),
     dispatch(openModal(modalNames.DISPLAY_PASSWORD)),
   ),
-  // check here any password alive and
-  // its Remaining time enought?
-  // now we get api >> fetchCandidatePassword
-  // console.log(cid),
-  // (dispatch(checkPasswordStatusSuccess(cid)).password === null ?
-  //   // do nothing
-  //   // dispatch(isUsablePasswordExist(cid)) :
-  //   console.log('Yes, It\'s null', cid) :
-  //   console.log('No, It\'s not null', cid))
-  // console.log('>>> ', dispatch(checkPasswordStatusRequest(cid)))
-  // generate here!
-  // dispatch(generatePassword(cid)),
-
-
-  // query to store new password
-  // and set new remaining time
-  // dispatch(isUsablePasswordExist(cid)),
-  // show password here
-  // dispatch(openModal(modalNames.SHOW_PASSWORD), { cid }) `\n then ),`
-
   // add Grade function
 });
 

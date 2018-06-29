@@ -9,7 +9,6 @@ if (token) {
     isFetching: false,
     isAuthenticated: true,
     id: user.id,
-    userid: user.userid,
   };
 }
 else {
@@ -33,7 +32,6 @@ const examAuth = (state = initialState, action) => {
         isFetching: false,
         isAuthenticated: true,
         id: action.payload.user.id,
-        userid: action.payload.user.userid,
       };
     case actionTypes.EXAM_LOGIN_FAILURE:
       return {

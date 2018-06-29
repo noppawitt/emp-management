@@ -10,11 +10,6 @@ const initialState = {
   startDate: null,
   endDate: null,
   isDateFilterChange: false,
-  // unstable code zone
-  isAlivePasswordExist: null,
-  displayPassword: null,
-  alivePassword: null,
-  // use!
   isModalFetching: true,
   userStatus: 'N/A',
   userStatusCode: 'N/A',
@@ -64,11 +59,10 @@ const Recruitment = (state = initialState, action) => {
         sortKey: action.payload.sortKey,
         direction: action.payload.direction
       };
-    // semi-unstable code zone
     case actionTypes.RECRUITMENT_CHECK_PASSWORD_STATUS_REQUEST:
       return {
         ...state,
-        cid: action.payload.cid,
+        id: action.payload.id,
         isModalFetching: true,
       };
     case actionTypes.RECRUITMENT_CHECK_PASSWORD_STATUS_SUCCESS:
@@ -83,20 +77,20 @@ const Recruitment = (state = initialState, action) => {
         messege: action.payload.messege,
         isModalFetching: false,
       };
-    case actionTypes.RECRUITMENT_GENERATE_PASSWORD_REQUEST:
+    case actionTypes.RECRUITMENT_ACTIVATE_REQUEST:
       return {
         ...state,
-        cid: action.payload.cid,
-        passwordLifetimes: action.payload.passwordLifetimes,
+        id: action.payload.id,
+        activationLifetimes: action.payload.activationLifetimes,
         isModalFetching: true,
       };
-    case actionTypes.RECRUITMENT_GENERATE_PASSWORD_SUCCESS:
+    case actionTypes.RECRUITMENT_ACTIVATE_SUCCESS:
       return {
         ...state,
         messege: action.payload.messege,
         isModalFetching: false,
       };
-    case actionTypes.RECRUITMENT_GENERATE_PASSWORD_FAILURE:
+    case actionTypes.RECRUITMENT_ACTIVATE_FAILURE:
       return {
         ...state,
         messege: action.payload.messege,

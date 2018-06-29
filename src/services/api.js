@@ -251,12 +251,12 @@ api.fetchAllRecruitment = () => (
   callApi(`/api/recruitments`)
 );
 
-api.checkPasswordStatus = cid => (
-  callApi(`/api/recruitments/checkPasswordStatus/?cid=${cid}`)
+api.checkPasswordStatus = id => (
+  callApi(`/api/recruitments/checkPasswordStatus/?id=${id}`)
 );
 
-api.generatePassword = (cid, lifetimes) => (
-  callApi(`/api/recruitments/generatePassword/?cid=${cid}&lifetimes=${lifetimes}`)
+api.activatePassword = (id, lifetimes) => (
+  callApi(`/api/recruitments/activatePassword/?id=${id}&lifetimes=${lifetimes}`)
 );
 
 // Exam
@@ -295,14 +295,14 @@ api.fetchExamResult = id => (
 // Exam Auth
 
 api.signup = form => (
-  callApi(`/examAuth/signu`, {
+  callApi(`/examAuth/signup`, {
     method: 'POST',
     body: form
   })
 );
 
 api.examLogin = form => (
-  callApi(`/examAuth/login`, {
+  callApi(`/examauth/login`, {
     method: 'POST',
     body: form
   })

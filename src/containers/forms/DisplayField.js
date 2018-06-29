@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { compose } from 'recompose';
+// import { compose } from 'recompose';
 import { Table } from 'semantic-ui-react';
 import Loader from '../../components/Loader';
 
@@ -13,17 +13,17 @@ const DisplayField = ({ isFetching, passwordObject, userStatus, userStatusCode }
         <Table.Row>
           <Table.HeaderCell>User ID</Table.HeaderCell>
           <Table.HeaderCell>Password</Table.HeaderCell>
-          <Table.HeaderCell>Last created</Table.HeaderCell>
+          <Table.HeaderCell>Last activated</Table.HeaderCell>
           <Table.HeaderCell>Approximately lifetimes (day)</Table.HeaderCell>
           <Table.HeaderCell>Password status</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
         <Table.Row>
-          <Table.Cell>{passwordObject.userId}</Table.Cell>
-          <Table.Cell>{passwordObject.password}</Table.Cell>
-          <Table.Cell>{new Date(passwordObject.lastestCreatedPasswordTime).toDateString()}</Table.Cell>
-          <Table.Cell>{passwordObject.passwordLifetimes}</Table.Cell>
+          <Table.Cell>{passwordObject.id}</Table.Cell>
+          <Table.Cell>{passwordObject.birthdate}</Table.Cell>
+          <Table.Cell>{new Date(passwordObject.lastestActivatedPasswordTime).toDateString()}</Table.Cell>
+          <Table.Cell>{passwordObject.activationLifetimes}</Table.Cell>
           <Table.Cell
             className={userStatusCode === 200 ? 'positive' : 'negative'}
             Icon={userStatusCode === 200 ? 'checkmark' : 'close'}
@@ -50,10 +50,10 @@ const mapStateToProps = state => ({
   userStatusCode: state.recruitment.userStatusCode,
 });
 
-const mapDispatchToProps = () => ({
-  // another thing
-});
+// const mapDispatchToProps = () => ({
+//   // another thing
+// });
 
-const enhance = compose(connect(mapStateToProps, mapDispatchToProps));
+// const enhance = compose(connect(mapStateToProps, mapDispatchToProps));
 
-export default enhance(DisplayField);
+export default connect(mapStateToProps)(DisplayField);

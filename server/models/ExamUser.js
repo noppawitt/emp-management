@@ -8,9 +8,9 @@ const ExamUser = {};
 ExamUser.create = (user, id) => (
   db.tx((transaction) => {
     const query = transaction.one(
-      'INSERT INTO examUsers (username, password, created_user, updated_user, type, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING 1',
+      'INSERT INTO exam_users (id, password, created_user, updated_user, type, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING 1',
       [
-        user.username,
+        user.id,
         user.password,
         id,
         id,
@@ -23,13 +23,7 @@ ExamUser.create = (user, id) => (
 );
 
 ExamUser.findById = id => (
-  db.oneOrNone('SELECT * FROM examUsers WHERE id = $1', [id])
-);
-
-// this exists to check there is
-// no a user before we let him signup
-ExamUser.findByUsername = username => (
-  db.oneOrNone('SELECT * FROM examUsers WHERE username = $1', [username])
+  db.oneOrNone('SELECT * FROM exam_users WHERE id = $1', [id])
 );
 
 // User.findAll = () => (
@@ -43,7 +37,7 @@ ExamUser.findByUsername = username => (
 
 ExamUser.createAdmin = user => (
   db.one(
-    'INSERT INTO examUsers (username, password, created_user, updated_user, type, status, id) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+    'INSERT INTO exam_users (id, password, created_user, updated_user, type, status, id) VALUES ($1, $2, $3, $4, $5, $6, $7)',
     [
       user.username,
       user.password,

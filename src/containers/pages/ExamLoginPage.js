@@ -5,16 +5,16 @@ import { connect } from 'react-redux';
 import { examLoginRequest } from '../../actions/examAuth';
 
 const ExamLoginPage = ({ dispatch }) => {
-  let userid;
+  let id;
   let password;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(examLoginRequest({
-      userid: userid.value,
+      id: id.value,
       password: password.value,
     }));
-    userid.value = '';
+    id.value = '';
     password.value = '';
   };
 
@@ -30,7 +30,7 @@ const ExamLoginPage = ({ dispatch }) => {
                   id="username"
                   placeholder="Username"
                   style={{ borderRadius: '15px' }}
-                  ref={(node) => { userid = node; }}
+                  ref={(node) => { id = node; }}
                 />
               </label>
             </Form.Field>

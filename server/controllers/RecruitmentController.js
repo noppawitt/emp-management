@@ -1,6 +1,7 @@
 const Recruitment = require('../models/Recruitment');
 
 exports.fetchAllRecruitment = (req, res, next) => {
+  console.log('hereherehere');
   Recruitment.fetchAllRecruitment()
     .then((recruitments) => {
       res.json(recruitments);
@@ -9,23 +10,18 @@ exports.fetchAllRecruitment = (req, res, next) => {
 };
 
 exports.checkPasswordStatus = (req, res, next) => {
-  const newCid = req.query.cid;
-  Recruitment.checkPasswordStatus(newCid)
+  const newid = req.query.id;
+  Recruitment.checkPasswordStatus(newid)
     .then((passwordStatusObject) => {
       res.json(passwordStatusObject);
     })
     .catch(next);
 };
 
-exports.generatePassword = (req, res, next) => {
-  const theCid = req.query.cid;
-  let newPassword = (Math.random().toString(36)).slice(-8);
-  let newLifetimes = req.query.lifetimes;
-  if (newLifetimes < 1) {
-    newPassword = null;
-    newLifetimes = 0;
-  }
-  Recruitment.generatePassword(theCid, newPassword, newLifetimes)
+exports.activatePassword = (req, res, next) => {
+  const theid = req.query.id;
+  const newLifetimes = req.query.lifetimes < 1 ? 0 : req.query.lifetimes;
+  Recruitment.generatePassword(theid, newLifetimes)
     .then((messege) => {
       res.json(messege);
     })
