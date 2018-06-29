@@ -262,9 +262,9 @@ api.activatePassword = (id, lifetimes) => (
 // Exam
 
 api.uploadImageExam = body => (
-  callApi('/api/upload-image-exam', {
+  callApi('/api/exam/upload-image-exam', {
     headers: {
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAwMDAsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE1MzAyMDM1MDF9.itTYDoWPThpTXhRFfUX2N3TXw3Zyi0qoLc45lTbetBw'
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAwMDEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE1Mjk2NTYyMjF9.j0y-6r2auXRbFIKFtSb41idMlOl_42_uupAR1bGJNz8'
     },
     method: 'POST',
     body
