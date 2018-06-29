@@ -10,6 +10,9 @@ import {
 } from '../actions/profile';
 import { closeModal } from '../actions/modal';
 import api from '../services/api';
+import jwt from 'jsonwebtoken';
+
+const token = localStorage.getItem('token');
 
 export function* fetchProfileTask(action) {
   try {

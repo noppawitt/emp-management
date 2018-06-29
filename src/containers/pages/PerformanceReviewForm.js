@@ -39,12 +39,12 @@ class PerformanceReviewForm extends React.Component {
                 <EmployeeInfo {...this.state} />
                 <br />
                 <div>
-                    <ScoreManager questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} />
+                    <ScoreManager questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} {...this.state}/>
                 </div>
                 <br />
-                <SupervisorCommentComponent />
+                <SupervisorCommentComponent {...this.state}/>
                 <br />
-                <SignatureComponent />
+                <SignatureComponent {...this.state}/>
             </div>
         );
     }

@@ -17,6 +17,7 @@ import EditProfilePictureModal from './modals/EditProfilePictureModal';
 import EditProjectModal from './modals/EditProjectModal';
 import AddMemberModal from './modals/AddMemberModal';
 import AddProbation from './modals/AddProbation';
+import AddPerformance from './modals/AddPerformance';
 
 const ModalContainer = ({ name, props }) => {
   switch (name) {
@@ -50,6 +51,8 @@ const ModalContainer = ({ name, props }) => {
       return <EditEducationProfileModal {...props} />;
     case modalNames.ADD_PROBATION:
       return <AddProbation {...props} />;
+    case modalNames.ADD_PERFORMANCE:
+      return <AddPerformance {...props} />;
     case modalNames.EDIT_PROFILE_PICTURE:
       return <EditProfilePictureModal {...props} />;
     default:

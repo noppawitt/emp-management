@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { closeModal } from '../../actions/modal';
 import { updateProfileRequest, updateProbationStore } from '../../actions/profile';
 import Modal from '../../components/Modal';
-import A from '../pages/ProbationForm'
+import A from '../pages/PerformanceReviewForm'
 
-class AddProbation extends React.Component{
+class AddPerformance extends React.Component{
   constructor(props){
     super(props);
     this.state = props;
@@ -18,7 +18,7 @@ class AddProbation extends React.Component{
   render(){
     return(
       <Modal
-        header={this.props.profile.eva == null ? 'Add Probation':'View Probation'}
+        header={this.props.profile.eva == null ? 'Add Performance':'View Performance'}
         onClose={this.props.onClose}
         onClick={()=>this.props.onSubmit(this.props.item,(this.props.profile.eva == null ? 'addProbation':'updateProbation'))}
         submitting={this.props.submitting}
@@ -30,11 +30,11 @@ class AddProbation extends React.Component{
   }
 }
 
-AddProbation.defaultProps = {
+AddPerformance.defaultProps = {
   submitting: false
 };
 
-AddProbation.propTypes = {
+AddPerformance.propTypes = {
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
@@ -58,4 +58,4 @@ const mapDispatchToProps = dispatch => ({
   onChange: (item) => dispatch(updateProbationStore(item))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddProbation);
+export default connect(mapStateToProps, mapDispatchToProps)(AddPerformance);

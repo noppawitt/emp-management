@@ -5,7 +5,7 @@ import { Segment,Grid , Header, Icon, Button, Dropdown, Container, Divider} from
 import ProfileBox from '../components/ProfileBox';
 import { openModal } from '../actions/modal';
 import * as modalNames from '../constants/modalNames';
-
+import './pages/css/EvaProfileBox.css'
 
 const options = [
   {
@@ -27,7 +27,7 @@ const AngleDownButton = (
   <Button icon="angle down"></Button>
 )
 
-const EvaProfileBox = ({evaProfile, onAddClick, id}) => {
+const EvaProfileBox = ({evaProfile, onAddProClick, id, onAddPerClick}) => {
   console.log(evaProfile);
   return (
 
@@ -49,10 +49,10 @@ const EvaProfileBox = ({evaProfile, onAddClick, id}) => {
         <div className="buttonGroup">
             <Button.Group>
               <Dropdown trigger={AngleDownButton} options={options} />
-              <Button>Performance</Button>
+              <Button onClick={onAddPerClick}>Performance</Button>
             </Button.Group>
         </div>
-            <Button icon labelPosition='left' icon={evaProfile==null ? 'plus':'angle right'} content={evaProfile==null ? 'Create Probation':'View Probation'} onClick={onAddClick} color={evaProfile==null ? 'green':'blue'}/>
+            <Button icon labelPosition='left' icon={evaProfile==null ? 'plus':'angle right'} content={evaProfile==null ? 'Create Probation':'View Probation'} onClick={onAddProClick} color={evaProfile==null ? 'green':'blue'}/>
       </Segment>
 
 
@@ -67,15 +67,17 @@ EvaProfileBox.defaultProps = {
 
 EvaProfileBox.propTypes = {
   evaProfile: PropTypes.object,
-  onAddClick: PropTypes.func.isRequired
+  onAddProClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  id: state.auth.id
+  id: state.auth.id,
+
 })
 
 const mapDispatchToProps = dispatch =>({
-  onAddClick: () => dispatch(openModal(modalNames.ADD_PROBATION))
+  onAddPerClick: () => dispatch(openModal(modalNames.ADD_PERFORMANCE)),
+  onAddProClick: () => dispatch(openModal(modalNames.ADD_PROBATION))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EvaProfileBox);
