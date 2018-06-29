@@ -49,7 +49,7 @@ class EmployeeInfo extends React.Component {
                         <td>Supervisor:</td>
                         <td>{this.state.supervisor}</td>
                         <td>{this.state.showEndProDate ? 'Probation End Date:' : ''}</td>
-                        <td>{this.state.showEndProDate ? <input type='date' value={this.state.endProbationDate} onChange={(event) => this.props.onChange(event.target.value)} /> : ''}</td>
+                        <td>{this.state.showEndProDate ? <input type='date' value={this.state.endProbationDate} onChange={(event) => this.props.onChange(event.target.value)} disabled={this.props.mode != 'edit'} /> : ''}</td>
                     </tr>
                 </table>
             </div>

@@ -6,7 +6,7 @@ const DropDown = (props) => {
     for (let i = 1; i <= (props.numOfElements ? props.numOfElements : 5); i++)
         elements.push(<option value={i}>{i}</option>);
 
-    return <select id={props.id} value={props.value} onChange={props.onChange}>{elements}</select>;
+    return <select id={props.id} value={props.value} onChange={props.onChange} disabled={props.mode != 'edit'}>{elements}</select>;
 };
 
 class ScoreTableManager extends React.Component {
@@ -107,8 +107,8 @@ class ScoreTableManager extends React.Component {
             table.push(<tr>
                 <td>{i + 1}</td>
                 <td colSpan="7">{this.state.questions[i]}</td>
-                <td><DropDown id={`expectScore${i}`} value={this.state.expectedScore[i]} onChange={this.updateExpectedScore} numOfElements={this.state.numOfElements} /></td>
-                <td><DropDown id={`score${i}`} value={this.state.score[i]} onChange={this.updateScore} numOfElements={this.state.numOfElements} /></td>
+                <td><DropDown id={`expectScore${i}`} value={this.state.expectedScore[i]} onChange={this.updateExpectedScore} numOfElements={this.state.numOfElements} mode={this.props.mode} /></td>
+                <td><DropDown id={`score${i}`} value={this.state.score[i]} onChange={this.updateScore} numOfElements={this.state.numOfElements} mode={this.props.mode} /></td>
                 <td>{this.state.weight[i]}%</td>
                 <td>{(this.state.totalPoint ? this.state.totalPoint[i] : "N/A")}{(this.state.totalPoint ? "%" : "")}</td>
             </tr>);

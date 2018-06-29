@@ -124,13 +124,13 @@ class ProbationForm extends React.Component {
                     <h1>Employee Probation Form</h1>
                     <h2>Playtorium Solutions Company Limited</h2>
                 </div>
-                <EmployeeInfo {...this.state} showEndProDate='true' onChange={this.employeeStateHandler} />
+                <EmployeeInfo {...this.state} showEndProDate='true' onChange={this.employeeStateHandler} mode='view' />
 
                 <div>
-                    <ScoreTableManager {...this.state} questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} onChange={this.scoreTableStateHandler} />
+                    <ScoreTableManager {...this.state} questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} onChange={this.scoreTableStateHandler} mode='view'/>
                 </div>
-                <EvaluationResultComponent {...this.state} onChange={this.evaluationResultHandler} />
-                <SupervisorCommentComponent {...this.state} onChange={this.supervisorCommentHandler} />
+                <EvaluationResultComponent {...this.state} onChange={this.evaluationResultHandler} mode='view'/>
+                <SupervisorCommentComponent {...this.state} onChange={this.supervisorCommentHandler} mode='view' />
                 <SignatureComponent {...this.state} />
             </div>
         );
