@@ -33,15 +33,13 @@ export function* addExamTask(action) {
         });
     }
 
-    const imageList = new FormData();
     for (let i = 0; i < files.length; i += 1) {
+      const imageList = new FormData();
       imageList.append('image', files[i]);
+      yield call(api.uploadImageExam, {
+        images: files[0]
+      });
     }
-    // if (files.length > 0) {
-    //   yield call(api.uploadImageExam, {
-    //     images: imageList
-    //   });
-    // }
 
     yield call(api.addExam, {
       exam: action.payload.form,

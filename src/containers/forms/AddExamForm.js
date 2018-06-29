@@ -103,7 +103,6 @@ const renderChoices = ({ fields, placeHold, meta }) => (
 );
 renderChoices.propTypes = {
   fields: Field.isRequired,
-  submitting: PropTypes.bool.isRequired,
   placeHold: PropTypes.string.isRequired,
   meta: PropTypes.object.isRequired,
 };
