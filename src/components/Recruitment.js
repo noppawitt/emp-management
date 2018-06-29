@@ -12,13 +12,13 @@ import { Link } from 'react-router-dom';
 // };
 
 // constant function for change status button
-const actionButtonController = (status, cid, onActivateUser) => {
+const actionButtonController = (status, cid, onClickActivate) => {
   switch (status) {
     // edit link
     case 'Wait for Grading':
       return <Button as={Link} to="/grade_exam" fluid color="teal">Grade</Button>;
     case 'Pending':
-      return <Button onClick={() => onActivateUser(cid)} fluid primary>Activate</Button>;
+      return <Button onClick={() => onClickActivate(cid)} fluid primary>Activate</Button>;
     case 'Complete':
       return <Button as={Link} to="/view_result" fluid primary positive>View Result</Button>;
     case 'In Progress':
@@ -39,7 +39,7 @@ const Recruitment = ({
   onEndDateChange,
   startDate,
   endDate,
-  onActivateUser }) => (
+  onClickActivate }) => (
     <Segment.Group raised>
       <Segment className="horizontal segments">
         <Segment>
@@ -63,7 +63,7 @@ const Recruitment = ({
         </Segment>
       </Segment>
       <Segment>
-        <Table striped selectable celled sortable>
+        <Table fixed striped selectable celled sortable>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell className="one wide center aligned">#</Table.HeaderCell>
@@ -92,7 +92,7 @@ const Recruitment = ({
                 <Table.Cell className="two wide">{recruitment.appointment}</Table.Cell>
                 <Table.Cell className="two wide">{recruitment.status}</Table.Cell>
                 <Table.Cell className="two wide">
-                  {actionButtonController(recruitment.status, recruitment.citizenId, onActivateUser)}
+                  {actionButtonController(recruitment.status, recruitment.citizenId, onClickActivate)}
                 </Table.Cell>
               </Table.Row>
             ))}
@@ -112,7 +112,7 @@ Recruitment.propTypes = {
   onEndDateChange: PropTypes.func.isRequired,
   startDate: PropTypes.string.isRequired,
   endDate: PropTypes.string.isRequired,
-  onActivateUser: PropTypes.func.isRequired,
+  onClickActivate: PropTypes.func.isRequired,
 };
 
 export default Recruitment;

@@ -20,7 +20,7 @@ export function* watchExamLogin() {
   yield takeEvery(actionTypes.EXAM_LOGIN_REQUEST, examLoginTask);
 }
 
-export default function* authSaga() {
+export default function* examAuthSaga() {
   yield all([
     watchExamLogin()
   ]);

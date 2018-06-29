@@ -1,11 +1,11 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt-nodejs');
-const User = require('../models/ExamUser');
+const ExamUser = require('../models/ExamUser');
 
 const jwtSecret = process.env.JWT_SECRET;
 
 exports.signin = (req, res, next) => {
-  User.findByUsername(req.body.username)
+  ExamUser.findByUsername(req.body.username)
     .then((user) => {
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
@@ -29,6 +29,27 @@ exports.signin = (req, res, next) => {
         const err = new Error('User not found');
         err.status = 404;
         next(err);
+      }
+    })
+    .catch(next);
+};
+
+exports.signup = (req, res, next) => {
+  const newUser = req.body.user;
+  ExamUser.findByUsername(newUser.username)
+    .then((user) => {
+      if (user) {
+        const err = new Error('User already exist');
+        err.status = 409;
+        next(err);
+      }
+      else {
+        newUser.password = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync());
+        ExamUser.createAdmin(newUser)
+          .then((createdUser) => {
+            res.json(createdUser);
+          })
+          .catch(next);
       }
     })
     .catch(next);

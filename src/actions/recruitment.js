@@ -48,23 +48,67 @@ export const sortRecruitment = (sortKey, direction) => ({
   }
 });
 
-export const isAlivePasswordExist = cid => ({
-  type: actionTypes.CHECK_ALIVE_PASSWORD_EXISTENCE,
+export const generatePasswordRequest = (cid, passwordLifetimes) => ({
+  type: actionTypes.RECRUITMENT_GENERATE_PASSWORD_REQUEST,
   payload: {
-    isAlivePasswordExist: cid,
+    cid,
+    passwordLifetimes,
   }
 });
 
-export const generatePassword = cid => ({
-  type: actionTypes.GENERATE_PASSWORD,
+export const generatePasswordSuccess = messege => ({
+  type: actionTypes.RECRUITMENT_GENERATE_PASSWORD_SUCCESS,
   payload: {
-    generatePassword: cid,
+    messege,
   }
 });
 
-export const displayPassword = password => ({
-  type: actionTypes.DISPLAY_PASSWORD,
+export const generatePasswordFailure = error => ({
+  type: actionTypes.RECRUITMENT_GENERATE_PASSWORD_FAILURE,
   payload: {
-    displayPassword: password,
+    error,
+  }
+});
+
+export const checkPasswordStatusRequest = cid => ({
+  type: actionTypes.RECRUITMENT_CHECK_PASSWORD_STATUS_REQUEST,
+  payload: {
+    cid,
+  }
+});
+
+export const checkPasswordStatusSuccess = passwordObject => ({
+  type: actionTypes.RECRUITMENT_CHECK_PASSWORD_STATUS_SUCCESS,
+  payload: {
+    passwordObject,
+  }
+});
+
+export const checkPasswordStatusFailure = error => ({
+  type: actionTypes.RECRUITMENT_CHECK_PASSWORD_STATUS_FAILURE,
+  payload: {
+    error,
+  }
+});
+
+export const updateUserStatus = (status, statusCode) => ({
+  type: actionTypes.RECRUITMENT_UPDATE_USER_STATUS,
+  payload: {
+    userStatus: status,
+    userStatusCode: statusCode,
+  }
+});
+
+export const updateLifetimesValue = lifetimesValue => ({
+  type: actionTypes.RECRUITMENT_UPDATE_LIFETIMES_VALUE,
+  payload: {
+    lifetimesValue,
+  }
+});
+
+export const updateLifetimesUnit = lifetimesUnit => ({
+  type: actionTypes.RECRUITMENT_UPDATE_LIFETIMES_UNIT,
+  payload: {
+    lifetimesUnit,
   }
 });

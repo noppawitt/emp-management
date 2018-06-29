@@ -4,6 +4,9 @@ const initialState = {
   isFetching: true,
   results: [1, 2, 3],
   activeItem: 'overall',
+  searchText: '',
+  startDate: null,
+  endDate: null,
 };
 
 const ViewResult = (state = initialState, action) => {
@@ -27,11 +30,24 @@ const ViewResult = (state = initialState, action) => {
         messege: action.payload.messege,
       };
     case actionTypes.VIEW_RESULT_CHANGE_ACTIVE_ITEM:
-      console.log('>>>', state, '<<<');
-      console.log('>>>', state.activeItem === '1');
       return {
         ...state,
         activeItem: action.payload.newActiveItem,
+      };
+    case actionTypes.FILTER_VIEW_RESULT:
+      return {
+        ...state,
+        searchText: action.payload.searchText,
+      };
+    case actionTypes.FILTER_START_DATE_VIEW_RESULT:
+      return {
+        ...state,
+        startDate: action.payload.startDate,
+      };
+    case actionTypes.FILTER_END_DATE_VIEW_RESULT:
+      return {
+        ...state,
+        endDate: action.payload.endDate,
       };
     default:
       return state;

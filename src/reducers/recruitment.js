@@ -10,8 +10,16 @@ const initialState = {
   startDate: null,
   endDate: null,
   isDateFilterChange: false,
+  // unstable code zone
   isAlivePasswordExist: null,
   displayPassword: null,
+  alivePassword: null,
+  // use!
+  isModalFetching: true,
+  userStatus: 'N/A',
+  userStatusCode: 'N/A',
+  lifetimesValue: null,
+  lifetimesUnit: 1,
 };
 
 const Recruitment = (state = initialState, action) => {
@@ -39,7 +47,6 @@ const Recruitment = (state = initialState, action) => {
         searchText: action.payload.searchText
       };
     case actionTypes.FILTER_START_DATE_RECRUITMENT:
-      console.log('>>', state.startDate, action.payload.startDate);
       return {
         ...state,
         startDate: action.payload.startDate,
@@ -57,15 +64,60 @@ const Recruitment = (state = initialState, action) => {
         sortKey: action.payload.sortKey,
         direction: action.payload.direction
       };
-    case actionTypes.CHECK_ALIVE_PASSWORD_EXISTENCE:
+    // semi-unstable code zone
+    case actionTypes.RECRUITMENT_CHECK_PASSWORD_STATUS_REQUEST:
       return {
         ...state,
-        isAlivePasswordExist: action.payload.isAlivePasswordExist,
+        cid: action.payload.cid,
+        isModalFetching: true,
       };
-    case actionTypes.DISPLAY_PASSWORD:
+    case actionTypes.RECRUITMENT_CHECK_PASSWORD_STATUS_SUCCESS:
       return {
         ...state,
-        displayPassword: action.payload.displayPassword,
+        passwordObject: action.payload.passwordObject,
+        isModalFetching: false,
+      };
+    case actionTypes.RECRUITMENT_CHECK_PASSWORD_STATUS_FAILURE:
+      return {
+        ...state,
+        messege: action.payload.messege,
+        isModalFetching: false,
+      };
+    case actionTypes.RECRUITMENT_GENERATE_PASSWORD_REQUEST:
+      return {
+        ...state,
+        cid: action.payload.cid,
+        passwordLifetimes: action.payload.passwordLifetimes,
+        isModalFetching: true,
+      };
+    case actionTypes.RECRUITMENT_GENERATE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        messege: action.payload.messege,
+        isModalFetching: false,
+      };
+    case actionTypes.RECRUITMENT_GENERATE_PASSWORD_FAILURE:
+      return {
+        ...state,
+        messege: action.payload.messege,
+        isModalFetching: false,
+      };
+    case actionTypes.RECRUITMENT_UPDATE_USER_STATUS:
+      return {
+        ...state,
+        userStatus: action.payload.userStatus,
+        userStatusCode: action.payload.userStatusCode,
+      };
+    case actionTypes.RECRUITMENT_UPDATE_LIFETIMES_VALUE:
+      return {
+        ...state,
+        lifetimesValue: action.payload.lifetimesValue,
+      };
+    case actionTypes.RECRUITMENT_UPDATE_LIFETIMES_UNIT:
+      console.log('I got it from my daddy!', action.payload);
+      return {
+        ...state,
+        lifetimesUnit: action.payload.lifetimesUnit,
       };
     default:
       return state;

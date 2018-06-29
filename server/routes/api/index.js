@@ -76,6 +76,6 @@ router.use('/recruitments', recruitment);
 
 router.use('/exam', exam);
 
-router.use('./viewResult', viewResult);
+router.use('/viewResult', viewResult);
 
 module.exports = router;
