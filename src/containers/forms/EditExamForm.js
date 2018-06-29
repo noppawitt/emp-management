@@ -75,7 +75,7 @@ examSubCategoryOptions.propTypes = {
   examCategory: PropTypes.string.isRequired
 };
 
-const renderChoices = ({ fields, placeHold, submitting, meta }) => (
+const renderChoices = ({ fields, placeHold, meta }) => (
   <div>
     <Header as="h5">Choices
       <label style={{ color: 'red' }}>*</label>
