@@ -53,4 +53,14 @@ LeaveRequest.findByYearAndMonth = (year, month, userId) => (
   db.manyOrNone('SELECT * FROM leave_requests WHERE extract(year from leave_date) = $1 AND extract(month from leave_date) = $2 AND user_id = $3 AND (status = $4 OR status = $5)', [year, month, userId, 'Approve', 'Pending'])
 );
 
+LeaveRequest.findSummaryLeave = year => (
+  db.manyOrNone(`SELECT users.id, CONCAT(employee_info.first_name, ' ', employee_info.last_name) as name, 
+  leave_requests.leave_type, EXTRACT(month from leave_date) as month, SUM(totalhours) / $1 as days
+  FROM users INNER JOIN employee_info ON users.id = employee_info.user_id 
+  LEFT OUTER JOIN leave_requests ON employee_info.user_id = leave_requests.user_id 
+  AND EXTRACT(year from leave_requests.leave_date) = $2
+  GROUP BY users.id, leave_requests.leave_type, month, name
+  ORDER BY users.id, leave_requests.leave_type, month`, [8, year])
+);
+
 module.exports = LeaveRequest;
