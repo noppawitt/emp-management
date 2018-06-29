@@ -39,3 +39,7 @@ exports.edit = (req, res, next) => {
     })
     .catch(next);
 }
+
+exports.uploadImg = (req,res,next) => {
+  res.json('upload');
+}

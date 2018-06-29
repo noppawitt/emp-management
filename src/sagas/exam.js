@@ -29,17 +29,25 @@ export function* addExamTask(action) {
       yield fetch(imageArray[i])
         .then(res => (res.blob()))
         .then((blob) => {
-          files.push(new File([blob], String(new Date())));
+          const d = new Date();
+          const fN = 'img' + d.getUTCDate() + (d.getUTCMonth() + 1) + d.getUTCFullYear() + d.getUTCHours() + d.getUTCMinutes() + d.getUTCSeconds() + d.getUTCMilliseconds();
+          files.push(new File([blob], fN + '.' + blob.type.split('/')[1]));
         });
     }
 
+    const formData = new FormData();
     for (let i = 0; i < files.length; i += 1) {
-      const imageList = new FormData();
-      imageList.append('image', files[i]);
-      yield call(api.uploadImageExam, {
-        images: files[0]
-      });
+      formData.append('image', files[i]);
     }
+    yield call(api.uploadImageExam, formData);
+
+    let newSrc = localStorage.getItem('examQuestion');
+    for (let i = 0; i < imageArray.length; i += 1) {
+      newSrc = newSrc.replace(imageArray[i], '/static/exam-img/' + files[i].name);
+    }
+
+    localStorage.setItem('examQuestion', newSrc);
+    console.log(localStorage.getItem('examQuestion'));
 
     yield call(api.addExam, {
       exam: action.payload.form,

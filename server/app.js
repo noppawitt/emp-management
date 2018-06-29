@@ -14,6 +14,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
+app.use('/static', express.static(path.resolve(__dirname, 'storage', 'public')));
 app.use(routes);
 app.use(errorHandler);
 
