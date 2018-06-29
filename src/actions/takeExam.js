@@ -1,9 +1,29 @@
 import * as actionTypes from '../constants/actionTypes';
 
-export const fetchExamRequest = something => ({
-  // don't forget to add this action type
-  type: actionTypes.FECTH_TAKE_EXAM_PAGE_REQUEST,
+export const fetcTakeExamRequest = () => ({
+  type: actionTypes.TAKE_EXAM_FECTH_REQUEST,
+  payload: {}
+});
+
+export const fetcTakeExamSuccess = (position, eprList, exam) => ({
+  type: actionTypes.TAKE_EXAM_FECTH_REQUEST,
   payload: {
-    something
+    position,
+    eprList,
+    exam,
+  }
+});
+
+export const fetcTakeExamFailure = messege => ({
+  type: actionTypes.TAKE_EXAM_FECTH_REQUEST,
+  payload: {
+    messege,
+  }
+});
+
+export const changeActiveItem = item => ({
+  type: actionTypes.TAKE_EXAM_CHANGE_ACTIVE_ITEM,
+  payload: {
+    item,
   }
 });

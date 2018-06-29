@@ -114,7 +114,6 @@ const Recruitment = (state = initialState, action) => {
         lifetimesValue: action.payload.lifetimesValue,
       };
     case actionTypes.RECRUITMENT_UPDATE_LIFETIMES_UNIT:
-      console.log('I got it from my daddy!', action.payload);
       return {
         ...state,
         lifetimesUnit: action.payload.lifetimesUnit,

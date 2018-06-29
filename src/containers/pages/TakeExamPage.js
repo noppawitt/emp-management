@@ -1,30 +1,51 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
-
-import { fetchExamRequest } from '../../actions/takeExam';
-
+import {
+  fetchTakeExamRequest,
+  changeActiveItemRequest
+} from '../../actions/takeExam';
 import TakeExam from '../../components/TakeExam';
-// import Loader from '../../components/Loader';
+import Loader from '../../components/Loader';
+// import { getVisibleExam } from '../../selectors/TakeExam';
 
-// import { getVisibleExam } frim '../../selectors/TakeExam';
-
-const TakeExamPage = () => (
-  <TakeExam />
-);
+const TakeExamPage = ({
+  isFetching,
+  cid,
+  activeItem,
+  changeActiveMenuItem,
+  eprList }) =>
+  (
+    !isFetching ?
+      <Loader /> :
+      <TakeExam
+        cid={cid}
+        activeItem={activeItem}
+        changeActiveMenuItem={changeActiveMenuItem}
+        eprList={eprList}
+      />
+  );
 
 TakeExamPage.propTypes = {
-  // validate type here
+  isFetching: PropTypes.bool.isRequired,
+  cid: PropTypes.string.isRequired,
+  activeItem: PropTypes.string.isRequired,
+  changeActiveMenuItem: PropTypes.func.isRequired,
+  eprList: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = () => ({
-  // map variable from state here
+const mapStateToProps = state => ({
+  isFetching: state.takeExam.isFetching,
+  cid: state.takeExam.cid,
+  activeItem: state.takeExam.activeItem,
+  eprList: state.takeExam.erpList,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchExam: () => dispatch(fetchExamRequest()),
+  fetchTakeExam: () => dispatch(fetchTakeExamRequest()),
   // map sfunction from dispatch here
+  changeActiveMenuItem: item => dispatch(changeActiveItemRequest(item)),
 });
 
 const enhance = compose(
@@ -32,8 +53,8 @@ const enhance = compose(
   lifecycle({
     componentDidMount() {
       // edit this, maybe?
-      const { fetchExam } = this.props;
-      fetchExam();
+      const { fetchTakeExam } = this.props;
+      fetchTakeExam();
     }
   })
 );

@@ -14,6 +14,7 @@ import recruitment from './recruitment';
 import examAuth from './examAuth';
 import agreement from './agreement';
 import viewResult from './viewResult';
+import takeExam from './takeExam';
 
 export default combineReducers({
   form: formReducer,
@@ -31,4 +32,5 @@ export default combineReducers({
   examAuth,
   agreement,
   viewResult,
+  takeExam,
 });

@@ -20,7 +20,7 @@ const ExamLoginPage = ({ dispatch }) => {
 
   return (
     <div>
-      <Grid.Column floated="center">
+      <Grid.Column>
         <Segment four wide center style={{ width: '300px' }}>
           <Form onSubmit={handleSubmit}>
             <Form.Field>

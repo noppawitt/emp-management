@@ -295,17 +295,23 @@ api.fetchExamResult = id => (
 // Exam Auth
 
 api.signup = form => (
-  callApi('/examAuth/signup', {
+  callApi(`/examAuth/signu`, {
     method: 'POST',
     body: form
   })
 );
 
 api.examLogin = form => (
-  callApi('/examAuth/login', {
+  callApi(`/examAuth/login`, {
     method: 'POST',
     body: form
   })
+);
+
+// Take Exam
+
+api.fetchTakeExam = () => (
+  callApi(`/api/takeExam`)
 );
 
 export default api;
