@@ -91,7 +91,7 @@ const mapDispatchToProps = dispatch => ({
   onEndDateChange: date => dispatch(filterEndDateRecruitment(date)),
   onClickActivate: cid => compose(
     dispatch(checkPasswordStatusRequest(cid)),
-    dispatch(openModal(modalNames.DISPLAY_PASSWORD)),
+    dispatch(openModal(modalNames.ACTIVATE)),
   ),
   // add Grade function
 });

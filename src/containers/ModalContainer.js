@@ -42,7 +42,7 @@ const ModalContainer = ({ name, props }) => {
       return <AddExamModal {...props} />;
     case modalNames.EDIT_EXAM:
       return <EditExamModal {...props} />;
-    case modalNames.DISPLAY_PASSWORD:
+    case modalNames.ACTIVATE:
       return <ActivateUserModal {...props} />;
     default:
       return <div />;

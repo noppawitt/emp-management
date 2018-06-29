@@ -23,7 +23,7 @@ export const ADD_NEW_EXAM = 'ADD_NEW_EXAM';
 export const EDIT_EXAM = 'EDIT_EXAM';
 
 // Recruitment
-export const DISPLAY_PASSWORD = 'DISPLAY_PASSWORD';
+export const ACTIVATE = 'ACTIVATE';
 
 // Other
 export const CONFIRM = 'CONFIRM';

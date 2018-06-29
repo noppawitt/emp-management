@@ -6,7 +6,9 @@ const examAuth = require('./examAuth');
 const api = require('./api');
 
 router.use('/examauth', examAuth);
+
 router.use('/auth', auth);
+
 router.use('/api', passport.authenticate('jwt', { session: false }), api);
 
 router.get('*', (req, res) => {

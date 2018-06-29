@@ -11,8 +11,8 @@ Recruitment.checkPasswordStatus = id => (
 );
 
 Recruitment.activatePassword = (id, lifetimes) => (
-  db.oneOrNone('UPDATE exam_users SET password_lifetimes = $2 where id = $1', [id, lifetimes])
-// .then(db.oneOrNone('SELECT id, birthdate, lastest_activated_password_time, activation_lifetimes FROM exam_users WHERE id = $1', [cid]))
+  db.oneOrNone('UPDATE exam_users SET activation_lifetimes = $2 where id = $1', [id, lifetimes])
+  // .then(db.oneOrNone('SELECT id, birthdate, lastest_activated_password_time, activation_lifetimes FROM exam_users WHERE id = $1', [cid]))
 );
 
 module.exports = Recruitment;
