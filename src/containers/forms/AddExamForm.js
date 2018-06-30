@@ -149,7 +149,7 @@ const enhance = compose(
   reduxForm({
     form: 'addExam',
     initialValues: {
-      choices: [{ data: '', answer: false }, { data: '', answer: false }]
+      choices: [{ data: 'Sample Choice1', answer: true }, { data: 'Sample Choice2', answer: false }]
     },
     validate
   })
