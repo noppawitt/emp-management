@@ -6,6 +6,8 @@ import SignatureComponent from './components/SignatureComponent';
 import EvaluationResultComponent from './components/EvaluationResultComponent';
 import SupervisorCommentComponent from './components/SupervisorCommentComponent';
 import logoBack from './pic/logo2.png'
+import logo from './pic/logo.png'
+
 const questions = ['ความรู้ในงานและการพัฒนาตัวเอง (Knowledge and Improvement)',
     'คุณภาพงาน (Quality of Work)',
     'ปริมาณงาน (Quantity of Work)',
@@ -121,8 +123,8 @@ class ProbationForm extends React.Component {
             <div className='main-container'>
                 <img className="logo_back" src={logoBack} />
                 <div className='profile'>
+                    <img className="logo" src={logo} />
                     <h1>Employee Probation Form</h1>
-                    <h2>Playtorium Solutions Company Limited</h2>
                 </div>
                 <EmployeeInfo {...this.state} showEndProDate='true' onChange={this.employeeStateHandler} mode={this.props.mode} />
 

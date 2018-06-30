@@ -23,3 +23,12 @@
   opacity: 0.02;
   pointer-events: none;
 }
+.logo{
+  position: relative;
+  width: 28vw;
+  height: 5.1vw;
+  max-width: 716.234px;
+  max-height: 130.453px;
+  min-width: 496.734px;
+  min-height: 90.4738px;
+}
