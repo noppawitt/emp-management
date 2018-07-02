@@ -47,7 +47,6 @@ examSubCategoryOptions.propTypes = {
 };
 
 const renderQuestion = question => (
-  
   <div dangerouslySetInnerHTML={{ __html: question }} />
 );
 
