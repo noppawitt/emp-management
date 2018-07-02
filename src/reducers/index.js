@@ -10,6 +10,7 @@ import project from './project';
 import projectDetail from './projectDetail';
 import leave from './leave';
 import timesheet from './timesheet';
+import holiday from './holiday';
 
 export default combineReducers({
   form: formReducer,
@@ -22,5 +23,6 @@ export default combineReducers({
   project,
   projectDetail,
   leave,
-  timesheet
+  timesheet,
+  holiday
 });
