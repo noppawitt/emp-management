@@ -86,12 +86,12 @@ class ProbationForm extends React.Component {
     }
 
     signatureHandler(newEmployeeSignDate, newSupervisorSignDate, newMDSignDate) {
-        this.setState({
+        this.state = {
+            ...this.state,
             employeeSignDate: newEmployeeSignDate,
             supervisorSignDate: newSupervisorSignDate,
             MDSignDate: newMDSignDate
-        })
-
+        };
         console.log(this.state);
     }
 
