@@ -7,10 +7,10 @@ export const fetchTakeExamRequest = id => ({
   }
 });
 
-export const fetchTakeExamSuccess = examObject => ({
+export const fetchTakeExamSuccess = fetchResult => ({
   type: actionTypes.TAKE_EXAM_FETCH_SUCCESS,
   payload: {
-    examObject,
+    fetchResult,
   }
 });
 

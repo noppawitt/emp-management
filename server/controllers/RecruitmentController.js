@@ -9,8 +9,7 @@ exports.fetchAllRecruitment = (req, res, next) => {
 };
 
 exports.checkPasswordStatus = (req, res, next) => {
-  const newid = req.query.id;
-  Recruitment.checkPasswordStatus(newid)
+  Recruitment.checkPasswordStatus(req.query.id)
     .then((passwordStatusObject) => {
       res.json(passwordStatusObject);
     })
@@ -18,9 +17,7 @@ exports.checkPasswordStatus = (req, res, next) => {
 };
 
 exports.activatePassword = (req, res, next) => {
-  const theid = req.query.id;
-  const newLifetimes = req.query.lifetimes < 1 ? 0 : req.query.lifetimes;
-  Recruitment.activatePassword(theid, newLifetimes)
+  Recruitment.activatePassword(req.query.id, req.query.lifetimes < 1 ? 0 : req.query.lifetimes)
     .then((messege) => {
       res.json(messege);
     })

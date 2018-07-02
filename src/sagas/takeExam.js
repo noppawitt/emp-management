@@ -6,10 +6,11 @@ import {
 } from '../actions/takeExam';
 import api from '../services/api';
 
-export function* fetchTakeExamTask() {
+export function* fetchTakeExamTask(action) {
   try {
-    const examObject = yield call(api.fetchTakeExam);
-    yield put(fetchTakeExamSuccess(examObject));
+    const fetchResult = yield call(api.fetchEPRList, action.payload.id);
+    console.log('fetchResult', fetchResult);
+    yield put(fetchTakeExamSuccess(fetchResult));
   }
   catch (error) {
     yield put(fetchTakeExamFailure(error));

@@ -15,8 +15,9 @@ const TakeExamPage = ({
   id,
   activeItem,
   onClickActiveItem,
-  eprList,
-  onClickTestButton,
+  position,
+  category,
+  subCategory,
   examObject }) =>
   (
     isFetching ?
@@ -25,8 +26,9 @@ const TakeExamPage = ({
         id={id}
         activeItem={activeItem}
         onClickActiveItem={onClickActiveItem}
-        eprList={eprList}
-        onClickTestButton={onClickTestButton}
+        position={position}
+        categoryList={category}
+        subCategoryList={subCategory}
         examObject={examObject}
       />
   );
@@ -36,8 +38,9 @@ TakeExamPage.propTypes = {
   id: PropTypes.string.isRequired,
   activeItem: PropTypes.string.isRequired,
   onClickActiveItem: PropTypes.func.isRequired,
-  eprList: PropTypes.array.isRequired,
-  onClickTestButton: PropTypes.func.isRequired,
+  position: PropTypes.string.isRequired,
+  category: PropTypes.array.isRequired,
+  subCategory: PropTypes.array.isRequired,
   examObject: PropTypes.array.isRequired,
 };
 
@@ -45,24 +48,24 @@ const mapStateToProps = state => ({
   isFetching: state.takeExam.isFetching,
   id: state.examAuth.id,
   activeItem: state.takeExam.activeItem,
-  eprList: state.takeExam.erpList,
+  position: state.takeExam.position,
+  category: state.takeExam.category,
+  subCategory: state.takeExam.subCategory,
   examObject: state.takeExam.examObject,
 });
 
 const mapDispatchToProps = dispatch => ({
   // fetchTakeExam: id => dispatch(fetchTakeExamRequest(id)),
+  fetchTakeExam: () => dispatch(fetchTakeExamRequest('1234567890191')),
   onClickActiveItem: item => dispatch(changeActiveItem(item)),
-  onClickTestButton: () => dispatch(fetchTakeExamRequest('1234567890151')),
 });
 
 const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
-      // const { fetchTakeExam } = this.props;
-      // fetchTakeExam();
-      const { onClickTestButton } = this.props;
-      onClickTestButton();
+      const { fetchTakeExam } = this.props;
+      fetchTakeExam();
     }
   })
 );

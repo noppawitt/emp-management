@@ -11,7 +11,8 @@ const TakeExam = ({
   id,
   activeItem,
   onClickActiveItem,
-  eprList,
+  categoryList,
+  subCategoryList,
   examObject }) =>
   (
     <Segment.Group>
@@ -21,16 +22,32 @@ const TakeExam = ({
       <Segment>
         <Grid>
           <Grid.Column width={3}>
-            <Menu fluid vertical tabular>
-              <Menu.Item name="1" active={activeItem === '1'} onClick={() => onClickActiveItem('1')} />
-              <Menu.Item name="2" active={activeItem === '2'} onClick={() => onClickActiveItem('2')} />
-              <Menu.Item name="3" active={activeItem === '3'} onClick={() => onClickActiveItem('3')} />
+            {/* <Menu vertical tabular>
               {eprList && eprList.map(eachRow => (
                 <Menu.Item
-                  name={eachRow.category + eachRow.subCategory}
-                  active={activeItem === eachRow.category + eachRow.subCategory}
-                  onClick={() => onClickActiveItem(eachRow.category + eachRow.subCategory)}
+                  name={eachRow.eprExCategory + eachRow.eprExSubcategory}
+                  active={activeItem === eachRow.eprExCategory + eachRow.eprExSubcategory}
+                  onClick={() => onClickActiveItem(eachRow.eprExCategory + eachRow.eprExSubcategory)}
                 />
+              ))}
+            </Menu> */}
+            {console.log(categoryList)}
+            {console.log(subCategoryList)}
+            <Menu vertical tabular>
+              {categoryList && categoryList.map(category => (
+                <Menu>
+                  <Menu.Header name={category.category} />
+                  <Menu.Menu>
+                    {subCategoryList.map(subCategory => (
+                      subCategory.category === categoryList.category ?
+                        <Menu.Item
+                          name={subCategory.subCategory}
+                          active={activeItem === category.category + subCategory.subCategory}
+                          onClick={() => onClickActiveItem(category.category + subCategory.subCategory)}
+                        /> : null
+                    ))}
+                  </Menu.Menu>
+                </Menu>
               ))}
             </Menu>
           </Grid.Column>
@@ -63,7 +80,8 @@ TakeExam.propTypes = {
   id: PropTypes.string.isRequired,
   activeItem: PropTypes.string.isRequired,
   onClickActiveItem: PropTypes.func.isRequired,
-  eprList: PropTypes.array.isRequired,
+  categoryList: PropTypes.array.isRequired,
+  subCategoryList: PropTypes.array.isRequired,
   examObject: PropTypes.array.isRequired,
 };
 
