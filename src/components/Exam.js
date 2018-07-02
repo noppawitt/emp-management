@@ -47,6 +47,7 @@ examSubCategoryOptions.propTypes = {
 };
 
 const renderQuestion = question => (
+  
   <div dangerouslySetInnerHTML={{ __html: question }} />
 );
 
@@ -106,7 +107,7 @@ const Exam = (({ onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, 
           </Table.Header>
           <Table.Body>{examsFilter.map(exam => (
             <Table.Row>
-              <Table.Cell style={{ height: '200px', overflowY: 'scroll', display: 'block' }}>
+              <Table.Cell style={{ height: '200px', overflowY: 'auto', display: 'block' }}>
                 <div>
                   {renderQuestion(exam.exQuestion)}
                 </div>
