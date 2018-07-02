@@ -7,6 +7,6 @@ router.put('/', ProjectController.update);
 
 router.get('/:id', ProjectController.findById);
 
-router.get('/', ProjectController.findProjectByTimesheet);
+router.get('/project-timesheet', ProjectController.findProjectByTimesheet);
 
 module.exports = router;
