@@ -30,6 +30,7 @@ exports.create = (req, res, next) => {
               next(err);
             }
             else {
+              const name = `${newUser.firstName} ${newUser.lastName}`;
               newUser.password = bcrypt.hashSync(pass, bcrypt.genSaltSync());
               if (newUser.gender === 'Male') {
                 newUser.picture = '/static/profile-img/man.jpg';
@@ -43,7 +44,7 @@ exports.create = (req, res, next) => {
                     from: process.env.MAIL_USER,
                     to: newUser.username,
                     subject: 'Playtorium Account Information',
-                    html: mailAddUser(newUser.username, pass)
+                    html: mailAddUser(newUser.username, pass, name)
                   };
                   mail.sendMail(mailOptions, (err, info) => {
                     if (err) {

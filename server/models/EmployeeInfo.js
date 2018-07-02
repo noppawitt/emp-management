@@ -44,7 +44,7 @@ EmployeeInfo.update = (employeeInfo, id) => (
     address = $12,
     updated_date = $13,
     first_name_th = $14,
-    last_name_th = $15
+    last_name_th = $15,
     gender = $16
     WHERE user_id = $17
     RETURNING user_id`,

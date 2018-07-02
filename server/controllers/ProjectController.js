@@ -27,12 +27,21 @@ exports.update = (req, res, next) => {
     .catch(next);
 };
 
-exports.findAll = (req, res, next) => {
-  Project.findAll()
-    .then((projects) => {
-      res.json(projects);
-    })
-    .catch(next);
+exports.find = (req, res, next) => {
+  if (req.query.userId && req.query.year && req.query.month) {
+    Project.findProjectByTimesheet(req.query.userId, req.query.year, req.query.month)
+      .then((projects) => {
+        res.json(projects);
+      })
+      .catch(next);
+  }
+  else {
+    Project.findAll()
+      .then((projects) => {
+        res.json(projects);
+      })
+      .catch(next);
+  }
 };
 
 exports.findById = (req, res, next) => {
