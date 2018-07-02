@@ -311,4 +311,6 @@ api.fetchHolidays = (year, month) => (
   callApi(`/api/holidays?year=${year}&month=${month}`)
 );
 
+// Report
+
 export default api;
