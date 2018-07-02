@@ -1,5 +1,4 @@
 const Probation = require('../models/Probation');
-const mail = require('../mail');
 
 exports.find = (req, res, next) => {
     console.log('probation running')
@@ -11,20 +10,16 @@ exports.find = (req, res, next) => {
 };
 
 exports.create = (req,res,next) => {
-  const mailOptions = {
-    from: 'i.plas.sa.tic@gmail.com',
-    to: 'ruby.pwn@hotmail.com',
-    subject: 'Hello',
-    html: `<p>Good Morning</p>`
-  };
-  mail.sendMail(mailOptions, (err, info) => {
-    if (err) {
-      console.log(err);
-    }
-    else {
-      console.log(info);
-    }
-  });
+  console.log(req)
+  const newProbationInfo = req.body.probationInfo;
+  Probation.insertProbation(newProbationInfo, req.user.id)
+    .then(() => {
+        Probation.findProById(req.body.probationInfo.employeeID)
+          .then((probations)=>{
+            res.json(probations)
+          });
+    })
+    .catch(next);
 };
 
 exports.update = (req,res,next) => {
@@ -40,3 +35,18 @@ exports.update = (req,res,next) => {
     })
     .catch(next);
 };
+
+// const mailOptions = {
+//   from: 'i.plas.sa.tic@gmail.com',
+//   to: 'ruby.pwn@hotmail.com',
+//   subject: 'Hello',
+//   html: `<p>Good Morning</p>`
+// };
+// mail.sendMail(mailOptions, (err, info) => {
+//   if (err) {
+//     console.log(err);
+//   }
+//   else {
+//     console.log(info);
+//   }
+// });
