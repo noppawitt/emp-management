@@ -93,7 +93,9 @@ class ProbationForm extends React.Component {
                 mobile: this.props.profile.eva.mobile,
                 transporationAllowance: this.props.profile.eva.transporationAllowance,
                 otherAllowance: this.props.profile.eva.otherAllowance,
-                supervisorComment: this.props.profile.eva.supComment
+                supervisorComment: this.props.profile.eva.supComment,
+                terminationDate: this.props.profile.eva.terminatedDate,
+                continuedDate: this.props.profile.eva.continuedDate
             })
         }
     }

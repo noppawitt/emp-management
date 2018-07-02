@@ -25,7 +25,7 @@ exports.create = (req,res,next) => {
 exports.update = (req,res,next) => {
   console.log('update probation');
   const newProbationInfo = req.body.probationInfo;
-  Probation.updateProbation(newProbationInfo)
+  Probation.updateProbation(newProbationInfo, req.user.id)
     .then(() => {
       console.log("Test Probation");
       Probation.findProById(req.body.probationInfo.employeeID)

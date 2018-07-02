@@ -11,8 +11,8 @@ class EvaluationResultComponent extends React.Component {
             confirmed: this.props.confirmed !== null ? this.props.confirmed : true,
             continued: this.props.continued !== null ? this.props.continued : true,
             passProDate: this.props.endProbationDate,
-            terminationDate: this.props.terminationDate || '',
-            continuedDate: this.props.continuedDate || ''
+            terminationDate: this.props.terminationDate || null,
+            continuedDate: this.props.continuedDate || null
         }
 
         this.showProElement1 = this.showProElement1.bind(this);
