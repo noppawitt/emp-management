@@ -1,4 +1,5 @@
 const db = require('../db/');
+const mail = require('../mail');
 
 const Probation = {};
 
@@ -55,4 +56,5 @@ Probation.updateProbation = (probationInfo,id) =>(
       probationInfo.employeeID
     ])
 )
+
 module.exports = Probation;
