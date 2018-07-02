@@ -106,18 +106,18 @@ const Exam = (({ onAddClick, onDeleteClick, onEditClick, onViewClick, onFilterCh
           </Table.Header>
           <Table.Body>{examsFilter.map(exam => (
             <Table.Row verticalAlign="top">
-              <Table.Cell style={{ height: '200px', overflowY: 'auto', display: 'block'}}>
+              <Table.Cell style={{ height: '200px', overflowY: 'auto', display: 'block', width: '100%' }}>
                 {renderQuestion(exam.exQuestion)}
               </Table.Cell>
               <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{exam.exCategory.charAt(0).toUpperCase().concat(exam.exCategory.slice(1))}</Table.Cell>
               <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{exam.exSubcategory.charAt(0).toUpperCase().concat(exam.exSubcategory.slice(1))}</Table.Cell>
               <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{exam.exType}</Table.Cell>
-              <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{(exam.exChoice).map(choice => (
-                <div>&#9679;&nbsp;{choice}</div>
+              <Table.Cell style={{ height: '200px', overflowY: 'auto', display: 'block', width: '100%' }}>{(exam.exChoice).map((choice, i) => (
+                <p><strong>{i + 1}.</strong> {choice}</p>
               ))}
               </Table.Cell>
-              <Table.Cell>{(exam.exAnswer).map(ans => (
-                <div>&#9679;&nbsp;{ans}</div>
+              <Table.Cell style={{ height: '200px', overflowY: 'auto', width: '100%' }}>{(exam.exAnswer).map(ans => (
+                <p>&#9679;&nbsp;{ans}</p>
               ))}
               </Table.Cell>
               <Table.Cell textAlign="center" style={{ cursor: 'default' }}>

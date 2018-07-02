@@ -19,7 +19,13 @@ const validate = (values) => {
     let sameAnswer = false;
     errors.choices = [];
     for (let i = 0; i < values.choices.length; i += 1) {
+      if (values.choices[i].data === undefined) {
+        continue;
+      }
       for (let j = 0; j < i; j += 1) {
+        if (values.choices[j].data === undefined) {
+          continue;
+        }
         if (values.choices[j].data.toLowerCase().trimRight() === values.choices[i].data.toLowerCase().trimRight()) {
           sameAnswer = !(values.choices[j].data === undefined || values.choices[j].data === '');
           break;
@@ -89,7 +95,7 @@ const renderChoices = ({ fields, placeHold, meta }) => (
           <Form.Group>
             <Field name={`${choice}.data`} as={Form.Input} component={Input} placeholder={placeHold} validate={[requiredField]} disabled={meta.submitting} />
             <Field name={`${choice}.answer`} as={Form.Checkbox} component={Input} label="Correct Answer" disabled={meta.submitting} />
-            <Icon fitted name="ban" color="red" size="large" onClick={() => fields.remove(index)} disabled={meta.submitting} />
+            <Icon type="button" fitted name="ban" color="red" size="large" onClick={() => fields.remove(index)} disabled={meta.submitting} />
           </Form.Group>
           <sbr />
         </div>
