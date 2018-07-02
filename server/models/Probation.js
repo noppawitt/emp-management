@@ -7,7 +7,7 @@ Probation.findProById = (id) => (
 )
 
 Probation.insertProbation = (probationInfo,id) =>(
-  db.one("INSERT INTO Probation (user_id,pass_pro_date,based_salary,mobile,transporation_allowance,other_allowance,pass_pro,confirmed_by_employment,sup_comment,em_sign_date,sup_sign_date,md_sign_date,continued,score,expected_score,created_user,updated_user,terminated_date,continued_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14 , $15 , $16 , $17) RETURNING 1",
+  db.one("INSERT INTO Probation (user_id,pass_pro_date,based_salary,mobile,transporation_allowance,other_allowance,pass_pro,confirmed_by_employment,sup_comment,em_sign_date,sup_sign_date,md_sign_date,continued,score,expected_score,created_user,updated_user,terminated_date,continued_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14 , $15 , $16 , $17, $18, $19) RETURNING 1",
   [
     probationInfo.employeeID,
     probationInfo.endProbationDate,
