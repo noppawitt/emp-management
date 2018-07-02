@@ -16,8 +16,8 @@ const validate = (values) => {
 };
 
 const genderOptions = [
-  { key: 'male', value: 'male', text: 'Male' },
-  { key: 'female', value: 'female', text: 'Female' }
+  { key: 'male', value: 'Male', text: 'Male' },
+  { key: 'female', value: 'Female', text: 'Female' }
 ];
 
 const engineerOptions = [

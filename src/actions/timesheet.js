@@ -32,10 +32,12 @@ export const fetchTimesheetRequest = (userId, year, month) => ({
   }
 });
 
-export const fetchTimesheetSuccess = timesheets => ({
+export const fetchTimesheetSuccess = (timesheets, leaves, holidays) => ({
   type: actionTypes.TIMESHHET_FETCH_SUCCESS,
   payload: {
-    timesheets
+    timesheets,
+    leaves,
+    holidays
   }
 });
 

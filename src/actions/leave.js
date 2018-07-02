@@ -23,10 +23,12 @@ export const createLeaveFailure = message => ({
   }
 });
 
-export const fetchLeaveRequest = userId => ({
+export const fetchLeaveRequest = (userId, year, month) => ({
   type: actionTypes.LEAVE_FETCH_REQUEST,
   payload: {
-    userId
+    userId,
+    year,
+    month
   }
 });
 
@@ -63,13 +65,5 @@ export const updateLeaveFailure = message => ({
   type: actionTypes.LEAVE_UPDATE_FAILURE,
   payload: {
     message
-  }
-});
-
-export const filterLeave = (key, value) => ({
-  type: actionTypes.FILTER_LEAVE,
-  payload: {
-    key,
-    value
   }
 });

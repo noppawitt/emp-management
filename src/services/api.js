@@ -1,9 +1,9 @@
+const token = localStorage.getItem('token');
+
 const callApi = (endpoint, request) => {
   if (request && request.body) {
     request.body = request.body instanceof FormData ? request.body : JSON.stringify(request.body);
   }
-
-  const token = localStorage.getItem('token');
 
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -179,7 +179,7 @@ api.createAssetProfile = body => (
 api.updateProfilePicture = body => (
   callApi('/api/employee-info/upload-profile-img', {
     headers: {
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAwMDAsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE1MzAyMDM1MDF9.itTYDoWPThpTXhRFfUX2N3TXw3Zyi0qoLc45lTbetBw'
+      Authorization: `Bearer ${token}`
     },
     method: 'POST',
     body
@@ -269,8 +269,8 @@ api.createLeave = body => (
   })
 );
 
-api.fetchLeave = userId => (
-  callApi(`/api/leave-request?userId=${userId}`)
+api.fetchLeave = (userId, year, month) => (
+  callApi(`/api/leave-request?userId=${userId}&year=${year}&month=${month}`)
 );
 
 api.updateLeave = body => (

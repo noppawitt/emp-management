@@ -27,7 +27,9 @@ export function* createTimesheetTask(action) {
 export function* fetchTimesheetTask(action) {
   try {
     const timesheets = yield call(api.fetchTimesheet, action.payload.userId, action.payload.year, action.payload.month);
-    yield put(fetchTimesheetSuccess(timesheets));
+    const leaves = yield call(api.fetchLeave, action.payload.userId, action.payload.year, action.payload.month);
+    const holidays = yield call(api.fetchHolidays, action.payload.year, action.payload.month);
+    yield put(fetchTimesheetSuccess(timesheets, leaves, holidays));
   }
   catch (error) {
     yield put(fetchTimesheetFailure(error));

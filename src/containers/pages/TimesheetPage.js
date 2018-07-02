@@ -9,9 +9,21 @@ import Loader from '../../components/Loader';
 import { fillTimesheetsToFullMonth } from '../../selectors/timesheet';
 import * as modalNames from '../../constants/modalNames';
 
-const TimesheetPage = ({ isFetching, fetchTimesheet, timesheets, userId, year, month, onAddClick, onEditClick }) => (
+const TimesheetPage = ({ isFetching, fetchTimesheet, timesheets, leaves, holidays, userId, year, month, onAddClick, onEditClick }) => (
   <div>
-    {isFetching ? <Loader /> : <Timesheet timesheets={timesheets} fetchTimesheet={fetchTimesheet} userId={userId} year={year} month={month} onAddClick={onAddClick} onEditClick={onEditClick} /> }
+    {isFetching ?
+      <Loader /> :
+      <Timesheet
+        timesheets={timesheets}
+        leaves={leaves}
+        holidays={holidays}
+        fetchTimesheet={fetchTimesheet}
+        userId={userId}
+        year={year}
+        month={month}
+        onAddClick={onAddClick}
+        onEditClick={onEditClick}
+      />}
   </div>
 );
 
@@ -22,6 +34,8 @@ TimesheetPage.defaultProps = {
 TimesheetPage.propTypes = {
   isFetching: PropTypes.bool,
   timesheets: PropTypes.array.isRequired,
+  leaves: PropTypes.array.isRequired,
+  holidays: PropTypes.array.isRequired,
   onAddClick: PropTypes.func.isRequired,
   onEditClick: PropTypes.func.isRequired,
   userId: PropTypes.string.isRequired,
@@ -33,6 +47,8 @@ TimesheetPage.propTypes = {
 const mapStateToProps = state => ({
   isFetching: state.timesheet.isFetching,
   timesheets: fillTimesheetsToFullMonth(state),
+  leaves: state.timesheet.leaves,
+  holidays: state.timesheet.holidays,
   userId: state.auth.id,
   year: state.timesheet.year,
   month: state.timesheet.month
