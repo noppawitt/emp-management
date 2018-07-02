@@ -50,6 +50,7 @@ const mapStateToProps = (state, { id }) => ({
   initialValues: {
     userId: state.auth.id,
     projectId: getTimesheetById(state, id).projectId,
+    date: getTimesheetById(state, id).date,
     timeIn: getTimesheetById(state, id).timeIn,
     timeOut: getTimesheetById(state, id).timeOut,
     task: getTimesheetById(state, id).task,

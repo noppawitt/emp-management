@@ -49,6 +49,20 @@ const projectDetail = (state = {}, action) => {
         ...state,
         message: action.payload.message
       };
+    case actionTypes.MEMBER_DELETE_REQUEST:
+      return {
+        ...state
+      };
+    case actionTypes.MEMBER_DELETE_SUCCESS:
+      return {
+        ...state,
+        members: action.payload.members
+      };
+    case actionTypes.MEMBER_DELETE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
     default:
       return state;
   }

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Icon, Table, Grid, Progress, Button, Select } from 'semantic-ui-react';
 import moment from 'moment';
 import PageHeader from './PageHeader';
+import history from '../history';
 
 class Timesheet extends React.Component {
   constructor(props) {
@@ -17,7 +18,6 @@ class Timesheet extends React.Component {
       iconBluecolor: 'blue',
       progressColor: 'blue',
       percent: 0,
-      date: moment(),
       lastholiday: { date: '', name: '' },
       lastleaveday: { date: '', status: '' },
       holidays: [
@@ -31,30 +31,23 @@ class Timesheet extends React.Component {
         { date: '2018-06-27', status: 'Sick Leave', timein: '9:00', timeout: '18:00', totalhours: 8 }
       ],
       months: [
-        { key: 1, value: 1, text: 'January' },
-        { key: 2, value: 2, text: 'Fabuary' },
-        { key: 3, value: 3, text: 'March' },
-        { key: 4, value: 4, text: 'April' },
-        { key: 5, value: 5, text: 'May' },
-        { key: 6, value: 6, text: 'June' },
-        { key: 7, value: 7, text: 'July' },
-        { key: 8, value: 8, text: 'August' },
-        { key: 9, value: 9, text: 'September' },
-        { key: 10, value: 10, text: 'October' },
-        { key: 11, value: 11, text: 'Novemver' },
-        { key: 12, value: 12, text: 'December' }
+        { key: 1, value: '01', text: 'January' },
+        { key: 2, value: '02', text: 'February' },
+        { key: 3, value: '03', text: 'March' },
+        { key: 4, value: '04', text: 'April' },
+        { key: 5, value: '05', text: 'May' },
+        { key: 6, value: '06', text: 'June' },
+        { key: 7, value: '07', text: 'July' },
+        { key: 8, value: '08', text: 'August' },
+        { key: 9, value: '09', text: 'September' },
+        { key: 10, value: '10', text: 'October' },
+        { key: 11, value: '11', text: 'November' },
+        { key: 12, value: '12', text: 'December' }
       ],
       years: [
         { key: 2018, value: 2018, text: '2018' },
         { key: 2019, value: 2019, text: '2019' },
-        { key: 2020, value: 2020, text: '2020' },
-        { key: 2021, value: 2021, text: '2021' },
-        { key: 2022, value: 2022, text: '2022' },
-        { key: 2023, value: 2023, text: '2023' },
-        { key: 2024, value: 2024, text: '2024' },
-        { key: 2025, value: 2025, text: '2025' },
-        { key: 2026, value: 2026, text: '2026' },
-        { key: 2027, value: 2027, text: '2027' }
+        { key: 2020, value: 2020, text: '2020' }
       ]
     };
     this.anotherMonthCell = this.anotherMonthCell.bind(this);
@@ -68,16 +61,19 @@ class Timesheet extends React.Component {
   componentDidMount() {
     this.calprogressbar();
   }
-  componentDidUpdate() {
-    // this.calprogressbar();
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (JSON.stringify(this.props.timesheets) !== JSON.stringify(nextProps.timesheets)) {
+  //     this.calprogressbar();
+  //     this.forceUpdate();
+  //   }
+  // }
   calprogressbar() {
     let progressColor = 'red';
     let countWorkDay = 0;
     let countFilledTimesheet = 0;
     for (let i = 0; i < this.props.timesheets.length; i += 1) {
       const x = this.props.timesheets[i];
-      if (moment(x.date).format('MM') === this.state.date.format('MM')) {
+      if (moment(x.date).format('MM') !== this.props.month) {
         continue;
       }
       else if (this.isLeaveday(moment(x.date))) {
@@ -101,16 +97,14 @@ class Timesheet extends React.Component {
         }
       }
     }
-    const percent = countFilledTimesheet / countWorkDay;
+    const percent = (countFilledTimesheet / countWorkDay) * 100;
     if (percent <= 30) progressColor = 'red';
     else if (percent <= 60) progressColor = 'yellow';
     else progressColor = 'blue';
-
-    this.setState({ progressColor });
-    this.setState({ percent });
+    this.({ percent, progressColor });
   }
   drawCell(date, hour, id) {
-    if (date.format('M') !== this.state.date.format('M')) {
+    if (date.format('MM') !== this.props.month) {
       return (this.anotherMonthCell(date.format('D')));
     }
     else if (this.isLeaveday(date)) {
@@ -300,11 +294,11 @@ class Timesheet extends React.Component {
         <Grid stackable doubling relaxed >
           <Grid.Row>
             <Grid.Column computer={8} >
-              <Select placeholder="Year" defaultValue={parseInt(this.state.date.format('YYYY'), 10)} options={this.state.years} onChange={(e, { value }) => this.props.onYearChange('year', value)} />
-              <Select style={{ marginLeft: '10px' }} placeholder="Month" defaultValue={parseInt(this.state.date.format('M'), 10)} options={this.state.months} onChange={(e, { value }) => this.props.onMonthChange('month', value)} />
+              <Select placeholder="Year" defaultValue={parseInt(this.props.year, 10)} options={this.state.years} onChange={(e, { value }) => this.props.fetchTimesheet(this.props.userId, value, this.props.month)} />
+              <Select style={{ marginLeft: '10px' }} placeholder="Month" defaultValue={this.props.month} options={this.state.months} onChange={(e, { value }) => this.props.fetchTimesheet(this.props.userId, this.props.year, value)} />
             </Grid.Column>
             <Grid.Column floated="right" width={5}>
-              <Button floated="right" onClick={this.props.onMultiAddClick} color="blue" >
+              <Button floated="right" onClick={() => history.push('/timesheet/new')} color="blue" >
                 New Task
               </Button>
             </Grid.Column>
@@ -313,7 +307,7 @@ class Timesheet extends React.Component {
         <Table celled stackable fixed>
           <Table.Header>
             <Table.Row textAlign="center">
-              <Table.HeaderCell colSpan="7"><font size="3">{this.state.date.format('MMMM')}</font> {this.state.date.format('YYYY')}</Table.HeaderCell>
+              <Table.HeaderCell colSpan="7"><font size="3">{moment.months()[this.props.month - 1]}</font> {this.props.year}</Table.HeaderCell>
             </Table.Row>
             <Table.Row textAlign="center">
               {this.state.days.map(day => <Table.HeaderCell key={day}>{day}</Table.HeaderCell>)}
@@ -341,11 +335,12 @@ class Timesheet extends React.Component {
 
 Timesheet.propTypes = {
   timesheets: PropTypes.array.isRequired,
+  fetchTimesheet: PropTypes.func.isRequired,
+  userId: PropTypes.string.isRequired,
+  year: PropTypes.string.isRequired,
+  month: PropTypes.string.isRequired,
   onAddClick: PropTypes.func.isRequired,
-  onEditClick: PropTypes.func.isRequired,
-  onMonthChange: PropTypes.func.isRequired,
-  onYearChange: PropTypes.func.isRequired,
-  onMultiAddClick: PropTypes.func.isRequired
+  onEditClick: PropTypes.func.isRequired
 };
 
 export default Timesheet;

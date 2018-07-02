@@ -125,7 +125,7 @@ exports.findByUserId = (req, res, next) => {
 };
 
 exports.findByMonthAndYear = (req, res, next) => {
-  Timesheet.findByMonthAndYear(req.body.month, req.body.year, req.body.userId)
+  Timesheet.findByMonthAndYear(req.query.month, req.query.year, req.query.userId)
     .then((timesheets) => {
       res.json(timesheets);
     })

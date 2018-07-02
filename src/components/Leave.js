@@ -6,7 +6,7 @@ import PageHeader from './PageHeader';
 const months = [
   { key: 0, value: 0, text: 'All' },
   { key: 1, value: 1, text: 'January' },
-  { key: 2, value: 2, text: 'Fabuary' },
+  { key: 2, value: 2, text: 'February' },
   { key: 3, value: 3, text: 'March' },
   { key: 4, value: 4, text: 'April' },
   { key: 5, value: 5, text: 'May' },
@@ -15,7 +15,7 @@ const months = [
   { key: 8, value: 8, text: 'August' },
   { key: 9, value: 9, text: 'September' },
   { key: 10, value: 10, text: 'October' },
-  { key: 11, value: 11, text: 'Novemver' },
+  { key: 11, value: 11, text: 'November' },
   { key: 12, value: 12, text: 'December' },
 ];
 

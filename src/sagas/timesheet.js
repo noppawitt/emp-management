@@ -26,7 +26,7 @@ export function* createTimesheetTask(action) {
 
 export function* fetchTimesheetTask(action) {
   try {
-    const timesheets = yield call(api.fetchTimesheet, action.payload.id);
+    const timesheets = yield call(api.fetchTimesheet, action.payload.userId, action.payload.year, action.payload.month);
     yield put(fetchTimesheetSuccess(timesheets));
   }
   catch (error) {
@@ -37,8 +37,8 @@ export function* fetchTimesheetTask(action) {
 export function* updateTimesheetTask(action) {
   try {
     const timesheets = yield call(api.updateTimesheet, { timesheet: action.payload.form });
-    yield put(updateTimesheetSuccess(timesheets));
     yield put(closeModal());
+    yield put(updateTimesheetSuccess(timesheets));
     action.payload.resolve();
   }
   catch (error) {

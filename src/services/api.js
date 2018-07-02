@@ -95,7 +95,7 @@ api.fetchAssetTypes = () => (
 );
 
 api.fetchAcessTypes = () => (
-  callApi('api/access-control')
+  callApi('/api/access-control')
 );
 
 // Profile
@@ -245,8 +245,15 @@ api.updateProjectDetail = body => (
 );
 
 api.createMember = body => (
-  callApi(`/api/has-project`, {
+  callApi(`/api/has-projects`, {
     method: 'POST',
+    body
+  })
+);
+
+api.deleteMember = body => (
+  callApi(`/api/has-projects`, {
+    method: 'DELETE',
     body
   })
 );
@@ -280,8 +287,8 @@ api.createTimesheet = body => (
   })
 );
 
-api.fetchTimesheet = userId => (
-  callApi(`/api/timesheets/?id=${userId}`)
+api.fetchTimesheet = (userId, year, month) => (
+  callApi(`/api/timesheets/?userId=${userId}&year=${year}&month=${month}`)
 );
 
 api.updateTimesheet = body => (
