@@ -61,7 +61,7 @@ class SignatureComponent extends React.Component {
         this.MDSignButton.current.disabled = true;
     }
     SupervisorSignHandler() {
-        this.setState({ supervisorSignDate: new Date().toString().substr(0, 24) });
+        this.setState({ supervisorSignDate: momet });
         document.getElementById('mark2').style.width = '2em';
         this.supervisorSignButton.current.disabled = true;
         this.MDSignButton.current.disabled = false;
