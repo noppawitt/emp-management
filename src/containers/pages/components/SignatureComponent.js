@@ -6,9 +6,9 @@ class SignatureComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            employeeSignDate: props.employeeSignDate || '',
-            supervisorSignDate: props.supervisorSignDate || '',
-            MDSignDate: props.MDSignDate || '',
+            employeeSignDate: props.employeeSignDate || null,
+            supervisorSignDate: props.supervisorSignDate || null,
+            MDSignDate: props.MDSignDate || null,
             role: props.role || ''
         };
 
@@ -47,6 +47,10 @@ class SignatureComponent extends React.Component {
 
         if (this.state.MDSignDate)
             this.MDSignHandler();
+    }
+
+    componentDidUpdate() {
+        this.props.onChange(this.state.employeeSignDate, this.state.supervisorSignDate, this.state.MDSignDate);
     }
 
     EmployeeSignHandler() {
