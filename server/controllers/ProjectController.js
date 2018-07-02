@@ -47,3 +47,11 @@ exports.findById = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.findProjectByTimesheet = (req, res, next) => {
+  Project.findProjectByTimesheet(req.query.userId, req.query.year, req.query.month)
+    .then((projects) => {
+      res.json(projects);
+    })
+    .catch(next);
+};

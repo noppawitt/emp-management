@@ -35,7 +35,7 @@ module.exports = (username, password) => (
                         <h2> นี่คือ Username และ Password สำหรับเข้าใช้งานระบบของบริษัท </h2>
                         <h2 style="margin-left: 1em">Username: ${username}</h2>
                         <h2 style="margin-left: 1em">Password: ${password}</h2>
-                        <h2>สามารถเข้าใช้งานระบบได้ทันทีคลิ๊ก<a href="#">ที่นี่</a><h2></h2>
+                        <h2>สามารถเข้าใช้งานระบบได้ทันทีคลิก<a href="#">ที่นี่</a><h2></h2>
                     </div>
                 </div>
             </div>
