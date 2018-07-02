@@ -38,6 +38,7 @@ const profile = (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
+        submitting: false,
         message: action.payload.message
       };
     case actionTypes.PROFILE_UPDATE_REQUEST:

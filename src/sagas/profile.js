@@ -37,6 +37,13 @@ export function* updateProfileTask(action) {
   try {
     const profile = {};
     switch (action.payload.type) {
+      case 'sign':
+        profile.eva = yield call(api.sign,{
+          employeeSignDate : action.payload.form.employeeSignDate,
+          supervisorSignDate : action.payload.form.supervisorSignDate,
+          MDSignDate : action.payload.form.MDSignDate
+        })
+        break
       case 'addPerformance' :
         profile.perf = yield call(api.addPerformance,{
           performanceInfo: action.payload.form
