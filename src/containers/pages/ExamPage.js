@@ -9,12 +9,20 @@ import Exam from '../../components/Exam';
 import Loader from '../../components/Loader';
 import { getVisibleExams } from '../../selectors/exam';
 
-const ExamPage = ({ isFetching, onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, examsFilter }) => (
+const ExamPage = ({ isFetching, onAddClick, onDeleteClick, onEditClick, onViewClick, onFilterChange, exams, examsFilter }) => (
   <div>
     {
       isFetching
-      ? <Loader />
-      : <Exam onAddClick={() => onAddClick(exams)} onDeleteClick={onDeleteClick} onEditClick={onEditClick} onFilterChange={onFilterChange} exams={exams} examsFilter={examsFilter} />
+        ? <Loader />
+        : <Exam
+          onAddClick={() => onAddClick(exams)}
+          onDeleteClick={onDeleteClick}
+          onEditClick={onEditClick}
+          onFilterChange={onFilterChange}
+          exams={exams}
+          examsFilter={examsFilter}
+          onViewClick={onViewClick}
+        />
     }
   </div>
 );
@@ -28,6 +36,7 @@ ExamPage.propTypes = {
   onAddClick: PropTypes.func.isRequired,
   onDeleteClick: PropTypes.func.isRequired,
   onEditClick: PropTypes.func.isRequired,
+  onViewClick: PropTypes.func.isRequired,
   onFilterChange: PropTypes.func.isRequired,
   exams: PropTypes.array.isRequired,
   examsFilter: PropTypes.array.isRequired,
@@ -42,6 +51,7 @@ const mapDispatchToProps = dispatch => ({
   fetchExam: () => dispatch(fetchExamRequest()),
   onFilterChange: (key, value) => dispatch(filterExams(key, value)),
   onAddClick: exams => dispatch(openModal(modalNames.ADD_NEW_EXAM, { exams })),
+  onViewClick: thisExam => dispatch(openModal(modalNames.VIEW_EXAM, { thisExam })),
   onDeleteClick: id => dispatch(openModal(modalNames.CONFIRM, {
     header: 'Delete question',
     description: 'Are you sure to delete this question ?',

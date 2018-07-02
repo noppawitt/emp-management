@@ -15,6 +15,7 @@ import ConfirmModal from './modals/ConfirmModal';
 import AddExamModal from './modals/AddExamModal';
 import EditExamModal from './modals/EditExamModal';
 import ActivateUserModal from './modals/ActivateUserModal';
+import ExamFullViewModal from './modals/ExamFullViewModal';
 
 const ModalContainer = ({ name, props }) => {
   switch (name) {
@@ -42,6 +43,8 @@ const ModalContainer = ({ name, props }) => {
       return <AddExamModal {...props} />;
     case modalNames.EDIT_EXAM:
       return <EditExamModal {...props} />;
+    case modalNames.VIEW_EXAM:
+      return <ExamFullViewModal {...props} />;
     case modalNames.ACTIVATE:
       return <ActivateUserModal {...props} />;
     default:

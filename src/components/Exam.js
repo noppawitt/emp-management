@@ -50,7 +50,7 @@ const renderQuestion = question => (
   <div dangerouslySetInnerHTML={{ __html: question }} />
 );
 
-const Exam = (({ onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, examsFilter, disabled, setDisabled, category, setCategory }) => (
+const Exam = (({ onAddClick, onDeleteClick, onEditClick, onViewClick, onFilterChange, exams, examsFilter, disabled, setDisabled, category, setCategory }) => (
   <div>
     <Segment.Group raised>
       <Segment>
@@ -123,11 +123,11 @@ const Exam = (({ onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, 
               ))}
               </Table.Cell>
               <Table.Cell textAlign="center" style={{ cursor: 'default' }}>
-                <Button active circular icon="eye" color="green" size="big" style={{ cursor: 'pointer' }} />
+                <Button active circular icon="eye" color="olive" size="big" onClick={() => onViewClick(exam)} style={{ cursor: 'pointer' }} />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <Button active circular icon="settings" color="blue" size="big" onClick={() => onEditClick(exams, exam)} style={{ cursor: 'pointer' }} />
+                <Button active circular icon="settings" color="linkedin" size="big" onClick={() => onEditClick(exams, exam)} style={{ cursor: 'pointer' }} />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <Button active circular icon="trash" color="red" size="big" onClick={() => onDeleteClick(exam.exId)} style={{ cursor: 'pointer' }} />
+                <Button active circular icon="trash" color="google plus" size="big" onClick={() => onDeleteClick(exam.exId)} style={{ cursor: 'pointer' }} />
               </Table.Cell>
             </Table.Row>
           ))}
@@ -142,6 +142,7 @@ Exam.propTypes = {
   onAddClick: PropTypes.func.isRequired,
   onDeleteClick: PropTypes.func.isRequired,
   onEditClick: PropTypes.func.isRequired,
+  onViewClick: PropTypes.func.isRequired,
   onFilterChange: PropTypes.func.isRequired,
   exams: PropTypes.array.isRequired,
   examsFilter: PropTypes.array.isRequired,
