@@ -30,6 +30,7 @@ class PerformanceReviewForm extends React.Component {
 
         this.scoreTableStateHandler = this.scoreTableStateHandler.bind(this);
         this.supervisorCommentHandler = this.supervisorCommentHandler.bind(this);
+        this.signatureHandler = this.signatureHandler.bind(this);
     }
 
     scoreTableStateHandler(newScore, newExpectedScore) {
@@ -66,6 +67,16 @@ class PerformanceReviewForm extends React.Component {
         console.log(this.state);
     }
 
+    signatureHandler(newEmployeeSignDate, newSupervisorSignDate, newMDSignDate) {
+        this.state = {
+            ...this.state,
+            employeeSignDate: newEmployeeSignDate,
+            supervisorSignDate: newSupervisorSignDate,
+            MDSignDate: newMDSignDate
+        };
+        this.props.test(this.state);
+    }
+
     render() {
         return (
             <div className='main-container'>
@@ -73,15 +84,15 @@ class PerformanceReviewForm extends React.Component {
                     <h1>Employee Performance Review Form</h1>
                     <h2>Playtorium Solutions Company Limited</h2>
                 </div>
-                <EmployeeInfo {...this.state} mode='edit'/>
+                <EmployeeInfo {...this.state} mode='edit' />
                 <br />
                 <div>
-                    <ScoreTableManager {...this.state} questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} onChange={this.scoreTableStateHandler} mode='edit'/>
+                    <ScoreTableManager {...this.state} questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} onChange={this.scoreTableStateHandler} mode='edit' />
                 </div>
                 <br />
-                <SupervisorCommentComponent {...this.state} onChange={this.supervisorCommentHandler} mode='edit'/>
+                <SupervisorCommentComponent {...this.state} onChange={this.supervisorCommentHandler} mode='edit' />
                 <br />
-                <SignatureComponent {...this.state} mode='edit'/>
+                <SignatureComponent {...this.state} role={this.props.role} onChange={this.signatureHandler} />
             </div>
         );
     }
