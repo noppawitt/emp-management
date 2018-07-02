@@ -47,7 +47,7 @@ examSubCategoryOptions.propTypes = {
 };
 
 const renderQuestion = question => (
-  <div style={{ verticalAlign: 'middle' }} dangerouslySetInnerHTML={{ __html: question }} />
+  <div dangerouslySetInnerHTML={{ __html: question }} />
 );
 
 const Exam = (({ onAddClick, onDeleteClick, onEditClick, onViewClick, onFilterChange, exams, examsFilter, disabled, setDisabled, category, setCategory }) => (

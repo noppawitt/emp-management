@@ -30,8 +30,15 @@ export function* addExamTask(action) {
         .then(res => (res.blob()))
         .then((blob) => {
           const d = new Date();
-          const fN = 'img' + d.getUTCDate() + (d.getUTCMonth() + 1) + d.getUTCFullYear() + d.getUTCHours() + d.getUTCMinutes() + d.getUTCSeconds() + d.getUTCMilliseconds();
-          files.push(new File([blob], fN + '.' + blob.type.split('/')[1]));
+          const fN = ('img')
+            .concat(d.getUTCDate())
+            .concat((d.getUTCMonth() + 1))
+            .concat(d.getUTCFullYear())
+            .concat(d.getUTCHours())
+            .concat(d.getUTCMinutes())
+            .concat(d.getUTCSeconds())
+            .concat(d.getUTCMilliseconds());
+          files.push(new File([blob], fN.concat('.').concat(blob.type.split('/')[1])));
         });
     }
 
@@ -43,7 +50,7 @@ export function* addExamTask(action) {
 
     let newSrc = localStorage.getItem('examQuestion');
     for (let i = 0; i < imageArray.length; i += 1) {
-      newSrc = newSrc.replace(imageArray[i], '/static/exam-img/' + files[i].name);
+      newSrc = newSrc.replace(imageArray[i], ('/static/exam-img/').concat(files[i].name));
     }
 
     localStorage.setItem('examQuestion', newSrc);
@@ -105,8 +112,15 @@ export function* editExamTask(action) {
         .then(res => (res.blob()))
         .then((blob) => {
           const d = new Date();
-          const fN = 'img' + d.getUTCDate() + (d.getUTCMonth() + 1) + d.getUTCFullYear() + d.getUTCHours() + d.getUTCMinutes() + d.getUTCSeconds() + d.getUTCMilliseconds();
-          files.push(new File([blob], fN + '.' + blob.type.split('/')[1]));
+          const fN = ('img')
+            .concat(d.getUTCDate())
+            .concat((d.getUTCMonth() + 1))
+            .concat(d.getUTCFullYear())
+            .concat(d.getUTCHours())
+            .concat(d.getUTCMinutes())
+            .concat(d.getUTCSeconds())
+            .concat(d.getUTCMilliseconds());
+          files.push(new File([blob], fN.concat('.').concat(blob.type.split('/')[1])));
         });
     }
 
@@ -118,11 +132,11 @@ export function* editExamTask(action) {
 
     let newSrc = localStorage.getItem('examQuestion');
     for (let i = 0; i < imageArray.length; i += 1) {
-      newSrc = newSrc.replace(imageArray[i], '/static/exam-img/' + files[i].name);
+      newSrc = newSrc.replace(imageArray[i], ('/static/exam-img/').concat(files[i].name));
     }
 
     localStorage.setItem('examQuestion', newSrc);
-    
+
     const exam = yield call(api.editExam, {
       form: action.payload.form,
       question: localStorage.getItem('examQuestion')
