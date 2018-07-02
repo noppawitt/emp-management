@@ -106,7 +106,7 @@ const Exam = (({ onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, 
           </Table.Header>
           <Table.Body>{examsFilter.map(exam => (
             <Table.Row>
-              <Table.Cell>
+              <Table.Cell style={{ height: '200px', overflowY: 'scroll', display: 'block' }}>
                 <div>
                   {renderQuestion(exam.exQuestion)}
                 </div>
@@ -123,6 +123,8 @@ const Exam = (({ onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, 
               ))}
               </Table.Cell>
               <Table.Cell textAlign="center" style={{ cursor: 'default' }}>
+                <Button active circular icon="eye" color="green" size="big" style={{ cursor: 'pointer' }} />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <Button active circular icon="settings" color="blue" size="big" onClick={() => onEditClick(exams, exam)} style={{ cursor: 'pointer' }} />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <Button active circular icon="trash" color="red" size="big" onClick={() => onDeleteClick(exam.exId)} style={{ cursor: 'pointer' }} />
