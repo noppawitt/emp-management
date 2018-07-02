@@ -11,10 +11,10 @@ const stylebox = {
   background: 'linear-gradient(to bottom right, DarkCyan  , rgb(92,151,181))',
 };
 
-const GeneralProfileBox = ({ image, generalProfile, onEditClick, onProfilePictureClick, onEditProfilePictureClick }) => (
+const GeneralProfileBox = ({ generalProfile, onEditClick, onProfilePictureClick, onEditProfilePictureClick }) => (
   <Segment.Group raised size="large">
     <Segment padded inverted style={stylebox}>
-      <ProfilePicture image={image} onProfilePictureClick={() => onProfilePictureClick(image)} onEditProfilePictureClick={onEditProfilePictureClick} />
+      <ProfilePicture image={generalProfile.picture} onProfilePictureClick={() => onProfilePictureClick(generalProfile.picture)} onEditProfilePictureClick={onEditProfilePictureClick} />
     </Segment>
     <Segment padded textAlign="center">
       <Grid>
@@ -33,7 +33,6 @@ const GeneralProfileBox = ({ image, generalProfile, onEditClick, onProfilePictur
 );
 
 GeneralProfileBox.propTypes = {
-  image: PropTypes.string.isRequired,
   generalProfile: PropTypes.object.isRequired,
   onEditClick: PropTypes.func.isRequired,
   onProfilePictureClick: PropTypes.func.isRequired,

@@ -8,14 +8,14 @@ User.create = (user, id) => (
       'INSERT INTO users (username, password, created_user, updated_user, type) VALUES ($1, $2, $3, $4, $5) RETURNING 1',
       [
         user.username,
-        'playtorium',
+        user.password,
         id,
         id,
         user.type,
       ]
     );
     const q2 = transaction.one(
-      'INSERT INTO employee_info (first_name, last_name, citizen_id, created_user, updated_user, email, gender) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING 1',
+      'INSERT INTO employee_info (first_name, last_name, citizen_id, created_user, updated_user, email, gender, picture) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING 1',
       [
         user.firstName,
         user.lastName,
@@ -23,7 +23,8 @@ User.create = (user, id) => (
         id,
         id,
         user.username,
-        user.gender
+        user.gender,
+        user.picture
       ]
     );
     const q3 = transaction.one(

@@ -47,6 +47,17 @@ const fillBorderAllRow = (worksheet, row) => {
   }
 };
 
+const fillBorderFixColumn = (worksheet, row, column) => {
+  for (let i = 0; i < column.length; i += 1) {
+    worksheet.getCell(`${column[i]}${row}`).border = {
+      top: { style: 'thin' },
+      left: { style: 'thin' },
+      bottom: { style: 'thin' },
+      right: { style: 'thin' }
+    };
+  }
+};
+
 const calOT = (timeIn, timeOut) => new Promise((resolve, reject) => {
   try {
     switch (timeIn) {
@@ -186,6 +197,124 @@ const calSumEachColumn = worksheet => new Promise((resolve, reject) => {
   }
 });
 
+const writeSummary = (worksheet, row, monthColumn) => new Promise((resolve, reject) => {
+  try {
+    row += 1;
+    worksheet.mergeCells(`B${row}:D${row}`);
+    worksheet.getCell(`B${row}`).alignment = { horizontal: 'center' };
+    worksheet.getCell(`B${row}`).value = 'summary';
+    for (let i = 0; i < monthColumn.length; i += 1) {
+      const sum = `SUM(${monthColumn[i]}4:${monthColumn[i]}${row - 2})`;
+      worksheet.getCell(`${monthColumn[i]}${row}`).value = {
+        formula: sum,
+        result: undefined
+      };
+    }
+    fillBorderAllRow(worksheet, row);
+    resolve(row);
+  }
+  catch (error) {
+    reject(error);
+  }
+});
+
+const writeAllProject = (workbook, year) => new Promise(async (resolve, reject) => {
+  try {
+    const projects = await Project.findByYear(year);
+    const worksheet = workbook.getWorksheet('Project');
+    let row = 3;
+    const column = ['B', 'C', 'D', 'E'];
+    for (let i = 0; i < projects.length; i += 1) {
+      worksheet.getCell(`B${row}`).value = projects[i].id;
+      worksheet.getCell(`C${row}`).value = projects[i].customer;
+      worksheet.getCell(`D${row}`).value = projects[i].quotationId;
+      worksheet.getCell(`E${row}`).value = projects[i].description;
+      fillBorderFixColumn(worksheet, row, column);
+      row += 1;
+    }
+    resolve(workbook);
+  }
+  catch (error) {
+    reject(error);
+  }
+});
+
+const writeAllLeave = (worksheet, leaveRequests, monthColumn, rowColumn) => new Promise((resolve, reject) => {
+  try {
+    let row = 5;
+    let userId = '';
+    for (let i = 0; i < leaveRequests.length; i += 1) {
+      if (leaveRequests[i].id === userId) {
+        if (leaveRequests[i].leaveType === 'Sick Leave') {
+          worksheet.getCell(`${monthColumn[(leaveRequests[i].month - 1) * 4]}${row}`).value = leaveRequests[i].days;
+        }
+        else if (leaveRequests[i].leaveType === 'Personal Leave') {
+          worksheet.getCell(`${monthColumn[((leaveRequests[i].month - 1) * 4) + 1]}${row}`).value = leaveRequests[i].days;
+        }
+        else if (leaveRequests[i].leaveType === 'Annual Leave') {
+          worksheet.getCell(`${monthColumn[((leaveRequests[i].month - 1) * 4) + 2]}${row}`).value = leaveRequests[i].days;
+        }
+        else if (leaveRequests[i].leaveType === 'Ordination Leave') {
+          worksheet.getCell(`${monthColumn[((leaveRequests[i].month - 1) * 4) + 3]}${row}`).value = leaveRequests[i].days;
+        }
+      }
+      else if (leaveRequests[i].id !== userId) {
+        row += 1;
+        worksheet.getCell(`B${row}`).value = leaveRequests[i].id;
+        worksheet.getCell(`C${row}`).value = leaveRequests[i].name;
+        worksheet.getCell(`D${row}`).value = leaveRequests[i].nickName;
+        worksheet.getCell(`E${row}`).value = leaveRequests[i].mobileNumber;
+        worksheet.getCell(`F${row}`).value = leaveRequests[i].startDate;
+        fillBorderFixColumn(worksheet, row, rowColumn);
+        userId = leaveRequests[i].id;
+        if (leaveRequests[i].leaveType === 'Sick Leave') {
+          worksheet.getCell(`${monthColumn[(leaveRequests[i].month - 1) * 4]}${row}`).value = leaveRequests[i].days;
+        }
+        else if (leaveRequests[i].leaveType === 'Personal Leave') {
+          worksheet.getCell(`${monthColumn[((leaveRequests[i].month - 1) * 4) + 1]}${row}`).value = leaveRequests[i].days;
+        }
+        else if (leaveRequests[i].leaveType === 'Annual Leave') {
+          worksheet.getCell(`${monthColumn[((leaveRequests[i].month - 1) * 4) + 2]}${row}`).value = leaveRequests[i].days;
+        }
+        else if (leaveRequests[i].leaveType === 'Ordination Leave') {
+          worksheet.getCell(`${monthColumn[((leaveRequests[i].month - 1) * 4) + 3]}${row}`).value = leaveRequests[i].days;
+        }
+      }
+    }
+    resolve(row);
+  }
+  catch (error) {
+    reject(error);
+  }
+});
+
+const calTotalLeave = (worksheet, row) => new Promise((resolve, reject) => {
+  try {
+    for (let i = 6; i <= row; i += 1) {
+      worksheet.getCell(`G${i}`).value = {
+        formula: `SUM(K${i},O${i},S${i},W${i},AA${i},AE${i},AI${i},AM${i},AQ${i},AU${i},AY${i},BC${i})`,
+        result: undefined
+      };
+      worksheet.getCell(`H${i}`).value = {
+        formula: `SUM(L${i},P${i},T${i},X${i},AB${i},AF${i},AJ${i},AN${i},AR${i},AV${i},AZ${i},BD${i})`,
+        result: undefined
+      };
+      worksheet.getCell(`I${i}`).value = {
+        formula: `SUM(M${i},Q${i},U${i},Y${i},AC${i},AG${i},AK${i},AO${i},AS${i},AW${i},BA${i},BE${i})`,
+        result: undefined
+      };
+      worksheet.getCell(`J${i}`).value = {
+        formula: `SUM(N${i},R${i},V${i},Z${i},AD${i},AH${i},AL${i},AP${i},AT${i},AX${i},BB${i},BF${i})`,
+        result: undefined
+      };
+    }
+    resolve(worksheet);
+  }
+  catch (error) {
+    reject(error);
+  }
+});
+
 exports.createReport = (req, res, next) => {
   const { excelType } = req.body;
   if (excelType.reportType === 'Timesheet (Normal)' || excelType.reportType === 'Timesheet (Special)') {
@@ -289,19 +418,18 @@ exports.createReport = (req, res, next) => {
         // Fill Each user timesheet
         Timesheet.findSummaryTimesheet(excelType.year)
           .then((timesheets) => {
-            console.log(timesheets);
             let user = '';
             let project = '';
             let row = 3;
             timesheets.forEach((timesheet) => {
               if (timesheet.id === user && timesheet.projectId === project) {
-                worksheet.getCell(`${monthColumn[timesheet.month - 1]}${row}`).value = timesheet.hours;
+                worksheet.getCell(`${monthColumn[timesheet.month - 1]}${row}`).value = timesheet.days;
               }
               else if (timesheet.id === user && timesheet.projectId !== project) {
                 row += 1;
                 fillBorderAllRow(worksheet, row);
                 worksheet.getCell(`D${row}`).value = timesheet.projectId;
-                worksheet.getCell(`${monthColumn[timesheet.month - 1]}${row}`).value = timesheet.hours;
+                worksheet.getCell(`${monthColumn[timesheet.month - 1]}${row}`).value = timesheet.days;
                 project = timesheet.projectId;
               }
               else if (timesheet.id !== user) {
@@ -312,14 +440,57 @@ exports.createReport = (req, res, next) => {
                 row += 1;
                 fillBorderAllRow(worksheet, row);
                 worksheet.getCell(`D${row}`).value = timesheet.projectId;
-                worksheet.getCell(`${monthColumn[timesheet.month - 1]}${row}`).value = timesheet.hours;
+                worksheet.getCell(`${monthColumn[timesheet.month - 1]}${row}`).value = timesheet.days;
                 user = timesheet.id;
                 project = timesheet.projectId;
               }
             });
-            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            res.setHeader('Content-Disposition', `attachment; filename="Timesheet_Summary_${excelType.year}.xlsx`);
-            workbook.xlsx.write(res);
+            row += 1;
+            fillBorderAllRow(worksheet, row);
+            writeSummary(worksheet, row, monthColumn)
+              .then(() => {
+                writeAllProject(workbook, excelType.year)
+                  .then(() => {
+                    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                    res.setHeader('Content-Disposition', `attachment; filename="Timesheet_Summary_${excelType.year}.xlsx`);
+                    workbook.xlsx.write(res);
+                  })
+                  .catch(next);
+              })
+              .catch(next);
+          })
+          .catch(next);
+      })
+      .catch(next);
+  }
+  else if (excelType.reportType === 'Summary Leave') {
+    const filename = 'server/storage/private/report/Playtorium_Summary_Leave.xlsx';
+    const workbook = new Excel.Workbook();
+    workbook.xlsx.readFile(filename)
+      .then(() => {
+        const worksheet = workbook.getWorksheet('Leave');
+        const rowColumn = ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+          'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ',
+          'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ', 'BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG'];
+        const monthColumn = ['K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+          'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ',
+          'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ', 'BA', 'BB', 'BC', 'BD', 'BE', 'BF'];
+        worksheet.getCell('D1').value = excelType.year;
+        const time = moment();
+        worksheet.getCell('D2').value = `${time.format('DD/MM/YY')} ${time.format('HH:mm')}`;
+        LeaveRequest.findSummaryLeave(excelType.year)
+          .then((leaveRequests) => {
+            writeAllLeave(worksheet, leaveRequests, monthColumn, rowColumn)
+              .then((row) => {
+                calTotalLeave(worksheet, row)
+                  .then(() => {
+                    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                    res.setHeader('Content-Disposition', `attachment; filename="Timesheet_Summary_${excelType.year}.xlsx`);
+                    workbook.xlsx.write(res);
+                  })
+                  .catch(next);
+              })
+              .catch(next);
           })
           .catch(next);
       })

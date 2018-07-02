@@ -13,6 +13,7 @@ exports.findAll = (req, res, next) => {
 
 exports.create = (req, res, next) => {
   const newUser = req.body.user;
+  const pass = 'playtorium';
   User.findByName(newUser.firstName, newUser.lastName)
     .then((user1) => {
       if (user1) {
@@ -29,14 +30,20 @@ exports.create = (req, res, next) => {
               next(err);
             }
             else {
-              newUser.password = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync());
+              newUser.password = bcrypt.hashSync(pass, bcrypt.genSaltSync());
+              if (newUser.gender === 'Male') {
+                newUser.picture = '/static/profile-img/man.jpg';
+              }
+              else {
+                newUser.picture = '/static/profile-img/woman.jpg';
+              }
               User.create(newUser, req.user.id)
                 .then((createdUser) => {
                   const mailOptions = {
                     from: process.env.MAIL_USER,
                     to: newUser.username,
                     subject: 'Playtorium Account Information',
-                    html: mailAddUser(newUser.username, 'playtorium')
+                    html: mailAddUser(newUser.username, pass)
                   };
                   mail.sendMail(mailOptions, (err, info) => {
                     if (err) {

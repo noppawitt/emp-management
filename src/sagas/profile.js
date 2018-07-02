@@ -6,7 +6,9 @@ import {
   updateProfileSuccess,
   updateProfileFailure,
   deleteProfileSuccess,
-  deleteProfileFailure
+  deleteProfileFailure,
+  updateProfilePictureSuccess,
+  updateProfilePictureFailure
 } from '../actions/profile';
 import { closeModal } from '../actions/modal';
 import api from '../services/api';
@@ -103,8 +105,17 @@ export function* deleteProfileTask(action) {
   }
 }
 
-export function* uploadProfilePictureTask(action) {
-  yield console.log(action);
+export function* updateProfilePictureTask(action) {
+  try {
+    const formData = new FormData();
+    formData.append('profileImage', action.payload.picture);
+    const { path } = yield call(api.updateProfilePicture, formData);
+    yield put(updateProfilePictureSuccess(`${path}?time=${new Date()}`));
+    yield put(closeModal());
+  }
+  catch (error) {
+    yield put(updateProfilePictureFailure(error));
+  }
 }
 
 export function* watchFetchProfileRequest() {
@@ -119,14 +130,15 @@ export function* watchDeleteProfileRequest() {
   yield takeEvery(actionTypes.PROFILE_DELETE_REQUEST, deleteProfileTask);
 }
 
-export function* watchUploadProfilePictureTask() {
-  yield takeEvery(actionTypes.PROFILE_PICTURE_UPLOAD_REQUEST, uploadProfilePictureTask);
+export function* watchUpdateProfilePictureRequest() {
+  yield takeEvery(actionTypes.PROFILE_PICTURE_UPDATE_REQUEST, updateProfilePictureTask);
 }
 
 export default function* profileSaga() {
   yield all([
     watchFetchProfileRequest(),
     watchUpdateProfileRequest(),
-    watchDeleteProfileRequest()
+    watchDeleteProfileRequest(),
+    watchUpdateProfilePictureRequest()
   ]);
 }

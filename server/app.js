@@ -14,11 +14,11 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
-app.use(errorHandler);
-app.use(routes);
 app.use('/static', express.static(path.resolve(__dirname, 'storage', 'public')));
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', 'dist', 'index.html'));
-});
+app.use('/', routes);
+app.use(errorHandler);
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '..', 'dist', 'index.html'));
+// });
 
 module.exports = app;

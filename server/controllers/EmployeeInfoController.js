@@ -27,8 +27,9 @@ exports.update = (req, res, next) => {
 };
 
 exports.updateProfileImg = (req, res, next) => {
-  EmployeeInfo.updateProfileImg(`/static/${req.file.destination}/${req.file.filename}`, req.user.id)
+  const path = `/static/profile-img/${req.file.filename}`;
+  EmployeeInfo.updateProfileImg(path, req.user.id)
     .then(() => {
-      res.json('upload complete!!!');
+      res.json({ path });
     });
 };

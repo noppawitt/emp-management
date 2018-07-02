@@ -58,6 +58,23 @@ const profile = (state = initialState, action) => {
         message: action.payload.message,
         isDeleting: false
       };
+    case actionTypes.PROFILE_PICTURE_UPDATE_REQUEST:
+      return {
+        ...state
+      };
+    case actionTypes.PROFILE_PICTURE_UPDATE_SUCCESS:
+      return {
+        ...state,
+        general: {
+          ...state.general,
+          picture: action.payload.pictureURL
+        }
+      };
+    case actionTypes.PROFILE_PICTURE_UPDATE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
     default:
       return state;
   }
