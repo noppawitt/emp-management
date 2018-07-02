@@ -1,16 +1,26 @@
 import * as actionTypes from '../constants/actionTypes';
 
 const initialState = {
-  isFetching: true
+  isFetching: true,
+  edited: false
 };
 
 const profile = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.UPDATE_PROBATION_STORE:
+      var disable;
+      if(action.payload.item.passPro==false){
+        if(action.payload.item.continued == true && action.payload.item.continuedDate != null){
+          disable = true;
+        }else if (action.payload.item.continued == false && action.payload.item.terminationDate != null){
+          disable = true;
+        }else disable = false;
+      }else disable = true;
+
       return {
         ...state,
         item: action.payload.item,
-        edited: true
+        edited: disable
       };
     case actionTypes.PROFILE_FETCH_REQUEST:
       return {
