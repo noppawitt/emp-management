@@ -92,7 +92,7 @@ class ProbationForm extends React.Component {
             supervisorSignDate: newSupervisorSignDate,
             MDSignDate: newMDSignDate
         };
-        console.log(this.state);
+        this.props.test(this.state);
     }
 
     componentWillMount() {
