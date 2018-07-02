@@ -25,7 +25,7 @@ class AddProbation extends React.Component{
         size="large"
         disable={!this.props.edited}
       >
-        <A test={this.props.onChange} profile={this.props.profile} mode={!this.props.profile.eva || (this.props.type=='admin' && !this.props.profile.eva.emSignDate) ? 'edit' : 'view'}/>
+        <A test={this.props.onChange} profile={this.props.profile} mode={!this.props.profile.eva || (this.props.type=='admin' && !this.props.profile.eva.emSignDate) ? 'edit' : 'view'} role={this.props.type == 'admin' ? 'supervisor':'employee'}/>
       </Modal>
     );
   }

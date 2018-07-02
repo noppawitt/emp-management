@@ -133,7 +133,7 @@ class ProbationForm extends React.Component {
                 </div>
                 <EvaluationResultComponent {...this.state} onChange={this.evaluationResultHandler} mode={this.props.mode}/>
                 <SupervisorCommentComponent {...this.state} onChange={this.supervisorCommentHandler} mode={this.props.mode} />
-                <SignatureComponent {...this.state} />
+                <SignatureComponent {...this.state} role={this.props.role}/>
             </div>
         );
     }

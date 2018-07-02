@@ -260,7 +260,7 @@ class EvaluationResultComponent extends React.Component {
                                             <tr>
                                                 <td>
                                                     <input type='radio' name='terminate' onClick={() => {
-                                                        this.state = { continued: true };
+                                                        this.state = { ...this.state, continued: true };
                                                         this.updateParentComponent();
                                                     }} checked={this.state.continued} />
                                                     &nbsp;Continued probation untill
