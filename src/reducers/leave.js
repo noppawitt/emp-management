@@ -1,7 +1,10 @@
+import moment from 'moment';
 import * as actionTypes from '../constants/actionTypes';
 
 const initialState = {
-  lists: []
+  lists: [],
+  year: moment().format('YYYY'),
+  month: moment().format('MM')
 };
 
 const leave = (state = initialState, action) => {
@@ -24,7 +27,9 @@ const leave = (state = initialState, action) => {
     case actionTypes.LEAVE_FETCH_REQUEST:
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
+        year: action.payload.year,
+        month: action.payload.month
       };
     case actionTypes.LEAVE_FETCH_SUCCESS:
       return {
@@ -52,11 +57,6 @@ const leave = (state = initialState, action) => {
       return {
         ...state,
         message: action.payload.message
-      };
-    case actionTypes.FILTER_LEAVE:
-      return {
-        ...state,
-        [action.payload.key]: action.payload.value
       };
     default:
       return state;

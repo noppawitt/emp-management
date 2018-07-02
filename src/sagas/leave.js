@@ -27,7 +27,7 @@ export function* createLeaveTask(action) {
 
 export function* fetchLeaveTask(action) {
   try {
-    const leaves = yield call(api.fetchLeave, action.payload.userId);
+    const leaves = yield call(api.fetchLeave, action.payload.userId, action.payload.year, action.payload.month);
     yield put(fetchLeaveSuccess(leaves));
   }
   catch (error) {

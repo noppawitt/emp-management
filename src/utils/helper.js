@@ -4,7 +4,7 @@ export const masterTableToOptions = (masterTable = []) => {
     const option = {};
     option.key = elem.id;
     option.text = elem.name;
-    option.value = elem.id.toString();
+    option.value = elem.id;
     options.push(option);
   });
   return options;

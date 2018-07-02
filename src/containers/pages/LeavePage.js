@@ -4,18 +4,16 @@ import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import {
   fetchLeaveRequest,
-  updateLeaveRequest,
-  filterLeave
+  updateLeaveRequest
 } from '../../actions/leave';
 import { openModal } from '../../actions/modal';
 import * as modalNames from '../../constants/modalNames';
-import { getVisibilityLeaves } from '../../selectors/leave';
 import Leave from '../../components/Leave';
 import Loader from '../../components/Loader';
 
-const LeavePage = ({ isFetching, leaves, onAddClick, onCancelClick, userId, onFilterChange }) => (
+const LeavePage = ({ isFetching, leaves, onAddClick, onCancelClick, userId, year, month, fetchLeave }) => (
   <div>
-    {isFetching ? <Loader /> : <Leave userId={userId} leaves={leaves} onAddClick={onAddClick} onCancelClick={onCancelClick} onFilterChange={onFilterChange} />}
+    {isFetching ? <Loader /> : <Leave userId={userId} leaves={leaves} onAddClick={onAddClick} onCancelClick={onCancelClick} fetchLeave={fetchLeave} year={year} month={month} />}
   </div>
 );
 
@@ -29,32 +27,35 @@ LeavePage.propTypes = {
   onAddClick: PropTypes.func.isRequired,
   onCancelClick: PropTypes.func.isRequired,
   userId: PropTypes.number.isRequired,
-  onFilterChange: PropTypes.func.isRequired
+  fetchLeave: PropTypes.func.isRequired,
+  year: PropTypes.string.isRequired,
+  month: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
   isFetching: state.leave.isFetching,
-  leaves: getVisibilityLeaves(state),
-  userId: state.auth.id
+  leaves: state.leave.lists,
+  userId: state.auth.id,
+  year: state.leave.year,
+  month: state.leave.month
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchLeave: userId => dispatch(fetchLeaveRequest(userId)),
+  fetchLeave: (userId, year, month) => dispatch(fetchLeaveRequest(userId, year, month)),
   onAddClick: () => dispatch(openModal(modalNames.CREATE_LEAVE_REQUEST)),
   onCancelClick: (userId, leave) => dispatch(openModal(modalNames.CONFIRM, {
     header: 'Cancel confirmation',
     description: 'Are you sure to cancel this leave request ?',
     onConfirm: () => dispatch(updateLeaveRequest(userId, { ...leave, status: 'Cancel' }))
-  })),
-  onFilterChange: (key, value) => dispatch(filterLeave(key, value))
+  }))
 });
 
 const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
-      const { fetchLeave, userId } = this.props;
-      fetchLeave(userId);
+      const { fetchLeave, userId, year, month } = this.props;
+      fetchLeave(userId, year, month);
     }
   })
 );

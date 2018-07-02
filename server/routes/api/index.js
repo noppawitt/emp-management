@@ -24,6 +24,7 @@ const timesheet = require('./timesheet');
 const leaveRequest = require('./leaveRequest');
 const accessControl = require('./accessControl');
 const report = require('./report');
+const masterATable = require('./masterTable');
 
 router.use('/employee-info', employeeInfo);
 
@@ -74,5 +75,7 @@ router.use('/leave-request', leaveRequest);
 router.use('/access-control', accessControl);
 
 router.use('/report', report);
+
+router.use('/master-table', masterATable);
 
 module.exports = router;

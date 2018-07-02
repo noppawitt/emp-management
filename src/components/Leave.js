@@ -4,37 +4,36 @@ import { Segment, Button, Icon, Table, Menu, Grid, Select } from 'semantic-ui-re
 import PageHeader from './PageHeader';
 
 const months = [
-  { key: 0, value: 0, text: 'All' },
-  { key: 1, value: 1, text: 'January' },
-  { key: 2, value: 2, text: 'February' },
-  { key: 3, value: 3, text: 'March' },
-  { key: 4, value: 4, text: 'April' },
-  { key: 5, value: 5, text: 'May' },
-  { key: 6, value: 6, text: 'June' },
-  { key: 7, value: 7, text: 'July' },
-  { key: 8, value: 8, text: 'August' },
-  { key: 9, value: 9, text: 'September' },
-  { key: 10, value: 10, text: 'October' },
-  { key: 11, value: 11, text: 'November' },
-  { key: 12, value: 12, text: 'December' },
+  { key: 1, value: '01', text: 'January' },
+  { key: 2, value: '02', text: 'Fabuary' },
+  { key: 3, value: '03', text: 'March' },
+  { key: 4, value: '04', text: 'April' },
+  { key: 5, value: '05', text: 'May' },
+  { key: 6, value: '06', text: 'June' },
+  { key: 7, value: '07', text: 'July' },
+  { key: 8, value: '08', text: 'August' },
+  { key: 9, value: '09', text: 'September' },
+  { key: 10, value: '10', text: 'October' },
+  { key: 11, value: '11', text: 'Novemver' },
+  { key: 12, value: '12', text: 'December' },
 ];
 
-const years = [{ key: 0, value: 0, text: 'All' }];
+const years = [];
 for (let y = 2018; y <= 2118; y += 1) {
-  years.push({ key: y, value: y, text: y });
+  years.push({ key: y, value: y.toString(), text: y });
 }
 
-const Leave = ({ leaves, onAddClick, onCancelClick, userId, onFilterChange }) => (
+const Leave = ({ leaves, onAddClick, onCancelClick, userId, fetchLeave, year, month }) => (
   <div>
     <PageHeader text="Leave Request" icon="envelope" />
     <Segment.Group raised>
       <Segment>
         <Grid>
           <Grid.Column width={3}>
-            <Select placeholder="Year" defaultValue={0} options={years} onChange={(e, { value }) => onFilterChange('year', value)} />
+            <Select placeholder="Year" defaultValue={year} options={years} onChange={(e, { value }) => fetchLeave(userId, value, month)} />
           </Grid.Column>
           <Grid.Column width={3}>
-            <Select placeholder="Month" defaultValue={0} options={months} onChange={(e, { value }) => onFilterChange('month', value)} />
+            <Select placeholder="Month" defaultValue={month} options={months} onChange={(e, { value }) => fetchLeave(userId, year, value)} />
           </Grid.Column>
           <Grid.Column width={10}>
             <Button icon labelPosition="left" floated="right" onClick={onAddClick} color="blue" >
@@ -106,7 +105,9 @@ Leave.propTypes = {
   onAddClick: PropTypes.func.isRequired,
   onCancelClick: PropTypes.func.isRequired,
   userId: PropTypes.number.isRequired,
-  onFilterChange: PropTypes.func.isRequired
+  fetchLeave: PropTypes.func.isRequired,
+  year: PropTypes.string.isRequired,
+  month: PropTypes.string.isRequired
 };
 
 export default Leave;

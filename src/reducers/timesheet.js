@@ -6,6 +6,8 @@ const now = moment();
 
 const initialState = {
   lists: [],
+  leaves: [],
+  holidays: [],
   year: now.format('YYYY'),
   month: now.format('MM')
 };
@@ -39,7 +41,9 @@ const timesheet = (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
-        lists: action.payload.timesheets
+        lists: action.payload.timesheets,
+        leaves: action.payload.leaves,
+        holidays: action.payload.holidays
       };
     case actionTypes.TIMESHEET_UPDATE_REQUEST:
       return {

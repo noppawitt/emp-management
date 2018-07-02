@@ -15,6 +15,11 @@ const validate = (values) => {
   return errors;
 };
 
+const genderOptions = [
+  { key: 'male', value: 'Male', text: 'Male' },
+  { key: 'female', value: 'Female', text: 'Female' }
+];
+
 const EditGeneralProfileForm = ({ handleSubmit }) => (
   <Form onSubmit={handleSubmit}>
     <Form.Group widths="equal">
@@ -27,6 +32,7 @@ const EditGeneralProfileForm = ({ handleSubmit }) => (
     </Form.Group>
     <Field name="nickName" component={Input} as={Form.Input} label="Nick name" placeholder="Nick name" />
     <Field name="birthday" component={Input} as={Form.Input} type="date" label="Birth date" placeholder="Birth date" />
+    <Field name="gender" component={Input} as={Form.Select} label="Gender" placeholder="Gender" options={genderOptions} />
     <Field name="citizenId" component={Input} as={Form.Input} label="Citizen ID" placeholder="Citizen ID" />
     <Field name="mobileNumber" component={Input} as={Form.Input} label="Mobile No." placeholder="Mobile No." />
     <Field name="email" component={Input} as={Form.Input} label="Email" placeholder="Email" />
@@ -49,6 +55,7 @@ const mapStateToProps = state => ({
     lastNameTh: state.profile.general.lastNameTh,
     nickName: state.profile.general.nickName,
     citizenId: state.profile.general.citizenId,
+    gender: state.profile.general.gender,
     mobileNumber: state.profile.general.mobileNumber,
     email: state.profile.general.email,
     facebookId: state.profile.general.facebookId,

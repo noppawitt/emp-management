@@ -20,16 +20,6 @@ class Timesheet extends React.Component {
       percent: 0,
       lastholiday: { date: '', name: '' },
       lastleaveday: { date: '', status: '' },
-      holidays: [
-        { date: '2018-06-14', name: 'Compensatory day' },
-        { date: '2018-06-22', name: 'Official holiday' },
-        { date: '2018-06-29', name: 'National holiday' }
-      ],
-      leavedays: [
-        { date: '2018-06-19', status: 'Personal Leave', timein: '9:00', timeout: '12:00', totalhours: 3 },
-        { date: '2018-06-26', status: 'Sick Leave', timein: '9:00', timeout: '18:00', totalhours: 8 },
-        { date: '2018-06-27', status: 'Sick Leave', timein: '9:00', timeout: '18:00', totalhours: 8 }
-      ],
       months: [
         { key: 1, value: '01', text: 'January' },
         { key: 2, value: '02', text: 'February' },
@@ -45,9 +35,22 @@ class Timesheet extends React.Component {
         { key: 12, value: '12', text: 'December' }
       ],
       years: [
+<<<<<<< HEAD
         { key: 2018, value: 2018, text: '2018' },
         { key: 2019, value: 2019, text: '2019' },
         { key: 2020, value: 2020, text: '2020' }
+=======
+        { key: 2018, value: '2018', text: '2018' },
+        { key: 2019, value: '2019', text: '2019' },
+        { key: 2020, value: '2020', text: '2020' },
+        { key: 2021, value: '2021', text: '2021' },
+        { key: 2022, value: '2022', text: '2022' },
+        { key: 2023, value: '2023', text: '2023' },
+        { key: 2024, value: '2024', text: '2024' },
+        { key: 2025, value: '2025', text: '2025' },
+        { key: 2026, value: '2026', text: '2026' },
+        { key: 2027, value: '2027', text: '2027' }
+>>>>>>> 2f7cd7704a7f072e782840d475c44b5a29b621d1
       ]
     };
     this.anotherMonthCell = this.anotherMonthCell.bind(this);
@@ -123,8 +126,8 @@ class Timesheet extends React.Component {
     return (this.workdayCell(date, hour, id));
   }
   isLeaveday(date) {
-    return this.state.leavedays.some(((leaveDay) => {
-      if (leaveDay.date === date.format('YYYY-MM-DD')) {
+    return this.props.leaves.some(((leaveDay) => {
+      if (leaveDay.leaveDate === date.format('YYYY-MM-DD')) {
         this.state.lastleaveday = leaveDay;
         return (true);
       }
@@ -138,7 +141,7 @@ class Timesheet extends React.Component {
           <Grid.Row style={{ height: '5em' }}>
             <font color={this.state.textAnotherDay}>- {this.state.lastleaveday.status}</font>
             <br />
-            <font color={this.state.textAnotherDay}>{this.state.lastleaveday.timein}-{this.state.lastleaveday.timeout}</font>
+            <font color={this.state.textAnotherDay}>{this.state.lastleaveday.startTime}-{this.state.lastleaveday.endTime}</font>
           </Grid.Row>
           {this.editButtonWorkday(date, hour, id)}
         </div>
@@ -215,9 +218,9 @@ class Timesheet extends React.Component {
     );
   }
   isHoliday(date) {
-    for (let i = 0; i < this.state.holidays.length; i += 1) {
-      if (moment(date).format('YYYY-MM-DD') === this.state.holidays[i].date) {
-        this.state.lastholiday = this.state.holidays[i];
+    for (let i = 0; i < this.props.holidays.length; i += 1) {
+      if (moment(date).format('YYYY-MM-DD') === this.props.holidays[i].date) {
+        this.state.lastholiday = this.props.holidays[i];
         return true;
       }
     }
@@ -260,7 +263,7 @@ class Timesheet extends React.Component {
     if (day === moment(this.state.lastholiday.date).format('D')) {
       return (
         <Grid.Row style={{ height: '5em' }}>
-          <font color={this.state.textAnotherDay}>- {this.state.lastholiday.name}</font>
+          <font color={this.state.textAnotherDay}>- {this.state.lastholiday.dateName}</font>
         </Grid.Row>
       );
     }
@@ -315,6 +318,8 @@ class Timesheet extends React.Component {
 
 Timesheet.propTypes = {
   timesheets: PropTypes.array.isRequired,
+  leaves: PropTypes.array.isRequired,
+  holidays: PropTypes.array.isRequired,
   fetchTimesheet: PropTypes.func.isRequired,
   userId: PropTypes.string.isRequired,
   year: PropTypes.string.isRequired,
