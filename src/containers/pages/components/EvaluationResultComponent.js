@@ -195,7 +195,7 @@ class EvaluationResultComponent extends React.Component {
                                                     Mobile
                                                 </td>
                                                 <td>
-                                                    <input type='number' value={this.state.mobile} onChange={(event) => {
+                                                    <input type='text' value={this.state.mobile} onChange={(event) => {
                                                         this.state = { ...this.state, mobile: event.target.value };
                                                         this.updateParentComponent();
                                                     }} />
