@@ -47,7 +47,7 @@ examSubCategoryOptions.propTypes = {
 };
 
 const renderQuestion = question => (
-  <div dangerouslySetInnerHTML={{ __html: question }} />
+  <div style={{ verticalAlign: 'middle' }} dangerouslySetInnerHTML={{ __html: question }} />
 );
 
 const Exam = (({ onAddClick, onDeleteClick, onEditClick, onViewClick, onFilterChange, exams, examsFilter, disabled, setDisabled, category, setCategory }) => (
@@ -105,16 +105,14 @@ const Exam = (({ onAddClick, onDeleteClick, onEditClick, onViewClick, onFilterCh
             </Table.Row>
           </Table.Header>
           <Table.Body>{examsFilter.map(exam => (
-            <Table.Row>
-              <Table.Cell style={{ height: '200px', overflowY: 'auto', display: 'block' }}>
-                <div>
-                  {renderQuestion(exam.exQuestion)}
-                </div>
+            <Table.Row verticalAlign="top">
+              <Table.Cell style={{ height: '200px', overflowY: 'auto', display: 'block'}}>
+                {renderQuestion(exam.exQuestion)}
               </Table.Cell>
-              <Table.Cell>{exam.exCategory.charAt(0).toUpperCase().concat(exam.exCategory.slice(1))}</Table.Cell>
-              <Table.Cell>{exam.exSubcategory.charAt(0).toUpperCase().concat(exam.exSubcategory.slice(1))}</Table.Cell>
-              <Table.Cell>{exam.exType}</Table.Cell>
-              <Table.Cell>{(exam.exChoice).map(choice => (
+              <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{exam.exCategory.charAt(0).toUpperCase().concat(exam.exCategory.slice(1))}</Table.Cell>
+              <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{exam.exSubcategory.charAt(0).toUpperCase().concat(exam.exSubcategory.slice(1))}</Table.Cell>
+              <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{exam.exType}</Table.Cell>
+              <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{(exam.exChoice).map(choice => (
                 <div>&#9679;&nbsp;{choice}</div>
               ))}
               </Table.Cell>
