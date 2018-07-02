@@ -10,7 +10,6 @@ export function* examLoginTask(action) {
     const user = yield call(api.examLogin, action.payload.form);
     localStorage.setItem('token', user.token);
     yield put(examLoginSuccess(user));
-    // change path / >> some path
     history.push('/takeexam');
   }
   catch (error) {

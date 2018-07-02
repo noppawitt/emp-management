@@ -2,6 +2,8 @@ const db = require('../db');
 
 const TakeExam = {};
 
-TakeExam.fetchSomething = () => (
-  db.none('SELECT NOTHING FROM NOTHING')
+TakeExam.fetchAllExam = () => (
+  db.manyOrNone('SELECT * FROM exams')
 );
+
+module.exports = TakeExam;

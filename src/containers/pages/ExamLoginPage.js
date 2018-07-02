@@ -20,6 +20,7 @@ const ExamLoginPage = ({ dispatch }) => {
 
   return (
     <div>
+      {console.log('exam login page')}
       <Grid.Column>
         <Segment four wide center style={{ width: '300px' }}>
           <Form onSubmit={handleSubmit}>

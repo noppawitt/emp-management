@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Menu, Container, Dropdown } from 'semantic-ui-react';
 // import SideNav, { Nav, NavIcon, NavText } from 'react-sidenav';
 // import logo from '../images/vertical-logo.png';
@@ -9,7 +9,7 @@ import { Menu, Container, Dropdown } from 'semantic-ui-react';
 //   isSidebarVisible = !isSidebarVisible
 // );
 
-const ExamNavBar = ({ userid, onLogout }) => (
+const ExamNavBar = ({ id, onLogout }) => (
   <div>
     <Menu attached borderless inverted size="huge">
       <Container>
@@ -23,9 +23,8 @@ const ExamNavBar = ({ userid, onLogout }) => (
           Take Exam (Test)
         </Menu.Item>
         <Menu.Menu position="right">
-          <Dropdown item pointing text={userid}>
+          <Dropdown item pointing text={id}>
             <Dropdown.Menu>
-              <Dropdown.Item text="Profile" as={Link} to="/profile" />
               <Dropdown.Item text="Log out" onClick={onLogout} />
             </Dropdown.Menu>
           </Dropdown>
@@ -36,7 +35,7 @@ const ExamNavBar = ({ userid, onLogout }) => (
 );
 
 ExamNavBar.propTypes = {
-  userid: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   onLogout: PropTypes.func.isRequired,
 };
 

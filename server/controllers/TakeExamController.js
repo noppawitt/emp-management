@@ -1,9 +1,9 @@
 const TakeExam = require('../models/TakeExam');
 
-exports.fetchSomething = (req, res, next) => {
-  TakeExam.fetchSomething()
-    .then((anotherThing) => {
-      res.json(anotherThing);
+exports.fetchAllExam = (req, res, next) => {
+  TakeExam.fetchAllExam()
+    .then((examObject) => {
+      res.json(examObject);
     })
     .catch(next);
 };

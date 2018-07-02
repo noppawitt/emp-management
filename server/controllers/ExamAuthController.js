@@ -9,8 +9,8 @@ exports.signin = (req, res, next) => {
     .then((user) => {
       if (user) {
         console.log(user);
-        // if (req.body.password === user.password) {
-        if (bcrypt.compareSync(req.body.password, user.password)) {
+        if (req.body.password === user.birthdate) {
+        // if (bcrypt.compareSync(req.body.password, user.password)) {
           const token = jwt.sign({
             id: user.id,
           }, jwtSecret);

@@ -31,7 +31,7 @@ const Routes = () => (
     <PrivateRoute path="/recruitment/*" component={RecruitmentPage} />
     <PrivateRoute path="/grade_exam" component={GradeExamPage} />
     <PrivateRoute path="/view_result" component={ViewResultPage} />
-    <ExamRoute path="/examlogin" component={ExamLoginPage} />
+    <Route path="/examlogin" component={ExamLoginPage} />
     <ExamRoute path="/preparetoexam" component={AgreementPage} />
     <ExamRoute path="/takeexam" component={TakeExamPage} />
   </Switch>

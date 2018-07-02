@@ -4,7 +4,7 @@ import { logout } from '../actions/examAuth';
 import ExamNavBar from '../components/ExamNavBar';
 
 const mapStateToProps = state => ({
-  userid: state.examAuth.userid,
+  id: state.examAuth.id,
 });
 
 const mapDispatchToProps = dispatch => ({

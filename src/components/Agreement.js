@@ -54,8 +54,7 @@ const Agreement = ({ submit }) => (
 );
 
 Agreement.propTypes = {
-  // something here, maybe
-  submit: PropTypes.bool.isRequired,
+  submit: PropTypes.func.isRequired,
 };
 
 export default Agreement;

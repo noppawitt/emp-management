@@ -8,12 +8,8 @@ import api from '../services/api';
 
 export function* fetchTakeExamTask() {
   try {
-    const cid = yield call(api.fetchTakeExam);
-    // step to fetch!
-    // > get cid
-    // > throw cid to get list of position (epr)
-    // > throw epr to get exams
-    yield put(fetchTakeExamSuccess(cid));
+    const examObject = yield call(api.fetchTakeExam);
+    yield put(fetchTakeExamSuccess(examObject));
   }
   catch (error) {
     yield put(fetchTakeExamFailure(error));
@@ -21,7 +17,7 @@ export function* fetchTakeExamTask() {
 }
 
 export function* watchFetchTakeExamRequest() {
-  yield takeEvery(actionTypes.TAKE_EXAM_FECTH_REQUEST, fetchTakeExamTask);
+  yield takeEvery(actionTypes.TAKE_EXAM_FETCH_REQUEST, fetchTakeExamTask);
 }
 
 export default function* takeExamSaga() {

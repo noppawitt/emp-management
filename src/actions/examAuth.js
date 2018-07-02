@@ -24,7 +24,7 @@ export const examLoginFailure = messege => ({
 
 export const logout = () => {
   localStorage.removeItem('token');
-  history.pushState('/login');
+  history.push('/examlogin');
   return ({
     type: actionTypes.EXAM_LOGOUT,
   });

@@ -18,7 +18,6 @@ exports.checkPasswordStatus = (req, res, next) => {
 };
 
 exports.activatePassword = (req, res, next) => {
-  console.log('here pls');
   const theid = req.query.id;
   const newLifetimes = req.query.lifetimes < 1 ? 0 : req.query.lifetimes;
   Recruitment.activatePassword(theid, newLifetimes)

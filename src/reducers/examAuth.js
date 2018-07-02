@@ -40,6 +40,11 @@ const examAuth = (state = initialState, action) => {
         isAuthenticated: false,
         messege: action.payload.messege,
       };
+    case actionTypes.EXAM_LOGOUT:
+      return {
+        ...state,
+        isAuthenticated: false,
+      };
     default:
       return state;
   }

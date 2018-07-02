@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import {
   fetchTakeExamRequest,
-  changeActiveItemRequest
+  changeActiveItem
 } from '../../actions/takeExam';
 import TakeExam from '../../components/TakeExam';
 import Loader from '../../components/Loader';
@@ -12,49 +12,57 @@ import Loader from '../../components/Loader';
 
 const TakeExamPage = ({
   isFetching,
-  cid,
+  id,
   activeItem,
-  changeActiveMenuItem,
-  eprList }) =>
+  onClickActiveItem,
+  eprList,
+  onClickTestButton,
+  examObject }) =>
   (
-    !isFetching ?
+    isFetching ?
       <Loader /> :
       <TakeExam
-        cid={cid}
+        id={id}
         activeItem={activeItem}
-        changeActiveMenuItem={changeActiveMenuItem}
+        onClickActiveItem={onClickActiveItem}
         eprList={eprList}
+        onClickTestButton={onClickTestButton}
+        examObject={examObject}
       />
   );
 
 TakeExamPage.propTypes = {
   isFetching: PropTypes.bool.isRequired,
-  cid: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   activeItem: PropTypes.string.isRequired,
-  changeActiveMenuItem: PropTypes.func.isRequired,
+  onClickActiveItem: PropTypes.func.isRequired,
   eprList: PropTypes.array.isRequired,
+  onClickTestButton: PropTypes.func.isRequired,
+  examObject: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
   isFetching: state.takeExam.isFetching,
-  cid: state.takeExam.cid,
+  id: state.examAuth.id,
   activeItem: state.takeExam.activeItem,
   eprList: state.takeExam.erpList,
+  examObject: state.takeExam.examObject,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchTakeExam: () => dispatch(fetchTakeExamRequest()),
-  // map sfunction from dispatch here
-  changeActiveMenuItem: item => dispatch(changeActiveItemRequest(item)),
+  // fetchTakeExam: id => dispatch(fetchTakeExamRequest(id)),
+  onClickActiveItem: item => dispatch(changeActiveItem(item)),
+  onClickTestButton: () => dispatch(fetchTakeExamRequest('1234567890151')),
 });
 
 const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
-      // edit this, maybe?
-      const { fetchTakeExam } = this.props;
-      fetchTakeExam();
+      // const { fetchTakeExam } = this.props;
+      // fetchTakeExam();
+      const { onClickTestButton } = this.props;
+      onClickTestButton();
     }
   })
 );

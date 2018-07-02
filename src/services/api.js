@@ -299,7 +299,7 @@ api.editExam = body => (
 // view exam result
 
 api.fetchExamResult = id => (
-  callApi(`/api/viewResult/?id=${id}`)
+  callApi(`/api/viewresult/?id=${id}`)
 );
 
 // Exam Auth
@@ -321,7 +321,7 @@ api.examLogin = form => (
 // Take Exam
 
 api.fetchTakeExam = () => (
-  callApi(`/api/takeExam`)
+  callApi(`/api/takeexam/`)
 );
 
 export default api;

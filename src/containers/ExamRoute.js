@@ -36,8 +36,8 @@ ExamRoute.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  userid: state.auth.userid,
+  isAuthenticated: state.examAuth.isAuthenticated,
+  id: state.examAuth.id,
 });
 
 export default connect(mapStateToProps)(ExamRoute);
