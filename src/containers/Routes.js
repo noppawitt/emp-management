@@ -10,6 +10,7 @@ import ProfilePage from './pages/ProfilePage';
 import EmployeePage from './pages/EmployeePage';
 import ReportPage from './pages/ReportPage';
 import AddTaskPage from './pages/AddTaskPage';
+import ManageLeave from './pages/ManageLeave';
 
 const Routes = () => (
   <Switch>
@@ -23,6 +24,8 @@ const Routes = () => (
     <PrivateRoute path="/profile/:id?" component={ProfilePage} />
     <PrivateRoute path="/employee" component={EmployeePage} />
     <PrivateRoute path="/report" component={ReportPage} />
+    <PrivateRoute path="/manageleave" component={ManageLeave} />
+
   </Switch>
 );
 

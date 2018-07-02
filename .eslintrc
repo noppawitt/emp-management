@@ -22,7 +22,8 @@
         "object-curly-newline": "off",
         "quotes": ["error", "single", { "allowTemplateLiterals": true }],
         "no-param-reassign": "off",
-        "no-mixed-operators": "off"
+        "no-mixed-operators": "off",
+        "no-continue": "off"
     },
     "plugins": [
         "import",

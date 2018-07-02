@@ -16,11 +16,13 @@ class Timesheet extends React.Component {
       textAnotherDay: '#999999',
       iconRedcolor: 'red',
       iconBluecolor: 'blue',
+      progressColor: 'blue',
+      percent: 0,
       lastholiday: { date: '', name: '' },
       lastleaveday: { date: '', status: '' },
       months: [
         { key: 1, value: '01', text: 'January' },
-        { key: 2, value: '02', text: 'Fabuary' },
+        { key: 2, value: '02', text: 'February' },
         { key: 3, value: '03', text: 'March' },
         { key: 4, value: '04', text: 'April' },
         { key: 5, value: '05', text: 'May' },
@@ -29,10 +31,15 @@ class Timesheet extends React.Component {
         { key: 8, value: '08', text: 'August' },
         { key: 9, value: '09', text: 'September' },
         { key: 10, value: '10', text: 'October' },
-        { key: 11, value: '11', text: 'Novemver' },
+        { key: 11, value: '11', text: 'November' },
         { key: 12, value: '12', text: 'December' }
       ],
       years: [
+<<<<<<< HEAD
+        { key: 2018, value: 2018, text: '2018' },
+        { key: 2019, value: 2019, text: '2019' },
+        { key: 2020, value: 2020, text: '2020' }
+=======
         { key: 2018, value: '2018', text: '2018' },
         { key: 2019, value: '2019', text: '2019' },
         { key: 2020, value: '2020', text: '2020' },
@@ -43,6 +50,7 @@ class Timesheet extends React.Component {
         { key: 2025, value: '2025', text: '2025' },
         { key: 2026, value: '2026', text: '2026' },
         { key: 2027, value: '2027', text: '2027' }
+>>>>>>> 2f7cd7704a7f072e782840d475c44b5a29b621d1
       ]
     };
     this.anotherMonthCell = this.anotherMonthCell.bind(this);
@@ -51,6 +59,56 @@ class Timesheet extends React.Component {
     this.addHolidayName = this.addHolidayName.bind(this);
     this.buttonOfHoliday = this.buttonOfHoliday.bind(this);
     this.leavedayCell = this.leavedayCell.bind(this);
+    this.calprogressbar = this.calprogressbar.bind(this);
+  }
+  componentDidMount() {
+    this.calprogressbar();
+  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (JSON.stringify(this.props.timesheets) !== JSON.stringify(nextProps.timesheets)) {
+  //     this.calprogressbar();
+  //     this.forceUpdate();
+  //   }
+  // }
+  // this.setState(prevState => ({
+  //   countWorkDayofmonth: prevState.countWorkDayofmonth + 1
+  // }));
+  // this.state.countWorkDayofmonth += 1;
+  calprogressbar() {
+    let progressColor = 'red';
+    let countWorkDay = 0;
+    let countFilledTimesheet = 0;
+    for (let i = 0; i < this.props.timesheets.length; i += 1) {
+      const x = this.props.timesheets[i];
+      if (moment(x.date).format('MM') !== this.props.month) {
+        continue;
+      }
+      else if (this.isLeaveday(moment(x.date))) {
+        if (this.state.lastleaveday.totalhours < 8) {
+          countWorkDay += 1;
+        }
+        if (x.totalhours > 0) {
+          countFilledTimesheet += 1;
+        }
+      }
+      else if (this.isHoliday(moment(x.date))) {
+        continue;
+      }
+      else if (moment(x.date).format('d') === '0' || moment(x.date).format('d') === '6') {
+        continue;
+      }
+      else {
+        countWorkDay += 1;
+        if (x.totalhours > 0) {
+          countFilledTimesheet += 1;
+        }
+      }
+    }
+    const percent = (countFilledTimesheet / countWorkDay) * 100;
+    if (percent <= 30) progressColor = 'red';
+    else if (percent <= 60) progressColor = 'yellow';
+    else progressColor = 'blue';
+    this.setState({ percent, progressColor });
   }
   drawCell(date, hour, id) {
     if (date.format('MM') !== this.props.month) {
@@ -137,7 +195,7 @@ class Timesheet extends React.Component {
         </Grid.Row>
       );
     }
-    else if (hour === 8) { color = this.state.textWorkcolor; iconcolor = this.state.iconBluecolor; }
+    else if (hour >= 8) { color = this.state.textWorkcolor; iconcolor = this.state.iconBluecolor; }
     return (
       <Grid.Row textAlign="center">
         <Button animated="fade" style={{ borderStyle: 'solid', borderColor: color, backgroundColor: 'white', borderWidth: '1px' }} onClick={() => this.props.onEditClick(id)} >
@@ -212,12 +270,10 @@ class Timesheet extends React.Component {
     return (<Grid.Row style={{ height: '5em' }} />);
   }
   render() {
-    const progressBar = percentWork => <div> <Progress percent={percentWork} active color="blue" progress /> </div>;
-
     return (
       <div>
         <PageHeader text="Timesheet" icon="calendar alternate" />
-        {progressBar(70)}
+        <Progress percent={this.state.percent} active color={this.state.progressColor} progress />
         <Grid stackable doubling relaxed >
           <Grid.Row>
             <Grid.Column computer={8} >
