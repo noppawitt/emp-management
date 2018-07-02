@@ -35,7 +35,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onClose: () => dispatch(closeModal()),
-  onSubmit: values => handleReduxFormSubmit(dispatch, addExamRequest, values, 'addExam'),
+  onSubmit: values => ((localStorage.getItem('examQuestion') !== '<p></p>' && localStorage.getItem('examQuestion') !== undefined) ? handleReduxFormSubmit(dispatch, addExamRequest, values, 'addExam') : 'invalid'),
   onClick: () => dispatch(submit('addExam'))
 });
 

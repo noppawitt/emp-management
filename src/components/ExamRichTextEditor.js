@@ -1,24 +1,29 @@
 import React, { Component } from 'react';
 import ReactDrafts from 'react-drafts';
+import { Header, Label } from 'semantic-ui-react';
 import '../../node_modules/react-drafts/dist/react-drafts.css';
 
 export default class ExamRichTextEditor extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { isClear: false };
+    this.state = { isClear: false, alreadyFocus: false, error: undefined };
 
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
     this.handleFileUpload = this.handleFileUpload.bind(this);
     this.handleSave = this.handleSave.bind(this);
 
-    setInterval(this.handleSave, 1200);
+    setInterval(this.handleSave, 500);
+    setTimeout(() => { this.setState({ alreadyFocus: true }); }, 5000);
   }
 
-  handleFileUpload(file) {
-    return Promise.resolve({
-      src: file.preview,
-      name: file.name
-    });
+  onFocus() {
+    this.setState({ alreadyFocus: true });
+  }
+
+  onBlur() {
+
   }
 
   handleSave() {
@@ -26,8 +31,15 @@ export default class ExamRichTextEditor extends Component {
       this.editor.save().then((content) => {
         localStorage.setItem('examQuestion', content);
 
-        setTimeout(() => { }, 1000);
+        setTimeout(() => { }, 300);
       });
+    });
+  }
+
+  handleFileUpload(file) {
+    return Promise.resolve({
+      src: file.preview,
+      name: file.name
     });
   }
 
@@ -40,16 +52,21 @@ export default class ExamRichTextEditor extends Component {
 
     return (
       <div className="demo-editor">
-        <header size="small"><strong>Question<label style={{ color: '#c62921' }}> *</label></strong></header>
+        <Header as="h5">Question
+          <label style={{ color: 'red' }}>*</label>
+          {this.state.alreadyFocus && localStorage.getItem('examQuestion') === '<p></p>' &&
+            <Label basic color="red" pointing="left" >Required</Label>}
+        </Header>
         <div style={{ borderStyle: 'solid', borderWidth: '1px', borderColor: '#e2e2e2', borderRadius: '5px' }}>
           <ReactDrafts
             ref={(editor) => { this.editor = editor; }}
             content={storedContent}
             onFileUpload={this.handleFileUpload}
             allowPhotoLink={false}
-            allowPhotoSizeAdjust={true}
-            linkInputAcceptsFiles={true}
+            allowPhotoSizeAdjust={false}
+            linkInputAcceptsFiles={false}
             spellcheckEnabled={false}
+            onFocus={this.onFocus}
             customControls={['headings', 'bold', 'italic', 'underline', 'quotes', 'bulletList', 'orderedList', 'alignLeft', 'alignCenter', 'alignRight', 'table', 'photo']}
             exportTo="html"
           />

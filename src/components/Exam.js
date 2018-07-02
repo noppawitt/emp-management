@@ -115,11 +115,11 @@ const Exam = (({ onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, 
               <Table.Cell>{exam.exSubcategory.charAt(0).toUpperCase().concat(exam.exSubcategory.slice(1))}</Table.Cell>
               <Table.Cell>{exam.exType}</Table.Cell>
               <Table.Cell>{(exam.exChoice).map(choice => (
-                <div>&#9679;{choice}</div>
+                <div>&#9679;&nbsp;{choice}</div>
               ))}
               </Table.Cell>
               <Table.Cell>{(exam.exAnswer).map(ans => (
-                <div>&#9679;{ans}</div>
+                <div>&#9679;&nbsp;{ans}</div>
               ))}
               </Table.Cell>
               <Table.Cell textAlign="center" style={{ cursor: 'default' }}>
