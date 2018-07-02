@@ -41,7 +41,7 @@ const employeeSelector = () => (
   <Grid.Column width={3}>
     <Form >
       <Form.Group width="equal">
-        <Form.Dropdown label="Employee" placeholder="Employees" selection options={employees} />
+        <Form.Dropdown size="large" label="Employee" placeholder="Employees" selection options={employees} />
       </Form.Group>
     </Form>
   </Grid.Column>
@@ -52,7 +52,7 @@ const reportTypeSelector = () => (
   <Grid.Column width={3}>
     <Form >
       <Form.Group width="equal" >
-        <Form.Dropdown label="Type" placeholder="Select Type" selection options={option} />
+        <Form.Dropdown size="large" label="Type" placeholder="Select Type" selection options={option} />
       </Form.Group>
     </Form>
   </Grid.Column>
@@ -63,7 +63,7 @@ const yearSelector = () => (
   <Grid.Column width={3}>
     <Form >
       <Form.Group width="equal">
-        <Form.Dropdown label="Year" placeholder="Select Year" selection options={years} />
+        <Form.Dropdown size="large" label="Year" placeholder="Select Year" selection options={years} />
       </Form.Group>
     </Form>
   </Grid.Column>
@@ -74,7 +74,7 @@ const monthSelector = () => (
   <Grid.Column width={3}>
     <Form >
       <Form.Group width="equal">
-        <Form.Dropdown label="Month" placeholder="Select Month" selection options={months} />
+        <Form.Dropdown size="large" label="Month" placeholder="Select Month" selection options={months} />
       </Form.Group>
     </Form>
   </Grid.Column>
@@ -85,7 +85,7 @@ const projectSelector = () => (
   <Grid.Column width={3} >
     <Form width="equal" >
       <Form.Group width="equal">
-        <Form.Dropdown label="Project" placeholder="Select Project" selection options={project} />
+        <Form.Dropdown size="large" label="Project" placeholder="Select Project" selection options={project} />
       </Form.Group>
     </Form>
   </Grid.Column>
@@ -105,6 +105,9 @@ const ReportPage = () => (
       <Grid.Row>
         {projectSelector()}
         {employeeSelector()}
+      </Grid.Row>
+      <Grid.Row>
+        <Button color="blue" style={{ marginLeft: '15px' }}>Download</Button>
       </Grid.Row>
     </Grid>
   </div>

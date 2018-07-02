@@ -67,6 +67,10 @@ class Timesheet extends React.Component {
   //     this.forceUpdate();
   //   }
   // }
+  // this.setState(prevState => ({
+  //   countWorkDayofmonth: prevState.countWorkDayofmonth + 1
+  // }));
+  // this.state.countWorkDayofmonth += 1;
   calprogressbar() {
     let progressColor = 'red';
     let countWorkDay = 0;
@@ -101,7 +105,7 @@ class Timesheet extends React.Component {
     if (percent <= 30) progressColor = 'red';
     else if (percent <= 60) progressColor = 'yellow';
     else progressColor = 'blue';
-    this.({ percent, progressColor });
+    this.setState({ percent, progressColor });
   }
   drawCell(date, hour, id) {
     if (date.format('MM') !== this.props.month) {
@@ -129,10 +133,6 @@ class Timesheet extends React.Component {
   }
   addStatusLeaveday(date, hour, id) {
     if (this.state.lastleaveday.totalhours < 8) {
-      // this.setState(prevState => ({
-      //   countWorkDayofmonth: prevState.countWorkDayofmonth + 1
-      // }));
-      // this.state.countWorkDayofmonth += 1;
       return (
         <div>
           <Grid.Row style={{ height: '5em' }}>
@@ -166,10 +166,6 @@ class Timesheet extends React.Component {
     );
   }
   workdayCell(date, hour, id) {
-    // this.setState(prevState => ({
-    //   countWorkDayofmonth: prevState.countWorkDayofmonth + 1
-    // }));
-    // this.state.countWorkDayofmonth += 1;
     return (
       <Table.Cell >
         <Grid.Column>
@@ -197,10 +193,6 @@ class Timesheet extends React.Component {
       );
     }
     else if (hour >= 8) { color = this.state.textWorkcolor; iconcolor = this.state.iconBluecolor; }
-    // this.setState(prevState => ({
-    //   countFilledTimesheet: prevState.countFilledTimesheet + 1
-    // }));
-    // this.state.countFilledTimesheet += 1;
     return (
       <Grid.Row textAlign="center">
         <Button animated="fade" style={{ borderStyle: 'solid', borderColor: color, backgroundColor: 'white', borderWidth: '1px' }} onClick={() => this.props.onEditClick(id)} >
@@ -274,18 +266,6 @@ class Timesheet extends React.Component {
     }
     return (<Grid.Row style={{ height: '5em' }} />);
   }
-  // calpercent(refresh) {
-  //   if (refresh) {
-  //     this.setState({ percent: this.state.countFilledTimesheet / this.state.countWorkDayofmonth });
-  //     this.setState({ progressColor: 'blue' });
-  //     if (this.state.percent <= 30) { this.setState({ progressColor: 'red' }); }
-  //     else if (this.state.percent <= 60) { this.setState({ progressColor: 'yellow' }); }
-  //     else { this.setState({ progressColor: 'blue' }); }
-  //   }
-  //   this.setState({ refreshcycle: !refresh });
-  // }
-
-
   render() {
     return (
       <div>
