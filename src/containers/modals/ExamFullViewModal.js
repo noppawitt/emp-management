@@ -14,7 +14,7 @@ const ExamFullViewModal = ({ onClose, thisExam }) => (
   >
     <SUIModal.Content>
       <Table style={{ height: '300px' }}>
-        <Table.Row>
+        <Table.Row verticalAlign="top">
           <Table.Cell width={9}>
             <div dangerouslySetInnerHTML={{ __html: thisExam.exQuestion }} />
           </Table.Cell>
