@@ -26,7 +26,9 @@ class SignatureComponent extends React.Component {
         this.employeeSignButton.current.disabled = true;
         this.supervisorSignButton.current.disabled = true;
         this.MDSignButton.current.disabled = true;
+
         console.log(this.props.role);
+
         if (this.state.role == 'employee')
             this.employeeSignButton.current.disabled = false;
         else if (this.state.role == 'supervisor')
@@ -57,14 +59,11 @@ class SignatureComponent extends React.Component {
         this.setState({ employeeSignDate: new Date().toString().substr(0, 24) });
         document.getElementById('mark1').style.width = '2em';
         this.employeeSignButton.current.disabled = true;
-        this.supervisorSignButton.current.disabled = false;
-        this.MDSignButton.current.disabled = true;
     }
     SupervisorSignHandler() {
-        this.setState({ supervisorSignDate: momet });
+        this.setState({ supervisorSignDate: new Date().toString().substr(0, 24) });
         document.getElementById('mark2').style.width = '2em';
         this.supervisorSignButton.current.disabled = true;
-        this.MDSignButton.current.disabled = false;
     }
     MDSignHandler() {
         this.setState({ MDSignDate: new Date().toString().substr(0, 24) });
