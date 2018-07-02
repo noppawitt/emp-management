@@ -49,7 +49,7 @@ const AddProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType }
       label="Payment type"
       placeholder="Payment type"
       options={paymentTypeOptions}
-      onChange={(event, newValue) => setWorkingDay(newValue === 'Man-month' ? 22 : null)}
+      onChange={(e, newValue) => setWorkingDay(newValue === 'Man-month' ? 22 : null)}
       disabled={submitting}
     />
     {paymentType === 'Man-month' && <Field name="workingDay" as={Form.Select} component={Input} label="Working day" placeholder="Working day" options={workingDayOptions} disabled={submitting} />}
