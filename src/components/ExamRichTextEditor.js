@@ -7,10 +7,9 @@ export default class ExamRichTextEditor extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { isClear: false, alreadyFocus: false, error: undefined };
+    this.state = { isClear: false, alreadyFocus: false };
 
     this.onFocus = this.onFocus.bind(this);
-    this.onBlur = this.onBlur.bind(this);
     this.handleFileUpload = this.handleFileUpload.bind(this);
     this.handleSave = this.handleSave.bind(this);
 
@@ -20,10 +19,6 @@ export default class ExamRichTextEditor extends Component {
 
   onFocus() {
     this.setState({ alreadyFocus: true });
-  }
-
-  onBlur() {
-
   }
 
   handleSave() {

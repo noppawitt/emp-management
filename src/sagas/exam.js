@@ -47,7 +47,6 @@ export function* addExamTask(action) {
     }
 
     localStorage.setItem('examQuestion', newSrc);
-    console.log(localStorage.getItem('examQuestion'));
 
     yield call(api.addExam, {
       exam: action.payload.form,
@@ -91,6 +90,39 @@ export function* deleteExamTask(action) {
 
 export function* editExamTask(action) {
   try {
+    const imageArrayNotClean = localStorage.getItem('examQuestion').split('<img src="');
+    const imageArray = [];
+    const files = [];
+
+    for (let i = 1; i < imageArrayNotClean.length; i += 1) {
+      if ((imageArrayNotClean[i].split('" '))[0].includes('blob:http')) {
+        imageArray.push((imageArrayNotClean[i].split('" '))[0]);
+      }
+    }
+
+    for (let i = 0; i < imageArray.length; i += 1) {
+      yield fetch(imageArray[i])
+        .then(res => (res.blob()))
+        .then((blob) => {
+          const d = new Date();
+          const fN = 'img' + d.getUTCDate() + (d.getUTCMonth() + 1) + d.getUTCFullYear() + d.getUTCHours() + d.getUTCMinutes() + d.getUTCSeconds() + d.getUTCMilliseconds();
+          files.push(new File([blob], fN + '.' + blob.type.split('/')[1]));
+        });
+    }
+
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i += 1) {
+      formData.append('image', files[i]);
+    }
+    yield call(api.uploadImageExam, formData);
+
+    let newSrc = localStorage.getItem('examQuestion');
+    for (let i = 0; i < imageArray.length; i += 1) {
+      newSrc = newSrc.replace(imageArray[i], '/static/exam-img/' + files[i].name);
+    }
+
+    localStorage.setItem('examQuestion', newSrc);
+    
     const exam = yield call(api.editExam, {
       form: action.payload.form,
       question: localStorage.getItem('examQuestion')

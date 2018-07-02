@@ -21,6 +21,7 @@ export const CREATE_LEAVE_REQUEST = 'CREATE_LEAVE_REQUEST';
 // Exam
 export const ADD_NEW_EXAM = 'ADD_NEW_EXAM';
 export const EDIT_EXAM = 'EDIT_EXAM';
+export const VIEW_EXAM = 'VIEW_EXAM';
 
 // Recruitment
 export const ACTIVATE = 'ACTIVATE';

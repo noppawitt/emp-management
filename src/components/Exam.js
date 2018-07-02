@@ -47,10 +47,10 @@ examSubCategoryOptions.propTypes = {
 };
 
 const renderQuestion = question => (
-  <div dangerouslySetInnerHTML={{ __html: question }} />
+  <div style={{ verticalAlign: 'middle' }} dangerouslySetInnerHTML={{ __html: question }} />
 );
 
-const Exam = (({ onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, examsFilter, disabled, setDisabled, category, setCategory }) => (
+const Exam = (({ onAddClick, onDeleteClick, onEditClick, onViewClick, onFilterChange, exams, examsFilter, disabled, setDisabled, category, setCategory }) => (
   <div>
     <Segment.Group raised>
       <Segment>
@@ -105,16 +105,14 @@ const Exam = (({ onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, 
             </Table.Row>
           </Table.Header>
           <Table.Body>{examsFilter.map(exam => (
-            <Table.Row>
-              <Table.Cell style={{ height: '200px', overflowY: 'auto', display: 'block' }}>
-                <div>
-                  {renderQuestion(exam.exQuestion)}
-                </div>
+            <Table.Row verticalAlign="top">
+              <Table.Cell style={{ height: '200px', overflowY: 'auto', display: 'block'}}>
+                {renderQuestion(exam.exQuestion)}
               </Table.Cell>
-              <Table.Cell>{exam.exCategory.charAt(0).toUpperCase().concat(exam.exCategory.slice(1))}</Table.Cell>
-              <Table.Cell>{exam.exSubcategory.charAt(0).toUpperCase().concat(exam.exSubcategory.slice(1))}</Table.Cell>
-              <Table.Cell>{exam.exType}</Table.Cell>
-              <Table.Cell>{(exam.exChoice).map(choice => (
+              <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{exam.exCategory.charAt(0).toUpperCase().concat(exam.exCategory.slice(1))}</Table.Cell>
+              <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{exam.exSubcategory.charAt(0).toUpperCase().concat(exam.exSubcategory.slice(1))}</Table.Cell>
+              <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{exam.exType}</Table.Cell>
+              <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{(exam.exChoice).map(choice => (
                 <div>&#9679;&nbsp;{choice}</div>
               ))}
               </Table.Cell>
@@ -123,11 +121,11 @@ const Exam = (({ onAddClick, onDeleteClick, onEditClick, onFilterChange, exams, 
               ))}
               </Table.Cell>
               <Table.Cell textAlign="center" style={{ cursor: 'default' }}>
-                <Button active circular icon="eye" color="green" size="big" style={{ cursor: 'pointer' }} />
+                <Button active circular icon="eye" color="olive" size="big" onClick={() => onViewClick(exam)} style={{ cursor: 'pointer' }} />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <Button active circular icon="settings" color="blue" size="big" onClick={() => onEditClick(exams, exam)} style={{ cursor: 'pointer' }} />
+                <Button active circular icon="settings" color="linkedin" size="big" onClick={() => onEditClick(exams, exam)} style={{ cursor: 'pointer' }} />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <Button active circular icon="trash" color="red" size="big" onClick={() => onDeleteClick(exam.exId)} style={{ cursor: 'pointer' }} />
+                <Button active circular icon="trash" color="google plus" size="big" onClick={() => onDeleteClick(exam.exId)} style={{ cursor: 'pointer' }} />
               </Table.Cell>
             </Table.Row>
           ))}
@@ -142,6 +140,7 @@ Exam.propTypes = {
   onAddClick: PropTypes.func.isRequired,
   onDeleteClick: PropTypes.func.isRequired,
   onEditClick: PropTypes.func.isRequired,
+  onViewClick: PropTypes.func.isRequired,
   onFilterChange: PropTypes.func.isRequired,
   exams: PropTypes.array.isRequired,
   examsFilter: PropTypes.array.isRequired,
