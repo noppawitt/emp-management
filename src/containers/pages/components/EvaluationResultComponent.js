@@ -186,7 +186,7 @@ class EvaluationResultComponent extends React.Component {
                                                     Based Salary
                                                 </td>
                                                 <td>
-                                                    <input type='text' value={this.state.basedSalary} onChange={(event) => {
+                                                    <input type='number' value={this.state.basedSalary} onChange={(event) => {
                                                         this.state = { ...this.state, basedSalary: event.target.value };
                                                         this.updateParentComponent();
                                                     }} />
@@ -195,7 +195,7 @@ class EvaluationResultComponent extends React.Component {
                                                     Mobile
                                                 </td>
                                                 <td>
-                                                    <input type='text' value={this.state.mobile} onChange={(event) => {
+                                                    <input type='number' value={this.state.mobile} onChange={(event) => {
                                                         this.state = { ...this.state, mobile: event.target.value };
                                                         this.updateParentComponent();
                                                     }} />
@@ -206,7 +206,7 @@ class EvaluationResultComponent extends React.Component {
                                                     Transporation Allowance
                                                 </td>
                                                 <td>
-                                                    <input type='text' value={this.state.transporationAllowance} onChange={(event) => {
+                                                    <input type='number' value={this.state.transporationAllowance} onChange={(event) => {
                                                         this.state = { ...this.state, transporationAllowance: event.target.value };
                                                         this.updateParentComponent();
                                                     }} />
@@ -215,7 +215,7 @@ class EvaluationResultComponent extends React.Component {
                                                     Others Allowance
                                                 </td>
                                                 <td>
-                                                    <input type='text' value={this.state.otherAllowance} onChange={(event) => {
+                                                    <input type='number' value={this.state.otherAllowance} onChange={(event) => {
                                                         this.state = { ...this.state, otherAllowance: event.target.value };
                                                         this.updateParentComponent();
                                                     }} />
