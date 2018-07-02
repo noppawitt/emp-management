@@ -1,6 +1,7 @@
 import React from 'react';
 import cmark from '../pic/mark.png';
 import './css/SignatureComponent.css';
+import moment from 'moment';
 
 class SignatureComponent extends React.Component {
     constructor(props) {
@@ -56,17 +57,17 @@ class SignatureComponent extends React.Component {
     }
 
     EmployeeSignHandler() {
-        this.setState({ employeeSignDate: new Date().toString().substr(0, 24) });
+        this.setState({ employeeSignDate: moment().format('YYYY-MM-DD') });
         document.getElementById('mark1').style.width = '2em';
         this.employeeSignButton.current.disabled = true;
     }
     SupervisorSignHandler() {
-        this.setState({ supervisorSignDate: new Date().toString().substr(0, 24) });
+        this.setState({ supervisorSignDate: moment().format('YYYY-MM-DD') });
         document.getElementById('mark2').style.width = '2em';
         this.supervisorSignButton.current.disabled = true;
     }
     MDSignHandler() {
-        this.setState({ MDSignDate: new Date().toString().substr(0, 24) });
+        this.setState({ MDSignDate: moment().format('YYYY-MM-DD') });
         document.getElementById('mark3').style.width = '2em';
         this.MDSignButton.current.disabled = true;
     }
@@ -106,9 +107,9 @@ class SignatureComponent extends React.Component {
                                 </th>
                             </tr>
                             <tr>
-                                <th>{this.state.employeeSignDate == '' ? '' : 'Date:'} <span className="date">{this.state.employeeSignDate}</span></th>
-                                <th>{this.state.supervisorSignDate == '' ? '' : 'Date:'} <span className="date">{this.state.supervisorSignDate}</span></th>
-                                <th>{this.state.MDSignDate == '' ? '' : 'Date:'} <span className="date">{this.state.MDSignDate}</span></th>
+                                <th>{!this.state.employeeSignDate ? '' : 'Date:'} <span className="date">{this.state.employeeSignDate ? moment(this.state.employeeSignDate).format('DD/MM/YYYY') : ''}</span></th>
+                                <th>{!this.state.supervisorSignDate ? '' : 'Date:'} <span className="date">{this.state.supervisorSignDate ? moment(this.state.supervisorSignDate).format('DD/MM/YYYY') : ''}</span></th>
+                                <th>{!this.state.MDSignDate ? '' : 'Date:'} <span className="date">{this.state.MDSignDate ? moment(this.state.MDSignDate).format('DD/MM/YYYY') : ''}</span></th>
                             </tr>
                         </tbody>
                     </table>
