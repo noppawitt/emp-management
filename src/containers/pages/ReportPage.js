@@ -1,130 +1,93 @@
-// import React from 'react';
-// import PropTypes from 'prop-types';
-// import { connect } from 'redux';
-// import { Grid, Button, Form } from 'semantic-ui-react';
-// import PageHeader from '../../components/PageHeader';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose, lifecycle } from 'recompose';
+import { Field, reduxForm, formValueSelector } from 'redux-form';
+import { Button, Form } from 'semantic-ui-react';
+import PageHeader from '../../components/PageHeader';
+import Input from '../../components/Input';
+import { getYearOptions, getMonthOptions } from '../../utils/options';
+import { fetchOwnProjectRequest, downloadReportRequest } from '../../actions/report';
+import { projectsToOptions } from '../../selectors/report';
 
-// const option = [
-//   { key: 'normal', value: 'normal', text: 'Timesheet(normal)' },
-//   { key: 'spacial', value: 'spacial', text: 'Timesheet(spacial)' },
-//   { key: 'summary', value: 'summary', text: 'SummaryTimesheet' }
-// ];
-// const months = [
-//   { key: 1, value: '01', text: 'January' },
-//   { key: 2, value: '02', text: 'February' },
-//   { key: 3, value: '03', text: 'March' },
-//   { key: 4, value: '04', text: 'April' },
-//   { key: 5, value: '05', text: 'May' },
-//   { key: 6, value: '06', text: 'June' },
-//   { key: 7, value: '07', text: 'July' },
-//   { key: 8, value: '08', text: 'August' },
-//   { key: 9, value: '09', text: 'September' },
-//   { key: 10, value: '10', text: 'October' },
-//   { key: 11, value: '11', text: 'November' },
-//   { key: 12, value: '12', text: 'December' }
-// ];
-// const years = [
-//   { key: 2018, value: 2018, text: '2018' },
-//   { key: 2019, value: 2019, text: '2019' },
-//   { key: 2020, value: 2020, text: '2020' }
-// ];
-// const employees = [
-//   { key: 10000, value: 10000, text: 'Thanapon Siriompark (Mark)' },
-//   { key: 10001, value: 10001, text: 'Jack Denial (J)' },
-//   { key: 10002, value: 10002, text: 'Pee Isgod (PP)' }
-// ];
-// const project = [
-//   { key: 'ps180001', value: 'ps180001', text: 'Project1' },
-//   { key: 'ps180002', value: 'ps180002', text: 'project2' },
-//   { key: 'ps180003', value: 'ps180003', text: 'project3' }
-// ];
-// const employeeSelector = () => (
-//   // <Grid.Row>
-//   <Grid.Column width={3}>
-//     <Form >
-//       <Form.Group width="equal">
-//         <Form.Dropdown size="large" label="Employee" placeholder="Employees" selection options={employees} />
-//       </Form.Group>
-//     </Form>
-//   </Grid.Column>
-//   // </Grid.Row>
-// );
-// const reportTypeSelector = () => (
-//   // <Grid.Row>
-//   <Grid.Column width={3}>
-//     <Form >
-//       <Form.Group width="equal" >
-//         <Form.Dropdown size="large" label="Type" placeholder="Select Type" selection options={option} />
-//       </Form.Group>
-//     </Form>
-//   </Grid.Column>
-//   // </Grid.Row>
-// );
-// const yearSelector = () => (
-//   // <Grid.Row>
-//   <Grid.Column width={3}>
-//     <Form >
-//       <Form.Group width="equal">
-//         <Form.Dropdown size="large" label="Year" placeholder="Select Year" selection options={years} />
-//       </Form.Group>
-//     </Form>
-//   </Grid.Column>
-//   // </Grid.Row>
-// );
-// const monthSelector = () => (
-//   // <Grid.Row>
-//   <Grid.Column width={3}>
-//     <Form >
-//       <Form.Group width="equal">
-//         <Form.Dropdown size="large" label="Month" placeholder="Select Month" selection options={months} />
-//       </Form.Group>
-//     </Form>
-//   </Grid.Column>
-//   // </Grid.Row>
-// );
-// const projectSelector = () => (
-//   // <Grid.Row>
-//   <Grid.Column width={3} >
-//     <Form width="equal" >
-//       <Form.Group width="equal">
-//         <Form.Dropdown size="large" label="Project" placeholder="Select Project" selection options={project} />
-//       </Form.Group>
-//     </Form>
-//   </Grid.Column>
-//   // </Grid.Row>
-// );
-// const ReportPage = () => (
-//   <div>
-//     <PageHeader text="Report" icon="file powerpoint" />
-//     <Grid>
-//       <Grid.Row>
-//         {reportTypeSelector()}
-//       </Grid.Row>
-//       <Grid.Row>
-//         {yearSelector()}
-//         {monthSelector()}
-//       </Grid.Row>
-//       <Grid.Row>
-//         {projectSelector()}
-//         {employeeSelector()}
-//       </Grid.Row>
-//       <Grid.Row>
-//         <Button color="blue" style={{ marginLeft: '15px' }}>Download</Button>
-//       </Grid.Row>
-//     </Grid>
-//   </div>
-// );
+const reportOptions = [
+  { key: 'normal', value: 'Timesheet (Normal)', text: 'Timesheet (Normal)' },
+  { key: 'normal-person', value: 'Timesheet (Normal) per Person', text: 'Timesheet (Normal) per Person' },
+  { key: 'special', value: 'Timesheet (Special)', text: 'Timesheet (Special)' },
+  { key: 'special-person', value: 'Timesheet (Special) per Person', text: 'Timesheet (Special) per Person' },
+  { key: 'summary-month', value: 'Summary Timesheet (Year)', text: 'Summary Timesheet (Year)' },
+  { key: 'summary-year', value: 'Summary Timesheet (Month)', text: 'Summary Timesheet (Month)' },
+  { key: 'resource', value: 'Resource Available', text: 'Resource Available' }
+];
 
-// // ReportPage.propTypes = {
+const templateOptions = [
+  { key: 'Playtorium', value: 'Playtorium', text: 'Playtorium' },
+  { key: 'MFEC', value: 'MFEC', text: 'MFEC' }
+];
 
-// // };
+const downloadReport = ({ reportType, template, userId, projectId, year, month }) => {
+  window.location = `/api/report?reportType=${reportType}&template=${template}&userId=${userId}&projectId=${projectId}&year=${year}&month=${month}`;
+};
 
-// // const mapStateToProps = state => ({
-// //   userId: state.auth.id
-// // });
+const ReportPage = ({ reportType, projectOptions, handleSubmit }) => (
+  <div>
+    <PageHeader text="Report" icon="file powerpoint" />
+    <Form onSubmit={handleSubmit(downloadReport)}>
+      <Field name="reportType" as={Form.Select} component={Input} label="Report type" placeholder="Report type" options={reportOptions} />
+      <Form.Group widths="equal">
+        <Field name="year" as={Form.Select} component={Input} label="Year" placeholder="Year" options={getYearOptions()} />
+        {reportType !== 'Summary Timesheet (Year)' &&
+        <Field name="month" as={Form.Select} component={Input} label="Month" placeholder="Month" options={getMonthOptions()} />}
+      </Form.Group>
+      {reportType !== 'Summary Timesheet (Year)' &&
+      <Field name="projectId" as={Form.Select} component={Input} label="Project" placeholder="Project" options={projectOptions} />}
+      {reportType !== 'Summary Timesheet (Year)' &&
+      <Field name="template" as={Form.Select} component={Input} label="Template" placeholder="Template" options={templateOptions} />}
+      {(reportType === 'Timesheet (Normal) per Person' || reportType === 'Timesheet (Special) per Person') &&
+      <Field name="userId" as={Form.Select} component={Input} label="Employee" placeholder="Employee" options={reportOptions} />}
+      <Button type="submit">Download</Button>
+    </Form>
+  </div>
+);
 
-// // const mapDispatchToProps = dispatch => ({
+ReportPage.propTypes = {
+  reportType: PropTypes.string.isRequired,
+  projectOptions: PropTypes.array.isRequired,
+  handleSubmit: PropTypes.func.isRequired
+};
 
-// // });
+const selector = formValueSelector('report');
 
-// export default connect(null, mapDispatchToProps)(ReportPage);
+const mapStateToProps = state => ({
+  userId: state.auth.id,
+  year: state.report.year,
+  month: state.report.month,
+  initialValues: {
+    userId: state.auth.id,
+    reportType: 'Timesheet (Normal)',
+    year: state.report.year,
+    month: state.report.month,
+    template: 'Playtorium'
+  },
+  reportType: selector(state, 'reportType'),
+  projectOptions: projectsToOptions(state)
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchOwnProject: (userId, year, month) => dispatch(fetchOwnProjectRequest(userId, year, month))
+});
+
+const enhance = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  lifecycle({
+    componentDidMount() {
+      const { fetchOwnProject, userId, year, month } = this.props;
+      fetchOwnProject(userId, year, month);
+    }
+  }),
+  reduxForm({
+    form: 'report'
+  })
+);
+
+export default enhance(ReportPage);

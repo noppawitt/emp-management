@@ -271,7 +271,7 @@ class Timesheet extends React.Component {
         <Grid stackable doubling relaxed >
           <Grid.Row>
             <Grid.Column computer={8} >
-              <Select placeholder="Year" defaultValue={parseInt(this.props.year, 10)} options={this.state.years} onChange={(e, { value }) => this.props.fetchTimesheet(this.props.userId, value, this.props.month)} />
+              <Select placeholder="Year" defaultValue={this.props.year} options={this.state.years} onChange={(e, { value }) => this.props.fetchTimesheet(this.props.userId, value, this.props.month)} />
               <Select style={{ marginLeft: '10px' }} placeholder="Month" defaultValue={this.props.month} options={this.state.months} onChange={(e, { value }) => this.props.fetchTimesheet(this.props.userId, this.props.year, value)} />
             </Grid.Column>
             <Grid.Column floated="right" width={5}>
