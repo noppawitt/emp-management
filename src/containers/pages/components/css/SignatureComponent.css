@@ -69,7 +69,7 @@
     font-weight: lighter;
 }
 
-.Accept-button{
+.accept-button{
   position: relative;
   padding: 10px 15px 10px 15px;
   font-size: 1em;
@@ -78,10 +78,12 @@
   text-decoration: none;
   border-radius: 5px;
 }
-.Accept-button:hover{
+.accept-button:hover{
   cursor:pointer;
   color: #37BFDB;
 }
-.Accept-button:disabled {
+.accept-button:disabled {
   pointer-events: none;
+  border: 1px solid rgb(155, 155, 155);
+  opacity: 0.7;
 }

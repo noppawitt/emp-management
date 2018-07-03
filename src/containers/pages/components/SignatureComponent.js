@@ -91,19 +91,19 @@ class SignatureComponent extends React.Component {
                             <tr>
                                 <th>
                                     <div className='div_mark'>
-                                        <button ref={this.employeeSignButton} className="Accept-button" onClick={this.EmployeeSignHandler}>Accept</button>
+                                        <button ref={this.employeeSignButton} className="accept-button" onClick={this.EmployeeSignHandler}>Accept</button>
                                         <div className="div_mark1" id="mark1"><img src={cmark} className="mark"></img></div>
                                     </div>
                                 </th>
                                 <th>
                                     <div className='div_mark'>
-                                        <button ref={this.supervisorSignButton} className="Accept-button" onClick={this.SupervisorSignHandler}>Accept</button>
+                                        <button ref={this.supervisorSignButton} className="accept-button" onClick={this.SupervisorSignHandler}>Accept</button>
                                         <div className="div_mark2" id="mark2"><img src={cmark} className="mark"></img></div>
                                     </div>
                                 </th>
                                 <th>
                                     <div className='div_mark'>
-                                        <button ref={this.MDSignButton} className="Accept-button" onClick={this.MDSignHandler}>Accept</button>
+                                        <button ref={this.MDSignButton} className="accept-button" onClick={this.MDSignHandler}>Accept</button>
                                         <div className="div_mark3" id="mark3"><img src={cmark} className="mark"></img></div>
                                     </div>
                                 </th>
