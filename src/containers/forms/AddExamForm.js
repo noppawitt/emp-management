@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { Field, reduxForm, formValueSelector, FieldArray } from 'redux-form';
-import { Form, Header, Icon, Button, Label } from 'semantic-ui-react';
+import { Form, Header, Icon, Button, Label, Checkbox } from 'semantic-ui-react';
 import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
 import ExamRichTextEditor from '../../components/ExamRichTextEditor';
@@ -81,6 +81,18 @@ examSubCategoryOptions.propTypes = {
   examCategory: PropTypes.string.isRequired
 };
 
+const renderCheckBox = ({ input, label }) => {
+  return (
+    <Form.Field>
+      <Checkbox
+        label={label}
+        checked={input.value ? true : false}
+        onChange={(e, { checked }) => input.onChange(checked)}
+      />
+    </Form.Field>
+  );
+};
+
 const renderChoices = ({ fields, placeHold, meta }) => (
   <div>
     <Header as="h5">Choices
@@ -94,7 +106,7 @@ const renderChoices = ({ fields, placeHold, meta }) => (
         <div>
           <Form.Group>
             <Field name={`${choice}.data`} as={Form.Input} component={Input} placeholder={placeHold} validate={[requiredField]} disabled={meta.submitting} />
-            <Field name={`${choice}.answer`} as={Form.Checkbox} component={Input} label="Correct Answer" disabled={meta.submitting} />
+            <Field name={`${choice}.answer`} component={renderCheckBox} label="Correct Answer" disabled={meta.submitting} />
             <Icon type="button" fitted name="ban" color="red" size="large" onClick={() => fields.remove(index)} disabled={meta.submitting} />
           </Form.Group>
           <sbr />
