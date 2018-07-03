@@ -66,7 +66,7 @@ class ProbationForm extends React.Component {
         if (percentTotal >= 60) {
             this.setState({
                 passPro: true,
-                notPassPro: false
+                notPassPro: false,
             })
         } else {
             this.setState({
@@ -75,6 +75,14 @@ class ProbationForm extends React.Component {
             })
         }
 
+        this.setState({
+            terminationDate: null,
+            continuedDate: null,
+            basedSalary: null,
+            mobile: null,
+            transporationAllowance: null,
+            otherAllowance: null
+        })
     }
 
     supervisorCommentHandler(newComment) {

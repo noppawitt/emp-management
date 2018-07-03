@@ -41,6 +41,8 @@ class EvaluationResultComponent extends React.Component {
             transporationAllowance: props.transporationAllowance,
             otherAllowance: props.otherAllowance
         })
+
+        console.log(this.state);
     }
 
     updateParentComponent() {
