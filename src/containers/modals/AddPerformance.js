@@ -12,7 +12,7 @@ class AddPerformance extends React.Component{
   constructor(props){
     super(props);
     this.state = props;
-    this.type = (this.props.profile.eva == null ? 'addPerformance':'updatePerformance')
+    this.type = (this.props.profile.perf.length==0 ? 'addPerformance':'updatePerformance')
   }
   componentDidMount(){
     console.log(this.state.submitting);
@@ -29,7 +29,7 @@ class AddPerformance extends React.Component{
             size="large"
             disable={!this.props.edited}
           >
-            <A test={this.props.onChange} profile={this.props.profile} mode={!this.props.profile.eva || (this.props.type=='admin' && !this.props.profile.eva.emSignDate) ? 'edit' : 'view'} role={this.props.type == 'admin' ? 'supervisor':'employee'}/>
+            <A test={this.props.onChange} profile={this.props.profile} mode={!this.props.profile.perf.length==0 || (this.props.type=='admin' && !this.props.profile.perf.emSignDate) ? 'edit' : 'view'} role={this.props.type == 'admin' ? 'supervisor':'employee'}/>
           </Modal>
         }
       </div>
