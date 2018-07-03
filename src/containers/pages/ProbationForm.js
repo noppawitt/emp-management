@@ -112,7 +112,8 @@ class ProbationForm extends React.Component {
                 continuedDate: this.props.profile.eva.continuedDate,
                 employeeSignDate: this.props.profile.eva.emSignDate,
                 supervisorSignDate: this.props.profile.eva.supSignDate,
-                MDSignDate: this.props.profile.eva.mdSignDate
+                MDSignDate: this.props.profile.eva.mdSignDate,
+                endProbationDate: this.props.profile.eva.passProDate
             })
         }
     }
