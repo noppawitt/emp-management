@@ -16,6 +16,12 @@ const questions = ['ความรู้ในงานและการพั
     'ความสามารถทางด้านภาษาอังกฤษ (TOEIC)',
     'ประกาศนียบัตรตามสายงาน (Certificate)'];
 
+const weightType = {
+    engLv2: [20, 15, 15, 20, 10, 20],
+    engLv3orMore: [15, 10, 10, 15, 10, 20, 20],
+    noEng: [20, 20, 20, 20, 20]
+}
+
 class ProbationForm extends React.Component {
     constructor(props) {
         super(props);
@@ -174,7 +180,9 @@ class ProbationForm extends React.Component {
                 </div>
                 <EmployeeInfo {...this.state} showEndProDate='true' onChange={this.employeeStateHandler} mode={this.props.mode} />
                 <div>
-                    <ScoreTableManager {...this.state} questions={questions} numOfQuestion={this.props.profile.work.engineer ? this.props.profile.work.levelId >= 3 ? 7 : 6 : 5} weight={[20, 20, 20, 20, 20]} score={this.state.score} onChange={this.scoreTableStateHandler} mode={this.props.mode} />
+                    <ScoreTableManager {...this.state} questions={questions} numOfQuestion={this.props.profile.work.engineer ? this.props.profile.work.levelId >= 3 ? 7 : 6 : 5}
+                        weight={this.props.profile.work.engineer ? this.props.profile.work.levelId >= 3 ? weightType.engLv3orMore : weightType.engLv2 : weightType.noEng}
+                        score={this.state.score} onChange={this.scoreTableStateHandler} mode={this.props.mode} />
                 </div>
                 <EvaluationResultComponent {...this.state} onChange={this.evaluationResultHandler} mode={this.props.mode} />
                 <SupervisorCommentComponent {...this.state} onChange={this.supervisorCommentHandler} mode={this.props.mode} />
