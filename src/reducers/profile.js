@@ -2,7 +2,8 @@ import * as actionTypes from '../constants/actionTypes';
 
 const initialState = {
   isFetching: true,
-  edited: false
+  edited: false,
+  proFetching: false
 };
 
 const profile = (state = initialState, action) => {
@@ -16,11 +17,28 @@ const profile = (state = initialState, action) => {
           disable = true;
         }else disable = false;
       }else disable = true;
-
       return {
         ...state,
         item: action.payload.item,
         edited: disable
+      };
+    case actionTypes.PROBATION_FETCH_REQUEST:
+      return{
+        ...state,
+        proFetching: true,
+        id: action.payload.id
+      };
+    case actionTypes.PROBATION_FETCH_SUCCESS:
+      return {
+        ...state,
+        proFetching: false,
+        ...action.payload.profile
+      };
+    case actionTypes.PROBATION_FETCH_FAILURE:
+      return {
+        ...state,
+        proFetching: false,
+        message: action.payload.message
       };
     case actionTypes.PROFILE_FETCH_REQUEST:
       return {

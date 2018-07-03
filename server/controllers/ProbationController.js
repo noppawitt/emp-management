@@ -1,6 +1,16 @@
 const Probation = require('../models/Probation');
 const mail = require('../mail');
 
+exports.check = (req,res,next) => {
+  console.log('check');
+  Probation.checkExist(req.query.id)
+    .then((exist)=>{
+      console.log(exist)
+      res.json(exist);
+    })
+    .catch(next);
+};
+
 exports.find = (req, res, next) => {
     console.log('probation running')
     Probation.findProById(req.query.id)

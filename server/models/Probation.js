@@ -3,6 +3,10 @@ const mail = require('../mail');
 
 const Probation = {};
 
+Probation.checkExist = (id) => (
+  db.oneOrNone("SELECT 1 as exist FROM Probation WHERE user_id=$1",[id])
+)
+
 Probation.findProById = (id) => (
   db.oneOrNone("SELECT * FROM Probation WHERE user_id=$1",[id])
 )

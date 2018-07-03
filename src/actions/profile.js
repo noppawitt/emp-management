@@ -74,3 +74,24 @@ export const deleteProfileFailure = message => ({
     message
   }
 });
+
+export const fetchProbationRequest = id => ({
+  type: actionTypes.PROBATION_FETCH_REQUEST,
+  payload:{
+    id
+  }
+});
+
+export const fetchProbationSuccess = profile => ({
+  type: actionTypes.PROBATION_FETCH_SUCCESS,
+  payload: {
+    profile
+  }
+});
+
+export const fetchProbationFailure = message => ({
+  type: actionTypes.PROBATION_FETCH_FAILURE,
+  payload: {
+    message
+  }
+});

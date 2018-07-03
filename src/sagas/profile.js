@@ -6,13 +6,26 @@ import {
   updateProfileSuccess,
   updateProfileFailure,
   deleteProfileSuccess,
-  deleteProfileFailure
+  deleteProfileFailure,
+  fetchProbationSuccess,
+  fetchProbationFailure
 } from '../actions/profile';
 import { closeModal } from '../actions/modal';
 import api from '../services/api';
 import jwt from 'jsonwebtoken';
 
 const token = jwt.decode(localStorage.getItem('token'));
+
+export function* fetchProbationTask(action){
+  try{
+    const profile = {};
+    profile.eva = yield call(api.fetchProbation, action.payload.id);
+    yield put(fetchProbationSuccess(profile));
+  }
+  catch (error) {
+    yield put(fetchProbationFailure(error));
+  }
+}
 
 export function* fetchProfileTask(action) {
   try {
@@ -23,7 +36,7 @@ export function* fetchProfileTask(action) {
     profile.certificates = yield call(api.fetchCertificateProfile, action.payload.id);
     profile.assets = yield call(api.fetchAssetProfile, action.payload.id);
     if(token.type=='admin' || token.id == action.payload.id){
-      profile.eva = yield call(api.fetchProbation, action.payload.id);
+      profile.eva = yield call(api.checkProbation, action.payload.id);
       profile.perf = yield call(api.fetchPerformance, action.payload.id);
     }
     yield put(fetchProfileSuccess(profile));
@@ -157,10 +170,15 @@ export function* watchUploadProfilePictureTask() {
   yield takeEvery(actionTypes.PROFILE_PICTURE_UPLOAD_REQUEST, uploadProfilePictureTask);
 }
 
+export function* watchFetchProbationRequest() {
+  yield takeEvery(actionTypes.PROBATION_FETCH_REQUEST, fetchProbationTask);
+}
+
 export default function* profileSaga() {
   yield all([
     watchFetchProfileRequest(),
     watchUpdateProfileRequest(),
-    watchDeleteProfileRequest()
+    watchDeleteProfileRequest(),
+    watchFetchProbationRequest()
   ]);
 }

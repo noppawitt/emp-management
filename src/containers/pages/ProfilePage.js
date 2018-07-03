@@ -9,7 +9,7 @@ import Loader from '../../components/Loader';
 
 const ProfilePage = ({ profile }) => (
   <div>
-    {profile.isFetching ? <Loader /> : <Profile profile={profile} />}
+    {profile.isFetching ? <Loader /> : <Profile profile={profile}/>}
   </div>
 );
 

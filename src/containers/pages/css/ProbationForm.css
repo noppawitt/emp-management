@@ -32,3 +32,6 @@
   min-width: 496.734px;
   min-height: 90.4738px;
 }
+.ui.dimmer {
+  position: fixed;
+}

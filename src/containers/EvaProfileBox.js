@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Segment,Grid , Header, Icon, Button, Dropdown, Container, Divider} from 'semantic-ui-react';
 import ProfileBox from '../components/ProfileBox';
 import { openModal } from '../actions/modal';
+import { fetchProbationRequest } from '../actions/profile';
 import * as modalNames from '../constants/modalNames';
 import './pages/css/EvaProfileBox.css'
 
@@ -11,7 +12,7 @@ const AngleDownButton = (
   <Button icon="angle down"></Button>
 )
 
-const EvaProfileBox = ({performanceProfile, evaProfile, onAddProClick, id, onAddPerClick, type}) => {
+const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, openPerformanceModal, type, fetchProbation, profileId}) => {
   console.log(evaProfile);
   const options = [
     {
@@ -48,10 +49,10 @@ const EvaProfileBox = ({performanceProfile, evaProfile, onAddProClick, id, onAdd
         <div className="buttonGroup">
             <Button.Group>
               <Dropdown trigger={AngleDownButton} options={options} />
-              <Button onClick={onAddPerClick} disabled={type!='admin' && performanceProfile.length==0}>{performanceProfile.length==0 ? 'Add Performance' : 'Performance'}</Button>
+              <Button onClick={openPerformanceModal} disabled={type!='admin' && performanceProfile.length==0}>{performanceProfile.length==0 ? 'Add Performance' : 'Performance'}</Button>
             </Button.Group>
         </div>
-            <Button icon labelPosition='left' disabled={type!='admin' && !evaProfile} icon={evaProfile==null ? 'plus':'angle right'} content={!evaProfile && type=='admin' ? 'Create Probation':'View Probation'} onClick={onAddProClick} color={evaProfile==null ? 'green':'blue'}/>
+            <Button icon labelPosition='left' disabled={type!='admin' && !evaProfile} icon={evaProfile==null ? 'plus':'angle right'} content={!evaProfile && type=='admin' ? 'Create Probation':'View Probation'} onClick={()=>{fetchProbation(profileId);openProbationModal()}} color={!evaProfile && type=='admin' ? 'green':'blue'}/>
       </Segment>
 
 
@@ -66,17 +67,19 @@ EvaProfileBox.defaultProps = {
 
 EvaProfileBox.propTypes = {
   evaProfile: PropTypes.object,
-  onAddProClick: PropTypes.func.isRequired
+  openProbationModal: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
+  profileId: state.profile.id,
   id: state.auth.id,
   type: state.auth.type
 })
 
 const mapDispatchToProps = dispatch =>({
-  onAddPerClick: () => dispatch(openModal(modalNames.ADD_PERFORMANCE)),
-  onAddProClick: () => dispatch(openModal(modalNames.ADD_PROBATION))
+  openPerformanceModal: () => dispatch(openModal(modalNames.ADD_PERFORMANCE)),
+  openProbationModal: () => dispatch(openModal(modalNames.ADD_PROBATION)),
+  fetchProbation: (id) => dispatch(fetchProbationRequest(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EvaProfileBox);

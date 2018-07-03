@@ -298,6 +298,10 @@ api.deleteTimesheet = body => (
   })
 );
 
+api.checkProbation = id => (
+  callApi(`/api/probation/check?id=${id}`)
+)
+
 api.fetchProbation = id => (
   callApi(`/api/probation/?id=${id}`)
 )
