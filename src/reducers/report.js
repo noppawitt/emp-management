@@ -1,11 +1,6 @@
-import moment from 'moment';
 import * as actionTypes from '../constants/actionTypes';
 
-const now = moment();
-
 const initialState = {
-  year: now.year(),
-  month: now.month() + 1,
   projects: []
 };
 

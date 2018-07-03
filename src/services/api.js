@@ -26,6 +26,30 @@ const callApi = (endpoint, request) => {
     });
 };
 
+const download = (endpoint, request) => {
+  if (request && request.body) {
+    request.body = JSON.stringify(request.body);
+  }
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+  const requestWithHeaders = {
+    ...{ headers },
+    ...request
+  };
+
+  return fetch(endpoint, requestWithHeaders)
+    .then(response => response.blob().then(blob => ({ response, blob })))
+    .then(({ response, blob }) => {
+      if (!response.ok) {
+        return Promise.reject();
+      }
+      return Promise.resolve(blob);
+    });
+};
+
 const api = {};
 
 // Auth
@@ -318,7 +342,7 @@ api.fetchOwnProject = (userId, year, month) => (
 );
 
 api.downloadReport = (reportType, template, userId, projectId, year, month) => (
-  callApi(`/api/report?reportType=${reportType}&template=${template}&userId=${userId}&projectId=${projectId}&year=${year}&month=${month}`)
+  download(`/api/report?reportType=${reportType}&template=${template}&userId=${userId}&projectId=${projectId}&year=${year}&month=${month}`)
 );
 
 export default api;
