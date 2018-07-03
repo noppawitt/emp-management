@@ -32,6 +32,9 @@ class PerformanceReviewForm extends React.Component {
             supervisor: '_supervisor',
             expectedScore: null,
             score: null,
+            employeeSignDate: null,
+            supervisorSignDate: null,
+            MDSignDate: null
         };
 
         this.scoreTableStateHandler = this.scoreTableStateHandler.bind(this);
@@ -51,7 +54,10 @@ class PerformanceReviewForm extends React.Component {
             this.setState({
                 expectedScore: this.props.profile.perf[0].expectedScore,
                 score: this.props.profile.perf[0].score,
-                supervisorComment: this.props.profile.perf[0].supComment
+                supervisorComment: this.props.profile.perf[0].supComment,
+                employeeSignDate: this.props.profile.perf[0].emSignDate,
+                supervisorSignDate: this.props.profile.perf[0].supSignDate,
+                MDSignDate: this.props.profile.perf[0].mdSignDate,
             })
         }
     }
