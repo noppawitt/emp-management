@@ -22,6 +22,24 @@ const profile = (state = initialState, action) => {
         item: action.payload.item,
         edited: disable
       };
+    case actionTypes.PERFORMANCE_FETCH_REQUEST:
+      return{
+        ...state,
+        proFetching: true,
+        id: action.payload.id
+      };
+    case actionTypes.PERFORMANCE_FETCH_SUCCESS:
+      return {
+        ...state,
+        proFetching: false,
+        ...action.payload.profile
+      };
+    case actionTypes.PERFORMANCE_FETCH_FAILURE:
+      return {
+        ...state,
+        proFetching: false,
+        message: action.payload.message
+      };
     case actionTypes.PROBATION_FETCH_REQUEST:
       return{
         ...state,

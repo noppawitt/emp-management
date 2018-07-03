@@ -20,16 +20,16 @@ class AddProbation extends React.Component{
     return(
       <div>
         {this.props.fetching ? <Loader/> :
-        <Modal
-          header={this.props.profile.eva == null ? 'Add Probation':'View Probation'}
-          onClose={this.props.onClose}
-          onClick={()=>this.props.onSubmit(this.props.item,(this.props.profile.eva == null ? 'addProbation':'updateProbation'))}
-          submitting={this.props.submitting}
-          size="large"
-          disable={!this.props.edited}
-        >
-          <A test={this.props.onChange} profile={this.props.profile} mode={!this.props.profile.eva || (this.props.type=='admin' && !this.props.profile.eva.emSignDate) ? 'edit' : 'view'} role={this.props.type == 'admin' ? 'supervisor':'employee'}/>
-        </Modal>
+          <Modal
+            header={this.props.profile.eva == null ? 'Add Probation':'View Probation'}
+            onClose={this.props.onClose}
+            onClick={()=>this.props.onSubmit(this.props.item,(this.props.profile.eva == null ? 'addProbation':'updateProbation'))}
+            submitting={this.props.submitting}
+            size="large"
+            disable={!this.props.edited}
+          >
+            <A test={this.props.onChange} profile={this.props.profile} mode={!this.props.profile.eva || (this.props.type=='admin' && !this.props.profile.eva.emSignDate) ? 'edit' : 'view'} role={this.props.type == 'admin' ? 'supervisor':'employee'}/>
+          </Modal>
         }
       </div>
     );

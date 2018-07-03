@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Segment,Grid , Header, Icon, Button, Dropdown, Container, Divider} from 'semantic-ui-react';
 import ProfileBox from '../components/ProfileBox';
 import { openModal } from '../actions/modal';
-import { fetchProbationRequest } from '../actions/profile';
+import { fetchProbationRequest, fetchPerformanceRequest } from '../actions/profile';
 import * as modalNames from '../constants/modalNames';
 import './pages/css/EvaProfileBox.css'
 
@@ -12,7 +12,7 @@ const AngleDownButton = (
   <Button icon="angle down"></Button>
 )
 
-const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, openPerformanceModal, type, fetchProbation, profileId}) => {
+const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, openPerformanceModal, type, fetchProbation, profileId, fetchPerformance}) => {
   console.log(evaProfile);
   const options = [
     {
@@ -49,7 +49,7 @@ const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, 
         <div className="buttonGroup">
             <Button.Group>
               <Dropdown trigger={AngleDownButton} options={options} />
-              <Button onClick={openPerformanceModal} disabled={type!='admin' && performanceProfile.length==0}>{performanceProfile.length==0 ? 'Add Performance' : 'Performance'}</Button>
+              <Button onClick={() => {fetchPerformance(profileId);openPerformanceModal();}} disabled={type!='admin' && performanceProfile.length==0}>{performanceProfile.length==0 ? 'Add Performance' : 'Performance'}</Button>
             </Button.Group>
         </div>
             <Button icon labelPosition='left' disabled={type!='admin' && !evaProfile} icon={evaProfile==null ? 'plus':'angle right'} content={!evaProfile && type=='admin' ? 'Create Probation':'View Probation'} onClick={()=>{fetchProbation(profileId);openProbationModal()}} color={!evaProfile && type=='admin' ? 'green':'blue'}/>
@@ -79,7 +79,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>({
   openPerformanceModal: () => dispatch(openModal(modalNames.ADD_PERFORMANCE)),
   openProbationModal: () => dispatch(openModal(modalNames.ADD_PROBATION)),
-  fetchProbation: (id) => dispatch(fetchProbationRequest(id))
+  fetchProbation: (id) => dispatch(fetchProbationRequest(id)),
+  fetchPerformance: (id) => dispatch(fetchPerformanceRequest(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EvaProfileBox);

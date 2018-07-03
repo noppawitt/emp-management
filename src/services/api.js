@@ -302,6 +302,10 @@ api.checkProbation = id => (
   callApi(`/api/probation/check?id=${id}`)
 )
 
+api.checkPerformance = id => (
+  callApi(`/api/performance/check?id=${id}`)
+)
+
 api.fetchProbation = id => (
   callApi(`/api/probation/?id=${id}`)
 )

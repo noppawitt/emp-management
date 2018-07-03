@@ -8,13 +8,26 @@ import {
   deleteProfileSuccess,
   deleteProfileFailure,
   fetchProbationSuccess,
-  fetchProbationFailure
+  fetchProbationFailure,
+  fetchPerformanceSuccess,
+  fetchPerformanceFailure
 } from '../actions/profile';
 import { closeModal } from '../actions/modal';
 import api from '../services/api';
 import jwt from 'jsonwebtoken';
 
 const token = jwt.decode(localStorage.getItem('token'));
+
+export function* fetchPerformanceTask(action){
+  try{
+    const profile = {};
+    profile.perf = yield call(api.fetchPerformance, action.payload.id);
+    yield put(fetchPerformanceSuccess(profile));
+  }
+  catch (error) {
+    yield put(fetchPerformanceFailure(error));
+  }
+}
 
 export function* fetchProbationTask(action){
   try{
@@ -37,7 +50,7 @@ export function* fetchProfileTask(action) {
     profile.assets = yield call(api.fetchAssetProfile, action.payload.id);
     if(token.type=='admin' || token.id == action.payload.id){
       profile.eva = yield call(api.checkProbation, action.payload.id);
-      profile.perf = yield call(api.fetchPerformance, action.payload.id);
+      profile.perf = yield call(api.checkPerformance, action.payload.id);
     }
     yield put(fetchProfileSuccess(profile));
   }
@@ -174,11 +187,16 @@ export function* watchFetchProbationRequest() {
   yield takeEvery(actionTypes.PROBATION_FETCH_REQUEST, fetchProbationTask);
 }
 
+export function* watchFetchPerformanceRequest() {
+  yield takeEvery(actionTypes.PERFORMANCE_FETCH_REQUEST, fetchPerformanceTask);
+}
+
 export default function* profileSaga() {
   yield all([
     watchFetchProfileRequest(),
     watchUpdateProfileRequest(),
     watchDeleteProfileRequest(),
-    watchFetchProbationRequest()
+    watchFetchProbationRequest(),
+    watchFetchPerformanceRequest()
   ]);
 }

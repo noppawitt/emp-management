@@ -95,3 +95,24 @@ export const fetchProbationFailure = message => ({
     message
   }
 });
+
+export const fetchPerformanceRequest = id => ({
+  type: actionTypes.PERFORMANCE_FETCH_REQUEST,
+  payload:{
+    id
+  }
+});
+
+export const fetchPerformanceSuccess = profile => ({
+  type: actionTypes.PERFORMANCE_FETCH_SUCCESS,
+  payload: {
+    profile
+  }
+});
+
+export const fetchPerformanceFailure = message => ({
+  type: actionTypes.PERFORMANCE_FETCH_FAILURE,
+  payload: {
+    message
+  }
+});
