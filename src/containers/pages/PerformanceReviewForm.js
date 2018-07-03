@@ -87,7 +87,7 @@ class PerformanceReviewForm extends React.Component {
                 <EmployeeInfo {...this.state} mode='edit' />
                 <br />
                 <div>
-                    <ScoreTableManager {...this.state} questions={questions} numOfQuestion={5} weight={[20, 20, 20, 20, 20]} score={this.state.score} onChange={this.scoreTableStateHandler} mode='edit' />
+                    <ScoreTableManager {...this.state} questions={questions} numOfQuestion={this.props.profile.work.engineer ? this.props.profile.work.levelId >= 3 ? 7 : 6 : 5} weight={[20, 20, 20, 20, 20]} score={this.state.score} onChange={this.scoreTableStateHandler} mode='edit' />
                 </div>
                 <br />
                 <SupervisorCommentComponent {...this.state} onChange={this.supervisorCommentHandler} mode='edit' />
