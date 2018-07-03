@@ -338,8 +338,35 @@ const calTotalLeave = (worksheet, row) => new Promise((resolve, reject) => {
   }
 });
 
+const writeHoliday = (workbook, excelType) => new Promise(async (resolve, reject) => {
+  try {
+    const worksheet = workbook.getWorksheet('Holiday');
+    const holidays = await Holiday.findByYear(excelType.year);
+    const column = ['B', 'C', 'D'];
+    let row = 4;
+    let index = 1;
+    holidays.forEach((holiday) => {
+      worksheet.getCell(`B${row}`).value = index;
+      worksheet.getCell(`C${row}`).value = moment(holiday.date, 'YYYY-MM-DD').format('D MMMM YYYY');
+      worksheet.getCell(`D${row}`).value = holiday.dateName;
+      fillBorderFixColumn(worksheet, row, column);
+      index += 1;
+      row += 1;
+    });
+    resolve(workbook);
+  }
+  catch (error) {
+    reject(error);
+  }
+});
+
 exports.createReport = (req, res, next) => {
-  const { excelType } = req.body;
+  const excelType = {};
+  excelType.reportType = req.query.reportType;
+  excelType.projectId = req.query.projectId;
+  excelType.userId = req.query.userId;
+  excelType.year = req.query.year;
+  excelType.month = req.query.month;
   if (excelType.reportType === 'Timesheet (Normal)') {
     const filename = 'server/storage/private/report/Playtorium_Timesheet.xlsx';
     getProjectDetail(excelType)
@@ -591,9 +618,13 @@ exports.createReport = (req, res, next) => {
               .then((row) => {
                 calTotalLeave(worksheet, row)
                   .then(() => {
-                    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-                    res.setHeader('Content-Disposition', `attachment; filename="Timesheet_Summary_${excelType.year}.xlsx`);
-                    workbook.xlsx.write(res);
+                    writeHoliday(workbook, excelType)
+                      .then(() => {
+                        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                        res.setHeader('Content-Disposition', `attachment; filename="Timesheet_Summary_${excelType.year}.xlsx`);
+                        workbook.xlsx.write(res);
+                      })
+                      .catch(next);
                   })
                   .catch(next);
               })
