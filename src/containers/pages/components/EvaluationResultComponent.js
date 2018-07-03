@@ -9,6 +9,7 @@ class EvaluationResultComponent extends React.Component {
         this.state = {
             ...this.props,
             passPro: this.props.passPro !== null ? this.props.passPro : true,
+            notPassPro: this.props.notPassPro !== null ? this.props.notPassPro : false,
             confirmed: this.props.confirmed !== null ? this.props.confirmed : true,
             continued: this.props.continued !== null ? this.props.continued : true,
             passProDate: this.props.endProbationDate,
@@ -29,6 +30,7 @@ class EvaluationResultComponent extends React.Component {
     componentWillReceiveProps(props) {
         this.setState({
             passPro: props.passPro,
+            notPassPro: props.notPassPro,
             confirmed: props.confirmed,
             continued: props.continued,
             passProDate: props.endProbationDate,
@@ -39,14 +41,12 @@ class EvaluationResultComponent extends React.Component {
             transporationAllowance: props.transporationAllowance,
             otherAllowance: props.otherAllowance
         })
-
-        console.log("Receive");
-        console.log(props);
     }
 
     updateParentComponent() {
         this.props.onChange(
             this.state.passPro,
+            this.state.notPassPro,
             this.state.confirmed,
             this.state.continued,
             this.state.passProDate,
@@ -84,10 +84,14 @@ class EvaluationResultComponent extends React.Component {
                 this.closeProElement2();
             else
                 this.showProElement2();
-        } else {
+        } else if (this.state.notPassPro) {
             this.showProElement3();
             this.closeProElement1();
             this.closeProElement2();
+        } else {
+            this.closeProElement1();
+            this.closeProElement2();
+            this.closeProElement3();
         }
     }
 
@@ -145,7 +149,13 @@ class EvaluationResultComponent extends React.Component {
                             <tr>
                                 <td>
                                     <input type='radio' name='pass-pro' onClick={() => {
-                                        this.state = { ...this.state, passPro: true, terminationDate: null, continuedDate: null };
+                                        this.state = {
+                                            ...this.state,
+                                            passPro: true,
+                                            notPassPro: false,
+                                            terminationDate: null,
+                                            continuedDate: null
+                                        };
                                         this.updateParentComponent();
                                     }} checked={this.state.passPro} />
                                     &nbsp;Pass probationary period.Effective date on
@@ -245,13 +255,14 @@ class EvaluationResultComponent extends React.Component {
                                         this.state = {
                                             ...this.state,
                                             passPro: false,
+                                            notPassPro: true,
                                             basedSalary: null,
                                             mobile: null,
                                             transporationAllowance: null,
                                             otherAllowance: null
                                         };
                                         this.updateParentComponent();
-                                    }} checked={!this.state.passPro} />
+                                    }} checked={this.state.notPassPro} />
                                     &nbsp;This person does not pass probation period. Action to be taken
                                 </td>
                             </tr>

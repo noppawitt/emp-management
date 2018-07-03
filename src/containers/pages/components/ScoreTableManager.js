@@ -35,7 +35,7 @@ class ScoreTableManager extends React.Component {
     }
 
     componentDidUpdate() {
-        this.props.onChange(this.state.score, this.state.expectedScore);
+        this.props.onChange(this.state.score, this.state.expectedScore, this.state.sumTotalPoint);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
