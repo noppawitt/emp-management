@@ -367,6 +367,7 @@ exports.createReport = (req, res, next) => {
   excelType.userId = req.query.userId;
   excelType.year = req.query.year;
   excelType.month = req.query.month;
+  excelType.template = req.query.template;
   if (excelType.reportType === 'Timesheet (Normal)') {
     const filename = 'server/storage/private/report/Playtorium_Timesheet.xlsx';
     getProjectDetail(excelType)
@@ -382,13 +383,13 @@ exports.createReport = (req, res, next) => {
             const yearMonth = `${excelType.year}-${excelType.month}`;
             const numberOfDayInMonth = moment(yearMonth, 'YYYY-MM').daysInMonth();
             let logo = '';
-            if (excelType.company === 'Playtorium') {
+            if (excelType.template === 'Playtorium') {
               logo = workbook.addImage({
                 filename: 'server/storage/private/logo/Playtorium.png',
                 extension: 'png'
               });
             }
-            else if (excelType.company === 'MFEC') {
+            else if (excelType.template === 'MFEC') {
               logo = workbook.addImage({
                 filename: 'server/storage/private/logo/MFEC.png',
                 extension: 'png'
@@ -462,13 +463,13 @@ exports.createReport = (req, res, next) => {
             const yearMonth = `${excelType.year}-${excelType.month}`;
             const numberOfDayInMonth = moment(yearMonth, 'YYYY-MM').daysInMonth();
             let logo = '';
-            if (excelType.company === 'Playtorium') {
+            if (excelType.template === 'Playtorium') {
               logo = workbook.addImage({
                 filename: 'server/storage/private/logo/Playtorium.png',
                 extension: 'png'
               });
             }
-            else if (excelType.company === 'MFEC') {
+            else if (excelType.template === 'MFEC') {
               logo = workbook.addImage({
                 filename: 'server/storage/private/logo/MFEC.png',
                 extension: 'png'
