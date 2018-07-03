@@ -15,7 +15,7 @@ class SupervisorCommentComponent extends React.Component {
         return (
             <div className='sup-comment'>
                 <span className='blue-text'>Summary Comments by Supervisors:</span>
-                <textarea onChange={(event) => this.props.onChange(event.target.value)} disabled={this.props.mode != 'edit'}>{this.state.supervisorComment}</textarea>
+                <textarea onChange={(event) => this.props.onChange(event.target.value)} disabled={this.props.mode != 'edit'}>{this.state.supervisorComment.trim()}</textarea>
             </div>
         );
     }
