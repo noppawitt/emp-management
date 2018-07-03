@@ -29,7 +29,7 @@ class AddPerformance extends React.Component{
             size="large"
             disable={!this.props.edited}
           >
-            <A test={this.props.onChange} profile={this.props.profile} mode={this.props.profile.perf.length==0 || (this.props.type=='admin' && !this.props.profile.perf.emSignDate) ? 'edit' : 'view'} role={this.props.type == 'admin' ? 'supervisor':'employee'}/>
+            <A test={this.props.onChange} profile={this.props.profile} mode={this.props.profile.perf.length==0 || (this.props.type=='admin' && !this.props.profile.perf[0].emSignDate) ? 'edit' : 'view'} role={this.props.type == 'admin' ? 'supervisor':'employee'}/>
           </Modal>
         }
       </div>
