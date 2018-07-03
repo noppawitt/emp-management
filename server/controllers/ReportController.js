@@ -148,7 +148,10 @@ const writeSpecialTimesheet = (excelType, holidayDates, worksheet, numberOfDayIn
                 worksheet.getCell(`I${day + 7}`).value = holidayWorkHour.holidayNonWork;
               }
               else {
-                worksheet.getCell(`G${day + 7}`).value = holidayWorkHour.holidayNonWork;
+                worksheet.getCell(`F${day + 7}`).value = holidayWorkHour.holidayWork;
+                if (holidayWorkHour.holidayNonWork !== 0) {
+                  worksheet.getCell(`G${day + 7}`).value = holidayWorkHour.holidayNonWork;
+                }
               }
             });
         }
@@ -223,12 +226,13 @@ const writeAllProject = (workbook, year) => new Promise(async (resolve, reject) 
     const projects = await Project.findByYear(year);
     const worksheet = workbook.getWorksheet('Project');
     let row = 3;
-    const column = ['B', 'C', 'D', 'E'];
+    const column = ['B', 'C', 'D', 'E', 'F'];
     for (let i = 0; i < projects.length; i += 1) {
       worksheet.getCell(`B${row}`).value = projects[i].id;
       worksheet.getCell(`C${row}`).value = projects[i].customer;
       worksheet.getCell(`D${row}`).value = projects[i].quotationId;
-      worksheet.getCell(`E${row}`).value = projects[i].description;
+      worksheet.getCell(`E${row}`).value = projects[i].purchasedOrder;
+      worksheet.getCell(`F${row}`).value = projects[i].description;
       fillBorderFixColumn(worksheet, row, column);
       row += 1;
     }
@@ -244,6 +248,7 @@ const writeAllLeave = (worksheet, leaveRequests, monthColumn, rowColumn) => new 
     let row = 5;
     let userId = '';
     for (let i = 0; i < leaveRequests.length; i += 1) {
+      leaveRequests[i].days = Math.floor(leaveRequests[i].days * 100) / 100;
       if (leaveRequests[i].id === userId) {
         if (leaveRequests[i].leaveType === 'Sick Leave') {
           worksheet.getCell(`${monthColumn[(leaveRequests[i].month - 1) * 4]}${row}`).value = leaveRequests[i].days;
@@ -288,6 +293,24 @@ const writeAllLeave = (worksheet, leaveRequests, monthColumn, rowColumn) => new 
   }
 });
 
+const writeTimesheet = (worksheet, timesheet) => new Promise((resolve, reject) => {
+  try {
+    for (let k = 0; k < timesheet.length; k += 1) {
+      const { date } = timesheet[k];
+      const day = parseInt(moment(date).format('DD'), 10);
+      worksheet.getCell(`B${day + 7}`).value = timesheet[k].task;
+      worksheet.getCell(`C${day + 7}`).value = timesheet[k].description;
+      worksheet.getCell(`D${day + 7}`).value = moment(timesheet[k].timeIn, 'HH:mm:ss').format('HH:mm');
+      worksheet.getCell(`E${day + 7}`).value = moment(timesheet[k].timeOut, 'HH:mm:ss').format('HH:mm');
+      worksheet.getCell(`F${day + 7}`).value = timesheet[k].totalhours;
+    }
+    resolve(worksheet);
+  }
+  catch (error) {
+    reject(error);
+  }
+});
+
 const calTotalLeave = (worksheet, row) => new Promise((resolve, reject) => {
   try {
     for (let i = 6; i <= row; i += 1) {
@@ -317,7 +340,7 @@ const calTotalLeave = (worksheet, row) => new Promise((resolve, reject) => {
 
 exports.createReport = (req, res, next) => {
   const { excelType } = req.body;
-  if (excelType.reportType === 'Timesheet (Normal)' || excelType.reportType === 'Timesheet (Special)') {
+  if (excelType.reportType === 'Timesheet (Normal)') {
     const filename = 'server/storage/private/report/Playtorium_Timesheet.xlsx';
     getProjectDetail(excelType)
       .then((project) => {
@@ -331,17 +354,101 @@ exports.createReport = (req, res, next) => {
             const worksheet = workbook.getWorksheet('Timesheet');
             const yearMonth = `${excelType.year}-${excelType.month}`;
             const numberOfDayInMonth = moment(yearMonth, 'YYYY-MM').daysInMonth();
-            const logo = workbook.addImage({
-              filename: 'server/storage/private/logo/playtorium.png',
-              extension: 'png'
-            });
+            let logo = '';
+            if (excelType.company === 'Playtorium') {
+              logo = workbook.addImage({
+                filename: 'server/storage/private/logo/Playtorium.png',
+                extension: 'png'
+              });
+            }
+            else if (excelType.company === 'MFEC') {
+              logo = workbook.addImage({
+                filename: 'server/storage/private/logo/MFEC.png',
+                extension: 'png'
+              });
+            }
             // write report header
-            if (excelType.reportType === 'Timesheet (Normal)') {
-              worksheet.getCell('C1').value = 'TIMESHEET';
+            worksheet.getCell('C1').value = 'TIMESHEET';
+            worksheet.addImage(logo, 'A1:B1');
+            worksheet.getCell('B2').value = `${project.user.firstName} ${project.user.lastName}`;
+            worksheet.getCell('E2').value = excelType.userId;
+            worksheet.getCell('B3').value = project.role;
+            worksheet.getCell('E3').value = `1 - ${numberOfDayInMonth} ${moment(excelType.month, 'MM').format('MMMM')} ${excelType.year}`;
+            worksheet.getCell('C4').value = project.detail.customer;
+            worksheet.getCell('C53').value = `${project.user.firstName} ${project.user.lastName}`;
+            // write day and Saturday, Sunday in report timesheet
+            for (let day = 1; day <= numberOfDayInMonth; day += 1) {
+              const date = `${yearMonth}-${day}`;
+              worksheet.getCell(`A${day + 7}`).value = date;
+              if (moment(date, 'YYYY-MM-DD').isoWeekday() === 6 || moment(date, 'YYYY-MM-DD').isoWeekday() === 7) {
+                holidayDates.push(day);
+                worksheet.getCell(`B${day + 7}`).value = 'Holiday';
+                fillRow(worksheet, day);
+              }
             }
-            else if (excelType.reportType === 'Timesheet (Special)') {
-              worksheet.getCell('C1').value = 'TIMESHEET S';
+            // write holiday in Timesheet report
+            for (let i = 0; i < holiday.length; i += 1) {
+              const { date } = holiday[i];
+              const day = parseInt(moment(date).format('DD'), 10);
+              holidayDates.push(day);
+              fillRow(worksheet, day);
+              worksheet.getCell(`C${day + 7}`).value = holiday[i].dateName;
+              worksheet.getCell(`B${day + 7}`).value = 'Holiday';
             }
+            // write Leave in Timesheet
+            for (let j = 0; j < leave.length; j += 1) {
+              const { leaveDate } = leave[j];
+              const day = parseInt(moment(leaveDate).format('DD'), 10);
+              fillRow(worksheet, day);
+              worksheet.getCell(`B${day + 7}`).value = 'Leave';
+              worksheet.getCell(`C${day + 7}`).value = leave[j].leaveType;
+            }
+            // write timesheet
+            writeTimesheet(worksheet, timesheet)
+              .then(() => {
+                calSumEachColumn(worksheet)
+                  .then(() => {
+                    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                    res.setHeader('Content-Disposition', `attachment; filename="Timesheet_${excelType.year}_${excelType.month}_${excelType.projectId}.xlsx`);
+                    workbook.xlsx.write(res);
+                  })
+                  .catch(next);
+              })
+              .catch(next);
+          })
+          .catch(next);
+      })
+      .catch(next);
+  }
+  else if (excelType.reportType === 'Timesheet (Special)') {
+    const filename = 'server/storage/private/report/Playtorium_Timesheet.xlsx';
+    getProjectDetail(excelType)
+      .then((project) => {
+        const { holiday } = project;
+        const { timesheet } = project;
+        const { leave } = project;
+        const holidayDates = [];
+        const workbook = new Excel.Workbook();
+        workbook.xlsx.readFile(filename)
+          .then(() => {
+            const worksheet = workbook.getWorksheet('Timesheet');
+            const yearMonth = `${excelType.year}-${excelType.month}`;
+            const numberOfDayInMonth = moment(yearMonth, 'YYYY-MM').daysInMonth();
+            let logo = '';
+            if (excelType.company === 'Playtorium') {
+              logo = workbook.addImage({
+                filename: 'server/storage/private/logo/Playtorium.png',
+                extension: 'png'
+              });
+            }
+            else if (excelType.company === 'MFEC') {
+              logo = workbook.addImage({
+                filename: 'server/storage/private/logo/MFEC.png',
+                extension: 'png'
+              });
+            }
+            // write report header
+            worksheet.getCell('C1').value = 'TIMESHEET S';
             worksheet.addImage(logo, 'A1:B1');
             worksheet.getCell('B2').value = `${project.user.firstName} ${project.user.lastName}`;
             worksheet.getCell('E2').value = excelType.userId;
@@ -384,7 +491,6 @@ exports.createReport = (req, res, next) => {
               worksheet.getCell(`C${day + 7}`).value = timesheet[k].description;
               worksheet.getCell(`D${day + 7}`).value = moment(timesheet[k].timeIn, 'HH:mm:ss').format('HH:mm');
               worksheet.getCell(`E${day + 7}`).value = moment(timesheet[k].timeOut, 'HH:mm:ss').format('HH:mm');
-              worksheet.getCell(`F${day + 7}`).value = timesheet[k].totalhours;
             }
             // special timesheet
             writeSpecialTimesheet(excelType, holidayDates, worksheet, numberOfDayInMonth)
@@ -422,6 +528,7 @@ exports.createReport = (req, res, next) => {
             let project = '';
             let row = 3;
             timesheets.forEach((timesheet) => {
+              timesheet.days = Math.ceil(timesheet.days * 100) / 100;
               if (timesheet.id === user && timesheet.projectId === project) {
                 worksheet.getCell(`${monthColumn[timesheet.month - 1]}${row}`).value = timesheet.days;
               }

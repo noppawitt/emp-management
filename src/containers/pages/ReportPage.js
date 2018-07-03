@@ -3,7 +3,7 @@ import { Grid, Button, Form } from 'semantic-ui-react';
 import PageHeader from '../../components/PageHeader';
 
 const option = [
-  { key: 'normal', value: 'normal', text: 'Timesheet(normal)' }, 
+  { key: 'normal', value: 'normal', text: 'Timesheet(normal)' },
   { key: 'spacial', value: 'spacial', text: 'Timesheet(spacial)' },
   { key: 'summary', value: 'summary', text: 'SummaryTimesheet' }
 ];
@@ -56,7 +56,7 @@ const reportTypeSelector = () => (
       </Form.Group>
     </Form>
   </Grid.Column>
-  // </Grid.Row> 
+  // </Grid.Row>
 );
 const yearSelector = () => (
   // <Grid.Row>
