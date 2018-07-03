@@ -148,7 +148,7 @@ const Exam = (({ onAddClick, onDeleteClick, onEditClick, onViewClick, onFilterCh
                   prevItem={{ content: <Icon name="angle left" />, icon: true }}
                   nextItem={{ content: <Icon name="angle right" />, icon: true }}
                   totalPages={parseInt(examsFilter.length / 3, 10) + ((examsFilter.length % 3 !== 0) ? 1 : 0)}
-                  onPageChange={(e, { activePage }) => { console.log(activePage); setPageNumber(activePage); }}
+                  onPageChange={(e, { activePage }) => { setPageNumber(activePage); }}
                 />
               </Table.HeaderCell>
             </Table.Row>
