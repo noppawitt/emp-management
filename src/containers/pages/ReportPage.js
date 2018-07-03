@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Button, Form } from 'semantic-ui-react';
+import { Grid, Button, Form, Select, Dropdown } from 'semantic-ui-react';
 import PageHeader from '../../components/PageHeader';
 
 const option = [
@@ -36,75 +36,63 @@ const project = [
   { key: 'ps180002', value: 'ps180002', text: 'project2' },
   { key: 'ps180003', value: 'ps180003', text: 'project3' }
 ];
+const Selector = (label, placeholder, options, width) => (
+  <Grid.Row>
+    <Grid.Column width={width}>
+      <Form.Dropdown fluid label={label} placeholder={placeholder} selection options={options} />
+    </Grid.Column>
+  </Grid.Row>
+);
 const employeeSelector = () => (
-  // <Grid.Row>
-  <Grid.Column width={3}>
-    <Form >
-      <Form.Group width="equal">
-        <Form.Dropdown size="large" label="Employee" placeholder="Employees" selection options={employees} />
-      </Form.Group>
-    </Form>
-  </Grid.Column>
-  // </Grid.Row>
+  <Grid.Row>
+    <Grid.Column width={6}>
+      <Select fluid label="Employee" placeholder="Employees" selection options={employees} />
+    </Grid.Column>
+  </Grid.Row>
 );
 const reportTypeSelector = () => (
-  // <Grid.Row>
-  <Grid.Column width={3}>
-    <Form >
-      <Form.Group width="equal" >
-        <Form.Dropdown size="large" label="Type" placeholder="Select Type" selection options={option} />
-      </Form.Group>
-    </Form>
-  </Grid.Column>
-  // </Grid.Row> 
+  <Grid.Row>
+    <Grid.Column width={3}>
+      <Form.Dropdown size="large" label="Type" placeholder="Select Type" selection options={option} />
+    </Grid.Column>
+  </Grid.Row> 
 );
-const yearSelector = () => (
-  // <Grid.Row>
-  <Grid.Column width={3}>
-    <Form >
-      <Form.Group width="equal">
-        <Form.Dropdown size="large" label="Year" placeholder="Select Year" selection options={years} />
-      </Form.Group>
-    </Form>
-  </Grid.Column>
-  // </Grid.Row>
-);
-const monthSelector = () => (
-  // <Grid.Row>
-  <Grid.Column width={3}>
-    <Form >
-      <Form.Group width="equal">
-        <Form.Dropdown size="large" label="Month" placeholder="Select Month" selection options={months} />
-      </Form.Group>
-    </Form>
-  </Grid.Column>
-  // </Grid.Row>
+const templateSelector = () => (
+  <Grid.Row>
+    <Grid.Column width={3}>
+      <Form.Dropdown size="large" label="Type" placeholder="Select Template" selection options={option} />
+    </Grid.Column>
+  </Grid.Row> 
 );
 const projectSelector = () => (
-  // <Grid.Row>
-  <Grid.Column width={3} >
-    <Form width="equal" >
-      <Form.Group width="equal">
-        <Form.Dropdown size="large" label="Project" placeholder="Select Project" selection options={project} />
-      </Form.Group>
-    </Form>
+  <Grid.Row>
+    <Grid.Column width={3} >
+      <Form width="equal" >
+        <Form.Group width="equal">
+          <Form.Dropdown size="large" label="Project" placeholder="Select Project" selection options={project} />
+        </Form.Group>
+      </Form>
+    </Grid.Column>
+  </Grid.Row>
+);
+const yearSelector = () => (
+  <Grid.Column width={3}>
+    <Form.Dropdown fluid label="Year" placeholder="Select Year" selection options={years} />
   </Grid.Column>
-  // </Grid.Row>
+);
+const monthSelector = () => (
+  <Grid.Column width={3}>
+    <Form.Dropdown fluid label="Month" placeholder="Select Month" selection options={months} />
+  </Grid.Column>
 );
 const ReportPage = () => (
   <div>
-    <PageHeader text="Report" icon="file powerpoint" />
+    <PageHeader text="Report" icon="print" />
     <Grid>
-      <Grid.Row>
-        {reportTypeSelector()}
-      </Grid.Row>
+      {Selector('Report Type', 'Select Type', option, 4)}
       <Grid.Row>
         {yearSelector()}
         {monthSelector()}
-      </Grid.Row>
-      <Grid.Row>
-        {projectSelector()}
-        {employeeSelector()}
       </Grid.Row>
       <Grid.Row>
         <Button color="blue" style={{ marginLeft: '15px' }}>Download</Button>

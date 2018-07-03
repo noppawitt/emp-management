@@ -35,11 +35,6 @@ class Timesheet extends React.Component {
         { key: 12, value: '12', text: 'December' }
       ],
       years: [
-<<<<<<< HEAD
-        { key: 2018, value: 2018, text: '2018' },
-        { key: 2019, value: 2019, text: '2019' },
-        { key: 2020, value: 2020, text: '2020' }
-=======
         { key: 2018, value: '2018', text: '2018' },
         { key: 2019, value: '2019', text: '2019' },
         { key: 2020, value: '2020', text: '2020' },
@@ -50,7 +45,6 @@ class Timesheet extends React.Component {
         { key: 2025, value: '2025', text: '2025' },
         { key: 2026, value: '2026', text: '2026' },
         { key: 2027, value: '2027', text: '2027' }
->>>>>>> 2f7cd7704a7f072e782840d475c44b5a29b621d1
       ]
     };
     this.anotherMonthCell = this.anotherMonthCell.bind(this);
