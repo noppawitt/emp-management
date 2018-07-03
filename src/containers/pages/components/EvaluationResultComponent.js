@@ -1,5 +1,6 @@
 import React from 'react';
 import './css/EvaluationResultComponent.css';
+import { ENGINE_METHOD_DIGESTS } from 'constants';
 
 class EvaluationResultComponent extends React.Component {
     constructor(props) {
@@ -8,6 +9,7 @@ class EvaluationResultComponent extends React.Component {
         this.state = {
             ...this.props,
             passPro: this.props.passPro !== null ? this.props.passPro : true,
+            notPassPro: this.props.notPassPro !== null ? this.props.notPassPro : false,
             confirmed: this.props.confirmed !== null ? this.props.confirmed : true,
             continued: this.props.continued !== null ? this.props.continued : true,
             passProDate: this.props.endProbationDate,
@@ -28,6 +30,7 @@ class EvaluationResultComponent extends React.Component {
     componentWillReceiveProps(props) {
         this.setState({
             passPro: props.passPro,
+            notPassPro: props.notPassPro,
             confirmed: props.confirmed,
             continued: props.continued,
             passProDate: props.endProbationDate,
@@ -38,11 +41,14 @@ class EvaluationResultComponent extends React.Component {
             transporationAllowance: props.transporationAllowance,
             otherAllowance: props.otherAllowance
         })
+
+        console.log(this.state);
     }
 
     updateParentComponent() {
         this.props.onChange(
             this.state.passPro,
+            this.state.notPassPro,
             this.state.confirmed,
             this.state.continued,
             this.state.passProDate,
@@ -80,10 +86,14 @@ class EvaluationResultComponent extends React.Component {
                 this.closeProElement2();
             else
                 this.showProElement2();
-        } else {
+        } else if (this.state.notPassPro) {
             this.showProElement3();
             this.closeProElement1();
             this.closeProElement2();
+        } else {
+            this.closeProElement1();
+            this.closeProElement2();
+            this.closeProElement3();
         }
     }
 
@@ -141,7 +151,13 @@ class EvaluationResultComponent extends React.Component {
                             <tr>
                                 <td>
                                     <input type='radio' name='pass-pro' onClick={() => {
-                                        this.state = { ...this.state, passPro: true };
+                                        this.state = {
+                                            ...this.state,
+                                            passPro: true,
+                                            notPassPro: false,
+                                            terminationDate: null,
+                                            continuedDate: null
+                                        };
                                         this.updateParentComponent();
                                     }} checked={this.state.passPro} />
                                     &nbsp;Pass probationary period.Effective date on
@@ -160,7 +176,13 @@ class EvaluationResultComponent extends React.Component {
                                             <tr>
                                                 <td>
                                                     <input type='radio' name='confirm-con' onClick={() => {
-                                                        this.state = { ...this.state, confirmed: true };
+                                                        this.state = {
+                                                            ...this.state, confirmed: true,
+                                                            basedSalary: null,
+                                                            mobile: null,
+                                                            transporationAllowance: null,
+                                                            otherAllowance: null
+                                                        };
                                                         this.updateParentComponent();
                                                     }} checked={this.state.confirmed} />
                                                     &nbsp;Confirmed By Employment Conditions
@@ -186,7 +208,7 @@ class EvaluationResultComponent extends React.Component {
                                                     Based Salary
                                                 </td>
                                                 <td>
-                                                    <input type='number' value={this.state.basedSalary} onChange={(event) => {
+                                                    <input type='number' value={this.state.basedSalary ? this.state.basedSalary : ''} onChange={(event) => {
                                                         this.state = { ...this.state, basedSalary: event.target.value };
                                                         this.updateParentComponent();
                                                     }} />
@@ -195,7 +217,7 @@ class EvaluationResultComponent extends React.Component {
                                                     Mobile
                                                 </td>
                                                 <td>
-                                                    <input type='text' value={this.state.mobile} onChange={(event) => {
+                                                    <input type='text' value={this.state.mobile ? this.state.mobile : ''} onChange={(event) => {
                                                         this.state = { ...this.state, mobile: event.target.value };
                                                         this.updateParentComponent();
                                                     }} />
@@ -206,7 +228,7 @@ class EvaluationResultComponent extends React.Component {
                                                     Transporation Allowance
                                                 </td>
                                                 <td>
-                                                    <input type='number' value={this.state.transporationAllowance} onChange={(event) => {
+                                                    <input type='number' value={this.state.transporationAllowance ? this.state.transporationAllowance : ''} onChange={(event) => {
                                                         this.state = { ...this.state, transporationAllowance: event.target.value };
                                                         this.updateParentComponent();
                                                     }} />
@@ -215,7 +237,7 @@ class EvaluationResultComponent extends React.Component {
                                                     Others Allowance
                                                 </td>
                                                 <td>
-                                                    <input type='number' value={this.state.otherAllowance} onChange={(event) => {
+                                                    <input type='number' value={this.state.otherAllowance ? this.state.otherAllowance : ''} onChange={(event) => {
                                                         this.state = { ...this.state, otherAllowance: event.target.value };
                                                         this.updateParentComponent();
                                                     }} />
@@ -232,9 +254,17 @@ class EvaluationResultComponent extends React.Component {
                             <tr>
                                 <td>
                                     <input type='radio' name='pass-pro' onClick={() => {
-                                        this.state = { ...this.state, passPro: false };
+                                        this.state = {
+                                            ...this.state,
+                                            passPro: false,
+                                            notPassPro: true,
+                                            basedSalary: null,
+                                            mobile: null,
+                                            transporationAllowance: null,
+                                            otherAllowance: null
+                                        };
                                         this.updateParentComponent();
-                                    }} checked={!this.state.passPro} />
+                                    }} checked={this.state.notPassPro} />
                                     &nbsp;This person does not pass probation period. Action to be taken
                                 </td>
                             </tr>
@@ -245,31 +275,31 @@ class EvaluationResultComponent extends React.Component {
                                             <tr>
                                                 <td>
                                                     <input type='radio' name='terminate' onClick={() => {
-                                                        this.state = { ...this.state, continued: false };
+                                                        this.state = { ...this.state, continued: false, continuedDate: null };
                                                         this.updateParentComponent();
                                                     }} checked={!this.state.continued} />
                                                     &nbsp;Termination Effective
                                                 </td>
                                                 <td>
-                                                    <input type='date' value={this.state.terminationDate} onChange={(event) => {
+                                                    <input type='date' value={this.state.terminationDate ? this.state.terminationDate : ''} onChange={(event) => {
                                                         this.state = { ...this.state, terminationDate: event.target.value };
                                                         this.updateParentComponent();
-                                                    }} />
+                                                    }} disabled={this.state.continued} />
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
                                                     <input type='radio' name='terminate' onClick={() => {
-                                                        this.state = { ...this.state, continued: true };
+                                                        this.state = { ...this.state, continued: true, terminationDate: null };
                                                         this.updateParentComponent();
                                                     }} checked={this.state.continued} />
                                                     &nbsp;Continued probation untill
                                                 </td>
                                                 <td>
-                                                    <input type='date' value={this.state.continuedDate} onChange={(event) => {
+                                                    <input type='date' value={this.state.continuedDate ? this.state.continuedDate : ''} onChange={(event) => {
                                                         this.state = { ...this.state, continuedDate: event.target.value };
                                                         this.updateParentComponent();
-                                                    }} />
+                                                    }} disabled={!this.state.continued} />
                                                 </td>
                                             </tr>
                                         </table>

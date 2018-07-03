@@ -35,7 +35,7 @@ class ScoreTableManager extends React.Component {
     }
 
     componentDidUpdate() {
-        this.props.onChange(this.state.score, this.state.expectedScore);
+        this.props.onChange(this.state.score, this.state.expectedScore, this.state.sumTotalPoint);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -107,8 +107,16 @@ class ScoreTableManager extends React.Component {
             table.push(<tr>
                 <td>{i + 1}</td>
                 <td colSpan="7">{this.state.questions[i]}</td>
-                <td><DropDown id={`expectScore${i}`} value={this.state.expectedScore[i]} onChange={this.updateExpectedScore} numOfElements={this.state.numOfElements} mode={this.props.mode} /></td>
-                <td><DropDown id={`score${i}`} value={this.state.score[i]} onChange={this.updateScore} numOfElements={this.state.numOfElements} mode={this.props.mode} /></td>
+                <td>
+                    {this.props.mode == 'edit' ?
+                        <DropDown id={`expectScore${i}`} value={this.state.expectedScore[i]} onChange={this.updateExpectedScore} numOfElements={this.state.numOfElements} mode={this.props.mode} />
+                        : this.state.expectedScore[i]}
+                </td>
+                <td>
+                    {this.props.mode == 'edit' ?
+                        <DropDown id={`score${i}`} value={this.state.score[i]} onChange={this.updateScore} numOfElements={this.state.numOfElements} mode={this.props.mode} />
+                        : this.state.score[i]}
+                </td>
                 <td>{this.state.weight[i]}%</td>
                 <td>{(this.state.totalPoint ? this.state.totalPoint[i] : "N/A")}{(this.state.totalPoint ? "%" : "")}</td>
             </tr>);

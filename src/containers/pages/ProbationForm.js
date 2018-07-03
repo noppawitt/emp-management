@@ -31,6 +31,7 @@ class ProbationForm extends React.Component {
             score: null,
             endProbationDate: this.props.profile.work.probationDate,
             passPro: true,
+            notPassPro: false,
             confirmed: true,
             continued: false,
             basedSalary: null,
@@ -56,11 +57,32 @@ class ProbationForm extends React.Component {
         this.setState({ endProbationDate: newEndProbationDate });
     }
 
-    scoreTableStateHandler(newScore, newExpectedScore) {
+    scoreTableStateHandler(newScore, newExpectedScore, percentTotal) {
         this.setState({
             score: newScore,
             expectedScore: newExpectedScore
         });
+
+        if (percentTotal >= 60) {
+            this.setState({
+                passPro: true,
+                notPassPro: false,
+            })
+        } else {
+            this.setState({
+                passPro: false,
+                notPassPro: false
+            })
+        }
+
+        this.setState({
+            terminationDate: null,
+            continuedDate: null,
+            basedSalary: null,
+            mobile: null,
+            transporationAllowance: null,
+            otherAllowance: null
+        })
     }
 
     supervisorCommentHandler(newComment) {
@@ -68,11 +90,12 @@ class ProbationForm extends React.Component {
         this.props.test(this.state);
     }
 
-    evaluationResultHandler(newPassPro, newConfirmed, newContinued, newEndProbationDate,
+    evaluationResultHandler(newPassPro, newNotPassPro, newConfirmed, newContinued, newEndProbationDate,
         newTerminationDate, newContinuedDate, newBasedSalary, newMoblie,
         newTransporationAllowance, newOtherAllowance) {
         this.setState({
             passPro: newPassPro,
+            notPassPro: newNotPassPro,
             confirmed: newConfirmed,
             continued: newContinued,
             endProbationDate: newEndProbationDate,
@@ -83,6 +106,8 @@ class ProbationForm extends React.Component {
             transporationAllowance: newTransporationAllowance,
             otherAllowance: newOtherAllowance
         });
+
+        this.forceUpdate();
     }
 
     signatureHandler(newEmployeeSignDate, newSupervisorSignDate, newMDSignDate) {
@@ -136,6 +161,7 @@ class ProbationForm extends React.Component {
 
     componentDidUpdate() {
         this.props.test(this.state);
+        console.log(this.state);
     }
 
     render() {
