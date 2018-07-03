@@ -70,7 +70,6 @@ class PerformanceReviewForm extends React.Component {
     supervisorCommentHandler(newComment) {
         this.state = { ...this.state, supervisorComment: newComment };
         this.props.test(this.state);
-        console.log(this.state);
     }
 
     signatureHandler(newEmployeeSignDate, newSupervisorSignDate, newMDSignDate) {
@@ -90,15 +89,15 @@ class PerformanceReviewForm extends React.Component {
                     <h1>Employee Performance Review Form</h1>
                     <h2>Playtorium Solutions Company Limited</h2>
                 </div>
-                <EmployeeInfo {...this.state} mode='edit' />
+                <EmployeeInfo {...this.state} mode={this.props.mode} />
                 <br />
                 <div>
                     <ScoreTableManager {...this.state} questions={questions} numOfQuestion={this.props.profile.work.engineer ? this.props.profile.work.levelId >= 3 ? 7 : 6 : 5}
                         weight={this.props.profile.work.engineer ? this.props.profile.work.levelId >= 3 ? weightType.engLv3orMore : weightType.engLv2 : weightType.noEng}
-                        score={this.state.score} onChange={this.scoreTableStateHandler} mode='edit' />
+                        score={this.state.score} onChange={this.scoreTableStateHandler} mode={this.props.mode} />
                 </div>
                 <br />
-                <SupervisorCommentComponent {...this.state} onChange={this.supervisorCommentHandler} mode='edit' />
+                <SupervisorCommentComponent {...this.state} onChange={this.supervisorCommentHandler} mode={this.props.mode} />
                 <br />
                 <SignatureComponent {...this.state} role={this.props.role} onChange={this.signatureHandler} />
             </div>
