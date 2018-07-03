@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import Modal from '../../components/modal';
-import { Segment, Grid, Menu, Table } from 'semantic-ui-react';
+import { Segment, Grid, Menu, Table, Pagination } from 'semantic-ui-react';
 
 const questionRenderer = item => (
   <div dangerouslySetInnerHTML={{ __html: item.exQuestion }} />
@@ -12,7 +12,6 @@ const TakeExam = ({
   activeItem,
   onClickActiveItem,
   categoryList,
-  subCategoryList,
   examObject }) =>
   (
     <Segment.Group>
@@ -22,32 +21,13 @@ const TakeExam = ({
       <Segment>
         <Grid>
           <Grid.Column width={3}>
-            {/* <Menu vertical tabular>
-              {eprList && eprList.map(eachRow => (
-                <Menu.Item
-                  name={eachRow.eprExCategory + eachRow.eprExSubcategory}
-                  active={activeItem === eachRow.eprExCategory + eachRow.eprExSubcategory}
-                  onClick={() => onClickActiveItem(eachRow.eprExCategory + eachRow.eprExSubcategory)}
-                />
-              ))}
-            </Menu> */}
-            {console.log(categoryList)}
-            {console.log(subCategoryList)}
             <Menu vertical tabular>
-              {categoryList && categoryList.map(category => (
-                <Menu>
-                  <Menu.Header name={category.category} />
-                  <Menu.Menu>
-                    {subCategoryList.map(subCategory => (
-                      subCategory.category === categoryList.category ?
-                        <Menu.Item
-                          name={subCategory.subCategory}
-                          active={activeItem === category.category + subCategory.subCategory}
-                          onClick={() => onClickActiveItem(category.category + subCategory.subCategory)}
-                        /> : null
-                    ))}
-                  </Menu.Menu>
-                </Menu>
+              {categoryList && categoryList.map(eachRow => (
+                <Menu.Item
+                  name={eachRow.category}
+                  active={activeItem === eachRow.category}
+                  onClick={() => onClickActiveItem(eachRow.category)}
+                />
               ))}
             </Menu>
           </Grid.Column>
@@ -67,6 +47,16 @@ const TakeExam = ({
                     </Table.Cell>
                   </Table.Row>
                 ))}
+                <Table.Footer>
+                  {categoryList &&
+                    <Segment>
+                      {categoryList.map(i => (
+                        i.category === activeItem ? i.category : null
+                      ))}
+                    </Segment>
+                  }
+                  <Pagination />
+                </Table.Footer>
               </Table>
             </Segment>
             {/* show exam according to 'activeMenuItem' below this */}
@@ -81,7 +71,6 @@ TakeExam.propTypes = {
   activeItem: PropTypes.string.isRequired,
   onClickActiveItem: PropTypes.func.isRequired,
   categoryList: PropTypes.array.isRequired,
-  subCategoryList: PropTypes.array.isRequired,
   examObject: PropTypes.array.isRequired,
 };
 

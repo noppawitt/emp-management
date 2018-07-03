@@ -2,12 +2,14 @@ import * as actionTypes from '../constants/actionTypes';
 
 const initialState = {
   isFetching: false,
-  activeItem: '1',
+  activeItem: '',
   id: null,
   position: '',
   category: [],
   subCategory: [],
   examObject: [],
+  recentExam: [],
+  answer: [],
 };
 
 const TakeExam = (state = initialState, action) => {
@@ -19,15 +21,12 @@ const TakeExam = (state = initialState, action) => {
         isFetching: true,
       };
     case actionTypes.TAKE_EXAM_FETCH_SUCCESS:
-      console.log(state.eprList, '>>>', action.payload.fetchResult);
-      console.log(action.payload.fetchResult.category);
-      console.log(action.payload.fetchResult.subCategory);
       return {
         ...state,
-        // position: action.payload.position,
         category: action.payload.fetchResult.category,
         subCategory: action.payload.fetchResult.subCategory,
-        // examObject: action.payload.examObject,
+        // activeItem: !action.payload.fetcheResult.category ? action.payload.fetchResult.category[0].category : state.activeItem,
+        recentExam: new Array(action.payload.fetchResult.category.length).fill(0),
         isFetching: false,
       };
     case actionTypes.TAKE_EXAM_FETCH_FAILURE:
