@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { Field, reduxForm, change } from 'redux-form';
 import { Form } from 'semantic-ui-react';
+import moment from 'moment';
 import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
 import { masterTableToOptions } from '../../utils/helper';
@@ -25,7 +26,7 @@ const engineerOptions = [
   { key: 'non-engineer', value: false, text: 'Non-Engineer' }
 ];
 
-const AddEmployeeForm = ({ handleSubmit, submitting, masterTable }) => (
+const AddEmployeeForm = ({ handleSubmit, submitting, masterTable, setDefaultProbationDate }) => (
   <Form onSubmit={handleSubmit}>
     <Field name="type" as={Form.Select} component={Input} label="User type" placeholder="User type" options={masterTableToOptions(masterTable.accessTypes)} disabled={submitting} />
     <Form.Group widths="equal">
@@ -38,7 +39,7 @@ const AddEmployeeForm = ({ handleSubmit, submitting, masterTable }) => (
     <Field name="levelId" as={Form.Select} component={Input} label="Level" placeholder="Level" options={masterTableToOptions(masterTable.levels)} disabled={submitting} />
     <Field name="departmentId" as={Form.Select} component={Input} label="Department" placeholder="Department" options={masterTableToOptions(masterTable.departments)} disabled={submitting} />
     <Field name="engineer" as={Form.Select} component={Input} label="Engineer" placeholder="Engineer" options={engineerOptions} disabled={submitting} />
-    <Field name="startDate" as={Form.Input} component={Input} type="date" label="Start date" placeholder="Start date" disabled={submitting} />
+    <Field name="startDate" as={Form.Input} component={Input} type="date" label="Start date" placeholder="Start date" onChange={(e, newValue) => setDefaultProbationDate(newValue)} disabled={submitting} />
     <Field name="probationDate" as={Form.Input} component={Input} type="date" label="Probation date" placeholder="Probation date" disabled={submitting} />
   </Form>
 );
@@ -46,17 +47,16 @@ const AddEmployeeForm = ({ handleSubmit, submitting, masterTable }) => (
 AddEmployeeForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
-  masterTable: PropTypes.object.isRequired
+  masterTable: PropTypes.object.isRequired,
+  setDefaultProbationDate: PropTypes.func.isRequired
 };
-
-// const selector = formValueSelector('addEmployee');
 
 const mapStateToProps = state => ({
   masterTable: state.masterTable
 });
 
 const mapDispatchToProps = dispatch => ({
-  setProbationDate: value => dispatch(change('addEmployee', 'probationDate', value))
+  setDefaultProbationDate: startDate => dispatch(change('addEmployee', 'probationDate', moment(startDate).add(120, 'days').format('YYYY-MM-DD')))
 });
 
 const enhance = compose(
