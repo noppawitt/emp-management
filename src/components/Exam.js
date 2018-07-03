@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Segment, Button, Icon, Grid, Dropdown, Input, Table } from 'semantic-ui-react';
+import { Segment, Button, Icon, Grid, Dropdown, Input, Table, Pagination } from 'semantic-ui-react';
 import { compose, withState } from 'recompose';
 
 const examCategoryOptions = (exams, subjectNoFilter, subjectFilter, subjectList) => {
@@ -50,7 +50,31 @@ const renderQuestion = question => (
   <div dangerouslySetInnerHTML={{ __html: question }} />
 );
 
-const Exam = (({ onAddClick, onDeleteClick, onEditClick, onViewClick, onFilterChange, exams, examsFilter, disabled, setDisabled, category, setCategory }) => (
+const showExamsFromPageNumber = (exams, examsFilter, row, onViewClick, onEditClick, onDeleteClick) => (
+  <Table.Row verticalAlign="top">
+    <Table.Cell style={{ height: '200px', overflowY: 'auto', display: 'block', width: '100%' }}>
+      {renderQuestion(examsFilter[row].exQuestion)}
+    </Table.Cell>
+    <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{examsFilter[row].exCategory.charAt(0).toUpperCase().concat(examsFilter[row].exCategory.slice(1))}</Table.Cell>
+    <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{examsFilter[row].exSubcategory.charAt(0).toUpperCase().concat(examsFilter[row].exSubcategory.slice(1))}</Table.Cell>
+    <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{examsFilter[row].exType}</Table.Cell>
+    <Table.Cell style={{ height: '200px', overflowY: 'auto', display: 'block', width: '100%' }}>{(examsFilter[row].exChoice).map((choice, i) => (
+      <p><strong>{i + 1}.</strong> {choice}</p>
+    ))}
+    </Table.Cell>
+    <Table.Cell style={{ height: '200px', overflowY: 'auto', width: '100%' }}>{(examsFilter[row].exAnswer).map(ans => (
+      <p>&#9679;&nbsp;{ans}</p>
+    ))}
+    </Table.Cell>
+    <Table.Cell textAlign="center" style={{ cursor: 'default' }}>
+      <Button active circular icon="eye" color="olive" size="big" onClick={() => onViewClick(examsFilter[row])} style={{ cursor: 'pointer' }} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <Button active circular icon="settings" color="linkedin" size="big" onClick={() => onEditClick(exams, examsFilter[row])} style={{ cursor: 'pointer' }} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <Button active circular icon="trash" color="google plus" size="big" onClick={() => onDeleteClick(examsFilter[row].exId)} style={{ cursor: 'pointer' }} />
+    </Table.Cell>
+  </Table.Row>
+);
+
+const Exam = (({ onAddClick, onDeleteClick, onEditClick, onViewClick, onFilterChange, exams, examsFilter, disabled, setDisabled, category, setCategory, pageNumber, setPageNumber }) => (
   <div>
     <Segment.Group raised>
       <Segment>
@@ -97,39 +121,38 @@ const Exam = (({ onAddClick, onDeleteClick, onEditClick, onViewClick, onFilterCh
             <Table.Row>
               <Table.HeaderCell width={7}>Question</Table.HeaderCell>
               <Table.HeaderCell width={1}>Category</Table.HeaderCell>
-              <Table.HeaderCell width={2}>Sub-Category</Table.HeaderCell>
+              <Table.HeaderCell width={1}>Sub-Category</Table.HeaderCell>
               <Table.HeaderCell width={1}>Type</Table.HeaderCell>
-              <Table.HeaderCell width={2}>Choice</Table.HeaderCell>
-              <Table.HeaderCell width={2}>Answer</Table.HeaderCell>
+              <Table.HeaderCell width={3}>Choice</Table.HeaderCell>
+              <Table.HeaderCell width={3}>Answer</Table.HeaderCell>
               <Table.HeaderCell >&nbsp;</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
-          <Table.Body>{examsFilter.map(exam => (
-            <Table.Row verticalAlign="top">
-              <Table.Cell style={{ height: '200px', overflowY: 'auto', display: 'block', width: '100%' }}>
-                {renderQuestion(exam.exQuestion)}
-              </Table.Cell>
-              <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{exam.exCategory.charAt(0).toUpperCase().concat(exam.exCategory.slice(1))}</Table.Cell>
-              <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{exam.exSubcategory.charAt(0).toUpperCase().concat(exam.exSubcategory.slice(1))}</Table.Cell>
-              <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{exam.exType}</Table.Cell>
-              <Table.Cell style={{ height: '200px', overflowY: 'auto', display: 'block', width: '100%' }}>{(exam.exChoice).map((choice, i) => (
-                <p><strong>{i + 1}.</strong> {choice}</p>
-              ))}
-              </Table.Cell>
-              <Table.Cell style={{ height: '200px', overflowY: 'auto', width: '100%' }}>{(exam.exAnswer).map(ans => (
-                <p>&#9679;&nbsp;{ans}</p>
-              ))}
-              </Table.Cell>
-              <Table.Cell textAlign="center" style={{ cursor: 'default' }}>
-                <Button active circular icon="eye" color="olive" size="big" onClick={() => onViewClick(exam)} style={{ cursor: 'pointer' }} />
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <Button active circular icon="settings" color="linkedin" size="big" onClick={() => onEditClick(exams, exam)} style={{ cursor: 'pointer' }} />
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <Button active circular icon="trash" color="google plus" size="big" onClick={() => onDeleteClick(exam.exId)} style={{ cursor: 'pointer' }} />
-              </Table.Cell>
-            </Table.Row>
-          ))}
+          <Table.Body>
+            {((pageNumber * 3) - 3 < examsFilter.length) && showExamsFromPageNumber(exams, examsFilter, (pageNumber * 3) - 3, onViewClick, onEditClick, onDeleteClick)}
+            {((pageNumber * 3) - 2 < examsFilter.length) && showExamsFromPageNumber(exams, examsFilter, (pageNumber * 3) - 2, onViewClick, onEditClick, onDeleteClick)}
+            {((pageNumber * 3) - 1 < examsFilter.length) && showExamsFromPageNumber(exams, examsFilter, (pageNumber * 3) - 1, onViewClick, onEditClick, onDeleteClick)}
           </Table.Body>
+          <Table.Footer>
+            <Table.Row>
+              <Table.HeaderCell colSpan="7">
+                <Pagination
+                  floated="right"
+                  defaultActivePage={1}
+                  showFirstAndLastNav="true"
+                  showPreviousAndNextNav="true"
+                  showEllipsis="false"
+                  ellipsisItem={{ content: <Icon name="ellipsis horizontal" />, icon: true }}
+                  firstItem={{ content: <Icon name="angle double left" />, icon: true }}
+                  lastItem={{ content: <Icon name="angle double right" />, icon: true }}
+                  prevItem={{ content: <Icon name="angle left" />, icon: true }}
+                  nextItem={{ content: <Icon name="angle right" />, icon: true }}
+                  totalPages={parseInt(examsFilter.length / 3, 10) + ((examsFilter.length % 3 !== 0) ? 1 : 0)}
+                  onPageChange={(e, { activePage }) => { console.log(activePage); setPageNumber(activePage); }}
+                />
+              </Table.HeaderCell>
+            </Table.Row>
+          </Table.Footer>
         </Table>
       </Segment>
     </Segment.Group>
@@ -148,8 +171,10 @@ Exam.propTypes = {
   setDisabled: PropTypes.func.isRequired,
   category: PropTypes.string.isRequired,
   setCategory: PropTypes.func.isRequired,
+  pageNumber: PropTypes.number.isRequired,
+  setPageNumber: PropTypes.func.isRequired
 };
 
-const enhance = compose(withState('disabled', 'setDisabled', true), withState('category', 'setCategory', ''));
+const enhance = compose(withState('disabled', 'setDisabled', true), withState('category', 'setCategory', ''), withState('pageNumber', 'setPageNumber', 1));
 
 export default enhance(Exam);
