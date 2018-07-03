@@ -23,7 +23,12 @@ export function* downloadReportTask(action) {
   try {
     const { reportType, template, userId, projectId, year, month } = action.payload;
     const file = yield call(api.downloadReport, reportType, template, userId, projectId, year, month);
-    saveAs(file);
+    if (reportType !== 'Summary Timesheet (Year)') {
+      saveAs(file, `${reportType}_${projectId}_${userId}_${year}_${month}`);
+    }
+    else {
+      saveAs(file, `${reportType}_${year}`);
+    }
     yield put(downloadReportSuccess());
   }
   catch (error) {

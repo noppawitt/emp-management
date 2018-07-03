@@ -8,8 +8,8 @@ const initialState = {
   lists: [],
   leaves: [],
   holidays: [],
-  year: now.format('YYYY'),
-  month: now.format('MM')
+  year: now.year(),
+  month: now.month() + 1
 };
 
 const timesheet = (state = initialState, action) => {

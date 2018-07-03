@@ -4,14 +4,11 @@ import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { Button, Form } from 'semantic-ui-react';
-import moment from 'moment';
 import PageHeader from '../../components/PageHeader';
 import Input from '../../components/Input';
 import { getYearOptions, getMonthOptions } from '../../utils/options';
 import { fetchOwnProjectRequest, downloadReportRequest } from '../../actions/report';
 import { projectsToOptions } from '../../selectors/report';
-
-const now = moment();
 
 const reportOptions = [
   { key: 'normal', value: 'Timesheet (Normal)', text: 'Timesheet (Normal)' },
@@ -64,15 +61,15 @@ const selector = formValueSelector('report');
 
 const mapStateToProps = state => ({
   userId: state.auth.id,
-  year: selector(state, 'year'),
-  month: selector(state, 'month'),
   initialValues: {
     userId: state.auth.id,
     reportType: 'Timesheet (Normal)',
-    year: now.year(),
-    month: now.month() + 1,
+    year: state.report.year,
+    month: state.report.month,
     template: 'Playtorium'
   },
+  year: state.report.year,
+  month: state.report.month,
   reportType: selector(state, 'reportType'),
   projectOptions: projectsToOptions(state)
 });
