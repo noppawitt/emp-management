@@ -21,9 +21,23 @@ export const fetchTakeExamFailure = messege => ({
   }
 });
 
-export const changeActiveItem = activeItem => ({
-  type: actionTypes.TAKE_EXAM_CHANGE_ACTIVE_ITEM,
+export const pageChange = value => ({
+  type: actionTypes.TAKE_EXAM_PAGINATION_CHANGE,
   payload: {
-    activeItem,
+    value,
   }
+});
+
+export const onPickRadioAnswer = choice => ({
+  type: actionTypes.TAKE_EXAM_ON_PICK_RADIO,
+  payload: {
+    choice,
+  },
+});
+
+export const onPickCheckboxAnswer = choice => ({
+  type: actionTypes.TAKE_EXAM_ON_PICK_CHECKBOX,
+  payload: {
+    choice,
+  },
 });

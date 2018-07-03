@@ -2,9 +2,15 @@ import * as actionTypes from '../constants/actionTypes';
 
 const initialState = {
   isFetching: false,
-  activeItem: '',
   id: null,
   examList: [],
+  currentActivePage: 1,
+  categoryTitle: '',
+  subCategoryTitle: '',
+  // pickedAnswer is a list of the answer that was picked in the current page
+  // when answerList is list of pickedAnswer
+  pickedAnswer: [],
+  answerList: [],
 };
 
 const TakeExam = (state = initialState, action) => {
@@ -20,6 +26,10 @@ const TakeExam = (state = initialState, action) => {
         ...state,
         examList: action.payload.examList,
         isFetching: false,
+        // this is initialize for categoryTitle and subCategoryTitle!
+        categoryTitle: action.payload.examList[1].exCategory,
+        subCategoryTitle: action.payload.examList[1].exSubcategory,
+        answerList: new Array(action.payload.examList.length).fill([]),
       };
     case actionTypes.TAKE_EXAM_FETCH_FAILURE:
       return {
@@ -27,10 +37,28 @@ const TakeExam = (state = initialState, action) => {
         messege: action.payload.messege,
         isFetching: false,
       };
-    case actionTypes.TAKE_EXAM_CHANGE_ACTIVE_ITEM:
+    case actionTypes.TAKE_EXAM_PAGINATION_CHANGE:
       return {
         ...state,
-        activeItem: action.payload.activeItem,
+        currentActivePage: action.payload.value,
+        categoryTitle: state.examList[action.payload.value].exCategory,
+        subCategoryTitle: state.examList[action.payload.value].exSubcategory,
+        // don't for change and get new save change answer!
+        // this is fecth old answer from answerList
+        pickedAnswer: state.answerList[action.payload.value],
+        answerList: [...state.answerList].splice([action.payload.value], 1, state.answerList),
+      };
+    case actionTypes.TAKE_EXAM_ON_PICK_RADIO:
+      return {
+        ...state,
+        pickedAnswer: [action.payload.choice],
+      };
+    case actionTypes.TAKE_EXAM_ON_PICK_CHECKBOX:
+      return {
+        ...state,
+        pickedAnswer: state.pickedAnswer.includes(action.payload.choice) ?
+          [...state.pickedAnswer].splice(state.pickedAnswer.indexOf(action.payload.choice), 1) :
+          [...state.pickedAnswer].push(action.payload.choice),
       };
     default:
       return state;
