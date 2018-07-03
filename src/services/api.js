@@ -320,8 +320,13 @@ api.examLogin = form => (
 
 // Take Exam
 
+// original one!
 api.fetchEPRList = id => (
   callApi(`/api/takeExam/fetchEPRList/?id=${id}`)
+);
+
+api.fetchAllExam = () => (
+  callApi(`/api/takeExam/fetchAllExam`)
 );
 
 export default api;

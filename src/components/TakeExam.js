@@ -1,77 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import Modal from '../../components/modal';
-import { Segment, Grid, Menu, Table, Pagination } from 'semantic-ui-react';
+import { Segment, Grid, Container } from 'semantic-ui-react';
 
 const questionRenderer = item => (
   <div dangerouslySetInnerHTML={{ __html: item.exQuestion }} />
 );
 
 const TakeExam = ({
-  id,
-  activeItem,
-  onClickActiveItem,
-  categoryList,
-  examObject }) =>
+  examList, }) =>
   (
     <Segment.Group>
       <Segment>
-        <h1>Timer here</h1>
-      </Segment>
-      <Segment>
         <Grid>
-          <Grid.Column width={3}>
-            <Menu vertical tabular>
-              {categoryList && categoryList.map(eachRow => (
-                <Menu.Item
-                  name={eachRow.category}
-                  active={activeItem === eachRow.category}
-                  onClick={() => onClickActiveItem(eachRow.category)}
-                />
-              ))}
-            </Menu>
+          <Grid.Column width={12}>
+            <h1>Category Name</h1>
+            <h3>Sub Category Name</h3>
           </Grid.Column>
-          <Grid.Column stretched width={12}>
-            <Segment>
-              <div> {id} </div>
-              <Table>
-                {examObject && examObject.map(item => (
-                  <Table.Row key={item.exId}>
-                    <Table.Row>
-                      {questionRenderer(item)}
-                    </Table.Row>
-                    <Table.Cell>
-                      {(item.exChoice).map(choice => (
-                        <div>{choice}</div>
-                      ))}
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
-                <Table.Footer>
-                  {categoryList &&
-                    <Segment>
-                      {categoryList.map(i => (
-                        i.category === activeItem ? i.category : null
-                      ))}
-                    </Segment>
-                  }
-                  <Pagination />
-                </Table.Footer>
-              </Table>
-            </Segment>
-            {/* show exam according to 'activeMenuItem' below this */}
+          <Grid.Column width={2}>
+            <Container textAlign="right"><h2>Timer</h2></Container>
           </Grid.Column>
         </Grid>
+      </Segment>
+      <Segment>
+        {examList && examList.map(row => (
+          <Segment>
+            ID: {row.exId}<br />
+            Category: {row.exCategory}<br />
+            Sub-Category: {row.exSubcategory}<br />
+            Exam Type: {row.exType}<br />
+            Question: {questionRenderer(row.exQuestion)}<br />
+            {row.exType === 'Choices' && <div>Choice: {row.exChoice}</div>}<br />
+            {row.exType === 'Choices' && <div>Choice: {row.answer}</div>}<br />
+          </Segment>
+        ))}
+        {!examList && (
+          <h1>Fetch fail somewhere!</h1>
+        )}
       </Segment>
     </Segment.Group>
   );
 
 TakeExam.propTypes = {
-  id: PropTypes.string.isRequired,
-  activeItem: PropTypes.string.isRequired,
-  onClickActiveItem: PropTypes.func.isRequired,
-  categoryList: PropTypes.array.isRequired,
-  examObject: PropTypes.array.isRequired,
+  examList: PropTypes.array.isRequired,
 };
 
 export default TakeExam;

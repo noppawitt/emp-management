@@ -10,3 +10,11 @@ exports.fetchEPRList = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.fetchAllExam = (req, res, next) => {
+  TakeExam.fetchAllExam()
+    .then((examList) => {
+      res.json(examList);
+    })
+    .catch(next);
+};
