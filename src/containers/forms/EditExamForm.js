@@ -81,16 +81,18 @@ examSubCategoryOptions.propTypes = {
   examCategory: PropTypes.string.isRequired
 };
 
-const renderCheckBox = ({ input, label }) => {
-  return (
-    <Form.Field>
-      <Checkbox
-        label={label}
-        checked={input.value ? true : false}
-        onChange={(e, { checked }) => input.onChange(checked)}
-      />
-    </Form.Field>
-  );
+const renderCheckBox = ({ input, label }) => (
+  <Form.Field>
+    <Checkbox
+      label={label}
+      checked={input.value}
+      onChange={(e, { checked }) => input.onChange(checked)}
+    />
+  </Form.Field>
+);
+renderCheckBox.propTypes = {
+  input: PropTypes.object.isRequired,
+  label: PropTypes.string.isRequired
 };
 
 const renderChoices = ({ fields, placeHold, meta }) => (
