@@ -33,7 +33,7 @@ Holiday.findAll = () => (
 );
 
 Holiday.findByYear = year => (
-  db.manyOrNone('SELECT * FROM holidays WHERE EXTRACT(YEAR FROM date) = $1', [year])
+  db.manyOrNone('SELECT * FROM holidays WHERE EXTRACT(YEAR FROM date) = $1 ORDER BY date', [year])
 );
 
 Holiday.findByYearAndMonth = (year, month) => (
