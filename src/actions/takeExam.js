@@ -28,6 +28,13 @@ export const pageChange = value => ({
   }
 });
 
+export const saveAnswerList = answerList => ({
+  type: actionTypes.TAKE_EXAM_SAVE_ANSWERLIST,
+  payload: {
+    answerList,
+  }
+});
+
 export const onPickRadioAnswer = choice => ({
   type: actionTypes.TAKE_EXAM_ON_PICK_RADIO,
   payload: {

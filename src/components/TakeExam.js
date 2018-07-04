@@ -7,6 +7,16 @@ const questionRenderer = question => (
   <div dangerouslySetInnerHTML={{ __html: question }} />
 );
 
+const updateAnswerList = (answerList, activePage, pickedAnswer, exId) => {
+  console.log('Before splice:', answerList);
+  answerList.splice(activePage - 1, 1, {
+    answer: pickedAnswer,
+    question: exId,
+  });
+  console.log('After splice:', answerList);
+  return answerList;
+};
+
 const TakeExam = ({
   examList,
   currentActivePage,
@@ -14,8 +24,10 @@ const TakeExam = ({
   categoryTitle,
   subCategoryTitle,
   pickedAnswer,
+  answerList,
   onClickRadio,
-  onClickCheckbox, }) =>
+  onClickCheckbox,
+  exId, }) =>
   (
     <Segment.Group>
       <Segment>
@@ -32,13 +44,12 @@ const TakeExam = ({
         </Grid>
       </Segment>
       <Segment>
-        {examList && examList.map(row => (
-          row.exId === currentActivePage ?
+        {examList && examList.map((row, i) => (
+          i === currentActivePage - 1 ?
             <Form>
               <h1>Question {currentActivePage}</h1>{questionRenderer(row.exQuestion)}<br />
-              Choice: {row.exType === 'Choices' && row.exChoice.map((answer) => {
-                console.log(row.exAnswer.length, row.exAnswer.length === 1);
-                return row.exAnswer.length === 1 ?
+              Choice: {row.exType === 'Choices' && row.exChoice.map(answer => (
+                row.exAnswer.length === 1 ?
                   <Form.Field>
                     <p>
                       <Radio
@@ -58,8 +69,8 @@ const TakeExam = ({
                         onClick={(e, { value }) => onClickCheckbox(value)}
                       />
                     </p>
-                  </Form.Field>;
-              })}
+                  </Form.Field>
+              ))}
             </Form> : ''
         ))}
         {!examList && (
@@ -68,7 +79,7 @@ const TakeExam = ({
       </Segment>
       <Segment>
         <Pagination
-          onPageChange={(e, { activePage }) => onPageChange(activePage)}
+          onPageChange={(e, { activePage }) => { updateAnswerList(answerList, currentActivePage, pickedAnswer, exId); onPageChange(activePage, answerList); }}
           floated="right"
           defaultActivePage={1}
           showFirstAndLastNav="true"
@@ -80,7 +91,7 @@ const TakeExam = ({
           prevItem={{ content: <Icon name="angle left" />, icon: true }}
           nextItem={{ content: <Icon name="angle right" />, icon: true }}
           // edit this after this
-          totalPages={1 < 0 ? parseInt(examList.length / 10, 10) + ((examList.length % 3 !== 0) ? 1 : 0) : 4}
+          totalPages={1 < 0 ? parseInt(examList.length / 10, 10) + ((examList.length % 3 !== 0) ? 1 : 0) : 5}
         />
       </Segment>
     </Segment.Group>
@@ -93,8 +104,10 @@ TakeExam.propTypes = {
   categoryTitle: PropTypes.string.isRequired,
   subCategoryTitle: PropTypes.string.isRequired,
   pickedAnswer: PropTypes.array.isRequired,
+  answerList: PropTypes.array.isRequired,
   onClickRadio: PropTypes.func.isRequired,
   onClickCheckbox: PropTypes.func.isRequired,
+  exId: PropTypes.string.isRequired,
 };
 
 export default TakeExam;
