@@ -62,7 +62,7 @@ export default class ExamRichTextEditor extends Component {
             linkInputAcceptsFiles={false}
             spellcheckEnabled={false}
             onFocus={this.onFocus}
-            customControls={['headings', 'bold', 'italic', 'underline', 'quotes', 'bulletList', 'orderedList', 'alignLeft', 'alignCenter', 'alignRight', 'table', 'photo']}
+            customControls={['headings', 'bold', 'italic', 'underline', 'alignLeft', 'alignCenter', 'alignRight', 'table', 'photo']}
             exportTo="html"
           />
         </div>

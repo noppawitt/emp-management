@@ -58,10 +58,15 @@ const showExamsFromPageNumber = (exams, examsFilter, row, onViewClick, onEditCli
     <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{examsFilter[row].exCategory.charAt(0).toUpperCase().concat(examsFilter[row].exCategory.slice(1))}</Table.Cell>
     <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{examsFilter[row].exSubcategory.charAt(0).toUpperCase().concat(examsFilter[row].exSubcategory.slice(1))}</Table.Cell>
     <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{examsFilter[row].exType}</Table.Cell>
-    <Table.Cell style={{ height: '200px', overflowY: 'auto', display: 'block', width: '100%' }}>{(examsFilter[row].exChoice).map((choice, i) => (
-      <p><strong>{i + 1}.</strong> {choice}</p>
-    ))}
-    </Table.Cell>
+    {examsFilter[row].exType === 'Write-Up' &&
+      <Table.Cell style={{ height: '200px' }}><p>-</p></Table.Cell>
+    }
+    {examsFilter[row].exType === 'Choices' &&
+      <Table.Cell style={{ height: '200px', overflowY: 'auto', display: 'block', width: '100%' }}>{(examsFilter[row].exChoice).map((choice, i) => (
+        <p><strong>{i + 1}.</strong> {choice}</p>
+      ))}
+      </Table.Cell>
+    }
     <Table.Cell style={{ height: '200px', overflowY: 'auto', width: '100%' }}>{(examsFilter[row].exAnswer).map(ans => (
       <p>&#9679;&nbsp;{ans}</p>
     ))}
