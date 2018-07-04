@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { closeModal } from '../../actions/modal';
 import { updateProfileRequest, updateProbationStore } from '../../actions/profile';
-import Modal from '../../components/Modal';
+import Modal from '../../components/EvaluationModal';
 import A from '../pages/ProbationForm'
 import Loader from '../../components/Loader';
 
