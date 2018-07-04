@@ -57,10 +57,10 @@ export default class ExamRichTextEditor extends Component {
             ref={(editor) => { this.editor = editor; }}
             content={storedContent}
             onFileUpload={this.handleFileUpload}
-            allowPhotoLink={false}
-            allowPhotoSizeAdjust={false}
-            linkInputAcceptsFiles={false}
-            spellcheckEnabled={false}
+            allowPhotoLink="false"
+            allowPhotoSizeAdjust="false"
+            linkInputAcceptsFiles="false"
+            spellcheckEnabled="false"
             onFocus={this.onFocus}
             customControls={['headings', 'bold', 'italic', 'underline', 'alignLeft', 'alignCenter', 'alignRight', 'table', 'photo']}
             exportTo="html"
