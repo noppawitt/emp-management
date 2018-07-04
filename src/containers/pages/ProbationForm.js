@@ -69,6 +69,9 @@ class ProbationForm extends React.Component {
             expectedScore: newExpectedScore
         });
 
+        if (this.props.profile.eva != null)
+            return;
+
         if (percentTotal >= 60) {
             this.setState({
                 passPro: true,
@@ -132,6 +135,7 @@ class ProbationForm extends React.Component {
                 expectedScore: this.props.profile.eva.expectedScore,
                 score: this.props.profile.eva.score,
                 passPro: this.props.profile.eva.passPro,
+                notPassPro: !this.props.profile.eva.passPro,
                 confirmed: this.props.profile.eva.confirmedByEmployment,
                 continued: this.props.profile.eva.continued,
                 basedSalary: this.props.profile.eva.basedSalary,
