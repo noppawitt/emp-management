@@ -26,43 +26,42 @@ const templateOptions = [
   { key: 'MFEC', value: 'MFEC', text: 'MFEC' }
 ];
 
-const downloadReport = ({ reportType, template, userId, projectId, year, month }) => {
-  window.location = `/api/report?reportType=${reportType}&template=${template}&userId=${userId}&projectId=${projectId}&year=${year}&month=${month}`;
-};
-
-const ReportPage = ({ reportType, projectOptions, handleSubmit }) => (
+const ReportPage = ({ fetchOwnProject, userId, year, month, reportType, projectOptions, handleSubmit, downloadReport }) => (
   <div>
     <PageHeader text="Report" icon="file powerpoint" />
     <Form onSubmit={handleSubmit(downloadReport)}>
       <Field name="reportType" as={Form.Select} component={Input} label="Report type" placeholder="Report type" options={reportOptions} />
       <Form.Group widths="equal">
-        <Field name="year" as={Form.Select} component={Input} label="Year" placeholder="Year" options={getYearOptions()} />
-        {(reportType !== 'Summary Timesheet (Year)' && reportType !== 'Summary leave') &&
-        <Field name="month" as={Form.Select} component={Input} label="Month" placeholder="Month" options={getMonthOptions()} />}
+        <Field name="year" as={Form.Select} component={Input} label="Year" placeholder="Year" onChange={(e, newValue) => fetchOwnProject(userId, newValue, month)} options={getYearOptions()} />
+        {(reportType !== 'Summary Timesheet (Year)' && reportType !== 'Summary Leave') &&
+        <Field name="month" as={Form.Select} component={Input} label="Month" placeholder="Month" onChange={(e, newValue) => fetchOwnProject(userId, year, newValue)} options={getMonthOptions()} />}
       </Form.Group>
-      {(reportType !== 'Summary Timesheet (Year)' && reportType !== 'Summary leave') &&
+      {(reportType !== 'Summary Timesheet (Year)' && reportType !== 'Summary Leave') &&
       <Field name="projectId" as={Form.Select} component={Input} label="Project" placeholder="Project" options={projectOptions} />}
-      {(reportType !== 'Summary Timesheet (Year)' && reportType !== 'Summary leave') &&
+      {(reportType !== 'Summary Timesheet (Year)' && reportType !== 'Summary Leave') &&
       <Field name="template" as={Form.Select} component={Input} label="Template" placeholder="Template" options={templateOptions} />}
       {(reportType === 'Timesheet (Normal) per Person' || reportType === 'Timesheet (Special) per Person') &&
-      <Field name="userId" as={Form.Select} component={Input} label="Employee" placeholder="Employee" options={reportOptions} />}
+      <Field name="userId" as={Form.Select} component={Input} label="Employee" placeholder="Employee" onChange={(e, newValue) => fetchOwnProject(newValue, year, month)} options={reportOptions} />}
       <Button type="submit">Download</Button>
     </Form>
   </div>
 );
 
 ReportPage.propTypes = {
+  fetchOwnProject: PropTypes.func.isRequired,
   reportType: PropTypes.string.isRequired,
   projectOptions: PropTypes.array.isRequired,
-  handleSubmit: PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired,
+  downloadReport: PropTypes.func.isRequired,
+  userId: PropTypes.number.isRequired,
+  year: PropTypes.number.isRequired,
+  month: PropTypes.number.isRequired
 };
 
 const selector = formValueSelector('report');
 
 const mapStateToProps = state => ({
   userId: state.auth.id,
-  year: state.report.year,
-  month: state.report.month,
   initialValues: {
     userId: state.auth.id,
     reportType: 'Timesheet (Normal)',
@@ -70,12 +69,15 @@ const mapStateToProps = state => ({
     month: state.report.month,
     template: 'Playtorium'
   },
+  year: state.report.year,
+  month: state.report.month,
   reportType: selector(state, 'reportType'),
   projectOptions: projectsToOptions(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchOwnProject: (userId, year, month) => dispatch(fetchOwnProjectRequest(userId, year, month))
+  fetchOwnProject: (userId, year, month) => dispatch(fetchOwnProjectRequest(userId, year, month)),
+  downloadReport: values => dispatch(downloadReportRequest(values))
 });
 
 const enhance = compose(
