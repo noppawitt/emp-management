@@ -21,7 +21,7 @@ const token = jwt.decode(localStorage.getItem('token'));
 export function* fetchPerformanceTask(action){
   try{
     const profile = {};
-    profile.perf = yield call(api.fetchPerformance, [action.payload.id,action.payload.year]);
+    profile.perfInfo = yield call(api.fetchPerformance, [action.payload.id,action.payload.year]);
     yield put(fetchPerformanceSuccess(profile));
   }
   catch (error) {

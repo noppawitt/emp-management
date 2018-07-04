@@ -12,7 +12,7 @@ class AddPerformance extends React.Component{
   constructor(props){
     super(props);
     this.state = props;
-    this.type = (this.props.profile.perf.length==0 ? 'addPerformance':'updatePerformance')
+    this.type = (!this.props.profile.perfInfo ? 'addPerformance':'updatePerformance')
   }
   componentDidMount(){
     console.log(this.state.submitting);
@@ -22,14 +22,14 @@ class AddPerformance extends React.Component{
       <div>
         {this.props.fetching ? <Loader/> :
           <Modal
-            header={this.props.profile.perf[0] == null ? 'Add Performance':'View Performance'}
+            header={!this.props.profile.perfInfo ? 'Add Performance':'View Performance'}
             onClose={this.props.onClose}
-            onClick={()=>this.props.onSubmit(this.props.item,(this.props.profile.perf[0] == null ? 'addPerformance':'updatePerformance'))}
+            onClick={()=>this.props.onSubmit(this.props.item,(!this.props.profile.perfInfo ? 'addPerformance':'updatePerformance'))}
             submitting={this.props.submitting}
             size="large"
             disable={!this.props.edited}
           >
-            <A test={this.props.onChange} profile={this.props.profile} mode={this.props.profile.perf.length==0 || (this.props.type=='admin' && !this.props.profile.perf[0].emSignDate) ? 'edit' : 'view'} role={this.props.type == 'admin' ? 'supervisor':'employee'}/>
+            <A test={this.props.onChange} profile={this.props.profile} mode={!this.props.profile.perfInfo || (this.props.type=='admin' && !this.props.profile.perfInfo.emSignDate) ? 'edit' : 'view'} role={this.props.type == 'admin' ? 'supervisor':'employee'}/>
           </Modal>
         }
       </div>
