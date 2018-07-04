@@ -4,14 +4,11 @@ import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { Button, Form } from 'semantic-ui-react';
-import moment from 'moment';
 import PageHeader from '../../components/PageHeader';
 import Input from '../../components/Input';
 import { getYearOptions, getMonthOptions } from '../../utils/options';
 import { fetchOwnProjectRequest, downloadReportRequest } from '../../actions/report';
 import { projectsToOptions } from '../../selectors/report';
-
-const now = moment();
 
 const reportOptions = [
   { key: 'normal', value: 'Timesheet (Normal)', text: 'Timesheet (Normal)' },
@@ -20,6 +17,7 @@ const reportOptions = [
   { key: 'special-person', value: 'Timesheet (Special) per Person', text: 'Timesheet (Special) per Person' },
   { key: 'summary-month', value: 'Summary Timesheet (Year)', text: 'Summary Timesheet (Year)' },
   { key: 'summary-year', value: 'Summary Timesheet (Month)', text: 'Summary Timesheet (Month)' },
+  { key: 'summary-leave', value: 'Summary Leave', text: 'Summary Leave' },
   { key: 'resource', value: 'Resource Available', text: 'Resource Available' }
 ];
 
@@ -35,12 +33,12 @@ const ReportPage = ({ fetchOwnProject, userId, year, month, reportType, projectO
       <Field name="reportType" as={Form.Select} component={Input} label="Report type" placeholder="Report type" options={reportOptions} />
       <Form.Group widths="equal">
         <Field name="year" as={Form.Select} component={Input} label="Year" placeholder="Year" onChange={(e, newValue) => fetchOwnProject(userId, newValue, month)} options={getYearOptions()} />
-        {reportType !== 'Summary Timesheet (Year)' &&
+        {(reportType !== 'Summary Timesheet (Year)' && reportType !== 'Summary Leave') &&
         <Field name="month" as={Form.Select} component={Input} label="Month" placeholder="Month" onChange={(e, newValue) => fetchOwnProject(userId, year, newValue)} options={getMonthOptions()} />}
       </Form.Group>
-      {reportType !== 'Summary Timesheet (Year)' &&
+      {(reportType !== 'Summary Timesheet (Year)' && reportType !== 'Summary Leave') &&
       <Field name="projectId" as={Form.Select} component={Input} label="Project" placeholder="Project" options={projectOptions} />}
-      {reportType !== 'Summary Timesheet (Year)' &&
+      {(reportType !== 'Summary Timesheet (Year)' && reportType !== 'Summary Leave') &&
       <Field name="template" as={Form.Select} component={Input} label="Template" placeholder="Template" options={templateOptions} />}
       {(reportType === 'Timesheet (Normal) per Person' || reportType === 'Timesheet (Special) per Person') &&
       <Field name="userId" as={Form.Select} component={Input} label="Employee" placeholder="Employee" onChange={(e, newValue) => fetchOwnProject(newValue, year, month)} options={reportOptions} />}
@@ -64,15 +62,15 @@ const selector = formValueSelector('report');
 
 const mapStateToProps = state => ({
   userId: state.auth.id,
-  year: selector(state, 'year'),
-  month: selector(state, 'month'),
   initialValues: {
     userId: state.auth.id,
     reportType: 'Timesheet (Normal)',
-    year: now.year(),
-    month: now.month() + 1,
+    year: state.report.year,
+    month: state.report.month,
     template: 'Playtorium'
   },
+  year: state.report.year,
+  month: state.report.month,
   reportType: selector(state, 'reportType'),
   projectOptions: projectsToOptions(state)
 });

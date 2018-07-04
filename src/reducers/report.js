@@ -1,6 +1,11 @@
+import moment from 'moment';
 import * as actionTypes from '../constants/actionTypes';
 
+const now = moment();
+
 const initialState = {
+  year: now.format('YYYY'),
+  month: now.format('MM'),
   projects: []
 };
 
@@ -8,7 +13,9 @@ const report = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.OWN_PROJECT_FETCH_REQUEST:
       return {
-        ...state
+        ...state,
+        year: action.payload.year,
+        month: action.payload.month
       };
     case actionTypes.OWN_PROJECT_FETCH_SUCCESS:
       return {
