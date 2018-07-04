@@ -7,7 +7,7 @@ Performance.checkExist = (id) => (
 )
 
 Performance.findById = (id,year) => (
-  db.manyOrNone("SELECT * FROM Performance WHERE user_id=$1 AND extract(year from created_date)=$2",[id,year])
+  db.oneOrNone("SELECT * FROM Performance WHERE user_id=$1 AND extract(year from created_date)=$2",[id,year])
 )
 
 Performance.insertPerformance = (performanceInfo,id) =>(

@@ -24,7 +24,7 @@ exports.create = (req,res,next) => {
   const newPerformanceInfo = req.body.performanceInfo;
   Performance.insertPerformance(newPerformanceInfo, req.user.id)
     .then(() => {
-        Performance.findById(req.body.performanceInfo.employeeID)
+        Performance.checkExist(req.body.performanceInfo.employeeID)
           .then((performance)=>{
             res.json(performance)
           });
@@ -38,7 +38,7 @@ exports.update = (req,res,next) => {
     Performance.updatePerformance(newPerformanceInfo, req.user.id)
       .then(() => {
         console.log("Test Probation");
-        Performance.findById(req.body.performanceInfo.employeeID)
+        Performance.checkExist(req.body.performanceInfo.employeeID)
           .then((performance)=>{
             res.json(performance)
           });

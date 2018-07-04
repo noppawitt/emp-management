@@ -50,14 +50,14 @@ class PerformanceReviewForm extends React.Component {
     }
 
     componentWillMount() {
-        if (this.props.profile.perf[0] != null) {
+        if (this.props.profile.perfInfo != null) {
             this.setState({
-                expectedScore: this.props.profile.perf[0].expectedScore,
-                score: this.props.profile.perf[0].score,
-                supervisorComment: this.props.profile.perf[0].supComment,
-                employeeSignDate: this.props.profile.perf[0].emSignDate,
-                supervisorSignDate: this.props.profile.perf[0].supSignDate,
-                MDSignDate: this.props.profile.perf[0].mdSignDate,
+                expectedScore: this.props.profile.perfInfo.expectedScore,
+                score: this.props.profile.perfInfo.score,
+                supervisorComment: this.props.profile.perfInfo.supComment,
+                employeeSignDate: this.props.profile.perfInfo.emSignDate,
+                supervisorSignDate: this.props.profile.perfInfo.supSignDate,
+                MDSignDate: this.props.profile.perfInfo.mdSignDate,
             })
         }
     }
