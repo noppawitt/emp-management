@@ -23,12 +23,9 @@ const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, 
         </span>
       ),
       disabled: true,
-    },
-    { text: '2018' },
-    { text: '2017' },
-    { text: '2016' },
-
+    }
   ]
+  performanceProfile.map(perf => options.push({text: perf.year}))
   return (
 
     <Segment.Group raised size="large">
