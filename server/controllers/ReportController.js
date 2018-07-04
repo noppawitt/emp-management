@@ -4,6 +4,7 @@ const HasProject = require('../models/HasProject');
 const Project = require('../models/Project');
 const EmployeeInfo = require('../models/EmployeeInfo');
 const Holiday = require('../models/Holiday');
+const User = require('../models/User');
 const Excel = require('exceljs');
 const moment = require('moment');
 
@@ -360,6 +361,113 @@ const writeHoliday = (workbook, excelType) => new Promise(async (resolve, reject
   }
 });
 
+const findEachAvailableDate = (excelType, userId) => new Promise((resolve, reject) => {
+  try {
+    let end = '';
+    let avialableDate = '';
+    HasProject.findWorkProjectDate(excelType.year, excelType.month, userId)
+      .then((hasProjects) => {
+        if (hasProjects.length !== 0) {
+          for (let i = 0; i < hasProjects.length; i += 1) {
+            if (hasProjects.length === 1) {
+              if (moment(hasProjects[i].startDate).format('YYYY-MM-DD') <= moment(`${excelType.year}-${excelType.month}-01`).format('YYYY-MM-DD')) {
+                if (moment(hasProjects[i].endDate).format('YYYY-MM-DD') === moment(`${excelType.year}-12-30`).format('YYYY-MM-DD')) {
+                  avialableDate += `${moment(`${excelType.year}-12-31`).format('DD/MM/YY')}`;
+                }
+                else if (moment(hasProjects[i].endDate).format('YYYY-MM-DD') !== moment(`${excelType.year}-12-31`).format('YYYY-MM-DD')) {
+                  avialableDate += `${moment(hasProjects[i].endDate).add(1, 'days').format('DD/MM/YY')}-${moment(`${excelType.year}-12-31`).format('DD/MM/YY')}`;
+                }
+              }
+              else if (moment(hasProjects[i].startDate).format('YYYY-MM-DD') === moment(`${excelType.year}-${excelType.month}-02`).format('YYYY-MM-DD')) {
+                if (moment(hasProjects[i].endDate).format('YYYY-MM-DD') === moment(`${excelType.year}-12-30`).format('YYYY-MM-DD')) {
+                  avialableDate += `${moment(`${excelType.year}-${excelType.month}-1`).format('DD/MM/YY')} ${moment(`${excelType.year}-12-31`).format('DD/MM/YY')}`;
+                }
+                else if (moment(hasProjects[i].endDate).format('YYYY-MM-DD') !== moment(`${excelType.year}-12-31`).format('YYYY-MM-DD')) {
+                  avialableDate += `${moment(`${excelType.year}-${excelType.month}-1`).format('DD/MM/YY')} ${moment(hasProjects[i].endDate).add(1, 'days').format('DD/MM/YY')}-${moment(`${excelType.year}-12-31`).format('DD/MM/YY')}`;
+                }
+              }
+              else if (moment(hasProjects[i].startDate).format('YYYY-MM-DD') >= moment(`${excelType.year}-${excelType.month}-03`)) {
+                if (moment(hasProjects[i].endDate).format('YYYY-MM-DD') === moment(`${excelType.year}-12-30`).format('YYYY-MM-DD')) {
+                  avialableDate += `${moment(`${excelType.year}-${excelType.month}-1`).format('DD/MM/YY')}-${moment(hasProjects[i].startDate).add(-1, 'days').format('DD/MM/YY')} ${moment(`${excelType.year}-${excelType.month}-1`).format('DD/MM/YY')} ${moment(`${excelType.year}-12-31`).format('DD/MM/YY')}`;
+                }
+                else if (moment(hasProjects[i].endDate).format('YYYY-MM-DD') !== moment(`${excelType.year}-12-31`).format('YYYY-MM-DD')) {
+                  avialableDate += `${moment(`${excelType.year}-${excelType.month}-1`).format('DD/MM/YY')}-${moment(hasProjects[i].startDate).add(-1, 'days').format('DD/MM/YY')} ${moment(`${excelType.year}-${excelType.month}-1`).format('DD/MM/YY')} ${moment(hasProjects[i].endDate).add(1, 'days').format('DD/MM/YY')}-${moment(`${excelType.year}-12-31`).format('DD/MM/YY')}`;
+                }
+              }
+            }
+            else if (i === 0) {
+              if (moment(hasProjects[i].startDate).format('YYYY-MM-DD') === moment(`${excelType.year}-${excelType.month}-02`).format('YYYY-MM-DD')) {
+                avialableDate += `${moment(`${excelType.year}-${excelType.month}-2`).format('DD/MM/YY')}`;
+                end = hasProjects[i].endDate;
+              }
+              else if (moment(hasProjects[i].startDate).format('YYYY-MM-DD') <= moment(`${excelType.year}-${excelType.month}-01`).format('YYYY-MM-DD')) {
+                end = hasProjects[i].endDate;
+              }
+              else {
+                avialableDate += `${moment(`${excelType.year}-${excelType.month}-01`).format('DD/MM/YY')}-${moment(hasProjects[i].startDate).add(-1, 'days').format('DD/MM/YY')} `;
+                end = hasProjects[i].endDate;
+              }
+            }
+            else if (i === hasProjects.length - 1) {
+              if (moment(hasProjects[i].endDate).format('YYYY-MM-DD') === moment(`${excelType.year}-12-30`).format('YYYY-MM-DD')) {
+                avialableDate += `${moment(`${excelType.year}-12-31`).format('DD/MM/YY')}`;
+              }
+              else if (moment(hasProjects[i].endDate).format('YYYY-MM-DD') !== moment(`${excelType.year}-12-31`).format('YYYY-MM-DD')) {
+                avialableDate += `${moment(hasProjects[i].endDate).add(1, 'days').format('DD/MM/YY')}-${moment(`${excelType.year}-12-31`).format('DD/MM/YY')}`;
+              }
+            }
+            else if (i !== 0 && i !== hasProjects.length - 1) {
+              if (moment(hasProjects[i].startDate).format('YYYY-MM-DD') <= moment(end).format('YYYY-MM-DD') && moment(hasProjects[i].endDate).format('YYYY-MM-DD') >= moment(end).format('YYYY-MM-DD')) {
+                end = hasProjects[i].endDate;
+              }
+              else if (moment(hasProjects[i].startDate).format('YYYY-MM-DD') > moment(end).format('YYYY-MM-DD')) {
+                if (moment(hasProjects[i].startDate).add(-2, 'days').format('YYYY-MM-DD') === moment(end).format('YYYY-MM-DD')) {
+                  avialableDate += `${moment(end).add(1, 'days').format('DD/MM/YY')}`;
+                  end = hasProjects[i].endDate;
+                }
+                else {
+                  avialableDate += `${moment(end).add(1, 'days').format('DD/MM/YY')}-${moment(hasProjects[i].startDate).add(-1, 'days').format('DD/MM/YY')}`;
+                  end = hasProjects[i].endDate;
+                }
+              }
+            }
+          }
+        }
+      });
+    resolve(avialableDate);
+  }
+  catch (error) {
+    reject(error);
+  }
+});
+
+const writeAvailableDate = (worksheet, excelType, column) => new Promise(async (resolve, reject) => {
+  try {
+    const users = await User.findAll();
+    let index = 1;
+    let row = 6;
+    users.forEach((user) => {
+      findEachAvailableDate(excelType, user.id)
+        .then((avialableDate) => {
+          if (avialableDate !== '') {
+            worksheet.getCell(`B${row}`).value = index;
+            worksheet.getCell(`C${row}`).value = `${user.firstName} ${user.lastName}`;
+            worksheet.getCell(`D${row}`).value = user.nickName;
+            worksheet.getCell(`E${row}`).value = user.positionName;
+            worksheet.getCell(`F${row}`).value = avialableDate;
+            fillBorderFixColumn(row, column);
+            index += 1;
+            row += 1;
+          }
+        });
+    });
+    resolve(worksheet);
+  }
+  catch (error) {
+    reject(error);
+  }
+});
+
 exports.createReport = (req, res, next) => {
   const excelType = {};
   excelType.reportType = req.query.reportType;
@@ -630,6 +738,27 @@ exports.createReport = (req, res, next) => {
                   .catch(next);
               })
               .catch(next);
+          })
+          .catch(next);
+      })
+      .catch(next);
+  }
+  else if (excelType.reportType === 'Resource Available') {
+    const filename = 'server/storage/private/report/Resource_Available.xlsx';
+    const workbook = new Excel.Workbook();
+    const column = ['B', 'C', 'D', 'E', 'F', 'G'];
+    workbook.xlsx.readFile(filename)
+      .then(() => {
+        const worksheet = workbook.getWorksheet('Resource Available');
+        const yearMonth = `${excelType.year}-${excelType.month}`;
+        worksheet.getCell('C3').value = `${moment(yearMonth, 'YYYY-MM').format('MMMM YYYY')}`;
+        const time = moment();
+        worksheet.getCell('C4').value = `${time.format('DD/MM/YY')} ${time.format('HH:mm')}`;
+        writeAvailableDate(worksheet, excelType, column)
+          .then(() => {
+            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            res.setHeader('Content-Disposition', `attachment; filename="Timesheet_Summary_${excelType.year}.xlsx`);
+            workbook.xlsx.write(res);
           })
           .catch(next);
       })

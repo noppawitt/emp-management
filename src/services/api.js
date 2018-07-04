@@ -338,7 +338,7 @@ api.fetchHolidays = (year, month) => (
 // Report
 
 api.fetchOwnProject = (userId, year, month) => (
-  callApi(`/api/projects?userId=${userId}year=${year}&month=${month}`)
+  callApi(`/api/projects?userId=${userId}&year=${year}&month=${month}`)
 );
 
 api.downloadReport = (reportType, template, userId, projectId, year, month) => (
