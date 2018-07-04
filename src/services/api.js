@@ -310,8 +310,8 @@ api.fetchProbation = id => (
   callApi(`/api/probation/?id=${id}`)
 )
 
-api.fetchPerformance = id => (
-  callApi(`/api/performance/?id=${id}`)
+api.fetchPerformance = data => (
+  callApi(`/api/performance/?id=${data[0]}&year=${data[1]}`)
 )
 
 api.addProbation = body => (

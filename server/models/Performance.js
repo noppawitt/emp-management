@@ -6,8 +6,8 @@ Performance.checkExist = (id) => (
   db.manyOrNone("SELECT extract(year from created_date) as year FROM Performance WHERE user_id=$1 ORDER BY created_date DESC",[id])
 )
 
-Performance.findById = (id) => (
-  db.manyOrNone("SELECT * FROM Performance WHERE user_id=$1 ORDER BY performance_id DESC",[id])
+Performance.findById = (id,year) => (
+  db.manyOrNone("SELECT * FROM Performance WHERE user_id=$1 AND extract(year from created_date)=$2",[id,year])
 )
 
 Performance.insertPerformance = (performanceInfo,id) =>(

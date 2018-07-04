@@ -12,7 +12,7 @@ exports.check = (req,res,next) => {
 
 exports.find = (req,res,next) => {
   console.log('fetch perf')
-  Performance.findById(req.query.id)
+  Performance.findById(req.query.id,req.query.year)
     .then((performance) => {
         res.json(performance);
     })

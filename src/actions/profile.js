@@ -96,10 +96,11 @@ export const fetchProbationFailure = message => ({
   }
 });
 
-export const fetchPerformanceRequest = id => ({
+export const fetchPerformanceRequest = (id,year) => ({
   type: actionTypes.PERFORMANCE_FETCH_REQUEST,
   payload:{
-    id
+    id,
+    year
   }
 });
 

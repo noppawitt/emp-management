@@ -25,7 +25,7 @@ const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, 
       disabled: true,
     }
   ]
-  performanceProfile.map(perf => options.push({text: perf.year}))
+  performanceProfile.map(perf => options.push({text: perf.year ,onClick: () => {fetchPerformance(profileId,perf.year);openPerformanceModal()}}))
   return (
 
     <Segment.Group raised size="large">
@@ -46,7 +46,7 @@ const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, 
         <div className="buttonGroup">
             <Button.Group>
               <Dropdown trigger={AngleDownButton} options={options} />
-              <Button onClick={() => {fetchPerformance(profileId);openPerformanceModal();}} disabled={type!='admin' && performanceProfile.length==0}>{performanceProfile.length==0 ? 'Add Performance' : 'Performance'}</Button>
+              <Button onClick={() => {fetchPerformance(profileId,(new Date()).getFullYear());openPerformanceModal();}} disabled={type!='admin' && performanceProfile.length==0}>{performanceProfile.length==0 ? 'Add Performance' : 'Performance'}</Button>
             </Button.Group>
         </div>
             <Button icon labelPosition='left' disabled={type!='admin' && !evaProfile} icon={evaProfile==null ? 'plus':'angle right'} content={!evaProfile && type=='admin' ? 'Create Probation':'View Probation'} onClick={()=>{fetchProbation(profileId);openProbationModal()}} color={!evaProfile && type=='admin' ? 'green':'blue'}/>
@@ -77,7 +77,7 @@ const mapDispatchToProps = dispatch =>({
   openPerformanceModal: () => dispatch(openModal(modalNames.ADD_PERFORMANCE)),
   openProbationModal: () => dispatch(openModal(modalNames.ADD_PROBATION)),
   fetchProbation: (id) => dispatch(fetchProbationRequest(id)),
-  fetchPerformance: (id) => dispatch(fetchPerformanceRequest(id))
+  fetchPerformance: (id,year) => dispatch(fetchPerformanceRequest(id,year))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EvaProfileBox);
