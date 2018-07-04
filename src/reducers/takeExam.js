@@ -22,17 +22,14 @@ const TakeExam = (state = initialState, action) => {
         isFetching: true,
       };
     case actionTypes.TAKE_EXAM_FETCH_SUCCESS:
-      console.log('FETCH_SUCCESS');
-      console.log(action.payload.examList);
       return {
         ...state,
         examList: action.payload.examList,
         isFetching: false,
-        // this is initialize for categoryTitle and subCategoryTitle!
         categoryTitle: action.payload.examList[0].exCategory,
         subCategoryTitle: action.payload.examList[0].exSubcategory,
         exId: action.payload.examList[0].exId,
-        answerList: new Array(action.payload.examList.length).fill([]),
+        answerList: new Array(action.payload.examList.length).fill({ answer: '', question: '' }),
       };
     case actionTypes.TAKE_EXAM_FETCH_FAILURE:
       return {
@@ -41,33 +38,22 @@ const TakeExam = (state = initialState, action) => {
         isFetching: false,
       };
     case actionTypes.TAKE_EXAM_PAGINATION_CHANGE:
-      // console.log('Check', state.answerList, [...state.answerList].splice(action.payload.value - 1, 1, []));
-      // console.log('Check', state.answerList, [...state.answerList].splice(action.payload.value - 1, 1, []));
-      // console.log('PickedAnswer:', state.pickedAnswer);
-      // console.log('HERE', [...state.answerList].splice(action.payload.value - 1, 1, state.pickedAnswer));
       return {
         ...state,
         currentActivePage: action.payload.value,
         categoryTitle: state.examList[action.payload.value - 1].exCategory,
         subCategoryTitle: state.examList[action.payload.value - 1].exSubcategory,
         exId: state.examList[action.payload.value - 1].exId,
-        // don't for change and get new save change answer!
-        // this is fecth old answer from answerList
-        // answerList: state.answerList.splice(action.payload.value - 1, 1, state.pickedAnswer),
-        // ?
-        // this mean if there is old answer use it!
-        // else initial with []
-        pickedAnswer: state.answerList[action.payload.value - 1] === undefined ? [] : state.answerList[action.payload.value - 1],
-      };
-    case actionTypes.TAKE_EXAM_SAVE_ANSWERLIST:
-      return {
-        ...state,
-        answerList: action.payload.answerList,
+        pickedAnswer: state.answerList[action.payload.value - 1] === { answer: '', question: '' } ? { answer: '', question: '' } : state.answerList[action.payload.value - 1].answer,
       };
     case actionTypes.TAKE_EXAM_ON_PICK_RADIO:
       return {
         ...state,
         pickedAnswer: [action.payload.choice],
+        answerList: [...state.answerList.slice(0, action.payload.currentActivePage - 1), {
+          answer: [action.payload.choice],
+          question: action.payload.exId,
+        }, ...state.answerList.slice(action.payload.currentActivePage)]
       };
     case actionTypes.TAKE_EXAM_ON_PICK_CHECKBOX:
       return {
@@ -75,6 +61,35 @@ const TakeExam = (state = initialState, action) => {
         pickedAnswer: state.pickedAnswer.includes(action.payload.choice) ?
           [...state.pickedAnswer].splice(state.pickedAnswer.indexOf(action.payload.choice), 1) :
           [...state.pickedAnswer].push(action.payload.choice),
+        answerList: [...state.answerList.slice(0, action.payload.currentActivePage - 1), {
+          answer: [action.payload.choice],
+          question: action.payload.exId,
+        }, ...state.answerList.slice(action.payload.currentActivePage)]
+      };
+    case actionTypes.TAKE_EXAM_ON_INPUT_TEXTAREA:
+      return {
+        ...state,
+        pickedAnswer: [action.payload.text],
+        answerList: [...state.answerList.slice(0, action.payload.currentActivePage - 1), {
+          answer: [action.payload.text],
+          question: action.payload.exId,
+        }, ...state.answerList.slice(action.payload.currentActivePage)]
+      };
+    case actionTypes.TAKE_EXAM_UPLOAD_REQUEST:
+      console.log('UPLOAD REQUEST!');
+      return {
+        ...state,
+        // don't need to update state
+      };
+    case actionTypes.TAKE_EXAM_UPLOAD_SUCCESS:
+      return {
+        ...state,
+        progress: action.payload.progress,
+      };
+    case actionTypes.TAKE_EXAM_UPLOAD_FAILURE:
+      return {
+        ...state,
+        messege: action.payload.messege,
       };
     default:
       return state;

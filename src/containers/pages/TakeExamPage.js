@@ -5,9 +5,10 @@ import { compose, lifecycle } from 'recompose';
 import {
   fetchTakeExamRequest,
   pageChange,
-  saveAnswerList,
   onPickRadioAnswer,
   onPickCheckboxAnswer,
+  onInputTextAreaAnswer,
+  uploadAnswerListRequest,
 } from '../../actions/takeExam';
 import TakeExam from '../../components/TakeExam';
 import Loader from '../../components/Loader';
@@ -24,7 +25,11 @@ const TakeExamPage = ({
   answerList,
   onClickRadio,
   onClickCheckbox,
-  exId, }) =>
+  onInputTextArea,
+  onClickSave,
+  onClickSubmit,
+  exId,
+  id, }) =>
   (
     isFetching ?
       <Loader /> :
@@ -38,7 +43,11 @@ const TakeExamPage = ({
         answerList={answerList}
         onClickRadio={onClickRadio}
         onClickCheckbox={onClickCheckbox}
+        onInputTextArea={onInputTextArea}
+        onClickSave={onClickSave}
+        onClickSubmit={onClickSubmit}
         exId={exId}
+        id={id}
       />
   );
 
@@ -53,7 +62,11 @@ TakeExamPage.propTypes = {
   answerList: PropTypes.array.isRequired,
   onClickRadio: PropTypes.func.isRequired,
   onClickCheckbox: PropTypes.func.isRequired,
+  onInputTextArea: PropTypes.func.isRequired,
   exId: PropTypes.string.isRequired,
+  onClickSave: PropTypes.func.isRequired,
+  onClickSubmit: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -65,17 +78,28 @@ const mapStateToProps = state => ({
   pickedAnswer: state.takeExam.pickedAnswer,
   answerList: state.takeExam.answerList,
   exId: state.takeExam.exId,
+  id: state.takeExam.id,
 });
 
 const mapDispatchToProps = dispatch => ({
   // fetchTakeExam: id => dispatch(fetchTakeExamRequest(id)),
   fetchTakeExam: () => dispatch(fetchTakeExamRequest('1234567890191')),
-  onPageChange: (value, answerList) => compose(
-    dispatch(saveAnswerList(answerList)),
-    dispatch(pageChange(value)),
+  onPageChange: value => dispatch(pageChange(value)),
+  // this three-'on'-function below this is called
+  // when there is input for each exam type
+  // we always save buffer everytimesanswer change
+  // instead of old one that only save on page save
+  // to reduce complexity in pageChange's reducer
+  onClickRadio: (choice, currentActivePage, pickedAnswer, exId) => dispatch(onPickRadioAnswer(choice, currentActivePage, pickedAnswer, exId)),
+  onClickCheckbox: (choice, currentActivePage, pickedAnswer, exId) => dispatch(onPickCheckboxAnswer(choice, currentActivePage, pickedAnswer, exId)),
+  onInputTextArea: (text, currentActivePage, pickedAnswer, exId) => dispatch(onInputTextAreaAnswer(text, currentActivePage, pickedAnswer, exId)),
+  onClickSave: (id, categoryTitle, answerList) => dispatch(uploadAnswerListRequest(id, categoryTitle, answerList)),
+  // Submit is save and exit!
+  onClickSubmit: (id, categoryTitle, answerList) => compose(
+    dispatch(uploadAnswerListRequest(id, categoryTitle, answerList)),
+    dispatch(),
+    // dispatch(finishExam()),
   ),
-  onClickRadio: choice => dispatch(onPickRadioAnswer(choice)),
-  onClickCheckbox: choice => dispatch(onPickCheckboxAnswer(choice)),
 });
 
 const enhance = compose(

@@ -1,21 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import Modal from '../../components/modal';
-import { Segment, Grid, Container, Pagination, Icon, Form, Radio, Checkbox } from 'semantic-ui-react';
+import { Segment, Grid, Container, Pagination, Icon, Form, Radio, Checkbox, Button, TextArea } from 'semantic-ui-react';
 
 const questionRenderer = question => (
   <div dangerouslySetInnerHTML={{ __html: question }} />
 );
 
-const updateAnswerList = (answerList, activePage, pickedAnswer, exId) => {
-  console.log('Before splice:', answerList);
-  answerList.splice(activePage - 1, 1, {
-    answer: pickedAnswer,
-    question: exId,
-  });
-  console.log('After splice:', answerList);
-  return answerList;
-};
+// const updateAnswerList = (answerList, activePage, pickedAnswer, exId) => {
+//   console.log('Bfore', answerList, pickedAnswer);
+//   // return answerList.splice(activePage - 1, 1, {
+//   //   answer: pickedAnswer,
+//   //   question: exId,
+//   // });
+//   // console.log('After', answerList);
+//   // return answerList;
+  // return new Promise((resolve) => {
+  //   answerList.splice(activePage - 1, 1, {
+  //     answer: [5, 5],
+  //     question: exId,
+  //   });
+  //   resolve(answerList);
+  // });
+// };
 
 const TakeExam = ({
   examList,
@@ -27,7 +34,11 @@ const TakeExam = ({
   answerList,
   onClickRadio,
   onClickCheckbox,
-  exId, }) =>
+  onInputTextArea,
+  onClickSave,
+  onClickSubmit,
+  exId,
+  id, }) =>
   (
     <Segment.Group>
       <Segment>
@@ -48,7 +59,7 @@ const TakeExam = ({
           i === currentActivePage - 1 ?
             <Form>
               <h1>Question {currentActivePage}</h1>{questionRenderer(row.exQuestion)}<br />
-              Choice: {row.exType === 'Choices' && row.exChoice.map(answer => (
+              {row.exType === 'Choices' && row.exChoice.map(answer => (
                 row.exAnswer.length === 1 ?
                   <Form.Field>
                     <p>
@@ -56,7 +67,9 @@ const TakeExam = ({
                         label={answer}
                         value={answer}
                         checked={pickedAnswer.includes(answer)}
-                        onClick={(e, { value }) => onClickRadio(value)}
+                        onClick={(e, { value }) => {
+                          onClickRadio(value, currentActivePage, pickedAnswer, exId);
+                        }}
                       />
                     </p>
                   </Form.Field> :
@@ -66,11 +79,24 @@ const TakeExam = ({
                         label={answer}
                         value={answer}
                         checked={pickedAnswer.includes(answer)}
-                        onClick={(e, { value }) => onClickCheckbox(value)}
+                        onClick={(e, { value }) => {
+                          onClickCheckbox(value, currentActivePage, pickedAnswer, exId);
+                        }}
                       />
                     </p>
                   </Form.Field>
               ))}
+              {row.exType !== 'Choices' &&
+                <Form.Field>
+                  <TextArea
+                    value={pickedAnswer}
+                    placeholder="Type the answer here.."
+                    onInput={(e, { value }) => {
+                      onInputTextArea(value, answerList, currentActivePage, pickedAnswer, exId);
+                    }}
+                  />
+                </Form.Field>
+              }
             </Form> : ''
         ))}
         {!examList && (
@@ -78,8 +104,16 @@ const TakeExam = ({
         )}
       </Segment>
       <Segment>
+        <Button primary icon labelPosition="left" onClick={() => onClickSave(id, categoryTitle, answerList)}>
+          <Icon name="save" />
+          Save
+        </Button>
+        <Button secondary icon labelPosition="right" onClick={() => onClickSubmit(id, categoryTitle, answerList)}>
+          <Icon name="send" />
+          Submit
+        </Button>
         <Pagination
-          onPageChange={(e, { activePage }) => { updateAnswerList(answerList, currentActivePage, pickedAnswer, exId); onPageChange(activePage, answerList); }}
+          onPageChange={(e, { activePage }) => onPageChange(activePage)}
           floated="right"
           defaultActivePage={1}
           showFirstAndLastNav="true"
@@ -107,7 +141,11 @@ TakeExam.propTypes = {
   answerList: PropTypes.array.isRequired,
   onClickRadio: PropTypes.func.isRequired,
   onClickCheckbox: PropTypes.func.isRequired,
+  onInputTextArea: PropTypes.func.isRequired,
+  onClickSave: PropTypes.func.isRequired,
+  onClickSubmit: PropTypes.func.isRequired,
   exId: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default TakeExam;
