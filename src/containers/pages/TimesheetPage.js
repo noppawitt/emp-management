@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
+import moment from 'moment';
 import { fetchTimesheetRequest } from '../../actions/timesheet';
 import { openModal } from '../../actions/modal';
 import Timesheet from '../../components/Timesheet';
@@ -9,23 +10,57 @@ import Loader from '../../components/Loader';
 import { fillTimesheetsToFullMonth } from '../../selectors/timesheet';
 import * as modalNames from '../../constants/modalNames';
 
-const TimesheetPage = ({ isFetching, fetchTimesheet, timesheets, leaves, holidays, userId, year, month, onAddClick, onEditClick }) => (
-  <div>
-    {isFetching ?
-      <Loader /> :
-      <Timesheet
-        timesheets={timesheets}
-        leaves={leaves}
-        holidays={holidays}
-        fetchTimesheet={fetchTimesheet}
-        userId={userId}
-        year={year}
-        month={month}
-        onAddClick={onAddClick}
-        onEditClick={onEditClick}
-      />}
-  </div>
-);
+const isHoliday = (date, holidays) => holidays.some(((holiday) => {
+  if (holiday.date === date.format('YYYY-MM-DD')) {
+    return true;
+  }
+  return false;
+}));
+
+const TimesheetPage = ({ isFetching, fetchTimesheet, timesheets, leaves, holidays, userId, year, month, onAddClick, onEditClick }) => {
+  let countWorkDay = 0;
+  let countFilledTimesheet = 0;
+  for (let i = 0; i < timesheets.length; i += 1) {
+    const x = timesheets[i];
+    if (moment(x.date).format('MM') !== month) {
+      continue;
+    }
+    else if (isHoliday(moment(x.date), holidays)) {
+      continue;
+    }
+    else if (moment(x.date).format('d') === '0' || moment(x.date).format('d') === '6') {
+      continue;
+    }
+    else {
+      countWorkDay += 1;
+      if (x.totalhours > 0) {
+        countFilledTimesheet += 1;
+      }
+    }
+  }
+  leaves.forEach((leave) => {
+    if (leave.totalhours === 8) { countWorkDay -= 1; }
+  });
+  const percent = Math.round((countFilledTimesheet / countWorkDay) * 10000) / 100;
+  return (
+    <div>
+      {isFetching ?
+        <Loader /> :
+        <Timesheet
+          timesheets={timesheets}
+          leaves={leaves}
+          holidays={holidays}
+          fetchTimesheet={fetchTimesheet}
+          userId={userId}
+          year={year}
+          month={month}
+          percent={percent}
+          onAddClick={onAddClick}
+          onEditClick={onEditClick}
+        />}
+    </div>
+  );
+};
 
 TimesheetPage.defaultProps = {
   isFetching: true

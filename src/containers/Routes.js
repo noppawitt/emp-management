@@ -25,7 +25,6 @@ const Routes = () => (
     <PrivateRoute path="/employee" component={EmployeePage} />
     <PrivateRoute path="/report" component={ReportPage} />
     <PrivateRoute path="/manageleave" component={ManageLeave} />
-
   </Switch>
 );
 

@@ -53,11 +53,11 @@ class Timesheet extends React.Component {
     this.addHolidayName = this.addHolidayName.bind(this);
     this.buttonOfHoliday = this.buttonOfHoliday.bind(this);
     this.leavedayCell = this.leavedayCell.bind(this);
-    this.calprogressbar = this.calprogressbar.bind(this);
+    // this.calprogressbar = this.calprogressbar.bind(this);
   }
-  componentDidMount() {
-    this.calprogressbar();
-  }
+  // componentDidMount() {
+  //   this.calprogressbar();
+  // }
   // componentWillReceiveProps(nextProps) {
   //   if (JSON.stringify(this.props.timesheets) !== JSON.stringify(nextProps.timesheets)) {
   //     this.calprogressbar();
@@ -68,42 +68,42 @@ class Timesheet extends React.Component {
   //   countWorkDayofmonth: prevState.countWorkDayofmonth + 1
   // }));
   // this.state.countWorkDayofmonth += 1;
-  calprogressbar() {
-    let progressColor = 'red';
-    let countWorkDay = 0;
-    let countFilledTimesheet = 0;
-    for (let i = 0; i < this.props.timesheets.length; i += 1) {
-      const x = this.props.timesheets[i];
-      if (moment(x.date).format('MM') !== this.props.month) {
-        continue;
-      }
-      else if (this.isLeaveday(moment(x.date))) {
-        if (this.state.lastleaveday.totalhours < 8) {
-          countWorkDay += 1;
-        }
-        if (x.totalhours > 0) {
-          countFilledTimesheet += 1;
-        }
-      }
-      else if (this.isHoliday(moment(x.date))) {
-        continue;
-      }
-      else if (moment(x.date).format('d') === '0' || moment(x.date).format('d') === '6') {
-        continue;
-      }
-      else {
-        countWorkDay += 1;
-        if (x.totalhours > 0) {
-          countFilledTimesheet += 1;
-        }
-      }
-    }
-    const percent = (countFilledTimesheet / countWorkDay) * 100;
-    if (percent <= 30) progressColor = 'red';
-    else if (percent <= 60) progressColor = 'yellow';
-    else progressColor = 'blue';
-    this.setState({ percent, progressColor });
-  }
+  // calprogressbar() {
+  //   let progressColor = 'red';
+  //   let countWorkDay = 0;
+  //   let countFilledTimesheet = 0;
+  //   for (let i = 0; i < this.props.timesheets.length; i += 1) {
+  //     const x = this.props.timesheets[i];
+  //     if (moment(x.date).format('MM') !== this.props.month) {
+  //       continue;
+  //     }
+  //     else if (this.isLeaveday(moment(x.date))) {
+  //       if (this.state.lastleaveday.totalhours < 8) {
+  //         countWorkDay += 1;
+  //       }
+  //       if (x.totalhours > 0) {
+  //         countFilledTimesheet += 1;
+  //       }
+  //     }
+  //     else if (this.isHoliday(moment(x.date))) {
+  //       continue;
+  //     }
+  //     else if (moment(x.date).format('d') === '0' || moment(x.date).format('d') === '6') {
+  //       continue;
+  //     }
+  //     else {
+  //       countWorkDay += 1;
+  //       if (x.totalhours > 0) {
+  //         countFilledTimesheet += 1;
+  //       }
+  //     }
+  //   }
+  //   const percent = (countFilledTimesheet / countWorkDay) * 100;
+  //   if (percent <= 30) progressColor = 'red';
+  //   else if (percent <= 60) progressColor = 'yellow';
+  //   else progressColor = 'blue';
+  //   this.setState({ percent, progressColor });
+  // }
   drawCell(date, hour, id) {
     if (date.format('MM') !== this.props.month) {
       return (this.anotherMonthCell(date.format('D')));
@@ -264,14 +264,18 @@ class Timesheet extends React.Component {
     return (<Grid.Row style={{ height: '5em' }} />);
   }
   render() {
+    let progressColor;
+    if (this.props.percent < 30) progressColor = 'red';
+    else if (this.props.percent < 70) progressColor = 'yellow';
+    else progressColor = 'blue';
     return (
       <div>
         <PageHeader text="Timesheet" icon="calendar alternate" />
-        <Progress percent={this.state.percent} active color={this.state.progressColor} progress />
+        <Progress percent={this.props.percent} active color={progressColor} progress />
         <Grid stackable doubling relaxed >
           <Grid.Row>
             <Grid.Column computer={8} >
-              <Select placeholder="Year" defaultValue={parseInt(this.props.year, 10)} options={this.state.years} onChange={(e, { value }) => this.props.fetchTimesheet(this.props.userId, value, this.props.month)} />
+              <Select placeholder="Year" defaultValue={this.props.year} options={this.state.years} onChange={(e, { value }) => this.props.fetchTimesheet(this.props.userId, value, this.props.month)} />
               <Select style={{ marginLeft: '10px' }} placeholder="Month" defaultValue={this.props.month} options={this.state.months} onChange={(e, { value }) => this.props.fetchTimesheet(this.props.userId, this.props.year, value)} />
             </Grid.Column>
             <Grid.Column floated="right" width={5}>
@@ -318,6 +322,7 @@ Timesheet.propTypes = {
   userId: PropTypes.string.isRequired,
   year: PropTypes.string.isRequired,
   month: PropTypes.string.isRequired,
+  percent: PropTypes.number.isRequired,
   onAddClick: PropTypes.func.isRequired,
   onEditClick: PropTypes.func.isRequired
 };

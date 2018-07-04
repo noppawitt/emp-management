@@ -1,20 +1,23 @@
 import * as actionTypes from '../constants/actionTypes';
 
-export const downloadReportRequest = (form, resolve, reject) => ({
-  type: actionTypes.REPORT_DOWNLOAD_REQUEST,
+export const fetchOwnProjectRequest = (userId, year, month) => ({
+  type: actionTypes.OWN_PROJECT_FETCH_REQUEST,
   payload: {
-    form,
-    resolve,
-    reject
+    userId,
+    year,
+    month,
   }
 });
 
-export const downloadReportSuccess = () => ({
-  type: actionTypes.REPORT_DOWNLOAD_SUCCESS
+export const fetchOwnProjectSuccess = projects => ({
+  type: actionTypes.OWN_PROJECT_FETCH_SUCCESS,
+  payload: {
+    projects
+  }
 });
 
-export const downloadReportFailure = message => ({
-  type: actionTypes.REPORT_DOWNLOAD_FAILURE,
+export const fetchOwnProjectFailure = message => ({
+  type: actionTypes.OWN_PROJECT_FETCH_FAILURE,
   payload: {
     message
   }
