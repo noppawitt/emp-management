@@ -264,7 +264,7 @@ api.activatePassword = (id, lifetimes) => (
 api.uploadImageExam = body => (
   callApi('/api/exam/upload-image-exam', {
     headers: {
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAwMDEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE1Mjk2NTYyMjF9.j0y-6r2auXRbFIKFtSb41idMlOl_42_uupAR1bGJNz8'
+      Authorization: ('Bearer ').concat(localStorage.getItem('token'))
     },
     method: 'POST',
     body

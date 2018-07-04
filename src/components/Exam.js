@@ -67,10 +67,14 @@ const showExamsFromPageNumber = (exams, examsFilter, row, onViewClick, onEditCli
       ))}
       </Table.Cell>
     }
-    <Table.Cell style={{ height: '200px', overflowY: 'auto', width: '100%' }}>{(examsFilter[row].exAnswer).map(ans => (
-      <p>&#9679;&nbsp;{ans}</p>
-    ))}
-    </Table.Cell>
+    {examsFilter[row].exType === 'Write-Up' &&
+      <Table.Cell style={{ height: '200px' }}><p>-</p></Table.Cell>
+    }
+    {examsFilter[row].exType === 'Choices' &&
+      <Table.Cell style={{ height: '200px', overflowY: 'auto', width: '100%' }}>{(examsFilter[row].exAnswer).map(ans => (
+        <p>&#9679;&nbsp;{ans}</p>
+      ))}
+      </Table.Cell>}
     <Table.Cell textAlign="center" style={{ cursor: 'default' }}>
       <Button active circular icon="eye" color="olive" size="big" onClick={() => onViewClick(examsFilter[row])} style={{ cursor: 'pointer' }} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <Button active circular icon="settings" color="linkedin" size="big" onClick={() => onEditClick(exams, examsFilter[row])} style={{ cursor: 'pointer' }} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -124,12 +128,12 @@ const Exam = (({ onAddClick, onDeleteClick, onEditClick, onViewClick, onFilterCh
         <Table striped selectable celled compact>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell width={7}>Question</Table.HeaderCell>
-              <Table.HeaderCell width={1}>Category</Table.HeaderCell>
-              <Table.HeaderCell width={1}>Sub-Category</Table.HeaderCell>
-              <Table.HeaderCell width={1}>Type</Table.HeaderCell>
-              <Table.HeaderCell width={3}>Choice</Table.HeaderCell>
-              <Table.HeaderCell width={3}>Answer</Table.HeaderCell>
+              <Table.HeaderCell width={6}>Question</Table.HeaderCell>
+              <Table.HeaderCell width={2}>Category</Table.HeaderCell>
+              <Table.HeaderCell width={2}>Sub-Category</Table.HeaderCell>
+              <Table.HeaderCell width={2}>Type</Table.HeaderCell>
+              <Table.HeaderCell width={2}>Choice</Table.HeaderCell>
+              <Table.HeaderCell width={2}>Answer</Table.HeaderCell>
               <Table.HeaderCell >&nbsp;</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
