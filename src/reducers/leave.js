@@ -17,7 +17,7 @@ const leave = (state = initialState, action) => {
     case actionTypes.LEAVE_CREATE_SUCCESS:
       return {
         ...state,
-        lists: action.payload.timesheets
+        lists: action.payload.leaves
       };
     case actionTypes.LEAVE_CREATE_FAILURE:
       return {
