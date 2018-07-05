@@ -1,3 +1,3 @@
-.dimmable:nth-child(3) {
+.ui.page.modals.dimmer.transition.visible.active:nth-child(2){
   background-color: rgba(0,0,0,0.85);
 }

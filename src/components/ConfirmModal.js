@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Button, Icon, Modal} from 'semantic-ui-react';
-import './css/ConfirmModal.css'
 
 class ConfirmModal extends React.Component{
   constructor(props){
@@ -10,7 +9,6 @@ class ConfirmModal extends React.Component{
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
-
   openModal(){
     this.setState({open: true})
   }
@@ -24,7 +22,6 @@ class ConfirmModal extends React.Component{
       <div>
         <Button disabled={this.props.submitting|| this.props.disable}  onClick={this.openModal} color='blue'> Save </Button>
         <Modal
-          basic
           size='small'
           open={this.state.open}
           closeOnRootNodeClick={false}
@@ -36,10 +33,10 @@ class ConfirmModal extends React.Component{
             </p>
           </Modal.Content>
           <Modal.Actions>
-            <Button basic color='red'  onClick={this.closeModal} inverted>
+            <Button color='red'  onClick={this.closeModal}>
               <Icon name='remove' /> No
             </Button>
-            <Button onClick={this.props.onClickHandle} color='green' loading={this.props.submitting} inverted>
+            <Button onClick={this.props.onClickHandle} color='green' loading={this.props.submitting}>
               <Icon name='checkmark' /> Yes
             </Button>
           </Modal.Actions>

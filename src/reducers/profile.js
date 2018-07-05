@@ -11,12 +11,13 @@ const profile = (state = initialState, action) => {
     case actionTypes.UPDATE_PROBATION_STORE:
       var disable;
       if(action.payload.item.passPro==false){
-        if(action.payload.item.continued == true && action.payload.item.continuedDate != null){
+        if(action.payload.item.continued == true && action.payload.item.continuedDate){
           disable = true;
-        }else if (action.payload.item.continued == false && action.payload.item.terminationDate != null){
+        }else if (action.payload.item.continued == false && action.payload.item.terminationDate){
           disable = true;
         }else disable = false;
-      }else disable = true;
+      }else if (action.payload.item.endProbationDate) disable = true;
+      else disable = false;
       return {
         ...state,
         item: action.payload.item,
