@@ -4,6 +4,7 @@ import ScoreTableManager from './components/ScoreTableManager';
 import EmployeeInfo from './components/EmployeeInfoComponent';
 import SignatureComponent from './components/SignatureComponent';
 import SupervisorCommentComponent from './components/SupervisorCommentComponent';
+import moment from 'moment';
 
 const questions = ['ความรู้ในงานและการพัฒนาตัวเอง (Knowledge and Improvement)',
     'คุณภาพงาน (Quality of Work)',
@@ -58,6 +59,7 @@ class PerformanceReviewForm extends React.Component {
                 employeeSignDate: this.props.profile.perfInfo.emSignDate,
                 supervisorSignDate: this.props.profile.perfInfo.supSignDate,
                 MDSignDate: this.props.profile.perfInfo.mdSignDate,
+                year:moment(this.props.profile.perfInfo.createdDate).format('YYYY')
             })
         }
     }

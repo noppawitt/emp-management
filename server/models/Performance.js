@@ -1,4 +1,5 @@
 const db = require('../db/');
+const moment = require('moment');
 
 const Performance = {};
 
@@ -27,7 +28,7 @@ Performance.insertPerformance = (performanceInfo,id) =>(
 
 Performance.updatePerformance = (performanceInfo,id) =>(
   db.none(
-    "UPDATE Performance SET score=$1, expected_score=$2, sup_comment=$3, em_sign_date=$4, sup_sign_date=$5, md_sign_date=$6, updated_user=$7 WHERE user_id=$7",
+    "UPDATE Performance SET score=$1, expected_score=$2, sup_comment=$3, em_sign_date=$4, sup_sign_date=$5, md_sign_date=$6, updated_user=$7, updated_date=$8 WHERE user_id=$9 and extract(year from created_date)=$10",
     [
       performanceInfo.score,
       performanceInfo.expectedScore,
@@ -35,8 +36,10 @@ Performance.updatePerformance = (performanceInfo,id) =>(
       performanceInfo.employeeSignDate,
       performanceInfo.supervisorSignDate,
       performanceInfo.MDSignDate,
+      id,
+      moment().format('YYYY-MM-DD HH:mm:ss'),
       performanceInfo.employeeID,
-      id
+      performanceInfo.year
     ])
 )
 module.exports = Performance;

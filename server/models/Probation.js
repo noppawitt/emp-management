@@ -1,5 +1,6 @@
 const db = require('../db/');
 const mail = require('../mail');
+const moment = require('moment');
 
 const Probation = {};
 
@@ -38,7 +39,7 @@ Probation.insertProbation = (probationInfo,id) =>(
 
 Probation.updateProbation = (probationInfo,id) =>(
   db.none(
-    "UPDATE Probation SET pass_pro_date=$1, based_salary=$2, mobile=$3, transporation_allowance=$4, other_allowance=$5, pass_pro=$6, confirmed_by_employment=$7, sup_comment=$8, em_sign_date=$9, sup_sign_date=$10, md_sign_date=$11, continued=$12, score=$13, expected_score=$14, updated_user=$15, terminated_date=$16, continued_date=$17 WHERE user_id=$18",
+    "UPDATE Probation SET pass_pro_date=$1, based_salary=$2, mobile=$3, transporation_allowance=$4, other_allowance=$5, pass_pro=$6, confirmed_by_employment=$7, sup_comment=$8, em_sign_date=$9, sup_sign_date=$10, md_sign_date=$11, continued=$12, score=$13, expected_score=$14, updated_user=$15, terminated_date=$16, continued_date=$17 updated_date=$18 WHERE user_id=$19",
     [
       probationInfo.endProbationDate,
       probationInfo.basedSalary,
@@ -57,6 +58,7 @@ Probation.updateProbation = (probationInfo,id) =>(
       id,
       probationInfo.terminationDate,
       probationInfo.continuedDate,
+      moment().format('YYYY-MM-DD HH:mm:ss'),
       probationInfo.employeeID
     ])
 )
