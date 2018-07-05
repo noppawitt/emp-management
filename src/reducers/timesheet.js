@@ -9,7 +9,9 @@ const initialState = {
   leaves: [],
   holidays: [],
   year: now.format('YYYY'),
-  month: now.format('MM')
+  month: now.format('MM'),
+  startDay: 1,
+  endDay: now.daysInMonth()
 };
 
 const timesheet = (state = initialState, action) => {
@@ -40,7 +42,8 @@ const timesheet = (state = initialState, action) => {
         isFetching: true,
         userId: action.payload.userId,
         year: action.payload.year,
-        month: action.payload.month
+        month: action.payload.month,
+        endDay: moment(action.payload.month).daysInMonth()
       };
     case actionTypes.TIMESHHET_FETCH_SUCCESS:
       return {

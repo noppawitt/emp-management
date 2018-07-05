@@ -12,7 +12,7 @@ const options = [
   { key: 1, value: 1, text: 1 }
 ];
 
-const AddTaskPage = ({ startDay, endDay, change }) => (
+const AddTaskPage = ({ month, startDay, endDay, change }) => (
   <div>
     <PageHeader text="New Task" icon="user" />
     <Segment raised >
@@ -24,7 +24,7 @@ const AddTaskPage = ({ startDay, endDay, change }) => (
                 <Form.Select fluid label="Project" placeholder="Project" options={options} />
                 <Form.Select fluid label="Task Name" placeholder="Task" options={taskOptions} />
                 <Form.Select label="Start Date" placeholder="start" defaultValue={startDay} options={getRangeOptions(1, endDay)} onChange={(e, { value }) => change('startDay', value)} />
-                <Form.Select label="End Date" placeholder="end" defaultValue={endDay} options={getRangeOptions(startDay, 31)} onChange={(e, { value }) => change('endDay', value)} />
+                <Form.Select label="End Date" placeholder="end" defaultValue={endDay} options={getRangeOptions(startDay, moment(month, 'MM').daysInMonth())} onChange={(e, { value }) => change('endDay', value)} />
               </Form.Group>
             </Form>
           </Grid.Column>
@@ -37,12 +37,14 @@ const AddTaskPage = ({ startDay, endDay, change }) => (
 );
 
 AddTaskPage.propTypes = {
+  month: PropTypes.string.isRequired,
   startDay: PropTypes.number.isRequired,
   endDay: PropTypes.number.isRequired,
   change: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
+  month: state.timesheet.month,
   startDay: state.timesheet.startDay,
   endDay: state.timesheet.endDay
 });
