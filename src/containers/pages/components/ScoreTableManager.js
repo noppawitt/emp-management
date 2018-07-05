@@ -6,7 +6,7 @@ const DropDown = (props) => {
     for (let i = 1; i <= (props.numOfElements ? props.numOfElements : 5); i++)
         elements.push(<option value={i}>{i}</option>);
 
-    return <select id={props.id} value={props.value} onChange={props.onChange} disabled={props.mode != 'edit'}>{elements}</select>;
+    return <select id={props.id} value={props.value || 3} onChange={props.onChange} disabled={props.mode != 'edit'}>{elements}</select>;
 };
 
 class ScoreTableManager extends React.Component {
