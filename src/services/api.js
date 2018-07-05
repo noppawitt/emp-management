@@ -335,4 +335,14 @@ api.uploadAnswer = (id, category, answerList) => (
   })
 );
 
+api.checkProgress = (id, category) => (
+  callApi(`/api/takeExam/checkProgress`, {
+    method: 'POST',
+    body: {
+      id,
+      category,
+    }
+  })
+);
+
 export default api;

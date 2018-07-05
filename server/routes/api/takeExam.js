@@ -5,4 +5,6 @@ router.get('/fetchAllExam', TakeExamController.fetchAllExam);
 
 router.post('/uploadAnswer', TakeExamController.updateAnswer);
 
+router.post('/checkProgress', TakeExamController.findUploadedCategory);
+
 module.exports = router;

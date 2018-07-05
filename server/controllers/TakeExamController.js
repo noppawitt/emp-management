@@ -25,17 +25,19 @@ exports.updateAnswer = (req, res, next) => {
       // after we make sure it exist update it
       TakeExam.updateAnswer(object.id, object.category, object.answerList)
         .then((result) => {
-          console.log('Update result:', result);
+          if (result === null) res.json('Update Complete');
+          else res.json('Something wrong :'.concat(result));
         })
         .catch(next);
-      // after we have already update it
-      // send result of update back
-      TakeExam.findUploadedAnswer(object.id, 'progress check')
-        .then((progress) => {
-          console.log('Progress', progress);
-          res.json(progress);
-        })
-        .catch(next);
+    })
+    .catch(next);
+};
+
+exports.findUploadedCategory = (req, res, next) => {
+  const object = req.body;
+  TakeExam.findUploadedCategory(object.id, object.category)
+    .then((result) => {
+      res.json(result);
     })
     .catch(next);
 };

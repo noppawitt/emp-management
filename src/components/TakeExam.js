@@ -1,35 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import Modal from '../../components/modal';
-import { Segment, Grid, Container, Pagination, Icon, Form, Radio, Checkbox, Button, TextArea } from 'semantic-ui-react';
+import {
+  Segment,
+  Grid,
+  Container,
+  Pagination,
+  Icon,
+  Form,
+  Radio,
+  Checkbox,
+  Button,
+  TextArea,
+  Header,
+} from 'semantic-ui-react';
 
 const questionRenderer = question => (
   <div dangerouslySetInnerHTML={{ __html: question }} />
 );
-
-// const updateAnswerList = (answerList, activePage, pickedAnswer, exId) => {
-//   console.log('Bfore', answerList, pickedAnswer);
-//   // return answerList.splice(activePage - 1, 1, {
-//   //   answer: pickedAnswer,
-//   //   question: exId,
-//   // });
-//   // console.log('After', answerList);
-//   // return answerList;
-// return new Promise((resolve) => {
-//   answerList.splice(activePage - 1, 1, {
-//     answer: [5, 5],
-//     question: exId,
-//   });
-//   resolve(answerList);
-// });
-// };
 
 const TakeExam = ({
   examList,
   currentActivePage,
   onPageChange,
   categoryTitle,
-  subCategoryTitle,
   pickedAnswer,
   answerList,
   onClickRadio,
@@ -44,10 +38,7 @@ const TakeExam = ({
       <Segment>
         <Grid>
           <Grid.Column width={12}>
-            <h1>{categoryTitle} : {subCategoryTitle}</h1>
-          </Grid.Column>
-          <Grid.Column width={2}>
-            <h2>{currentActivePage}</h2>
+            <Header>{categoryTitle}</Header>
           </Grid.Column>
           <Grid.Column width={2}>
             <Container textAlign="right"><h2>Timer</h2></Container>
@@ -116,9 +107,6 @@ const TakeExam = ({
           onPageChange={(e, { activePage }) => onPageChange(activePage)}
           floated="right"
           defaultActivePage={1}
-          showFirstAndLastNav={true}
-          showPreviousAndNextNav={true}
-          showEllipsis={true}
           boundaryRange={1}
           siblingRange={0}
           ellipsisItem={{ content: <Icon name="ellipsis horizontal" />, icon: true }}
@@ -137,7 +125,6 @@ TakeExam.propTypes = {
   currentActivePage: PropTypes.string.isRequired,
   onPageChange: PropTypes.func.isRequired,
   categoryTitle: PropTypes.string.isRequired,
-  subCategoryTitle: PropTypes.string.isRequired,
   pickedAnswer: PropTypes.array.isRequired,
   answerList: PropTypes.array.isRequired,
   onClickRadio: PropTypes.func.isRequired,

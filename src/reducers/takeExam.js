@@ -91,6 +91,20 @@ const TakeExam = (state = initialState, action) => {
         ...state,
         messege: action.payload.messege,
       };
+    case actionTypes.TAKE_EXAM_CHECK_PROGRESS_REQUEST:
+      return {
+        ...state,
+      };
+    case actionTypes.TAKE_EXAM_CHECK_PROGRESS_SUCCESS:
+      return {
+        ...state,
+        progressResult: action.payload.preogressResult,
+      };
+    case actionTypes.TAKE_EXAM_CHECK_PROGRESS_FAILURE:
+      return {
+        ...state,
+        messege: action.payload.messege,
+      };
     default:
       return state;
   }

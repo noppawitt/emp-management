@@ -14,6 +14,9 @@ TakeExam.createBufferAnswer = (id, category, answerList, date) => (
 );
 
 TakeExam.findUploadedAnswer = (id, type) => {
+  // this 2 query do similar thing in same table
+  // their difference is only return value type
+  // so write it together or wait for reason to
   if (type === 'existing check') {
     return db.oneOrNone('SELECT 1 FROM exam_candidate_submitted WHERE id = $1', [id]);
   }
@@ -27,5 +30,9 @@ TakeExam.updateAnswer = (id, category, answerList) => {
   console.log(id, '<<<');
   return db.oneOrNone('UPDATE exam_candidate_submitted SET (id, category, answer_list) = ($1, $2, $3)', [id, category, answerList]);
 };
+
+TakeExam.findUploadedCategory = (id, category) => (
+  db.oneOrNone('SELECT * FROM exam_candidate_submitted WHERE id = $1 and category = $2', [id, category])
+);
 
 module.exports = TakeExam;

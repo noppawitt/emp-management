@@ -80,3 +80,25 @@ export const uploadAnswerListFailure = messege => ({
     messege,
   }
 });
+
+export const checkProgressRequest = (id, category) => ({
+  type: actionTypes.TAKE_EXAM_CHECK_PROGRESS_REQUEST,
+  payload: {
+    id,
+    category,
+  }
+});
+
+export const checkProgressSuccess = progressResult => ({
+  type: actionTypes.TAKE_EXAM_CHECK_PROGRESS_REQUEST,
+  payload: {
+    progressResult,
+  }
+});
+
+export const checkProgressFailure = messege => ({
+  type: actionTypes.TAKE_EXAM_CHECK_PROGRESS_REQUEST,
+  payload: {
+    messege,
+  }
+});
