@@ -5,7 +5,7 @@ import {Button, Icon, Modal} from 'semantic-ui-react';
 class ConfirmModal extends React.Component{
   constructor(props){
     super(props);
-    this.state = {open: false}
+    this.state = {open: this.props.open || false}
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
@@ -20,7 +20,7 @@ class ConfirmModal extends React.Component{
   render(){
     return(
       <div>
-        <Button disabled={this.props.submitting|| this.props.disable}  onClick={this.openModal} color='blue'> Save </Button>
+        {this.props.open ? '' : <Button disabled={this.props.submitting|| this.props.disable}  onClick={this.openModal} color='blue'> Save </Button>}
         <Modal
           size='small'
           open={this.state.open}
@@ -33,7 +33,7 @@ class ConfirmModal extends React.Component{
             </p>
           </Modal.Content>
           <Modal.Actions>
-            <Button color='red'  onClick={this.closeModal}>
+            <Button color='red'  onClick={this.props.onClose}>
               <Icon name='remove' /> No
             </Button>
             <Button onClick={this.props.onClickHandle} color='green' loading={this.props.submitting}>

@@ -10,7 +10,8 @@ const profile = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.UPDATE_PROBATION_STORE:
       var disable;
-      if(action.payload.item.passPro==false){
+      if(action.payload.item.passPro === undefined) disable = true
+      else if(action.payload.item.passPro==false){
         if(action.payload.item.continued == true && action.payload.item.continuedDate){
           disable = true;
         }else if (action.payload.item.continued == false && action.payload.item.terminationDate){

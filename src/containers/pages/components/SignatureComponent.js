@@ -2,6 +2,7 @@ import React from 'react';
 import cmark from '../pic/mark.png';
 import './css/SignatureComponent.css';
 import moment from 'moment';
+import ConfirmModal from '../../../components/ConfirmModal';
 
 class SignatureComponent extends React.Component {
     constructor(props) {
@@ -10,7 +11,8 @@ class SignatureComponent extends React.Component {
             employeeSignDate: props.employeeSignDate || null,
             supervisorSignDate: props.supervisorSignDate || null,
             MDSignDate: props.MDSignDate || null,
-            role: props.role || ''
+            role: props.role || '',
+            open: false
         };
 
         this.EmployeeSignHandler = this.EmployeeSignHandler.bind(this);
@@ -64,9 +66,10 @@ class SignatureComponent extends React.Component {
         this.employeeSignButton.current.disabled = true;
     }
     SupervisorSignHandler() {
-        this.setState({ supervisorSignDate: moment().format('YYYY-MM-DD') });
-        document.getElementById('mark2').style.width = '2em';
-        this.supervisorSignButton.current.disabled = true;
+        // this.setState({ supervisorSignDate: moment().format('YYYY-MM-DD') });
+        // document.getElementById('mark2').style.width = '2em';
+        // this.supervisorSignButton.current.disabled = true;
+        this.setState({open: true})
     }
     MDSignHandler() {
         this.setState({ MDSignDate: moment().format('YYYY-MM-DD') });
@@ -77,6 +80,7 @@ class SignatureComponent extends React.Component {
     render() {
         return (
             <div className='sign-container'>
+                {this.state.open ? <ConfirmModal submitting={false} onClickHandle={()=>{console.log('dddddd')}} disable={false} open={true} onClose={()=>{this.setState({open: false})}}/> : ''}
                 <div>
                     <div className='header'>&emsp;&emsp;&emsp;&emsp;Employee has read this appraisal and discussed the contents with direct supervisor. Signatures identify that employee has been advised on their performance by direct supervisor.</div>
                 </div>

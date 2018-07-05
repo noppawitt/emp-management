@@ -38,7 +38,7 @@ const EvaluationModal = ({ header, buttonName, onClose, onClick, submitting, chi
       {children}
     </Modal.Content>
     <Modal.Actions>
-      <ConfirmModal submitting={submitting} onClickHandle={onClick} disable={disable}/>
+      <ConfirmModal submitting={submitting} onClickHandle={onClick} disable={disable} open={false}/>
     </Modal.Actions>
   </Modal>
 );
