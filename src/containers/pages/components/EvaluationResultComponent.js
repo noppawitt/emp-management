@@ -231,7 +231,9 @@ class EvaluationResultComponent extends React.Component {
                                                     Based Salary
                                                 </td>
                                                 <td>
-                                                    <input type='number' value={this.state.basedSalary ? this.state.basedSalary : ''} onChange={(event) => {
+                                                    <input type='number' min='0' value={this.state.basedSalary ? this.state.basedSalary : ''} onChange={(event) => {
+                                                        if (event.target.value < 0)
+                                                            event.target.value = 0;
                                                         this.state = { ...this.state, basedSalary: event.target.value };
                                                         this.updateParentComponent();
                                                     }} />
@@ -240,7 +242,9 @@ class EvaluationResultComponent extends React.Component {
                                                     Mobile
                                                 </td>
                                                 <td>
-                                                    <input type='text' value={this.state.mobile ? this.state.mobile : ''} onChange={(event) => {
+                                                    <input type='number' min='0' value={this.state.mobile ? this.state.mobile : ''} onChange={(event) => {
+                                                        if (event.target.value < 0)
+                                                            event.target.value = 0;
                                                         this.state = { ...this.state, mobile: event.target.value };
                                                         this.updateParentComponent();
                                                     }} />
@@ -251,7 +255,9 @@ class EvaluationResultComponent extends React.Component {
                                                     Transporation Allowance
                                                 </td>
                                                 <td>
-                                                    <input type='number' value={this.state.transporationAllowance ? this.state.transporationAllowance : ''} onChange={(event) => {
+                                                    <input type='number' min='0' value={this.state.transporationAllowance ? this.state.transporationAllowance : ''} onChange={(event) => {
+                                                        if (event.target.value < 0)
+                                                            event.target.value = 0;
                                                         this.state = { ...this.state, transporationAllowance: event.target.value };
                                                         this.updateParentComponent();
                                                     }} />
@@ -260,7 +266,9 @@ class EvaluationResultComponent extends React.Component {
                                                     Others Allowance
                                                 </td>
                                                 <td>
-                                                    <input type='number' value={this.state.otherAllowance ? this.state.otherAllowance : ''} onChange={(event) => {
+                                                    <input type='number' min='0' value={this.state.otherAllowance ? this.state.otherAllowance : ''} onChange={(event) => {
+                                                        if (event.target.value < 0)
+                                                            event.target.value = 0;
                                                         this.state = { ...this.state, otherAllowance: event.target.value };
                                                         this.updateParentComponent();
                                                     }} />
