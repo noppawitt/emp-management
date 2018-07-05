@@ -66,7 +66,8 @@ const TakeExam = (state = initialState, action) => {
           question: action.payload.exId,
         }, ...state.answerList.slice(action.payload.currentActivePage)]
       };
-    case actionTypes.TAKE_EXAM_ON_INPUT_TEXTAREA:
+    case actionTypes.TAKE_EXAM_ON_INPUT_TEXTAREA: {
+      console.log(action.payload.currentActivePage);
       return {
         ...state,
         pickedAnswer: [action.payload.text],
@@ -75,6 +76,7 @@ const TakeExam = (state = initialState, action) => {
           question: action.payload.exId,
         }, ...state.answerList.slice(action.payload.currentActivePage)]
       };
+    }
     case actionTypes.TAKE_EXAM_UPLOAD_REQUEST:
       console.log('UPLOAD REQUEST!');
       return {

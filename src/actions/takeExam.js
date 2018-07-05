@@ -48,12 +48,11 @@ export const onPickCheckboxAnswer = (choice, currentActivePage, pickedAnswer, ex
   },
 });
 
-export const onInputTextAreaAnswer = (text, currentActivePage, pickedAnswer, exId) => ({
+export const onInputTextAreaAnswer = (text, currentActivePage, exId) => ({
   type: actionTypes.TAKE_EXAM_ON_INPUT_TEXTAREA,
   payload: {
     text,
     currentActivePage,
-    pickedAnswer,
     exId,
   },
 });
