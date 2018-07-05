@@ -14,7 +14,6 @@ TakeExam.createBufferAnswer = (id, category, answerList, date) => (
 );
 
 TakeExam.findUploadedAnswer = (id, type) => {
-  console.log('Type', type);
   if (type === 'existing check') {
     return db.oneOrNone('SELECT 1 FROM exam_candidate_submitted WHERE id = $1', [id]);
   }

@@ -124,8 +124,7 @@ const TakeExam = ({
           lastItem={{ content: <Icon name="angle double right" />, icon: true }}
           prevItem={{ content: <Icon name="angle left" />, icon: true }}
           nextItem={{ content: <Icon name="angle right" />, icon: true }}
-          // edit this after this
-          totalPages={1 < 0 ? parseInt(examList.length / 10, 10) + ((examList.length % 3 !== 0) ? 1 : 0) : 5}
+          totalPages={examList.length}
         />
       </Segment>
     </Segment.Group>
