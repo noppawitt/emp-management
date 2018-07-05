@@ -8,6 +8,8 @@ import {
   checkProgressFailure,
   checkProgressSuccess,
 } from '../actions/takeExam';
+import { openModal } from '../actions/modal';
+import * as modalNames from '../constants/modalNames';
 import api from '../services/api';
 
 // the easy one
@@ -50,8 +52,11 @@ export function* uploadAnswerListTask(action) {
 export function* checkProgressTask(action) {
   try {
     const progressResult = yield call(api.checkProgress, action.payload.id, action.payload.category);
-    console.log('HERE', progressResult);
-    yield put(checkProgressSuccess(progressResult));
+    const examProgress = yield put(checkProgressSuccess(progressResult));
+    console.log(examProgress);
+    yield put(openModal(modalNames.VIEW_EXAM_PROGRESS, {
+      examProgress: examProgress.payload.progressResult
+    }));
   }
   catch (error) {
     yield put(checkProgressFailure(error));

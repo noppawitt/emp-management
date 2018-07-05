@@ -16,6 +16,7 @@ import AddExamModal from './modals/AddExamModal';
 import EditExamModal from './modals/EditExamModal';
 import ActivateUserModal from './modals/ActivateUserModal';
 import ExamFullViewModal from './modals/ExamFullViewModal';
+import ExamProgressModal from './modals/ExamProgressModal';
 
 const ModalContainer = ({ name, props }) => {
   switch (name) {
@@ -45,6 +46,8 @@ const ModalContainer = ({ name, props }) => {
       return <EditExamModal {...props} />;
     case modalNames.VIEW_EXAM:
       return <ExamFullViewModal {...props} />;
+    case modalNames.VIEW_EXAM_PROGRESS:
+      return <ExamProgressModal {...props} />;
     case modalNames.ACTIVATE:
       return <ActivateUserModal {...props} />;
     default:
