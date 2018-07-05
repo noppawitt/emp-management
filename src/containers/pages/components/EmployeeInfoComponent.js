@@ -55,7 +55,9 @@ class EmployeeInfo extends React.Component {
                         <td>{this.state.supervisor}</td>
                         <td>{this.state.showEndProDate ? 'Probation End Date:' : ''}</td>
                         <td>{this.state.showEndProDate ? <input type='date' value={this.state.endProbationDate} onChange={(event) => {
-                            if (moment(event.target.value).isBefore(this.state.startDate))
+                            console.log("test1");
+                            console.log(event.target.value);
+                            if (event.target.value == '' || moment(event.target.value).isBefore(this.state.startDate))
                                 alert(validationMessage.endProbationDateValidation);
                             else
                                 this.props.onChange(event.target.value);

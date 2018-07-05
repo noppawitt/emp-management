@@ -171,7 +171,7 @@ class EvaluationResultComponent extends React.Component {
                                 </td>
                                 <td>
                                     <input type='date' value={this.state.passProDate} onChange={(event) => {
-                                        if (moment(event.target.value).isBefore(this.state.startDate))
+                                        if (event.target.value == '' || moment(event.target.value).isBefore(this.state.startDate))
                                             alert(validationMessage.passProDateVilidation);
                                         else {
                                             this.state = {
