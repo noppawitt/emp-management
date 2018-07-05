@@ -9,6 +9,7 @@ import {
   onPickCheckboxAnswer,
   onInputTextAreaAnswer,
   uploadAnswerListRequest,
+  checkProgressRequest,
 } from '../../actions/takeExam';
 import TakeExam from '../../components/TakeExam';
 import Loader from '../../components/Loader';
@@ -29,7 +30,8 @@ const TakeExamPage = ({
   onClickSave,
   onClickSubmit,
   exId,
-  id, }) =>
+  id,
+  onClickCheckProgress, }) =>
   (
     isFetching ?
       <Loader /> :
@@ -48,6 +50,7 @@ const TakeExamPage = ({
         onClickSubmit={onClickSubmit}
         exId={exId}
         id={id}
+        onClickCheckProgress={onClickCheckProgress}
       />
   );
 
@@ -67,6 +70,7 @@ TakeExamPage.propTypes = {
   onClickSave: PropTypes.func.isRequired,
   onClickSubmit: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
+  onClickCheckProgress: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -100,6 +104,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(),
     // dispatch(finishExam()),
   ),
+  onClickCheckProgress: (id, category) => dispatch(checkProgressRequest(id, category)),
 });
 
 const enhance = compose(

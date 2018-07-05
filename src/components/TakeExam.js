@@ -32,7 +32,8 @@ const TakeExam = ({
   onClickSave,
   onClickSubmit,
   exId,
-  id, }) =>
+  id,
+  onClickCheckProgress, }) =>
   (
     <div>
       <br />
@@ -40,7 +41,7 @@ const TakeExam = ({
         <Segment>
           <Grid>
             <Grid.Column width={14}>
-              <Header as="h1">Cateogry : {categoryTitle.charAt(0).toUpperCase().concat(categoryTitle.slice(1))}</Header>
+              <Header as="h1">Category : {categoryTitle.charAt(0).toUpperCase().concat(categoryTitle.slice(1))}</Header>
             </Grid.Column>
             <Grid.Column width={2}>
               <Container textAlign="right"><Header as="h1">Timer</Header></Container>
@@ -97,11 +98,15 @@ const TakeExam = ({
           )}
         </Segment>
         <Segment>
+          <Button color="green" icon labelPosition="left" onClick={() => onClickCheckProgress(id, categoryTitle)}>
+            <Icon name="checkmark" />
+            Check
+          </Button>
           <Button primary icon labelPosition="left" onClick={() => onClickSave(id, categoryTitle, answerList)}>
             <Icon name="save" />
             Save
           </Button>
-          <Button secondary icon labelPosition="right" onClick={() => onClickSubmit(id, categoryTitle, answerList)}>
+          <Button secondary icon labelPosition="left" onClick={() => onClickSubmit(id, categoryTitle, answerList)}>
             <Icon name="send" />
             Submit
           </Button>
@@ -137,6 +142,7 @@ TakeExam.propTypes = {
   onClickSubmit: PropTypes.func.isRequired,
   exId: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  onClickCheckProgress: PropTypes.func.isRequired,
 };
 
 export default TakeExam;

@@ -5,6 +5,8 @@ import {
   fetchTakeExamSuccess,
   uploadAnswerListFailure,
   uploadAnswerListSuccess,
+  checkProgressFailure,
+  checkProgressSuccess,
 } from '../actions/takeExam';
 import api from '../services/api';
 
@@ -29,6 +31,17 @@ export function* uploadAnswerListTask(action) {
   }
 }
 
+export function* checkProgressTask(action) {
+  try {
+    const progressResult = yield call(api.checkProgress, action.payload.id, action.payload.category);
+    console.log('HERE', progressResult);
+    yield put(checkProgressSuccess(progressResult));
+  }
+  catch (error) {
+    yield put(checkProgressFailure(error));
+  }
+}
+
 export function* watchFetchTakeExamRequest() {
   yield takeEvery(actionTypes.TAKE_EXAM_FETCH_REQUEST, fetchTestExamTask);
 }
@@ -37,9 +50,14 @@ export function* watchUploadAnswerListRequest() {
   yield takeEvery(actionTypes.TAKE_EXAM_UPLOAD_REQUEST, uploadAnswerListTask);
 }
 
+export function* watchCheckProgressRequest() {
+  yield takeEvery(actionTypes.TAKE_EXAM_CHECK_PROGRESS_REQUEST, checkProgressTask);
+}
+
 export default function* takeExamSaga() {
   yield all([
     watchFetchTakeExamRequest(),
     watchUploadAnswerListRequest(),
+    watchCheckProgressRequest(),
   ]);
 }

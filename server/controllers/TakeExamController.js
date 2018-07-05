@@ -35,6 +35,7 @@ exports.updateAnswer = (req, res, next) => {
 
 exports.findUploadedCategory = (req, res, next) => {
   const object = req.body;
+  console.log('?????', object);
   TakeExam.findUploadedCategory(object.id, object.category)
     .then((result) => {
       res.json(result);

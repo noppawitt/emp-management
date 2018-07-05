@@ -96,11 +96,12 @@ const TakeExam = (state = initialState, action) => {
     case actionTypes.TAKE_EXAM_CHECK_PROGRESS_REQUEST:
       return {
         ...state,
+        // nothing to update state yet
       };
     case actionTypes.TAKE_EXAM_CHECK_PROGRESS_SUCCESS:
       return {
         ...state,
-        progressResult: action.payload.preogressResult,
+        progressResult: action.payload.progressResult,
       };
     case actionTypes.TAKE_EXAM_CHECK_PROGRESS_FAILURE:
       return {

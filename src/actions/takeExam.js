@@ -89,14 +89,14 @@ export const checkProgressRequest = (id, category) => ({
 });
 
 export const checkProgressSuccess = progressResult => ({
-  type: actionTypes.TAKE_EXAM_CHECK_PROGRESS_REQUEST,
+  type: actionTypes.TAKE_EXAM_CHECK_PROGRESS_SUCCESS,
   payload: {
     progressResult,
   }
 });
 
 export const checkProgressFailure = messege => ({
-  type: actionTypes.TAKE_EXAM_CHECK_PROGRESS_REQUEST,
+  type: actionTypes.TAKE_EXAM_CHECK_PROGRESS_FAILURE,
   payload: {
     messege,
   }
