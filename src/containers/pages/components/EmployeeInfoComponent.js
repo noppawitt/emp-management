@@ -2,6 +2,10 @@ import React from 'react';
 import './css/EmployeeInfoComponent.css'
 import moment from 'moment';
 
+const validationMessage = {
+    endProbationDateValidation: "Probation End Date must not before Probation Start Date."
+};
+
 class EmployeeInfo extends React.Component {
     constructor(props) {
         super(props);
@@ -50,7 +54,12 @@ class EmployeeInfo extends React.Component {
                         <td>Supervisor:</td>
                         <td>{this.state.supervisor}</td>
                         <td>{this.state.showEndProDate ? 'Probation End Date:' : ''}</td>
-                        <td>{this.state.showEndProDate ? <input type='date' value={this.state.endProbationDate} onChange={(event) => this.props.onChange(event.target.value)} disabled={this.props.mode != 'edit'} /> : ''}</td>
+                        <td>{this.state.showEndProDate ? <input type='date' value={this.state.endProbationDate} onChange={(event) => {
+                            if (moment(event.target.value).isBefore(this.state.startDate))
+                                alert(validationMessage.endProbationDateValidation);
+                            else
+                                this.props.onChange(event.target.value);
+                        }} disabled={this.props.mode != 'edit'} /> : ''}</td>
                     </tr>
                 </table>
             </div>
