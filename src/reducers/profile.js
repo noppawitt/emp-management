@@ -10,15 +10,12 @@ const profile = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.UPDATE_PROBATION_STORE:
       var disable;
-      if(action.payload.item.passPro === undefined) disable = true
-      else if(action.payload.item.passPro==false){
-        if(action.payload.item.continued == true && action.payload.item.continuedDate){
-          disable = true;
-        }else if (action.payload.item.continued == false && action.payload.item.terminationDate){
-          disable = true;
-        }else disable = false;
-      }else if (action.payload.item.endProbationDate) disable = true;
-      else disable = false;
+      if(action.payload.item.passPro && !action.payload.item.confirmed) {
+        if(action.payload.item.basedSalary || action.payload.item.mobile || action.payload.item.transporationAllowance || action.payload.item.otherAllowance)disable = true;
+        else disable = false
+      }
+      else if(action.payload.item.passPro === undefined) disable = true
+      else disable = true
       return {
         ...state,
         item: action.payload.item,
