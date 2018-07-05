@@ -23,6 +23,7 @@ const GeneralProfileBox = ({ generalProfile, onEditClick, onProfilePictureClick,
         </Grid.Column>
       </Grid>
       <Header size="huge">{generalProfile.firstName} {generalProfile.lastName} ({generalProfile.nickName})<Icon color={generalProfile.gender === 'Male' ? 'blue' : 'pink'} name={generalProfile.gender === 'Male' ? 'mars' : 'venus'} /></Header>
+      <Header size="huge">{generalProfile.firstNameTh} {generalProfile.lastNameTh}</Header>
       <Header size="small">Citizen ID: {generalProfile.citizenId}</Header>
       <Header size="small">Mobile No: {generalProfile.mobileNumber}</Header>
       <Header size="small">Email: {generalProfile.email}</Header>
