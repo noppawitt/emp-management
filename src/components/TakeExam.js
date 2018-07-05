@@ -126,7 +126,6 @@ const TakeExam = ({
           lastItem={{ content: <Icon name="angle double right" />, icon: true }}
           prevItem={{ content: <Icon name="angle left" />, icon: true }}
           nextItem={{ content: <Icon name="angle right" />, icon: true }}
-          // edit this after this
           totalPages={examList.length}
         />
       </Segment>
