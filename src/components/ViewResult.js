@@ -27,7 +27,7 @@ const ViewResult = ({
             <Menu.Item name="Profile" active={activeItem === 'profile'} onClick={() => changeActiveItem('profile')} />
             <Menu.Item name="Overall" active={activeItem === 'overall'} onClick={() => changeActiveItem('overall')} />
             {/* Change this to dynamic-with-exam-type tab */}
-            {eprList.map(eachRow => (
+            {eprList && eprList.map(eachRow => (
               // eachRow.subCategory
               <Menu.Item
                 name={eachRow.category + eachRow.subCategory}

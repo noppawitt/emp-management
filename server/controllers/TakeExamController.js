@@ -8,6 +8,24 @@ exports.fetchAllExam = (req, res, next) => {
     .catch(next);
 };
 
+exports.fetchEPRList = (req, res, next) => {
+  const object = req.query;
+  TakeExam.fetchEPRList(object.id)
+  // TakeExam.fetchEPRList('1234567890191')
+    .then((EPRList) => {
+      res.json(EPRList);
+    })
+    .catch(next);
+};
+
+exports.fetchExamId = (req, res, next) => {
+  TakeExam.fetchExamId()
+    .then((ExamIdObject) => {
+      res.json(ExamIdObject);
+    })
+    .catch(next);
+};
+
 exports.updateAnswer = (req, res, next) => {
   const object = req.body;
   console.log(object);
@@ -34,7 +52,7 @@ exports.updateAnswer = (req, res, next) => {
 };
 
 exports.findUploadedCategory = (req, res, next) => {
-  const object = req.body;
+  const object = req.query;
   console.log('?????', object);
   TakeExam.findUploadedCategory(object.id, object.category)
     .then((result) => {

@@ -320,8 +320,22 @@ api.examLogin = form => (
 
 // Take Exam
 
+// the ez one
 api.fetchAllExam = () => (
   callApi(`/api/takeExam/fetchAllExam`)
+);
+
+// the real-one here
+api.fetchEPRList = id => (
+  callApi(`/api/takeExam/fetchEPRList/?id=${id}`)
+);
+
+api.fetchExamId = () => (
+  callApi(`/api/takeExam/fetchExamId`)
+);
+
+api.checkProgress = (id, category) => (
+  callApi(`/api/takeExam/checkProgress/?id=${id}&category=${category}`)
 );
 
 api.uploadAnswer = (id, category, answerList) => (
@@ -331,16 +345,6 @@ api.uploadAnswer = (id, category, answerList) => (
       id,
       category,
       answerList,
-    }
-  })
-);
-
-api.checkProgress = (id, category) => (
-  callApi(`/api/takeExam/checkProgress`, {
-    method: 'POST',
-    body: {
-      id,
-      category,
     }
   })
 );

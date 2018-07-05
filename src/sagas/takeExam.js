@@ -10,10 +10,26 @@ import {
 } from '../actions/takeExam';
 import api from '../services/api';
 
+// the easy one
+// we fetch all for test first
 export function* fetchTestExamTask() {
   try {
     const examList = yield call(api.fetchAllExam);
     yield put(fetchTakeExamSuccess(examList));
+  }
+  catch (error) {
+    yield put(fetchTakeExamFailure(error));
+  }
+}
+
+// this is real one
+// send id to fetch eprList first
+// then for each category in eprlist
+// we random some exam
+export function* fetchTestExamTask2(action) {
+  try {
+    const EPRList = yield call(api.fetchEPRList, action.payload.id);
+    yield put(fetchTakeExamSuccess(EPRList));
   }
   catch (error) {
     yield put(fetchTakeExamFailure(error));

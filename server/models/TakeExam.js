@@ -6,6 +6,28 @@ TakeExam.fetchAllExam = () => (
   db.many('SELECT * from exams')
 );
 
+TakeExam.fetchEPRList = id => (
+  db.manyOrNone('SELECT'
+    + ' epr_ex_category as category'
+    + ', epr_ex_subcategory as subcategory'
+    + ', epr_ex_type as type'
+    + ', epr_requirednumber as required_number'
+    + ' FROM recruitments r'
+    + ' JOIN exams_position_required epr'
+    + ' ON epr.epr_position = ANY( r.position )'
+    + ' WHERE r.citizen_id = $1', [id])
+);
+
+TakeExam.fetchExamId = () => (
+  db.manyOrNone('SELECT'
+  + 'ex_category as category'
+  + ', ex_subcagory as subcategory'
+  + ', ex_type as type'
+  + ', ARRAY_AGG( ex_id ) as ex_id_list'
+  + 'FROM exams'
+  + 'GROUP BY ex_category, ex_subcategory, ex_type')
+);
+
 TakeExam.createBufferAnswer = (id, category, answerList, date) => (
   db.oneOrNone(
     'INSERT INTO exam_candidate_submitted (id, category, answer_list, test_date) VALUES ($1, $2, $3, $4)',
