@@ -4,8 +4,9 @@ import moment from 'moment';
 
 const validationMessage = {
     passProDateVilidation: "Pass Probation Date must after Start Date.",
-    terminationDateValidation: "Termination Effective must after End Probation End.",
-    continuedDateValidation: "Continued probation until must after End Probation End."
+    terminationDateValidation: "Termination Effective must after End Probation Date.",
+    continuedDateValidation: "Continued probation until must after End Probation Date.",
+    salaryValidation: "Please enter at least one."
 }
 
 class EvaluationResultComponent extends React.Component {
@@ -212,7 +213,9 @@ class EvaluationResultComponent extends React.Component {
                                                         this.state = { ...this.state, confirmed: false };
                                                         this.updateParentComponent();
                                                     }} checked={!this.state.confirmed} />
-                                                    &nbsp;Adjust the Salary and Benefits
+                                                    &nbsp;Adjust the Salary and Benefits {this.state.confirmed || this.state.basedSalary ||
+                                                        this.state.mobile || this.state.transporationAllowance ||
+                                                        this.state.otherAllowance ? '' : <a>{validationMessage.salaryValidation}</a>}
                                                 </td>
                                             </tr>
                                         </table>
