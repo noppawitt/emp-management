@@ -1,4 +1,5 @@
 import { call, put, takeEvery, all } from 'redux-saga/effects';
+import moment from 'moment';
 import * as actionTypes from '../constants/actionTypes';
 import {
   createLeaveSuccess,
@@ -14,7 +15,7 @@ import api from '../services/api';
 export function* createLeaveTask(action) {
   try {
     yield call(api.createLeave, { leaveRequest: action.payload.form });
-    const leaves = yield call(api.fetchLeave, action.payload.form.userId);
+    const leaves = yield call(api.fetchLeave, action.payload.form.userId, moment(action.payload.form.leaveFrom).format('YYYY'), moment(action.payload.form.leaveFrom).format('MM'));
     yield put(createLeaveSuccess(leaves));
     yield put(closeModal());
     action.payload.resolve();

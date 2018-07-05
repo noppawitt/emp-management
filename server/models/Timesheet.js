@@ -6,7 +6,7 @@ const Timesheet = {};
 Timesheet.create = (timesheet, id) => (
   db.one(
     `INSERT INTO timesheets (user_id, date, project_id, time_in, time_out, totalhours, 
-      created_user, updated_user, task) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING 1`,
+      created_user, updated_user, task, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING 1`,
     [
       timesheet.userId,
       timesheet.date,
@@ -16,14 +16,15 @@ Timesheet.create = (timesheet, id) => (
       timesheet.totalhours,
       id,
       id,
-      timesheet.task
+      timesheet.task,
+      timesheet.description
     ]
   )
 );
 
 Timesheet.update = (timesheet, id) => (
   db.none(
-    'UPDATE timesheets SET project_id = $1, time_in = $2, time_out = $3, totalhours = $4, updated_user = $5, updated_date = $6, task = $7 WHERE id = $8',
+    'UPDATE timesheets SET project_id = $1, time_in = $2, time_out = $3, totalhours = $4, updated_user = $5, updated_date = $6, task = $7, description = $8 WHERE id = $9',
     [
       timesheet.projectId,
       timesheet.timeIn,
@@ -32,6 +33,7 @@ Timesheet.update = (timesheet, id) => (
       id,
       moment().format('YYYY-MM-DD HH:mm:ss'),
       timesheet.task,
+      timesheet.description,
       timesheet.id,
     ]
   )

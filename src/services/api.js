@@ -74,6 +74,10 @@ api.hello = () => (
 
 // Master table
 
+api.fetchMasterTable = () => (
+  callApi('/api/master-table')
+);
+
 api.fetchDepartments = () => (
   callApi('/api/departments')
 );
