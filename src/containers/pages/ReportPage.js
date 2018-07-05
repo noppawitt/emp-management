@@ -17,6 +17,7 @@ const reportOptions = [
   { key: 'special-person', value: 'Timesheet (Special) per Person', text: 'Timesheet (Special) per Person' },
   { key: 'summary-month', value: 'Summary Timesheet (Year)', text: 'Summary Timesheet (Year)' },
   { key: 'summary-year', value: 'Summary Timesheet (Month)', text: 'Summary Timesheet (Month)' },
+  { key: 'summary-leave', value: 'Summary Leave', text: 'Summary Leave' },
   { key: 'resource', value: 'Resource Available', text: 'Resource Available' }
 ];
 
@@ -32,12 +33,12 @@ const ReportPage = ({ fetchOwnProject, userId, year, month, reportType, projectO
       <Field name="reportType" as={Form.Select} component={Input} label="Report type" placeholder="Report type" options={reportOptions} />
       <Form.Group widths="equal">
         <Field name="year" as={Form.Select} component={Input} label="Year" placeholder="Year" onChange={(e, newValue) => fetchOwnProject(userId, newValue, month)} options={getYearOptions()} />
-        {reportType !== 'Summary Timesheet (Year)' &&
+        {(reportType !== 'Summary Timesheet (Year)' && reportType !== 'Summary Leave') &&
         <Field name="month" as={Form.Select} component={Input} label="Month" placeholder="Month" onChange={(e, newValue) => fetchOwnProject(userId, year, newValue)} options={getMonthOptions()} />}
       </Form.Group>
-      {reportType !== 'Summary Timesheet (Year)' &&
+      {(reportType !== 'Summary Timesheet (Year)' && reportType !== 'Summary Leave') &&
       <Field name="projectId" as={Form.Select} component={Input} label="Project" placeholder="Project" options={projectOptions} />}
-      {reportType !== 'Summary Timesheet (Year)' &&
+      {(reportType !== 'Summary Timesheet (Year)' && reportType !== 'Summary Leave') &&
       <Field name="template" as={Form.Select} component={Input} label="Template" placeholder="Template" options={templateOptions} />}
       {(reportType === 'Timesheet (Normal) per Person' || reportType === 'Timesheet (Special) per Person') &&
       <Field name="userId" as={Form.Select} component={Input} label="Employee" placeholder="Employee" onChange={(e, newValue) => fetchOwnProject(newValue, year, month)} options={reportOptions} />}
