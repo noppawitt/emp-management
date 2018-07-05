@@ -20,6 +20,10 @@
     display: none;
 }
 
+.sup-comment:disabled{
+    border: none;
+}
+
 .blue-text {
     color: rgb(44, 154, 205);
     font-size: 1.7em;

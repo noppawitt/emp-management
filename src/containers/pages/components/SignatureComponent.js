@@ -12,7 +12,7 @@ class SignatureComponent extends React.Component {
             supervisorSignDate: props.supervisorSignDate || null,
             MDSignDate: props.MDSignDate || null,
             role: props.role || '',
-            open: false
+            modal: ''
         };
 
         this.EmployeeSignHandler = this.EmployeeSignHandler.bind(this);
@@ -66,10 +66,13 @@ class SignatureComponent extends React.Component {
         this.employeeSignButton.current.disabled = true;
     }
     SupervisorSignHandler() {
-        // this.setState({ supervisorSignDate: moment().format('YYYY-MM-DD') });
-        // document.getElementById('mark2').style.width = '2em';
-        // this.supervisorSignButton.current.disabled = true;
-        this.setState({open: true})
+        this.setState({ supervisorSignDate: moment().format('YYYY-MM-DD') });
+        document.getElementById('mark2').style.width = '2em';
+        this.supervisorSignButton.current.disabled = true;
+        // this.setState({
+        //   modal: <ConfirmModal submitting={false} onClickHandle={()=>{console.log("HI")}} disable={false} open={true}
+        //           onClose={()=>{this.setState({modal: '' , supervisorSignDate: moment().format('YYYY-MM-DD')})}}/>
+        // })
     }
     MDSignHandler() {
         this.setState({ MDSignDate: moment().format('YYYY-MM-DD') });
@@ -80,7 +83,6 @@ class SignatureComponent extends React.Component {
     render() {
         return (
             <div className='sign-container'>
-                {this.state.open ? <ConfirmModal submitting={false} onClickHandle={()=>{console.log('dddddd')}} disable={false} open={true} onClose={()=>{this.setState({open: false})}}/> : ''}
                 <div>
                     <div className='header'>&emsp;&emsp;&emsp;&emsp;Employee has read this appraisal and discussed the contents with direct supervisor. Signatures identify that employee has been advised on their performance by direct supervisor.</div>
                 </div>
