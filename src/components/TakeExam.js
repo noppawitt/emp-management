@@ -99,7 +99,7 @@ const TakeExam = ({
         </Segment>
         <Segment>
           <Button color="green" icon labelPosition="left" onClick={() => onClickCheckProgress(id, categoryTitle)}>
-            <Icon name="checkmark" />
+            <Icon name="search" />
             Check
           </Button>
           <Button primary icon labelPosition="left" onClick={() => onClickSave(id, categoryTitle, answerList)}>
