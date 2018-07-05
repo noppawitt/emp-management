@@ -10,6 +10,7 @@ import {
   onInputTextAreaAnswer,
   uploadAnswerListRequest,
   checkProgressRequest,
+  categoryChange,
 } from '../../actions/takeExam';
 import TakeExam from '../../components/TakeExam';
 import Loader from '../../components/Loader';
@@ -20,8 +21,7 @@ const TakeExamPage = ({
   examList,
   currentActivePage,
   onPageChange,
-  categoryTitle,
-  subCategoryTitle,
+  activeCategory,
   pickedAnswer,
   answerList,
   onClickRadio,
@@ -31,7 +31,9 @@ const TakeExamPage = ({
   onClickSubmit,
   exId,
   id,
-  onClickCheckProgress, }) =>
+  onClickCheckProgress,
+  categoryList,
+  onClickCategory, }) =>
   (
     isFetching ?
       <Loader /> :
@@ -39,8 +41,7 @@ const TakeExamPage = ({
         examList={examList}
         currentActivePage={currentActivePage}
         onPageChange={onPageChange}
-        categoryTitle={categoryTitle}
-        subCategoryTitle={subCategoryTitle}
+        activeCategory={activeCategory}
         pickedAnswer={pickedAnswer}
         answerList={answerList}
         onClickRadio={onClickRadio}
@@ -51,6 +52,8 @@ const TakeExamPage = ({
         exId={exId}
         id={id}
         onClickCheckProgress={onClickCheckProgress}
+        categoryList={categoryList}
+        onClickCategory={onClickCategory}
       />
   );
 
@@ -59,8 +62,7 @@ TakeExamPage.propTypes = {
   examList: PropTypes.array.isRequired,
   currentActivePage: PropTypes.string.isRequired,
   onPageChange: PropTypes.func.isRequired,
-  categoryTitle: PropTypes.string.isRequired,
-  subCategoryTitle: PropTypes.string.isRequired,
+  activeCategory: PropTypes.string.isRequired,
   pickedAnswer: PropTypes.array.isRequired,
   answerList: PropTypes.array.isRequired,
   onClickRadio: PropTypes.func.isRequired,
@@ -71,18 +73,21 @@ TakeExamPage.propTypes = {
   onClickSubmit: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   onClickCheckProgress: PropTypes.func.isRequired,
+  categoryList: PropTypes.array.isRequired,
+  onClickCategory: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   isFetching: state.takeExam.isFetching,
   examList: state.takeExam.examList,
   currentActivePage: state.takeExam.currentActivePage,
-  categoryTitle: state.takeExam.categoryTitle,
+  activeCategory: state.takeExam.activeCategory,
   subCategoryTitle: state.takeExam.subCategoryTitle,
   pickedAnswer: state.takeExam.pickedAnswer,
   answerList: state.takeExam.answerList,
   exId: state.takeExam.exId,
   id: state.takeExam.id,
+  categoryList: state.takeExam.categoryList,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -105,6 +110,7 @@ const mapDispatchToProps = dispatch => ({
     // dispatch(finishExam()),
   ),
   onClickCheckProgress: (id, category) => dispatch(checkProgressRequest(id, category)),
+  onClickCategory: category => dispatch(categoryChange(category)),
 });
 
 const enhance = compose(

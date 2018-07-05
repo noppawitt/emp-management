@@ -101,3 +101,10 @@ export const checkProgressFailure = messege => ({
     messege,
   }
 });
+
+export const categoryChange = category => ({
+  type: actionTypes.TAKE_EXAM_CATEGORY_CHANGE,
+  payload: {
+    category,
+  }
+});

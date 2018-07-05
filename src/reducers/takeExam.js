@@ -5,8 +5,8 @@ const initialState = {
   id: null,
   examList: [],
   currentActivePage: 1,
-  categoryTitle: '',
-  subCategoryTitle: '',
+  activeCategory: '',
+  categoryList: [],
   // pickedAnswer is a list of the answer that was picked in the current page
   // when answerList is list of pickedAnswer
   pickedAnswer: [],
@@ -26,8 +26,7 @@ const TakeExam = (state = initialState, action) => {
         ...state,
         examList: action.payload.examList,
         isFetching: false,
-        categoryTitle: action.payload.examList[0].exCategory,
-        subCategoryTitle: action.payload.examList[0].exSubcategory,
+        activeCategory: action.payload.examList[0].exCategory,
         exId: action.payload.examList[0].exId,
         answerList: new Array(action.payload.examList.length).fill({ answer: '', question: '' }),
       };
@@ -41,8 +40,8 @@ const TakeExam = (state = initialState, action) => {
       return {
         ...state,
         currentActivePage: action.payload.value,
-        categoryTitle: state.examList[action.payload.value - 1].exCategory,
-        subCategoryTitle: state.examList[action.payload.value - 1].exSubcategory,
+        // delete activeCategory here someday
+        activeCategory: state.examList[action.payload.value - 1].exCategory,
         exId: state.examList[action.payload.value - 1].exId,
         pickedAnswer: state.answerList[action.payload.value - 1] === { answer: '', question: '' } ? { answer: '', question: '' } : state.answerList[action.payload.value - 1].answer,
       };
@@ -107,6 +106,11 @@ const TakeExam = (state = initialState, action) => {
       return {
         ...state,
         messege: action.payload.messege,
+      };
+    case actionTypes.TAKE_EXAM_CATEGORY_CHANGE:
+      return {
+        ...state,
+        activeCategory: action.payload.category,
       };
     default:
       return state;

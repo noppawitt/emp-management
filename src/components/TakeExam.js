@@ -24,7 +24,7 @@ const TakeExam = ({
   examList,
   currentActivePage,
   onPageChange,
-  categoryTitle,
+  activeCategory,
   pickedAnswer,
   answerList,
   onClickRadio,
@@ -34,7 +34,9 @@ const TakeExam = ({
   onClickSubmit,
   exId,
   id,
-  onClickCheckProgress, }) =>
+  onClickCheckProgress,
+  categoryList,
+  onClickCategory, }) =>
   (
     <div>
       <br />
@@ -44,7 +46,7 @@ const TakeExam = ({
             <Menu fluid vertical tabular>
               <Menu.Item name="Category 1 : TEST" active={1 > 0} />
               {categoryList && categoryList.map(category => (
-                <Menu.Item name={category.category} active={activeCategory === category.category} onClick={() => changeActiveCategory(category.category)} />
+                <Menu.Item name={category.category} active={activeCategory === category.category} onClick={() => onClickCategory(category.category)} />
               ))}
             </Menu>
           </Grid.Column>
@@ -52,7 +54,7 @@ const TakeExam = ({
             <Segment>
               <Grid>
                 <Grid.Column width={14}>
-                  <Header as="h1">Category : {categoryTitle.charAt(0).toUpperCase().concat(categoryTitle.slice(1))}</Header>
+                  <Header as="h1">Category : {activeCategory.charAt(0).toUpperCase().concat(activeCategory.slice(1))}</Header>
                 </Grid.Column>
                 <Grid.Column width={2}>
                   <Container textAlign="right"><Header as="h1">Timer</Header></Container>
@@ -109,15 +111,15 @@ const TakeExam = ({
               )}
             </Segment>
             <Segment>
-              <Button color="green" icon labelPosition="left" onClick={() => onClickCheckProgress(id, categoryTitle)}>
+              <Button color="green" icon labelPosition="left" onClick={() => onClickCheckProgress(id, activeCategory)}>
                 <Icon name="search" />
                 Check
               </Button>
-              <Button primary icon labelPosition="left" onClick={() => onClickSave(id, categoryTitle, answerList)}>
+              <Button primary icon labelPosition="left" onClick={() => onClickSave(id, activeCategory, answerList)}>
                 <Icon name="save" />
                 Save
               </Button>
-              <Button secondary icon labelPosition="left" onClick={() => onClickSubmit(id, categoryTitle, answerList)}>
+              <Button secondary icon labelPosition="left" onClick={() => onClickSubmit(id, activeCategory, answerList)}>
                 <Icon name="send" />
                 Submit
               </Button>
@@ -145,7 +147,7 @@ TakeExam.propTypes = {
   examList: PropTypes.array.isRequired,
   currentActivePage: PropTypes.string.isRequired,
   onPageChange: PropTypes.func.isRequired,
-  categoryTitle: PropTypes.string.isRequired,
+  activeCategory: PropTypes.string.isRequired,
   pickedAnswer: PropTypes.array.isRequired,
   answerList: PropTypes.array.isRequired,
   onClickRadio: PropTypes.func.isRequired,
@@ -156,6 +158,8 @@ TakeExam.propTypes = {
   exId: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   onClickCheckProgress: PropTypes.func.isRequired,
+  categoryList: PropTypes.array.isRequired,
+  onClickCategory: PropTypes.func.isRequired,
 };
 
 export default TakeExam;

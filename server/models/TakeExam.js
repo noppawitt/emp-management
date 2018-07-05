@@ -20,12 +20,12 @@ TakeExam.fetchEPRList = id => (
 
 TakeExam.fetchExamId = () => (
   db.manyOrNone('SELECT'
-  + 'ex_category as category'
-  + ', ex_subcagory as subcategory'
+  + ' ex_category as category'
+  + ', ex_subcategory as subcategory'
   + ', ex_type as type'
   + ', ARRAY_AGG( ex_id ) as ex_id_list'
-  + 'FROM exams'
-  + 'GROUP BY ex_category, ex_subcategory, ex_type')
+  + ' FROM exams'
+  + ' GROUP BY ex_category, ex_subcategory, ex_type')
 );
 
 TakeExam.createBufferAnswer = (id, category, answerList, date) => (
