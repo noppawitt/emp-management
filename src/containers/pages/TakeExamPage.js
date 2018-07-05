@@ -92,7 +92,7 @@ const mapDispatchToProps = dispatch => ({
   // to reduce complexity in pageChange's reducer
   onClickRadio: (choice, currentActivePage, pickedAnswer, exId) => dispatch(onPickRadioAnswer(choice, currentActivePage, pickedAnswer, exId)),
   onClickCheckbox: (choice, currentActivePage, pickedAnswer, exId) => dispatch(onPickCheckboxAnswer(choice, currentActivePage, pickedAnswer, exId)),
-  onInputTextArea: (text, currentActivePage, pickedAnswer, exId) => dispatch(onInputTextAreaAnswer(text, currentActivePage, pickedAnswer, exId)),
+  onInputTextArea: (text, currentActivePage, exId) => dispatch(onInputTextAreaAnswer(text, currentActivePage, exId)),
   onClickSave: (id, categoryTitle, answerList) => dispatch(uploadAnswerListRequest(id, categoryTitle, answerList)),
   // Submit is save and exit!
   onClickSubmit: (id, categoryTitle, answerList) => compose(
