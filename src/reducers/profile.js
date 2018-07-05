@@ -8,6 +8,11 @@ const initialState = {
 
 const profile = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.CLEAR_PROBATION_STORE:
+      return {
+        ...state,
+        edited: false
+      }
     case actionTypes.UPDATE_PROBATION_STORE:
       var disable;
       if(action.payload.item.passPro && !action.payload.item.confirmed) {

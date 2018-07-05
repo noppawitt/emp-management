@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { closeModal } from '../../actions/modal';
-import { updateProfileRequest, updateProbationStore } from '../../actions/profile';
+import { updateProfileRequest, updateProbationStore, clearProbationStore} from '../../actions/profile';
 import Modal from '../../components/EvaluationModal';
 import A from '../pages/ProbationForm'
 import Loader from '../../components/Loader';
@@ -22,7 +22,7 @@ class AddProbation extends React.Component{
         {this.props.fetching ? <Loader/> :
           <Modal
             header={this.props.profile.eva == null ? 'Add Probation':'View Probation'}
-            onClose={this.props.onClose}
+            onClose={()=>{this.props.onClose();this.props.clear();}}
             onClick={()=>this.props.onSubmit(this.props.item,(this.props.profile.eva == null ? 'addProbation':'updateProbation'))}
             submitting={this.props.submitting}
             size="large"
@@ -59,6 +59,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  clear: () => dispatch(clearProbationStore()),
   onClose: () => dispatch(closeModal()),
   onSubmit: (item,type) =>  (new Promise((resolve,reject)=> (
     dispatch(updateProfileRequest(item,resolve,reject,type))

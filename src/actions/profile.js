@@ -117,3 +117,7 @@ export const fetchPerformanceFailure = message => ({
     message
   }
 });
+
+export const clearProbationStore = () => ({
+  type: actionTypes.CLEAR_PROBATION_STORE,
+});
