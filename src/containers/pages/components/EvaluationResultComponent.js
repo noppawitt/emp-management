@@ -4,8 +4,9 @@ import moment from 'moment';
 
 const validationMessage = {
     passProDateVilidation: "Pass Probation Date must after Start Date.",
-    terminationDateValidation: "Termination Effective must after End Probation End.",
-    continuedDateValidation: "Continued probation until must after End Probation End."
+    terminationDateValidation: "Termination Effective must after End Probation Date.",
+    continuedDateValidation: "Continued probation until must after End Probation Date.",
+    salaryValidation: "Please enter at least one."
 }
 
 class EvaluationResultComponent extends React.Component {
@@ -212,7 +213,9 @@ class EvaluationResultComponent extends React.Component {
                                                         this.state = { ...this.state, confirmed: false };
                                                         this.updateParentComponent();
                                                     }} checked={!this.state.confirmed} />
-                                                    &nbsp;Adjust the Salary and Benefits
+                                                    &nbsp;Adjust the Salary and Benefits {this.state.confirmed || this.state.basedSalary ||
+                                                        this.state.mobile || this.state.transporationAllowance ||
+                                                        this.state.otherAllowance ? '' : <a>{validationMessage.salaryValidation}</a>}
                                                 </td>
                                             </tr>
                                         </table>
@@ -228,7 +231,9 @@ class EvaluationResultComponent extends React.Component {
                                                     Based Salary
                                                 </td>
                                                 <td>
-                                                    <input type='number' value={this.state.basedSalary ? this.state.basedSalary : ''} onChange={(event) => {
+                                                    <input type='number' min='0' value={this.state.basedSalary ? this.state.basedSalary : ''} onChange={(event) => {
+                                                        if (event.target.value < 0)
+                                                            event.target.value = 0;
                                                         this.state = { ...this.state, basedSalary: event.target.value };
                                                         this.updateParentComponent();
                                                     }} />
@@ -237,7 +242,9 @@ class EvaluationResultComponent extends React.Component {
                                                     Mobile
                                                 </td>
                                                 <td>
-                                                    <input type='text' value={this.state.mobile ? this.state.mobile : ''} onChange={(event) => {
+                                                    <input type='number' min='0' value={this.state.mobile ? this.state.mobile : ''} onChange={(event) => {
+                                                        if (event.target.value < 0)
+                                                            event.target.value = 0;
                                                         this.state = { ...this.state, mobile: event.target.value };
                                                         this.updateParentComponent();
                                                     }} />
@@ -248,7 +255,9 @@ class EvaluationResultComponent extends React.Component {
                                                     Transporation Allowance
                                                 </td>
                                                 <td>
-                                                    <input type='number' value={this.state.transporationAllowance ? this.state.transporationAllowance : ''} onChange={(event) => {
+                                                    <input type='number' min='0' value={this.state.transporationAllowance ? this.state.transporationAllowance : ''} onChange={(event) => {
+                                                        if (event.target.value < 0)
+                                                            event.target.value = 0;
                                                         this.state = { ...this.state, transporationAllowance: event.target.value };
                                                         this.updateParentComponent();
                                                     }} />
@@ -257,7 +266,9 @@ class EvaluationResultComponent extends React.Component {
                                                     Others Allowance
                                                 </td>
                                                 <td>
-                                                    <input type='number' value={this.state.otherAllowance ? this.state.otherAllowance : ''} onChange={(event) => {
+                                                    <input type='number' min='0' value={this.state.otherAllowance ? this.state.otherAllowance : ''} onChange={(event) => {
+                                                        if (event.target.value < 0)
+                                                            event.target.value = 0;
                                                         this.state = { ...this.state, otherAllowance: event.target.value };
                                                         this.updateParentComponent();
                                                     }} />
