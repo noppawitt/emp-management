@@ -15,13 +15,13 @@ const questionRenderer = question => (
 //   // });
 //   // console.log('After', answerList);
 //   // return answerList;
-  // return new Promise((resolve) => {
-  //   answerList.splice(activePage - 1, 1, {
-  //     answer: [5, 5],
-  //     question: exId,
-  //   });
-  //   resolve(answerList);
-  // });
+// return new Promise((resolve) => {
+//   answerList.splice(activePage - 1, 1, {
+//     answer: [5, 5],
+//     question: exId,
+//   });
+//   resolve(answerList);
+// });
 // };
 
 const TakeExam = ({
@@ -116,16 +116,18 @@ const TakeExam = ({
           onPageChange={(e, { activePage }) => onPageChange(activePage)}
           floated="right"
           defaultActivePage={1}
-          showFirstAndLastNav="true"
-          showPreviousAndNextNav="true"
-          showEllipsis="false"
+          showFirstAndLastNav={true}
+          showPreviousAndNextNav={true}
+          showEllipsis={true}
+          boundaryRange={1}
+          siblingRange={0}
           ellipsisItem={{ content: <Icon name="ellipsis horizontal" />, icon: true }}
           firstItem={{ content: <Icon name="angle double left" />, icon: true }}
           lastItem={{ content: <Icon name="angle double right" />, icon: true }}
           prevItem={{ content: <Icon name="angle left" />, icon: true }}
           nextItem={{ content: <Icon name="angle right" />, icon: true }}
           // edit this after this
-          totalPages={1 < 0 ? parseInt(examList.length / 10, 10) + ((examList.length % 3 !== 0) ? 1 : 0) : 5}
+          totalPages={examList.length}
         />
       </Segment>
     </Segment.Group>
