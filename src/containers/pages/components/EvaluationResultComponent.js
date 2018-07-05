@@ -1,6 +1,12 @@
 import React from 'react';
 import './css/EvaluationResultComponent.css';
-import { ENGINE_METHOD_DIGESTS } from 'constants';
+import moment from 'moment';
+
+const validationMessage = {
+    passProDateVilidation: "Pass Probation Date must after Start Date.",
+    terminationDateValidation: "Termination Effective must after End Probation End.",
+    continuedDateValidation: "Continued probation until must after End Probation End."
+}
 
 class EvaluationResultComponent extends React.Component {
     constructor(props) {
@@ -164,8 +170,22 @@ class EvaluationResultComponent extends React.Component {
                                 </td>
                                 <td>
                                     <input type='date' value={this.state.passProDate} onChange={(event) => {
-                                        this.state = { ...this.state, passProDate: event.target.value };
-                                        this.updateParentComponent();
+                                        if (moment(event.target.value).isBefore(this.state.startDate))
+                                            alert(validationMessage.passProDateVilidation);
+                                        else {
+                                            this.state = {
+                                                ...this.state,
+                                                passProDate: event.target.value
+                                            }
+
+                                            if (this.state.terminationDate && !moment(event.target.value).isBefore(this.state.terminationDate))
+                                                this.state = { ...this.state, terminationDate: moment(event.target.value).add(1, 'day').format('YYYY-MM-DD') };
+
+                                            if (this.state.continuedDate && !moment(event.target.value).isBefore(this.state.continuedDate))
+                                                this.state = { ...this.state, continuedDate: moment(event.target.value).add(1, 'day').format('YYYY-MM-DD') };
+
+                                            this.updateParentComponent();
+                                        }
                                     }} />
                                 </td>
                             </tr>
@@ -275,30 +295,46 @@ class EvaluationResultComponent extends React.Component {
                                             <tr>
                                                 <td>
                                                     <input type='radio' name='terminate' onClick={() => {
-                                                        this.state = { ...this.state, continued: false, continuedDate: null };
+                                                        this.state = {
+                                                            ...this.state,
+                                                            continued: false,
+                                                            terminationDate: moment(this.state.passProDate).add(1, 'day').format('YYYY-MM-DD'),
+                                                            continuedDate: null
+                                                        };
                                                         this.updateParentComponent();
                                                     }} checked={!this.state.continued} />
                                                     &nbsp;Termination Effective
                                                 </td>
                                                 <td>
                                                     <input type='date' value={this.state.terminationDate ? this.state.terminationDate : ''} onChange={(event) => {
-                                                        this.state = { ...this.state, terminationDate: event.target.value };
-                                                        this.updateParentComponent();
+                                                        if (moment(event.target.value).isAfter(this.state.passProDate)) {
+                                                            this.state = { ...this.state, terminationDate: event.target.value };
+                                                            this.updateParentComponent();
+                                                        } else
+                                                            alert(validationMessage.terminationDateValidation);
                                                     }} disabled={this.state.continued} />
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
                                                     <input type='radio' name='terminate' onClick={() => {
-                                                        this.state = { ...this.state, continued: true, terminationDate: null };
+                                                        this.state = {
+                                                            ...this.state,
+                                                            continued: true,
+                                                            continuedDate: moment(this.state.passProDate).add(60, 'day').format('YYYY-MM-DD'),
+                                                            terminationDate: null
+                                                        };
                                                         this.updateParentComponent();
                                                     }} checked={this.state.continued} />
                                                     &nbsp;Continued probation untill
                                                 </td>
                                                 <td>
                                                     <input type='date' value={this.state.continuedDate ? this.state.continuedDate : ''} onChange={(event) => {
-                                                        this.state = { ...this.state, continuedDate: event.target.value };
-                                                        this.updateParentComponent();
+                                                        if (moment(event.target.value).isAfter(this.state.passProDate)) {
+                                                            this.state = { ...this.state, continuedDate: event.target.value };
+                                                            this.updateParentComponent();
+                                                        } else
+                                                            alert(validationMessage.continuedDateValidation);
                                                     }} disabled={!this.state.continued} />
                                                 </td>
                                             </tr>
