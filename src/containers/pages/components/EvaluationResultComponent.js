@@ -294,6 +294,18 @@ class EvaluationResultComponent extends React.Component {
                                             transporationAllowance: null,
                                             otherAllowance: null
                                         };
+
+                                        if (this.state.continued)
+                                            this.state = {
+                                                ...this.state,
+                                                continuedDate: moment(this.state.passProDate).add(60, 'day').format('YYYY-MM-DD')
+
+                                            }
+                                        else
+                                            this.state = {
+                                                ...this.state,
+                                                terminationDate: moment(this.state.passProDate).add(1, 'day').format('YYYY-MM-DD')
+                                            };
                                         this.updateParentComponent();
                                     }} checked={this.state.notPassPro} />
                                     &nbsp;This person does not pass probation period. Action to be taken
@@ -317,13 +329,18 @@ class EvaluationResultComponent extends React.Component {
                                                     &nbsp;Termination Effective
                                                 </td>
                                                 <td>
-                                                    <input type='date' value={this.state.terminationDate ? this.state.terminationDate : ''} onChange={(event) => {
-                                                        if (moment(event.target.value).isAfter(this.state.passProDate)) {
-                                                            this.state = { ...this.state, terminationDate: event.target.value };
-                                                            this.updateParentComponent();
-                                                        } else
-                                                            alert(validationMessage.terminationDateValidation);
-                                                    }} disabled={this.state.continued} />
+                                                    {!this.state.continued ?
+                                                        <input type='date' value={this.state.terminationDate ? this.state.terminationDate : ''} onChange={(event) => {
+                                                            if (moment(event.target.value).isAfter(this.state.passProDate)) {
+                                                                this.state = {
+                                                                    ...this.state,
+                                                                    terminationDate: event.target.value
+                                                                };
+                                                                this.updateParentComponent();
+                                                            } else
+                                                                alert(validationMessage.terminationDateValidation);
+                                                        }} disabled={this.state.continued} />
+                                                        : ''}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -340,13 +357,15 @@ class EvaluationResultComponent extends React.Component {
                                                     &nbsp;Continued probation untill
                                                 </td>
                                                 <td>
-                                                    <input type='date' value={this.state.continuedDate ? this.state.continuedDate : ''} onChange={(event) => {
-                                                        if (moment(event.target.value).isAfter(this.state.passProDate)) {
-                                                            this.state = { ...this.state, continuedDate: event.target.value };
-                                                            this.updateParentComponent();
-                                                        } else
-                                                            alert(validationMessage.continuedDateValidation);
-                                                    }} disabled={!this.state.continued} />
+                                                    {this.state.continued ?
+                                                        <input type='date' value={this.state.continuedDate ? this.state.continuedDate : ''} onChange={(event) => {
+                                                            if (moment(event.target.value).isAfter(this.state.passProDate)) {
+                                                                this.state = { ...this.state, continuedDate: event.target.value };
+                                                                this.updateParentComponent();
+                                                            } else
+                                                                alert(validationMessage.continuedDateValidation);
+                                                        }} disabled={!this.state.continued} />
+                                                        : ''}
                                                 </td>
                                             </tr>
                                         </table>
