@@ -73,7 +73,7 @@ User.create = async (user, id) => (
       )
         .then(() => {
           db.none(
-            'INSERT INTO employee_work (department_id, level_id, start_date, probation_date, created_user, updated_user, contract_id, engineer, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
+            'INSERT INTO employee_work (department_id, level_id, start_date, probation_date, created_user, updated_user, contract_id, engineer, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING user_id',
             [
               user.departmentId,
               user.levelId,

@@ -13,7 +13,7 @@ export const getYearOptions = () => {
 export const getMonthOptions = () => {
   const monthOptions = [];
   moment.months().forEach((month, i) => {
-    monthOptions.push({ key: moment(month,'MMMM').format('MM'), value: moment(month,'MMMM').format('MM'), text: month });
+    monthOptions.push({ key: moment(month, 'MMMM').format('MM'), value: moment(month, 'MMMM').format('MM'), text: month });
   });
   return monthOptions;
 };
