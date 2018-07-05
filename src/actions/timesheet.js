@@ -91,3 +91,11 @@ export const deleteTimesheetFailure = message => ({
     message
   }
 });
+
+export const updateInput = (key, value) => ({
+  type: actionTypes.UPDATE_INPUT,
+  payload: {
+    key,
+    value
+  }
+});

@@ -20,3 +20,21 @@ export const fillTimesheetsToFullMonth = (state) => {
 };
 
 export const getTimesheetById = (state, id) => state.timesheet.lists.find(t => t.id === id);
+
+export const getFormInitialValues = (state) => {
+  const { year, month, startDay, endDay, lists } = state.timesheet;
+  let timesheets = [];
+  for (let day = startDay; day <= endDay; day += 1) {
+    const date = moment(`${year}-${month}-${day}`).format('YYYY-MM-DD');
+    const tasks = lists.filter(l => l.date === date);
+    if (tasks.length > 0) timesheets = timesheets.concat(tasks);
+    else {
+      timesheets.push({
+        date,
+        timeIn: '09:00:00',
+        timeOut: '18:00:00',
+      });
+    }
+  }
+  return timesheets;
+};

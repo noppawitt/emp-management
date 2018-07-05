@@ -8,6 +8,7 @@ import { fetchProjectRequest } from '../../actions/project';
 import { projectsToOptions } from '../../selectors/project';
 import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
+import { taskOptions } from '../../utils/options';
 
 const validate = (values) => {
   const errors = {};
@@ -15,13 +16,6 @@ const validate = (values) => {
   errors.endDate = validator.required(values.endDate);
   return errors;
 };
-
-const taskOptions = [
-  { key: 'development', value: 'Development', text: 'Development' },
-  { key: 'testing', value: 'Testing', text: 'Testing' },
-  { key: 'training', value: 'Traning', text: 'Traning' },
-  { key: 'Meeting', value: 'Meeting', text: 'Meeting' }
-];
 
 const AddTimesheetForm = ({ handleSubmit, submitting, projects }) => (
   <Form onSubmit={handleSubmit}>

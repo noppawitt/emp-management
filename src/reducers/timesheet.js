@@ -9,11 +9,18 @@ const initialState = {
   leaves: [],
   holidays: [],
   year: now.year(),
-  month: now.month() + 1
+  month: now.month() + 1,
+  startDay: 1,
+  endDay: now.daysInMonth()
 };
 
 const timesheet = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.UPDATE_INPUT:
+      return {
+        ...state,
+        [action.payload.key]: action.payload.value
+      };
     case actionTypes.TIMESHEET_CREATE_REQUEST:
       return {
         ...state,
