@@ -1,6 +1,10 @@
 import React from 'react';
 import './css/EvaluationResultComponent.css';
-import { ENGINE_METHOD_DIGESTS } from 'constants';
+import moment from 'moment';
+
+const validationMessage = {
+
+}
 
 class EvaluationResultComponent extends React.Component {
     constructor(props) {
@@ -275,7 +279,12 @@ class EvaluationResultComponent extends React.Component {
                                             <tr>
                                                 <td>
                                                     <input type='radio' name='terminate' onClick={() => {
-                                                        this.state = { ...this.state, continued: false, continuedDate: null };
+                                                        this.state = {
+                                                            ...this.state,
+                                                            continued: false,
+                                                            terminationDate: moment(this.state.endProbationDate).add(1, 'day').format('YYYY-MM-DD'),
+                                                            continuedDate: null
+                                                        };
                                                         this.updateParentComponent();
                                                     }} checked={!this.state.continued} />
                                                     &nbsp;Termination Effective
@@ -290,7 +299,12 @@ class EvaluationResultComponent extends React.Component {
                                             <tr>
                                                 <td>
                                                     <input type='radio' name='terminate' onClick={() => {
-                                                        this.state = { ...this.state, continued: true, terminationDate: null };
+                                                        this.state = {
+                                                            ...this.state,
+                                                            continued: true,
+                                                            continuedDate: moment(this.state.endProbationDate).add(60, 'day').format('YYYY-MM-DD'),
+                                                            terminationDate: null
+                                                        };
                                                         this.updateParentComponent();
                                                     }} checked={this.state.continued} />
                                                     &nbsp;Continued probation untill
