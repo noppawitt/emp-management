@@ -12,11 +12,7 @@ export const getYearOptions = () => {
 
 export const getMonthOptions = () => {
   const monthOptions = [];
-<<<<<<< HEAD
-  moment.months().forEach((month, i) => {
-=======
   moment.months().forEach((month) => {
->>>>>>> 289a5db6543758b2fce72a32ddb4386cbfcaa762
     monthOptions.push({ key: moment(month, 'MMMM').format('MM'), value: moment(month, 'MMMM').format('MM'), text: month });
   });
   return monthOptions;

@@ -553,7 +553,7 @@ exports.createReport = (req, res, next) => {
             // write day and Saturday, Sunday in report timesheet
             for (let day = 1; day <= numberOfDayInMonth; day += 1) {
               const date = `${yearMonth}-${day}`;
-              worksheet.getCell(`A${day + 7}`).value = date;
+              worksheet.getCell(`A${day + 7}`).value = moment(date).format('DD/MM/YY');
               if (moment(date, 'YYYY-MM-DD').isoWeekday() === 6 || moment(date, 'YYYY-MM-DD').isoWeekday() === 7) {
                 holidayDates.push(day);
                 worksheet.getCell(`B${day + 7}`).value = 'Holiday';
@@ -633,7 +633,7 @@ exports.createReport = (req, res, next) => {
             // write day and Saturday, Sunday in report timesheet
             for (let day = 1; day <= numberOfDayInMonth; day += 1) {
               const date = `${yearMonth}-${day}`;
-              worksheet.getCell(`A${day + 7}`).value = date;
+              worksheet.getCell(`A${day + 7}`).value = moment(date).format('DD/MM/YY');
               if (moment(date, 'YYYY-MM-DD').isoWeekday() === 6 || moment(date, 'YYYY-MM-DD').isoWeekday() === 7) {
                 holidayDates.push(day);
                 worksheet.getCell(`B${day + 7}`).value = 'Holiday';
