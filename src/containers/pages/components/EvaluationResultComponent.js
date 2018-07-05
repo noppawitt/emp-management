@@ -3,7 +3,7 @@ import './css/EvaluationResultComponent.css';
 import moment from 'moment';
 
 const validationMessage = {
-
+    passProDateVilidation: "Pass Probation Date must after Start Date"
 }
 
 class EvaluationResultComponent extends React.Component {
@@ -168,8 +168,12 @@ class EvaluationResultComponent extends React.Component {
                                 </td>
                                 <td>
                                     <input type='date' value={this.state.passProDate} onChange={(event) => {
-                                        this.state = { ...this.state, passProDate: event.target.value };
-                                        this.updateParentComponent();
+                                        if (moment(event.target.value).isBefore(this.state.startDate))
+                                            alert(validationMessage.passProDateVilidation);
+                                        else {
+                                            this.state = { ...this.state, passProDate: event.target.value };
+                                            this.updateParentComponent();
+                                        }
                                     }} />
                                 </td>
                             </tr>
