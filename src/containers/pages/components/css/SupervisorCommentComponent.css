@@ -20,8 +20,8 @@
     display: none;
 }
 
-.sup-comment:disabled{
-    border: none;
+.sup-comment textarea:disabled{
+    border-color: rgb(234,234,234);
 }
 
 .blue-text {
