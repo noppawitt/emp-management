@@ -14,7 +14,18 @@ import Loader from '../../components/Loader';
 
 const LeavePage = ({ isFetching, isFetchingHis, leaves, onAddClick, onCancelClick, userId, year, month, fetchLeave, leaveHistory }) => (
   <div>
-    {(isFetching || isFetchingHis)? <Loader /> : <Leave userId={userId} leaves={leaves} leaveHistory={leaveHistory} onAddClick={onAddClick} onCancelClick={onCancelClick} fetchLeave={fetchLeave} year={year} month={month} />}
+    {(isFetching || isFetchingHis) ?
+      <Loader /> :
+      <Leave
+        userId={userId}
+        leaves={leaves}
+        leaveHistory={leaveHistory}
+        onAddClick={onAddClick}
+        onCancelClick={onCancelClick}
+        fetchLeave={fetchLeave}
+        year={year}
+        month={month}
+      />}
   </div>
 );
 
