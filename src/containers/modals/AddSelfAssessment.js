@@ -21,9 +21,9 @@ class AddSelfAssessment extends React.Component {
       <div>
         {this.props.fetching ? <Loader /> :
           <Modal
-            header={this.props.profile.eva == null ? 'Add Probation' : 'View Probation'}
-            onClose={() => { }}
-            onClick={() => { }}
+            header={this.props.profile.eva == null ? 'Add Probation':'View Probation'}
+            onClose={()=>{this.props.onClose()}}
+            onClick={()=>{}}
             submitting={false}
             size="large"
             disable={true}
