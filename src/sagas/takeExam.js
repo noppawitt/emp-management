@@ -43,7 +43,7 @@ const eprList = [
     category: 'testing',
     subcategory: 'istqb',
     type: 'choices',
-    requiredNumber: 4,
+    requiredNumber: 3,
     points: '29/30',
     submitDate: '2018-06-23',
     gradeDate: '2018-06-26',
@@ -101,7 +101,11 @@ export function* fetchTestExamTask(action) {
       }
     }
     console.log('test2', x);
-    yield put(fetchTakeExamSuccess(EPRList));
+    const examList = yield call(api.fetchExamSpecifyId, x);
+    console.log('???', examList);
+    const oldExamList = yield call(api.fetchAllExam);
+    console.log('oldone', oldExamList);
+    yield put(fetchTakeExamSuccess(examList));
   }
   catch (error) {
     yield put(fetchTakeExamFailure(error));

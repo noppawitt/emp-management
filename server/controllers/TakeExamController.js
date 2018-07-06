@@ -26,6 +26,25 @@ exports.fetchExamId = (req, res, next) => {
     .catch(next);
 };
 
+exports.fetchExamSpecifyId = (req, res, next) => {
+  const rawIdList = req.body.idList;
+  const idList = [];
+  console.log('eiei', rawIdList);
+  rawIdList.forEach((item) => {
+    console.log('item:', item);
+    item.exIdList.forEach((id) => {
+      idList.push(id);
+    });
+  });
+  console.log('??', idList);
+  TakeExam.fetchExamSpecifyId(idList)
+    .then((examList) => {
+      console.log('EXAMLIST', examList);
+      res.json(examList);
+    })
+    .catch(next);
+};
+
 exports.updateAnswer = (req, res, next) => {
   const object = req.body;
   console.log(object);

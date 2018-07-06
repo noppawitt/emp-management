@@ -28,6 +28,18 @@ TakeExam.fetchExamId = () => (
   + ' GROUP BY ex_category, ex_subcategory, ex_type')
 );
 
+TakeExam.fetchExamSpecifyId = idList => (
+  db.manyOrNone('SELECT'
+  + ' ex_id'
+  + ', ex_category'
+  + ', ex_subcategory'
+  + ', ex_type'
+  + ', ex_question'
+  + ', ex_choice'
+  + ', ARRAY_LENGTH(ex_answer, 1) as ex_answer_length'
+  + ' FROM exams WHERE ex_id = ANY ($1)', [idList])
+);
+
 TakeExam.createBufferAnswer = (id, category, answerList, date) => (
   db.oneOrNone(
     'INSERT INTO exam_candidate_submitted (id, category, answer_list, test_date) VALUES ($1, $2, $3, $4)',

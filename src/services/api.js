@@ -334,6 +334,15 @@ api.fetchExamId = () => (
   callApi(`/api/takeExam/fetchExamId`)
 );
 
+api.fetchExamSpecifyId = idList => (
+  callApi(`/api/takeExam/fetchExamSpecifyId/`, {
+    method: 'POST',
+    body: {
+      idList,
+    },
+  })
+);
+
 api.checkProgress = (id, category) => (
   callApi(`/api/takeExam/checkProgress/?id=${id}&category=${category}`)
 );

@@ -67,7 +67,7 @@ const TakeExam = ({
                   <Form>
                     <h1>Question {currentActivePage} of {examList.length}</h1>{questionRenderer(row.exQuestion)}<br />
                     {row.exType === 'Choices' && row.exChoice.map(answer => (
-                      row.exAnswer.length === 1 ?
+                      row.exAnswerLength === 1 ?
                         <Form.Field>
                           <p>
                             <Radio
