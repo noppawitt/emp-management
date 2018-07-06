@@ -3,6 +3,7 @@
     width: 100%;
     margin: auto;
     font-family: 'Prompt', sans-serif;
+    overflow: hidden;
 }
 
 .blue-text {
@@ -18,10 +19,6 @@
     box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.04);
 }
 
-.self-assessment-form table {
-    width: 100%;
-}
-
 .self-assessment-form textarea {
     border-radius: 7px;
     border-width: thin;
@@ -35,6 +32,22 @@
 
 .self-assessment-form textarea::-webkit-scrollbar {
     display: none;
+}
+
+.pages-contrainer {
+    position: relative;
+    table-layout: fixed;
+    width: 400%;
+    transition: 0.5s;
+    left: 0%;
+}
+
+.pages-contrainer td {
+    vertical-align: top;
+}
+
+.pages-contrainer td div table {
+    width: 100%;
 }
 
 .major-respon-table th, .sign-accom-table th, .con-com-table th, .str-improve-table th {
