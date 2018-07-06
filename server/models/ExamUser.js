@@ -8,7 +8,7 @@ const ExamUser = {};
 ExamUser.create = (user, id) => (
   db.tx((transaction) => {
     const query = transaction.one(
-      'INSERT INTO exam_users (id, password, created_user, updated_user, type, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING 1',
+      'INSERT INTO exam_users2 (id, password, created_user, updated_user, type, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING 1',
       [
         user.id,
         user.password,
@@ -23,7 +23,7 @@ ExamUser.create = (user, id) => (
 );
 
 ExamUser.findById = id => (
-  db.oneOrNone('SELECT * FROM exam_users WHERE id = $1', [id])
+  db.oneOrNone('SELECT * FROM exam_users2 WHERE id = $1', [id])
 );
 
 // User.findAll = () => (
@@ -37,7 +37,7 @@ ExamUser.findById = id => (
 
 ExamUser.createAdmin = user => (
   db.one(
-    'INSERT INTO exam_users (id, password, created_user, updated_user, type, status, id) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+    'INSERT INTO exam_users2 (id, password, created_user, updated_user, type, status, id) VALUES ($1, $2, $3, $4, $5, $6, $7)',
     [
       user.username,
       user.password,
