@@ -58,7 +58,8 @@ class PerformanceReviewForm extends React.Component {
                 employeeSignDate: this.props.profile.perfInfo.emSignDate,
                 supervisorSignDate: this.props.profile.perfInfo.supSignDate,
                 MDSignDate: this.props.profile.perfInfo.mdSignDate,
-                performanceId: this.props.profile.perfInfo.performanceId
+                performanceId: this.props.profile.perfInfo.performanceId,
+                level: this.props.profile.perfInfo.levelId
             })
         }
     }
@@ -99,7 +100,7 @@ class PerformanceReviewForm extends React.Component {
                 <EmployeeInfo {...this.state} mode={this.props.mode} />
                 <br />
                 <div>
-                    <ScoreTableManager {...this.state} questions={questions} numOfQuestion={this.props.profile.work.engineer ? this.props.profile.work.levelId >= 3 ? 7 : 6 : 5}
+                    <ScoreTableManager {...this.state} questions={questions} numOfQuestion={this.props.profile.work.engineer ? this.state.level >= 3 ? 7 : 6 : 5}
                         weight={this.props.profile.work.engineer ? this.props.profile.work.levelId >= 3 ? weightType.engLv3orMore : weightType.engLv2 : weightType.noEng}
                         score={this.state.score} onChange={this.scoreTableStateHandler} mode={this.props.mode} />
                 </div>

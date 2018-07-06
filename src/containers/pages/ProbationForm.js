@@ -148,7 +148,8 @@ class ProbationForm extends React.Component {
                 employeeSignDate: this.props.profile.eva.emSignDate,
                 supervisorSignDate: this.props.profile.eva.supSignDate,
                 MDSignDate: this.props.profile.eva.mdSignDate,
-                endProbationDate: this.props.profile.eva.passProDate
+                endProbationDate: this.props.profile.eva.passProDate,
+                level: this.props.profile.eva.levelId
             })
         }
     }
@@ -184,7 +185,7 @@ class ProbationForm extends React.Component {
                 </div>
                 <EmployeeInfo {...this.state} showEndProDate='true' onChange={this.employeeStateHandler} mode={this.props.mode} />
                 <div>
-                    <ScoreTableManager {...this.state} questions={questions} numOfQuestion={this.props.profile.work.engineer ? this.props.profile.work.levelId >= 3 ? 7 : 6 : 5}
+                    <ScoreTableManager {...this.state} questions={questions} numOfQuestion={this.props.profile.work.engineer ? this.state.level >= 3 ? 7 : 6 : 5}
                         weight={this.props.profile.work.engineer ? this.props.profile.work.levelId >= 3 ? weightType.engLv3orMore : weightType.engLv2 : weightType.noEng}
                         score={this.state.score} onChange={this.scoreTableStateHandler} mode={this.props.mode} />
                 </div>
