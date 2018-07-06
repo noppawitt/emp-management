@@ -12,8 +12,12 @@ import { taskOptions } from '../../utils/options';
 
 const validate = (values) => {
   const errors = {};
-  errors.startDate = validator.required(values.startDate);
-  errors.endDate = validator.required(values.endDate);
+  errors.projectId = validator.required(values.projectId);
+  errors.timeIn = validator.required(values.timeIn);
+  errors.timeIn = validator.timeBefore(values.timeIn, values.timeOut);
+  errors.timeOut = validator.required(values.timeOut);
+  errors.timeOut = validator.timeAfter(values.timeOut, values.timeIn);
+  errors.task = validator.required(values.task);
   return errors;
 };
 

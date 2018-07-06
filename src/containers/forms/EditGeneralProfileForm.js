@@ -6,39 +6,106 @@ import { Field, reduxForm } from 'redux-form';
 import { Form } from 'semantic-ui-react';
 import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
-
-const validate = (values) => {
-  const errors = {};
-  errors.firstName = validator.required(values.firstName);
-  errors.lastName = validator.required(values.lastName);
-  errors.email = validator.email(values.email);
-  return errors;
-};
-
-const genderOptions = [
-  { key: 'male', value: 'Male', text: 'Male' },
-  { key: 'female', value: 'Female', text: 'Female' }
-];
+import { genderOptions } from '../../utils/options';
 
 const EditGeneralProfileForm = ({ handleSubmit }) => (
   <Form onSubmit={handleSubmit}>
     <Form.Group widths="equal">
-      <Field name="firstName" component={Input} as={Form.Input} label="First name" placeholder="First name" />
-      <Field name="lastName" component={Input} as={Form.Input} label="Last name" placeholder="Last name" />
+      <Field
+        name="firstName"
+        component={Input}
+        as={Form.Input}
+        label="First name"
+        validate={[validator.required, validator.englishName]}
+      />
+      <Field
+        name="lastName"
+        component={Input}
+        as={Form.Input}
+        label="Last name"
+        validate={[validator.required, validator.englishName]}
+      />
     </Form.Group>
     <Form.Group widths="equal">
-      <Field name="firstNameTh" component={Input} as={Form.Input} label="ชื่อ" placeholder="ชื่อ" />
-      <Field name="lastNameTh" component={Input} as={Form.Input} label="นามสกุล" placeholder="นามสกุล" />
+      <Field
+        name="firstNameTh"
+        component={Input}
+        as={Form.Input}
+        label="ชื่อ"
+        validate={[validator.required, validator.thai]}
+      />
+      <Field
+        name="lastNameTh"
+        component={Input}
+        as={Form.Input}
+        label="นามสกุล"
+        validate={[validator.required, validator.thai]}
+      />
     </Form.Group>
-    <Field name="nickName" component={Input} as={Form.Input} label="Nick name" placeholder="Nick name" />
-    <Field name="birthday" component={Input} as={Form.Input} type="date" label="Birth date" placeholder="Birth date" />
-    <Field name="gender" component={Input} as={Form.Select} label="Gender" placeholder="Gender" options={genderOptions} />
-    <Field name="citizenId" component={Input} as={Form.Input} label="Citizen ID" placeholder="Citizen ID" />
-    <Field name="mobileNumber" component={Input} as={Form.Input} label="Mobile No." placeholder="Mobile No." />
-    <Field name="email" component={Input} as={Form.Input} label="Email" placeholder="Email" />
-    <Field name="facebookId" component={Input} as={Form.Input} label="Facebook" placeholder="Facebook" />
-    <Field name="lineId" component={Input} as={Form.Input} label="Line ID" placeholder="Line ID" />
-    <Field name="address" component={Input} as={Form.TextArea} autoHeight label="Address" placeholder="Address" />
+    <Field
+      name="nickName"
+      component={Input}
+      as={Form.Input}
+      label="Nick name"
+      validate={validator.required}
+    />
+    <Field
+      name="birthday"
+      component={Input}
+      as={Form.Input}
+      type="date"
+      label="Birth date"
+      validate={validator.date}
+    />
+    <Field
+      name="gender"
+      component={Input}
+      as={Form.Select}
+      label="Gender"
+      options={genderOptions}
+      validate={validator.required}
+    />
+    <Field
+      name="citizenId"
+      component={Input}
+      as={Form.Input}
+      label="Citizen ID"
+      validator={[validator.required, value => validator.length(value, 13)]}
+    />
+    <Field
+      name="mobileNumber"
+      component={Input}
+      as={Form.Input}
+      label="Mobile No."
+      validate={[validator.required, value => validator.length(value, 10)]}
+    />
+    <Field
+      name="email"
+      component={Input}
+      as={Form.Input}
+      label="Email"
+      validate={[validator.required, validator.email]}
+    />
+    <Field
+      name="facebookId"
+      component={Input}
+      as={Form.Input}
+      label="Facebook"
+    />
+    <Field
+      name="lineId"
+      component={Input}
+      as={Form.Input}
+      label="Line ID"
+      validate={validator.lineId}
+    />
+    <Field
+      name="address"
+      component={Input}
+      as={Form.TextArea}
+      autoHeight
+      label="Address"
+    />
   </Form>
 );
 
@@ -69,8 +136,7 @@ const mapStateToProps = state => ({
 const enhance = compose(
   connect(mapStateToProps),
   reduxForm({
-    form: 'editGeneralProfile',
-    validate
+    form: 'editGeneralProfile'
   })
 );
 

@@ -89,7 +89,7 @@ const enhance = compose(
     }
   }),
   reduxForm({
-    form: 'report'
+    form: 'report',
   })
 );
 

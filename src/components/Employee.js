@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Item, Segment, Input, Button, Icon } from 'semantic-ui-react';
 import PageHeader from './PageHeader';
-import image from '../images/cat.jpg';
 import history from '../history';
 
 const items = employee => (
@@ -10,7 +9,7 @@ const items = employee => (
     <Segment raised style={{ cursor: 'pointer' }} onClick={() => history.push(`/profile/${employee.id}`)}>
       <Item.Group>
         <Item>
-          <Item.Image size="small" src={image} />
+          <Item.Image size="small" src={employee.picture} />
           <Item.Content>
             <Item.Header ><br /><br />{`${employee.firstName || '-'} ${employee.lastName || '-'} (${employee.nickName || '-'})`}</Item.Header>
             <Item.Description>{`Mobile No.: ${employee.mobileNumber || '-'}`}</Item.Description>

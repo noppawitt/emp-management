@@ -29,6 +29,43 @@ export const getRangeOptions = (start, end) => {
 export const taskOptions = [
   { key: 'development', value: 'Development', text: 'Development' },
   { key: 'testing', value: 'Testing', text: 'Testing' },
-  { key: 'training', value: 'Traning', text: 'Traning' },
+  { key: 'training', value: 'Training', text: 'Training' },
   { key: 'Meeting', value: 'Meeting', text: 'Meeting' }
+];
+
+export const leaveTypesOptions = [
+  { key: 'Annual Leave', value: 'Annual Leave', text: 'Annual Leave' },
+  { key: 'Personal Leave', value: 'Personal Leave', text: 'Personal Leave' },
+  { key: 'Sick Leave', value: 'Sick Leave', text: 'Sick Leave' },
+  { key: 'Ordination Leave', value: 'Ordination Leave', text: 'Ordination Leave' },
+];
+
+export const durationsOptions = [
+  { key: 'Full day', value: 'Full day', text: 'Full day' },
+  { key: 'Specific time', value: 'Specific time', text: 'Specific time' }
+];
+
+export const paymentTypeOptions = [
+  { key: 'Man-month', value: 'Man-month', text: 'Man-month' },
+  { key: 'Man-day', value: 'Man-day', text: 'Man-day' },
+];
+
+export const workingDayOptions = [
+  { key: 22, value: 22, text: '22 days per month' },
+  { key: 20, value: 20, text: '20 days per month' },
+];
+
+export const statusOptions = [
+  { key: 'In Progress', value: 'In Progress', text: 'In Progress' },
+  { key: 'Done', value: 'Done', text: 'Done' }
+];
+
+export const genderOptions = [
+  { key: 'male', value: 'Male', text: 'Male' },
+  { key: 'female', value: 'Female', text: 'Female' }
+];
+
+export const engineerOptions = [
+  { key: 'engineer', value: true, text: 'Engineer' },
+  { key: 'non-engineer', value: false, text: 'Non-Engineer' }
 ];
