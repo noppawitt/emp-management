@@ -29,7 +29,7 @@ class PerformanceReviewForm extends React.Component {
             employeeID: this.props.profile.work.userId,
             level: this.props.profile.work.levelId,
             startDate: this.props.profile.work.startDate,
-            supervisor: '_supervisor',
+            supervisor: this.props.profile.work.bossname,
             expectedScore: null,
             score: null,
             employeeSignDate: null,
