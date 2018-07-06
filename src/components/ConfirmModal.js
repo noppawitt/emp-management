@@ -29,7 +29,7 @@ class ConfirmModal extends React.Component{
           <Modal.Header icon='archive' content='Confirmation' />
           <Modal.Content>
             <p>
-              ...
+              Are you sure ?
             </p>
           </Modal.Content>
           <Modal.Actions>
