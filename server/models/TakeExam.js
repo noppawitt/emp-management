@@ -28,6 +28,10 @@ TakeExam.fetchExamId = () => (
   + ' GROUP BY ex_category, ex_subcategory, ex_type')
 );
 
+TakeExam.fetchRandomExIdList = id => (
+  db.oneOrNone('SELECT random_ex_id_list FROM exam_users2 WHERE id = $1', [id])
+);
+
 TakeExam.fetchExamSpecifyId = idList => (
   db.manyOrNone('SELECT'
   + ' ex_id'
@@ -65,8 +69,8 @@ TakeExam.updateAnswer = (id, category, answerList) => {
   return db.oneOrNone('UPDATE exam_candidate_submitted SET (id, category, answer_list) = ($1, $2, $3)', [id, category, answerList]);
 };
 
-TakeExam.findUploadedCategory = (id, category) => (
-  db.oneOrNone('SELECT * FROM exam_candidate_submitted WHERE id = $1 and category = $2', [id, category])
+TakeExam.findUploadedCategory = id => (
+  db.oneOrNone('SELECT * FROM exam_candidate_submitted WHERE id = $1', [id])
 );
 
 module.exports = TakeExam;

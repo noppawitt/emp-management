@@ -7,6 +7,8 @@ router.get('/fetchEPRList', TakeExamController.fetchEPRList);
 
 router.get('/fetchExamId', TakeExamController.fetchExamId);
 
+router.get('/fetchRandomExIdList', TakeExamController.fetchRandomExIdList);
+
 router.post('/fetchExamSpecifyId', TakeExamController.fetchExamSpecifyId);
 
 router.get('/checkProgress', TakeExamController.findUploadedCategory);

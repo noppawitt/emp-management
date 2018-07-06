@@ -7,104 +7,20 @@ import {
   uploadAnswerListSuccess,
   checkProgressFailure,
   checkProgressSuccess,
+  fetchProgress,
 } from '../actions/takeExam';
 import { openModal } from '../actions/modal';
 import * as modalNames from '../constants/modalNames';
 import api from '../services/api';
 
-// the easy one
-// we fetch all for test first
-export function* fetchTestExamTask2() {
-  try {
-    const examList = yield call(api.fetchAllExam);
-    console.log(examList);
-    yield put(fetchTakeExamSuccess(examList));
-  }
-  catch (error) {
-    yield put(fetchTakeExamFailure(error));
-  }
-}
-
-// this is real one
-// send id to fetch eprList first
-// then for each category in eprlist
-// we random some exam
-const shuffle = (a) => {
-  for (let i = a.length - 1; i >= 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-};
-
-const eprList = [
-  {
-    key: 0,
-    category: 'testing',
-    subcategory: 'istqb',
-    type: 'choices',
-    requiredNumber: 3,
-    points: '29/30',
-    submitDate: '2018-06-23',
-    gradeDate: '2018-06-26',
-  },
-  {
-    key: 1,
-    category: 'Logic',
-    subcategory: 'Supplementary',
-    type: 'choices',
-    requiredNumber: 10,
-    points: '29/30',
-    submitDate: '2018-06-23',
-    gradeDate: '2018-06-24',
-  },
-  {
-    key: 2,
-    category: 'Security',
-    subcategory: 'Fundamental',
-    type: 'choices',
-    requiredNumber: 5,
-    points: '29/30',
-    submitDate: '2018-06-23',
-    gradeDate: '2018-06-25',
-  },
-  {
-    key: 3,
-    category: 'Security',
-    subcategory: 'Supplementary',
-    type: 'choices',
-    requiredNumber: 5,
-    points: '29/30',
-    submitDate: '2018-06-23',
-    gradeDate: '2018-06-23',
-  },
-];
-
 export function* fetchTestExamTask(action) {
   try {
-    const EPR2List = yield call(api.fetchEPRList, action.payload.id);
-    const rawExamList = yield call(api.fetchExamId);
-    const EPRList = eprList;
-
-    const x = [];
-    for (let i = 0; i < EPRList.length; i += 1) {
-      for (let j = 0; j < rawExamList.length; j += 1) {
-        if (rawExamList[j].category.toLowerCase() === EPRList[i].category.toLowerCase()
-          && rawExamList[j].subcategory.toLowerCase() === EPRList[i].subcategory.toLowerCase()
-          && rawExamList[j].type.toLowerCase() === EPRList[i].type.toLowerCase()) {
-          const idList = (shuffle(rawExamList[j].exIdList.slice())).slice(0, EPRList[i].requiredNumber);
-          const temp = Object.assign({}, rawExamList[j]);
-          temp.exIdList = idList.slice();
-          x.push(temp);
-          break;
-        }
-      }
-    }
-    console.log('test2', x);
-    const examList = yield call(api.fetchExamSpecifyId, x);
-    console.log('???', examList);
-    const oldExamList = yield call(api.fetchAllExam);
-    console.log('oldone', oldExamList);
+    const randomExIdList = yield call(api.fetchRandomExIdList, action.payload.id);
+    const examList = yield call(api.fetchExamSpecifyId, randomExIdList);
+    console.log('HERE is the examlist', examList);
+    const progressResult = yield call(api.checkProgress, action.payload.id);
+    console.log(progressResult);
+    yield put(fetchProgress(progressResult));
     yield put(fetchTakeExamSuccess(examList));
   }
   catch (error) {
@@ -125,7 +41,7 @@ export function* uploadAnswerListTask(action) {
 
 export function* checkProgressTask(action) {
   try {
-    const progressResult = yield call(api.checkProgress, action.payload.id, action.payload.category);
+    const progressResult = yield call(api.checkProgress, action.payload.id);
     const examProgress = yield put(checkProgressSuccess(progressResult));
     console.log(examProgress);
     yield put(openModal(modalNames.VIEW_EXAM_PROGRESS, {

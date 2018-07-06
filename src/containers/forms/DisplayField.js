@@ -22,7 +22,7 @@ const DisplayField = ({ isFetching, passwordObject, userStatus, userStatusCode }
         <Table.Row>
           <Table.Cell>{passwordObject.id}</Table.Cell>
           <Table.Cell>{passwordObject.birthdate}</Table.Cell>
-          <Table.Cell>{new Date(passwordObject.lastestActivatedPasswordTime).toDateString()}</Table.Cell>
+          <Table.Cell>{new Date(passwordObject.latestActivatedPasswordTime).toDateString()}</Table.Cell>
           <Table.Cell>{passwordObject.activationLifetimes}</Table.Cell>
           <Table.Cell
             className={userStatusCode === 200 ? 'positive' : 'negative'}

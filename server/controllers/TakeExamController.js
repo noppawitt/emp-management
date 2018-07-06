@@ -26,20 +26,18 @@ exports.fetchExamId = (req, res, next) => {
     .catch(next);
 };
 
+exports.fetchRandomExIdList = (req, res, next) => {
+  TakeExam.fetchRandomExIdList(req.query.id)
+    .then((List) => {
+      res.json(List);
+    })
+    .catch(next);
+};
+
 exports.fetchExamSpecifyId = (req, res, next) => {
   const rawIdList = req.body.idList;
-  const idList = [];
-  console.log('eiei', rawIdList);
-  rawIdList.forEach((item) => {
-    console.log('item:', item);
-    item.exIdList.forEach((id) => {
-      idList.push(id);
-    });
-  });
-  console.log('??', idList);
-  TakeExam.fetchExamSpecifyId(idList)
+  TakeExam.fetchExamSpecifyId(rawIdList.randomExIdList)
     .then((examList) => {
-      console.log('EXAMLIST', examList);
       res.json(examList);
     })
     .catch(next);
@@ -72,9 +70,9 @@ exports.updateAnswer = (req, res, next) => {
 
 exports.findUploadedCategory = (req, res, next) => {
   const object = req.query;
-  console.log('?????', object);
-  TakeExam.findUploadedCategory(object.id, object.category)
+  TakeExam.findUploadedCategory(object.id)
     .then((result) => {
+      console.log(result);
       res.json(result);
     })
     .catch(next);

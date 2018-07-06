@@ -21,6 +21,13 @@ export const fetchTakeExamFailure = messege => ({
   }
 });
 
+export const fetchProgress = progressResult => ({
+  type: actionTypes.TAKE_EXAM_FETCH_PROGRESS,
+  payload: {
+    progressResult,
+  }
+});
+
 export const pageChange = value => ({
   type: actionTypes.TAKE_EXAM_PAGINATION_CHANGE,
   payload: {
@@ -57,11 +64,10 @@ export const onInputTextAreaAnswer = (text, currentActivePage, exId) => ({
   },
 });
 
-export const uploadAnswerListRequest = (id, category, answerList) => ({
+export const uploadAnswerListRequest = (id, answerList) => ({
   type: actionTypes.TAKE_EXAM_UPLOAD_REQUEST,
   payload: {
     id,
-    category,
     answerList,
   }
 });
@@ -80,11 +86,10 @@ export const uploadAnswerListFailure = messege => ({
   }
 });
 
-export const checkProgressRequest = (id, category) => ({
+export const checkProgressRequest = id => ({
   type: actionTypes.TAKE_EXAM_CHECK_PROGRESS_REQUEST,
   payload: {
     id,
-    category,
   }
 });
 

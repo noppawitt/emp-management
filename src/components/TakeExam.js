@@ -46,7 +46,11 @@ const TakeExam = ({
             <Menu fluid vertical tabular>
               <Menu.Item name="Category 1 : TEST" active={1 > 0} />
               {categoryList && categoryList.map(category => (
-                <Menu.Item name={category.category} active={activeCategory === category.category} onClick={() => onClickCategory(category.category)} />
+                <Menu.Item
+                  name={category.category}
+                  active={activeCategory === category.category}
+                  onClick={() => onClickCategory(category.category)}
+                />
               ))}
             </Menu>
           </Grid.Column>
@@ -111,15 +115,30 @@ const TakeExam = ({
               )}
             </Segment>
             <Segment>
-              <Button color="green" icon labelPosition="left" onClick={() => onClickCheckProgress(id, activeCategory)}>
+              <Button
+                icon
+                labelPosition="left"
+                color="green"
+                onClick={() => onClickCheckProgress(id)}
+              >
                 <Icon name="search" />
                 Check
               </Button>
-              <Button primary icon labelPosition="left" onClick={() => onClickSave(id, activeCategory, answerList)}>
+              <Button
+                icon
+                labelPosition="left"
+                primary
+                onClick={() => onClickSave(id, answerList)}
+              >
                 <Icon name="save" />
                 Save
               </Button>
-              <Button secondary icon labelPosition="left" onClick={() => onClickSubmit(id, activeCategory, answerList)}>
+              <Button
+                icon
+                labelPosition="left"
+                secondary
+                onClick={() => onClickSubmit(id, answerList)}
+              >
                 <Icon name="send" />
                 Submit
               </Button>

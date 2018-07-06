@@ -259,6 +259,16 @@ api.activatePassword = (id, lifetimes) => (
   callApi(`/api/recruitments/activatePassword/?id=${id}&lifetimes=${lifetimes}`)
 );
 
+api.uploadRandomExIdList = (randomExIdList, id) => (
+  callApi(`/api/recruitments/uploadRandomExIdList/`, {
+    method: 'POST',
+    body: {
+      randomExIdList,
+      id,
+    }
+  })
+);
+
 // Exam
 
 api.uploadImageExam = body => (
@@ -312,7 +322,7 @@ api.signup = form => (
 );
 
 api.examLogin = form => (
-  callApi(`/examauth/login`, {
+  callApi(`/examAuth/login`, {
     method: 'POST',
     body: form
   })
@@ -334,6 +344,10 @@ api.fetchExamId = () => (
   callApi(`/api/takeExam/fetchExamId`)
 );
 
+api.fetchRandomExIdList = id => (
+  callApi(`/api/takeExam/fetchRandomExIdList/?id=${id}`)
+);
+
 api.fetchExamSpecifyId = idList => (
   callApi(`/api/takeExam/fetchExamSpecifyId/`, {
     method: 'POST',
@@ -343,16 +357,15 @@ api.fetchExamSpecifyId = idList => (
   })
 );
 
-api.checkProgress = (id, category) => (
-  callApi(`/api/takeExam/checkProgress/?id=${id}&category=${category}`)
+api.checkProgress = id => (
+  callApi(`/api/takeExam/checkProgress/?id=${id}`)
 );
 
-api.uploadAnswer = (id, category, answerList) => (
+api.uploadAnswer = (id, answerList) => (
   callApi(`/api/takeExam/uploadAnswer/`, {
     method: 'POST',
     body: {
       id,
-      category,
       answerList,
     }
   })

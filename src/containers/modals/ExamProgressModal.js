@@ -30,16 +30,9 @@ const showAllStatus = (examProgress, onPageChange, onClose) => {
   const allStatus = [];
   for (let i = 0; i < Math.ceil(examProgress.answerList.length / 10); i += 1) {
     allStatus.push(<Table.Cell>
-      {examProgress.answerList[(i * 10)] && showStatus(examProgress.answerList[(i * 10)], (i * 10) + 1, onPageChange, onClose)}
-      {examProgress.answerList[(i * 10) + 1] && showStatus(examProgress.answerList[(i * 10) + 1], (i * 10) + 2, onPageChange, onClose)}
-      {examProgress.answerList[(i * 10) + 2] && showStatus(examProgress.answerList[(i * 10) + 2], (i * 10) + 3, onPageChange, onClose)}
-      {examProgress.answerList[(i * 10) + 3] && showStatus(examProgress.answerList[(i * 10) + 3], (i * 10) + 4, onPageChange, onClose)}
-      {examProgress.answerList[(i * 10) + 4] && showStatus(examProgress.answerList[(i * 10) + 4], (i * 10) + 5, onPageChange, onClose)}
-      {examProgress.answerList[(i * 10) + 5] && showStatus(examProgress.answerList[(i * 10) + 5], (i * 10) + 6, onPageChange, onClose)}
-      {examProgress.answerList[(i * 10) + 6] && showStatus(examProgress.answerList[(i * 10) + 6], (i * 10) + 7, onPageChange, onClose)}
-      {examProgress.answerList[(i * 10) + 7] && showStatus(examProgress.answerList[(i * 10) + 7], (i * 10) + 8, onPageChange, onClose)}
-      {examProgress.answerList[(i * 10) + 8] && showStatus(examProgress.answerList[(i * 10) + 8], (i * 10) + 9, onPageChange, onClose)}
-      {examProgress.answerList[(i * 10) + 9] && showStatus(examProgress.answerList[(i * 10) + 9], (i * 10) + 10, onPageChange, onClose)}
+      {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(j => (
+        examProgress.answerList[(i * 10) + j]
+        && showStatus(examProgress.answerList[(i * 10)], (i * 10) + j + 1, onPageChange, onClose)))}
     </Table.Cell>);
   }
   return allStatus;
@@ -53,9 +46,9 @@ const ExamProgressModal = ({ onClose, examProgress, onPageChange }) => (
     open
     onClose={onClose}
   >
-    <SUIModal.Header>
+    {/* <SUIModal.Header>
       {examProgress.category.charAt(0).toUpperCase().concat(examProgress.category.slice(1)).concat(' : Status')}
-    </SUIModal.Header>
+    </SUIModal.Header> */}
     <SUIModal.Content>
       <Table celled>
         <Table.Row verticalAlign="top">
