@@ -37,54 +37,10 @@ const shuffle = (a) => {
   return a;
 };
 
-const eprList = [
-  {
-    key: 0,
-    category: 'testing',
-    subcategory: 'istqb',
-    type: 'choices',
-    requiredNumber: 3,
-    points: '29/30',
-    submitDate: '2018-06-23',
-    gradeDate: '2018-06-26',
-  },
-  {
-    key: 1,
-    category: 'Logic',
-    subcategory: 'Supplementary',
-    type: 'choices',
-    requiredNumber: 10,
-    points: '29/30',
-    submitDate: '2018-06-23',
-    gradeDate: '2018-06-24',
-  },
-  {
-    key: 2,
-    category: 'Security',
-    subcategory: 'Fundamental',
-    type: 'choices',
-    requiredNumber: 5,
-    points: '29/30',
-    submitDate: '2018-06-23',
-    gradeDate: '2018-06-25',
-  },
-  {
-    key: 3,
-    category: 'Security',
-    subcategory: 'Supplementary',
-    type: 'choices',
-    requiredNumber: 5,
-    points: '29/30',
-    submitDate: '2018-06-23',
-    gradeDate: '2018-06-23',
-  },
-];
-
 export function* fetchTestExamTask(action) {
   try {
-    const EPR2List = yield call(api.fetchEPRList, action.payload.id);
+    const EPRList = yield call(api.fetchEPRList, action.payload.id);
     const rawExamList = yield call(api.fetchExamId);
-    const EPRList = eprList;
 
     const x = [];
     for (let i = 0; i < EPRList.length; i += 1) {

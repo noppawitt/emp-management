@@ -155,7 +155,7 @@ TakeExam.propTypes = {
   onInputTextArea: PropTypes.func.isRequired,
   onClickSave: PropTypes.func.isRequired,
   onClickSubmit: PropTypes.func.isRequired,
-  exId: PropTypes.string.isRequired,
+  exId: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
   onClickCheckProgress: PropTypes.func.isRequired,
   categoryList: PropTypes.array.isRequired,

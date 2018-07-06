@@ -9,9 +9,7 @@ exports.fetchAllExam = (req, res, next) => {
 };
 
 exports.fetchEPRList = (req, res, next) => {
-  // const object = req.query;
-  // TakeExam.fetchEPRList(object.id)
-  TakeExam.fetchEPRList('1234567890191')
+  TakeExam.fetchEPRList(req.query.id)
     .then((EPRList) => {
       res.json(EPRList);
     })
@@ -28,18 +26,14 @@ exports.fetchExamId = (req, res, next) => {
 
 exports.fetchExamSpecifyId = (req, res, next) => {
   const rawIdList = req.body.idList;
-  const idList = [];
-  console.log('eiei', rawIdList);
+  const idList = [];  
   rawIdList.forEach((item) => {
-    console.log('item:', item);
     item.exIdList.forEach((id) => {
       idList.push(id);
     });
   });
-  console.log('??', idList);
   TakeExam.fetchExamSpecifyId(idList)
     .then((examList) => {
-      console.log('EXAMLIST', examList);
       res.json(examList);
     })
     .catch(next);

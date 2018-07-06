@@ -68,7 +68,7 @@ TakeExamPage.propTypes = {
   onClickRadio: PropTypes.func.isRequired,
   onClickCheckbox: PropTypes.func.isRequired,
   onInputTextArea: PropTypes.func.isRequired,
-  exId: PropTypes.string.isRequired,
+  exId: PropTypes.number.isRequired,
   onClickSave: PropTypes.func.isRequired,
   onClickSubmit: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
@@ -86,13 +86,12 @@ const mapStateToProps = state => ({
   pickedAnswer: state.takeExam.pickedAnswer,
   answerList: state.takeExam.answerList,
   exId: state.takeExam.exId,
-  id: state.takeExam.id,
+  id: state.examAuth.id,
   categoryList: state.takeExam.categoryList,
 });
 
 const mapDispatchToProps = dispatch => ({
-  // fetchTakeExam: id => dispatch(fetchTakeExamRequest(id)),
-  fetchTakeExam: () => dispatch(fetchTakeExamRequest('1234567890191')),
+  fetchTakeExam: id => dispatch(fetchTakeExamRequest(id)),
   onPageChange: value => dispatch(pageChange(value)),
   // this three-'on'-function below this is called
   // when there is input for each exam type
@@ -117,8 +116,8 @@ const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
-      const { fetchTakeExam } = this.props;
-      fetchTakeExam();
+      const { fetchTakeExam, id } = this.props;
+      fetchTakeExam(id);
     }
   })
 );
