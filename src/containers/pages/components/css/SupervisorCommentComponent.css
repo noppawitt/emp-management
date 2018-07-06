@@ -20,8 +20,8 @@
     display: none;
 }
 
-.sup-comment textarea:disabled{
-    border-color: rgb(234,234,234);
+.sup-comment textarea:disabled {
+    border-color: rgb(234, 234, 234);
 }
 
 .blue-text {
@@ -29,4 +29,10 @@
     font-size: 1.7em;
     text-shadow: 0px 3px 1px rgba(0, 0, 0, 0.05);
     font-weight: bold;
+}
+
+.underline {
+    padding-bottom: 1%;
+    border-bottom: 0.1em solid #bbbbbb;
+    box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.04);
 }

@@ -2,33 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { closeModal } from '../../actions/modal';
-import { updateProfileRequest, updateProbationStore, clearProbationStore} from '../../actions/profile';
+import { updateProfileRequest, updateProbationStore, clearProbationStore } from '../../actions/profile';
 import Modal from '../../components/EvaluationModal';
-import A from '../pages/ProbationForm'
+import A from '../pages/SelfAssessmentForm'
 import Loader from '../../components/Loader';
 
-class AddSelfAssessment extends React.Component{
-  constructor(props){
+class AddSelfAssessment extends React.Component {
+  constructor(props) {
     super(props);
     this.state = props;
-    this.type = (this.props.profile.eva == null ? 'addProbation':'updateProbation')
+    this.type = (this.props.profile.eva == null ? 'addProbation' : 'updateProbation')
   }
-  componentDidMount(){
+  componentDidMount() {
     console.log(this.state.edited);
   }
-  render(){
-    return(
+  render() {
+    return (
       <div>
-        {this.props.fetching ? <Loader/> :
+        {this.props.fetching ? <Loader /> :
           <Modal
-            header={this.props.profile.eva == null ? 'Add Probation':'View Probation'}
-            onClose={()=>{}}
-            onClick={()=>{}}
+            header={this.props.profile.eva == null ? 'Add Probation' : 'View Probation'}
+            onClose={() => { }}
+            onClick={() => { }}
             submitting={false}
             size="large"
             disable={true}
           >
-            <A test={this.props.onChange} profile={this.props.profile}/>
+            <A test={this.props.onChange} profile={this.props.profile} />
           </Modal>
         }
       </div>
@@ -61,8 +61,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   clear: () => dispatch(clearProbationStore()),
   onClose: () => dispatch(closeModal()),
-  onSubmit: (item,type) =>  (new Promise((resolve,reject)=> (
-    dispatch(updateProfileRequest(item,resolve,reject,type))
+  onSubmit: (item, type) => (new Promise((resolve, reject) => (
+    dispatch(updateProfileRequest(item, resolve, reject, type))
   ))),
 
   onClick: () => dispatch(submit('addProbationProfile')),

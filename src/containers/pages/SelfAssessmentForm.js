@@ -5,9 +5,28 @@ import './css/SelfAssessmentForm.css'
 
 class SelfAssessmentForm extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentPage: 0
+        }
+
+        this.animateChangePage = this.animateChangePage.bind(this);
+    }
+
+    animateChangePage() {
+        document.getElementsByClassName('pages-contrainer')[0].style.left = this.state.currentPage * (-100) + '%';
+    }
+
     render() {
         return (
             <div className='self-assessment-form'>
+                <button onClick={() => {
+                    this.state = { currentPage: (this.state.currentPage + 1) % 4 };
+                    this.animateChangePage();
+                }}>
+                    click
+                </button>
                 <div>
                     <h1>Self Assessment Form</h1>
                     <h2>Playtorium Solutions Company Limited</h2>
@@ -57,24 +76,21 @@ class SelfAssessmentForm extends React.Component {
                         {/* Page Two */}
                         <td>
                             <div>
-                                <span className='underline blue-text'>Goal 1 The Most Important * เป้าหมายสำคัญอันดับที่ 1</span>
-                                <GoalComponent />
+                                <GoalComponent header='Goal 1 The Most Important * เป้าหมายสำคัญอันดับที่ 1' />
                             </div>
                         </td>
 
                         {/* Page Three */}
                         <td>
                             <div>
-                                <span>Goal 2 More Important * เป้าหมายสำคัญอันดับที่ 2</span>
-                                <GoalComponent />
+                                <GoalComponent header='Goal 2 More Important * เป้าหมายสำคัญอันดับที่ 2' />
                             </div>
                         </td>
 
                         {/* Page Four */}
                         <td>
                             <div>
-                                <span>Goal 3 Less Important * เป้าหมายสำคัญอันดับที่ 3</span>
-                                <GoalComponent />
+                                <GoalComponent header='Goal 3 Less Important * เป้าหมายสำคัญอันดับที่ 3' />
                             </div>
                         </td>
                     </tr >
