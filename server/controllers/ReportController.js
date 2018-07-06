@@ -684,7 +684,7 @@ exports.createReport = (req, res, next) => {
       })
       .catch(next);
   }
-  else if (excelType.reportType === 'Summary Timesheet') {
+  else if (excelType.reportType === 'Summary Timesheet (Year)') {
     const filename = 'server/storage/private/report/Playtorium_Summary_Timesheet.xlsx';
     const workbook = new Excel.Workbook();
     workbook.xlsx.readFile(filename)
