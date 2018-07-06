@@ -50,7 +50,7 @@ ProgressBar.defaultProps = {
 ProgressBar.propTypes = {
   percent: PropTypes.number,
   type: PropTypes.string.isRequired,
-  max : PropTypes.number.isRequired
+  max: PropTypes.number.isRequired
 };
 
 export default ProgressBar;

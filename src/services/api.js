@@ -307,7 +307,7 @@ api.updateLeave = body => (
     body
   })
 );
-api.fetchLeaveHistory = (userId, year) =>(
+api.fetchLeaveHistory = (userId, year) => (
   callApi(`/api/leave-history?userId=${userId}&year=${year}`)
 );
 
