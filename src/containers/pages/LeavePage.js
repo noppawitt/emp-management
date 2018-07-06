@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import {
   fetchLeaveRequest,
-  updateLeaveRequest
+  updateLeaveRequest,
+  fetchLeaveHistoryRequest
 } from '../../actions/leave';
 import { openModal } from '../../actions/modal';
 import * as modalNames from '../../constants/modalNames';
@@ -42,6 +43,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchLeave: (userId, year, month) => dispatch(fetchLeaveRequest(userId, year, month)),
+  fetchLeaveHistory: (userId, year) => dispatch(fetchLeaveHistoryRequest(userId, year)),
   onAddClick: () => dispatch(openModal(modalNames.CREATE_LEAVE_REQUEST)),
   onCancelClick: (userId, leave) => dispatch(openModal(modalNames.CONFIRM, {
     header: 'Cancel confirmation',
@@ -54,8 +56,9 @@ const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
-      const { fetchLeave, userId, year, month } = this.props;
+      const { fetchLeave, fetchLeaveHistory, userId, year, month } = this.props;
       fetchLeave(userId, year, month);
+      fetchLeaveHistory(userId, year);
     }
   })
 );
