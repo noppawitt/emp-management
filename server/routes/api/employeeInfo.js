@@ -2,6 +2,7 @@ const router = require('express').Router();
 const EmployeeInfoController = require('../../controllers/EmployeeInfoController');
 const multer = require('multer');
 const mime = require('mime/lite');
+const { can } = require('../../middlewares');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -20,6 +21,6 @@ router.get('/', EmployeeInfoController.findById);
 
 router.post('/', EmployeeInfoController.create);
 
-router.put('/', EmployeeInfoController.update);
+router.put('/', can(['employeeInfoEditAll', 'employeeInfoEditOwn']), EmployeeInfoController.update);
 
 module.exports = router;
