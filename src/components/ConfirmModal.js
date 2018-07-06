@@ -22,7 +22,7 @@ class ConfirmModal extends React.Component{
       <div>
         <Button disabled={this.props.submitting|| this.props.disable}  onClick={this.openModal} color='blue'> Save </Button>
         <Modal
-          size='small'
+          size='mini'
           open={this.state.open}
           closeOnRootNodeClick={false}
         >
