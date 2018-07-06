@@ -46,7 +46,7 @@ export function* updateLeaveTask(action) {
         leaveTo: action.payload.leave.leaveTo
       }]
     });
-    const leaves = yield call(api.fetchLeave, action.payload.userId);
+    const leaves = yield call(api.fetchLeave, action.payload.userId, moment(action.payload.leaveFrom).format('YYYY'), moment(action.payload.leaveFrom).format('MM'));
     yield put(updateLeaveSuccess(leaves));
     yield put(closeModal());
   }

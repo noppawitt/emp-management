@@ -11,8 +11,8 @@ import * as validator from '../../utils/validator';
 
 const validate = (values) => {
   const errors = {};
-  errors.startDate = validator.required(values.startDate);
-  errors.endDate = validator.required(values.endDate);
+  errors.userId = validator.required(values.userId);
+  errors.role = validator.required(values.role);
   return errors;
 };
 

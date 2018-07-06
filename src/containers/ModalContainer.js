@@ -19,7 +19,7 @@ import AddMemberModal from './modals/AddMemberModal';
 import AddTimesheetModal from './modals/AddTimesheetModal';
 import EditTimesheetModal from './modals/EditTimesheetModal';
 
-const ModalContainer = ({ name, props }) => {
+const renderModal = ({ name, props }) => {
   switch (name) {
     case modalNames.EDIT_GENERAL_PROFILE:
       return <EditGeneralProfileModal {...props} />;
@@ -60,19 +60,18 @@ const ModalContainer = ({ name, props }) => {
   }
 };
 
-ModalContainer.defaultProps = {
-  name: null,
-  props: null
-};
+const ModalContainer = ({ stack }) => (
+  <div>
+    {stack.map(s => renderModal(s))}
+  </div>
+);
 
 ModalContainer.propTypes = {
-  name: PropTypes.string,
-  props: PropTypes.object
+  stack: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
-  name: state.modal.name,
-  props: state.modal.props
+  stack: state.modal.stack
 });
 
 export default connect(mapStateToProps)(ModalContainer);

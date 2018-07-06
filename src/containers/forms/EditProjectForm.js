@@ -6,28 +6,24 @@ import { Field, reduxForm, formValueSelector, change } from 'redux-form';
 import { Form } from 'semantic-ui-react';
 import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
+import { statusOptions, paymentTypeOptions, workingDayOptions } from '../../utils/options';
 
 const validate = (values) => {
   const errors = {};
+  errors.id = validator.required(values.id);
+  errors.name = validator.required(values.name);
+  errors.quotationId = validator.required(values.quotationId);
+  errors.customer = validator.required(values.customer);
+  errors.purchasedOrder = validator.required(values.purchasedOrder);
+  errors.amount = validator.required(values.amount);
   errors.startDate = validator.required(values.startDate);
+  errors.startDate = validator.dateBefore(values.startDate, values.endDate);
   errors.endDate = validator.required(values.endDate);
+  errors.endDate = validator.dateAfter(values.endDate, values.startDate);
+  errors.status = validator.required(values.status);
+  errors.paymentType = validator.required(values.paymentType);
   return errors;
 };
-
-const paymentTypeOptions = [
-  { key: 'Man-month', value: 'Man-month', text: 'Man-month' },
-  { key: 'Man-day', value: 'Man-day', text: 'Man-day' },
-];
-
-const workingDayOptions = [
-  { key: 22, value: 22, text: '22 days per month' },
-  { key: 20, value: 20, text: '20 days per month' },
-];
-
-const statusOptions = [
-  { key: 'In Progress', value: 'In Progress', text: 'In Progress' },
-  { key: 'Done', value: 'Done', text: 'Done' }
-];
 
 const EditProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType }) => (
   <Form onSubmit={handleSubmit}>
@@ -37,8 +33,8 @@ const EditProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType 
       <Field name="customer" as={Form.Input} component={Input} label="Customer" placeholder="Customer" disabled={submitting} />
     </Form.Group>
     <Form.Group widths="equal">
-      <Field name="purchasedOrder" as={Form.Input} component={Input} label="  order No." placeholder="Purchesed order No." disabled={submitting} />
-      <Field name="amount" as={Form.Input} component={Input} label="amount" placeholder="amount" disabled={submitting} />
+      <Field name="purchasedOrder" as={Form.Input} component={Input} label="PO No." placeholder="PO No." disabled={submitting} />
+      <Field name="amount" as={Form.Input} component={Input} label="Amount" placeholder="Amount" disabled={submitting} />
     </Form.Group>
     <Form.Group widths="equal">
       <Field name="startDate" as={Form.Input} component={Input} label="From" placeholder="From" type="date" disabled={submitting} />
