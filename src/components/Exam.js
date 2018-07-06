@@ -47,39 +47,39 @@ examSubCategoryOptions.propTypes = {
 };
 
 const renderQuestion = question => (
-  <div dangerouslySetInnerHTML={{ __html: question }} />
+  <div style={{ overflow:'auto', height: '200px' }} dangerouslySetInnerHTML={{ __html: question }} />
 );
 
 const showExamsFromPageNumber = (exams, examsFilter, row, onViewClick, onEditClick, onDeleteClick) => (
   <Table.Row verticalAlign="top">
-    <Table.Cell style={{ height: '200px', overflowY: 'auto', display: 'block', width: '100%' }}>
+    <Table.Cell>
       {renderQuestion(examsFilter[row].exQuestion)}
     </Table.Cell>
-    <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{examsFilter[row].exCategory.charAt(0).toUpperCase().concat(examsFilter[row].exCategory.slice(1))}</Table.Cell>
-    <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{examsFilter[row].exSubcategory.charAt(0).toUpperCase().concat(examsFilter[row].exSubcategory.slice(1))}</Table.Cell>
-    <Table.Cell style={{ height: '200px', overflowY: 'auto' }}>{examsFilter[row].exType}</Table.Cell>
+    <Table.Cell><div style={{ overflow:'auto', height: '200px' }}>{examsFilter[row].exCategory.charAt(0).toUpperCase().concat(examsFilter[row].exCategory.slice(1))}</div></Table.Cell>
+    <Table.Cell><div style={{ overflow:'auto', height: '200px' }}>{examsFilter[row].exSubcategory.charAt(0).toUpperCase().concat(examsFilter[row].exSubcategory.slice(1))}</div></Table.Cell>
+    <Table.Cell><div style={{ overflow:'auto', height: '200px' }}>{examsFilter[row].exType}</div></Table.Cell>
     {examsFilter[row].exType === 'Write-Up' &&
-      <Table.Cell style={{ height: '200px' }}><p>-</p></Table.Cell>
+      <Table.Cell><div style={{ overflow:'auto', height: '200px' }}><p>-</p></div></Table.Cell>
     }
     {examsFilter[row].exType === 'Choices' &&
-      <Table.Cell style={{ height: '200px', overflowY: 'auto', display: 'block', width: '100%' }}>{(examsFilter[row].exChoice).map((choice, i) => (
+      <Table.Cell><div style={{ overflow:'auto', height: '200px' }}>{(examsFilter[row].exChoice).map((choice, i) => (
         <p><strong>{i + 1}.</strong> {choice}</p>
       ))}
-      </Table.Cell>
+      </div></Table.Cell>
     }
     {examsFilter[row].exType === 'Write-Up' &&
-      <Table.Cell style={{ height: '200px' }}><p>-</p></Table.Cell>
+      <Table.Cell><div style={{ overflow:'auto', height: '200px' }}><p>-</p></div></Table.Cell>
     }
     {examsFilter[row].exType === 'Choices' &&
-      <Table.Cell style={{ height: '200px', overflowY: 'auto', width: '100%' }}>{(examsFilter[row].exAnswer).map(ans => (
+      <Table.Cell><div style={{ overflow:'auto', height: '200px' }}>{(examsFilter[row].exAnswer).map(ans => (
         <p>&#9679;&nbsp;{ans}</p>
       ))}
-      </Table.Cell>}
-    <Table.Cell textAlign="center" style={{ cursor: 'default' }}>
+      </div></Table.Cell>}
+    <Table.Cell textAlign="center"><div style={{ overflow:'auto', height: '200px' }}>
       <Button active circular icon="eye" color="olive" size="big" onClick={() => onViewClick(examsFilter[row])} style={{ cursor: 'pointer' }} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <Button active circular icon="settings" color="linkedin" size="big" onClick={() => onEditClick(exams, examsFilter[row])} style={{ cursor: 'pointer' }} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <Button active circular icon="trash" color="google plus" size="big" onClick={() => onDeleteClick(examsFilter[row].exId)} style={{ cursor: 'pointer' }} />
-    </Table.Cell>
+    </div></Table.Cell>
   </Table.Row>
 );
 
