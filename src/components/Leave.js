@@ -126,7 +126,7 @@ const Leave = ({ leaves, leaveHistory, onAddClick, onCancelClick, userId, fetchL
 
 Leave.propTypes = {
   leaves: PropTypes.array.isRequired,
-  leaveHistory: PropTypes.object.isRequired, 
+  leaveHistory: PropTypes.object.isRequired,
   onAddClick: PropTypes.func.isRequired,
   onCancelClick: PropTypes.func.isRequired,
   userId: PropTypes.number.isRequired,
