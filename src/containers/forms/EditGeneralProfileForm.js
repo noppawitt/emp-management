@@ -97,6 +97,7 @@ const EditGeneralProfileForm = ({ handleSubmit }) => (
       component={Input}
       as={Form.Input}
       label="Line ID"
+      validate={validator.lineId}
     />
     <Field
       name="address"
