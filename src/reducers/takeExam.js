@@ -22,19 +22,20 @@ const TakeExam = (state = initialState, action) => {
         id: action.payload.id,
         isFetching: true,
       };
-    case actionTypes.TAKE_EXAM_FETCH_SUCCESS:
+    case actionTypes.TAKE_EXAM_FETCH_SUCCESS: {
       return {
         ...state,
         examList: action.payload.examList,
         isFetching: false,
         activeCategory: action.payload.examList[0].exCategory,
         exId: action.payload.examList[0].exId,
-        answerList: state.progressResult === [] ?
+        answerList: (state.progressResult === null || state.progressResult === []) ?
           new Array(action.payload.examList.length).fill({ answer: '', question: '' }) :
           state.progressResult.answerList,
-        pickedAnswer: state.progressResult === [] ?
+        pickedAnswer: (state.progressResult === null || state.progressResult === []) ?
           '' : state.progressResult.answerList[0].answer,
       };
+    }
     case actionTypes.TAKE_EXAM_FETCH_FAILURE:
       return {
         ...state,
