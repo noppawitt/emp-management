@@ -18,4 +18,8 @@ LeaveHistory.create = (leave, id) => (
   )
 );
 
+LeaveHistory.findByUserIdAndYear = (userId, year) => (
+  db.one('SELECT * FROM leave_history WHERE user_id = $1 AND year = $2', [userId, year])
+);
+
 module.exports = LeaveHistory;

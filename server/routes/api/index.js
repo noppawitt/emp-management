@@ -26,6 +26,7 @@ const accessControl = require('./accessControl');
 const report = require('./report');
 const masterATable = require('./masterTable');
 const workExperience = require('./workExperience');
+const leaveHistory = require('./leaveHistory');
 
 router.use('/employee-info', employeeInfo);
 
@@ -80,5 +81,7 @@ router.use('/report', report);
 router.use('/master-table', masterATable);
 
 router.use('/work-experience', workExperience);
+
+router.use('/leave-history', leaveHistory);
 
 module.exports = router;
