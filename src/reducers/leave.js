@@ -3,6 +3,7 @@ import * as actionTypes from '../constants/actionTypes';
 
 const initialState = {
   lists: [],
+  leaveHistory: {},
   year: moment().format('YYYY'),
   month: moment().format('MM')
 };
@@ -61,18 +62,19 @@ const leave = (state = initialState, action) => {
     case actionTypes.LEAVEHISTORY_FETCH_REQUEST:
       return {
         ...state,
-        isFetching: true,
+        isFetchingHis: true,
         year: action.payload.year
       };
     case actionTypes.LEAVEHISTORY_FETCH_SUCCESS:
       return {
         ...state,
-        isFetching: false,
+        isFetchingHis: false,
         leaveHistory: action.payload.leaveHistory
       };
     case actionTypes.LEAVEHISTORY_FETCH_FAULURE:
       return {
         ...state,
+        isFetchingHis: false,
         message: action.payload.message
       };
     default:

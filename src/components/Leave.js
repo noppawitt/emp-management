@@ -25,7 +25,7 @@ for (let y = 2018; y <= 2118; y += 1) {
   years.push({ key: y, value: y.toString(), text: y });
 }
 
-const Leave = ({ leaves, onAddClick, onCancelClick, userId, fetchLeave, year, month }) => (
+const Leave = ({ leaves, leaveHistory, onAddClick, onCancelClick, userId, fetchLeave, year, month }) => (
   <div>
     <PageHeader text="Leave Request" icon="envelope" />
     <Grid>
@@ -33,17 +33,17 @@ const Leave = ({ leaves, onAddClick, onCancelClick, userId, fetchLeave, year, mo
         <Grid.Column width={2} />
         <Grid.Column width={4}>
           <Segment style={{ backgroundColor: 'rgba(252, 252, 252)' }}>
-            <ProgressBar percent={100} type="Annual" />
+            <ProgressBar percent={leaveHistory.annualLeaveRemain} max={120} type="Annual" />
           </Segment>
         </Grid.Column>
         <Grid.Column width={4}>
           <Segment style={{ backgroundColor: 'rgba(252, 252, 252)' }}>
-            <ProgressBar percent={50} type="Personal" />
+            <ProgressBar percent={leaveHistory.personalLeaveRemain} max={48} type="Personal" />
           </Segment>
         </Grid.Column>
         <Grid.Column width={4}>
           <Segment style={{ backgroundColor: 'rgba(252, 252, 252)' }}>
-            <ProgressBar percent={10} type="Sick" />
+            <ProgressBar percent={leaveHistory.sickLeaveRemain} max={240} type="Sick" />
           </Segment>
         </Grid.Column>
       </Grid.Row>
@@ -126,6 +126,7 @@ const Leave = ({ leaves, onAddClick, onCancelClick, userId, fetchLeave, year, mo
 
 Leave.propTypes = {
   leaves: PropTypes.array.isRequired,
+  leaveHistory: PropTypes.object.isRequired, 
   onAddClick: PropTypes.func.isRequired,
   onCancelClick: PropTypes.func.isRequired,
   userId: PropTypes.number.isRequired,
