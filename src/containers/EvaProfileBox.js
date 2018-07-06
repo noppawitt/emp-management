@@ -12,7 +12,7 @@ const AngleDownButton = (
   <Button icon="angle down"></Button>
 )
 
-const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, openPerformanceModal, type, fetchProbation, profileId, fetchPerformance}) => {
+const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, openPerformanceModal, type, fetchProbation, profileId, fetchPerformance, openSelfAssessment}) => {
   console.log(evaProfile);
   const options = [
     {
@@ -50,7 +50,7 @@ const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, 
             </Button.Group>
         </div>
             <Button icon labelPosition='left' disabled={type!='admin' && !evaProfile} icon={evaProfile==null ? 'plus':'angle right'} content={!evaProfile && type=='admin' ? 'Create Probation':'View Probation'} onClick={()=>{fetchProbation(profileId);openProbationModal()}} color={!evaProfile && type=='admin' ? 'green':'blue'}/>
-            <Button icon labelPosition='left' icon={'angle right'} content={'SELF'} onClick={()=>{openProbationModal()}} color={'yellow'}/>
+            <Button icon labelPosition='left' icon={'angle right'} content={'SELF'} onClick={()=>{openSelfAssessment()}} color={'yellow'}/>
 
       </Segment>
 

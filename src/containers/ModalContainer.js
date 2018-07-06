@@ -18,6 +18,7 @@ import EditProjectModal from './modals/EditProjectModal';
 import AddMemberModal from './modals/AddMemberModal';
 import AddProbation from './modals/AddProbation';
 import AddPerformance from './modals/AddPerformance';
+import AddSelfAssessment from './modals/AddSelfAssessment';
 
 const ModalContainer = ({ name, props }) => {
   switch (name) {
