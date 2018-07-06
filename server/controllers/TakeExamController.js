@@ -24,15 +24,17 @@ exports.fetchExamId = (req, res, next) => {
     .catch(next);
 };
 
+exports.fetchRandomExIdList = (req, res, next) => {
+  TakeExam.fetchRandomExIdList(req.query.id)
+    .then((List) => {
+      res.json(List);
+    })
+    .catch(next);
+};
+
 exports.fetchExamSpecifyId = (req, res, next) => {
   const rawIdList = req.body.idList;
-  const idList = [];  
-  rawIdList.forEach((item) => {
-    item.exIdList.forEach((id) => {
-      idList.push(id);
-    });
-  });
-  TakeExam.fetchExamSpecifyId(idList)
+  TakeExam.fetchExamSpecifyId(rawIdList.randomExIdList)
     .then((examList) => {
       res.json(examList);
     })
@@ -66,9 +68,9 @@ exports.updateAnswer = (req, res, next) => {
 
 exports.findUploadedCategory = (req, res, next) => {
   const object = req.query;
-  console.log('?????', object);
-  TakeExam.findUploadedCategory(object.id, object.category)
+  TakeExam.findUploadedCategory(object.id)
     .then((result) => {
+      console.log(result);
       res.json(result);
     })
     .catch(next);

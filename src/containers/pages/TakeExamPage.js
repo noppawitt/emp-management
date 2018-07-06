@@ -93,22 +93,17 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchTakeExam: id => dispatch(fetchTakeExamRequest(id)),
   onPageChange: value => dispatch(pageChange(value)),
-  // this three-'on'-function below this is called
-  // when there is input for each exam type
-  // we always save buffer everytimesanswer change
-  // instead of old one that only save on page save
-  // to reduce complexity in pageChange's reducer
   onClickRadio: (choice, currentActivePage, pickedAnswer, exId) => dispatch(onPickRadioAnswer(choice, currentActivePage, pickedAnswer, exId)),
   onClickCheckbox: (choice, currentActivePage, pickedAnswer, exId) => dispatch(onPickCheckboxAnswer(choice, currentActivePage, pickedAnswer, exId)),
   onInputTextArea: (text, currentActivePage, exId) => dispatch(onInputTextAreaAnswer(text, currentActivePage, exId)),
-  onClickSave: (id, categoryTitle, answerList) => dispatch(uploadAnswerListRequest(id, categoryTitle, answerList)),
+  onClickSave: (id, answerList) => dispatch(uploadAnswerListRequest(id, answerList)),
   // Submit is save and exit!
-  onClickSubmit: (id, categoryTitle, answerList) => compose(
-    dispatch(uploadAnswerListRequest(id, categoryTitle, answerList)),
+  onClickSubmit: (id, answerList) => compose(
+    dispatch(uploadAnswerListRequest(id, answerList)),
     dispatch(),
     // dispatch(finishExam()),
   ),
-  onClickCheckProgress: (id, category) => dispatch(checkProgressRequest(id, category)),
+  onClickCheckProgress: id => dispatch(checkProgressRequest(id)),
   onClickCategory: category => dispatch(categoryChange(category)),
 });
 

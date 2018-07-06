@@ -112,3 +112,10 @@ export const updateLifetimesUnit = lifetimesUnit => ({
     lifetimesUnit,
   }
 });
+
+export const randomExam = id => ({
+  type: actionTypes.RECRUITMENT_RANDOM_EXAM,
+  payload: {
+    id,
+  }
+});

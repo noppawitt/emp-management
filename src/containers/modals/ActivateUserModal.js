@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import { closeModal } from '../../actions/modal';
 import {
   // checkPasswordStatusRequest,
   activatePasswordRequest,
   updateLifetimesValue,
   updateLifetimesUnit,
+  randomExam,
 } from '../../actions/recruitment';
 import DisplayField from '../forms/DisplayField';
 // import { generatePasswordRequest } from '../../actions/recruitment';
@@ -69,7 +71,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onClose: () => dispatch(closeModal()),
-  onClickActivate: (id, activationLifetimes) => dispatch(activatePasswordRequest(id, activationLifetimes)),
+  onClickActivate: (id, activationLifetimes) => compose(
+    dispatch(activatePasswordRequest(id, activationLifetimes)),
+    dispatch(randomExam(id)),
+  ),
   onLifetimesValueChange: e => dispatch(updateLifetimesValue(e.target.value)),
   onLifetimesUnitChange: unit => dispatch(updateLifetimesUnit(unit)),
 });

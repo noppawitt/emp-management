@@ -112,6 +112,11 @@ const Recruitment = (state = initialState, action) => {
         ...state,
         lifetimesUnit: action.payload.lifetimesUnit,
       };
+    case actionTypes.RECRUITMENT_RANDOM_EXAM:
+      return {
+        ...state,
+        // nothing to update state yet
+      };
     default:
       return state;
   }

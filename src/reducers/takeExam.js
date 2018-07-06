@@ -11,6 +11,7 @@ const initialState = {
   // when answerList is list of pickedAnswer
   pickedAnswer: [],
   answerList: [],
+  progressResult: [],
 };
 
 const TakeExam = (state = initialState, action) => {
@@ -28,13 +29,22 @@ const TakeExam = (state = initialState, action) => {
         isFetching: false,
         activeCategory: action.payload.examList[0].exCategory,
         exId: action.payload.examList[0].exId,
-        answerList: new Array(action.payload.examList.length).fill({ answer: '', question: '' }),
+        answerList: state.progressResult === [] ?
+          new Array(action.payload.examList.length).fill({ answer: '', question: '' }) :
+          state.progressResult.answerList,
+        pickedAnswer: state.progressResult === [] ?
+          '' : state.progressResult.answerList[0].answer,
       };
     case actionTypes.TAKE_EXAM_FETCH_FAILURE:
       return {
         ...state,
         messege: action.payload.messege,
         isFetching: false,
+      };
+    case actionTypes.TAKE_EXAM_FETCH_PROGRESS:
+      return {
+        ...state,
+        progressResult: action.payload.progressResult,
       };
     case actionTypes.TAKE_EXAM_PAGINATION_CHANGE:
       return {

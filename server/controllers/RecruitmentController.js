@@ -17,9 +17,24 @@ exports.checkPasswordStatus = (req, res, next) => {
 };
 
 exports.activatePassword = (req, res, next) => {
-  Recruitment.activatePassword(req.query.id, req.query.lifetimes < 1 ? 0 : req.query.lifetimes)
+  Recruitment.activatePassword(req.query.id, req.query.lifetimes < 1 ? 0 : req.query.lifetimes, new Date())
     .then((messege) => {
       res.json(messege);
+    })
+    .catch(next);
+};
+
+exports.uploadRandomExIdList = (req, res, next) => {
+  const randomExIdList = [];
+  Object(req.body.randomExIdList).map(item => (
+    item.exIdList.map(sublist => (
+      randomExIdList.push(sublist)
+    ))
+  ));
+  Recruitment.uploadRandomExIdList(randomExIdList, req.body.id)
+    .then((ok) => {
+      console.log(ok);
+      res.json(ok);
     })
     .catch(next);
 };
