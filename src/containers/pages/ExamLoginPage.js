@@ -28,7 +28,7 @@ const ExamLoginPage = ({ dispatch }) => {
           <br />
           <br />
           <Grid.Column>
-            <Icon circular inverted color='teal' name="book" size="massive" />
+            <Icon circular inverted color="teal" name="book" size="massive" />
             <Header as="h1">Take Exam</Header>
           </Grid.Column>
           <br />

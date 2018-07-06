@@ -29,10 +29,10 @@ const TakeExam = (state = initialState, action) => {
         isFetching: false,
         activeCategory: action.payload.examList[0].exCategory,
         exId: action.payload.examList[0].exId,
-        answerList: state.progressResult === [] ?
+        answerList: state.progressResult === [] || state.progressResult === null ?
           new Array(action.payload.examList.length).fill({ answer: '', question: '' }) :
           state.progressResult.answerList,
-        pickedAnswer: state.progressResult === [] ?
+        pickedAnswer: state.progressResult === [] || state.progressResult === null ?
           '' : state.progressResult.answerList[0].answer,
       };
     case actionTypes.TAKE_EXAM_FETCH_FAILURE:

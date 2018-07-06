@@ -315,14 +315,14 @@ api.fetchExamResult = id => (
 // Exam Auth
 
 api.signup = form => (
-  callApi(`/examAuth/signup`, {
+  callApi(`/examauth/signup`, {
     method: 'POST',
     body: form
   })
 );
 
 api.examLogin = form => (
-  callApi(`/examAuth/login`, {
+  callApi(`/examauth/login`, {
     method: 'POST',
     body: form
   })

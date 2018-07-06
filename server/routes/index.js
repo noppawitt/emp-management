@@ -5,7 +5,7 @@ const auth = require('./auth');
 const examAuth = require('./examAuth');
 const api = require('./api');
 
-router.use('/examAuth', examAuth);
+router.use('/examauth', examAuth);
 
 router.use('/auth', auth);
 
