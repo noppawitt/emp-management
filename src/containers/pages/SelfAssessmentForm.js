@@ -42,14 +42,12 @@ class SelfAssessmentForm extends React.Component {
                                     <tr><td><textarea></textarea></td></tr>
                                 </table>
                             </div>
-                            <br />
                             <div>
                                 <table className='sign-accom-table'>
                                     <tr><th className='underline'><span className='blue-text'>Significant Accomplishments</span></th></tr>
                                     <tr><td><textarea></textarea></td></tr>
                                 </table>
                             </div>
-                            <br />
                             <div>
                                 <table className='con-com-table'>
                                     <tr><th className='underline'><span className='blue-text'>Contribution/Company Activities</span></th></tr>
@@ -95,8 +93,6 @@ class SelfAssessmentForm extends React.Component {
                         </td>
                     </tr >
                 </table >
-                <br />
-                <br />
             </div >
         );
     }

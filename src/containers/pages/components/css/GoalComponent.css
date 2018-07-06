@@ -6,6 +6,10 @@
     text-align: left;
 }
 
+.goal-table td {
+    padding-top: 1em;
+}
+
 .blue-text {
     color: rgb(44, 154, 205);
     font-size: 1.7em;
