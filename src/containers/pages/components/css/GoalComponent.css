@@ -1,27 +1,27 @@
-.sup-comment {
-    position: relative;
-    width: 100%;
-    margin: auto;
+.goal-table {
+    table-layout: fixed;
     font-family: 'Prompt', sans-serif;
 }
 
-.sup-comment textarea {
+.goal-table th {
+    padding: 1em 0 0.5em 0;
+    text-align: left;
+}
+
+.goal-table td {
+    padding-top: 1em;
+    font-size: 18px;
+}
+
+.goal-table td textarea {
     border-radius: 7px;
     border-width: thin;
     padding: 1%;
-    height: 10em;
+    height: 8em;
     width: 100%;
     resize: none;
     overflow: scroll;
     margin-bottom: 1%;
-}
-
-.sup-comment textarea::-webkit-scrollbar {
-    display: none;
-}
-
-.sup-comment textarea:disabled {
-    border-color: rgb(234, 234, 234);
 }
 
 .blue-text {

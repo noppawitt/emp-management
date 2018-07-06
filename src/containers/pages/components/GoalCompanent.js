@@ -1,11 +1,17 @@
 import React from 'react';
+import './css/GoalComponent.css'
 
 class GoalComponent extends React.Component {
 
     render() {
         return (
             <div>
-                <table>
+                <table className='goal-table'>
+                    <tr>
+                        <th colSpan='2' className='underline'>
+                            <span className='blue-text'>{this.props.header}</span>
+                        </th>
+                    </tr>
                     <tr>
                         <td>Description: What is the goal?</td>
                         <td><textarea></textarea></td>
