@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import * as actionTypes from '../constants/actionTypes';
 
 let initialState;
-const token = localStorage.getItem('token');
+const token = localStorage.getItem('examToken');
 if (token) {
   const user = jwt.decode(token);
   initialState = {
