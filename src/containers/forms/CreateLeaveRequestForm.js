@@ -6,25 +6,22 @@ import { Field, reduxForm, formValueSelector, change } from 'redux-form';
 import { Form } from 'semantic-ui-react';
 import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
+import { leaveTypesOptions, durationsOptions } from '../../utils/options';
 
 const validate = (values) => {
   const errors = {};
-  errors.startDate = validator.required(values.startDate);
-  errors.endDate = validator.required(values.endDate);
+  errors.leaveType = validator.required(values.leaveType);
+  errors.leaveFrom = validator.required(values.leaveFrom);
+  errors.leaveFrom = validator.dateBefore(values.leaveFrom, values.leaveTo);
+  errors.leaveTo = validator.required(values.leaveTo);
+  errors.leaveTo = validator.dateAfter(values.leaveTo, values.leaveFrom);
+  errors.timeIn = validator.required(values.timeIn);
+  errors.timeIn = validator.timeBefore(values.timeIn, values.timeOut);
+  errors.timeOut = validator.required(values.timeOut);
+  errors.timeOut = validator.timeAfter(values.timeOut, values.timeIn);
+  errors.purpose = validator.required(values.purpose);
   return errors;
 };
-
-const leaveTypes = [
-  { key: 'Annual Leave', value: 'Annual Leave', text: 'Annual Leave' },
-  { key: 'Personal Leave', value: 'Personal Leave', text: 'Personal Leave' },
-  { key: 'Sick Leave', value: 'Sick Leave', text: 'Sick Leave' },
-  { key: 'Ordination Leave', value: 'Ordination Leave', text: 'Ordination Leave' },
-];
-
-const durations = [
-  { key: 'Full day', value: 'Full day', text: 'Full day' },
-  { key: 'Specific time', value: 'Specific time', text: 'Specific time' }
-];
 
 const remark = `1. พนักงานจะใช้สิทธิ์ลาได้ เมื่อผู้บังคับบัญชาอนุมัติก่อนเท่านั้น โดยต้องปฏิบัติตามระเบียบข้อบังคับของบริษัทอย่างเคร่งครัด
 
@@ -34,7 +31,7 @@ const remark = `1. พนักงานจะใช้สิทธิ์ลา�
 
 const CreateLeaveRequestForm = ({ handleSubmit, submitting, duration, resetStartTime, resetEndTime }) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="leaveType" as={Form.Select} component={Input} label="Leave type" placeholder="Leave type" options={leaveTypes} disabled={submitting} />
+    <Field name="leaveType" as={Form.Select} component={Input} label="Leave type" placeholder="Leave type" options={leaveTypesOptions} disabled={submitting} />
     <Form.Group widths="equal">
       <Field name="leaveFrom" as={Form.Input} component={Input} type="date" label="From" placeholder="From" disabled={submitting} />
       <Field name="leaveTo" as={Form.Input} component={Input} type="date" label="To" placeholder="To" disabled={submitting} />
@@ -45,7 +42,7 @@ const CreateLeaveRequestForm = ({ handleSubmit, submitting, duration, resetStart
       component={Input}
       label="Duration"
       placeholder="Duration"
-      options={durations}
+      options={durationsOptions}
       onChange={() => { resetStartTime(); resetEndTime(); }}
       disabled={submitting}
     />

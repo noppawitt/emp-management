@@ -67,3 +67,25 @@ export const updateLeaveFailure = message => ({
     message
   }
 });
+
+export const fetchLeaveHistoryRequest = (userId, year) => ({
+  type: actionTypes.LEAVEHISTORY_FETCH_REQUEST,
+  payload: {
+    userId,
+    year
+  }
+});
+
+export const fetchLeaveHistorySuccess = leaveHistory => ({
+  type: actionTypes.LEAVEHISTORY_FETCH_SUCCESS,
+  payload: {
+    leaveHistory
+  }
+});
+
+export const fetchLeaveHistoryFailure = message => ({
+  type: actionTypes.LEAVEHISTORY_FETCH_FAULURE,
+  payload: {
+    message
+  }
+});

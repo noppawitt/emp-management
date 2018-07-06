@@ -63,6 +63,7 @@
     "passport-local": "^1.0.0",
     "pg-promise": "^8.2.2",
     "prop-types": "^15.6.1",
+    "rc-progress": "^2.2.5",
     "react": "^16.2.0",
     "react-avatar-editor": "^11.0.4",
     "react-big-calendar": "^0.19.1",

@@ -4,26 +4,30 @@ import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import {
   fetchLeaveRequest,
-  updateLeaveRequest
+  updateLeaveRequest,
+  fetchLeaveHistoryRequest
 } from '../../actions/leave';
 import { openModal } from '../../actions/modal';
 import * as modalNames from '../../constants/modalNames';
 import Leave from '../../components/Leave';
 import Loader from '../../components/Loader';
 
-const LeavePage = ({ isFetching, leaves, onAddClick, onCancelClick, userId, year, month, fetchLeave }) => (
+const LeavePage = ({ isFetching, isFetchingHis, leaves, onAddClick, onCancelClick, userId, year, month, fetchLeave, leaveHistory }) => (
   <div>
-    {isFetching ? <Loader /> : <Leave userId={userId} leaves={leaves} onAddClick={onAddClick} onCancelClick={onCancelClick} fetchLeave={fetchLeave} year={year} month={month} />}
+    {(isFetching || isFetchingHis)? <Loader /> : <Leave userId={userId} leaves={leaves} leaveHistory={leaveHistory} onAddClick={onAddClick} onCancelClick={onCancelClick} fetchLeave={fetchLeave} year={year} month={month} />}
   </div>
 );
 
 LeavePage.defaultProps = {
-  isFetching: true
+  isFetching: true,
+  isFetchingHis: true
 };
 
 LeavePage.propTypes = {
   isFetching: PropTypes.bool,
+  isFetchingHis: PropTypes.bool,
   leaves: PropTypes.array.isRequired,
+  leaveHistory: PropTypes.object.isRequired,
   onAddClick: PropTypes.func.isRequired,
   onCancelClick: PropTypes.func.isRequired,
   userId: PropTypes.number.isRequired,
@@ -34,6 +38,8 @@ LeavePage.propTypes = {
 
 const mapStateToProps = state => ({
   isFetching: state.leave.isFetching,
+  isFetchingHis: state.leave.isFetchingHis,
+  leaveHistory: state.leave.leaveHistory,
   leaves: state.leave.lists,
   userId: state.auth.id,
   year: state.leave.year,
@@ -42,6 +48,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchLeave: (userId, year, month) => dispatch(fetchLeaveRequest(userId, year, month)),
+  fetchLeaveHistory: (userId, year) => dispatch(fetchLeaveHistoryRequest(userId, year)),
   onAddClick: () => dispatch(openModal(modalNames.CREATE_LEAVE_REQUEST)),
   onCancelClick: (userId, leave) => dispatch(openModal(modalNames.CONFIRM, {
     header: 'Cancel confirmation',
@@ -54,8 +61,9 @@ const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
-      const { fetchLeave, userId, year, month } = this.props;
+      const { fetchLeave, fetchLeaveHistory, userId, year, month } = this.props;
       fetchLeave(userId, year, month);
+      fetchLeaveHistory(userId, year);
     }
   })
 );

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Table, Grid, Progress, Button, Select } from 'semantic-ui-react';
+import { Icon, Table, Grid, Progress, Button, Select, Label } from 'semantic-ui-react';
 import moment from 'moment';
 import PageHeader from './PageHeader';
 import history from '../history';
@@ -56,7 +56,7 @@ class Timesheet extends React.Component {
       return (
         <div>
           <Grid.Row style={{ height: '5em' }}>
-            <font color={this.state.textAnotherDay}>- {this.state.lastleaveday.status}</font>
+            <font color={this.state.textAnotherDay}>- {this.state.lastleaveday.leaveType}</font>
             <br />
             <font color={this.state.textAnotherDay}>{this.state.lastleaveday.startTime}-{this.state.lastleaveday.endTime}</font>
           </Grid.Row>
@@ -67,7 +67,7 @@ class Timesheet extends React.Component {
     return (
       <div>
         <Grid.Row style={{ height: '5em' }}>
-          <font color={this.state.textAnotherDay}>- {this.state.lastleaveday.status}</font>
+          <font color={this.state.textAnotherDay}>- {this.state.lastleaveday.leaveType}</font>
         </Grid.Row>
         {this.buttonOfHoliday(date, hour, id)}
       </div>
@@ -115,10 +115,15 @@ class Timesheet extends React.Component {
     else if (hour >= 8) { color = this.state.textWorkcolor; iconcolor = this.state.iconBluecolor; }
     return (
       <Grid.Row textAlign="center">
-        <Button animated="fade" style={{ borderStyle: 'solid', borderColor: color, backgroundColor: 'white', borderWidth: '1px' }} onClick={() => this.props.onEditClick(id)} >
-          <Button.Content visible><font color={color} >{hour} Hours</font></Button.Content>
-          <Button.Content hidden > <Icon color={iconcolor} name="pencil alternate" /> </Button.Content>
-        </Button>
+        <Button.Group>
+          <Button animated="fade" style={{ borderStyle: 'solid', borderColor: color, backgroundColor: 'white', borderWidth: '1px' }} onClick={() => this.props.onEditClick(id)} >
+            <Button.Content visible><font color={color} >{hour} Hours</font></Button.Content>
+            <Button.Content hidden > <Icon color={iconcolor} name="pencil alternate" /> </Button.Content>
+          </Button>
+          <Button icon color={iconcolor} onClick={() => this.props.onAddClick(date.format('YYYY-MM-DD'))}>
+            <Icon name="add" />
+          </Button>
+        </Button.Group>
       </Grid.Row>
     );
   }
@@ -160,10 +165,15 @@ class Timesheet extends React.Component {
     if (hour !== 0) {
       return (
         <Grid.Row textAlign="center">
-          <Button animated="fade" style={{ borderStyle: 'solid', borderColor: this.state.textWorkcolor, backgroundColor: 'white', borderWidth: '1px' }} onClick={() => this.props.onEditClick(id)} >
-            <Button.Content visible><font color={this.state.textWorkcolor}>{hour} Hours</font></Button.Content>
-            <Button.Content hidden > <Icon color="blue" name="pencil alternate" /> </Button.Content>
-          </Button>
+          <Button.Group>
+            <Button animated="fade" style={{ borderStyle: 'solid', borderColor: this.state.textWorkcolor, backgroundColor: 'white', borderWidth: '1px' }} onClick={() => this.props.onEditClick(id)} >
+              <Button.Content visible><font color={this.state.textWorkcolor}>{hour} Hours</font></Button.Content>
+              <Button.Content hidden > <Icon color={this.state.iconBluecolor} name="pencil alternate" /> </Button.Content>
+            </Button>
+            <Button icon color={this.state.iconBluecolor} onClick={() => this.props.onAddClick(date.format('YYYY-MM-DD'))}>
+              <Icon name="add" />
+            </Button>
+          </Button.Group>
         </Grid.Row>
       );
     }
