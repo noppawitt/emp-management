@@ -53,6 +53,8 @@ const ModalContainer = ({ name, props }) => {
       return <AddProbation {...props} />;
     case modalNames.ADD_PERFORMANCE:
       return <AddPerformance {...props} />;
+    case modalNames.ADD_SELFASSESSMENT:
+      return <AddSelfAssessment {...props} />;
     case modalNames.EDIT_PROFILE_PICTURE:
       return <EditProfilePictureModal {...props} />;
     default:

@@ -50,6 +50,8 @@ const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, 
             </Button.Group>
         </div>
             <Button icon labelPosition='left' disabled={type!='admin' && !evaProfile} icon={evaProfile==null ? 'plus':'angle right'} content={!evaProfile && type=='admin' ? 'Create Probation':'View Probation'} onClick={()=>{fetchProbation(profileId);openProbationModal()}} color={!evaProfile && type=='admin' ? 'green':'blue'}/>
+            <Button icon labelPosition='left' icon={'angle right'} content={'SELF'} onClick={()=>{openProbationModal()}} color={'yellow'}/>
+
       </Segment>
 
 
@@ -75,6 +77,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch =>({
   openPerformanceModal: () => dispatch(openModal(modalNames.ADD_PERFORMANCE)),
+  openSelfAssessment: () => dispatch(openModal(modalNames.ADD_SELFASSESSMENT)),
   openProbationModal: () => dispatch(openModal(modalNames.ADD_PROBATION)),
   fetchProbation: (id) => dispatch(fetchProbationRequest(id)),
   fetchPerformance: (id,year) => dispatch(fetchPerformanceRequest(id,year))
