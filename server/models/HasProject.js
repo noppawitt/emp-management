@@ -53,7 +53,7 @@ HasProject.findWorkProjectDate = (year, month, userId) => (
     LEFT OUTER JOIN has_projects ON users.id = has_projects.user_id 
     LEFT OUTER JOIN projects ON has_projects.project_id = projects.id AND 
     EXTRACT(year from projects.end_date) = $1 AND EXTRACT(month from projects.end_date) >= $2 
-    WHERE users.id = $3 ORDER BY projects.start_date`, [year, month, userId])
+    WHERE users.id = $3 ORDER BY projects.start_date, projects.end_date`, [year, month, userId])
 );
 
 module.exports = HasProject;
