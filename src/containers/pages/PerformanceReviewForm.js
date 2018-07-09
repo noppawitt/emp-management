@@ -24,12 +24,12 @@ class PerformanceReviewForm extends React.Component {
         super(props);
         this.state = {
             name: this.props.profile.general.firstName + ' ' + this.props.profile.general.lastName,
-            department: this.props.profile.work.departmentName,
-            position: this.props.profile.work.positionName,
-            employeeID: this.props.profile.work.userId,
-            level: this.props.profile.work.levelId,
-            startDate: this.props.profile.work.startDate,
-            supervisor: this.props.profile.work.bossname,
+            department: this.props.profile.work.departmentName || '-',
+            position: this.props.profile.work.positionName || '-',
+            employeeID: this.props.profile.work.userId || '-',
+            level: this.props.profile.work.levelId || '-',
+            startDate: this.props.profile.work.startDate || '-',
+            supervisor: this.props.profile.work.bossname || '-',
             expectedScore: null,
             score: null,
             employeeSignDate: null,
