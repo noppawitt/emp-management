@@ -20,9 +20,14 @@ const questionRenderer = question => (
   <div dangerouslySetInnerHTML={{ __html: question }} />
 );
 
-const categoryLengthCalculate = (examList, categoryList) => {
-  console.log(examList, 'e\ne', categoryList);
-  return examList.length;
+const categoryLengthCalculate = (categoryList, activeCategory) => {
+  console.log('e', categoryList);
+  categoryList.map((object) => {
+    if (object[0] === activeCategory) {
+      console.log(object[1]);
+      return object[1];
+    }
+  });
 };
 
 const TakeExam = ({
@@ -52,9 +57,9 @@ const TakeExam = ({
               <Menu.Item name="Category Menu" />
               {categoryList && categoryList.map(category => (
                 <Menu.Item
-                  name={category}
-                  active={activeCategory === category}
-                  onClick={() => onClickCategory(category)}
+                  name={category[0]}
+                  active={activeCategory === category[0]}
+                  onClick={() => onClickCategory(category[0])}
                 />
               ))}
             </Menu>
@@ -148,7 +153,7 @@ const TakeExam = ({
                 Submit
               </Button>
               <Pagination
-                onPageChange={(e, { activePage }) => onPageChange(activePage)}
+                onPageChange={(e, { activePage }) => { console.log('as', activePage); onPageChange(activePage); }}
                 floated="right"
                 defaultActivePage={1}
                 boundaryRange={1}
@@ -158,7 +163,7 @@ const TakeExam = ({
                 lastItem={{ content: <Icon name="angle double right" />, icon: true }}
                 prevItem={{ content: <Icon name="angle left" />, icon: true }}
                 nextItem={{ content: <Icon name="angle right" />, icon: true }}
-                totalPages={categoryLengthCalculate(examList, categoryList)}
+                totalPages={categoryLengthCalculate(categoryList, activeCategory)}
               />
             </Segment>
           </Grid.Column>
