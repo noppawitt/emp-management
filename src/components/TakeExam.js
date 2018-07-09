@@ -84,7 +84,7 @@ const TakeExam = ({
               <Menu.Item header name="Category Menu" />
               {categoryList && categoryList.map(category => (
                 <Menu.Item
-                  name={('►').concat(category[0].charAt(0).toUpperCase().concat(category[0].slice(1)))}
+                  name={('► ').concat(category[0].charAt(0).toUpperCase().concat(category[0].slice(1)))}
                   active={activeCategory === category[0]}
                   onClick={() => { onClickCategory(category[0]); pageChange(1); }}
                 />
@@ -182,7 +182,6 @@ const TakeExam = ({
               <Pagination
                 onPageChange={(e, { activePage }) => onPageChange(activePage)}
                 floated="right"
-                defaultActivePage={1}
                 activePage={currentActivePage}
                 boundaryRange={1}
                 siblingRange={0}
