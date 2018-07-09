@@ -12,9 +12,9 @@ import * as modalNames from '../../constants/modalNames';
 import Leave from '../../components/Leave';
 import Loader from '../../components/Loader';
 
-const LeavePage = ({ isFetching, isFetchingHis, leaves, onAddClick, onCancelClick, userId, year, month, fetchLeave, leaveHistory }) => (
+const LeavePage = ({ isFetching, isHistoryFetching, leaves, onAddClick, onCancelClick, userId, year, month, fetchLeave, leaveHistory }) => (
   <div>
-    {(isFetching || isFetchingHis) ?
+    {(isFetching || isHistoryFetching) ?
       <Loader /> :
       <Leave
         userId={userId}
@@ -31,12 +31,12 @@ const LeavePage = ({ isFetching, isFetchingHis, leaves, onAddClick, onCancelClic
 
 LeavePage.defaultProps = {
   isFetching: true,
-  isFetchingHis: true
+  isHistoryFetching: true
 };
 
 LeavePage.propTypes = {
   isFetching: PropTypes.bool,
-  isFetchingHis: PropTypes.bool,
+  isHistoryFetching: PropTypes.bool,
   leaves: PropTypes.array.isRequired,
   leaveHistory: PropTypes.object.isRequired,
   onAddClick: PropTypes.func.isRequired,
@@ -49,7 +49,7 @@ LeavePage.propTypes = {
 
 const mapStateToProps = state => ({
   isFetching: state.leave.isFetching,
-  isFetchingHis: state.leave.isFetchingHis,
+  isHistoryFetching: state.leave.isHistoryFetching,
   leaveHistory: state.leave.leaveHistory,
   leaves: state.leave.lists,
   userId: state.auth.id,

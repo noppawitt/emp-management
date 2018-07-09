@@ -29,6 +29,7 @@ const CertificateProfileBox = ({ certificatesProfile, onAddClick, onDeleteClick 
       lists={[
         { key: 'name', title: 'Name', value: p.name },
         { key: 'institute', title: 'Institute', value: p.institute },
+        { key: 'certificateDate', title: 'Certificate date', value: p.certificateDate },
         { key: 'score', title: 'Score', value: p.score },
         { key: 'description', title: 'Description', value: p.description },
       ]}

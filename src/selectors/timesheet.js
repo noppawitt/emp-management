@@ -30,11 +30,18 @@ export const getFormInitialValues = (state) => {
     if (tasks.length > 0) timesheets = timesheets.concat(tasks);
     else {
       timesheets.push({
+        userId: state.auth.id,
         date,
         timeIn: '09:00:00',
         timeOut: '18:00:00',
+        projectId: state.timesheet.projectId,
+        task: state.timesheet.task,
+        description: ''
       });
     }
   }
+  timesheets.forEach((timesheet) => {
+    timesheet.userId = state.auth.id;
+  });
   return timesheets;
 };

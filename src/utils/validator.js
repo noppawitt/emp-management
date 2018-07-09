@@ -11,5 +11,5 @@ export const timeAfter = (endTime, startTime) => (startTime && endTime && endTim
 export const dateBefore = (startDate, endDate) => (startDate && endDate && startDate < endDate ? undefined : 'Start date must come before end date');
 export const dateAfter = (endDate, startDate) => (startDate && endDate && endDate > startDate ? undefined : 'End date must come before start date');
 export const englishName = value => (value && /^[A-Z][a-z]+$/.test(value) ? undefined : 'Must be English and start with capital letter');
-export const thai = value => (value && /^[ก-๙]$/.test(value) ? undefined : 'Must be Thai');
-export const lineId = value => (value && /^[A-Za-z0-9._-]$/.test(value) ? undefined : 'Invallid line ID');
+export const thai = value => (value && /^[ก-๙]+$/.test(value) ? undefined : 'Must be Thai');
+export const lineId = value => (value && /^[A-Za-z0-9._-]+$/.test(value) ? undefined : 'Invallid line ID');

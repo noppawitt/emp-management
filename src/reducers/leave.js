@@ -59,22 +59,22 @@ const leave = (state = initialState, action) => {
         ...state,
         message: action.payload.message
       };
-    case actionTypes.LEAVEHISTORY_FETCH_REQUEST:
+    case actionTypes.LEAVE_HISTORY_FETCH_REQUEST:
       return {
         ...state,
-        isFetchingHis: true,
+        isHistoryFetching: true,
         year: action.payload.year
       };
-    case actionTypes.LEAVEHISTORY_FETCH_SUCCESS:
+    case actionTypes.LEAVE_HISTORY_FETCH_SUCCESS:
       return {
         ...state,
-        isFetchingHis: false,
+        isHistoryFetching: false,
         leaveHistory: action.payload.leaveHistory
       };
-    case actionTypes.LEAVEHISTORY_FETCH_FAULURE:
+    case actionTypes.LEAVE_HISTORY_FETCH_FAILURE:
       return {
         ...state,
-        isFetchingHis: false,
+        isHistoryFetching: false,
         message: action.payload.message
       };
     default:
