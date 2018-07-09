@@ -67,7 +67,7 @@ const TakeExam = ({
                 <Menu.Item
                   name={category[0]}
                   active={activeCategory === category[0]}
-                  onClick={() => { console.log(category[0]); onClickCategory(category[0]); }}
+                  onClick={() => onClickCategory(category[0])}
                 />
               ))}
             </Menu>
@@ -161,7 +161,7 @@ const TakeExam = ({
                 Submit
               </Button>
               <Pagination
-                onPageChange={(e, { activePage }) => onPageChange(activePage)}
+                onPageChange={(e, { activePage }) => { console.log('as', activePage); onPageChange(activePage); }}
                 floated="right"
                 defaultActivePage={1}
                 activePage={currentActivePage}
