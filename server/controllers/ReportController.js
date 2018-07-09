@@ -515,7 +515,6 @@ exports.createReport = (req, res, next) => {
   excelType.month = req.query.month;
   excelType.template = req.query.template;
   if (excelType.reportType === 'Timesheet (Normal)') {
-    console.log(req.user);
     const filename = 'server/storage/private/report/Playtorium_Timesheet.xlsx';
     getProjectDetail(excelType)
       .then((project) => {

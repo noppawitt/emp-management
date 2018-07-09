@@ -80,7 +80,7 @@ export function* watchUpdateLeaveRequest() {
 }
 
 export function* watchFetchLeaveHistoryRequest() {
-  yield takeEvery(actionTypes.LEAVEHISTORY_FETCH_REQUEST, fetchLeaveHistoryTask);
+  yield takeEvery(actionTypes.LEAVE_HISTORY_FETCH_REQUEST, fetchLeaveHistoryTask);
 }
 
 export default function* leaveSaga() {

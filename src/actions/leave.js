@@ -69,7 +69,7 @@ export const updateLeaveFailure = message => ({
 });
 
 export const fetchLeaveHistoryRequest = (userId, year) => ({
-  type: actionTypes.LEAVEHISTORY_FETCH_REQUEST,
+  type: actionTypes.LEAVE_HISTORY_FETCH_REQUEST,
   payload: {
     userId,
     year
@@ -77,14 +77,14 @@ export const fetchLeaveHistoryRequest = (userId, year) => ({
 });
 
 export const fetchLeaveHistorySuccess = leaveHistory => ({
-  type: actionTypes.LEAVEHISTORY_FETCH_SUCCESS,
+  type: actionTypes.LEAVE_HISTORY_FETCH_SUCCESS,
   payload: {
     leaveHistory
   }
 });
 
 export const fetchLeaveHistoryFailure = message => ({
-  type: actionTypes.LEAVEHISTORY_FETCH_FAULURE,
+  type: actionTypes.LEAVE_HISTORY_FETCH_FAILURE,
   payload: {
     message
   }
