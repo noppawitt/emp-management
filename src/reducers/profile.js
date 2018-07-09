@@ -10,7 +10,7 @@ const profile = (state = initialState, action) => {
       return {
         ...state,
         isFetching: true,
-        id: action.payload.id
+        userId: action.payload.userId
       };
     case actionTypes.PROFILE_FETCH_SUCCESS:
       return {
@@ -49,7 +49,7 @@ const profile = (state = initialState, action) => {
     case actionTypes.PROFILE_DELETE_SUCCESS:
       return {
         ...state,
-        [`${action.payload.profileType}s`]: state[`${action.payload.profileType}s`].filter(p => p.id !== action.payload.profileId),
+        [`${action.payload.profileType}s`]: state[`${action.payload.profileType}s`].filter(p => p.userId !== action.payload.profileId),
         isDeleting: false
       };
     case actionTypes.PROFILE_DELETE_FAILURE:

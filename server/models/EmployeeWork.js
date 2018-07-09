@@ -41,8 +41,12 @@ EmployeeWork.update = (employeeWork, id) => (
   )
 );
 
-EmployeeWork.findByUserId = userId => (
+EmployeeWork.findAllByUserId = userId => (
   db.oneOrNone('SELECT * FROM employee_work WHERE user_id = $1', [userId])
+);
+
+EmployeeWork.findOwnByUserId = userId => (
+  db.oneOrNone('SELECT department_id, position_id, level_id, user_id FROM employee_work WHERE user_id = $1', [userId])
 );
 
 module.exports = EmployeeWork;

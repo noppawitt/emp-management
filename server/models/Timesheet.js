@@ -69,7 +69,7 @@ Timesheet.findByMonthAndYear = (month, year, userId) => (
 );
 
 Timesheet.delete = id => (
-  db.one('DELETE FROM timesheets WHERE id = $1', [id])
+  db.none('DELETE FROM timesheets WHERE id = $1', [id])
 );
 
 module.exports = Timesheet;

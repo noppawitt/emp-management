@@ -16,11 +16,11 @@ import api from '../services/api';
 export function* fetchProfileTask(action) {
   try {
     const profile = {};
-    profile.general = yield call(api.fetchGeneralProfile, action.payload.id);
-    profile.work = yield call(api.fetchWorkProfile, action.payload.id);
-    profile.educations = yield call(api.fetchEducationProfile, action.payload.id);
-    profile.certificates = yield call(api.fetchCertificateProfile, action.payload.id);
-    profile.assets = yield call(api.fetchAssetProfile, action.payload.id);
+    profile.general = yield call(api.fetchGeneralProfile, action.payload.userId);
+    profile.work = yield call(api.fetchWorkProfile, action.payload.userId);
+    profile.educations = yield call(api.fetchEducationProfile, action.payload.userId);
+    profile.certificates = yield call(api.fetchCertificateProfile, action.payload.userId);
+    profile.assets = yield call(api.fetchAssetProfile, action.payload.userId);
     yield put(fetchProfileSuccess(profile));
   }
   catch (error) {

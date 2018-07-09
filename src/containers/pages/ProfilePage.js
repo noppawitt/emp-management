@@ -23,7 +23,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchProfile: id => dispatch(fetchProfileRequest(id)),
+  fetchProfile: userId => dispatch(fetchProfileRequest(userId)),
   fetchMasterTable: () => dispatch(fetchMasterTableRequest())
 });
 

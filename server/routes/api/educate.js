@@ -1,12 +1,13 @@
 const router = require('express').Router();
 const EducateController = require('../../controllers/EducateController');
+const { can } = require('../../middlewares');
 
-router.post('/', EducateController.create);
+router.post('/', can(['educateAdd']), EducateController.create);
 
-router.put('/', EducateController.update);
+router.put('/', can(['educateEdit']), EducateController.update);
 
-router.get('/', EducateController.findByUserId);
+router.get('/', can(['educateView']), EducateController.findByUserId);
 
-router.delete('/', EducateController.delete);
+router.delete('/', can(['educateDelete']), EducateController.delete);
 
 module.exports = router;

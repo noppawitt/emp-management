@@ -12,7 +12,7 @@ const getProjectDetail = excelType => new Promise(async (resolve, reject) => {
   try {
     const project = await HasProject.findByProjectIdAndUserId(excelType.projectId, excelType.userId);
     project.detail = await Project.findById(excelType.projectId);
-    project.user = await EmployeeInfo.findById(excelType.userId);
+    project.user = await EmployeeInfo.findAllByUserId(excelType.userId);
     project.timesheet = await Timesheet.findTimesheetInProject(excelType.year, excelType.month, excelType.projectId, excelType.userId);
     project.leave = await LeaveRequest.findByYearAndMonth(excelType.year, excelType.month, excelType.userId);
     project.holiday = await Holiday.findByYearAndMonth(excelType.year, excelType.month);
