@@ -81,10 +81,10 @@ const TakeExam = ({
         <Grid>
           <Grid.Column width={3}>
             <Menu fluid vertical tabular>
-              <Menu.Item name="Category Menu" />
+              <Menu.Item header name="Category Menu" />
               {categoryList && categoryList.map(category => (
                 <Menu.Item
-                  name={category[0]}
+                  name={('►').concat(category[0].charAt(0).toUpperCase().concat(category[0].slice(1)))}
                   active={activeCategory === category[0]}
                   onClick={() => { onClickCategory(category[0]); pageChange(1); }}
                 />
