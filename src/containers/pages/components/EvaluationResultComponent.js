@@ -53,6 +53,18 @@ class EvaluationResultComponent extends React.Component {
     }
 
     updateParentComponent() {
+        if (this.state.basedSalary == '')
+            this.state.basedSalary = null;
+
+        if (this.state.mobile == '')
+            this.state.mobile = null;
+
+        if (this.state.transporationAllowance == '')
+            this.state.transporationAllowance = null;
+
+        if (this.state.otherAllowance == '')
+            this.state.otherAllowance = null;
+
         this.props.onChange(
             this.state.passPro,
             this.state.notPassPro,
