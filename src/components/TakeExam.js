@@ -39,6 +39,24 @@ const filterExam = (examList, activeCategory) => {
   return filter;
 };
 
+const showAnswerCheckRadio = (exId, pickedAnswer, answer) => {
+  for (let i = 0; i < pickedAnswer.length; i += 1) {
+    if (pickedAnswer[i].question === exId && pickedAnswer[i].answer.includes(answer)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+const showAnswerText = (exId, pickedAnswer) => {
+  for (let i = 0; i < pickedAnswer.length; i += 1) {
+    if (pickedAnswer[i].question === exId) {
+      return pickedAnswer[i].answer[0];
+    }
+  }
+  return undefined;
+};
+
 const TakeExam = ({
   examList,
   currentActivePage,
@@ -63,10 +81,10 @@ const TakeExam = ({
         <Grid>
           <Grid.Column width={3}>
             <Menu fluid vertical tabular>
-              <Menu.Item name="Category Menu" />
+              <Menu.Item header name="Category Menu" />
               {categoryList && categoryList.map(category => (
                 <Menu.Item
-                  name={category[0]}
+                  name={('► ').concat(category[0].charAt(0).toUpperCase().concat(category[0].slice(1)))}
                   active={activeCategory === category[0]}
                   onClick={() => { onClickCategory(category[0]); pageChange(1); }}
                 />
@@ -88,9 +106,9 @@ const TakeExam = ({
                               <Radio
                                 label={answer}
                                 value={answer}
-                                checked={pickedAnswer && pickedAnswer.includes(answer)}
+                                checked={showAnswerCheckRadio(row.exId, answerList, answer)}
                                 onClick={(e, { value }) => {
-                                  onClickRadio(value, currentActivePage, pickedAnswer, exId);
+                                  onClickRadio(value, currentActivePage, pickedAnswer, row.exId);
                                 }}
                               />
                             </p>
@@ -100,9 +118,9 @@ const TakeExam = ({
                               <Checkbox
                                 label={answer}
                                 value={answer}
-                                checked={pickedAnswer && pickedAnswer.includes(answer)}
+                                checked={showAnswerCheckRadio(row.exId, answerList, answer)}
                                 onClick={(e, { value }) => {
-                                  onClickCheckbox(value, currentActivePage, pickedAnswer, exId);
+                                  onClickCheckbox(value, currentActivePage, pickedAnswer, row.exId);
                                 }}
                               />
                             </p>
@@ -111,10 +129,10 @@ const TakeExam = ({
                       {row.exType !== 'Choices' &&
                         <Form.Field>
                           <TextArea
-                            value={pickedAnswer && pickedAnswer[0]}
+                            value={showAnswerText(row.exId, answerList)}
                             placeholder="Type the answer here.."
                             onInput={(e, { value }) => {
-                              onInputTextArea(value, currentActivePage, exId);
+                              onInputTextArea(value, currentActivePage, row.exId);
                             }}
                           />
                         </Form.Field>
