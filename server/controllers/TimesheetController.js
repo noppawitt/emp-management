@@ -135,7 +135,7 @@ exports.findByMonthAndYear = (req, res, next) => {
 exports.delete = (req, res, next) => {
   Timesheet.delete(req.body.id)
     .then(() => {
-      Timesheet.findByUserId(req.user.id)
+      Timesheet.findByUserId(req.body.id)
         .then((timesheets) => {
           res.json(timesheets);
         })

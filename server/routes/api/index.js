@@ -27,6 +27,8 @@ const report = require('./report');
 const masterATable = require('./masterTable');
 const workExperience = require('./workExperience');
 const leaveHistory = require('./leaveHistory');
+const toeic = require('./toeic');
+const promoteHistory = require('./promoteHistory');
 
 router.use('/employee-info', employeeInfo);
 
@@ -83,5 +85,9 @@ router.use('/master-table', masterATable);
 router.use('/work-experience', workExperience);
 
 router.use('/leave-history', leaveHistory);
+
+router.use('/toeic', toeic);
+
+router.use('/promote-history', promoteHistory);
 
 module.exports = router;

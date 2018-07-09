@@ -1,12 +1,11 @@
 const router = require('express').Router();
 const HasAssetController = require('../../controllers/HasAssetController');
+const { can } = require('../../middlewares');
 
-router.post('/', HasAssetController.create);
-
-router.put('/', HasAssetController.update);
+router.post('/', can(['hasAssetAdd']), HasAssetController.create);
 
 router.get('/', HasAssetController.findByUserId);
 
-router.delete('/', HasAssetController.delete);
+router.delete('/', can(['hasAssetDelete']), HasAssetController.delete);
 
 module.exports = router;

@@ -10,11 +10,25 @@ exports.create = (req, res, next) => {
 };
 
 exports.findById = (req, res, next) => {
-  EmployeeInfo.findById(req.query.id)
-    .then((employeeInfo) => {
-      res.json(employeeInfo);
-    })
-    .catch(next);
+  if (req.accessControl.employeeInfoViewAll) {
+    EmployeeInfo.findAllByUserId(req.query.userId)
+      .then((employeeInfo) => {
+        res.json(employeeInfo);
+      })
+      .catch(next);
+  }
+  else if (req.accessControl.employeeInfoViewOwn) {
+    EmployeeInfo.findOwnByUserId(req.query.userId)
+      .then((employeeInfo) => {
+        res.json(employeeInfo);
+      })
+      .catch(next);
+  }
+  else {
+    res.status(401).json({
+      message: `You don't have permission to do this.`
+    });
+  }
 };
 
 exports.update = (req, res, next) => {

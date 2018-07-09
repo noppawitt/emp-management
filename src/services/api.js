@@ -128,24 +128,24 @@ api.fetchAcessTypes = () => (
 
 // Profile
 
-api.fetchGeneralProfile = id => (
-  callApi(`/api/employee-info?id=${id}`)
+api.fetchGeneralProfile = userId => (
+  callApi(`/api/employee-info?userId=${userId}`)
 );
 
-api.fetchWorkProfile = id => (
-  callApi(`/api/employee-work?id=${id}`)
+api.fetchWorkProfile = userId => (
+  callApi(`/api/employee-work?userId=${userId}`)
 );
 
-api.fetchEducationProfile = id => (
-  callApi(`/api/educates?id=${id}`)
+api.fetchEducationProfile = userId => (
+  callApi(`/api/educates?userId=${userId}`)
 );
 
-api.fetchCertificateProfile = id => (
-  callApi(`/api/has-certificates?id=${id}`)
+api.fetchCertificateProfile = userId => (
+  callApi(`/api/has-certificates?userId=${userId}`)
 );
 
-api.fetchAssetProfile = id => (
-  callApi(`/api/has-assets?id=${id}`)
+api.fetchAssetProfile = userId => (
+  callApi(`/api/has-assets?userId=${userId}`)
 );
 
 api.updateGeneralProfile = body => (

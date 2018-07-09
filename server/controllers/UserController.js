@@ -9,7 +9,7 @@ const mailAddUser = require('../mail_template/mailAddUser');
 
 const createLeaveHistory = (userId, id) => new Promise(async (resolve, reject) => {
   try {
-    const employeeWork = await EmployeeWork.findByUserId(userId);
+    const employeeWork = await EmployeeWork.findAllByUserId(userId);
     const level = await Level.findById(employeeWork.levelId);
     const leave = {};
     leave.userId = userId;

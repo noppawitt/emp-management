@@ -16,19 +16,6 @@ HasAsset.create = (hasAsset, id) => (
   )
 );
 
-// HasAsset.update = (hasAsset, id) => (
-//   db.one(
-//     'UPDATE has_assets SET asset_id = $1, asset_date = $2, updated_user = $3, updated_date = $4 WHERE id = $5',
-//     [
-//       hasAsset.assetId,
-//       hasAsset.assetDate,
-//       id,
-//       moment().format('YYYY-MM-DD HH:mm:ss'),
-//       hasAsset.id
-//     ]
-//   )
-// );
-
 HasAsset.findByUserId = userId => (
   db.manyOrNone('SELECT assets.description AS description, assets.serial_number AS serial_number, has_assets.user_id AS user_id, has_assets.asset_id AS asset_id, assets.name AS asset_name, assets.asset_type_id AS asset_type_id, asset_types.name AS asset_type_name, has_assets.asset_date AS asset_date, has_assets.id AS id FROM has_assets, assets, asset_types WHERE has_assets.asset_id = assets.id AND assets.asset_type_id = asset_types.id AND has_assets.user_id = $1', [userId])
 );

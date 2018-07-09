@@ -1,12 +1,11 @@
 const router = require('express').Router();
 const HasCertificateController = require('../../controllers/HasCertificateController');
+const { can } = require('../../middlewares');
 
-router.post('/', HasCertificateController.create);
-
-// router.put('/', HasCertificateController.update);
+router.post('/', can(['hasCertificateAdd']), HasCertificateController.create);
 
 router.get('/', HasCertificateController.findByUserId);
 
-router.delete('/', HasCertificateController.delete);
+router.delete('/', can(['hasCertificateDelete']), HasCertificateController.delete);
 
 module.exports = router;

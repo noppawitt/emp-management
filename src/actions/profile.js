@@ -1,9 +1,9 @@
 import * as actionTypes from '../constants/actionTypes';
 
-export const fetchProfileRequest = id => ({
+export const fetchProfileRequest = userId => ({
   type: actionTypes.PROFILE_FETCH_REQUEST,
   payload: {
-    id
+    userId
   }
 });
 

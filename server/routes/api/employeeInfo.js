@@ -17,7 +17,7 @@ const upload = multer({ storage });
 
 router.post('/upload-profile-img', upload.single('profileImage'), EmployeeInfoController.updateProfileImg);
 
-router.get('/', EmployeeInfoController.findById);
+router.get('/', can(['employeeInfoViewAll', 'employeeInfoViewOwn']), EmployeeInfoController.findById);
 
 router.post('/', EmployeeInfoController.create);
 
