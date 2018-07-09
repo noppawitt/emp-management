@@ -25,7 +25,7 @@ class ConfirmModal extends React.Component{
   render(){
     return(
       <div>
-        {this.props.button ? <Button disabled={this.props.submitting|| this.props.disable}  onClick={this.openModal} color='blue'> Save </Button> : <Button color='blue' onClick={()=>{this.props.closeModal();this.props.clear()}}> Close </Button>}
+        {this.props.button ? <Button disabled={this.props.submitting|| this.props.disable}  onClick={this.openModal} color='blue'> Save </Button> : <Button color='grey' onClick={()=>{this.props.closeModal();this.props.clear()}}> Close </Button>}
         <Modal
           size='mini'
           open={this.state.open}
