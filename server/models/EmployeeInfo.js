@@ -68,7 +68,7 @@ EmployeeInfo.updateAll = (employeeInfo, id) => (
       employeeInfo.userId
     ]
   )
-    .then(result => db.none(`SELECT * FROM employee_info WHERE user_id = $1`, [result.userId]))
+    .then(result => db.one(`SELECT * FROM employee_info WHERE user_id = $1`, [result.userId]))
 );
 
 EmployeeInfo.updateOwn = (employeeInfo, id) => (
@@ -83,6 +83,7 @@ EmployeeInfo.updateOwn = (employeeInfo, id) => (
       employeeInfo.userId
     ]
   )
+    .then(result => db.one(`SELECT * FROM employee_info WHERE user_id = $1`, [result.userId]))
 );
 
 EmployeeInfo.findById = id => (

@@ -36,6 +36,11 @@ exports.update = (req, res, next) => {
         })
         .catch(next);
     }
+    else {
+      res.status(401).json({
+        message: `You don't have permission to do this.`
+      });
+    }
   }
   else {
     res.status(401).json({
