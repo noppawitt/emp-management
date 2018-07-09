@@ -9,6 +9,7 @@ import {
   checkProgressSuccess,
   fetchProgress,
   fetchCategory,
+  fetchSubCategory,
 } from '../actions/takeExam';
 import { openModal } from '../actions/modal';
 import * as modalNames from '../constants/modalNames';
@@ -19,8 +20,8 @@ export function* fetchTestExamTask(action) {
     const randomExIdList = yield call(api.fetchRandomExIdList, action.payload.id);
     const examList = yield call(api.fetchExamSpecifyId, randomExIdList);
     console.log(examList);
-    const categoryList = {};
-    const subCategoryList = {};
+    const categoryList = [];
+    const subCategoryList = [];
     Object(examList).map((item) => {
       console.log('item:', item);
       if (!categoryList.includes(item.exCategory)) categoryList.push(item.exCategory);
@@ -35,8 +36,8 @@ export function* fetchTestExamTask(action) {
         if (categoryList[i] === examList[j].exCategory) {
           count += 1;
         }
-        examAmountPerCategory.push([categoryList[i], count]);
       }
+      examAmountPerCategory.push([categoryList[i], count]);
     }
 
     for (let i = 0; i < subCategoryList.length; i += 1) {
@@ -45,14 +46,15 @@ export function* fetchTestExamTask(action) {
         if (categoryList[i] === examList[j].exCategory && subCategoryList[i] === examList[j].exSubcategory) {
           count += 1;
         }
-        examAmountPerSubCategory.push([subCategoryList[i], count]);
       }
+      examAmountPerSubCategory.push([subCategoryList[i], count]);
     }
 
-    console.log(examAmountPerCategory);
-    console.log(examAmountPerSubCategory);
+    console.log('EAPC', examAmountPerCategory);
+    console.log('EAPsC', examAmountPerSubCategory);
 
-    yield put(fetchCategory(categoryList));
+    yield put(fetchCategory(examAmountPerCategory));
+    yield put(fetchSubCategory(examAmountPerSubCategory));
     const progressResult = yield call(api.checkProgress, action.payload.id);
     yield put(fetchProgress(progressResult));
     yield put(fetchTakeExamSuccess(examList));

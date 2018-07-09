@@ -35,6 +35,13 @@ export const fetchCategory = categoryList => ({
   }
 });
 
+export const fetchSubCategory = subCategoryList => ({
+  type: actionTypes.TAKE_EXAM_FETCH_SUB_CATEGORYLIST,
+  payload: {
+    subCategoryList,
+  }
+});
+
 export const pageChange = value => ({
   type: actionTypes.TAKE_EXAM_PAGINATION_CHANGE,
   payload: {

@@ -50,6 +50,11 @@ const TakeExam = (state = initialState, action) => {
         ...state,
         categoryList: action.payload.categoryList,
       };
+    case actionTypes.TAKE_EXAM_FETCH_SUB_CATEGORYLIST:
+      return {
+        ...state,
+        subCategoryList: action.payload.subCategoryList,
+      };
     case actionTypes.TAKE_EXAM_PAGINATION_CHANGE:
       return {
         ...state,
