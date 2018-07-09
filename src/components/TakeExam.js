@@ -39,6 +39,24 @@ const filterExam = (examList, activeCategory) => {
   return filter;
 };
 
+const showAnswerCheckRadio = (exId, pickedAnswer, answer) => {
+  for (let i = 0; i < pickedAnswer.length; i += 1) {
+    if (pickedAnswer[i].question === exId && pickedAnswer[i].answer.includes(answer)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+const showAnswerText = (exId, pickedAnswer) => {
+  for (let i = 0; i < pickedAnswer.length; i += 1) {
+    if (pickedAnswer[i].question === exId) {
+      return pickedAnswer[i].answer[0];
+    }
+  }
+  return undefined;
+};
+
 const TakeExam = ({
   examList,
   currentActivePage,
@@ -96,9 +114,9 @@ const TakeExam = ({
                             <Radio
                               label={answer}
                               value={answer}
-                              checked={pickedAnswer && pickedAnswer.includes(answer)}
+                              checked={showAnswerCheckRadio(row.exId, answerList, answer)}
                               onClick={(e, { value }) => {
-                                onClickRadio(value, currentActivePage, pickedAnswer, exId);
+                                onClickRadio(value, currentActivePage, pickedAnswer, row.exId);
                               }}
                             />
                           </p>
@@ -108,9 +126,9 @@ const TakeExam = ({
                             <Checkbox
                               label={answer}
                               value={answer}
-                              checked={pickedAnswer && pickedAnswer.includes(answer)}
+                              checked={showAnswerCheckRadio(row.exId, answerList, answer)}
                               onClick={(e, { value }) => {
-                                onClickCheckbox(value, currentActivePage, pickedAnswer, exId);
+                                onClickCheckbox(value, currentActivePage, pickedAnswer, row.exId);
                               }}
                             />
                           </p>
@@ -119,10 +137,10 @@ const TakeExam = ({
                     {row.exType !== 'Choices' &&
                       <Form.Field>
                         <TextArea
-                          value={pickedAnswer && pickedAnswer[0]}
+                          value={showAnswerText(row.exId, answerList)}
                           placeholder="Type the answer here.."
                           onInput={(e, { value }) => {
-                            onInputTextArea(value, currentActivePage, exId);
+                            onInputTextArea(value, currentActivePage, row.exId);
                           }}
                         />
                       </Form.Field>

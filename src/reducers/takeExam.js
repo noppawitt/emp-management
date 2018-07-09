@@ -87,14 +87,28 @@ const TakeExam = (state = initialState, action) => {
         }, ...state.answerList.slice(action.payload.currentActivePage)]
       };
     case actionTypes.TAKE_EXAM_ON_INPUT_TEXTAREA: {
-      console.log(action.payload.currentActivePage);
+      const copyAnswerList = [...state.answerList].slice();
+      let indexAns = -1;
+      for (let i = 0; i < copyAnswerList.length; i += 1) {
+        console.log(copyAnswerList[i].question);
+        if (copyAnswerList[i].question === action.payload.exId) {
+          indexAns = i;
+          break;
+        }
+        if (indexAns === -1 && copyAnswerList[i].question === '') {
+          indexAns = i;
+        }
+      }
+      copyAnswerList[indexAns] = {
+        answer: [action.payload.text],
+        question: action.payload.exId
+      };
+      console.log(copyAnswerList);
+
       return {
         ...state,
         pickedAnswer: [action.payload.text],
-        answerList: [...state.answerList.slice(0, action.payload.currentActivePage - 1), {
-          answer: [action.payload.text],
-          question: action.payload.exId,
-        }, ...state.answerList.slice(action.payload.currentActivePage)]
+        answerList: copyAnswerList
       };
     }
     case actionTypes.TAKE_EXAM_UPLOAD_REQUEST:
