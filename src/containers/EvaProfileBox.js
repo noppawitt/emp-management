@@ -26,11 +26,23 @@ const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, 
     }
   ]
   const optionsPro = [
-
+    {
+      text: 'Probation List',
+      disabled: true
+    }
   ]
 
-  performanceProfile.map(perf => optionsPerf.push({text: perf.year ,onClick: () => {fetchPerformance(profileId,perf.year);openPerformanceModal()}}))
-  evaProfile.map(pro => optionsPro.push({text: pro.probationId ,onClick: () => {fetchProbation(profileId,pro.probationId);openProbationModal()}}))
+  performanceProfile.map(perf =>
+    optionsPerf.push({text: perf.year ,onClick: () => {fetchPerformance(profileId,perf.year);openPerformanceModal()}})
+  )
+  // evaProfile.map(pro =>
+  //   optionsPro.push({text: pro.probationId ,onClick: () => {fetchProbation(profileId,pro.probationId);openProbationModal()}})
+  // )
+  for(var i = 0;i<evaProfile.length;i++){
+    if(i==evaProfile.length-1)optionsPro.push({text: 'Probation', onClick: () => {fetchProbation(profileId,pro.probationId);openProbationModal()}})
+    else optionsPro.push({text: 'Continued Probation '+ (evaProfile.length-i-1),onClick: () => {fetchProbation(profileId,pro.probationId);openProbationModal()}})
+  }
+
   return (
 
     <Segment.Group raised size="large">
