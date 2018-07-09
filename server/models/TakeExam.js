@@ -45,10 +45,10 @@ TakeExam.fetchExamSpecifyId = idList => (
   + ' FROM exams WHERE ex_id = ANY ($1)', [idList])
 );
 
-TakeExam.createBufferAnswer = (id, category, answerList, date) => (
+TakeExam.createBufferAnswer = (id, answerList, date) => (
   db.oneOrNone(
-    'INSERT INTO exam_candidate_submitted (id, category, answer_list, test_date) VALUES ($1, $2, $3, $4)',
-    [id, category, answerList, date]
+    'INSERT INTO exam_candidate_submitted (id, answer_list, test_date) VALUES ($1, $2, $3)',
+    [id, answerList, date]
   )
 );
 
@@ -65,9 +65,9 @@ TakeExam.findUploadedAnswer = (id, type) => {
   return null;
 };
 
-TakeExam.updateAnswer = (id, category, answerList) => {
+TakeExam.updateAnswer = (id, answerList, submittedTime) => {
   console.log(id, '<<<');
-  return db.oneOrNone('UPDATE exam_candidate_submitted SET (id, category, answer_list) = ($1, $2, $3)', [id, category, answerList]);
+  return db.oneOrNone('UPDATE exam_candidate_submitted SET (id, answer_list, submitted_time) = ($1, $2, $3)', [id, answerList, submittedTime]);
 };
 
 TakeExam.findUploadedCategory = id => (

@@ -21,17 +21,20 @@ const TakeExam = (state = initialState, action) => {
         isFetching: true,
       };
     case actionTypes.TAKE_EXAM_FETCH_SUCCESS: {
+      console.log('MMMMNNM', state.progressResult);
       return {
         ...state,
         examList: action.payload.examList,
         isFetching: false,
         activeCategory: action.payload.examList[0].exCategory,
         exId: action.payload.examList[0].exId,
-        answerList: (state.progressResult === null || state.progressResult === []) ?
+        answerList: (state.progressResult === null
+          || state.progressResult === []) ?
           new Array(action.payload.examList.length).fill({ answer: '', question: '' }) :
-          state.progressResult.answerList,
-        pickedAnswer: (state.progressResult === null || state.progressResult === []) ?
-          '' : state.progressResult.answerList[0].answer,
+          state.progressResult,
+        pickedAnswer: (state.progressResult === null
+          || state.progressResult === []) ?
+          '' : state.progressResult[0].answer,
       };
     }
     case actionTypes.TAKE_EXAM_FETCH_FAILURE:
@@ -59,10 +62,9 @@ const TakeExam = (state = initialState, action) => {
       return {
         ...state,
         currentActivePage: action.payload.value,
-        // delete activeCategory here someday
-        activeCategory: state.examList[action.payload.value - 1].exCategory,
         exId: state.examList[action.payload.value - 1].exId,
-        pickedAnswer: state.answerList[action.payload.value - 1] === { answer: '', question: '' } ? { answer: '', question: '' } : state.answerList[action.payload.value - 1].answer,
+        pickedAnswer: state.answerList[action.payload.value - 1] === { answer: '', question: '' } ?
+          { answer: '', question: '' } : state.answerList[action.payload.value - 1].answer,
       };
     case actionTypes.TAKE_EXAM_ON_PICK_RADIO:
       return {
@@ -129,6 +131,7 @@ const TakeExam = (state = initialState, action) => {
     case actionTypes.TAKE_EXAM_CATEGORY_CHANGE:
       return {
         ...state,
+        currentActivePage: 1,
         activeCategory: action.payload.category,
       };
     default:

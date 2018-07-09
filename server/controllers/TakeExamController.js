@@ -48,15 +48,15 @@ exports.updateAnswer = (req, res, next) => {
     .then((isExist) => {
       // if no old answer exist so create it first
       if (!isExist) {
-        console.log('CREATE!!!', object.category);
-        TakeExam.createBufferAnswer(object.id, object.category, object.answerList, new Date())
+        TakeExam.createBufferAnswer(object.id, object.answerList, new Date())
           .then((result) => {
             console.log('Create result', result);
           })
           .catch(next);
       }
       // after we make sure it exist update it
-      TakeExam.updateAnswer(object.id, object.category, object.answerList)
+      console.log('?>?>?>?>?', object.answerList);
+      TakeExam.updateAnswer(object.id, object.answerList, new Date())
         .then((result) => {
           if (result === null) res.json('Update Complete');
           else res.json('Something wrong :'.concat(result));

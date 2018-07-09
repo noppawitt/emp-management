@@ -19,11 +19,9 @@ export function* fetchTestExamTask(action) {
   try {
     const randomExIdList = yield call(api.fetchRandomExIdList, action.payload.id);
     const examList = yield call(api.fetchExamSpecifyId, randomExIdList);
-    console.log(examList);
     const categoryList = [];
     const subCategoryList = [];
     Object(examList).map((item) => {
-      console.log('item:', item);
       if (!categoryList.includes(item.exCategory)) categoryList.push(item.exCategory);
       if (!subCategoryList.includes([item.exCategory, item.exSubcategory].join(' '))) subCategoryList.push([item.exCategory, item.exSubcategory].join(' '));
       return 1;
@@ -49,13 +47,13 @@ export function* fetchTestExamTask(action) {
       }
       examAmountPerSubCategory.push([subCategoryList[i], count]);
     }
-
-    console.log('EAPC', examAmountPerCategory);
-    console.log('EAPsC', examAmountPerSubCategory);
-
     yield put(fetchCategory(examAmountPerCategory));
     yield put(fetchSubCategory(examAmountPerSubCategory));
-    const progressResult = yield call(api.checkProgress, action.payload.id);
+    const tempProgressResult = yield call(api.checkProgress, action.payload.id);
+    const progressResult = [];
+    for (let i = 0; i < tempProgressResult.answerList.length; i += 1) {
+      progressResult.push(JSON.parse(tempProgressResult.answerList[i]));
+    }
     yield put(fetchProgress(progressResult));
     yield put(fetchTakeExamSuccess(examList));
   }
@@ -66,8 +64,7 @@ export function* fetchTestExamTask(action) {
 
 export function* uploadAnswerListTask(action) {
   try {
-    console.log('yield!', action.payload.category);
-    const progress = yield call(api.uploadAnswer, action.payload.id, action.payload.category, action.payload.answerList);
+    const progress = yield call(api.uploadAnswer, action.payload.id, action.payload.answerList);
     yield put(uploadAnswerListSuccess(progress));
   }
   catch (error) {
