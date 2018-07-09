@@ -71,7 +71,8 @@ const TakeExam = ({
   id,
   onClickCheckProgress,
   onClickCategory,
-  categoryList, }) =>
+  categoryList,
+  saveStatus, }) =>
   (
     <div>
       <br />
@@ -181,6 +182,8 @@ const TakeExam = ({
             <Icon name="send" />
             Submit
           </Button>
+          <br />
+          <div style={{ color: (saveStatus === 'Save answers error !') ? 'red' : 'green' }}>{saveStatus}</div>
         </Segment>
       </Segment.Group>
     </div>
@@ -202,6 +205,7 @@ TakeExam.propTypes = {
   onClickCheckProgress: PropTypes.func.isRequired,
   onClickCategory: PropTypes.func.isRequired,
   categoryList: PropTypes.array.isRequired,
+  saveStatus: PropTypes.string.isRequired,
 };
 
 export default TakeExam;

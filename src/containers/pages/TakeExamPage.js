@@ -33,7 +33,8 @@ const TakeExamPage = ({
   id,
   onClickCheckProgress,
   onClickCategory,
-  categoryList, }) =>
+  categoryList,
+  saveStatus }) =>
   (
     isFetching ?
       <Loader /> :
@@ -53,6 +54,7 @@ const TakeExamPage = ({
         onClickCheckProgress={onClickCheckProgress}
         onClickCategory={onClickCategory}
         categoryList={categoryList}
+        saveStatus={saveStatus}
       />
   );
 
@@ -73,6 +75,7 @@ TakeExamPage.propTypes = {
   onClickCheckProgress: PropTypes.func.isRequired,
   onClickCategory: PropTypes.func.isRequired,
   categoryList: PropTypes.array.isRequired,
+  saveStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -85,6 +88,7 @@ const mapStateToProps = state => ({
   answerList: state.takeExam.answerList,
   id: state.examAuth.id,
   categoryList: state.takeExam.categoryList,
+  saveStatus: state.takeExam.saveStatus
 });
 
 const mapDispatchToProps = dispatch => ({

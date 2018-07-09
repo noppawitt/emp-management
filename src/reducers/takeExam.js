@@ -10,6 +10,7 @@ const initialState = {
   pickedAnswer: [],
   answerList: [],
   progressResult: [],
+  saveStatus: ' '
 };
 
 const TakeExam = (state = initialState, action) => {
@@ -119,16 +120,23 @@ const TakeExam = (state = initialState, action) => {
         ...state,
         isFetching: true
       };
-    case actionTypes.TAKE_EXAM_UPLOAD_SUCCESS:
+    case actionTypes.TAKE_EXAM_UPLOAD_SUCCESS: {
+      const date = new Date();
       return {
         ...state,
         progress: action.payload.progress,
-        isFetching: false
+        isFetching: false,
+        saveStatus: ('Save answers complete @ ')
+          .concat(date.getHours()).concat(':')
+          .concat(date.getMinutes()).concat(':')
+          .concat(date.getSeconds())
       };
+    }
     case actionTypes.TAKE_EXAM_UPLOAD_FAILURE:
       return {
         ...state,
         messege: action.payload.messege,
+        saveStatus: 'Save answers error !'
       };
     case actionTypes.TAKE_EXAM_CHECK_PROGRESS_REQUEST:
       return {
