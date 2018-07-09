@@ -8,6 +8,7 @@ import {
   checkProgressFailure,
   checkProgressSuccess,
   fetchProgress,
+  fetchCategory,
 } from '../actions/takeExam';
 import { openModal } from '../actions/modal';
 import * as modalNames from '../constants/modalNames';
@@ -17,9 +18,42 @@ export function* fetchTestExamTask(action) {
   try {
     const randomExIdList = yield call(api.fetchRandomExIdList, action.payload.id);
     const examList = yield call(api.fetchExamSpecifyId, randomExIdList);
-    console.log('HERE is the examlist', examList);
+    console.log(examList);
+    const categoryList = {};
+    const subCategoryList = {};
+    Object(examList).map((item) => {
+      console.log('item:', item);
+      if (!categoryList.includes(item.exCategory)) categoryList.push(item.exCategory);
+      if (!subCategoryList.includes([item.exCategory, item.exSubcategory].join(' '))) subCategoryList.push([item.exCategory, item.exSubcategory].join(' '));
+      return 1;
+    });
+    const examAmountPerCategory = [];
+    const examAmountPerSubCategory = [];
+    for (let i = 0; i < categoryList.length; i += 1) {
+      let count = 0;
+      for (let j = 0; j < examList.length; j += 1) {
+        if (categoryList[i] === examList[j].exCategory) {
+          count += 1;
+        }
+        examAmountPerCategory.push([categoryList[i], count]);
+      }
+    }
+
+    for (let i = 0; i < subCategoryList.length; i += 1) {
+      let count = 0;
+      for (let j = 0; j < examList.length; j += 1) {
+        if (categoryList[i] === examList[j].exCategory && subCategoryList[i] === examList[j].exSubcategory) {
+          count += 1;
+        }
+        examAmountPerSubCategory.push([subCategoryList[i], count]);
+      }
+    }
+
+    console.log(examAmountPerCategory);
+    console.log(examAmountPerSubCategory);
+
+    yield put(fetchCategory(categoryList));
     const progressResult = yield call(api.checkProgress, action.payload.id);
-    console.log(progressResult);
     yield put(fetchProgress(progressResult));
     yield put(fetchTakeExamSuccess(examList));
   }

@@ -20,6 +20,11 @@ const questionRenderer = question => (
   <div dangerouslySetInnerHTML={{ __html: question }} />
 );
 
+const categoryLengthCalculate = (examList, categoryList) => {
+  console.log(examList, 'e\ne', categoryList);
+  return examList.length;
+};
+
 const TakeExam = ({
   examList,
   currentActivePage,
@@ -35,8 +40,8 @@ const TakeExam = ({
   exId,
   id,
   onClickCheckProgress,
-  categoryList,
-  onClickCategory, }) =>
+  onClickCategory,
+  categoryList, }) =>
   (
     <div>
       <br />
@@ -44,12 +49,12 @@ const TakeExam = ({
         <Grid>
           <Grid.Column width={3}>
             <Menu fluid vertical tabular>
-              <Menu.Item name="Category 1 : TEST" active={1 > 0} />
+              <Menu.Item name="Category Menu" />
               {categoryList && categoryList.map(category => (
                 <Menu.Item
-                  name={category.category}
-                  active={activeCategory === category.category}
-                  onClick={() => onClickCategory(category.category)}
+                  name={category}
+                  active={activeCategory === category}
+                  onClick={() => onClickCategory(category)}
                 />
               ))}
             </Menu>
@@ -153,7 +158,7 @@ const TakeExam = ({
                 lastItem={{ content: <Icon name="angle double right" />, icon: true }}
                 prevItem={{ content: <Icon name="angle left" />, icon: true }}
                 nextItem={{ content: <Icon name="angle right" />, icon: true }}
-                totalPages={examList.length}
+                totalPages={categoryLengthCalculate(examList, categoryList)}
               />
             </Segment>
           </Grid.Column>
@@ -174,11 +179,11 @@ TakeExam.propTypes = {
   onInputTextArea: PropTypes.func.isRequired,
   onClickSave: PropTypes.func.isRequired,
   onClickSubmit: PropTypes.func.isRequired,
-  exId: PropTypes.string.isRequired,
+  exId: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
   onClickCheckProgress: PropTypes.func.isRequired,
-  categoryList: PropTypes.array.isRequired,
   onClickCategory: PropTypes.func.isRequired,
+  categoryList: PropTypes.array.isRequired,
 };
 
 export default TakeExam;

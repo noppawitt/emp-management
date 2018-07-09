@@ -28,6 +28,13 @@ export const fetchProgress = progressResult => ({
   }
 });
 
+export const fetchCategory = categoryList => ({
+  type: actionTypes.TAKE_EXAM_FETCH_CATEGORYLIST,
+  payload: {
+    categoryList,
+  }
+});
+
 export const pageChange = value => ({
   type: actionTypes.TAKE_EXAM_PAGINATION_CHANGE,
   payload: {

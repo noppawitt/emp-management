@@ -9,9 +9,7 @@ exports.fetchAllExam = (req, res, next) => {
 };
 
 exports.fetchEPRList = (req, res, next) => {
-  // const object = req.query;
-  // TakeExam.fetchEPRList(object.id)
-  TakeExam.fetchEPRList('1234567890191')
+  TakeExam.fetchEPRList(req.query.id)
     .then((EPRList) => {
       res.json(EPRList);
     })

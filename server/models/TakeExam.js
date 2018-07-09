@@ -25,7 +25,8 @@ TakeExam.fetchExamId = () => (
   + ', ex_type as type'
   + ', ARRAY_AGG( ex_id ) as ex_id_list'
   + ' FROM exams'
-  + ' GROUP BY ex_category, ex_subcategory, ex_type')
+  + ' GROUP BY ex_category, ex_subcategory, ex_type'
+  + ' ORDER BY ex_category, ex_subcategory, ex_type')
 );
 
 TakeExam.fetchRandomExIdList = id => (

@@ -32,8 +32,8 @@ const TakeExamPage = ({
   exId,
   id,
   onClickCheckProgress,
-  categoryList,
-  onClickCategory, }) =>
+  onClickCategory,
+  categoryList, }) =>
   (
     isFetching ?
       <Loader /> :
@@ -52,8 +52,8 @@ const TakeExamPage = ({
         exId={exId}
         id={id}
         onClickCheckProgress={onClickCheckProgress}
-        categoryList={categoryList}
         onClickCategory={onClickCategory}
+        categoryList={categoryList}
       />
   );
 
@@ -68,13 +68,13 @@ TakeExamPage.propTypes = {
   onClickRadio: PropTypes.func.isRequired,
   onClickCheckbox: PropTypes.func.isRequired,
   onInputTextArea: PropTypes.func.isRequired,
-  exId: PropTypes.string.isRequired,
+  exId: PropTypes.number.isRequired,
   onClickSave: PropTypes.func.isRequired,
   onClickSubmit: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   onClickCheckProgress: PropTypes.func.isRequired,
-  categoryList: PropTypes.array.isRequired,
   onClickCategory: PropTypes.func.isRequired,
+  categoryList: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -86,13 +86,12 @@ const mapStateToProps = state => ({
   pickedAnswer: state.takeExam.pickedAnswer,
   answerList: state.takeExam.answerList,
   exId: state.takeExam.exId,
-  id: state.takeExam.id,
+  id: state.examAuth.id,
   categoryList: state.takeExam.categoryList,
 });
 
 const mapDispatchToProps = dispatch => ({
-  // fetchTakeExam: id => dispatch(fetchTakeExamRequest(id)),
-  fetchTakeExam: () => dispatch(fetchTakeExamRequest('1234567890191')),
+  fetchTakeExam: id => dispatch(fetchTakeExamRequest(id)),
   onPageChange: value => dispatch(pageChange(value)),
   onClickRadio: (choice, currentActivePage, pickedAnswer, exId) => dispatch(onPickRadioAnswer(choice, currentActivePage, pickedAnswer, exId)),
   onClickCheckbox: (choice, currentActivePage, pickedAnswer, exId) => dispatch(onPickCheckboxAnswer(choice, currentActivePage, pickedAnswer, exId)),
@@ -112,8 +111,8 @@ const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
-      const { fetchTakeExam } = this.props;
-      fetchTakeExam();
+      const { fetchTakeExam, id } = this.props;
+      fetchTakeExam(id);
     }
   })
 );
