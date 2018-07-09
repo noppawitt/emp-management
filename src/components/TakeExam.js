@@ -15,19 +15,25 @@ import {
   Header,
   Menu,
 } from 'semantic-ui-react';
+import { pageChange } from '../actions/takeExam';
 
 const questionRenderer = question => (
   <div dangerouslySetInnerHTML={{ __html: question }} />
 );
 
-const categoryLengthCalculate = (categoryList, activeCategory) => {
-  console.log('e', categoryList);
-  categoryList.map((object) => {
-    if (object[0] === activeCategory) {
-      console.log(object[1]);
-      return object[1];
+const findIndex = (categoryList, activeCategory) => {
+  console.log(categoryList, activeCategory);
+  for (let i = 0; i < categoryList.length; i += 1) {
+    if (categoryList[i][0] === activeCategory) {
+      return i;
     }
-  });
+  }
+  return 99;
+};
+
+const categoryLengthCalculate = (categoryList, activeCategory) => {
+  console.log('f >>', findIndex(categoryList, activeCategory), categoryList[findIndex(categoryList, activeCategory)]);
+  return categoryList[findIndex(categoryList, activeCategory)][1];
 };
 
 const TakeExam = ({
@@ -59,7 +65,7 @@ const TakeExam = ({
                 <Menu.Item
                   name={category[0]}
                   active={activeCategory === category[0]}
-                  onClick={() => onClickCategory(category[0])}
+                  onClick={() => { onClickCategory(category[0]); pageChange(1); }}
                 />
               ))}
             </Menu>
@@ -76,10 +82,10 @@ const TakeExam = ({
               </Grid>
             </Segment>
             <Segment>
-              {examList && examList.map((row, i) => (
+              {categoryList[findIndex(categoryList, activeCategory)] && categoryList[findIndex(categoryList, activeCategory)].map((row, i) => (
                 i === currentActivePage - 1 ?
                   <Form>
-                    <h1>Question {currentActivePage} of {examList.length}</h1>{questionRenderer(row.exQuestion)}<br />
+                    <h1>Question {currentActivePage} of {categoryLengthCalculate(categoryList, activeCategory)}</h1>{questionRenderer(row.exQuestion)}<br />
                     {row.exType === 'Choices' && row.exChoice.map(answer => (
                       row.exAnswerLength === 1 ?
                         <Form.Field>
@@ -153,7 +159,7 @@ const TakeExam = ({
                 Submit
               </Button>
               <Pagination
-                onPageChange={(e, { activePage }) => { console.log('as', activePage); onPageChange(activePage); }}
+                onPageChange={(e, { activePage }) => onPageChange(activePage)}
                 floated="right"
                 defaultActivePage={1}
                 boundaryRange={1}

@@ -42,15 +42,12 @@ export const fetchSubCategory = subCategoryList => ({
   }
 });
 
-export const pageChange = (value) => {
-  console.log('Q?Q?', value);
-  return {
-    type: actionTypes.TAKE_EXAM_PAGINATION_CHANGE,
-    payload: {
-      value,
-    }
-  };
-};
+export const pageChange = value => ({
+  type: actionTypes.TAKE_EXAM_PAGINATION_CHANGE,
+  payload: {
+    value,
+  }
+});
 
 export const onPickRadioAnswer = (choice, currentActivePage, pickedAnswer, exId) => ({
   type: actionTypes.TAKE_EXAM_ON_PICK_RADIO,
