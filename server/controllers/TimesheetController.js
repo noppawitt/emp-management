@@ -68,6 +68,7 @@ const createTimesheet = (newTimesheetArray, id) => new Promise((resolve, reject)
       newTimesheet.timeIn = timesheet.timeIn;
       newTimesheet.timeOut = timesheet.timeOut;
       newTimesheet.task = timesheet.task;
+      newTimesheet.description = timesheet.description;
       calTotalHours(newTimesheet.timeIn, newTimesheet.timeOut)
         .then((totalhours) => {
           newTimesheet.totalhours = totalhours;

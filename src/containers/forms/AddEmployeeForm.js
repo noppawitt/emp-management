@@ -47,7 +47,7 @@ const AddEmployeeForm = ({ handleSubmit, submitting, masterTable, setDefaultProb
       label="Username"
       placeholder="example@playtorium.co.th"
       disabled={submitting}
-      validate={[validator.required, validator.englishName]}
+      validate={[validator.required, validator.email]}
     />
     <Field
       name="citizenId"
@@ -55,7 +55,7 @@ const AddEmployeeForm = ({ handleSubmit, submitting, masterTable, setDefaultProb
       component={Input}
       label="Citizen ID"
       disabled={submitting}
-      validate={[validator.required, validator.number, value => validator.length(value, 13)]}
+      validate={[validator.required, validator.number, validator.length13]}
     />
     <Field
       name="gender"
@@ -112,6 +112,7 @@ const AddEmployeeForm = ({ handleSubmit, submitting, masterTable, setDefaultProb
       disabled={submitting}
       validator={[validator.required, validator.date]}
     />
+    <button type="submit">test</button>
   </Form>
 );
 
