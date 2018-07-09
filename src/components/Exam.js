@@ -47,7 +47,7 @@ examSubCategoryOptions.propTypes = {
 };
 
 const renderQuestion = question => (
-  <div style={{ overflow:'auto', height: '200px' }} dangerouslySetInnerHTML={{ __html: question }} />
+  <div style={{ overflow: 'auto', height: '200px' }} dangerouslySetInnerHTML={{ __html: question }} />
 );
 
 const showExamsFromPageNumber = (exams, examsFilter, row, onViewClick, onEditClick, onDeleteClick) => (
@@ -55,31 +55,51 @@ const showExamsFromPageNumber = (exams, examsFilter, row, onViewClick, onEditCli
     <Table.Cell>
       {renderQuestion(examsFilter[row].exQuestion)}
     </Table.Cell>
-    <Table.Cell><div style={{ overflow:'auto', height: '200px' }}>{examsFilter[row].exCategory.charAt(0).toUpperCase().concat(examsFilter[row].exCategory.slice(1))}</div></Table.Cell>
-    <Table.Cell><div style={{ overflow:'auto', height: '200px' }}>{examsFilter[row].exSubcategory.charAt(0).toUpperCase().concat(examsFilter[row].exSubcategory.slice(1))}</div></Table.Cell>
-    <Table.Cell><div style={{ overflow:'auto', height: '200px' }}>{examsFilter[row].exType}</div></Table.Cell>
+    <Table.Cell>
+      <div style={{ overflow: 'auto', height: '200px' }}>{examsFilter[row].exCategory.charAt(0).toUpperCase().concat(examsFilter[row].exCategory.slice(1))}
+      </div>
+    </Table.Cell>
+    <Table.Cell>
+      <div style={{ overflow: 'auto', height: '200px' }}>{examsFilter[row].exSubcategory.charAt(0).toUpperCase().concat(examsFilter[row].exSubcategory.slice(1))}
+      </div>
+    </Table.Cell>
+    <Table.Cell>
+      <div style={{ overflow: 'auto', height: '200px' }}>{examsFilter[row].exType}
+      </div>
+    </Table.Cell>
     {examsFilter[row].exType === 'Write-Up' &&
-      <Table.Cell><div style={{ overflow:'auto', height: '200px' }}><p>-</p></div></Table.Cell>
+      <Table.Cell><div style={{ overflow: 'auto', height: '200px' }}><p>-</p></div></Table.Cell>
     }
     {examsFilter[row].exType === 'Choices' &&
-      <Table.Cell><div style={{ overflow:'auto', height: '200px' }}>{(examsFilter[row].exChoice).map((choice, i) => (
-        <p><strong>{i + 1}.</strong> {choice}</p>
-      ))}
-      </div></Table.Cell>
+      <Table.Cell>
+        <div style={{ overflow: 'auto', height: '200px' }}>{(examsFilter[row].exChoice).map((choice, i) => (
+          <p><strong>{i + 1}.</strong> {choice}</p>
+        ))}
+        </div>
+      </Table.Cell>
     }
     {examsFilter[row].exType === 'Write-Up' &&
-      <Table.Cell><div style={{ overflow:'auto', height: '200px' }}><p>-</p></div></Table.Cell>
+      <Table.Cell>
+        <div style={{ overflow: 'auto', height: '200px' }}><p>-</p>
+        </div>
+      </Table.Cell>
     }
     {examsFilter[row].exType === 'Choices' &&
-      <Table.Cell><div style={{ overflow:'auto', height: '200px' }}>{(examsFilter[row].exAnswer).map(ans => (
-        <p>&#9679;&nbsp;{ans}</p>
-      ))}
-      </div></Table.Cell>}
-    <Table.Cell textAlign="center"><div style={{ overflow:'auto', height: '200px' }}>
-      <Button active circular icon="eye" color="olive" size="big" onClick={() => onViewClick(examsFilter[row])} style={{ cursor: 'pointer' }} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <Button active circular icon="settings" color="linkedin" size="big" onClick={() => onEditClick(exams, examsFilter[row])} style={{ cursor: 'pointer' }} />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <Button active circular icon="trash" color="google plus" size="big" onClick={() => onDeleteClick(examsFilter[row].exId)} style={{ cursor: 'pointer' }} />
-    </div></Table.Cell>
+      <Table.Cell>
+        <div style={{ overflow: 'auto', height: '200px' }}>{(examsFilter[row].exAnswer).map(ans => (
+          <p>&#9679;&nbsp;{ans}</p>
+        ))}
+        </div>
+      </Table.Cell>}
+    <Table.Cell textAlign="center">
+      <div style={{ overflow: 'auto', height: '200px' }}>
+        <Button active circular icon="eye" color="olive" size="big" onClick={() => onViewClick(examsFilter[row])} style={{ cursor: 'pointer' }} />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <Button active circular icon="settings" color="linkedin" size="big" onClick={() => onEditClick(exams, examsFilter[row])} style={{ cursor: 'pointer' }} />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <Button active circular icon="trash" color="google plus" size="big" onClick={() => onDeleteClick(examsFilter[row].exId)} style={{ cursor: 'pointer' }} />
+      </div>
+    </Table.Cell>
   </Table.Row>
 );
 
