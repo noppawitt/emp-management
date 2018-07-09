@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import {
   Segment,
   Grid,
-  Container,
   Pagination,
   Icon,
   Form,
@@ -69,7 +68,6 @@ const TakeExam = ({
   onInputTextArea,
   onClickSave,
   onClickSubmit,
-  exId,
   id,
   onClickCheckProgress,
   onClickCategory,
@@ -93,12 +91,12 @@ const TakeExam = ({
           </Grid.Column>
           <Grid.Column width={13}>
             <Grid>
-              <Grid.Column width={14}>
+              <Grid.Column width={13}>
                 <br />
                 {filterExam(examList, activeCategory).length > 0 && filterExam(examList, activeCategory).map((row, i) => (
                   i === currentActivePage - 1 ?
                     <Form>
-                      <h1>Question {currentActivePage} of {filterExam(examList, activeCategory).length}</h1>{questionRenderer(row.exQuestion)}<br />
+                      <Header as="h1">Question {currentActivePage} of {filterExam(examList, activeCategory).length}</Header>{questionRenderer(row.exQuestion)}<br />
                       {row.exType === 'Choices' && row.exChoice.map(answer => (
                         row.exAnswerLength === 1 ?
                           <Form.Field>
@@ -142,28 +140,31 @@ const TakeExam = ({
                 {!examList && (
                   <h1>Fetch fail somewhere!</h1>
                 )}
-
               </Grid.Column>
-              <Grid.Column width={2}>
-                <Container textAlign="right"><Header as="h1">Timer</Header></Container>
+              <Grid.Column width={3}>
+                <br />
+                <Form style={{ textAlign: 'right' }}>
+                  <Header as="h1">00:00:00&nbsp;&nbsp;&nbsp;</Header>
+                </Form>
               </Grid.Column>
             </Grid>
             <br />
             <Grid.Row>
-              <Pagination
-                onPageChange={(e, { activePage }) => onPageChange(activePage)}
-                defaultActivePage={1}
-                activePage={currentActivePage}
-                boundaryRange={1}
-                siblingRange={0}
-                ellipsisItem={{ content: <Icon name="ellipsis horizontal" />, icon: true }}
-                firstItem={{ content: <Icon name="angle double left" />, icon: true }}
-                lastItem={{ content: <Icon name="angle double right" />, icon: true }}
-                prevItem={{ content: <Icon name="angle left" />, icon: true }}
-                nextItem={{ content: <Icon name="angle right" />, icon: true }}
-                totalPages={categoryLengthCalculate(examList, activeCategory)}
-              />
-              <br />
+              <Grid.Column>
+                <Pagination
+                  floated="right"
+                  onPageChange={(e, { activePage }) => onPageChange(activePage)}
+                  activePage={currentActivePage}
+                  boundaryRange={1}
+                  siblingRange={1}
+                  ellipsisItem={{ content: <Icon name="ellipsis horizontal" />, icon: true }}
+                  firstItem={{ content: <Icon name="angle double left" />, icon: true }}
+                  lastItem={{ content: <Icon name="angle double right" />, icon: true }}
+                  prevItem={{ content: <Icon name="angle left" />, icon: true }}
+                  nextItem={{ content: <Icon name="angle right" />, icon: true }}
+                  totalPages={categoryLengthCalculate(examList, activeCategory)}
+                />
+              </Grid.Column>
             </Grid.Row>
           </Grid.Column>
         </Grid>
@@ -197,7 +198,6 @@ TakeExam.propTypes = {
   onInputTextArea: PropTypes.func.isRequired,
   onClickSave: PropTypes.func.isRequired,
   onClickSubmit: PropTypes.func.isRequired,
-  exId: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
   onClickCheckProgress: PropTypes.func.isRequired,
   onClickCategory: PropTypes.func.isRequired,
