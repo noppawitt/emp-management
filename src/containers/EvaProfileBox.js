@@ -9,7 +9,7 @@ import * as modalNames from '../constants/modalNames';
 import './pages/css/EvaProfileBox.css'
 
 const AngleDownButton = (
-  <Button icon="angle down"></Button>
+  <Button icon="angle down" ></Button>
 )
 
 const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, openPerformanceModal, type, fetchProbation, profileId, fetchPerformance, openSelfAssessment}) => {
@@ -38,9 +38,13 @@ const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, 
   // evaProfile.map(pro =>
   //   optionsPro.push({text: pro.probationId ,onClick: () => {fetchProbation(profileId,pro.probationId);openProbationModal()}})
   // )
-  for(var i = 0;i<evaProfile.length;i++){
-    if(i==evaProfile.length-1)optionsPro.push({text: 'Probation', onClick: () => {fetchProbation(profileId,pro.probationId);openProbationModal()}})
-    else optionsPro.push({text: 'Continued Probation '+ (evaProfile.length-i-1),onClick: () => {fetchProbation(profileId,pro.probationId);openProbationModal()}})
+
+  for(let i = 0;i<evaProfile.length;i++){
+    if(i==evaProfile.length-1){
+      console.log()
+      optionsPro.push({text: 'Probation', onClick: () =>{fetchProbation(profileId,evaProfile[i].probationId);openProbationModal();}})
+    }
+    else optionsPro.push({text: 'Continued Probation '+ (evaProfile.length-i-1),onClick: () => {fetchProbation(profileId,evaProfile[i].probationId);openProbationModal();}})
   }
 
   return (
@@ -61,7 +65,11 @@ const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, 
       </Segment>
       <Segment raised padded size="large">
         <div className="buttonGroup">
-            <Button.Group>
+            <Button.Group
+              color={
+                performanceProfile.length==0 || performanceProfile[0].year<(new Date()).getFullYear() ? 'green' : 'blue'
+              }
+            >
               <Dropdown trigger={AngleDownButton} options={optionsPerf} />
               <Button onClick={() => {fetchPerformance(profileId,(new Date()).getFullYear());openPerformanceModal();}}
                 disabled={type!='admin' && performanceProfile.length==0}>
@@ -70,7 +78,12 @@ const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, 
             </Button.Group>
         </div>
         <div className="buttonGroup">
-            <Button.Group>
+            <Button.Group
+              color={
+                evaProfile.length==0 && type=='admin' ? 'green':
+                evaProfile.length!=0 && type=='admin' && evaProfile[0].passPro==false && evaProfile[0].continued==true && evaProfile[0].mdSignDate!=null ? 'green' : 'blue'
+              }
+            >
               <Dropdown trigger={AngleDownButton} options={optionsPro} />
               <Button onClick={() => {
                   if(!(evaProfile.length==0 && type=='admin') && !(evaProfile.length!=0 && type=='admin' && evaProfile[0].passPro==false && evaProfile[0].continued==true && evaProfile[0].mdSignDate!=null))
@@ -85,7 +98,7 @@ const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, 
               </Button>
             </Button.Group>
         </div>
-            <Button icon labelPosition='left' icon={'angle right'} content={'SELF'} onClick={()=>{openSelfAssessment()}} color={'yellow'}/>
+            <Button icon labelPosition='left' icon={'angle right'} content={'Self Assessment'} onClick={()=>{openSelfAssessment()}} color={'yellow'}/>
 
       </Segment>
 

@@ -35,7 +35,7 @@ class ProbationForm extends React.Component {
             supervisor: this.props.profile.work.bossname || '-',
             expectedScore: null,
             score: null,
-            endProbationDate: this.props.profile.work.probationDate,
+            endProbationDate: this.props.profile.evaInfo == null && this.props.profile.eva.length!=0 ? this.props.profile.eva[0].continuedDate:this.props.profile.work.probationDate,
             passPro: true,
             notPassPro: false,
             confirmed: true,

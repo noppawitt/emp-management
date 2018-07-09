@@ -42,8 +42,11 @@ exports.update = (req,res,next) => {
     const mailOptions = {
       from: 'i.plas.sa.tic@gmail.com',
       to: 'ruby.pwn@hotmail.com',
-      subject: 'Hello',
-      html: `<p>Good Morning</p>`
+      subject: 'Probation',
+      html:
+        `
+          <p>Probation of ${req.body.probationInfo.name} already sumitted</p>
+        `
     };
     mail.sendMail(mailOptions, (err, info) => {
       if (err) {
