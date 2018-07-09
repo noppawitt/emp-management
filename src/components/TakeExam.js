@@ -20,9 +20,22 @@ const questionRenderer = question => (
   <div dangerouslySetInnerHTML={{ __html: question }} />
 );
 
-const categoryLengthCalculate = (examList, categoryList) => {
-  console.log(examList, 'e\ne', categoryList);
-  return examList.length;
+const categoryLengthCalculate = (examList, activeCategory) => {
+  let pageNumber = 0;
+  for (let i = 0; i < examList.length; i += 1) {
+    pageNumber += (examList[i].exCategory === activeCategory) ? 1 : 0;
+  }
+  return pageNumber;
+};
+
+const filterExam = (examList, activeCategory) => {
+  const filter = [];
+  for (let i = 0; i < examList.length; i += 1) {
+    if (examList[i].exCategory === activeCategory) {
+      filter.push(examList[i]);
+    }
+  }
+  return filter;
 };
 
 const TakeExam = ({
@@ -52,9 +65,9 @@ const TakeExam = ({
               <Menu.Item name="Category Menu" />
               {categoryList && categoryList.map(category => (
                 <Menu.Item
-                  name={category}
-                  active={activeCategory === category}
-                  onClick={() => onClickCategory(category)}
+                  name={category[0]}
+                  active={activeCategory === category[0]}
+                  onClick={() => { console.log(category[0]); onClickCategory(category[0]); }}
                 />
               ))}
             </Menu>
@@ -71,10 +84,10 @@ const TakeExam = ({
               </Grid>
             </Segment>
             <Segment>
-              {examList && examList.map((row, i) => (
+              {filterExam(examList, activeCategory).length > 0 && filterExam(examList, activeCategory).map((row, i) => (
                 i === currentActivePage - 1 ?
                   <Form>
-                    <h1>Question {currentActivePage} of {examList.length}</h1>{questionRenderer(row.exQuestion)}<br />
+                    <h1>Question {currentActivePage} of {filterExam(examList, activeCategory).length}</h1>{questionRenderer(row.exQuestion)}<br />
                     {row.exType === 'Choices' && row.exChoice.map(answer => (
                       row.exAnswerLength === 1 ?
                         <Form.Field>
@@ -151,6 +164,7 @@ const TakeExam = ({
                 onPageChange={(e, { activePage }) => onPageChange(activePage)}
                 floated="right"
                 defaultActivePage={1}
+                activePage={currentActivePage}
                 boundaryRange={1}
                 siblingRange={0}
                 ellipsisItem={{ content: <Icon name="ellipsis horizontal" />, icon: true }}
@@ -158,7 +172,7 @@ const TakeExam = ({
                 lastItem={{ content: <Icon name="angle double right" />, icon: true }}
                 prevItem={{ content: <Icon name="angle left" />, icon: true }}
                 nextItem={{ content: <Icon name="angle right" />, icon: true }}
-                totalPages={categoryLengthCalculate(examList, categoryList)}
+                totalPages={categoryLengthCalculate(examList, activeCategory)}
               />
             </Segment>
           </Grid.Column>

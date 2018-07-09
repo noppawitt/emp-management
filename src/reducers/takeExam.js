@@ -59,8 +59,6 @@ const TakeExam = (state = initialState, action) => {
       return {
         ...state,
         currentActivePage: action.payload.value,
-        // delete activeCategory here someday
-        activeCategory: state.examList[action.payload.value - 1].exCategory,
         exId: state.examList[action.payload.value - 1].exId,
         pickedAnswer: state.answerList[action.payload.value - 1] === { answer: '', question: '' } ? { answer: '', question: '' } : state.answerList[action.payload.value - 1].answer,
       };
@@ -129,6 +127,7 @@ const TakeExam = (state = initialState, action) => {
     case actionTypes.TAKE_EXAM_CATEGORY_CHANGE:
       return {
         ...state,
+        currentActivePage: 1,
         activeCategory: action.payload.category,
       };
     default:
