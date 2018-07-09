@@ -10,6 +10,7 @@ import {
   fetchProgress,
   fetchCategory,
   fetchSubCategory,
+  finishExam,
 } from '../actions/takeExam';
 import { openModal } from '../actions/modal';
 import * as modalNames from '../constants/modalNames';
@@ -86,6 +87,16 @@ export function* checkProgressTask(action) {
   }
 }
 
+export function* finishExamTask() {
+  try {
+    const result = yield call(api.xx);
+    yield put(finishExam(result));
+  }
+  catch (error) {
+    yield put(otherthing(error));
+  }
+}
+
 export function* watchFetchTakeExamRequest() {
   yield takeEvery(actionTypes.TAKE_EXAM_FETCH_REQUEST, fetchTestExamTask);
 }
@@ -98,10 +109,15 @@ export function* watchCheckProgressRequest() {
   yield takeEvery(actionTypes.TAKE_EXAM_CHECK_PROGRESS_REQUEST, checkProgressTask);
 }
 
+export function* watchFinishExamRequest() {
+  yield takeEvery(actionTypes.TAKE_EXAM_FINISH_EXAM, finishExamTask);
+}
+
 export default function* takeExamSaga() {
   yield all([
     watchFetchTakeExamRequest(),
     watchUploadAnswerListRequest(),
     watchCheckProgressRequest(),
+    watchFinishExamRequest(),
   ]);
 }

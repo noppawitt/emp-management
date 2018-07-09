@@ -134,6 +134,11 @@ const TakeExam = (state = initialState, action) => {
         currentActivePage: 1,
         activeCategory: action.payload.category,
       };
+    case actionTypes.TAKE_EXAM_FINISH_EXAM:
+      return {
+        ...state,
+        // nothing to update state yet...
+      };
     default:
       return state;
   }

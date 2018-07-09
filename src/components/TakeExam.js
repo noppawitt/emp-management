@@ -74,96 +74,66 @@ const TakeExam = ({
             </Menu>
           </Grid.Column>
           <Grid.Column width={13}>
-            <Segment>
-              <Grid>
-                <Grid.Column width={14}>
-                  <Header as="h1">Category : {activeCategory.charAt(0).toUpperCase().concat(activeCategory.slice(1))}</Header>
-                </Grid.Column>
-                <Grid.Column width={2}>
-                  <Container textAlign="right"><Header as="h1">Timer</Header></Container>
-                </Grid.Column>
-              </Grid>
-            </Segment>
-            <Segment>
-              {filterExam(examList, activeCategory).length > 0 && filterExam(examList, activeCategory).map((row, i) => (
-                i === currentActivePage - 1 ?
-                  <Form>
-                    <h1>Question {currentActivePage} of {filterExam(examList, activeCategory).length}</h1>{questionRenderer(row.exQuestion)}<br />
-                    {row.exType === 'Choices' && row.exChoice.map(answer => (
-                      row.exAnswerLength === 1 ?
+            <Grid>
+              <Grid.Column width={14}>
+                <br />
+                {filterExam(examList, activeCategory).length > 0 && filterExam(examList, activeCategory).map((row, i) => (
+                  i === currentActivePage - 1 ?
+                    <Form>
+                      <h1>Question {currentActivePage} of {filterExam(examList, activeCategory).length}</h1>{questionRenderer(row.exQuestion)}<br />
+                      {row.exType === 'Choices' && row.exChoice.map(answer => (
+                        row.exAnswerLength === 1 ?
+                          <Form.Field>
+                            <p>
+                              <Radio
+                                label={answer}
+                                value={answer}
+                                checked={pickedAnswer && pickedAnswer.includes(answer)}
+                                onClick={(e, { value }) => {
+                                  onClickRadio(value, currentActivePage, pickedAnswer, exId);
+                                }}
+                              />
+                            </p>
+                          </Form.Field> :
+                          <Form.Field>
+                            <p>
+                              <Checkbox
+                                label={answer}
+                                value={answer}
+                                checked={pickedAnswer && pickedAnswer.includes(answer)}
+                                onClick={(e, { value }) => {
+                                  onClickCheckbox(value, currentActivePage, pickedAnswer, exId);
+                                }}
+                              />
+                            </p>
+                          </Form.Field>
+                      ))}
+                      {row.exType !== 'Choices' &&
                         <Form.Field>
-                          <p>
-                            <Radio
-                              label={answer}
-                              value={answer}
-                              checked={pickedAnswer && pickedAnswer.includes(answer)}
-                              onClick={(e, { value }) => {
-                                onClickRadio(value, currentActivePage, pickedAnswer, exId);
-                              }}
-                            />
-                          </p>
-                        </Form.Field> :
-                        <Form.Field>
-                          <p>
-                            <Checkbox
-                              label={answer}
-                              value={answer}
-                              checked={pickedAnswer && pickedAnswer.includes(answer)}
-                              onClick={(e, { value }) => {
-                                onClickCheckbox(value, currentActivePage, pickedAnswer, exId);
-                              }}
-                            />
-                          </p>
+                          <TextArea
+                            value={pickedAnswer && pickedAnswer[0]}
+                            placeholder="Type the answer here.."
+                            onInput={(e, { value }) => {
+                              onInputTextArea(value, currentActivePage, exId);
+                            }}
+                          />
                         </Form.Field>
-                    ))}
-                    {row.exType !== 'Choices' &&
-                      <Form.Field>
-                        <TextArea
-                          value={pickedAnswer && pickedAnswer[0]}
-                          placeholder="Type the answer here.."
-                          onInput={(e, { value }) => {
-                            onInputTextArea(value, currentActivePage, exId);
-                          }}
-                        />
-                      </Form.Field>
-                    }
-                  </Form> : ''
-              ))}
-              {!examList && (
-                <h1>Fetch fail somewhere!</h1>
-              )}
-            </Segment>
-            <Segment>
-              <Button
-                icon
-                labelPosition="left"
-                color="green"
-                onClick={() => onClickCheckProgress(id)}
-              >
-                <Icon name="search" />
-                Check
-              </Button>
-              <Button
-                icon
-                labelPosition="left"
-                primary
-                onClick={() => onClickSave(id, answerList)}
-              >
-                <Icon name="save" />
-                Save
-              </Button>
-              <Button
-                icon
-                labelPosition="left"
-                secondary
-                onClick={() => onClickSubmit(id, answerList)}
-              >
-                <Icon name="send" />
-                Submit
-              </Button>
+                      }
+                    </Form> : ''
+                ))}
+                {!examList && (
+                  <h1>Fetch fail somewhere!</h1>
+                )}
+
+              </Grid.Column>
+              <Grid.Column width={2}>
+                <Container textAlign="right"><Header as="h1">Timer</Header></Container>
+              </Grid.Column>
+            </Grid>
+            <br />
+            <Grid.Row>
               <Pagination
                 onPageChange={(e, { activePage }) => onPageChange(activePage)}
-                floated="right"
                 defaultActivePage={1}
                 activePage={currentActivePage}
                 boundaryRange={1}
@@ -175,9 +145,24 @@ const TakeExam = ({
                 nextItem={{ content: <Icon name="angle right" />, icon: true }}
                 totalPages={categoryLengthCalculate(examList, activeCategory)}
               />
-            </Segment>
+              <br />
+            </Grid.Row>
           </Grid.Column>
         </Grid>
+        <Segment>
+          <Button icon labelPosition="left" color="green" onClick={() => onClickCheckProgress(id)}>
+            <Icon name="search" />
+            Check
+          </Button>
+          <Button icon labelPosition="left" primary onClick={() => onClickSave(id, answerList)}>
+            <Icon name="save" />
+            Save
+          </Button>
+          <Button icon labelPosition="left" secondary onClick={() => onClickSubmit(id, answerList)}>
+            <Icon name="send" />
+            Submit
+          </Button>
+        </Segment>
       </Segment.Group>
     </div>
   );

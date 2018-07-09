@@ -127,3 +127,9 @@ export const categoryChange = category => ({
     category,
   }
 });
+
+export const finishExam = () => ({
+  type: actionTypes.TAKE_EXAM_FINISH_EXAM,
+  payload: {
+  }
+});

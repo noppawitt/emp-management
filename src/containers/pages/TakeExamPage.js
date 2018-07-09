@@ -11,6 +11,7 @@ import {
   uploadAnswerListRequest,
   checkProgressRequest,
   categoryChange,
+  finishExam,
 } from '../../actions/takeExam';
 import TakeExam from '../../components/TakeExam';
 import Loader from '../../components/Loader';
@@ -100,8 +101,7 @@ const mapDispatchToProps = dispatch => ({
   // Submit is save and exit!
   onClickSubmit: (id, answerList) => compose(
     dispatch(uploadAnswerListRequest(id, answerList)),
-    dispatch(),
-    // dispatch(finishExam()),
+    dispatch(finishExam()),
   ),
   onClickCheckProgress: id => dispatch(checkProgressRequest(id)),
   onClickCategory: category => dispatch(categoryChange(category)),
