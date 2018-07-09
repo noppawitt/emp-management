@@ -32,9 +32,9 @@ class SelfAssessmentForm extends React.Component {
             contribution: "_contribution" || '',
             strengths: "_strengths" || '',
             improvements: "_improvements" || '',
-            goal1: null || ['','','','',''],
-            goal2: null || ['','','','',''],
-            goal3: null || ['','','','',''],
+            goal1: null || ['', '', '', '', ''],
+            goal2: null || ['', '', '', '', ''],
+            goal3: null || ['', '', '', '', ''],
             currentPage: 0
         }
 
@@ -44,21 +44,24 @@ class SelfAssessmentForm extends React.Component {
         this.goalThreeHandler = this.goalThreeHandler.bind(this);
     }
 
-    goalOneHandler() {
-
+    goalOneHandler(newGoal) {
+        this.state.goal1 = newGoal;
     }
 
-    goalTwoHandler() {
-        
+    goalTwoHandler(newGoal) {
+        this.state.goal2 = newGoal;
     }
 
-    goalThreeHandler() {
-        
+    goalThreeHandler(newGoal) {
+        this.state.goal3 = newGoal;
     }
-    
+
     animateChangePage() {
         document.getElementsByClassName('pages-contrainer')[0].style.left = this.state.currentPage * (-100) + '%';
-        console.log(this.state);
+    }
+
+    componentDidUpdate() {
+        console.log("tesabcbcbt");
     }
 
     render() {
@@ -113,21 +116,21 @@ class SelfAssessmentForm extends React.Component {
                         {/* Page Two */}
                         <td>
                             <div>
-                                <GoalComponent header='Goal 1 The Most Important * เป้าหมายสำคัญอันดับที่ 1' />
+                                <GoalComponent header='Goal 1 The Most Important * เป้าหมายสำคัญอันดับที่ 1' onChange={this.goalOneHandler} />
                             </div>
                         </td>
 
                         {/* Page Three */}
                         <td>
                             <div>
-                                <GoalComponent header='Goal 2 More Important * เป้าหมายสำคัญอันดับที่ 2' />
+                                <GoalComponent header='Goal 2 More Important * เป้าหมายสำคัญอันดับที่ 2' onChange={this.goalTwoHandler} />
                             </div>
                         </td>
 
                         {/* Page Four */}
                         <td>
                             <div>
-                                <GoalComponent header='Goal 3 Less Important * เป้าหมายสำคัญอันดับที่ 3' />
+                                <GoalComponent header='Goal 3 Less Important * เป้าหมายสำคัญอันดับที่ 3' onChange={this.goalThreeHandler} />
                             </div>
                         </td>
                     </tr >
