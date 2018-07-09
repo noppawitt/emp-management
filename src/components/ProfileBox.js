@@ -30,7 +30,7 @@ const ProfileBox = ({ lists, onEditClick, onDeleteClick }) => (
       <Grid.Column floated="right" computer={1} mobile={2}>
         <Dropdown icon="ellipsis horizontal" direction="left">
           <Dropdown.Menu>
-            {onEditClick && <Dropdown.Item text="Edit" icon="pencil alternate" onClick={onEditClick} />}
+            {onEditClick && <Dropdown.Item text="Edit" icon="pencil" onClick={onEditClick} />}
             {onDeleteClick && <Dropdown.Item text="Delete" icon="trash alternate" onClick={onDeleteClick} />}
           </Dropdown.Menu>
         </Dropdown>

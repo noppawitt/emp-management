@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Table, Grid, Progress, Button, Select, Label } from 'semantic-ui-react';
+import { Icon, Table, Grid, Progress, Button, Select } from 'semantic-ui-react';
 import moment from 'moment';
 import PageHeader from './PageHeader';
 import history from '../history';
@@ -107,7 +107,7 @@ class Timesheet extends React.Component {
         <Grid.Row textAlign="center">
           <Button animated="fade" style={{ borderStyle: 'solid', borderColor: color, backgroundColor: 'white', borderWidth: '1px' }} onClick={() => this.props.onAddClick(date.format('YYYY-MM-DD'))} >
             <Button.Content visible><font color={color} >Add new</font></Button.Content>
-            <Button.Content hidden > <Icon color={iconcolor} name="pencil alternate" /> </Button.Content>
+            <Button.Content hidden > <Icon color={iconcolor} name="pencil" /> </Button.Content>
           </Button>
         </Grid.Row>
       );
@@ -118,7 +118,7 @@ class Timesheet extends React.Component {
         <Button.Group>
           <Button animated="fade" style={{ borderStyle: 'solid', borderColor: color, backgroundColor: 'white', borderWidth: '1px' }} onClick={() => this.props.onEditClick(id)} >
             <Button.Content visible><font color={color} >{hour} Hours</font></Button.Content>
-            <Button.Content hidden > <Icon color={iconcolor} name="pencil alternate" /> </Button.Content>
+            <Button.Content hidden > <Icon color={iconcolor} name="pencil" /> </Button.Content>
           </Button>
           <Button icon color={iconcolor} onClick={() => this.props.onAddClick(date.format('YYYY-MM-DD'))}>
             <Icon name="add" />
@@ -168,7 +168,7 @@ class Timesheet extends React.Component {
           <Button.Group>
             <Button animated="fade" style={{ borderStyle: 'solid', borderColor: this.state.textWorkcolor, backgroundColor: 'white', borderWidth: '1px' }} onClick={() => this.props.onEditClick(id)} >
               <Button.Content visible><font color={this.state.textWorkcolor}>{hour} Hours</font></Button.Content>
-              <Button.Content hidden > <Icon color={this.state.iconBluecolor} name="pencil alternate" /> </Button.Content>
+              <Button.Content hidden > <Icon color={this.state.iconBluecolor} name="pencil" /> </Button.Content>
             </Button>
             <Button icon color={this.state.iconBluecolor} onClick={() => this.props.onAddClick(date.format('YYYY-MM-DD'))}>
               <Icon name="add" />
@@ -181,7 +181,7 @@ class Timesheet extends React.Component {
       <Grid.Row textAlign="center">
         <Button animated="fade" style={{ backgroundColor: this.state.holidaycolor }} onClick={() => this.props.onAddClick(date.format('YYYY-MM-DD'))} >
           <Button.Content visible><font color={this.state.textAnotherDay}>Add new</font></Button.Content>
-          <Button.Content hidden > <Icon color="grey" name="pencil alternate" /> </Button.Content>
+          <Button.Content hidden > <Icon color="grey" name="pencil" /> </Button.Content>
         </Button>
       </Grid.Row>
     );
@@ -203,7 +203,7 @@ class Timesheet extends React.Component {
     else progressColor = 'blue';
     return (
       <div>
-        <PageHeader text="Timesheet" icon="calendar alternate" />
+        <PageHeader text="Timesheet" icon="calendar" />
         <Progress percent={this.props.percent} active color={progressColor} progress />
         <Grid stackable doubling relaxed >
           <Grid.Row>
@@ -252,7 +252,7 @@ Timesheet.propTypes = {
   leaves: PropTypes.array.isRequired,
   holidays: PropTypes.array.isRequired,
   fetchTimesheet: PropTypes.func.isRequired,
-  userId: PropTypes.string.isRequired,
+  userId: PropTypes.number.isRequired,
   year: PropTypes.string.isRequired,
   month: PropTypes.string.isRequired,
   percent: PropTypes.number.isRequired,
