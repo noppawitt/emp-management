@@ -32,7 +32,7 @@ export function* fetchPerformanceTask(action){
 export function* fetchProbationTask(action){
   try{
     const profile = {};
-    profile.eva = yield call(api.fetchProbation, action.payload.id);
+    profile.evaInfo = yield call(api.fetchProbation, [action.payload.id,action.payload.probationId]);
     yield put(fetchProbationSuccess(profile));
   }
   catch (error) {

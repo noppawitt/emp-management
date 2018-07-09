@@ -11,7 +11,7 @@ class AddProbation extends React.Component{
   constructor(props){
     super(props);
     this.state = props;
-    this.type = (this.props.profile.eva == null ? 'addProbation':'updateProbation')
+    this.type = (this.props.profile.evaInfo == null ? 'addProbation':'updateProbation')
   }
   componentDidMount(){
     console.log(this.state.edited);
@@ -21,14 +21,14 @@ class AddProbation extends React.Component{
       <div>
         {this.props.fetching ? <Loader/> :
           <Modal
-            header={this.props.profile.eva == null ? 'Add Probation':'View Probation'}
+            header={this.props.profile.evaInfo == null ? 'Add Probation':'View Probation'}
             onClose={()=>{this.props.onClose();this.props.clear();}}
-            onClick={()=>this.props.onSubmit(this.props.item,(this.props.profile.eva == null ? 'addProbation':'updateProbation'))}
+            onClick={()=>this.props.onSubmit(this.props.item,(this.props.profile.evaInfo == null ? 'addProbation':'updateProbation'))}
             submitting={this.props.submitting}
             size="large"
             disable={!this.props.edited}
           >
-            <A test={this.props.onChange} profile={this.props.profile} mode={!this.props.profile.eva || (this.props.type=='admin' && !this.props.profile.eva.emSignDate) ? 'edit' : 'view'} role={this.props.type == 'admin' ? 'supervisor':'employee'}/>
+            <A test={this.props.onChange} profile={this.props.profile} mode={!this.props.profile.evaInfo || (this.props.type=='admin' && !this.props.profile.evaInfo.emSignDate) ? 'edit' : 'view'} role={this.props.type == 'admin' ? 'supervisor':'employee'}/>
           </Modal>
         }
       </div>

@@ -14,7 +14,7 @@ const AngleDownButton = (
 
 const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, openPerformanceModal, type, fetchProbation, profileId, fetchPerformance, openSelfAssessment}) => {
   console.log(evaProfile);
-  const options = [
+  const optionsPerf = [
     {
       key: 'user',
       text: (
@@ -25,7 +25,12 @@ const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, 
       disabled: true,
     }
   ]
-  performanceProfile.map(perf => options.push({text: perf.year ,onClick: () => {fetchPerformance(profileId,perf.year);openPerformanceModal()}}))
+  const optionsPro = [
+
+  ]
+
+  performanceProfile.map(perf => optionsPerf.push({text: perf.year ,onClick: () => {fetchPerformance(profileId,perf.year);openPerformanceModal()}}))
+  evaProfile.map(pro => optionsPro.push({text: pro.probationId ,onClick: () => {fetchProbation(profileId,pro.probationId);openProbationModal()}}))
   return (
 
     <Segment.Group raised size="large">
@@ -45,11 +50,29 @@ const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, 
       <Segment raised padded size="large">
         <div className="buttonGroup">
             <Button.Group>
-              <Dropdown trigger={AngleDownButton} options={options} />
-              <Button onClick={() => {fetchPerformance(profileId,(new Date()).getFullYear());openPerformanceModal();}} disabled={type!='admin' && performanceProfile.length==0}>{performanceProfile.length==0 || performanceProfile[0].year<(new Date()).getFullYear() ? 'Add Performance' : 'Performance'}</Button>
+              <Dropdown trigger={AngleDownButton} options={optionsPerf} />
+              <Button onClick={() => {fetchPerformance(profileId,(new Date()).getFullYear());openPerformanceModal();}}
+                disabled={type!='admin' && performanceProfile.length==0}>
+                {performanceProfile.length==0 || performanceProfile[0].year<(new Date()).getFullYear() ? 'Add Performance' : 'Performance'}
+              </Button>
             </Button.Group>
         </div>
-            <Button icon labelPosition='left' disabled={type!='admin' && !evaProfile} icon={evaProfile==null ? 'plus':'angle right'} content={!evaProfile && type=='admin' ? 'Create Probation':'View Probation'} onClick={()=>{fetchProbation(profileId);openProbationModal()}} color={!evaProfile && type=='admin' ? 'green':'blue'}/>
+        <div className="buttonGroup">
+            <Button.Group>
+              <Dropdown trigger={AngleDownButton} options={optionsPro} />
+              <Button onClick={() => {
+                  if(!(evaProfile.length==0 && type=='admin') && !(evaProfile.length!=0 && type=='admin' && evaProfile[0].passPro==false && evaProfile[0].continued==true && evaProfile[0].mdSignDate!=null))
+                    fetchProbation(profileId,evaProfile[0].probationId);
+                  openProbationModal();}
+                }
+                disabled={type!='admin' && evaProfile.length==0}>
+                {
+                  evaProfile.length==0 && type=='admin' ? 'Create Probation':
+                  evaProfile.length!=0 && type=='admin' && evaProfile[0].passPro==false && evaProfile[0].continued==true && evaProfile[0].mdSignDate!=null ? 'Create Continue Probation' : 'View Probation'
+                }
+              </Button>
+            </Button.Group>
+        </div>
             <Button icon labelPosition='left' icon={'angle right'} content={'SELF'} onClick={()=>{openSelfAssessment()}} color={'yellow'}/>
 
       </Segment>
@@ -68,7 +91,7 @@ EvaProfileBox.propTypes = {
   evaProfile: PropTypes.object,
   openProbationModal: PropTypes.func.isRequired
 };
-
+// <Button icon labelPosition='left' disabled={type!='admin' && !evaProfile} icon={evaProfile==null ? 'plus':'angle right'} content={!evaProfile && type=='admin' ? 'Create Probation':'View Probation'} onClick={()=>{fetchProbation(profileId);openProbationModal()}} color={!evaProfile && type=='admin' ? 'green':'blue'}/>
 const mapStateToProps = state => ({
   profileId: state.profile.id,
   id: state.auth.id,
@@ -79,7 +102,7 @@ const mapDispatchToProps = dispatch =>({
   openPerformanceModal: () => dispatch(openModal(modalNames.ADD_PERFORMANCE)),
   openSelfAssessment: () => dispatch(openModal(modalNames.ADD_SELFASSESSMENT)),
   openProbationModal: () => dispatch(openModal(modalNames.ADD_PROBATION)),
-  fetchProbation: (id) => dispatch(fetchProbationRequest(id)),
+  fetchProbation: (id,probationId) => dispatch(fetchProbationRequest(id,probationId)),
   fetchPerformance: (id,year) => dispatch(fetchPerformanceRequest(id,year))
 });
 

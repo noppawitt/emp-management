@@ -69,7 +69,7 @@ class ProbationForm extends React.Component {
             expectedScore: newExpectedScore
         });
 
-        if (this.props.profile.eva != null)
+        if (this.props.profile.evaInfo != null)
             return;
 
         if (percentTotal >= 60) {
@@ -130,26 +130,27 @@ class ProbationForm extends React.Component {
     }
 
     componentWillMount() {
-        if (this.props.profile.eva != null) {
+        if (this.props.profile.evaInfo != null) {
             this.setState({
-                expectedScore: this.props.profile.eva.expectedScore,
-                score: this.props.profile.eva.score,
-                passPro: this.props.profile.eva.passPro,
-                notPassPro: !this.props.profile.eva.passPro,
-                confirmed: this.props.profile.eva.confirmedByEmployment,
-                continued: this.props.profile.eva.continued,
-                basedSalary: this.props.profile.eva.basedSalary,
-                mobile: this.props.profile.eva.mobile,
-                transporationAllowance: this.props.profile.eva.transporationAllowance,
-                otherAllowance: this.props.profile.eva.otherAllowance,
-                supervisorComment: this.props.profile.eva.supComment,
-                terminationDate: this.props.profile.eva.terminatedDate,
-                continuedDate: this.props.profile.eva.continuedDate,
-                employeeSignDate: this.props.profile.eva.emSignDate,
-                supervisorSignDate: this.props.profile.eva.supSignDate,
-                MDSignDate: this.props.profile.eva.mdSignDate,
-                endProbationDate: this.props.profile.eva.passProDate,
-                level: this.props.profile.eva.levelId
+                expectedScore: this.props.profile.evaInfo.expectedScore,
+                score: this.props.profile.evaInfo.score,
+                passPro: this.props.profile.evaInfo.passPro,
+                notPassPro: !this.props.profile.evaInfo.passPro,
+                confirmed: this.props.profile.evaInfo.confirmedByEmployment,
+                continued: this.props.profile.evaInfo.continued,
+                basedSalary: this.props.profile.evaInfo.basedSalary,
+                mobile: this.props.profile.evaInfo.mobile,
+                transporationAllowance: this.props.profile.evaInfo.transporationAllowance,
+                otherAllowance: this.props.profile.evaInfo.otherAllowance,
+                supervisorComment: this.props.profile.evaInfo.supComment,
+                terminationDate: this.props.profile.evaInfo.terminatedDate,
+                continuedDate: this.props.profile.evaInfo.continuedDate,
+                employeeSignDate: this.props.profile.evaInfo.emSignDate,
+                supervisorSignDate: this.props.profile.evaInfo.supSignDate,
+                MDSignDate: this.props.profile.evaInfo.mdSignDate,
+                endProbationDate: this.props.profile.evaInfo.passProDate,
+                level: this.props.profile.evaInfo.levelId,
+                proId: this.props.profile.evaInfo.probationId
             })
         }
     }
