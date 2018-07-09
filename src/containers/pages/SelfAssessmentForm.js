@@ -32,12 +32,30 @@ class SelfAssessmentForm extends React.Component {
             contribution: "_contribution" || '',
             strengths: "_strengths" || '',
             improvements: "_improvements" || '',
+            goal1: null || ['','','','',''],
+            goal2: null || ['','','','',''],
+            goal3: null || ['','','','',''],
             currentPage: 0
         }
 
         this.animateChangePage = this.animateChangePage.bind(this);
+        this.goalOneHandler = this.goalOneHandler.bind(this);
+        this.goalTwoHandler = this.goalTwoHandler.bind(this);
+        this.goalThreeHandler = this.goalThreeHandler.bind(this);
     }
 
+    goalOneHandler() {
+
+    }
+
+    goalTwoHandler() {
+        
+    }
+
+    goalThreeHandler() {
+        
+    }
+    
     animateChangePage() {
         document.getElementsByClassName('pages-contrainer')[0].style.left = this.state.currentPage * (-100) + '%';
         console.log(this.state);
