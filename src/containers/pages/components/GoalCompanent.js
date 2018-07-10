@@ -2,6 +2,23 @@ import React from 'react';
 import './css/GoalComponent.css'
 
 class GoalComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            goal: props.goal || ['', '', '', '', '']
+        }
+        this.updateParentState = this.updateParentState.bind(this);
+    }
+
+    componentWillReceiveProps(props) {
+        this.setState({
+            goal: props.goal
+        })
+    }
+
+    updateParentState() {
+        this.props.onChange(this.state.goal);
+    }
 
     render() {
         return (
@@ -14,26 +31,41 @@ class GoalComponent extends React.Component {
                     </tr>
                     <tr>
                         <td>Description: What is the goal?</td>
-                        <td><textarea></textarea></td>
+                        <td><textarea onChange={(event) => {
+                            this.state.goal[0] = event.target.value;
+                            this.updateParentState();
+                        }}></textarea></td>
                     </tr>
                     <tr>
                         <td>First Step Plan: What is the first step towards achieving this goal?</td>
-                        <td><textarea></textarea></td>
+                        <td><textarea onChange={(event) => {
+                            this.state.goal[1] = event.target.value;
+                            this.updateParentState();
+                        }}></textarea></td>
                     </tr>
                     <tr>
                         <td>Evaluation: How will we know if the goal is achieved? What will happen or change?</td>
-                        <td><textarea></textarea></td>
+                        <td><textarea onChange={(event) => {
+                            this.state.goal[2] = event.target.value;
+                            this.updateParentState();
+                        }}></textarea></td>
                     </tr>
                     <tr>
                         <td>Support: What training or experience, or other support, could help?</td>
-                        <td><textarea></textarea></td>
+                        <td><textarea onChange={(event) => {
+                            this.state.goal[3] = event.target.value;
+                            this.updateParentState();
+                        }}></textarea></td>
                     </tr>
                     <tr>
                         <td>Timing: When will the goal be achieved?</td>
-                        <td><textarea></textarea></td>
+                        <td><textarea onChange={(event) => {
+                            this.state.goal[4] = event.target.value;
+                            this.updateParentState();
+                        }}></textarea></td>
                     </tr>
                 </table>
-            </div>
+            </div >
         );
     }
 }
