@@ -181,7 +181,7 @@ class SelfAssessmentForm extends React.Component {
                             </div>
                             <div>
                                 <table className='con-com-table'>
-                                    <tr><th className='underline'><span className='blue-text'>Contribution/Company Activities</span></th></tr>
+                                    <tr><th className='underline'><span className='blue-text'>Contribution / Company Activities</span></th></tr>
                                     <tr><td><textarea onChange={(event) => {
                                         this.state = {
                                             ...this.state,
