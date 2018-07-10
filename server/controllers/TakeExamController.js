@@ -1,13 +1,5 @@
 const TakeExam = require('../models/TakeExam');
 
-exports.fetchAllExam = (req, res, next) => {
-  TakeExam.fetchAllExam()
-    .then((examList) => {
-      res.json(examList);
-    })
-    .catch(next);
-};
-
 exports.fetchEPRList = (req, res, next) => {
   TakeExam.fetchEPRList(req.query.id)
     .then((EPRList) => {
@@ -73,4 +65,27 @@ exports.findUploadedCategory = (req, res, next) => {
       res.json(result);
     })
     .catch(next);
+};
+
+exports.saveTimestamp = (req, res, next) => {
+  TakeExam.saveTimestamp(req.body.id, req.body.time)
+    .then((retval) => {
+      console.log('return value:', retval);
+      res.json(retval);
+    })
+    .catch(next);
+};
+
+exports.deActivate = (req, res, next) => {
+  if (req.body.status !== 'deactive') {
+    console.log('deactive status: not deactive type!');
+    res.json('deactive status: not deactive type!');
+  }
+  else {
+    TakeExam.changeStatus(req.body.id, 'Wait for Grading')
+      .then((retval) => {
+        res.json('deactive status: '.concat(retval === null ? 'OK' : 'Something wrong'));
+      })
+      .catch(next);
+  }
 };

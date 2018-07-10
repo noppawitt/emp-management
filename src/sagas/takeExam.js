@@ -91,10 +91,14 @@ export function* checkProgressTask(action) {
   }
 }
 
-export function* finishExamTask() {
+export function* finishExamTask(action) {
   try {
-    const result = yield call(api.xx);
-    yield put(finishExamSuccess(result));
+    const now = new Date();
+    console.log('Now is:', now);
+    const timestampResult = yield call(api.saveTimestamp, action.payload.id, now);
+    const deActivateResult = yield call(api.deActivate, action.payload.id, now);
+    console.log('saga - Result:\n', timestampResult, '\n', deActivateResult);
+    yield put(finishExamSuccess());
   }
   catch (error) {
     yield put(finishExamFailure(error));
@@ -114,7 +118,7 @@ export function* watchCheckProgressRequest() {
 }
 
 export function* watchFinishExamRequest() {
-  yield takeEvery(actionTypes.TAKE_EXAM_FINISH_EXAM, finishExamTask);
+  yield takeEvery(actionTypes.TAKE_EXAM_FINISH_EXAM_REQUEST, finishExamTask);
 }
 
 export default function* takeExamSaga() {

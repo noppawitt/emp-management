@@ -74,4 +74,12 @@ TakeExam.findUploadedCategory = id => (
   db.oneOrNone('SELECT * FROM exam_candidate_submitted WHERE id = $1', [id])
 );
 
+TakeExam.saveTimestamp = (id, time) => (
+  db.oneOrNone('UPDATE exam_candidate_submitted SET submitted_time = $2 WHERE id = $1', [id, time])
+);
+
+TakeExam.changeStatus = (id, status) => (
+  db.oneOrNone('UPDATE recruitments SET status = $2 WHERE citizen_id =$1', [id, status])
+);
+
 module.exports = TakeExam;
