@@ -4,7 +4,7 @@ import { Grid, Segment, Form, Button, Container, Header, Icon } from 'semantic-u
 import { connect } from 'react-redux';
 import { examLoginRequest } from '../../actions/examAuth';
 
-const ExamLoginPage = ({ dispatch }) => {
+const ExamLoginPage = ({ dispatch, message }) => {
   let id;
   let password;
 
@@ -57,6 +57,7 @@ const ExamLoginPage = ({ dispatch }) => {
                       ref={(node) => { password = node; }}
                     />
                   </label>
+                  {message !== ' ' && <div style={{ color: 'red' }}><strong>{message}</strong></div>}
                   <br />
                   <Button primary type="submit">Submit</Button>
                 </Form.Field>
@@ -69,8 +70,17 @@ const ExamLoginPage = ({ dispatch }) => {
   );
 };
 
+const mapStateToProps = state => ({
+  message: state.examAuth.message
+});
+
 ExamLoginPage.propTypes = {
+  message: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
 };
 
-export default connect()(ExamLoginPage);
+ExamLoginPage.defaultProps = {
+  message: ' '
+};
+
+export default connect(mapStateToProps, null)(ExamLoginPage);

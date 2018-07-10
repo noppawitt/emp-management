@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt-nodejs');
 const ExamUser = require('../models/ExamUser');
+const moment = require('moment');
 
 const jwtSecret = process.env.JWT_SECRET;
 
@@ -8,16 +9,21 @@ exports.signin = (req, res, next) => {
   ExamUser.findById(req.body.id)
     .then((user) => {
       if (user) {
-        console.log(user);
         if (req.body.password === user.birthdate) {
-        // if (bcrypt.compareSync(req.body.password, user.password)) {
-          const token = jwt.sign({
-            id: user.id,
-          }, jwtSecret);
-          res.json({
-            id: user.id,
-            token,
-          });
+          if (moment(user.latestActivatedPasswordTime).add({ days: user.activationLifetimes }).diff(moment()) > 0) {
+            const token = jwt.sign({
+              id: user.id,
+            }, jwtSecret);
+            res.json({
+              id: user.id,
+              token,
+            });
+          }
+          else {
+            const err = new Error('This user is not activated');
+            err.status = 401;
+            next(err);
+          }
         }
         else {
           const err = new Error('Incorrect password');

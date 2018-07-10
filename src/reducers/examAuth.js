@@ -38,7 +38,7 @@ const examAuth = (state = initialState, action) => {
         ...state,
         isFetching: false,
         isAuthenticated: false,
-        messege: action.payload.messege,
+        message: 'Login Failed',
       };
     case actionTypes.EXAM_LOGOUT:
       return {
