@@ -10,6 +10,7 @@ const initialState = {
   pickedAnswer: [],
   answerList: [],
   progressResult: [],
+  saveStatus: ' '
 };
 
 const TakeExam = (state = initialState, action) => {
@@ -21,19 +22,22 @@ const TakeExam = (state = initialState, action) => {
         isFetching: true,
       };
     case actionTypes.TAKE_EXAM_FETCH_SUCCESS: {
-      console.log('MMMMNNM', state.progressResult);
+      const initialAnswerList = [];
+      for (let i = 0; i < action.payload.examList.length; i += 1) {
+        initialAnswerList.push({ answer: '', question: action.payload.examList[i].exId });
+      }
+
       return {
         ...state,
         examList: action.payload.examList,
         isFetching: false,
         activeCategory: action.payload.examList[0].exCategory,
-        exId: action.payload.examList[0].exId,
         answerList: (state.progressResult === null
-          || state.progressResult === []) ?
-          new Array(action.payload.examList.length).fill({ answer: '', question: '' }) :
+          || state.progressResult.length === 0) ?
+          initialAnswerList :
           state.progressResult,
         pickedAnswer: (state.progressResult === null
-          || state.progressResult === []) ?
+          || state.progressResult.length === 0) ?
           '' : state.progressResult[0].answer,
       };
     }
@@ -62,7 +66,6 @@ const TakeExam = (state = initialState, action) => {
       return {
         ...state,
         currentActivePage: action.payload.value,
-        exId: state.examList[action.payload.value - 1].exId,
         pickedAnswer: state.answerList[action.payload.value - 1] === { answer: '', question: '' } ?
           { answer: '', question: '' } : state.answerList[action.payload.value - 1].answer,
       };
@@ -115,17 +118,25 @@ const TakeExam = (state = initialState, action) => {
       console.log('UPLOAD REQUEST!');
       return {
         ...state,
-        // don't need to update state
+        isFetching: true
       };
-    case actionTypes.TAKE_EXAM_UPLOAD_SUCCESS:
+    case actionTypes.TAKE_EXAM_UPLOAD_SUCCESS: {
+      const date = new Date();
       return {
         ...state,
         progress: action.payload.progress,
+        isFetching: false,
+        saveStatus: ('Save answers complete @ ')
+          .concat(date.getHours()).concat(':')
+          .concat(date.getMinutes()).concat(':')
+          .concat(date.getSeconds())
       };
+    }
     case actionTypes.TAKE_EXAM_UPLOAD_FAILURE:
       return {
         ...state,
         messege: action.payload.messege,
+        saveStatus: 'Save answers error !'
       };
     case actionTypes.TAKE_EXAM_CHECK_PROGRESS_REQUEST:
       return {

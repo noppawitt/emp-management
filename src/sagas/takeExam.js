@@ -54,8 +54,10 @@ export function* fetchTestExamTask(action) {
     yield put(fetchSubCategory(examAmountPerSubCategory));
     const tempProgressResult = yield call(api.checkProgress, action.payload.id);
     const progressResult = [];
-    for (let i = 0; i < tempProgressResult.answerList.length; i += 1) {
-      progressResult.push(JSON.parse(tempProgressResult.answerList[i]));
+    if (tempProgressResult !== null) {
+      for (let i = 0; i < tempProgressResult.answerList.length; i += 1) {
+        progressResult.push(JSON.parse(tempProgressResult.answerList[i]));
+      }
     }
     yield put(fetchProgress(progressResult));
     yield put(fetchTakeExamSuccess(examList));

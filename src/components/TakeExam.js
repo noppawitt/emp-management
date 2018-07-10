@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import {
   Segment,
   Grid,
-  Container,
   Pagination,
   Icon,
   Form,
@@ -72,7 +71,8 @@ const TakeExam = ({
   id,
   onClickCheckProgress,
   onClickCategory,
-  categoryList, }) =>
+  categoryList,
+  saveStatus, }) =>
   (
     <div>
       <br />
@@ -92,78 +92,89 @@ const TakeExam = ({
           </Grid.Column>
           <Grid.Column width={13}>
             <Grid>
-              <Grid.Column width={14}>
-                <br />
-                {filterExam(examList, activeCategory).length > 0 && filterExam(examList, activeCategory).map((row, i) => (
-                  i === currentActivePage - 1 ?
-                    <Form>
-                      <h1>Question {currentActivePage} of {filterExam(examList, activeCategory).length}</h1>{questionRenderer(row.exQuestion)}<br />
-                      {row.exType === 'Choices' && row.exChoice.map(answer => (
-                        row.exAnswerLength === 1 ?
+              <Grid.Row>
+                <Grid.Column width={15}>
+                  <br />
+                  {filterExam(examList, activeCategory).length > 0 && filterExam(examList, activeCategory).map((row, i) => (
+                    i === currentActivePage - 1 ?
+                      <Form>
+                        <Grid>
+                          <Grid.Row>
+                            <Grid.Column width={10}>
+                              <Header as="h1">Question {currentActivePage} of {filterExam(examList, activeCategory).length}</Header>
+                            </Grid.Column>
+                            <Grid.Column width={6} style={{ textAlign: 'right' }} >
+                              <Header as="h1">00:00:00&nbsp;&nbsp;&nbsp;</Header>
+                            </Grid.Column>
+                          </Grid.Row>
+                        </Grid>
+                        <br />
+                        {questionRenderer(row.exQuestion)}
+                        <br />
+                        {row.exType === 'Choices' && row.exChoice.map(answer => (
+                          row.exAnswerLength === 1 ?
+                            <Form.Field>
+                              <p>
+                                <Radio
+                                  label={answer}
+                                  value={answer}
+                                  checked={showAnswerCheckRadio(row.exId, answerList, answer)}
+                                  onClick={(e, { value }) => {
+                                    onClickRadio(value, currentActivePage, pickedAnswer, row.exId);
+                                  }}
+                                />
+                              </p>
+                            </Form.Field> :
+                            <Form.Field>
+                              <p>
+                                <Checkbox
+                                  label={answer}
+                                  value={answer}
+                                  checked={showAnswerCheckRadio(row.exId, answerList, answer)}
+                                  onClick={(e, { value }) => {
+                                    onClickCheckbox(value, currentActivePage, pickedAnswer, row.exId);
+                                  }}
+                                />
+                              </p>
+                            </Form.Field>
+                        ))}
+                        {row.exType !== 'Choices' &&
                           <Form.Field>
-                            <p>
-                              <Radio
-                                label={answer}
-                                value={answer}
-                                checked={showAnswerCheckRadio(row.exId, answerList, answer)}
-                                onClick={(e, { value }) => {
-                                  onClickRadio(value, currentActivePage, pickedAnswer, row.exId);
-                                }}
-                              />
-                            </p>
-                          </Form.Field> :
-                          <Form.Field>
-                            <p>
-                              <Checkbox
-                                label={answer}
-                                value={answer}
-                                checked={showAnswerCheckRadio(row.exId, answerList, answer)}
-                                onClick={(e, { value }) => {
-                                  onClickCheckbox(value, currentActivePage, pickedAnswer, row.exId);
-                                }}
-                              />
-                            </p>
+                            <TextArea
+                              value={showAnswerText(row.exId, answerList)}
+                              placeholder="Type the answer here.."
+                              onInput={(e, { value }) => {
+                                onInputTextArea(value, currentActivePage, row.exId);
+                              }}
+                            />
                           </Form.Field>
-                      ))}
-                      {row.exType !== 'Choices' &&
-                        <Form.Field>
-                          <TextArea
-                            value={showAnswerText(row.exId, answerList)}
-                            placeholder="Type the answer here.."
-                            onInput={(e, { value }) => {
-                              onInputTextArea(value, currentActivePage, row.exId);
-                            }}
-                          />
-                        </Form.Field>
-                      }
-                    </Form> : ''
-                ))}
-                {!examList && (
-                  <h1>Fetch fail somewhere!</h1>
-                )}
-
-              </Grid.Column>
-              <Grid.Column width={2}>
-                <Container textAlign="right"><Header as="h1">Timer</Header></Container>
-              </Grid.Column>
+                        }
+                      </Form> : ''
+                  ))}
+                  {!examList && (
+                    <h1>Fetch fail somewhere!</h1>
+                  )}
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row>
+                <Grid.Column width={15}>
+                  <Pagination
+                    floated="right"
+                    onPageChange={(e, { activePage }) => onPageChange(activePage)}
+                    activePage={currentActivePage}
+                    boundaryRange={1}
+                    siblingRange={1}
+                    ellipsisItem={{ content: <Icon name="ellipsis horizontal" />, icon: true }}
+                    firstItem={{ content: <Icon name="angle double left" />, icon: true }}
+                    lastItem={{ content: <Icon name="angle double right" />, icon: true }}
+                    prevItem={{ content: <Icon name="angle left" />, icon: true }}
+                    nextItem={{ content: <Icon name="angle right" />, icon: true }}
+                    totalPages={categoryLengthCalculate(examList, activeCategory)}
+                  />
+                </Grid.Column>
+              </Grid.Row>
             </Grid>
             <br />
-            <Grid.Row>
-              <Pagination
-                onPageChange={(e, { activePage }) => onPageChange(activePage)}
-                defaultActivePage={1}
-                activePage={currentActivePage}
-                boundaryRange={1}
-                siblingRange={0}
-                ellipsisItem={{ content: <Icon name="ellipsis horizontal" />, icon: true }}
-                firstItem={{ content: <Icon name="angle double left" />, icon: true }}
-                lastItem={{ content: <Icon name="angle double right" />, icon: true }}
-                prevItem={{ content: <Icon name="angle left" />, icon: true }}
-                nextItem={{ content: <Icon name="angle right" />, icon: true }}
-                totalPages={categoryLengthCalculate(examList, activeCategory)}
-              />
-              <br />
-            </Grid.Row>
           </Grid.Column>
         </Grid>
         <Segment>
@@ -179,6 +190,8 @@ const TakeExam = ({
             <Icon name="send" />
             Submit
           </Button>
+          <br />
+          <div style={{ color: (saveStatus === 'Save answers error !') ? 'red' : 'green' }}>{saveStatus}</div>
         </Segment>
       </Segment.Group>
     </div>
@@ -200,6 +213,7 @@ TakeExam.propTypes = {
   onClickCheckProgress: PropTypes.func.isRequired,
   onClickCategory: PropTypes.func.isRequired,
   categoryList: PropTypes.array.isRequired,
+  saveStatus: PropTypes.string.isRequired,
 };
 
 export default TakeExam;
