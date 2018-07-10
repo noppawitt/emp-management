@@ -32,7 +32,7 @@ const Routes = () => (
     <PrivateRoute path="/grade_exam" component={GradeExamPage} />
     <PrivateRoute path="/view_result" component={ViewResultPage} />
     <Route path="/examlogin" component={ExamLoginPage} />
-    <ExamRoute path="/preparetoexam" component={TakeExamAgreementPage} />
+    <ExamRoute path="/takeexam_agreement" component={TakeExamAgreementPage} />
     <ExamRoute path="/takeexam" component={TakeExamPage} />
   </Switch>
 );

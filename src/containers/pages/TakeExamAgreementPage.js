@@ -4,20 +4,17 @@ import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import TakeExamAgreement from '../../components/TakeExamAgreement';
 import {
-  clickAccept,
   clickCheckbox,
 } from '../../actions/takeExamAgreement';
 
-const TakeExamAgreementPage = ({ onClickAccept, isAgree, onClickCheckbox }) => (
+const TakeExamAgreementPage = ({ isAgree, onClickCheckbox }) => (
   <TakeExamAgreement
-    onClickAccept={onClickAccept}
     isAgree={isAgree}
     onClickCheckbox={onClickCheckbox}
   />
 );
 
 TakeExamAgreementPage.propTypes = {
-  onClickAccept: PropTypes.func.isRequired,
   isAgree: PropTypes.bool.isRequired,
   onClickCheckbox: PropTypes.func.isRequired,
 };
@@ -27,7 +24,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onClickAccept: () => dispatch(clickAccept()),
   onClickCheckbox: value => dispatch(clickCheckbox(value)),
 });
 

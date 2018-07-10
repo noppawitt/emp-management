@@ -11,6 +11,7 @@ import recruitmentSaga from './recruitment';
 import examAuthSaga from './examAuth';
 import viewResultSaga from './viewResult';
 import takeExamSaga from './takeExam';
+import takeExamAgreementSaga from './takeExamAgreement';
 
 export default function* rootSaga() {
   yield all([
@@ -26,5 +27,6 @@ export default function* rootSaga() {
     examAuthSaga(),
     viewResultSaga(),
     takeExamSaga(),
+    takeExamAgreementSaga(),
   ]);
 }

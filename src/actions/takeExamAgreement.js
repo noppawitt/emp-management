@@ -6,9 +6,3 @@ export const clickCheckbox = isAgree => ({
     isAgree,
   }
 });
-
-export const clickAccept = () => ({
-  type: actionTypes.TAKE_EXAM_AGREEMENT_CLICK_ACCEPT,
-  payload: {
-  }
-});

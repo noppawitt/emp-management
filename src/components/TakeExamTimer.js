@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Grid } from 'semantic-ui-react';
 import moment from 'moment';
-import './TakeExamTimerStyle.css';
+import '../styles/TakeExamTimerStyle.css';
 
 const paddingZero = (number) => {
   let stringNum = number.toString();
