@@ -1,4 +1,5 @@
 import { call, put, takeEvery, all } from 'redux-saga/effects';
+import moment from 'moment';
 import * as actionTypes from '../constants/actionTypes';
 import {
   fetchTakeExamFailure,
@@ -57,8 +58,11 @@ export function* fetchTestExamTask(action) {
         progressResult.push(JSON.parse(tempProgressResult.answerList[i]));
       }
     }
+    const start = moment();
     yield put(fetchProgress(progressResult));
-    yield put(fetchTakeExamSuccess(examList));
+    yield put(fetchTakeExamSuccess(examList, (tempProgressResult.startTime) ? tempProgressResult.startTime : start));
+    // if (tempProgressResult.startTime) {
+    // }
   }
   catch (error) {
     yield put(fetchTakeExamFailure(error));
