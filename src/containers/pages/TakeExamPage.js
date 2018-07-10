@@ -30,7 +30,6 @@ const TakeExamPage = ({
   onInputTextArea,
   onClickSave,
   onClickSubmit,
-  exId,
   id,
   onClickCheckProgress,
   onClickCategory,
@@ -50,7 +49,6 @@ const TakeExamPage = ({
         onInputTextArea={onInputTextArea}
         onClickSave={onClickSave}
         onClickSubmit={onClickSubmit}
-        exId={exId}
         id={id}
         onClickCheckProgress={onClickCheckProgress}
         onClickCategory={onClickCategory}
@@ -69,7 +67,6 @@ TakeExamPage.propTypes = {
   onClickRadio: PropTypes.func.isRequired,
   onClickCheckbox: PropTypes.func.isRequired,
   onInputTextArea: PropTypes.func.isRequired,
-  exId: PropTypes.number.isRequired,
   onClickSave: PropTypes.func.isRequired,
   onClickSubmit: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
@@ -86,7 +83,6 @@ const mapStateToProps = state => ({
   subCategoryTitle: state.takeExam.subCategoryTitle,
   pickedAnswer: state.takeExam.pickedAnswer,
   answerList: state.takeExam.answerList,
-  exId: state.takeExam.exId,
   id: state.examAuth.id,
   categoryList: state.takeExam.categoryList,
 });
@@ -101,7 +97,7 @@ const mapDispatchToProps = dispatch => ({
   // Submit is save and exit!
   onClickSubmit: (id, answerList) => compose(
     dispatch(uploadAnswerListRequest(id, answerList)),
-    dispatch(finishExam()),
+    dispatch(finishExam(id)),
   ),
   onClickCheckProgress: id => dispatch(checkProgressRequest(id)),
   onClickCategory: category => dispatch(categoryChange(category)),

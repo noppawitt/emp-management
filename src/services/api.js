@@ -308,6 +308,14 @@ api.editExam = body => (
 
 // view exam result
 
+api.grading = id => (
+  callApi(`/api/viewresult/grading/?id=${id}`)
+);
+
+api.fetchUngradedExam = id => (
+  callApi(`/api/viewresult/fetchUngradedExam/?id=${id}`)
+);
+
 api.fetchExamResult = id => (
   callApi(`/api/viewresult/?id=${id}`)
 );

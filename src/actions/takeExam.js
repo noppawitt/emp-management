@@ -128,8 +128,22 @@ export const categoryChange = category => ({
   }
 });
 
-export const finishExam = () => ({
-  type: actionTypes.TAKE_EXAM_FINISH_EXAM,
+export const finishExamRequest = time => ({
+  type: actionTypes.TAKE_EXAM_FINISH_EXAM_REQUEST,
+  payload: {
+    time,
+  }
+});
+
+export const finishExamSuccess = () => ({
+  type: actionTypes.TAKE_EXAM_FINISH_EXAM_SUCCESS,
   payload: {
   }
 });
+
+export const finishExamFailure = messege => ({
+  type: actionTypes.TAKE_EXAM_FINISH_EXAM_FAILURE,
+  payload: {
+    messege,
+  }
+})

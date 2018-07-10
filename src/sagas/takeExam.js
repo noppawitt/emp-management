@@ -10,7 +10,8 @@ import {
   fetchProgress,
   fetchCategory,
   fetchSubCategory,
-  finishExam,
+  finishExamFailure,
+  finishExamSuccess,
 } from '../actions/takeExam';
 import { openModal } from '../actions/modal';
 import * as modalNames from '../constants/modalNames';
@@ -20,6 +21,7 @@ export function* fetchTestExamTask(action) {
   try {
     const randomExIdList = yield call(api.fetchRandomExIdList, action.payload.id);
     const examList = yield call(api.fetchExamSpecifyId, randomExIdList);
+    console.log(examList);
     const categoryList = [];
     const subCategoryList = [];
     Object(examList).map((item) => {
@@ -90,10 +92,10 @@ export function* checkProgressTask(action) {
 export function* finishExamTask() {
   try {
     const result = yield call(api.xx);
-    yield put(finishExam(result));
+    yield put(finishExamSuccess(result));
   }
   catch (error) {
-    yield put(otherthing(error));
+    yield put(finishExamFailure(error));
   }
 }
 
