@@ -67,7 +67,6 @@ exports.findUploadedCategory = (req, res, next) => {
 };
 
 exports.updateStartTime = (req, res, next) => {
-  console.log(moment(req.body.startTime) instanceof moment);
   TakeExam.updateStartTime(req.body.startTime, req.body.id)
     .then((result) => {
       res.json(result);
