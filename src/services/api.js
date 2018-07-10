@@ -308,6 +308,14 @@ api.editExam = body => (
 
 // view exam result
 
+api.grading = id => (
+  callApi(`/api/viewresult/grading/?id=${id}`)
+);
+
+api.fetchUngradedExam = id => (
+  callApi(`/api/viewresult/fetchUngradedExam/?id=${id}`)
+);
+
 api.fetchExamResult = id => (
   callApi(`/api/viewresult/?id=${id}`)
 );
@@ -330,12 +338,6 @@ api.examLogin = form => (
 
 // Take Exam
 
-// the ez one
-api.fetchAllExam = () => (
-  callApi(`/api/takeExam/fetchAllExam`)
-);
-
-// the real-one here
 api.fetchEPRList = id => (
   callApi(`/api/takeExam/fetchEPRList/?id=${id}`)
 );
@@ -367,6 +369,26 @@ api.uploadAnswer = (id, answerList) => (
     body: {
       id,
       answerList,
+    }
+  })
+);
+
+api.updateSubmittedTime = (id, time) => (
+  callApi(`/api/takeExam/updateSubmittedTime`, {
+    method: 'POST',
+    body: {
+      id,
+      time,
+    }
+  })
+);
+
+api.deActivate = (id, status) => (
+  callApi(`/api/takeExam/deActivate`, {
+    method: 'POST',
+    bodt: {
+      id,
+      status,
     }
   })
 );

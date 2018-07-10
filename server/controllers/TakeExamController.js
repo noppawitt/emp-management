@@ -1,14 +1,6 @@
 const TakeExam = require('../models/TakeExam');
 const moment = require('moment');
 
-exports.fetchAllExam = (req, res, next) => {
-  TakeExam.fetchAllExam()
-    .then((examList) => {
-      res.json(examList);
-    })
-    .catch(next);
-};
-
 exports.fetchEPRList = (req, res, next) => {
   TakeExam.fetchEPRList(req.query.id)
     .then((EPRList) => {
@@ -44,7 +36,6 @@ exports.fetchExamSpecifyId = (req, res, next) => {
 
 exports.updateAnswer = (req, res, next) => {
   const object = req.body;
-  console.log(object);
   TakeExam.findUploadedAnswer(object.id, 'existing check')
     .then((isExist) => {
       // if no old answer exist so create it first
@@ -56,7 +47,6 @@ exports.updateAnswer = (req, res, next) => {
           .catch(next);
       }
       // after we make sure it exist update it
-      console.log('?>?>?>?>?', object.answerList);
       TakeExam.updateAnswer(object.id, object.answerList, new Date())
         .then((result) => {
           if (result === null) res.json('Update Complete');
@@ -71,7 +61,6 @@ exports.findUploadedCategory = (req, res, next) => {
   const object = req.query;
   TakeExam.findUploadedCategory(object.id)
     .then((result) => {
-      console.log(result);
       res.json(result);
     })
     .catch(next);
@@ -84,4 +73,28 @@ exports.updateStartTime = (req, res, next) => {
       res.json(result);
     })
     .catch(next);
+};
+
+exports.updateSubmittedTime = (req, res, next) => {
+  console.log('>>', req.body.time);
+  TakeExam.saveTimestamp(req.body.id, req.body.time)
+    .then((retval) => {
+      console.log('return value:', retval);
+      res.json(retval);
+    })
+    .catch(next);
+};
+
+exports.deActivate = (req, res, next) => {
+  if (req.body.status !== 'deactive') {
+    console.log('deactive status: not deactive type!');
+    res.json('deactive status: not deactive type!');
+  }
+  else {
+    TakeExam.changeStatus(req.body.id, 'Wait for Grading')
+      .then((retval) => {
+        res.json('deactive status: '.concat(retval === null ? 'OK' : 'Something wrong'));
+      })
+      .catch(next);
+  }
 };

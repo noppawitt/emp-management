@@ -129,8 +129,22 @@ export const categoryChange = category => ({
   }
 });
 
-export const finishExam = () => ({
-  type: actionTypes.TAKE_EXAM_FINISH_EXAM,
+export const finishExamRequest = id => ({
+  type: actionTypes.TAKE_EXAM_FINISH_EXAM_REQUEST,
   payload: {
+    id,
+  }
+});
+
+export const finishExamSuccess = () => ({
+  type: actionTypes.TAKE_EXAM_FINISH_EXAM_SUCCESS,
+  payload: {
+  }
+});
+
+export const finishExamFailure = messege => ({
+  type: actionTypes.TAKE_EXAM_FINISH_EXAM_FAILURE,
+  payload: {
+    messege,
   }
 });

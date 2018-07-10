@@ -11,7 +11,8 @@ import {
   fetchProgress,
   fetchCategory,
   fetchSubCategory,
-  finishExam,
+  finishExamFailure,
+  finishExamSuccess,
 } from '../actions/takeExam';
 import { openModal } from '../actions/modal';
 import * as modalNames from '../constants/modalNames';
@@ -21,6 +22,7 @@ export function* fetchTestExamTask(action) {
   try {
     const randomExIdList = yield call(api.fetchRandomExIdList, action.payload.id);
     const examList = yield call(api.fetchExamSpecifyId, randomExIdList);
+    console.log(examList);
     const categoryList = [];
     const subCategoryList = [];
     Object(examList).map((item) => {
@@ -97,13 +99,16 @@ export function* checkProgressTask(action) {
   }
 }
 
-export function* finishExamTask() {
+export function* finishExamTask(action) {
   try {
-    const result = yield call(api.xx);
-    yield put(finishExam(result));
+    const now = moment();
+    const timestampResult = yield call(api.updateSubmittedTime, action.payload.id, now);
+    const deActivateResult = yield call(api.deActivate, action.payload.id, 'Waiting for Grading');
+    console.log(timestampResult, deActivateResult);
+    yield put(finishExamSuccess());
   }
   catch (error) {
-    yield put(otherthing(error));
+    yield put(finishExamFailure(error));
   }
 }
 
@@ -120,7 +125,7 @@ export function* watchCheckProgressRequest() {
 }
 
 export function* watchFinishExamRequest() {
-  yield takeEvery(actionTypes.TAKE_EXAM_FINISH_EXAM, finishExamTask);
+  yield takeEvery(actionTypes.TAKE_EXAM_FINISH_EXAM_REQUEST, finishExamTask);
 }
 
 export default function* takeExamSaga() {

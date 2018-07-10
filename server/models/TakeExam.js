@@ -76,8 +76,17 @@ TakeExam.findUploadedCategory = id => (
 );
 
 TakeExam.updateStartTime = (startTime, id) => {
+  console.log('in', startTime);
   const start = moment(startTime).format('YYYY-MM-DD HH:mm:ss');
   return db.none('UPDATE exam_candidate_submitted SET start_time = $1 WHERE id = $2', [start, id]);
 };
+
+TakeExam.updateSubmittedTime = (id, time) => (
+  db.oneOrNone('UPDATE exam_candidate_submitted SET submitted_time = $2 WHERE id = $1', [id, moment(time).format('YYYY-MM-DD HH:mm:ss')])
+);
+
+TakeExam.changeStatus = (id, status) => (
+  db.oneOrNone('UPDATE recruitments SET status = $2 WHERE citizen_id =$1', [id, status])
+);
 
 module.exports = TakeExam;

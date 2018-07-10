@@ -106,7 +106,7 @@ const mapDispatchToProps = dispatch => ({
   // Submit is save and exit!
   onClickSubmit: (id, answerList) => compose(
     dispatch(uploadAnswerListRequest(id, answerList)),
-    dispatch(finishExam()),
+    dispatch(finishExam(id)),
   ),
   onClickCheckProgress: id => dispatch(checkProgressRequest(id)),
   onClickCategory: category => dispatch(categoryChange(category)),

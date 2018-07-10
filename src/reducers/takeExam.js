@@ -116,7 +116,6 @@ const TakeExam = (state = initialState, action) => {
       };
     }
     case actionTypes.TAKE_EXAM_UPLOAD_REQUEST:
-      console.log('UPLOAD REQUEST!');
       return {
         ...state,
         isFetching: true
