@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
+import { Redirect } from 'react-router-dom';
 import moment from 'moment';
 import {
   fetchTakeExamRequest,
@@ -16,7 +17,6 @@ import {
 } from '../../actions/takeExam';
 import TakeExam from '../../components/TakeExam';
 import Loader from '../../components/Loader';
-// import { getVisibleExam } from '../../selectors/TakeExam';
 
 const TakeExamPage = ({
   isFetching,
@@ -37,8 +37,13 @@ const TakeExamPage = ({
   categoryList,
   saveStatus,
   startTime }) =>
-  (
-    isFetching ?
+  ((localStorage.getItem('agree') === undefined || localStorage.getItem('agree') === null || localStorage.getItem('agree') !== 'agree')
+    ? <Redirect
+      to={{
+        pathname: '/takeexam_agreement'
+      }}
+    />
+    : (isFetching ?
       <Loader /> :
       <TakeExam
         examList={examList}
@@ -58,7 +63,7 @@ const TakeExamPage = ({
         categoryList={categoryList}
         saveStatus={saveStatus}
         startTime={startTime}
-      />
+      />)
   );
 
 TakeExamPage.propTypes = {

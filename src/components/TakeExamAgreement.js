@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Segment, Form, Grid, Checkbox, Button } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import history from '../history';
 
 const TakeExamAgreement = ({ isAgree, onClickCheckbox }) => (
   <div>
@@ -36,8 +36,7 @@ const TakeExamAgreement = ({ isAgree, onClickCheckbox }) => (
               <Button
                 primary
                 disabled={!isAgree}
-                as={Link}
-                to="/takeexam"
+                onClick={() => { localStorage.setItem('agree', 'agree'); history.push('/takeexam'); }}
               >
                 Accept
               </Button>
