@@ -25,7 +25,8 @@
         "linebreak-style": ["error","windows"],
         "no-mixed-operators": "off",
         "no-continue": "off",
-        "no-underscore-dangle": "off"
+        "no-underscore-dangle": "off",
+        "no-nested-ternary": "off"
     },
     "plugins": [
         "import",
