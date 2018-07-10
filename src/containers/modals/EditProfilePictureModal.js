@@ -7,7 +7,7 @@ import AvatarEditor from 'react-avatar-editor';
 import { closeModal } from '../../actions/modal';
 import { updateProfilePictureRequest } from '../../actions/profile';
 
-const EditProfilePictureModal = ({ onClose, picture, setPicture, scale, setScale, updateProfilePicture }) => {
+const EditProfilePictureModal = ({ onClose, picture, setPicture, scale, setScale, updateProfilePicture, profileId }) => {
   let imageEditor;
   const onSaveClick = () => {
     const image = imageEditor.getImage().toDataURL();
@@ -37,7 +37,7 @@ const EditProfilePictureModal = ({ onClose, picture, setPicture, scale, setScale
           borderRadius={250}
           scale={scale}
         />}
-        <input name="file" type="file" onChange={e => setPicture(URL.createObjectURL(e.target.files[0]))} />
+        <input name="file" type="file" onChange={e => setPicture(URL.createObjectURL(e.target.files[0]), profileId)} />
         {picture && scale}
         {picture && <Input type="range" min={1} max={3} step={0.1} onChange={(e, { value }) => setScale(value)} />}
         <Button onClick={onSaveClick}>Save</Button>
@@ -52,18 +52,23 @@ EditProfilePictureModal.propTypes = {
   setPicture: PropTypes.func.isRequired,
   scale: PropTypes.number.isRequired,
   setScale: PropTypes.func.isRequired,
-  updateProfilePicture: PropTypes.func.isRequired
+  updateProfilePicture: PropTypes.func.isRequired,
+  profileId: PropTypes.number.isRequired
 };
+
+const mapStateToProps = state => ({
+  profileId: state.profile.userId
+});
 
 const mapDispatchToProps = dispatch => ({
   onClose: () => dispatch(closeModal()),
-  updateProfilePicture: blob => dispatch(updateProfilePictureRequest(blob))
+  updateProfilePicture: (blob, userId) => dispatch(updateProfilePictureRequest(blob, userId))
 });
 
 const enhance = compose(
   withState('picture', 'setPicture', undefined),
   withState('scale', 'setScale', 1),
-  connect(null, mapDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps)
 );
 
 export default enhance(EditProfilePictureModal);

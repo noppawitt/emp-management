@@ -68,10 +68,11 @@ export const deleteProfileFailure = message => ({
   }
 });
 
-export const updateProfilePictureRequest = picture => ({
+export const updateProfilePictureRequest = (picture, userId) => ({
   type: actionTypes.PROFILE_PICTURE_UPDATE_REQUEST,
   payload: {
-    picture
+    picture,
+    userId
   }
 });
 

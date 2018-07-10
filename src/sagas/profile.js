@@ -113,6 +113,7 @@ export function* updateProfilePictureTask(action) {
   try {
     const formData = new FormData();
     formData.append('profileImage', action.payload.picture);
+    formData.append('userId', action.payload.userId);
     const { path } = yield call(api.updateProfilePicture, formData);
     yield put(updateProfilePictureSuccess(`${path}?time=${new Date()}`));
     yield put(closeModal());
