@@ -32,7 +32,7 @@ class SelfAssessmentForm extends React.Component {
             contribution: '',
             strengths: '',
             improvements: '',
-            goal1: [null, null, null, null, null],
+            goal1: ['', '', '', '', ''],
             goal2: ['', '', '', '', ''],
             goal3: ['', '', '', '', ''],
             currentPage: 0
