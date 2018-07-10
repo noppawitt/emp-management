@@ -117,12 +117,24 @@ class SelfAssessmentForm extends React.Component {
     }
 
     componentDidUpdate() {
-        this.state = { ...this.state, currentPage: this.props.item.currentPage };
+        this.state = this.props.item;
         this.animateChangePage();
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return nextProps.item.currentPage != nextState.item.currentPage;
+
+      currentPage: 0
+        return (
+          nextProps.item.currentPage != nextState.currentPage ||
+          nextProps.item.majorResponsibilities != nextState.majorResponsibilities ||
+          nextProps.item.significantAccomplishments != nextState.significantAccomplishments ||
+          nextProps.item.contribution != nextState.contribution ||
+          nextProps.item.strengths != nextState.strengths ||
+          nextProps.item.improvements != nextState.improvements ||
+          nextProps.item.goal1 != nextState.goal1 ||
+          nextProps.item.goal2 != nextState.goal2 ||
+          nextProps.item.goal3 != nextState.goal3
+        );
     }
 
     render() {
