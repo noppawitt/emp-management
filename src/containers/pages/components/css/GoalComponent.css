@@ -10,14 +10,14 @@
 
 .goal-table td {
     padding-top: 1em;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .goal-table td textarea {
     border-radius: 7px;
     border-width: thin;
     padding: 1%;
-    height: 8em;
+    height: 7em;
     width: 100%;
     resize: none;
     overflow: scroll;
