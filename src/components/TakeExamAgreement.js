@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { Segment, Table, Form, Grid, Checkbox, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
-const Agreement = ({ submit }) => (
+const TakeExamAgreement = ({ onClickAccept, isAgree, onClickCheckbox }) => (
   <div>
     <Table>
       <Table.Body>
         <Segment>
           <h1>Terms and Conditions.</h1>
           {/* this just a temp paragraph,
-            replace it with test-rule and agreement */}
+            replace it with exam-rule and agreement */}
           <p>Compliment interested discretion estimating on stimulated apartments oh.</p>
           <p>Dear so sing when in find read of call. As distrusts behaviour abilities defective is.</p>
           <p>Never at water me might. On formed merits hunted unable merely by mr whence or.</p>
@@ -28,21 +28,25 @@ const Agreement = ({ submit }) => (
       <Table.Footer>
         <Table.Row>
           <Segment>
-            {/* here submit is func
-              but on we get it and proptype it is bool,
-              fix it later */}
-            <Form onSubmit={() => submit}>
+            <Form>
               <Grid>
                 <Grid.Row>
-                  <Checkbox label=" I agree to the Terms and Conditions." />
-                </Grid.Row>
-                <Grid.Row>
-                  <Grid.Column width={2}>
-                    <Button primary type="submit" as={Link} to="/examlogin">Accept</Button>
-                  </Grid.Column>
-                  <Grid.Column width={2}>
-                    <Button type="submit">Logout</Button>
-                  </Grid.Column>
+                  <Button
+                    primary
+                    type="submit"
+                    as={Link}
+                    to="/examlogin"
+                    onClick={() => onClickAccept()}
+                    disabled={!isAgree}
+                  >
+                    Accept
+                  </Button>
+                  <Checkbox
+                    label=" I agree to the Terms and Conditions."
+                    value={!isAgree}
+                    checked={isAgree}
+                    onClick={(e, { value }) => onClickCheckbox(value)}
+                  />
                 </Grid.Row>
               </Grid>
             </Form>
@@ -53,8 +57,10 @@ const Agreement = ({ submit }) => (
   </div>
 );
 
-Agreement.propTypes = {
-  submit: PropTypes.func.isRequired,
+TakeExamAgreement.propTypes = {
+  onClickAccept: PropTypes.func.isRequired,
+  isAgree: PropTypes.bool.isRequired,
+  onClickCheckbox: PropTypes.func.isRequired,
 };
 
-export default Agreement;
+export default TakeExamAgreement;

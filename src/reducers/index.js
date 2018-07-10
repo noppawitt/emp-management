@@ -12,7 +12,7 @@ import timesheet from './timesheet';
 import exam from './exam';
 import recruitment from './recruitment';
 import examAuth from './examAuth';
-import agreement from './agreement';
+import takeExamAgreement from './takeExamAgreement';
 import viewResult from './viewResult';
 import takeExam from './takeExam';
 
@@ -30,7 +30,7 @@ export default combineReducers({
   recruitment,
   exam,
   examAuth,
-  agreement,
+  takeExamAgreement,
   viewResult,
   takeExam,
 });

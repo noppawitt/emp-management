@@ -1,17 +1,16 @@
 import * as actionTypes from '../constants/actionTypes';
 
 const initialState = {
-  isFetching: true,
+  isAgree: false,
 };
 
 // edit this
 const agreement = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.FETCH_EXAM_LIST:
+    case actionTypes.TAKE_EXAM_AGREEMENT_CLICK_CHECKBOX:
       return {
         ...state,
-        isFetching: true,
-        id: action.payload.id,
+        isAgree: action.payload.isAgree,
       };
     default:
       return state;
