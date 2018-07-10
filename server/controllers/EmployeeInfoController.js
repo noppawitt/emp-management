@@ -24,11 +24,6 @@ exports.findById = (req, res, next) => {
       })
       .catch(next);
   }
-  else {
-    res.status(401).json({
-      message: `You don't have permission to do this.`
-    });
-  }
 };
 
 exports.update = (req, res, next) => {
@@ -56,17 +51,31 @@ exports.update = (req, res, next) => {
       });
     }
   }
-  else {
-    res.status(401).json({
-      message: `You don't have permission to do this.`
-    });
-  }
 };
 
 exports.updateProfileImg = (req, res, next) => {
   const path = `/static/profile-img/${req.file.filename}`;
-  EmployeeInfo.updateProfileImg(path, req.user.id)
-    .then(() => {
-      res.json({ path });
-    });
+  // for admin
+  if (req.accessControl.employeeInfoEditAll) {
+    EmployeeInfo.updateProfileImg(path, req.user.id)
+      .then(() => {
+        res.json({ path });
+      })
+      .catch(next);
+  }
+  // for user
+  else if (req.accessControl.employeeInfoEditOwn) {
+    if (req.body.userId === req.user.id) {
+      EmployeeInfo.updateProfileImg(path, req.body.userId)
+        .then(() => {
+          res.json({ path });
+        })
+        .catch(next);
+    }
+    else {
+      res.status(401).json({
+        message: `You don't have permission to do this.`
+      });
+    }
+  }
 };
