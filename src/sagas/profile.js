@@ -10,13 +10,26 @@ import {
   fetchProbationSuccess,
   fetchProbationFailure,
   fetchPerformanceSuccess,
-  fetchPerformanceFailure
+  fetchPerformanceFailure,
+  fetchSelfAssessmentSuccess,
+  fetchSelfAssessmentFailure
 } from '../actions/profile';
 import { closeModal } from '../actions/modal';
 import api from '../services/api';
 import jwt from 'jsonwebtoken';
 
 const token = jwt.decode(localStorage.getItem('token'));
+
+export function* fetchSelfAssessmentTask(action){
+  try{
+    const profile = {};
+    profile.selfInfo = yield call(api.fetchSelfAssessment, action.payload.id);
+    yield put(fetchSelfAssessmentSuccess(profile));
+  }
+  catch (error) {
+    yield put(fetchSelfAssessmentFailure(error));
+  }
+}
 
 export function* fetchPerformanceTask(action){
   try{
@@ -51,6 +64,7 @@ export function* fetchProfileTask(action) {
     if(token.type=='admin' || token.id == action.payload.id || token.type == 'md'){
       profile.eva = yield call(api.checkProbation, action.payload.id);
       profile.perf = yield call(api.checkPerformance, action.payload.id);
+      profile.self = yield call(api.checkSelfAssessment, action.payload.id);
     }
     yield put(fetchProfileSuccess(profile));
   }
@@ -63,13 +77,16 @@ export function* updateProfileTask(action) {
   try {
     const profile = {};
     switch (action.payload.type) {
-      case 'sign':
-        profile.eva = yield call(api.sign,{
-          employeeSignDate : action.payload.form.employeeSignDate,
-          supervisorSignDate : action.payload.form.supervisorSignDate,
-          MDSignDate : action.payload.form.MDSignDate
-        })
-        break
+      case 'addSelfAssessment' :
+        profile.self = yield call(api.addSelfAssessment,{
+          selfAssessmentInfo: action.payload.form
+        });
+        break;
+      case 'updateSelfAssessment' :
+        profile.self = yield call(api.updateSelfAssessment,{
+          selfAssessmentInfo: action.payload.form
+        });
+        break;
       case 'addPerformance' :
         profile.perf = yield call(api.addPerformance,{
           performanceInfo: action.payload.form
@@ -191,12 +208,17 @@ export function* watchFetchPerformanceRequest() {
   yield takeEvery(actionTypes.PERFORMANCE_FETCH_REQUEST, fetchPerformanceTask);
 }
 
+export function* watchFetchSelfAssessmentRequest() {
+  yield takeEvery(actionTypes.SELFASSESSMENT_FETCH_REQUEST, fetchSelfAssessmentTask);
+}
+
 export default function* profileSaga() {
   yield all([
     watchFetchProfileRequest(),
     watchUpdateProfileRequest(),
     watchDeleteProfileRequest(),
     watchFetchProbationRequest(),
-    watchFetchPerformanceRequest()
+    watchFetchPerformanceRequest(),
+    watchFetchSelfAssessmentRequest()
   ]);
 }

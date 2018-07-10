@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Segment,Grid , Header, Icon, Button, Dropdown, Container, Divider} from 'semantic-ui-react';
 import ProfileBox from '../components/ProfileBox';
 import { openModal } from '../actions/modal';
-import { fetchProbationRequest, fetchPerformanceRequest } from '../actions/profile';
+import { fetchProbationRequest, fetchPerformanceRequest, fetchSelfAssessmentRequest} from '../actions/profile';
 import * as modalNames from '../constants/modalNames';
 import './pages/css/EvaProfileBox.css'
 
@@ -12,7 +12,7 @@ const AngleDownButton = (
   <Button icon="angle down" ></Button>
 )
 
-const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, openPerformanceModal, type, fetchProbation, profileId, fetchPerformance, openSelfAssessment}) => {
+const EvaProfileBox = ({performanceProfile, evaProfile, selfProfile, openProbationModal, id, openPerformanceModal, type, fetchProbation, profileId, fetchPerformance, openSelfAssessmentModal, fetchSelfAssessment}) => {
   console.log(evaProfile);
   const optionsPerf = [
     {
@@ -98,7 +98,7 @@ const EvaProfileBox = ({performanceProfile, evaProfile, openProbationModal, id, 
               </Button>
             </Button.Group>
         </div>
-            <Button icon labelPosition='left' icon={'angle right'} content={'Self Assessment'} onClick={()=>{openSelfAssessment()}} color={'yellow'}/>
+            <Button icon labelPosition='left' icon={'angle right'} content={selfProfile ? 'Self Assessment' : 'Add Self Assessment'} onClick={()=>{if(selfProfile!=null)fetchSelfAssessment(profileId);openSelfAssessmentModal()}} color={selfProfile ? 'yellow':'green'}/>
 
       </Segment>
 
@@ -125,10 +125,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch =>({
   openPerformanceModal: () => dispatch(openModal(modalNames.ADD_PERFORMANCE)),
-  openSelfAssessment: () => dispatch(openModal(modalNames.ADD_SELFASSESSMENT)),
+  openSelfAssessmentModal: () => dispatch(openModal(modalNames.ADD_SELFASSESSMENT)),
   openProbationModal: () => dispatch(openModal(modalNames.ADD_PROBATION)),
   fetchProbation: (id,probationId) => dispatch(fetchProbationRequest(id,probationId)),
-  fetchPerformance: (id,year) => dispatch(fetchPerformanceRequest(id,year))
+  fetchPerformance: (id,year) => dispatch(fetchPerformanceRequest(id,year)),
+  fetchSelfAssessment: (id) => dispatch(fetchSelfAssessmentRequest(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EvaProfileBox);

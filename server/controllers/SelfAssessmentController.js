@@ -1,6 +1,7 @@
-const SelfAssessment = require('../model/SelfAssessment')
+const SelfAssessment = require('../models/SelfAssessment')
 
 exports.check = (req,res,next) => {
+  console.log('check self');
   SelfAssessment.checkExist(req.query.id)
     .then( exist => {
       res.json(exist)
@@ -18,9 +19,10 @@ exports.find = (req,res,next) => {
 
 exports.create = (req,res,next) => {
   const newSelfAssessment = req.body.selfAssessmentInfo;
+  console.log('create self');
   SelfAssessment.insertSelfAssessment(newSelfAssessment, req.user.id)
     .then(()=>{
-      SelfAssessment.findById(req.body.selfAssessmentInfo.employeeID)
+      SelfAssessment.checkExist(req.body.selfAssessmentInfo.employeeID)
         .then( exist => {
           res.json(exist)
         })
@@ -32,7 +34,7 @@ exports.update = (req,res,next) => {
   const newSelfAssessment = req.body.selfAssessmentInfo;
   SelfAssessment.updateSelfAssessment(newSelfAssessment, req.user.id)
     .then(()=>{
-      SelfAssessment.findById(req.body.selfAssessmentInfo.employeeID)
+      SelfAssessment.checkExist(req.body.selfAssessmentInfo.employeeID)
         .then( exist =>{
           res.json(exist)
         })

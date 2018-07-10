@@ -23,10 +23,10 @@ class AddSelfAssessment extends React.Component {
           <Modal
             header={this.props.profile.eva == null ? 'Add Probation':'View Probation'}
             onClose={()=>{this.props.onClose()}}
-            onClick={()=>{}}
-            submitting={false}
+            onClick={()=>this.props.onSubmit(this.props.item,(this.props.profile.selfInfo == null ? 'addSelfAssessment':'updateSelfAssessment'))}
+            submitting={this.props.submitting}
             size="large"
-            disable={true}
+            disable={!this.props.edited}
           >
             <A test={this.props.onChange} profile={this.props.profile} currentPage={this.props.profile.item ? this.props.profile.item.currentPage : 0}/>
           </Modal>

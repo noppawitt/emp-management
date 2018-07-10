@@ -119,6 +119,27 @@ export const fetchPerformanceFailure = message => ({
   }
 });
 
+export const fetchSelfAssessmentRequest = (id) => ({
+  type: actionTypes.SELFASSESSMENT_FETCH_REQUEST,
+  payload:{
+    id
+  }
+});
+
+export const fetchSelfAssessmentSuccess = profile => ({
+  type: actionTypes.SELFASSESSMENT_FETCH_SUCCESS,
+  payload: {
+    profile
+  }
+});
+
+export const fetchSelfAssessmentFailure = message => ({
+  type: actionTypes.SELFASSESSMENT_FETCH_FAILURE,
+  payload: {
+    message
+  }
+});
+
 export const clearProbationStore = () => ({
   type: actionTypes.CLEAR_PROBATION_STORE,
 });
