@@ -28,7 +28,7 @@ class AddSelfAssessment extends React.Component {
             size="large"
             disable={!this.props.edited}
           >
-            <A test={this.props.onChange} profile={this.props.profile} currentPage={this.props.profile.item ? this.props.profile.item.currentPage : 0}/>
+            <A test={this.props.onChange} profile={this.props.profile} item={this.props.profile.item}/>
           </Modal>
         }
       </div>

@@ -25,6 +25,8 @@ const profile = (state = initialState, action) => {
       }else if(action.payload.type=='performance'){
         edited = true
       }else if(action.payload.type=='selfassessment'){
+        if(action.payload.item.validate) edited = true;
+        else edited = false;
       }
       return {
         ...state,

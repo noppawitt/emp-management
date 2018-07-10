@@ -43,7 +43,7 @@ class SelfAssessmentForm extends React.Component {
         this.goalTwoHandler = this.goalTwoHandler.bind(this);
         this.goalThreeHandler = this.goalThreeHandler.bind(this);
         this.updateReduxState = this.updateReduxState.bind(this);
-        this.validateFeild = this.validateFeild.bind(this);
+        this.validateField = this.validateField.bind(this);
     }
 
     componentWillMount(){
@@ -108,7 +108,7 @@ class SelfAssessmentForm extends React.Component {
     }
 
     updateReduxState() {
-        this.validateFeild();
+        this.validateField();
         this.props.test(this.state);
     }
 
@@ -117,12 +117,12 @@ class SelfAssessmentForm extends React.Component {
     }
 
     componentDidUpdate() {
-        this.state = { ...this.state, currentPage: this.props.currentPage };
+        this.state = { ...this.state, currentPage: this.props.item.currentPage };
         this.animateChangePage();
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return nextProps.currentPage != nextState.currentPage;
+        return nextProps.item.currentPage != nextState.item.currentPage;
     }
 
     render() {
