@@ -34,14 +34,13 @@ class SignatureComponent extends React.Component {
             this.employeeSignButton.current.disabled = false;
         else if (this.state.role == 'supervisor')
             this.supervisorSignButton.current.disabled = false;
-        else if (this.state.role == 'MD')
+        else if (this.state.role == 'md')
             this.MDSignButton.current.disabled = false;
         else {
             this.employeeSignButton.current.disabled = true;
             this.supervisorSignButton.current.disabled = true;
             this.MDSignButton.current.disabled = true;
         }
-
         if (this.state.employeeSignDate)
             this.EmployeeSignHandler();
         else

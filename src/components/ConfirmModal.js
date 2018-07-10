@@ -54,7 +54,7 @@ class ConfirmModal extends React.Component{
 
 const mapStateToProps = state => ({
   button:
-    state.auth.type == 'User' && ((state.profile.evaInfo &&state.profile.evaInfo.emSignDate) || (state.profile.perfInfo &&state.profile.perf.emSignDate)) ? false :
+    state.auth.type == 'User' && ((state.profile.evaInfo && state.profile.evaInfo.emSignDate) || (state.profile.perfInfo && state.profile.perf.emSignDate)) ? false :
     state.auth.type == 'admin' && ((state.profile.evaInfo && state.profile.evaInfo.supSignDate) || (state.profile.perfInfo && state.profile.perfInfo.supSignDate)) ? false : true
 });
 

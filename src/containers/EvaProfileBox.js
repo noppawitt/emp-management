@@ -113,7 +113,7 @@ EvaProfileBox.defaultProps = {
 };
 
 EvaProfileBox.propTypes = {
-  evaProfile: PropTypes.object,
+  evaProfile: PropTypes.array,
   openProbationModal: PropTypes.func.isRequired
 };
 // <Button icon labelPosition='left' disabled={type!='admin' && !evaProfile} icon={evaProfile==null ? 'plus':'angle right'} content={!evaProfile && type=='admin' ? 'Create Probation':'View Probation'} onClick={()=>{fetchProbation(profileId);openProbationModal()}} color={!evaProfile && type=='admin' ? 'green':'blue'}/>
