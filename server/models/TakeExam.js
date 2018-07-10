@@ -76,7 +76,7 @@ TakeExam.findUploadedCategory = id => (
 );
 
 TakeExam.updateStartTime = (startTime, id) => {
-  const start = moment(startTime).utc().format('YYYY-MM-DD HH:mm:ss');
+  const start = moment(startTime).format('YYYY-MM-DD HH:mm:ss');
   return db.none('UPDATE exam_candidate_submitted SET start_time = $1 WHERE id = $2', [start, id]);
 };
 

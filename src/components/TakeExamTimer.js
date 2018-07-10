@@ -24,7 +24,7 @@ class TakeExamTimer extends Component {
   }
 
   countDown() {
-    const current = moment().utc();
+    const current = moment();
     const timeLeftSecond = paddingZero(Math.abs(this.endTime.diff(current, 'seconds') % 60));
     const timeLeftMinute = paddingZero(Math.abs(this.endTime.diff(current, 'minutes') % 60));
     const timeLeftHour = paddingZero(Math.abs(this.endTime.diff(current, 'hours') % 60));
