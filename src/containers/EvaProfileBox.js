@@ -90,7 +90,7 @@ const EvaProfileBox = ({performanceProfile, evaProfile, selfProfile, openProbati
                     fetchProbation(profileId,evaProfile[0].probationId);
                   openProbationModal();}
                 }
-                disabled={type!='admin' && evaProfile.length==0}>
+                disabled={(type!='admin' && evaProfile.length==0) || !selfProfile}>
                 {
                   evaProfile.length==0 && type=='admin' ? 'Create Probation':
                   evaProfile.length!=0 && type=='admin' && evaProfile[0].passPro==false && evaProfile[0].continued==true && evaProfile[0].mdSignDate!=null ? 'Create Continue Probation' : 'View Probation'
