@@ -2,7 +2,7 @@ const router = require('express').Router();
 const EmployeeWorkController = require('../../controllers/EmployeeWorkController');
 const { can } = require('../../middlewares');
 
-router.post('/', EmployeeWorkController.create);
+router.post('/', can(['userAdd']), EmployeeWorkController.create);
 
 router.get('/', can(['employeeWorkViewOwn', 'employeeWorkViewAll']), EmployeeWorkController.findByUserId);
 
