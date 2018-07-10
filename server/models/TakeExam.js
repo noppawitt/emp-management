@@ -1,4 +1,5 @@
 const db = require('../db');
+const moment = require('moment');
 
 const TakeExam = {};
 
@@ -20,13 +21,13 @@ TakeExam.fetchEPRList = id => (
 
 TakeExam.fetchExamId = () => (
   db.manyOrNone('SELECT'
-  + ' ex_category as category'
-  + ', ex_subcategory as subcategory'
-  + ', ex_type as type'
-  + ', ARRAY_AGG( ex_id ) as ex_id_list'
-  + ' FROM exams'
-  + ' GROUP BY ex_category, ex_subcategory, ex_type'
-  + ' ORDER BY ex_category, ex_subcategory, ex_type')
+    + ' ex_category as category'
+    + ', ex_subcategory as subcategory'
+    + ', ex_type as type'
+    + ', ARRAY_AGG( ex_id ) as ex_id_list'
+    + ' FROM exams'
+    + ' GROUP BY ex_category, ex_subcategory, ex_type'
+    + ' ORDER BY ex_category, ex_subcategory, ex_type')
 );
 
 TakeExam.fetchRandomExIdList = id => (
@@ -35,14 +36,14 @@ TakeExam.fetchRandomExIdList = id => (
 
 TakeExam.fetchExamSpecifyId = idList => (
   db.manyOrNone('SELECT'
-  + ' ex_id'
-  + ', ex_category'
-  + ', ex_subcategory'
-  + ', ex_type'
-  + ', ex_question'
-  + ', ex_choice'
-  + ', ARRAY_LENGTH(ex_answer, 1) as ex_answer_length'
-  + ' FROM exams WHERE ex_id = ANY ($1)', [idList])
+    + ' ex_id'
+    + ', ex_category'
+    + ', ex_subcategory'
+    + ', ex_type'
+    + ', ex_question'
+    + ', ex_choice'
+    + ', ARRAY_LENGTH(ex_answer, 1) as ex_answer_length'
+    + ' FROM exams WHERE ex_id = ANY ($1)', [idList])
 );
 
 TakeExam.createBufferAnswer = (id, answerList, date) => (
@@ -74,8 +75,13 @@ TakeExam.findUploadedCategory = id => (
   db.oneOrNone('SELECT * FROM exam_candidate_submitted WHERE id = $1', [id])
 );
 
+TakeExam.updateStartTime = (startTime, id) => {
+  const start = moment(startTime).format('YYYY-MM-DD HH:mm:ss');
+  return db.none('UPDATE exam_candidate_submitted SET start_time = $1 WHERE id = $2', [start, id]);
+};
+
 TakeExam.saveTimestamp = (id, time) => (
-  db.oneOrNone('UPDATE exam_candidate_submitted SET submitted_time = $2 WHERE id = $1', [id, time])
+  db.oneOrNone('UPDATE exam_candidate_submitted SET submitted_time = $2 WHERE id = $1', [id, moment(time).format('YYYY-MM-DD HH:mm:ss')])
 );
 
 TakeExam.changeStatus = (id, status) => (

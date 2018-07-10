@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 // import Modal from '../../components/modal';
 import {
   Segment,
@@ -15,6 +16,7 @@ import {
   Menu,
 } from 'semantic-ui-react';
 import { pageChange } from '../actions/takeExam';
+import TakeExamTimer from './TakeExamTimer';
 
 const questionRenderer = question => (
   <div dangerouslySetInnerHTML={{ __html: question }} />
@@ -72,7 +74,8 @@ const TakeExam = ({
   onClickCheckProgress,
   onClickCategory,
   categoryList,
-  saveStatus, }) =>
+  saveStatus,
+  startTime }) =>
   (
     <div>
       <br />
@@ -103,9 +106,7 @@ const TakeExam = ({
                             <Grid.Column width={10}>
                               <Header as="h1">Question {currentActivePage} of {filterExam(examList, activeCategory).length}</Header>
                             </Grid.Column>
-                            <Grid.Column width={6} style={{ textAlign: 'right' }} >
-                              <Header as="h1">00:00:00&nbsp;&nbsp;&nbsp;</Header>
-                            </Grid.Column>
+                            <TakeExamTimer startTime={startTime} />
                           </Grid.Row>
                         </Grid>
                         <br />
@@ -214,6 +215,7 @@ TakeExam.propTypes = {
   onClickCategory: PropTypes.func.isRequired,
   categoryList: PropTypes.array.isRequired,
   saveStatus: PropTypes.string.isRequired,
+  startTime: PropTypes.instanceOf(moment).isRequired,
 };
 
 export default TakeExam;

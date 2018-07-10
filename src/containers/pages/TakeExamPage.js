@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
+import moment from 'moment';
 import {
   fetchTakeExamRequest,
   pageChange,
@@ -34,7 +35,8 @@ const TakeExamPage = ({
   onClickCheckProgress,
   onClickCategory,
   categoryList,
-  saveStatus }) =>
+  saveStatus,
+  startTime }) =>
   (
     isFetching ?
       <Loader /> :
@@ -55,6 +57,7 @@ const TakeExamPage = ({
         onClickCategory={onClickCategory}
         categoryList={categoryList}
         saveStatus={saveStatus}
+        startTime={startTime}
       />
   );
 
@@ -76,6 +79,7 @@ TakeExamPage.propTypes = {
   onClickCategory: PropTypes.func.isRequired,
   categoryList: PropTypes.array.isRequired,
   saveStatus: PropTypes.string.isRequired,
+  startTime: PropTypes.instanceOf(moment).isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -88,7 +92,8 @@ const mapStateToProps = state => ({
   answerList: state.takeExam.answerList,
   id: state.examAuth.id,
   categoryList: state.takeExam.categoryList,
-  saveStatus: state.takeExam.saveStatus
+  saveStatus: state.takeExam.saveStatus,
+  startTime: state.takeExam.startTime,
 });
 
 const mapDispatchToProps = dispatch => ({

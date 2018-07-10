@@ -39,6 +39,7 @@ const TakeExam = (state = initialState, action) => {
         pickedAnswer: (state.progressResult === null
           || state.progressResult.length === 0) ?
           '' : state.progressResult[0].answer,
+        startTime: action.payload.startTime
       };
     }
     case actionTypes.TAKE_EXAM_FETCH_FAILURE:

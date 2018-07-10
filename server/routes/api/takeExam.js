@@ -13,6 +13,8 @@ router.get('/checkProgress', TakeExamController.findUploadedCategory);
 
 router.post('/uploadAnswer', TakeExamController.updateAnswer);
 
+router.put('/updateStartTime', TakeExamController.updateStartTime);
+
 router.post('/saveTimestamp', TakeExamController.saveTimestamp);
 
 router.post('/deActivate', TakeExamController.deActivate);
