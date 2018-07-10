@@ -8,14 +8,14 @@ import EducationProfileBox from '../containers/EducationProfileBox';
 import CertificateProfilxBox from '../containers/CertificateProfileBox';
 import AssetProfileBox from '../containers/AssetProfileBox';
 
-const Profile = ({ profile }) => (
+const Profile = ({ profile, can }) => (
   <div>
     <PageHeader icon="user" text="Profile" />
     <Grid centered>
       <Grid.Column computer={12} mobile={16}>
         <GeneralProfileBox generalProfile={profile.general} />
         <WorkProfileBox workProfile={profile.work} />
-        <EducationProfileBox educationsProfile={profile.educations} />
+        {can.educateView && <EducationProfileBox educationsProfile={profile.educations} />}
         <CertificateProfilxBox certificatesProfile={profile.certificates} />
         <AssetProfileBox assetsProfile={profile.assets} />
       </Grid.Column>
@@ -24,7 +24,8 @@ const Profile = ({ profile }) => (
 );
 
 Profile.propTypes = {
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  can: PropTypes.object.isRequired
 };
 
 export default Profile;

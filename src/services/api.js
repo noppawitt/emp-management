@@ -352,4 +352,10 @@ api.downloadReport = (reportType, template, userId, projectId, year, month) => (
   download(`/api/report?reportType=${reportType}&template=${template}&userId=${userId}&projectId=${projectId}&year=${year}&month=${month}`)
 );
 
+// Access Control
+
+api.fetchAccessControl = () => (
+  callApi(`/api/access-control`)
+);
+
 export default api;

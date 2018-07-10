@@ -3,37 +3,42 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import { fetchProfileRequest } from '../../actions/profile';
-import { fetchMasterTableRequest } from '../../actions/masterTable';
 import Profile from '../../components/Profile';
 import Loader from '../../components/Loader';
 
-const ProfilePage = ({ profile }) => (
+const ProfilePage = ({ profile, can }) => (
   <div>
-    {profile.isFetching ? <Loader /> : <Profile profile={profile} />}
+    {profile.isFetching ? <Loader /> : <Profile profile={profile} can={can} />}
   </div>
 );
 
 ProfilePage.propTypes = {
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  can: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   id: state.auth.id,
-  profile: state.profile
+  profile: state.profile,
+  can: state.accessControl
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchProfile: userId => dispatch(fetchProfileRequest(userId)),
-  fetchMasterTable: () => dispatch(fetchMasterTableRequest())
+  fetchProfile: userId => dispatch(fetchProfileRequest(userId))
 });
 
 const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
-      const { id, fetchProfile, fetchMasterTable, match: { params } } = this.props;
-      fetchProfile(params.id || id);
-      fetchMasterTable();
+      const { fetchProfile, match: { params } } = this.props;
+      fetchProfile(Number(params.id));
+    },
+    componentDidUpdate(prevProps) {
+      const { fetchProfile, match: { params } } = this.props;
+      if (params.id !== prevProps.match.params.id) {
+        fetchProfile(Number(params.id));
+      }
     }
   })
 );

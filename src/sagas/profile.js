@@ -1,4 +1,4 @@
-import { call, put, takeEvery, all } from 'redux-saga/effects';
+import { call, put, takeEvery, all, select } from 'redux-saga/effects';
 import * as actionTypes from '../constants/actionTypes';
 import {
   fetchProfileSuccess,
@@ -11,14 +11,18 @@ import {
   updateProfilePictureFailure
 } from '../actions/profile';
 import { closeModal } from '../actions/modal';
+import { getAccessControl } from '../selectors/accessControl';
 import api from '../services/api';
 
 export function* fetchProfileTask(action) {
   try {
+    const can = yield select(getAccessControl);
     const profile = {};
     profile.general = yield call(api.fetchGeneralProfile, action.payload.userId);
     profile.work = yield call(api.fetchWorkProfile, action.payload.userId);
-    profile.educations = yield call(api.fetchEducationProfile, action.payload.userId);
+    if (can.educateView) {
+      profile.educations = yield call(api.fetchEducationProfile, action.payload.userId);
+    }
     profile.certificates = yield call(api.fetchCertificateProfile, action.payload.userId);
     profile.assets = yield call(api.fetchAssetProfile, action.payload.userId);
     yield put(fetchProfileSuccess(profile));

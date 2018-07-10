@@ -12,6 +12,7 @@ import leave from './leave';
 import timesheet from './timesheet';
 import holiday from './holiday';
 import report from './report';
+import accessControl from './accessControl';
 
 export default combineReducers({
   form: formReducer,
@@ -26,5 +27,6 @@ export default combineReducers({
   leave,
   timesheet,
   holiday,
-  report
+  report,
+  accessControl
 });
