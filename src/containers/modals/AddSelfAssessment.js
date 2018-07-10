@@ -66,7 +66,7 @@ const mapDispatchToProps = dispatch => ({
   ))),
 
   onClick: () => dispatch(submit('addProbationProfile')),
-  onChange: (item) => dispatch(updateProbationStore(item))
+  onChange: (item) => dispatch(updateProbationStore(item,'selfassessment'))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddSelfAssessment);

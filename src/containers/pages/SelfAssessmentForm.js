@@ -43,6 +43,7 @@ class SelfAssessmentForm extends React.Component {
         this.goalTwoHandler = this.goalTwoHandler.bind(this);
         this.goalThreeHandler = this.goalThreeHandler.bind(this);
         this.updateReduxState = this.updateReduxState.bind(this);
+        this.validateFeild = this.validateFeild.bind(this);
     }
 
     componentWillMount(){
@@ -75,7 +76,39 @@ class SelfAssessmentForm extends React.Component {
         this.updateReduxState();
     }
 
+    validateField() {
+        let isValid = true;
+
+        if (!this.state.majorResponsibilities)
+            isValid = false;
+
+        if (!this.state.significantAccomplishments)
+            isValid = false;
+
+        if (!this.state.contribution)
+            isValid = false;
+
+        if (!this.state.strengths)
+            isValid = false;
+
+        if (!this.state.improvements)
+            isValid = false;
+
+        if (!this.state.goal1 || this.state.goal1.length != 5)
+            isValid = false;
+
+        for (let i = 0; i < this.state.goal1.length; i++) {
+            if (!this.state.goal1[i]) {
+                isValid = false;
+                break;
+            }
+        }
+
+        this.state = { ...this.state, validate: isValid };
+    }
+
     updateReduxState() {
+        this.validateFeild();
         this.props.test(this.state);
     }
 

@@ -1,9 +1,10 @@
 import * as actionTypes from '../constants/actionTypes';
 
-export const updateProbationStore = item =>({
+export const updateProbationStore = (item,type) =>({
   type: actionTypes.UPDATE_PROBATION_STORE,
   payload:{
-    item
+    item,
+    type
   }
 });
 
