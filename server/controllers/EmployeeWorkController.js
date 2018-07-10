@@ -30,7 +30,9 @@ exports.findByUserId = (req, res, next) => {
             employeeWork.departmentName = values[1].name;
             employeeWork.positionName = values[2].name;
             employeeWork.contractName = values[3].name;
-            employeeWork.bossName = `${values[4].firstName} ${values[4].lastName}`;
+            if (values[4]) {
+              employeeWork.bossName = `${values[4].firstName} ${values[4].lastName}`;
+            }
             res.json(employeeWork);
           })
           .catch(next);

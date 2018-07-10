@@ -65,7 +65,7 @@ Timesheet.findByMonthAndYear = (month, year, userId) => (
   timesheets.time_in, timesheets.time_out, timesheets.task, timesheets.description, timesheets.totalhours
   FROM timesheets INNER JOIN projects ON timesheets.project_id = projects.id 
   WHERE EXTRACT(month from timesheets.date) = $1 AND EXTRACT(year from timesheets.date) = $2 
-  AND timesheets.user_id = $3`, [month, year, userId])
+  AND timesheets.user_id = $3 ORDER BY timesheets.date, timesheets.time_in`, [month, year, userId])
 );
 
 Timesheet.delete = id => (
