@@ -13,7 +13,7 @@ const EditProfilePictureModal = ({ onClose, picture, setPicture, scale, setScale
     const image = imageEditor.getImage().toDataURL();
     fetch(image)
       .then(res => res.blob())
-      .then(blob => updateProfilePicture(blob));
+      .then(blob => updateProfilePicture(blob, profileId));
   };
   return (
     <Modal
@@ -37,7 +37,7 @@ const EditProfilePictureModal = ({ onClose, picture, setPicture, scale, setScale
           borderRadius={250}
           scale={scale}
         />}
-        <input name="file" type="file" onChange={e => setPicture(URL.createObjectURL(e.target.files[0]), profileId)} />
+        <input name="file" type="file" onChange={e => setPicture(URL.createObjectURL(e.target.files[0]))} />
         {picture && scale}
         {picture && <Input type="range" min={1} max={3} step={0.1} onChange={(e, { value }) => setScale(value)} />}
         <Button onClick={onSaveClick}>Save</Button>
