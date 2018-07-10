@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start:server": "npx nodemon server",
-    "start:client": "webpack-dev-server --mode development --open",
+    "start:client": "webpack-dev-server --mode development --open --host 0.0.0.0",
     "start": "npx concurrently \"yarn start:server\" \"yarn start:client\"",
     "dev": "webpack --mode development",
     "build": "webpack --mode production"

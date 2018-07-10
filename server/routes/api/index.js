@@ -26,6 +26,7 @@ const accessControl = require('./accessControl');
 const report = require('./report');
 const probation = require('./probation');
 const performance = require('./performance');
+const selfAssessment = require('./selfAssessment');
 
 router.use('/employee-info', employeeInfo);
 
@@ -80,5 +81,7 @@ router.use('/report', report);
 router.use('/probation', probation);
 
 router.use('/performance', performance);
+
+router.use('/selfassessment', selfAssessment);
 
 module.exports = router;

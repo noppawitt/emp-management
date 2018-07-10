@@ -1,9 +1,10 @@
 import * as actionTypes from '../constants/actionTypes';
 
-export const updateProbationStore = item =>({
+export const updateProbationStore = (item,type) =>({
   type: actionTypes.UPDATE_PROBATION_STORE,
   payload:{
-    item
+    item,
+    type
   }
 });
 
@@ -114,6 +115,27 @@ export const fetchPerformanceSuccess = profile => ({
 
 export const fetchPerformanceFailure = message => ({
   type: actionTypes.PERFORMANCE_FETCH_FAILURE,
+  payload: {
+    message
+  }
+});
+
+export const fetchSelfAssessmentRequest = (id) => ({
+  type: actionTypes.SELFASSESSMENT_FETCH_REQUEST,
+  payload:{
+    id
+  }
+});
+
+export const fetchSelfAssessmentSuccess = profile => ({
+  type: actionTypes.SELFASSESSMENT_FETCH_SUCCESS,
+  payload: {
+    profile
+  }
+});
+
+export const fetchSelfAssessmentFailure = message => ({
+  type: actionTypes.SELFASSESSMENT_FETCH_FAILURE,
   payload: {
     message
   }

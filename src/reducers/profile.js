@@ -16,17 +16,40 @@ const profile = (state = initialState, action) => {
         perfInfo: null
       }
     case actionTypes.UPDATE_PROBATION_STORE:
-      var disable;
-      if(action.payload.item.passPro && !action.payload.item.confirmed) {
-        if(action.payload.item.basedSalary || action.payload.item.mobile || action.payload.item.transporationAllowance || action.payload.item.otherAllowance)disable = true;
-        else disable = false
+      var edited;
+      if(action.payload.type=='probation'){
+        if(action.payload.item.passPro && !action.payload.item.confirmed) {
+          if(action.payload.item.basedSalary || action.payload.item.mobile || action.payload.item.transporationAllowance || action.payload.item.otherAllowance)edited = true;
+          else edited = false;
+        }else edited = true;
+      }else if(action.payload.type=='performance'){
+        edited = true
+      }else if(action.payload.type=='selfassessment'){
+        if(action.payload.item.validate) edited = true;
+        else edited = false;
       }
-      else if(action.payload.item.passPro === undefined) disable = true
-      else disable = true
       return {
         ...state,
         item: action.payload.item,
-        edited: disable
+        edited: edited
+      };
+    case actionTypes.SELFASSESSMENT_FETCH_REQUEST:
+      return{
+        ...state,
+        proFetching: true,
+        id: action.payload.id
+      };
+    case actionTypes.SELFASSESSMENT_FETCH_SUCCESS:
+      return {
+        ...state,
+        proFetching: false,
+        ...action.payload.profile
+      };
+    case actionTypes.SELFASSESSMENT_FETCH_FAILURE:
+      return {
+        ...state,
+        proFetching: false,
+        message: action.payload.message
       };
     case actionTypes.PERFORMANCE_FETCH_REQUEST:
       return{

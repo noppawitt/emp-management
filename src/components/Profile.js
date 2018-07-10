@@ -16,7 +16,7 @@ const Profile = ({ profile, type , id ,profileId}) => (
     <Grid centered>
       <Grid.Column computer={12} mobile={16}>
         <GeneralProfileBox image={image} generalProfile={profile.general} />
-        {type == 'admin' ||  id == profileId || type == 'md'? <EvaProfileBox evaProfile={profile.eva} performanceProfile={profile.perf}/> : ''}
+        {type == 'admin' ||  id == profileId || type == 'md'? <EvaProfileBox evaProfile={profile.eva} performanceProfile={profile.perf} selfProfile={profile.self}/> : ''}
         <WorkProfileBox workProfile={profile.work} />
         <EducationProfileBox educationsProfile={profile.educations} />
         <CertificateProfilxBox certificatesProfile={profile.certificates} />

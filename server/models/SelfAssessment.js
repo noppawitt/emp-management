@@ -30,11 +30,11 @@ SelfAssessment.insertSelfAssessment = (selfAssessmentInfo,id) => (
 )
 
 SelfAssessment.updateSelfAssessment = (selfAssessmentInfo,id) => (
-  db.none("UPDATE Probation SET responsibilities=$1, accomplishments=$2, activities=$3, strengths=$4, improvements=$5, goal_1=$6, goal_2=$7, goal_3=$8, updated_user=$9, updated_date=$10 WHERE user_id=$11",
+  db.none("UPDATE SelfAssessment SET responsibilities=$1, accomplishments=$2, activities=$3, strengths=$4, improvements=$5, goal_1=$6, goal_2=$7, goal_3=$8, updated_user=$9, updated_date=$10 WHERE user_id=$11",
   [
-    selfAssessmentInfo.responsibilities,
-    selfAssessmentInfo.accomplishments,
-    selfAssessmentInfo.activities,
+    selfAssessmentInfo.majorResponsibilities,
+    selfAssessmentInfo.significantAccomplishments,
+    selfAssessmentInfo.contribution,
     selfAssessmentInfo.strengths,
     selfAssessmentInfo.improvements,
     selfAssessmentInfo.goal1,
@@ -46,4 +46,4 @@ SelfAssessment.updateSelfAssessment = (selfAssessmentInfo,id) => (
   ])
 )
 
-module.export = SelfAssessment;
+module.exports = SelfAssessment;

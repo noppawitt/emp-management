@@ -306,12 +306,20 @@ api.checkPerformance = id => (
   callApi(`/api/performance/check?id=${id}`)
 )
 
+api.checkSelfAssessment = id => (
+  callApi(`/api/selfassessment/check?id=${id}`)
+)
+
 api.fetchProbation = data => (
   callApi(`/api/probation/?id=${data[0]}&proId=${data[1]}`)
 )
 
 api.fetchPerformance = data => (
   callApi(`/api/performance/?id=${data[0]}&year=${data[1]}`)
+)
+
+api.fetchSelfAssessment = id => (
+  callApi(`/api/selfassessment/?id=${id}`)
 )
 
 api.addProbation = body => (
@@ -337,6 +345,20 @@ api.addPerformance = body => (
 
 api.updatePerformance = body => (
   callApi('/api/performance', {
+    method: 'PUT',
+    body
+  })
+)
+
+api.addSelfAssessment = body => (
+  callApi('/api/selfassessment', {
+    method: 'POST',
+    body
+  })
+)
+
+api.updateSelfAssessment = body => (
+  callApi('api/selfassessment', {
     method: 'PUT',
     body
   })

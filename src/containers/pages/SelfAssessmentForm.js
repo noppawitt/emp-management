@@ -20,22 +20,22 @@ class SelfAssessmentForm extends React.Component {
 
         // for test
         this.state = {
-            name: '_firstname_lastname' || '-',
-            department: '_department' || '-',
-            position: "_position" || '-',
-            employeeID: "_employee_id" || '-',
-            level: "_level" || '-',
-            startDate: "2000-12-12" || '-',
-            supervisor: "_supervisor" || '-',
-            majorResponsibilities: "_marjorResponsibilities" || '',
-            significantAccomplishments: "_significantAccomplishments" || '',
-            contribution: "_contribution" || '',
-            strengths: "_strengths" || '',
-            improvements: "_improvements" || '',
-            goal1: null || ['', '', '', '', ''],
-            goal2: null || ['', '', '', '', ''],
-            goal3: null || ['', '', '', '', ''],
-            currentPage: 0,
+            name: this.props.profile.general.firstName + ' ' + this.props.profile.general.lastName || '-',
+            department: this.props.profile.work.departmentName || '-',
+            position: this.props.profile.work.positionName || '-',
+            employeeID: this.props.profile.work.userId || '-',
+            level: this.props.profile.work.levelId || '-',
+            startDate: this.props.profile.work.startDate || '-',
+            supervisor: this.props.profile.work.bossname || '-',
+            majorResponsibilities: '',
+            significantAccomplishments: '',
+            contribution: '',
+            strengths: '',
+            improvements: '',
+            goal1: ['', '', '', '', ''],
+            goal2: ['', '', '', '', ''],
+            goal3: ['', '', '', '', ''],
+            currentPage: 0
         }
 
         this.animateChangePage = this.animateChangePage.bind(this);
@@ -43,7 +43,22 @@ class SelfAssessmentForm extends React.Component {
         this.goalTwoHandler = this.goalTwoHandler.bind(this);
         this.goalThreeHandler = this.goalThreeHandler.bind(this);
         this.updateReduxState = this.updateReduxState.bind(this);
-        this.validateFeild = this.validateFeild.bind(this);
+        this.validateField = this.validateField.bind(this);
+    }
+
+    componentWillMount(){
+      if(this.props.profile.selfInfo){
+        this.setState({
+          majorResponsibilities: this.props.profile.selfInfo.responsibilities,
+          significantAccomplishments: this.props.profile.selfInfo.accomplishments,
+          contribution: this.props.profile.selfInfo.activities,
+          strengths: this.props.profile.selfInfo.strengths,
+          improvements: this.props.profile.selfInfo.improvements,
+          goal1: this.props.profile.selfInfo.goal1,
+          goal2: this.props.profile.selfInfo.goal2,
+          goal3: this.props.profile.selfInfo.goal3,
+        })
+      }
     }
 
     goalOneHandler(newGoal) {
@@ -93,7 +108,7 @@ class SelfAssessmentForm extends React.Component {
     }
 
     updateReduxState() {
-        this.validateFeild();
+        this.validateField();
         this.props.test(this.state);
     }
 
@@ -102,12 +117,24 @@ class SelfAssessmentForm extends React.Component {
     }
 
     componentDidUpdate() {
-        this.state = { ...this.state, currentPage: this.props.currentPage };
+        this.state = this.props.item;
         this.animateChangePage();
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return nextProps.currentPage != nextState.currentPage;
+
+      currentPage: 0
+        return (
+          nextProps.item.currentPage != nextState.currentPage ||
+          nextProps.item.majorResponsibilities != nextState.majorResponsibilities ||
+          nextProps.item.significantAccomplishments != nextState.significantAccomplishments ||
+          nextProps.item.contribution != nextState.contribution ||
+          nextProps.item.strengths != nextState.strengths ||
+          nextProps.item.improvements != nextState.improvements ||
+          nextProps.item.goal1 != nextState.goal1 ||
+          nextProps.item.goal2 != nextState.goal2 ||
+          nextProps.item.goal3 != nextState.goal3
+        );
     }
 
     render() {
