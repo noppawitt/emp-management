@@ -75,10 +75,11 @@ export const deleteProfileFailure = message => ({
   }
 });
 
-export const fetchProbationRequest = id => ({
+export const fetchProbationRequest = (id,probationId) => ({
   type: actionTypes.PROBATION_FETCH_REQUEST,
   payload:{
-    id
+    id,
+    probationId
   }
 });
 

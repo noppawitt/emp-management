@@ -13,8 +13,9 @@ exports.check = (req,res,next) => {
 
 exports.find = (req, res, next) => {
     console.log('probation running')
-    Probation.findProById(req.query.id)
+    Probation.findProById(req.query.id,req.query.proId)
         .then((users) => {
+            console.log(users)
             res.json(users);
         })
         .catch(next);
@@ -25,7 +26,7 @@ exports.create = (req,res,next) => {
   const newProbationInfo = req.body.probationInfo;
   Probation.insertProbation(newProbationInfo, req.user.id)
     .then(() => {
-        Probation.findProById(req.body.probationInfo.employeeID)
+        Probation.checkExist(req.body.probationInfo.employeeID)
           .then((probations)=>{
             res.json(probations)
           });
@@ -41,8 +42,11 @@ exports.update = (req,res,next) => {
     const mailOptions = {
       from: 'i.plas.sa.tic@gmail.com',
       to: 'ruby.pwn@hotmail.com',
-      subject: 'Hello',
-      html: `<p>Good Morning</p>`
+      subject: 'Probation',
+      html:
+        `
+          <p>Probation of ${req.body.probationInfo.name} already sumitted</p>
+        `
     };
     mail.sendMail(mailOptions, (err, info) => {
       if (err) {
@@ -56,7 +60,7 @@ exports.update = (req,res,next) => {
   Probation.updateProbation(newProbationInfo, req.user.id)
     .then(() => {
       console.log("Test Probation");
-      Probation.findProById(req.body.probationInfo.employeeID)
+      Probation.checkExist(req.body.probationInfo.employeeID)
         .then((probation)=>{
           res.json(probation)
         });

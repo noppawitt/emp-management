@@ -32,7 +32,7 @@ export function* fetchPerformanceTask(action){
 export function* fetchProbationTask(action){
   try{
     const profile = {};
-    profile.eva = yield call(api.fetchProbation, action.payload.id);
+    profile.evaInfo = yield call(api.fetchProbation, [action.payload.id,action.payload.probationId]);
     yield put(fetchProbationSuccess(profile));
   }
   catch (error) {
@@ -48,7 +48,7 @@ export function* fetchProfileTask(action) {
     profile.educations = yield call(api.fetchEducationProfile, action.payload.id);
     profile.certificates = yield call(api.fetchCertificateProfile, action.payload.id);
     profile.assets = yield call(api.fetchAssetProfile, action.payload.id);
-    if(token.type=='admin' || token.id == action.payload.id){
+    if(token.type=='admin' || token.id == action.payload.id || token.type == 'md'){
       profile.eva = yield call(api.checkProbation, action.payload.id);
       profile.perf = yield call(api.checkPerformance, action.payload.id);
     }

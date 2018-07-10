@@ -11,7 +11,9 @@ const profile = (state = initialState, action) => {
     case actionTypes.CLEAR_PROBATION_STORE:
       return {
         ...state,
-        edited: false
+        edited: false,
+        evaInfo: null,
+        perfInfo: null
       }
     case actionTypes.UPDATE_PROBATION_STORE:
       var disable;

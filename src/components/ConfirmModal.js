@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import {Button, Icon, Modal} from 'semantic-ui-react';
+import { closeModal } from '../actions/modal';
+import { clearProbationStore} from '../actions/profile';
 
 class ConfirmModal extends React.Component{
   constructor(props){
@@ -16,11 +19,13 @@ class ConfirmModal extends React.Component{
   closeModal(){
     this.setState({open: false});
   }
-
+  componentWillMount(){
+    console.log('asdasdasd  '+ this.props.button);
+  }
   render(){
     return(
       <div>
-        <Button disabled={this.props.submitting|| this.props.disable}  onClick={this.openModal} color='blue'> Save </Button>
+        {this.props.button ? <Button disabled={this.props.submitting|| this.props.disable}  onClick={this.openModal} color='blue'> Save </Button> : <Button color='grey' onClick={()=>{this.props.closeModal();this.props.clear()}}> Close </Button>}
         <Modal
           size='mini'
           open={this.state.open}
@@ -47,4 +52,15 @@ class ConfirmModal extends React.Component{
 
 }
 
-export default ConfirmModal;
+const mapStateToProps = state => ({
+  button:
+    state.auth.type == 'User' && ((state.profile.evaInfo && state.profile.evaInfo.emSignDate) || (state.profile.perfInfo && state.profile.perf.emSignDate)) ? false :
+    state.auth.type == 'admin' && ((state.profile.evaInfo && state.profile.evaInfo.supSignDate) || (state.profile.perfInfo && state.profile.perfInfo.supSignDate)) ? false : true
+});
+
+const mapDispatchToProps = dispatch => ({
+  closeModal: () => dispatch(closeModal()),
+  clear: () => dispatch(clearProbationStore())
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(ConfirmModal);
