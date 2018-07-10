@@ -101,11 +101,10 @@ export function* checkProgressTask(action) {
 
 export function* finishExamTask(action) {
   try {
-    const now = new Date();
-    console.log('Now is:', now);
-    const timestampResult = yield call(api.saveTimestamp, action.payload.id, now);
-    const deActivateResult = yield call(api.deActivate, action.payload.id, now);
-    console.log('saga - Result:\n', timestampResult, '\n', deActivateResult);
+    const now = moment();
+    const timestampResult = yield call(api.updateSubmittedTime, action.payload.id, now);
+    const deActivateResult = yield call(api.deActivate, action.payload.id, 'Waiting for Grading');
+    console.log(timestampResult, deActivateResult);
     yield put(finishExamSuccess());
   }
   catch (error) {

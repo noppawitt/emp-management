@@ -15,7 +15,7 @@ router.post('/uploadAnswer', TakeExamController.updateAnswer);
 
 router.put('/updateStartTime', TakeExamController.updateStartTime);
 
-router.post('/saveTimestamp', TakeExamController.saveTimestamp);
+router.post('/updateSubmittedTime', TakeExamController.updateSubmittedTime);
 
 router.post('/deActivate', TakeExamController.deActivate);
 

@@ -373,9 +373,8 @@ api.uploadAnswer = (id, answerList) => (
   })
 );
 
-<<<<<<< HEAD
-api.saveTimestamp = (id, time) => (
-  callApi(`/api/takeExam/saveTimestamp`, {
+api.updateSubmittedTime = (id, time) => (
+  callApi(`/api/takeExam/updateSubmittedTime`, {
     method: 'POST',
     body: {
       id,
@@ -391,12 +390,13 @@ api.deActivate = (id, status) => (
       id,
       status,
     }
-=======
+  })
+);
+
 api.updateStartTimeTakeExam = body => (
   callApi('/api/takeExam/updateStartTime/', {
     method: 'PUT',
     body
->>>>>>> e2f7dc7fb7a35a7c4edc4a21448d5f0c60b6ff61
   })
 );
 

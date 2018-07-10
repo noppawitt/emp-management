@@ -36,7 +36,6 @@ exports.fetchExamSpecifyId = (req, res, next) => {
 
 exports.updateAnswer = (req, res, next) => {
   const object = req.body;
-  console.log(object);
   TakeExam.findUploadedAnswer(object.id, 'existing check')
     .then((isExist) => {
       // if no old answer exist so create it first
@@ -62,7 +61,6 @@ exports.findUploadedCategory = (req, res, next) => {
   const object = req.query;
   TakeExam.findUploadedCategory(object.id)
     .then((result) => {
-      console.log(result);
       res.json(result);
     })
     .catch(next);
@@ -77,7 +75,8 @@ exports.updateStartTime = (req, res, next) => {
     .catch(next);
 };
 
-exports.saveTimestamp = (req, res, next) => {
+exports.updateSubmittedTime = (req, res, next) => {
+  console.log('>>', req.body.time);
   TakeExam.saveTimestamp(req.body.id, req.body.time)
     .then((retval) => {
       console.log('return value:', retval);
