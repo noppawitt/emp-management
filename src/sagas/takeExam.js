@@ -60,9 +60,9 @@ export function* fetchTestExamTask(action) {
         progressResult.push(JSON.parse(tempProgressResult.answerList[i]));
       }
     }
-    const start = moment();
+    const start = moment().utc();
     yield put(fetchProgress(progressResult));
-    yield put(fetchTakeExamSuccess(examList, (tempProgressResult.startTime) ? moment(tempProgressResult.startTime) : start));
+    yield put(fetchTakeExamSuccess(examList, (tempProgressResult.startTime) ? moment(tempProgressResult.startTime).utc() : start));
     if (!tempProgressResult.startTime) {
       yield call(api.updateStartTimeTakeExam, {
         startTime: start,
@@ -101,7 +101,7 @@ export function* checkProgressTask(action) {
 
 export function* finishExamTask(action) {
   try {
-    const now = moment();
+    const now = moment().utc();
     const timestampResult = yield call(api.updateSubmittedTime, action.payload.id, now);
     const deActivateResult = yield call(api.deActivate, action.payload.id, 'Waiting for Grading');
     console.log(timestampResult, deActivateResult);
