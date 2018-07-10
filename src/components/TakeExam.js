@@ -17,8 +17,11 @@ import {
 import { pageChange } from '../actions/takeExam';
 import TakeExamTimer from './TakeExamTimer';
 
-const questionRenderer = question => (
-  <div dangerouslySetInnerHTML={{ __html: question }} />
+const questionRenderer = (question, subcategory) => (
+  <div>
+    <div dangerouslySetInnerHTML={{ __html: question }} />
+    <strong>(Topic: {subcategory.slice(0,1).toUpperCase().concat(subcategory.slice(1))})</strong>
+  </div>
 );
 
 const categoryLengthCalculate = (examList, activeCategory) => {
@@ -109,7 +112,7 @@ const TakeExam = ({
                           </Grid.Row>
                         </Grid>
                         <br />
-                        {questionRenderer(row.exQuestion)}
+                        {questionRenderer(row.exQuestion, row.exSubcategory)}
                         <br />
                         {row.exType === 'Choices' && row.exChoice.map(answer => (
                           row.exAnswerLength === 1 ?
