@@ -60,9 +60,13 @@ export function* fetchTestExamTask(action) {
     }
     const start = moment();
     yield put(fetchProgress(progressResult));
-    yield put(fetchTakeExamSuccess(examList, (tempProgressResult.startTime) ? tempProgressResult.startTime : start));
-    // if (tempProgressResult.startTime) {
-    // }
+    yield put(fetchTakeExamSuccess(examList, (tempProgressResult.startTime) ? moment(tempProgressResult.startTime) : start));
+    if (!tempProgressResult.startTime) {
+      yield call(api.updateStartTimeTakeExam, {
+        startTime: start,
+        id: action.payload.id
+      });
+    }
   }
   catch (error) {
     yield put(fetchTakeExamFailure(error));

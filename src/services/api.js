@@ -371,4 +371,11 @@ api.uploadAnswer = (id, answerList) => (
   })
 );
 
+api.updateStartTimeTakeExam = body => (
+  callApi('/api/takeExam/updateStartTime/', {
+    method: 'PUT',
+    body
+  })
+);
+
 export default api;

@@ -15,4 +15,6 @@ router.get('/checkProgress', TakeExamController.findUploadedCategory);
 
 router.post('/uploadAnswer', TakeExamController.updateAnswer);
 
+router.put('/updateStartTime', TakeExamController.updateStartTime);
+
 module.exports = router;

@@ -1,4 +1,5 @@
 const TakeExam = require('../models/TakeExam');
+const moment = require('moment');
 
 exports.fetchAllExam = (req, res, next) => {
   TakeExam.fetchAllExam()
@@ -71,6 +72,15 @@ exports.findUploadedCategory = (req, res, next) => {
   TakeExam.findUploadedCategory(object.id)
     .then((result) => {
       console.log(result);
+      res.json(result);
+    })
+    .catch(next);
+};
+
+exports.updateStartTime = (req, res, next) => {
+  console.log(moment(req.body.startTime) instanceof moment);
+  TakeExam.updateStartTime(req.body.startTime, req.body.id)
+    .then((result) => {
       res.json(result);
     })
     .catch(next);
