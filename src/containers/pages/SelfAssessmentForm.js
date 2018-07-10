@@ -68,6 +68,15 @@ class SelfAssessmentForm extends React.Component {
         document.getElementsByClassName('pages-contrainer')[0].style.left = this.state.currentPage * (-100) + '%';
     }
 
+    componentDidUpdate() {
+        this.state = { ...this.state, currentPage: this.props.currentPage };
+        this.animateChangePage();
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextProps.currentPage != nextState.currentPage;
+    }
+
     render() {
         return (
             <div className='self-assessment-form'>
