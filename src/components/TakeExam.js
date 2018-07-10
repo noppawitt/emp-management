@@ -12,7 +12,6 @@ import {
   Checkbox,
   Button,
   TextArea,
-  Header,
   Menu,
 } from 'semantic-ui-react';
 import { pageChange } from '../actions/takeExam';
@@ -104,7 +103,7 @@ const TakeExam = ({
                         <Grid>
                           <Grid.Row>
                             <Grid.Column width={10}>
-                              <Header as="h1">Question {currentActivePage} of {filterExam(examList, activeCategory).length}</Header>
+                              <h1>Question {currentActivePage} of {filterExam(examList, activeCategory).length}</h1>
                             </Grid.Column>
                             <TakeExamTimer startTime={startTime} />
                           </Grid.Row>
