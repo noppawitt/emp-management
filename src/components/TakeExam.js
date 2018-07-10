@@ -20,7 +20,7 @@ import TakeExamTimer from './TakeExamTimer';
 const questionRenderer = (question, subcategory) => (
   <div>
     <div dangerouslySetInnerHTML={{ __html: question }} />
-    <strong>(Topic: {subcategory.slice(0,1).toUpperCase().concat(subcategory.slice(1))})</strong>
+    <strong>(Topic: {subcategory.slice(0, 1).toUpperCase().concat(subcategory.slice(1))})</strong>
   </div>
 );
 
@@ -100,17 +100,23 @@ const TakeExam = ({
               <Grid.Row>
                 <Grid.Column width={15}>
                   <br />
+                  <Form>
+                    <Grid>
+                      <Grid.Row>
+                        <Grid.Column width={10}>
+                          <h1>
+                            Question {currentActivePage} of {filterExam(examList, activeCategory).length}
+                          </h1>
+                        </Grid.Column>
+                        <Grid.Column width={6} style={{ textAlign: 'right' }}>
+                          <TakeExamTimer startTime={startTime} />
+                        </Grid.Column>
+                      </Grid.Row>
+                    </Grid>
+                  </Form>
                   {filterExam(examList, activeCategory).length > 0 && filterExam(examList, activeCategory).map((row, i) => (
                     i === currentActivePage - 1 ?
                       <Form>
-                        <Grid>
-                          <Grid.Row>
-                            <Grid.Column width={10}>
-                              <h1>Question {currentActivePage} of {filterExam(examList, activeCategory).length}</h1>
-                            </Grid.Column>
-                            <TakeExamTimer startTime={startTime} />
-                          </Grid.Row>
-                        </Grid>
                         <br />
                         {questionRenderer(row.exQuestion, row.exSubcategory)}
                         <br />
@@ -217,7 +223,11 @@ TakeExam.propTypes = {
   onClickCategory: PropTypes.func.isRequired,
   categoryList: PropTypes.array.isRequired,
   saveStatus: PropTypes.string.isRequired,
-  startTime: PropTypes.instanceOf(moment).isRequired,
+  startTime: PropTypes.instanceOf(moment),
+};
+
+TakeExam.defaultProps = {
+  startTime: moment('00:00:00', 'HH:mm:ss')
 };
 
 export default TakeExam;

@@ -5,7 +5,7 @@ import './TakeExamTimerStyle.css';
 
 const paddingZero = (number) => {
   let stringNum = number.toString();
-  let needZeroNum = 2 - stringNum.length;
+  const needZeroNum = 2 - stringNum.length;
 
   for (let i = 0; i < needZeroNum; i += 1) {
     stringNum = ('0').concat(stringNum);
@@ -44,9 +44,7 @@ class TakeExamTimer extends Component {
 
   render() {
     return (
-      <Grid.Column width={6} style={{ textAlign: 'right' }} >
-        <h1 className={this.state.timerStatus}>{this.state.timer}</h1>
-      </Grid.Column >
+      <h1 className={this.state.timerStatus}>{this.state.timer}</h1>
     );
   }
 }
