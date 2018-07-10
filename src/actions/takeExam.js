@@ -1,4 +1,5 @@
 import * as actionTypes from '../constants/actionTypes';
+import history from '../history';
 
 export const fetchTakeExamRequest = id => ({
   type: actionTypes.TAKE_EXAM_FETCH_REQUEST,
@@ -148,3 +149,11 @@ export const finishExamFailure = messege => ({
     messege,
   }
 });
+
+export const logout = () => {
+  localStorage.removeItem('examToken');
+  history.push('/examlogin');
+  return ({
+    type: actionTypes.EXAM_LOGOUT,
+  });
+};

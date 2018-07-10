@@ -14,6 +14,7 @@ import {
   checkProgressRequest,
   categoryChange,
   finishExam,
+  logout,
 } from '../../actions/takeExam';
 import TakeExam from '../../components/TakeExam';
 import Loader from '../../components/Loader';
@@ -36,9 +37,12 @@ const TakeExamPage = ({
   onClickCategory,
   categoryList,
   saveStatus,
-  startTime }) =>
-  ((localStorage.getItem('agree') === undefined || localStorage.getItem('agree') === null || localStorage.getItem('agree') !== 'agree')
-    ? <Redirect
+  startTime,
+  onClickLogout, }) =>
+  ((localStorage.getItem('agree') === undefined
+    || localStorage.getItem('agree') === null
+    || localStorage.getItem('agree') !== 'agree') ?
+    <Redirect
       to={{
         pathname: '/takeexam_agreement'
       }}
@@ -63,6 +67,7 @@ const TakeExamPage = ({
         categoryList={categoryList}
         saveStatus={saveStatus}
         startTime={startTime}
+        onClickLogout={onClickLogout}
       />)
   );
 
@@ -85,6 +90,7 @@ TakeExamPage.propTypes = {
   categoryList: PropTypes.array.isRequired,
   saveStatus: PropTypes.string.isRequired,
   startTime: PropTypes.instanceOf(moment).isRequired,
+  onClickLogout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -112,9 +118,15 @@ const mapDispatchToProps = dispatch => ({
   onClickSubmit: (id, answerList) => compose(
     dispatch(uploadAnswerListRequest(id, answerList)),
     dispatch(finishExam(id)),
+    dispatch(logout()),
   ),
   onClickCheckProgress: id => dispatch(checkProgressRequest(id)),
   onClickCategory: category => dispatch(categoryChange(category)),
+  onClickLogout: (id, answerList) => compose(
+    dispatch(uploadAnswerListRequest(id, answerList)),
+    // logout here
+    dispatch(logout()),
+  ),
 });
 
 const enhance = compose(

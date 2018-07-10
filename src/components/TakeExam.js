@@ -77,7 +77,8 @@ const TakeExam = ({
   onClickCategory,
   categoryList,
   saveStatus,
-  startTime }) =>
+  startTime,
+  onClickLogout, }) =>
   (
     <div>
       <br />
@@ -156,8 +157,7 @@ const TakeExam = ({
                                 onInputTextArea(value, currentActivePage, row.exId);
                               }}
                             />
-                          </Form.Field>
-                        }
+                          </Form.Field>}
                       </Form> : ''
                   ))}
                   {!examList && (
@@ -202,6 +202,13 @@ const TakeExam = ({
           <br />
           <div style={{ color: (saveStatus === 'Save answers error !') ? 'red' : 'green' }}>{saveStatus}</div>
         </Segment>
+        <Segment>
+          <Button floated="right" icon labelPosition="left" negative onClick={() => onClickLogout(id, answerList)}>
+            <Icon name="sign out" />
+            Log out
+          </Button>
+          <br /><br />
+        </Segment>
       </Segment.Group>
     </div>
   );
@@ -224,6 +231,7 @@ TakeExam.propTypes = {
   categoryList: PropTypes.array.isRequired,
   saveStatus: PropTypes.string.isRequired,
   startTime: PropTypes.instanceOf(moment),
+  onClickLogout: PropTypes.func.isRequired,
 };
 
 TakeExam.defaultProps = {
