@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { compose, lifecycle } from 'recompose';
+import { compose } from 'recompose';
 import { Field, reduxForm, change } from 'redux-form';
 import { Form } from 'semantic-ui-react';
 import moment from 'moment';
 import Input from '../../components/Input';
-import { fetchMasterTableRequest } from '../../actions/masterTable';
 import * as validator from '../../utils/validator';
 import { masterTableToOptions } from '../../utils/helper';
 import { genderOptions, engineerOptions } from '../../utils/options';
@@ -128,18 +127,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchMasterTable: () => dispatch(fetchMasterTableRequest()),
   setDefaultProbationDate: startDate => dispatch(change('addEmployee', 'probationDate', moment(startDate).add(120, 'days').format('YYYY-MM-DD')))
 });
 
 const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
-  lifecycle({
-    componentDidMount() {
-      const { fetchMasterTable } = this.props;
-      fetchMasterTable();
-    }
-  }),
   reduxForm({
     form: 'addEmployee'
   })
