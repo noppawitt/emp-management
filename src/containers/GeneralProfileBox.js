@@ -18,7 +18,7 @@ const GeneralProfileBox = ({ generalProfile, onEditClick, onProfilePictureClick,
         image={generalProfile.picture}
         onProfilePictureClick={() => onProfilePictureClick(generalProfile.picture)}
         onEditProfilePictureClick={onEditProfilePictureClick}
-        editted={userId === profileId}
+        editted={can.employeeInfoEditAll || (userId === profileId)}
       />
     </Segment>
     <Segment padded textAlign="center">
