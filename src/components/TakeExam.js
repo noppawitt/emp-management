@@ -120,12 +120,12 @@ const TakeExam = ({
                         <br />
                         {questionRenderer(row.exQuestion, row.exSubcategory)}
                         <br />
-                        {row.exType === 'Choices' && row.exChoice.map(answer => (
+                        {row.exType === 'Choices' && row.exChoice.map((answer, j) => (
                           row.exAnswerLength === 1 ?
                             <Form.Field>
                               <p>
                                 <Radio
-                                  label={answer}
+                                  label={(j + 1).toString().concat('. ').concat(answer)}
                                   value={answer}
                                   checked={showAnswerCheckRadio(row.exId, answerList, answer)}
                                   onClick={(e, { value }) => {
@@ -137,7 +137,7 @@ const TakeExam = ({
                             <Form.Field>
                               <p>
                                 <Checkbox
-                                  label={answer}
+                                  label={(j + 1).toString().concat('. ').concat(answer)}
                                   value={answer}
                                   checked={showAnswerCheckRadio(row.exId, answerList, answer)}
                                   onClick={(e, { value }) => {
