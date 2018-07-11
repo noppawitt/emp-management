@@ -358,7 +358,7 @@ api.addSelfAssessment = body => (
 )
 
 api.updateSelfAssessment = body => (
-  callApi('api/selfassessment', {
+  callApi('/api/selfassessment', {
     method: 'PUT',
     body
   })
