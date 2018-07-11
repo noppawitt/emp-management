@@ -13,24 +13,66 @@ import { taskOptions } from '../../utils/options';
 
 const validate = (values) => {
   const errors = {};
-  errors.projectId = validator.required(values.projectId);
-  errors.timeIn = validator.required(values.timeIn);
   errors.timeIn = validator.timeBefore(values.timeIn, values.timeOut);
-  errors.timeOut = validator.required(values.timeOut);
   errors.timeOut = validator.timeAfter(values.timeOut, values.timeIn);
-  errors.task = validator.required(values.task);
   return errors;
 };
 
 const EditTimesheetForm = ({ handleSubmit, submitting, projects }) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="projectId" as={Form.Dropdown} component={Input} search selection label="Project" placeholder="Project" options={projects} disabled={submitting} />
+    <Field 
+      name="projectId"
+      as={Form.Dropdown}
+      component={Input}
+      search
+      selection
+      label="Project"
+      placeholder="Project"
+      options={projects}
+      disabled={submitting}
+      validate={validator.required}
+    />
     <Form.Group widths="equal">
-      <Field name="timeIn" as={Form.Input} component={Input} type="time" label="Time in" placeholder="Time in" disabled={submitting} />
-      <Field name="timeOut" as={Form.Input} component={Input} type="time" label="Time out" placeholder="Time out" disabled={submitting} />
+      <Field
+        name="timeIn"
+        as={Form.Input}
+        component={Input}
+        type="time"
+        label="Time in"
+        placeholder="Time in"
+        disabled={submitting}
+        validate={validator.required}
+      />
+      <Field
+        name="timeOut"
+        as={Form.Input}
+        component={Input}
+        type="time"
+        label="Time out"
+        placeholder="Time out"
+        disabled={submitting}
+        validate={validator.required}
+      />
     </Form.Group>
-    <Field name="task" as={Form.Select} component={Input} label="Task" placeholder="Task" options={taskOptions} disabled={submitting} />
-    <Field name="description" as={Form.TextArea} component={Input} autoHeight label="Description" placeholder="Description" disabled={submitting} />
+    <Field
+      name="task"
+      as={Form.Select}
+      component={Input}
+      label="Task"
+      placeholder="Task"
+      options={taskOptions}
+      disabled={submitting}
+      validate={validator.required}
+    />
+    <Field
+      name="description"
+      as={Form.TextArea}
+      component={Input}
+      autoHeight
+      label="Description"
+      placeholder="Description"
+      disabled={submitting}
+    />
   </Form>
 );
 

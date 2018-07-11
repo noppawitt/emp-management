@@ -23,7 +23,8 @@
         "quotes": ["error", "single", { "allowTemplateLiterals": true }],
         "no-param-reassign": "off",
         "no-mixed-operators": "off",
-        "no-continue": "off"
+        "no-continue": "off",
+        "class-methods-use-this": "off"
     },
     "plugins": [
         "import",
