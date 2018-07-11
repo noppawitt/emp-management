@@ -55,8 +55,8 @@ export function* checkPasswordStatusTask(action) {
 
 export function* activatePasswordTask(action) {
   try {
-    const messege = yield call(api.activatePassword, action.payload.id, action.payload.activationLifetimes);
-    yield put(activatePasswordSuccess(messege));
+    const message = yield call(api.activatePassword, action.payload.id, action.payload.activationLifetimes);
+    yield put(activatePasswordSuccess(message));
     yield put(checkPasswordStatusRequest(action.payload.id));
   }
   catch (error) {

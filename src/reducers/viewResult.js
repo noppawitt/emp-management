@@ -27,7 +27,7 @@ const ViewResult = (state = initialState, action) => {
       return {
         ...state,
         isFetching: true,
-        messege: action.payload.messege,
+        message: action.payload.message,
       };
     case actionTypes.VIEW_RESULT_CHANGE_ACTIVE_ITEM:
       return {

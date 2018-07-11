@@ -20,12 +20,12 @@ const takeExamAgreement = (state = initialState, action) => {
     case actionTypes.TAKE_EXAM_AGREEMENT_START_EXAM_FAILURE:
       return {
         ...state,
-        messege: action.payload.messege,
+        message: action.payload.message,
       };
     case actionTypes.TAKE_EXAM_AGREEMENT_START_EXAM_SUCCESS:
       return {
         ...state,
-        messege: action.payload.messege,
+        message: action.payload.message,
       };
     default:
       return state;

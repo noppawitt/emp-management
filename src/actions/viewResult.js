@@ -14,10 +14,10 @@ export const fetchExamResultSuccess = results => ({
   }
 });
 
-export const fetchExamResultFailure = messege => ({
+export const fetchExamResultFailure = message => ({
   type: actionTypes.VIEW_RESULT_FETCH_FAILURE,
   payload: {
-    messege,
+    message,
   }
 });
 

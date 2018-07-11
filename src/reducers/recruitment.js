@@ -34,7 +34,7 @@ const Recruitment = (state = initialState, action) => {
       return {
         ...state,
         isFetching: true,
-        messege: action.payload.messege
+        message: action.payload.message
       };
     case actionTypes.FILTER_RECRUITMENT:
       return {
@@ -74,7 +74,7 @@ const Recruitment = (state = initialState, action) => {
     case actionTypes.RECRUITMENT_CHECK_PASSWORD_STATUS_FAILURE:
       return {
         ...state,
-        messege: action.payload.messege,
+        message: action.payload.message,
         isModalFetching: false,
       };
     case actionTypes.RECRUITMENT_ACTIVATE_REQUEST:
@@ -87,13 +87,13 @@ const Recruitment = (state = initialState, action) => {
     case actionTypes.RECRUITMENT_ACTIVATE_SUCCESS:
       return {
         ...state,
-        messege: action.payload.messege,
+        message: action.payload.message,
         isModalFetching: false,
       };
     case actionTypes.RECRUITMENT_ACTIVATE_FAILURE:
       return {
         ...state,
-        messege: action.payload.messege,
+        message: action.payload.message,
         isModalFetching: false,
       };
     case actionTypes.RECRUITMENT_UPDATE_USER_STATUS:
