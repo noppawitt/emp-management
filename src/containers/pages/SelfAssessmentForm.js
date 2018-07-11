@@ -3,6 +3,8 @@ import EmployeeInfo from './components/EmployeeInfoComponent';
 import GoalComponent from './components/GoalCompanent';
 import './css/SelfAssessmentForm.css'
 
+const requiredMessage = <a style={{ color: 'red' }}>(Please enter your answer.)</a>
+
 class SelfAssessmentForm extends React.Component {
 
     constructor(props) {
@@ -157,7 +159,8 @@ class SelfAssessmentForm extends React.Component {
                         <td>
                             <div>
                                 <table className='major-respon-table'>
-                                    <tr><th className='underline'><span className='blue-text'>Major Responsibilities</span></th></tr>
+                                    <tr><th className='underline'><span className='blue-text'>Major Responsibilities</span>
+                                        {!this.state.majorResponsibilities ? requiredMessage : ''}</th></tr>
                                     <tr><td><textarea tabIndex='-1' onChange={(event) => {
                                         this.state = {
                                             ...this.state,
@@ -169,7 +172,8 @@ class SelfAssessmentForm extends React.Component {
                             </div>
                             <div>
                                 <table className='sign-accom-table'>
-                                    <tr><th className='underline'><span className='blue-text'>Significant Accomplishments</span></th></tr>
+                                    <tr><th className='underline'><span className='blue-text'>Significant Accomplishments</span>
+                                        {!this.state.significantAccomplishments ? <a style={{ color: 'red' }}>(Please enter your answer.)</a> : ''}</th></tr>
                                     <tr><td><textarea tabIndex='-1' onChange={(event) => {
                                         this.state = {
                                             ...this.state,
@@ -181,7 +185,8 @@ class SelfAssessmentForm extends React.Component {
                             </div>
                             <div>
                                 <table className='con-com-table'>
-                                    <tr><th className='underline'><span className='blue-text'>Contribution / Company Activities</span></th></tr>
+                                    <tr><th className='underline'><span className='blue-text'>Contribution / Company Activities</span>
+                                        {!this.state.contribution ? <a style={{ color: 'red' }}>(Please enter your answer.)</a> : ''}</th></tr>
                                     <tr><td><textarea tabIndex='-1' onChange={(event) => {
                                         this.state = {
                                             ...this.state,
@@ -197,21 +202,25 @@ class SelfAssessmentForm extends React.Component {
                                         <th colSpan='2' className='underline'><span className='blue-text'>Strengths/Improvements</span></th>
                                     </tr>
                                     <tr>
-                                        <td><span>Strengths</span><textarea tabIndex='-1' onChange={(event) => {
-                                            this.state = {
-                                                ...this.state,
-                                                strengths: event.target.value
-                                            };
-                                            this.updateReduxState();
-                                        }}>{this.state.strengths}</textarea></td>
-                                        <td><span>Improvements</span><textarea tabIndex='-1' onChange={(event) => {
-                                            this.state = {
-                                                ...this.state,
-                                                improvements: event.target.value
-                                            };
-                                            this.updateReduxState();
-                                        }
-                                        }>{this.state.improvements}</textarea></td>
+                                        <td><span>Strengths</span>
+                                            {!this.state.strengths ? <a style={{ color: 'red' }}>(Please enter your answer.)</a> : ''}
+                                            <textarea tabIndex='-1' onChange={(event) => {
+                                                this.state = {
+                                                    ...this.state,
+                                                    strengths: event.target.value
+                                                };
+                                                this.updateReduxState();
+                                            }}>{this.state.strengths}</textarea></td>
+                                        <td><span>Improvements</span>
+                                            {!this.state.improvements ? <a style={{ color: 'red' }}>(Please enter your answer.)</a> : ''}
+                                            <textarea tabIndex='-1' onChange={(event) => {
+                                                this.state = {
+                                                    ...this.state,
+                                                    improvements: event.target.value
+                                                };
+                                                this.updateReduxState();
+                                            }
+                                            }>{this.state.improvements}</textarea></td>
                                     </tr>
                                 </table>
                             </div>
