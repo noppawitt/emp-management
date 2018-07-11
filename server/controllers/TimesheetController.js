@@ -68,6 +68,7 @@ const createTimesheet = (newTimesheetArray, id) => new Promise((resolve, reject)
       newTimesheet.timeIn = timesheet.timeIn;
       newTimesheet.timeOut = timesheet.timeOut;
       newTimesheet.task = timesheet.task;
+      newTimesheet.description = timesheet.description;
       calTotalHours(newTimesheet.timeIn, newTimesheet.timeOut)
         .then((totalhours) => {
           newTimesheet.totalhours = totalhours;
@@ -135,7 +136,7 @@ exports.findByMonthAndYear = (req, res, next) => {
 exports.delete = (req, res, next) => {
   Timesheet.delete(req.body.id)
     .then(() => {
-      Timesheet.findByUserId(req.user.id)
+      Timesheet.findByUserId(req.body.id)
         .then((timesheets) => {
           res.json(timesheets);
         })

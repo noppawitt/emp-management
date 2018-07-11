@@ -7,13 +7,13 @@ import AvatarEditor from 'react-avatar-editor';
 import { closeModal } from '../../actions/modal';
 import { updateProfilePictureRequest } from '../../actions/profile';
 
-const EditProfilePictureModal = ({ onClose, picture, setPicture, scale, setScale, updateProfilePicture }) => {
+const EditProfilePictureModal = ({ onClose, picture, setPicture, scale, setScale, updateProfilePicture, profileId }) => {
   let imageEditor;
   const onSaveClick = () => {
     const image = imageEditor.getImage().toDataURL();
     fetch(image)
       .then(res => res.blob())
-      .then(blob => updateProfilePicture(blob));
+      .then(blob => updateProfilePicture(blob, profileId));
   };
   return (
     <Modal
@@ -52,18 +52,23 @@ EditProfilePictureModal.propTypes = {
   setPicture: PropTypes.func.isRequired,
   scale: PropTypes.number.isRequired,
   setScale: PropTypes.func.isRequired,
-  updateProfilePicture: PropTypes.func.isRequired
+  updateProfilePicture: PropTypes.func.isRequired,
+  profileId: PropTypes.number.isRequired
 };
+
+const mapStateToProps = state => ({
+  profileId: state.profile.userId
+});
 
 const mapDispatchToProps = dispatch => ({
   onClose: () => dispatch(closeModal()),
-  updateProfilePicture: blob => dispatch(updateProfilePictureRequest(blob))
+  updateProfilePicture: (blob, userId) => dispatch(updateProfilePictureRequest(blob, userId))
 });
 
 const enhance = compose(
   withState('picture', 'setPicture', undefined),
   withState('scale', 'setScale', 1),
-  connect(null, mapDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps)
 );
 
 export default enhance(EditProfilePictureModal);

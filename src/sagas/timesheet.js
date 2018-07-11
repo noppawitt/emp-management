@@ -9,14 +9,19 @@ import {
   updateTimesheetFailure
 } from '../actions/timesheet';
 import { closeModal } from '../actions/modal';
+import history from '../history';
 import api from '../services/api';
 
 export function* createTimesheetTask(action) {
   try {
-    const timesheets = yield call(api.createTimesheet, { timesheets: [action.payload.form] });
+    const timesheets = yield call(
+      api.createTimesheet,
+      action.payload.isArray ? action.payload.form : { timesheets: [action.payload.form] }
+    );
     yield put(createTimesheetSuccess(timesheets));
     yield put(closeModal());
     action.payload.resolve();
+    if (action.payload.isArray) history.push('/timesheet');
   }
   catch (error) {
     yield put(createTimesheetFailure(error));

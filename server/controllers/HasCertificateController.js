@@ -12,18 +12,6 @@ exports.create = (req, res, next) => {
     .catch(next);
 };
 
-// exports.update = (req, res, next) => {
-//   const editHasCertificate = req.body.hasCertificate;
-//   HasCertificate.update(editHasCertificate, req.user.id)
-//     .then(() => {
-//       HasCertificate.findByUserId(req.user.id)
-//         .then((hasCertificates) => {
-//           res.json(hasCertificates);
-//         });
-//     })
-//     .catch(next);
-// };
-
 exports.findByUserId = (req, res, next) => {
   HasCertificate.findByUserId(req.query.id)
     .then((hasCertificates) => {

@@ -1,11 +1,12 @@
 import * as actionTypes from '../constants/actionTypes';
 
-export const createTimesheetRequest = (form, resolve, reject) => ({
+export const createTimesheetRequest = (form, resolve, reject, isArray) => ({
   type: actionTypes.TIMESHEET_CREATE_REQUEST,
   payload: {
     form,
     resolve,
-    reject
+    reject,
+    isArray
   }
 });
 

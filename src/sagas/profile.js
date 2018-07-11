@@ -1,4 +1,4 @@
-import { call, put, takeEvery, all } from 'redux-saga/effects';
+import { call, put, takeEvery, all, select } from 'redux-saga/effects';
 import * as actionTypes from '../constants/actionTypes';
 import {
   fetchProfileSuccess,
@@ -11,16 +11,20 @@ import {
   updateProfilePictureFailure
 } from '../actions/profile';
 import { closeModal } from '../actions/modal';
+import { getAccessControl } from '../selectors/accessControl';
 import api from '../services/api';
 
 export function* fetchProfileTask(action) {
   try {
+    const can = yield select(getAccessControl);
     const profile = {};
-    profile.general = yield call(api.fetchGeneralProfile, action.payload.id);
-    profile.work = yield call(api.fetchWorkProfile, action.payload.id);
-    profile.educations = yield call(api.fetchEducationProfile, action.payload.id);
-    profile.certificates = yield call(api.fetchCertificateProfile, action.payload.id);
-    profile.assets = yield call(api.fetchAssetProfile, action.payload.id);
+    profile.general = yield call(api.fetchGeneralProfile, action.payload.userId);
+    profile.work = yield call(api.fetchWorkProfile, action.payload.userId);
+    if (can.educateView) {
+      profile.educations = yield call(api.fetchEducationProfile, action.payload.userId);
+    }
+    profile.certificates = yield call(api.fetchCertificateProfile, action.payload.userId);
+    profile.assets = yield call(api.fetchAssetProfile, action.payload.userId);
     yield put(fetchProfileSuccess(profile));
   }
   catch (error) {
@@ -108,6 +112,7 @@ export function* deleteProfileTask(action) {
 export function* updateProfilePictureTask(action) {
   try {
     const formData = new FormData();
+    formData.append('userId', action.payload.userId);
     formData.append('profileImage', action.payload.picture);
     const { path } = yield call(api.updateProfilePicture, formData);
     yield put(updateProfilePictureSuccess(`${path}?time=${new Date()}`));

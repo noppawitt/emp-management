@@ -114,7 +114,7 @@ class Timesheet extends React.Component {
             onClick={() => this.props.onAddClick(arrayDate[0].date)}
           >
             <Button.Content visible><font color={color} >Add new</font></Button.Content>
-            <Button.Content hidden > <Icon color={iconcolor} name="pencil alternate" /> </Button.Content>
+            <Button.Content hidden > <Icon color={iconcolor} name="pencil" /> </Button.Content>
           </Button>
         </Grid.Row>
       );
@@ -223,7 +223,7 @@ class Timesheet extends React.Component {
           onClick={() => this.props.onAddClick(arrayDate[0].date)}
         >
           <Button.Content visible><font color={this.state.textAnotherDay}>Add new</font></Button.Content>
-          <Button.Content hidden > <Icon color="grey" name="pencil alternate" /> </Button.Content>
+          <Button.Content hidden > <Icon color="grey" name="pencil" /> </Button.Content>
         </Button>
       </Grid.Row>
     );
@@ -259,7 +259,7 @@ class Timesheet extends React.Component {
     else progressColor = 'blue';
     return (
       <div>
-        <PageHeader text="Timesheet" icon="calendar alternate" />
+        <PageHeader text="Timesheet" icon="calendar" />
         <Progress percent={this.props.percent} active color={progressColor} progress />
         <Grid stackable doubling relaxed >
           <Grid.Row>
@@ -308,7 +308,7 @@ Timesheet.propTypes = {
   leaves: PropTypes.array.isRequired,
   holidays: PropTypes.array.isRequired,
   fetchTimesheet: PropTypes.func.isRequired,
-  userId: PropTypes.string.isRequired,
+  userId: PropTypes.number.isRequired,
   year: PropTypes.string.isRequired,
   month: PropTypes.string.isRequired,
   percent: PropTypes.number.isRequired,

@@ -9,6 +9,7 @@ import leaveSaga from './leave';
 import timesheetSaga from './timesheet';
 import holidaySaga from './holiday';
 import reportSaga from './report';
+import accessControlSaga from './accessControl';
 
 export default function* rootSaga() {
   yield all([
@@ -21,6 +22,7 @@ export default function* rootSaga() {
     leaveSaga(),
     timesheetSaga(),
     holidaySaga(),
-    reportSaga()
+    reportSaga(),
+    accessControlSaga()
   ]);
 }

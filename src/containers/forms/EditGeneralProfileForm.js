@@ -8,7 +8,7 @@ import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
 import { genderOptions } from '../../utils/options';
 
-const EditGeneralProfileForm = ({ handleSubmit }) => (
+const EditGeneralProfileForm = ({ handleSubmit, can }) => (
   <Form onSubmit={handleSubmit}>
     <Form.Group widths="equal">
       <Field
@@ -49,6 +49,7 @@ const EditGeneralProfileForm = ({ handleSubmit }) => (
       label="Nick name"
       validate={validator.required}
     />
+    {can.employeeInfoEditAll &&
     <Field
       name="birthday"
       component={Input}
@@ -56,7 +57,7 @@ const EditGeneralProfileForm = ({ handleSubmit }) => (
       type="date"
       label="Birth date"
       validate={validator.date}
-    />
+    />}
     <Field
       name="gender"
       component={Input}
@@ -65,6 +66,7 @@ const EditGeneralProfileForm = ({ handleSubmit }) => (
       options={genderOptions}
       validate={validator.required}
     />
+    {can.employeeInfoEditAll &&
     <Field
       name="citizenId"
       component={Input}
@@ -110,7 +112,8 @@ const EditGeneralProfileForm = ({ handleSubmit }) => (
 );
 
 EditGeneralProfileForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired,
+  can: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -130,7 +133,8 @@ const mapStateToProps = state => ({
     birthday: state.profile.general.birthday,
     address: state.profile.general.address,
     picture: state.profile.general.picture
-  }
+  },
+  can: state.accessControl
 });
 
 const enhance = compose(

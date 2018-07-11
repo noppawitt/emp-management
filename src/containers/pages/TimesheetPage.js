@@ -73,7 +73,7 @@ TimesheetPage.propTypes = {
   holidays: PropTypes.array.isRequired,
   onAddClick: PropTypes.func.isRequired,
   onEditClick: PropTypes.func.isRequired,
-  userId: PropTypes.string.isRequired,
+  userId: PropTypes.number.isRequired,
   year: PropTypes.string.isRequired,
   month: PropTypes.string.isRequired,
   fetchTimesheet: PropTypes.func.isRequired

@@ -1,12 +1,11 @@
 const router = require('express').Router();
 const EmployeeWorkController = require('../../controllers/EmployeeWorkController');
+const { can } = require('../../middlewares');
 
-router.post('/', EmployeeWorkController.create);
+router.post('/', can(['userAdd']), EmployeeWorkController.create);
 
-router.get('/', EmployeeWorkController.findByUserId);
+router.get('/', can(['employeeWorkViewOwn', 'employeeWorkViewAll']), EmployeeWorkController.findByUserId);
 
-router.put('/', EmployeeWorkController.update);
-
-// router.delete('/:id', EmployeeWorkController.update);
+router.put('/', can(['employeeWorkEdit']), EmployeeWorkController.update);
 
 module.exports = router;

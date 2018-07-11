@@ -7,7 +7,7 @@ import { openModal } from '../actions/modal';
 import { deleteProfileRequest } from '../actions/profile';
 import * as modalNames from '../constants/modalNames';
 
-const AssetProfileBox = ({ assetsProfile, onAddClick, onDeleteClick }) => (
+const AssetProfileBox = ({ assetsProfile, onAddClick, onDeleteClick, can }) => (
   <Segment.Group raised size="large">
     <Segment padded>
       <Grid>
@@ -19,9 +19,10 @@ const AssetProfileBox = ({ assetsProfile, onAddClick, onDeleteClick }) => (
             </Header.Content>
           </Header>
         </Grid.Column>
+        {can.hasAssetAdd &&
         <Grid.Column floated="right" computer={1} mobile={2}>
           <Icon name="add" link size="large" onClick={onAddClick} />
-        </Grid.Column>
+        </Grid.Column>}
       </Grid>
     </Segment>
     {assetsProfile.map(p => (<ProfileBox
@@ -33,6 +34,7 @@ const AssetProfileBox = ({ assetsProfile, onAddClick, onDeleteClick }) => (
         { key: 'description', title: 'Description', value: p.description }
       ]}
       onDeleteClick={() => onDeleteClick(p.id)}
+      deleted={can.hasAssetDelete}
     />))}
   </Segment.Group>
 );
@@ -40,8 +42,13 @@ const AssetProfileBox = ({ assetsProfile, onAddClick, onDeleteClick }) => (
 AssetProfileBox.propTypes = {
   assetsProfile: PropTypes.array.isRequired,
   onAddClick: PropTypes.func.isRequired,
-  onDeleteClick: PropTypes.func.isRequired
+  onDeleteClick: PropTypes.func.isRequired,
+  can: PropTypes.object.isRequired
 };
+
+const mapStateToProps = state => ({
+  can: state.accessControl
+});
 
 const mapDispatchToProps = dispatch => ({
   onAddClick: id => dispatch(openModal(modalNames.ADD_ASSET_PROFILE, { id })),
@@ -52,4 +59,4 @@ const mapDispatchToProps = dispatch => ({
   }))
 });
 
-export default connect(null, mapDispatchToProps)(AssetProfileBox);
+export default connect(mapStateToProps, mapDispatchToProps)(AssetProfileBox);

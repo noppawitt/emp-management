@@ -5,8 +5,11 @@ const Timesheet = {};
 
 Timesheet.create = (timesheet, id) => (
   db.one(
-    `INSERT INTO timesheets (user_id, date, project_id, time_in, time_out, totalhours, 
-      created_user, updated_user, task, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING 1`,
+    `INSERT INTO timesheets (user_id, date, project_id, time_in, time_out, totalhours, created_user, updated_user, task, description)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      ON CONFLICT (user_id, date, project_id) DO UPDATE
+      SET project_id = $3, time_in = $4, time_out = $5, totalhours = $6, updated_user = $8, task = $9, description = $10
+      RETURNING 1`,
     [
       timesheet.userId,
       timesheet.date,
@@ -62,11 +65,11 @@ Timesheet.findByMonthAndYear = (month, year, userId) => (
   timesheets.time_in, timesheets.time_out, timesheets.task, timesheets.description, timesheets.totalhours
   FROM timesheets INNER JOIN projects ON timesheets.project_id = projects.id 
   WHERE EXTRACT(month from timesheets.date) = $1 AND EXTRACT(year from timesheets.date) = $2 
-  AND timesheets.user_id = $3`, [month, year, userId])
+  AND timesheets.user_id = $3 ORDER BY timesheets.date, timesheets.time_in`, [month, year, userId])
 );
 
 Timesheet.delete = id => (
-  db.one('DELETE FROM timesheets WHERE id = $1', [id])
+  db.none('DELETE FROM timesheets WHERE id = $1', [id])
 );
 
 module.exports = Timesheet;

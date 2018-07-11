@@ -41,18 +41,6 @@ exports.create = (req, res, next) => {
   }
 };
 
-exports.update = (req, res, next) => {
-  const editHasAsset = req.body.hasAsset;
-  HasAsset.update(editHasAsset, req.user.id)
-    .then(() => {
-      HasAsset.findByUserId(req.user.id)
-        .then((hasAssets) => {
-          res.json(hasAssets);
-        });
-    })
-    .catch(next);
-};
-
 exports.findByUserId = (req, res, next) => {
   HasAsset.findByUserId(req.query.id)
     .then((hasAssets) => {

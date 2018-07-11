@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { compose, lifecycle } from 'recompose';
+import { compose } from 'recompose';
 import { Field, reduxForm, change } from 'redux-form';
 import { Form } from 'semantic-ui-react';
 import moment from 'moment';
 import Input from '../../components/Input';
-import { fetchMasterTableRequest } from '../../actions/masterTable';
 import * as validator from '../../utils/validator';
 import { masterTableToOptions } from '../../utils/helper';
 import { genderOptions, engineerOptions } from '../../utils/options';
@@ -47,7 +46,7 @@ const AddEmployeeForm = ({ handleSubmit, submitting, masterTable, setDefaultProb
       label="Username"
       placeholder="example@playtorium.co.th"
       disabled={submitting}
-      validate={[validator.required, validator.englishName]}
+      validate={[validator.required, validator.email]}
     />
     <Field
       name="citizenId"
@@ -55,7 +54,7 @@ const AddEmployeeForm = ({ handleSubmit, submitting, masterTable, setDefaultProb
       component={Input}
       label="Citizen ID"
       disabled={submitting}
-      validate={[validator.required, validator.number, value => validator.length(value, 13)]}
+      validate={[validator.required, validator.number, validator.length13]}
     />
     <Field
       name="gender"
@@ -112,6 +111,7 @@ const AddEmployeeForm = ({ handleSubmit, submitting, masterTable, setDefaultProb
       disabled={submitting}
       validator={[validator.required, validator.date]}
     />
+    <button type="submit">test</button>
   </Form>
 );
 
@@ -127,18 +127,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchMasterTable: () => dispatch(fetchMasterTableRequest()),
   setDefaultProbationDate: startDate => dispatch(change('addEmployee', 'probationDate', moment(startDate).add(120, 'days').format('YYYY-MM-DD')))
 });
 
 const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
-  lifecycle({
-    componentDidMount() {
-      const { fetchMasterTable } = this.props;
-      fetchMasterTable();
-    }
-  }),
   reduxForm({
     form: 'addEmployee'
   })

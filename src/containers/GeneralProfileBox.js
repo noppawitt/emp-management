@@ -11,20 +11,28 @@ const stylebox = {
   background: 'linear-gradient(to bottom right, DarkCyan  , rgb(92,151,181))',
 };
 
-const GeneralProfileBox = ({ generalProfile, onEditClick, onProfilePictureClick, onEditProfilePictureClick }) => (
+const GeneralProfileBox = ({ generalProfile, onEditClick, onProfilePictureClick, onEditProfilePictureClick, userId, profileId, can }) => (
   <Segment.Group raised size="large">
     <Segment padded inverted style={stylebox}>
-      <ProfilePicture image={generalProfile.picture} onProfilePictureClick={() => onProfilePictureClick(generalProfile.picture)} onEditProfilePictureClick={onEditProfilePictureClick} />
+      <ProfilePicture
+        image={generalProfile.picture}
+        onProfilePictureClick={() => onProfilePictureClick(generalProfile.picture)}
+        onEditProfilePictureClick={onEditProfilePictureClick}
+        editted={can.employeeInfoEditAll || (userId === profileId)}
+      />
     </Segment>
     <Segment padded textAlign="center">
+      {userId === profileId &&
       <Grid>
         <Grid.Column floated="right" computer={1} mobile={2}>
           <Icon name="edit" onClick={onEditClick} link size="large" />
         </Grid.Column>
-      </Grid>
+      </Grid>}
       <Header size="huge">{generalProfile.firstName} {generalProfile.lastName} ({generalProfile.nickName})<Icon color={generalProfile.gender === 'Male' ? 'blue' : 'pink'} name={generalProfile.gender === 'Male' ? 'mars' : 'venus'} /></Header>
       <Header size="huge">{generalProfile.firstNameTh} {generalProfile.lastNameTh}</Header>
-      <Header size="small">Citizen ID: {generalProfile.citizenId}</Header>
+      <Header size="small">ID: {generalProfile.userId}</Header>
+      {can.employeeInfoViewAll && <Header size="small">Citizen ID: {generalProfile.citizenId}</Header>}
+      {can.employeeInfoViewAll && <Header size="small">Birth date: {generalProfile.birthday}</Header>}
       <Header size="small">Mobile No: {generalProfile.mobileNumber}</Header>
       <Header size="small">Email: {generalProfile.email}</Header>
       <Header size="small">Facebook: {generalProfile.facebookId}</Header>
@@ -37,8 +45,17 @@ GeneralProfileBox.propTypes = {
   generalProfile: PropTypes.object.isRequired,
   onEditClick: PropTypes.func.isRequired,
   onProfilePictureClick: PropTypes.func.isRequired,
-  onEditProfilePictureClick: PropTypes.func.isRequired
+  onEditProfilePictureClick: PropTypes.func.isRequired,
+  userId: PropTypes.number.isRequired,
+  profileId: PropTypes.number.isRequired,
+  can: PropTypes.object.isRequired
 };
+
+const mapStateToProps = state => ({
+  userId: state.auth.id,
+  profileId: state.profile.userId,
+  can: state.accessControl
+});
 
 const mapDispatchToProps = dispatch => ({
   onEditClick: () => dispatch(openModal(modalNames.EDIT_GENERAL_PROFILE)),
@@ -48,4 +65,4 @@ const mapDispatchToProps = dispatch => ({
   onEditProfilePictureClick: () => dispatch(openModal(modalNames.EDIT_PROFILE_PICTURE))
 });
 
-export default connect(null, mapDispatchToProps)(GeneralProfileBox);
+export default connect(mapStateToProps, mapDispatchToProps)(GeneralProfileBox);

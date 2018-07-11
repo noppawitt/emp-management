@@ -68,4 +68,8 @@ Project.findProjectByTimesheet = (userId, year, month) => (
   EXTRACT(month from timesheets.date) = $2 AND timesheets.user_id = $3`, [year, month, userId])
 );
 
+Project.delete = id => (
+  db.none('DELETE FROM projects WHERE id = $1', [id])
+);
+
 module.exports = Project;

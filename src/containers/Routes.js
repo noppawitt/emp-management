@@ -21,7 +21,7 @@ const Routes = () => (
     <PrivateRoute path="/leave" component={LeavePage} />
     <PrivateRoute exact path="/project" component={ProjectPage} />
     <PrivateRoute path="/project/:id" component={ProjectDetailPage} />
-    <PrivateRoute path="/profile/:id?" component={ProfilePage} />
+    <PrivateRoute path="/profile/:id" component={ProfilePage} />
     <PrivateRoute path="/employee" component={EmployeePage} />
     <PrivateRoute path="/report" component={ReportPage} />
     <PrivateRoute path="/manageleave" component={ManageLeave} />
