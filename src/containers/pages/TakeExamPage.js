@@ -41,8 +41,8 @@ const TakeExamPage = ({
   onClickLogout, }) =>
   ((localStorage.getItem('agree') === undefined
     || localStorage.getItem('agree') === null
-    || localStorage.getItem('agree') !== 'agree') ?
-    <Redirect
+    || localStorage.getItem('agree') !== 'agree')
+    ? <Redirect
       to={{
         pathname: '/takeexam_agreement'
       }}
