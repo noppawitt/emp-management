@@ -68,7 +68,6 @@ export function* randomExamTask(action) {
   try {
     const EPRList = yield call(api.fetchEPRList, action.payload.id);
     const rawExamList = yield call(api.fetchExamId);
-
     const randomExIdList = [];
     for (let i = 0; i < EPRList.length; i += 1) {
       for (let j = 0; j < rawExamList.length; j += 1) {
@@ -83,7 +82,6 @@ export function* randomExamTask(action) {
         }
       }
     }
-    console.log('HHHHHHHHHHHHHHHH', randomExIdList);
     const ok = yield call(api.uploadRandomExIdList, randomExIdList, action.payload.id);
     console.log('random exam ok:', ok);
   }

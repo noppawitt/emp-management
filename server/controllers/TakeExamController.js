@@ -59,9 +59,17 @@ exports.updateAnswer = (req, res, next) => {
 exports.findUploadedCategory = (req, res, next) => {
   const object = req.query;
   TakeExam.findUploadedCategory(object.id)
-    .then((result) => {
-      res.json(result);
-    })
+    // .then((isExist) => {
+    //   if (!isExist) {
+    //     TakeExam.createBufferAnswer(object.id, [], new Date())
+    //       .then((result) => {
+    //         console.log('Create result', result);
+    //         res.json(result);
+    //       })
+    //       .catch(next);
+    //   }
+    // })
+    .then((result) => { res.json(result); })
     .catch(next);
 };
 
