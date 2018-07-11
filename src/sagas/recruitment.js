@@ -57,7 +57,6 @@ export function* activatePasswordTask(action) {
   try {
     const messege = yield call(api.activatePassword, action.payload.id, action.payload.activationLifetimes);
     yield put(activatePasswordSuccess(messege));
-    // after generation complete lets check and display it
     yield put(checkPasswordStatusRequest(action.payload.id));
   }
   catch (error) {
@@ -84,6 +83,7 @@ export function* randomExamTask(action) {
         }
       }
     }
+    console.log('HHHHHHHHHHHHHHHH', randomExIdList);
     const ok = yield call(api.uploadRandomExIdList, randomExIdList, action.payload.id);
     console.log('random exam ok:', ok);
   }

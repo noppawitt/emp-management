@@ -386,7 +386,7 @@ api.updateSubmittedTime = (id, time) => (
 api.deActivate = (id, status) => (
   callApi(`/api/takeExam/deActivate`, {
     method: 'POST',
-    bodt: {
+    body: {
       id,
       status,
     }

@@ -1,5 +1,4 @@
 const TakeExam = require('../models/TakeExam');
-const moment = require('moment');
 
 exports.fetchEPRList = (req, res, next) => {
   TakeExam.fetchEPRList(req.query.id)
@@ -76,7 +75,7 @@ exports.updateStartTime = (req, res, next) => {
 
 exports.updateSubmittedTime = (req, res, next) => {
   console.log('>>', req.body.time);
-  TakeExam.saveTimestamp(req.body.id, req.body.time)
+  TakeExam.updateSubmittedTime(req.body.id, req.body.time)
     .then((retval) => {
       console.log('return value:', retval);
       res.json(retval);
@@ -91,8 +90,13 @@ exports.deActivate = (req, res, next) => {
   }
   else {
     TakeExam.changeStatus(req.body.id, 'Wait for Grading')
-      .then((retval) => {
-        res.json('deactive status: '.concat(retval === null ? 'OK' : 'Something wrong'));
+      .then(() => {
+        TakeExam.expiredActivationLifetime(req.body.id)
+          .then((retval) => {
+            console.log(req.body.id);
+            res.json('deactive status: '.concat(retval === null ? 'OK' : 'Something wrong'));
+          })
+          .catch(next);
       })
       .catch(next);
   }
