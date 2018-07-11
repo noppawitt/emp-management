@@ -4,8 +4,8 @@ import { Container } from 'semantic-ui-react';
 import ModalContainer from '../containers/ModalContainer';
 
 const ExamApp = ({ children }) => (
-  <div>
-    <Container>
+  <div style={{ backgroundColor: '#5c97b5' }}>
+    <Container style={{ backgroundColor: 'white', height: '100%' }}>
       {children}
     </Container>
     <ModalContainer />
