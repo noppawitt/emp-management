@@ -46,19 +46,19 @@ class SelfAssessmentForm extends React.Component {
         this.validateField = this.validateField.bind(this);
     }
 
-    componentWillMount(){
-      if(this.props.profile.selfInfo){
-        this.setState({
-          majorResponsibilities: this.props.profile.selfInfo.responsibilities,
-          significantAccomplishments: this.props.profile.selfInfo.accomplishments,
-          contribution: this.props.profile.selfInfo.activities,
-          strengths: this.props.profile.selfInfo.strengths,
-          improvements: this.props.profile.selfInfo.improvements,
-          goal1: this.props.profile.selfInfo.goal1,
-          goal2: this.props.profile.selfInfo.goal2,
-          goal3: this.props.profile.selfInfo.goal3,
-        })
-      }
+    componentWillMount() {
+        if (this.props.profile.selfInfo) {
+            this.setState({
+                majorResponsibilities: this.props.profile.selfInfo.responsibilities,
+                significantAccomplishments: this.props.profile.selfInfo.accomplishments,
+                contribution: this.props.profile.selfInfo.activities,
+                strengths: this.props.profile.selfInfo.strengths,
+                improvements: this.props.profile.selfInfo.improvements,
+                goal1: this.props.profile.selfInfo.goal1,
+                goal2: this.props.profile.selfInfo.goal2,
+                goal3: this.props.profile.selfInfo.goal3,
+            })
+        }
     }
 
     goalOneHandler(newGoal) {
@@ -123,17 +123,17 @@ class SelfAssessmentForm extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState) {
 
-      currentPage: 0
+        currentPage: 0
         return (
-          nextProps.item.currentPage != nextState.currentPage ||
-          nextProps.item.majorResponsibilities != nextState.majorResponsibilities ||
-          nextProps.item.significantAccomplishments != nextState.significantAccomplishments ||
-          nextProps.item.contribution != nextState.contribution ||
-          nextProps.item.strengths != nextState.strengths ||
-          nextProps.item.improvements != nextState.improvements ||
-          nextProps.item.goal1 != nextState.goal1 ||
-          nextProps.item.goal2 != nextState.goal2 ||
-          nextProps.item.goal3 != nextState.goal3
+            nextProps.item.currentPage != nextState.currentPage ||
+            nextProps.item.majorResponsibilities != nextState.majorResponsibilities ||
+            nextProps.item.significantAccomplishments != nextState.significantAccomplishments ||
+            nextProps.item.contribution != nextState.contribution ||
+            nextProps.item.strengths != nextState.strengths ||
+            nextProps.item.improvements != nextState.improvements ||
+            nextProps.item.goal1 != nextState.goal1 ||
+            nextProps.item.goal2 != nextState.goal2 ||
+            nextProps.item.goal3 != nextState.goal3
         );
     }
 
@@ -158,7 +158,7 @@ class SelfAssessmentForm extends React.Component {
                             <div>
                                 <table className='major-respon-table'>
                                     <tr><th className='underline'><span className='blue-text'>Major Responsibilities</span></th></tr>
-                                    <tr><td><textarea onChange={(event) => {
+                                    <tr><td><textarea tabIndex='-1' onChange={(event) => {
                                         this.state = {
                                             ...this.state,
                                             majorResponsibilities: event.target.value
@@ -170,7 +170,7 @@ class SelfAssessmentForm extends React.Component {
                             <div>
                                 <table className='sign-accom-table'>
                                     <tr><th className='underline'><span className='blue-text'>Significant Accomplishments</span></th></tr>
-                                    <tr><td><textarea onChange={(event) => {
+                                    <tr><td><textarea tabIndex='-1' onChange={(event) => {
                                         this.state = {
                                             ...this.state,
                                             significantAccomplishments: event.target.value
@@ -182,7 +182,7 @@ class SelfAssessmentForm extends React.Component {
                             <div>
                                 <table className='con-com-table'>
                                     <tr><th className='underline'><span className='blue-text'>Contribution / Company Activities</span></th></tr>
-                                    <tr><td><textarea onChange={(event) => {
+                                    <tr><td><textarea tabIndex='-1' onChange={(event) => {
                                         this.state = {
                                             ...this.state,
                                             contribution: event.target.value
@@ -197,14 +197,14 @@ class SelfAssessmentForm extends React.Component {
                                         <th colSpan='2' className='underline'><span className='blue-text'>Strengths/Improvements</span></th>
                                     </tr>
                                     <tr>
-                                        <td><span>Strengths</span><textarea onChange={(event) => {
+                                        <td><span>Strengths</span><textarea tabIndex='-1' onChange={(event) => {
                                             this.state = {
                                                 ...this.state,
                                                 strengths: event.target.value
                                             };
                                             this.updateReduxState();
                                         }}>{this.state.strengths}</textarea></td>
-                                        <td><span>Improvements</span><textarea onChange={(event) => {
+                                        <td><span>Improvements</span><textarea tabIndex='-1' onChange={(event) => {
                                             this.state = {
                                                 ...this.state,
                                                 improvements: event.target.value
@@ -216,6 +216,7 @@ class SelfAssessmentForm extends React.Component {
                                 </table>
                             </div>
                         </td>
+
 
                         {/* Page Two */}
                         <td>
