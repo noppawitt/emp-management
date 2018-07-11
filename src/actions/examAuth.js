@@ -15,10 +15,10 @@ export const examLoginSuccess = user => ({
   }
 });
 
-export const examLoginFailure = messege => ({
+export const examLoginFailure = message => ({
   type: actionTypes.EXAM_LOGIN_FAILURE,
   payload: {
-    messege
+    message
   }
 });
 

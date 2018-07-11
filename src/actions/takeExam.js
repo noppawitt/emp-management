@@ -16,10 +16,10 @@ export const fetchTakeExamSuccess = (examList, startTime) => ({
   }
 });
 
-export const fetchTakeExamFailure = messege => ({
+export const fetchTakeExamFailure = message => ({
   type: actionTypes.TAKE_EXAM_FETCH_FAILURE,
   payload: {
-    messege,
+    message,
   }
 });
 
@@ -95,10 +95,10 @@ export const uploadAnswerListSuccess = progress => ({
   }
 });
 
-export const uploadAnswerListFailure = messege => ({
+export const uploadAnswerListFailure = message => ({
   type: actionTypes.TAKE_EXAM_UPLOAD_FAILURE,
   payload: {
-    messege,
+    message,
   }
 });
 
@@ -116,10 +116,10 @@ export const checkProgressSuccess = progressResult => ({
   }
 });
 
-export const checkProgressFailure = messege => ({
+export const checkProgressFailure = message => ({
   type: actionTypes.TAKE_EXAM_CHECK_PROGRESS_FAILURE,
   payload: {
-    messege,
+    message,
   }
 });
 
@@ -143,10 +143,10 @@ export const finishExamSuccess = () => ({
   }
 });
 
-export const finishExamFailure = messege => ({
+export const finishExamFailure = message => ({
   type: actionTypes.TAKE_EXAM_FINISH_EXAM_FAILURE,
   payload: {
-    messege,
+    message,
   }
 });
 

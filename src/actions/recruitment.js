@@ -12,10 +12,10 @@ export const fetchRecruitmentSuccess = recruitments => ({
   }
 });
 
-export const fetchRecruitmentFailure = messege => ({
+export const fetchRecruitmentFailure = message => ({
   type: actionTypes.RECRUITMENT_FETCH_FAILURE,
   payload: {
-    messege
+    message
   }
 });
 
@@ -56,10 +56,10 @@ export const activatePasswordRequest = (id, activationLifetimes) => ({
   }
 });
 
-export const activatePasswordSuccess = messege => ({
+export const activatePasswordSuccess = message => ({
   type: actionTypes.RECRUITMENT_ACTIVATE_SUCCESS,
   payload: {
-    messege,
+    message,
   }
 });
 

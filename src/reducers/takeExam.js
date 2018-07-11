@@ -45,7 +45,7 @@ const TakeExam = (state = initialState, action) => {
     case actionTypes.TAKE_EXAM_FETCH_FAILURE:
       return {
         ...state,
-        messege: action.payload.messege,
+        message: action.payload.message,
         isFetching: false,
       };
     case actionTypes.TAKE_EXAM_FETCH_PROGRESS:
@@ -135,7 +135,7 @@ const TakeExam = (state = initialState, action) => {
     case actionTypes.TAKE_EXAM_UPLOAD_FAILURE:
       return {
         ...state,
-        messege: action.payload.messege,
+        message: action.payload.message,
         saveStatus: 'Save answers error !'
       };
     case actionTypes.TAKE_EXAM_CHECK_PROGRESS_REQUEST:
@@ -151,7 +151,7 @@ const TakeExam = (state = initialState, action) => {
     case actionTypes.TAKE_EXAM_CHECK_PROGRESS_FAILURE:
       return {
         ...state,
-        messege: action.payload.messege,
+        message: action.payload.message,
       };
     case actionTypes.TAKE_EXAM_CATEGORY_CHANGE:
       return {
@@ -159,10 +159,28 @@ const TakeExam = (state = initialState, action) => {
         currentActivePage: 1,
         activeCategory: action.payload.category,
       };
-    case actionTypes.TAKE_EXAM_FINISH_EXAM:
+    case actionTypes.TAKE_EXAM_FINISH_EXAM_REQUEST:
       return {
         ...state,
-        // nothing to update state yet...
+      };
+    case actionTypes.TAKE_EXAM_FINISH_EXAM_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        id: null,
+        examList: [],
+        currentActivePage: 1,
+        activeCategory: '',
+        categoryList: [],
+        pickedAnswer: [],
+        answerList: [],
+        progressResult: [],
+        saveStatus: ' '
+      };
+    case actionTypes.TAKE_EXAM_FINISH_EXAM_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message,
       };
     default:
       return state;

@@ -19,8 +19,8 @@ exports.checkPasswordStatus = (req, res, next) => {
 
 exports.activatePassword = (req, res, next) => {
   Recruitment.activatePassword(req.query.id, req.query.lifetimes < 1 ? 0 : req.query.lifetimes, new Date())
-    .then((messege) => {
-      res.json(messege);
+    .then((message) => {
+      res.json(message);
     })
     .catch(next);
 };
