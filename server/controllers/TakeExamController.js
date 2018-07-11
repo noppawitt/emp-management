@@ -56,20 +56,21 @@ exports.updateAnswer = (req, res, next) => {
     .catch(next);
 };
 
-exports.findUploadedCategory = (req, res, next) => {
+exports.findUploadedAnswer = (req, res, next) => {
   const object = req.query;
-  TakeExam.findUploadedCategory(object.id)
-    // .then((isExist) => {
-    //   if (!isExist) {
-    //     TakeExam.createBufferAnswer(object.id, [], new Date())
-    //       .then((result) => {
-    //         console.log('Create result', result);
-    //         res.json(result);
-    //       })
-    //       .catch(next);
-    //   }
-    // })
-    .then((result) => { res.json(result); })
+  TakeExam.findUploadedAnswer(object.id)
+    .then((isExist) => {
+      if (!isExist) {
+        TakeExam.createBufferAnswer(object.id, [], new Date())
+          .then((result) => {
+            console.log('Create result', result);
+            res.json(result);
+          })
+          .catch(next);
+      }
+      else res.json(isExist);
+    })
+    // .then((result) => { res.json(result); })
     .catch(next);
 };
 

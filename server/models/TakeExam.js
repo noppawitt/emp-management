@@ -71,7 +71,7 @@ TakeExam.updateAnswer = (id, answerList, submittedTime) => {
   return db.oneOrNone('UPDATE exam_candidate_submitted SET (id, answer_list, submitted_time) = ($1, $2, $3)', [id, answerList, submittedTime]);
 };
 
-TakeExam.findUploadedCategory = id => (
+TakeExam.findUploadedAnswer = id => (
   db.oneOrNone('SELECT * FROM exam_candidate_submitted WHERE id = $1', [id])
 );
 
