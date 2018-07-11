@@ -13,10 +13,14 @@ exports.signin = (req, res, next) => {
           if (moment(user.latestActivatedPasswordTime).add({ days: user.activationLifetimes }).diff(moment()) > 0) {
             const token = jwt.sign({
               id: user.id,
+              agreementStatus: user.agreementStatus,
+              testdate: user.testDate,
             }, jwtSecret);
             res.json({
               id: user.id,
               token,
+              agreementStatus: user.agreementStatus,
+              testdate: user.testDate,
             });
           }
           else {

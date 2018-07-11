@@ -336,6 +336,15 @@ api.examLogin = form => (
   })
 );
 
+// Take Exam Agreement
+
+api.startExam = body => (
+  callApi('api/takeexamagreement/acceptagreement', {
+    method: 'PUT',
+    body
+  })
+);
+
 // Take Exam
 
 api.fetchEPRList = id => (

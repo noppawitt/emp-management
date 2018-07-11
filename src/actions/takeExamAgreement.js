@@ -6,3 +6,28 @@ export const clickCheckbox = isAgree => ({
     isAgree,
   }
 });
+
+export const clickAgree = (id, testdate) => ({
+  type: actionTypes.TAKE_EXAM_AGREEMENT_START_EXAM_REQUEST,
+  payload: {
+    id,
+    testdate,
+  }
+});
+
+export const startExamSuccess = message => {
+  location.href = '/takeexam';
+  return {
+    type: actionTypes.TAKE_EXAM_AGREEMENT_START_EXAM_SUCCESS,
+    payload: {
+      message
+    }
+  }
+};
+
+export const startExamFailure = message => ({
+  type: actionTypes.TAKE_EXAM_AGREEMENT_START_EXAM_FAILURE,
+  payload: {
+    message
+  }
+});
