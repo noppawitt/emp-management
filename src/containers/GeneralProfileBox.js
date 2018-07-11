@@ -59,7 +59,7 @@ GeneralProfileBox.propTypes = {
 const mapStateToProps = state => ({
   userId: state.auth.id,
   profileId: state.profile.userId,
-  can: state.accessControl
+  can: state.accessControl.can
 });
 
 const mapDispatchToProps = dispatch => ({

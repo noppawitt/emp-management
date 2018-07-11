@@ -50,7 +50,7 @@ CertificateProfileBox.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  can: state.accessControl
+  can: state.accessControl.can
 });
 
 const mapDispatchToProps = dispatch => ({
