@@ -60,7 +60,7 @@ exports.find = async (req, res, next) => {
     else if (req.query.id) {
       Project.findById(req.query.id)
         .then((project) => {
-          Project.findMemberProject(req.params.id)
+          Project.findMemberProject(req.query.id)
             .then((members) => {
               project.members = members;
               res.json(project);
