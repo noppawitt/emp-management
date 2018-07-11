@@ -69,18 +69,16 @@ const isHoliday = (holidays, date) => {
   return false;
 };
 
-const createLeaveRequest = (newLeaveRequest, holidays, id) => new Promise((resolve, reject) => {
+const createLeaveRequest = (newLeaveRequest, holidays, id) => new Promise(async (resolve, reject) => {
   try {
     for (let m = moment(newLeaveRequest.leaveFrom); m.diff(newLeaveRequest.leaveTo, 'days') <= 0; m.add(1, 'days')) {
       if (m.isoWeekday() !== 6 && m.isoWeekday() !== 7) {
         if (!isHoliday(holidays, m)) {
-          calTotalHours(newLeaveRequest.startTime, newLeaveRequest.endTime)
-            .then((totalhours) => {
-              newLeaveRequest.leaveDate = m.format('YYYY-MM-DD');
-              newLeaveRequest.totalhours = totalhours;
-              newLeaveRequest.code = 'playtorium';
-              LeaveRequest.create(newLeaveRequest, id);
-            });
+          const totalhours = await calTotalHours(newLeaveRequest.startTime, newLeaveRequest.endTime);
+          newLeaveRequest.leaveDate = m.format('YYYY-MM-DD');
+          newLeaveRequest.totalhours = totalhours;
+          newLeaveRequest.code = 'playtorium';
+          LeaveRequest.create(newLeaveRequest, id);
         }
       }
     }
@@ -122,26 +120,62 @@ exports.update = (req, res, next) => {
 };
 
 exports.findLeaveRequest = (req, res, next) => {
-  if (req.query.month && req.query.year && req.query.userId) {
-    LeaveRequest.findByYearAndMonth(req.query.year, req.query.month, req.query.userId)
-      .then((leaveRequests) => {
-        res.json(leaveRequests);
-      })
-      .catch(next);
+  if (req.accessControl.leaveRequestViewAll) {
+    if (req.query.month && req.query.year && req.query.userId) {
+      LeaveRequest.findByYearAndMonth(req.query.year, req.query.month, req.query.userId)
+        .then((leaveRequests) => {
+          res.json(leaveRequests);
+        })
+        .catch(next);
+    }
+    else if (req.query.userId) {
+      LeaveRequest.findByUserId(req.query.userId)
+        .then((leaveRequests) => {
+          res.json(leaveRequests);
+        })
+        .catch(next);
+    }
+    else {
+      LeaveRequest.findAll()
+        .then((leaveRequests) => {
+          res.json(leaveRequests);
+        })
+        .catch(next);
+    }
   }
-  else if (req.query.userId) {
-    LeaveRequest.findByUserId(req.query.userId)
-      .then((leaveRequests) => {
-        res.json(leaveRequests);
-      })
-      .catch(next);
+  else if (req.accessControl.leaveRequestViewOwn) {
+    if (req.query.month && req.query.year && req.query.userId) {
+      if (parseInt(req.query.userId, 10) === req.user.id) {
+        LeaveRequest.findByYearAndMonth(req.query.year, req.query.month, req.query.userId)
+          .then((leaveRequests) => {
+            res.json(leaveRequests);
+          })
+          .catch(next);
+      }
+      else {
+        res.status(401).json({
+          message: `You don't have permission to do this.`
+        });
+      }
+    }
+    else if (req.query.userId) {
+      if (parseInt(req.query.userId, 10) === req.user.id) {
+        LeaveRequest.findByUserId(req.query.userId)
+          .then((leaveRequests) => {
+            res.json(leaveRequests);
+          })
+          .catch(next);
+      }
+      else {
+        res.status(401).json({
+          message: `You don't have permission to do this.`
+        });
+      }
+    }
+    else {
+      res.status(401).json({
+        message: `You don't have permission to do this.`
+      });
+    }
   }
-};
-
-exports.findAll = (req, res, next) => {
-  LeaveRequest.findAll()
-    .then((leaveRequests) => {
-      res.json(leaveRequests);
-    })
-    .catch(next);
 };
