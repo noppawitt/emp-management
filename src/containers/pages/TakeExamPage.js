@@ -41,11 +41,11 @@ const TakeExamPage = ({
   onClickLogout, }) =>
   ((localStorage.getItem('agree') === undefined
     || localStorage.getItem('agree') === null
-    || localStorage.getItem('agree') !== 'agree')
+    || !localStorage.getItem('agree').includes(id))
     ? <Redirect
       to={{
         pathname: '/takeexam_agreement'
-        }}
+      }}
     />
     : (isFetching ?
       <Loader /> :
