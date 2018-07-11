@@ -1,4 +1,4 @@
-import { call, put, takeEvery, all } from 'redux-saga/effects';
+import { call, put, takeLatest, all } from 'redux-saga/effects';
 import * as actionTypes from '../constants/actionTypes';
 import { fetchAccessControlSuccess, fetchAccessControlFailure } from '../actions/accessControl';
 import api from '../services/api';
@@ -14,7 +14,7 @@ export function* fetchAccessControlTask() {
 }
 
 export function* watchFetchAccessControlTask() {
-  yield takeEvery(actionTypes.ACCESS_CONTROL_FETCH_REQUEST, fetchAccessControlTask);
+  yield takeLatest(actionTypes.ACCESS_CONTROL_FETCH_REQUEST, fetchAccessControlTask);
 }
 
 export default function* accessControlSaga() {

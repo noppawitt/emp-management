@@ -117,7 +117,7 @@ const EditProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType 
       label="Working day"
       placeholder="Working day"
       options={workingDayOptions}
-      disabled={submitting} 
+      disabled={submitting}
     />}
     <Field
       name="description"

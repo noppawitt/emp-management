@@ -7,15 +7,18 @@ import WorkProfileBox from '../containers/WorkProfileBox';
 import EducationProfileBox from '../containers/EducationProfileBox';
 import CertificateProfilxBox from '../containers/CertificateProfileBox';
 import AssetProfileBox from '../containers/AssetProfileBox';
+import Can from '../containers/Can';
 
-const Profile = ({ profile, can }) => (
+const Profile = ({ profile }) => (
   <div>
     <PageHeader icon="user" text="Profile" />
     <Grid centered>
       <Grid.Column computer={12} mobile={16}>
         <GeneralProfileBox generalProfile={profile.general} />
         <WorkProfileBox workProfile={profile.work} />
-        {can.educateView && <EducationProfileBox educationsProfile={profile.educations} />}
+        <Can activity="educateView">
+          <EducationProfileBox educationsProfile={profile.educations} />
+        </Can>
         <CertificateProfilxBox certificatesProfile={profile.certificates} />
         <AssetProfileBox assetsProfile={profile.assets} />
       </Grid.Column>
@@ -24,8 +27,7 @@ const Profile = ({ profile, can }) => (
 );
 
 Profile.propTypes = {
-  profile: PropTypes.object.isRequired,
-  can: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired
 };
 
 export default Profile;
