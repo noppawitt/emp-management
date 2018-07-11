@@ -129,7 +129,7 @@ class Timesheet extends React.Component {
                 animated="fade"
                 style={{ borderStyle: 'solid', borderColor: color, backgroundColor: 'white', borderWidth: '1px' }}
               >
-                <Button.Content visible><font color={color} >{hour} Hours</font></Button.Content>
+                <Button.Content visible><font color={color} >{Math.ceil(hour * 100) / 100} Hours</font></Button.Content>
                 <Button.Content hidden > <Icon color={iconcolor} name="pencil alternate" /> </Button.Content>
               </Button>}
             flowing
@@ -196,7 +196,7 @@ class Timesheet extends React.Component {
                   animated="fade"
                   style={{ borderStyle: 'solid', borderColor: this.state.textWorkcolor, backgroundColor: 'white', borderWidth: '1px' }}
                 >
-                  <Button.Content visible><font color={this.state.textWorkcolor}>{hour} Hours</font></Button.Content>
+                  <Button.Content visible><font color={this.state.textWorkcolor}>{Math.ceil(hour * 100) / 100} Hours</font></Button.Content>
                   <Button.Content hidden > <Icon color={this.state.iconBluecolor} name="pencil alternate" /> </Button.Content>
                 </Button>}
               flowing

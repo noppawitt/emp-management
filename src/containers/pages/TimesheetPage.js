@@ -21,7 +21,7 @@ const TimesheetPage = ({ isFetching, fetchTimesheet, timesheets, leaves, holiday
   let countWorkDay = 0;
   let countFilledTimesheet = 0;
   for (let i = 0; i < timesheets.length; i += 1) {
-    const x = timesheets[i];
+    const x = timesheets[i][0];
     if (moment(x.date).format('MM') !== month) {
       continue;
     }

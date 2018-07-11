@@ -73,7 +73,7 @@ const EditGeneralProfileForm = ({ handleSubmit, can }) => (
       as={Form.Input}
       label="Citizen ID"
       validate={[validator.required, validator.length13]}
-    />
+    />}
     <Field
       name="mobileNumber"
       component={Input}
