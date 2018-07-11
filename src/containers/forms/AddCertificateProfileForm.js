@@ -32,7 +32,7 @@ AddCertificateProfileForm.propTypes = {
 const mapStateToProps = state => ({
   masterTable: state.masterTable,
   initialValues: {
-    userId: state.profile.id
+    userId: state.profile.userId
   }
 });
 

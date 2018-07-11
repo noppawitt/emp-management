@@ -30,7 +30,6 @@ const AddAssetProfileForm = ({ masterTable, handleSubmit, submitting, ownFlag })
       component={Input}
       label="Owner"
       options={ownFlagOptions}
-      validate={validator.required}
     />
     {ownFlag ?
       <Field
@@ -95,7 +94,7 @@ const selector = formValueSelector('addAssetProfile');
 const mapStateToProps = state => ({
   masterTable: state.masterTable,
   initialValues: {
-    userId: state.profile.id,
+    userId: state.profile.userId,
     ownFlag: true
   },
   ownFlag: selector(state, 'ownFlag')
