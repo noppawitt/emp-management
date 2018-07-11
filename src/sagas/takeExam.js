@@ -52,7 +52,8 @@ export function* fetchTestExamTask(action) {
     }
     yield put(fetchCategory(examAmountPerCategory));
     yield put(fetchSubCategory(examAmountPerSubCategory));
-    const tempProgressResult = yield call(api.checkProgress, action.payload.id);
+    const testDate = yield call(api.getTestDate, action.payload.id);
+    const tempProgressResult = yield call(api.checkProgress, action.payload.id, testDate);
     const progressResult = [];
     if (tempProgressResult !== null) {
       for (let i = 0; i < tempProgressResult.answerList.length; i += 1) {
@@ -65,7 +66,8 @@ export function* fetchTestExamTask(action) {
     if (tempProgressResult !== null && tempProgressResult.startTime === null) {
       yield call(api.updateStartTimeTakeExam, {
         startTime: start,
-        id: action.payload.id
+        id: action.payload.id,
+        testDate,
       });
     }
   }
@@ -76,7 +78,8 @@ export function* fetchTestExamTask(action) {
 
 export function* uploadAnswerListTask(action) {
   try {
-    const progress = yield call(api.uploadAnswer, action.payload.id, action.payload.answerList);
+    const testDate = yield call(api.getTestDate, action.payload.id);
+    const progress = yield call(api.uploadAnswer, action.payload.id, action.payload.answerList, testDate);
     yield put(uploadAnswerListSuccess(progress));
   }
   catch (error) {
@@ -86,9 +89,10 @@ export function* uploadAnswerListTask(action) {
 
 export function* checkProgressTask(action) {
   try {
-    const progressResult = yield call(api.checkProgress, action.payload.id);
+    const testDate = yield call(api.getTestDate, action.payload.id);
+    console.log('TEST date:', testDate);
+    const progressResult = yield call(api.checkProgress, action.payload.id, testDate);
     const examProgress = yield put(checkProgressSuccess(progressResult));
-    console.log(examProgress);
     yield put(openModal(modalNames.VIEW_EXAM_PROGRESS, {
       examProgress: examProgress.payload.progressResult
     }));
@@ -100,8 +104,8 @@ export function* checkProgressTask(action) {
 
 export function* finishExamTask(action) {
   try {
-    const now = moment();
-    const timestampResult = yield call(api.updateSubmittedTime, action.payload.id, now);
+    const testDate = yield call(api.getTestDate, action.payload.id);
+    const timestampResult = yield call(api.updateSubmittedTime, action.payload.id, testDate);
     const deActivateResult = yield call(api.deActivate, action.payload.id, 'deactive');
     console.log(timestampResult, deActivateResult);
     localStorage.removeItem('agree');

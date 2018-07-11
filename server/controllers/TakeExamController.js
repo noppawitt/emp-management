@@ -35,18 +35,18 @@ exports.fetchExamSpecifyId = (req, res, next) => {
 
 exports.updateAnswer = (req, res, next) => {
   const object = req.body;
-  TakeExam.findUploadedAnswer(object.id, 'existing check')
+  TakeExam.findUploadedAnswer(object.id, 'existing check', object.testDate)
     .then((isExist) => {
       // if no old answer exist so create it first
       if (!isExist) {
-        TakeExam.createBufferAnswer(object.id, object.answerList, new Date())
+        TakeExam.createBufferAnswer(object.id, object.answerList, object.testDate)
           .then((result) => {
             console.log('Create result', result);
           })
           .catch(next);
       }
       // after we make sure it exist update it
-      TakeExam.updateAnswer(object.id, object.answerList, new Date(), new Date())
+      TakeExam.updateAnswer(object.id, object.answerList, new Date(), object.testDate)
         .then((result) => {
           if (result === null) res.json('Update Complete');
           else res.json('Something wrong :'.concat(result));
@@ -57,25 +57,27 @@ exports.updateAnswer = (req, res, next) => {
 };
 
 exports.findUploadedAnswer = (req, res, next) => {
-  const object = req.query;
-  TakeExam.findUploadedAnswer(object.id)
-    .then((isExist) => {
-      if (!isExist) {
-        TakeExam.createBufferAnswer(object.id, [], new Date())
-          .then((result) => {
-            console.log('Create result', result);
-            res.json(result);
+  const object = req.body;
+  const x = 'progress check';
+  console.log(x);
+  TakeExam.findUploadedAnswer(object.id, 'progress check', object.testDate.toString())
+    .then((result) => {
+      // if result null > not exist > create it 1st
+      // initialize answerList with empty list
+      if (!result) {
+        TakeExam.createBufferAnswer(object.id, [], object.testDate)
+          .then((createresult) => {
+            res.json(createresult);
           })
           .catch(next);
       }
-      else res.json(isExist);
+      else res.json(result);
     })
-    // .then((result) => { res.json(result); })
     .catch(next);
 };
 
 exports.updateStartTime = (req, res, next) => {
-  TakeExam.updateStartTime(req.body.startTime, req.body.id)
+  TakeExam.updateStartTime(req.body.startTime, req.body.id, req.body.testDate)
     .then((result) => {
       res.json(result);
     })
@@ -83,10 +85,8 @@ exports.updateStartTime = (req, res, next) => {
 };
 
 exports.updateSubmittedTime = (req, res, next) => {
-  console.log('>>', req.body.time);
-  TakeExam.updateSubmittedTime(req.body.id, req.body.time)
+  TakeExam.updateSubmittedTime(req.body.id, req.body.time, req.body.testDate)
     .then((retval) => {
-      console.log('return value:', retval);
       res.json(retval);
     })
     .catch(next);

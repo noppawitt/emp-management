@@ -4,14 +4,12 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { closeModal } from '../../actions/modal';
 import {
-  // checkPasswordStatusRequest,
   activatePasswordRequest,
   updateLifetimesValue,
   updateLifetimesUnit,
   randomExam,
 } from '../../actions/recruitment';
 import DisplayField from '../forms/DisplayField';
-// import { generatePasswordRequest } from '../../actions/recruitment';
 import ExamModal from '../../components/ExamModal';
 
 const ActivateUserModal = ({

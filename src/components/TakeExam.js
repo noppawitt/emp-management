@@ -199,15 +199,12 @@ const TakeExam = ({
             <Icon name="send" />
             Submit
           </Button>
-          <br />
-          <div style={{ color: (saveStatus === 'Save answers error !') ? 'red' : 'green' }}>{saveStatus}</div>
-        </Segment>
-        <Segment>
           <Button floated="right" icon labelPosition="left" negative onClick={() => onClickLogout(id, answerList)}>
             <Icon name="sign out" />
             Log out
           </Button>
-          <br /><br />
+          <br />
+          <div style={{ color: (saveStatus === 'Save answers error !') ? 'red' : 'green' }}>{saveStatus}</div>
         </Segment>
       </Segment.Group>
     </div>

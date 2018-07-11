@@ -255,18 +255,30 @@ api.checkPasswordStatus = id => (
   callApi(`/api/recruitments/checkPasswordStatus/?id=${id}`)
 );
 
-api.activatePassword = (id, lifetimes) => (
-  callApi(`/api/recruitments/activatePassword/?id=${id}&lifetimes=${lifetimes}`)
+api.activatePassword = (id, lifetimes, testDate) => (
+  callApi(`/api/recruitments/activatePassword/`, {
+    method: 'POST',
+    body: {
+      id,
+      lifetimes,
+      testDate,
+    }
+  })
 );
 
-api.uploadRandomExIdList = (randomExIdList, id) => (
+api.uploadRandomExIdList = (randomExIdList, id, testDate) => (
   callApi(`/api/recruitments/uploadRandomExIdList/`, {
     method: 'POST',
     body: {
       randomExIdList,
       id,
+      testDate,
     }
   })
+);
+
+api.getTestDate = id => (
+  callApi(`/api/recruitments/getTestDate/?id=${id}`)
 );
 
 // Exam
@@ -359,26 +371,34 @@ api.fetchExamSpecifyId = idList => (
   })
 );
 
-api.checkProgress = id => (
-  callApi(`/api/takeExam/checkProgress/?id=${id}`)
+api.checkProgress = (id, testDate) => (
+  callApi(`/api/takeExam/checkProgress/`, {
+    method: 'POST',
+    body: {
+      id,
+      testDate,
+    }
+  })
 );
 
-api.uploadAnswer = (id, answerList) => (
+api.uploadAnswer = (id, answerList, testDate) => (
   callApi(`/api/takeExam/uploadAnswer/`, {
     method: 'POST',
     body: {
       id,
       answerList,
+      testDate,
     }
   })
 );
 
-api.updateSubmittedTime = (id, time) => (
+api.updateSubmittedTime = (id, time, testDate) => (
   callApi(`/api/takeExam/updateSubmittedTime`, {
     method: 'POST',
     body: {
       id,
       time,
+      testDate,
     }
   })
 );

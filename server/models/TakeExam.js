@@ -46,22 +46,22 @@ TakeExam.fetchExamSpecifyId = idList => (
     + ' FROM exams WHERE ex_id = ANY ($1)', [idList])
 );
 
-TakeExam.createBufferAnswer = (id, answerList, date) => (
+TakeExam.createBufferAnswer = (id, answerList, testDate) => (
   db.oneOrNone(
     'INSERT INTO exam_candidate_submitted (id, answer_list, test_date) VALUES ($1, $2, $3)',
-    [id, answerList, date]
+    [id, answerList, testDate]
   )
 );
 
-TakeExam.findUploadedAnswer = (id, type) => {
+TakeExam.findUploadedAnswer = (id, type, testDate) => {
   // this 2 query do similar thing in same table
   // their difference is only return value type
   // so write it together or wait for reason to
   if (type === 'existing check') {
-    return db.oneOrNone('SELECT 1 FROM exam_candidate_submitted WHERE id = $1', [id]);
+    return db.oneOrNone('SELECT 1 FROM exam_candidate_submitted WHERE id = $1 AND test_date = $2', [id, testDate]);
   }
   else if (type === 'progress check') {
-    return db.oneOrNone('SELECT * FROM exam_candidate_submitted WHERE id = $1', [id]);
+    return db.oneOrNone('SELECT * FROM exam_candidate_submitted WHERE id = $1 AND test_date = $2', [id, testDate]);
   }
   return null;
 };
@@ -72,17 +72,13 @@ TakeExam.updateAnswer = (id, answerList, submittedTime, testDate) => {
     + ' WHERE id = $1 AND test_date = $4', [id, answerList, submittedTime, testDate]);
 };
 
-TakeExam.findUploadedAnswer = id => (
-  db.oneOrNone('SELECT * FROM exam_candidate_submitted WHERE id = $1', [id])
-);
-
-TakeExam.updateStartTime = (startTime, id) => {
+TakeExam.updateStartTime = (startTime, id, testDate) => {
   const start = moment(startTime).format('YYYY-MM-DD HH:mm:ss');
-  return db.none('UPDATE exam_candidate_submitted SET start_time = $1 WHERE id = $2', [start, id]);
+  return db.none('UPDATE exam_candidate_submitted SET start_time = $1 WHERE id = $2 AND test_date = $3', [start, id, testDate]);
 };
 
-TakeExam.updateSubmittedTime = (id, time) => (
-  db.oneOrNone('UPDATE exam_candidate_submitted SET submitted_time = $2 WHERE id = $1', [id, moment(time).format('YYYY-MM-DD HH:mm:ss')])
+TakeExam.updateSubmittedTime = (id, time, testDate) => (
+  db.oneOrNone('UPDATE exam_candidate_submitted SET submitted_time = $2 WHERE id = $1 AND test_date = $3', [id, moment(time).format('YYYY-MM-DD HH:mm:ss'), testDate])
 );
 
 TakeExam.changeStatus = (id, status) => (

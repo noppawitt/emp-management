@@ -55,7 +55,8 @@ export function* checkPasswordStatusTask(action) {
 
 export function* activatePasswordTask(action) {
   try {
-    const message = yield call(api.activatePassword, action.payload.id, action.payload.activationLifetimes);
+    const testDate = yield call(api.getTestDate, action.payload.id);
+    const message = yield call(api.activatePassword, action.payload.id, action.payload.activationLifetimes, testDate);
     yield put(activatePasswordSuccess(message));
     yield put(checkPasswordStatusRequest(action.payload.id));
   }
@@ -82,7 +83,8 @@ export function* randomExamTask(action) {
         }
       }
     }
-    const ok = yield call(api.uploadRandomExIdList, randomExIdList, action.payload.id);
+    const testDate = yield call(api.getTestDate, action.payload.id);
+    const ok = yield call(api.uploadRandomExIdList, randomExIdList, action.payload.id, testDate);
     console.log('random exam ok:', ok);
   }
   catch (error) {

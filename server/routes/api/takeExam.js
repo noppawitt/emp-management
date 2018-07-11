@@ -9,7 +9,7 @@ router.get('/fetchRandomExIdList', TakeExamController.fetchRandomExIdList);
 
 router.post('/fetchExamSpecifyId', TakeExamController.fetchExamSpecifyId);
 
-router.get('/checkProgress', TakeExamController.findUploadedAnswer);
+router.post('/checkProgress', TakeExamController.findUploadedAnswer);
 
 router.post('/uploadAnswer', TakeExamController.updateAnswer);
 

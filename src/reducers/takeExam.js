@@ -10,7 +10,8 @@ const initialState = {
   pickedAnswer: [],
   answerList: [],
   progressResult: [],
-  saveStatus: ' '
+  saveStatus: ' ',
+  testDate: 'YYYY-MM-DD',
 };
 
 const TakeExam = (state = initialState, action) => {
