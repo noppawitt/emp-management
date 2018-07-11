@@ -13,6 +13,7 @@ import {
   Button,
   TextArea,
   Menu,
+  Header,
 } from 'semantic-ui-react';
 import { pageChange } from '../actions/takeExam';
 import TakeExamTimer from './TakeExamTimer';
@@ -81,6 +82,8 @@ const TakeExam = ({
   onClickLogout, }) =>
   (
     <div>
+      <br />
+      <Header style={{ textAlign: 'right' }} as="h1">Login as {id}</Header>
       <br />
       <Segment.Group raised>
         <Grid>
