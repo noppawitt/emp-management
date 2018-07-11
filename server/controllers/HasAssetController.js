@@ -33,7 +33,7 @@ exports.create = (req, res, next) => {
     const newHasAsset = req.body;
     HasAsset.create(newHasAsset, req.user.id)
       .then(() => {
-        HasAsset.findByUserId(req.user.id)
+        HasAsset.findByUserId(req.query.userId)
           .then((hasAssets) => {
             res.json(hasAssets);
           });
@@ -42,7 +42,7 @@ exports.create = (req, res, next) => {
 };
 
 exports.findByUserId = (req, res, next) => {
-  HasAsset.findByUserId(req.query.id)
+  HasAsset.findByUserId(req.query.userId)
     .then((hasAssets) => {
       res.json(hasAssets);
     })
@@ -52,7 +52,7 @@ exports.findByUserId = (req, res, next) => {
 exports.delete = (req, res, next) => {
   HasAsset.delete(req.body.id, req.user.id)
     .then(() => {
-      HasAsset.findByUserId(req.user.id)
+      HasAsset.findByUserId(req.query.userId)
         .then((hasAssets) => {
           res.json(hasAssets);
         })

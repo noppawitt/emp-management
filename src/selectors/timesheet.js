@@ -13,7 +13,7 @@ export const fillTimesheetsToFullMonth = (state) => {
     if (tasks.length > 0) {
       timesheets.push(tasks);
     }
-    else  {
+    else {
       timesheets.push([{ date: date.format('YYYY-MM-DD'), totalhours: 0 }]);
     }
     date.add(1, 'days');
