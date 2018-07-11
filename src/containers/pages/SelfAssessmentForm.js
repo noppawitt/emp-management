@@ -221,7 +221,7 @@ class SelfAssessmentForm extends React.Component {
                         {/* Page Two */}
                         <td>
                             <div>
-                                <GoalComponent header='Goal 1 The Most Important * เป้าหมายสำคัญอันดับที่ 1' goal={this.state.goal1} onChange={this.goalOneHandler} />
+                                <GoalComponent header='Goal 1 The Most Important * เป้าหมายสำคัญอันดับที่ 1' goal={this.state.goal1} onChange={this.goalOneHandler} require={true} />
                             </div>
                         </td>
 
