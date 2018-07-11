@@ -34,35 +34,35 @@ class GoalComponent extends React.Component {
                         <td><textarea onChange={(event) => {
                             this.state.goal[0] = event.target.value;
                             this.updateParentState();
-                        }}></textarea></td>
+                        }}>{this.state.goal[0]}</textarea></td>
                     </tr>
                     <tr>
                         <td>First Step Plan: What is the first step towards achieving this goal?</td>
                         <td><textarea onChange={(event) => {
                             this.state.goal[1] = event.target.value;
                             this.updateParentState();
-                        }}></textarea></td>
+                        }}>{this.state.goal[1]}</textarea></td>
                     </tr>
                     <tr>
                         <td>Evaluation: How will we know if the goal is achieved? What will happen or change?</td>
                         <td><textarea onChange={(event) => {
                             this.state.goal[2] = event.target.value;
                             this.updateParentState();
-                        }}></textarea></td>
+                        }}>{this.state.goal[2]}</textarea></td>
                     </tr>
                     <tr>
                         <td>Support: What training or experience, or other support, could help?</td>
                         <td><textarea onChange={(event) => {
                             this.state.goal[3] = event.target.value;
                             this.updateParentState();
-                        }}></textarea></td>
+                        }}>{this.state.goal[3]}</textarea></td>
                     </tr>
                     <tr>
                         <td>Timing: When will the goal be achieved?</td>
                         <td><textarea onChange={(event) => {
                             this.state.goal[4] = event.target.value;
                             this.updateParentState();
-                        }}></textarea></td>
+                        }}>{this.state.goal[4]}</textarea></td>
                     </tr>
                 </table>
             </div >

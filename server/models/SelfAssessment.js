@@ -21,9 +21,9 @@ SelfAssessment.insertSelfAssessment = (selfAssessmentInfo,id) => (
     selfAssessmentInfo.contribution,
     selfAssessmentInfo.strengths,
     selfAssessmentInfo.improvements,
-    [],
-    [],
-    [],
+    selfAssessmentInfo.goal1,
+    selfAssessmentInfo.goal2,
+    selfAssessmentInfo.goal3,
     id,
     id
   ])
