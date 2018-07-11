@@ -16,9 +16,7 @@ const validate = (values) => {
   errors.customer = validator.required(values.customer);
   errors.purchasedOrder = validator.required(values.purchasedOrder);
   errors.amount = validator.required(values.amount);
-  errors.startDate = validator.required(values.startDate);
   errors.startDate = validator.dateBefore(values.startDate, values.endDate);
-  errors.endDate = validator.required(values.endDate);
   errors.endDate = validator.dateAfter(values.endDate, values.startDate);
   errors.status = validator.required(values.status);
   errors.paymentType = validator.required(values.paymentType);
@@ -27,20 +25,81 @@ const validate = (values) => {
 
 const EditProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType }) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="name" as={Form.Input} component={Input} label="Name" placeholder="Name" disabled={submitting} />
+    <Field
+      name="name"
+      as={Form.Input}
+      component={Input}
+      label="Name"
+      placeholder="Name"
+      disabled={submitting}
+    />
     <Form.Group widths="equal">
-      <Field name="quotationId" as={Form.Input} component={Input} label="Quotation No." placeholder="Quotation No." disabled={submitting} />
-      <Field name="customer" as={Form.Input} component={Input} label="Customer" placeholder="Customer" disabled={submitting} />
+      <Field
+        name="quotationId"
+        as={Form.Input}
+        component={Input}
+        label="Quotation No."
+        placeholder="Quotation No."
+        disabled={submitting}
+      />
+      <Field
+        name="customer"
+        as={Form.Input}
+        component={Input}
+        label="Customer"
+        placeholder="Customer"
+        disabled={submitting}
+      />
     </Form.Group>
     <Form.Group widths="equal">
-      <Field name="purchasedOrder" as={Form.Input} component={Input} label="PO No." placeholder="PO No." disabled={submitting} />
-      <Field name="amount" as={Form.Input} component={Input} label="Amount" placeholder="Amount" disabled={submitting} />
+      <Field
+        name="purchasedOrder"
+        as={Form.Input}
+        component={Input}
+        label="PO No."
+        placeholder="PO No."
+        disabled={submitting}
+      />
+      <Field
+        name="amount"
+        as={Form.Input}
+        component={Input}
+        label="Amount"
+        placeholder="Amount"
+        disabled={submitting}
+      />
     </Form.Group>
     <Form.Group widths="equal">
-      <Field name="startDate" as={Form.Input} component={Input} label="From" placeholder="From" type="date" disabled={submitting} />
-      <Field name="endDate" as={Form.Input} component={Input} label="To" placeholder="To" type="date" disabled={submitting} />
+      <Field
+        name="startDate"
+        as={Form.Input}
+        component={Input}
+        label="From"
+        placeholder="From"
+        type="date"
+        disabled={submitting}
+        validate={validator.required}
+      />
+      <Field
+        name="endDate"
+        as={Form.Input}
+        component={Input}
+        label="To"
+        placeholder="To"
+        type="date"
+        disabled={submitting}
+        validate={validator.required}
+      />
     </Form.Group>
-    <Field name="status" as={Form.Select} component={Input} label="Status" placeholder="Status" options={statusOptions} disabled={submitting} />
+    <Field
+      name="status"
+      as={Form.Select}
+      component={Input}
+      label="Status"
+      placeholder="Status"
+      options={statusOptions}
+      disabled={submitting}
+    />
     <Field
       name="paymentType"
       as={Form.Select}
@@ -51,8 +110,24 @@ const EditProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType 
       onChange={(e, newValue) => setWorkingDay(newValue === 'Man-month' ? 22 : null)}
       disabled={submitting}
     />
-    {paymentType === 'Man-month' && <Field name="workingDay" as={Form.Select} component={Input} label="Working day" placeholder="Working day" options={workingDayOptions} disabled={submitting} />}
-    <Field name="description" as={Form.TextArea} component={Input} autoHeight label="Description" placeholder="Description" disabled={submitting} />
+    {paymentType === 'Man-month' && <Field
+      name="workingDay"
+      as={Form.Select}
+      component={Input}
+      label="Working day"
+      placeholder="Working day"
+      options={workingDayOptions}
+      disabled={submitting} 
+    />}
+    <Field
+      name="description"
+      as={Form.TextArea}
+      component={Input}
+      autoHeight
+      label="Description"
+      placeholder="Description"
+      disabled={submitting}
+    />
   </Form>
 );
 
