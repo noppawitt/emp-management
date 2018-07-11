@@ -9,6 +9,8 @@ if (token) {
     isFetching: false,
     isAuthenticated: true,
     id: user.id,
+    agreementStatus: user.agreementStatus,
+    testdate: user.testdate
   };
 }
 else {
@@ -26,13 +28,16 @@ const examAuth = (state = initialState, action) => {
         isFetching: true,
         isAuthenticated: false,
       };
-    case actionTypes.EXAM_LOGIN_SUCCESS:
+    case actionTypes.EXAM_LOGIN_SUCCESS: {
       return {
         ...state,
         isFetching: false,
         isAuthenticated: true,
         id: action.payload.user.id,
+        agreementStatus: action.payload.user.agreementStatus,
+        testdate: action.payload.user.testdate,
       };
+    }
     case actionTypes.EXAM_LOGIN_FAILURE:
       return {
         ...state,
@@ -44,6 +49,7 @@ const examAuth = (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: false,
+        agreementStatus: '',
       };
     default:
       return state;

@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Segment, Form, Grid, Checkbox, Button } from 'semantic-ui-react';
-import history from '../history';
 
-const TakeExamAgreement = ({ isAgree, onClickCheckbox }) => (
+const TakeExamAgreement = ({ isAgree, onClickCheckbox, id, onClickAgree, testdate }) => (
   <div>
     <br />
     <Segment.Group>
@@ -36,7 +35,7 @@ const TakeExamAgreement = ({ isAgree, onClickCheckbox }) => (
               <Button
                 primary
                 disabled={!isAgree}
-                onClick={() => { localStorage.setItem('agree', 'agree'); history.push('/takeexam'); }}
+                onClick={() => onClickAgree(id, testdate)}
               >
                 Accept
               </Button>
@@ -51,6 +50,9 @@ const TakeExamAgreement = ({ isAgree, onClickCheckbox }) => (
 TakeExamAgreement.propTypes = {
   isAgree: PropTypes.bool.isRequired,
   onClickCheckbox: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  onClickAgree: PropTypes.func.isRequired,
+  testdate: PropTypes.string.isRequired,
 };
 
 export default TakeExamAgreement;

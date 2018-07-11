@@ -38,37 +38,38 @@ const TakeExamPage = ({
   categoryList,
   saveStatus,
   startTime,
-  onClickLogout, }) =>
-  ((localStorage.getItem('agree') === undefined
-    || localStorage.getItem('agree') === null
-    || localStorage.getItem('agree') !== 'agree')
+  onClickLogout,
+  agreementStatus, }) =>
+  ((agreementStatus === 'NotRead')
     ? <Redirect
       to={{
         pathname: '/takeexam_agreement'
-        }}
+      }}
     />
     : (isFetching ?
       <Loader /> :
-      <TakeExam
-        examList={examList}
-        currentActivePage={currentActivePage}
-        onPageChange={onPageChange}
-        activeCategory={activeCategory}
-        pickedAnswer={pickedAnswer}
-        answerList={answerList}
-        onClickRadio={onClickRadio}
-        onClickCheckbox={onClickCheckbox}
-        onInputTextArea={onInputTextArea}
-        onClickSave={onClickSave}
-        onClickSubmit={onClickSubmit}
-        id={id}
-        onClickCheckProgress={onClickCheckProgress}
-        onClickCategory={onClickCategory}
-        categoryList={categoryList}
-        saveStatus={saveStatus}
-        startTime={startTime}
-        onClickLogout={onClickLogout}
-      />)
+      <div>
+        <TakeExam
+          examList={examList}
+          currentActivePage={currentActivePage}
+          onPageChange={onPageChange}
+          activeCategory={activeCategory}
+          pickedAnswer={pickedAnswer}
+          answerList={answerList}
+          onClickRadio={onClickRadio}
+          onClickCheckbox={onClickCheckbox}
+          onInputTextArea={onInputTextArea}
+          onClickSave={onClickSave}
+          onClickSubmit={onClickSubmit}
+          id={id}
+          onClickCheckProgress={onClickCheckProgress}
+          onClickCategory={onClickCategory}
+          categoryList={categoryList}
+          saveStatus={saveStatus}
+          startTime={startTime}
+          onClickLogout={onClickLogout}
+        />
+      </div>)
   );
 
 TakeExamPage.propTypes = {
@@ -91,6 +92,7 @@ TakeExamPage.propTypes = {
   saveStatus: PropTypes.string.isRequired,
   startTime: PropTypes.instanceOf(moment).isRequired,
   onClickLogout: PropTypes.func.isRequired,
+  agreementStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -105,6 +107,7 @@ const mapStateToProps = state => ({
   categoryList: state.takeExam.categoryList,
   saveStatus: state.takeExam.saveStatus,
   startTime: state.takeExam.startTime,
+  agreementStatus: state.examAuth.agreementStatus,
 });
 
 const mapDispatchToProps = dispatch => ({

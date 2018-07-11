@@ -21,6 +21,14 @@ const TakeExam = (state = initialState, action) => {
         ...state,
         id: action.payload.id,
         isFetching: true,
+        examList: [],
+        currentActivePage: 1,
+        activeCategory: '',
+        categoryList: [],
+        pickedAnswer: [],
+        answerList: [],
+        progressResult: [],
+        saveStatus: ' '
       };
     case actionTypes.TAKE_EXAM_FETCH_SUCCESS: {
       const initialAnswerList = [];

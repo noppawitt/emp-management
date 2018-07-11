@@ -6,11 +6,14 @@ import {
   startExamSuccess,
 } from '../actions/takeExamAgreement';
 
-export function* startExamTask() {
+export function* startExamTask(action) {
   try {
-    const status = yield call(api.startExam());
-    console.log(status);
-    yield put(startExamSuccess(status));
+    const resStart = yield call(api.startExam, {
+      id: action.payload.id,
+      testdate: action.payload.testdate
+    });
+    localStorage.setItem('examToken', resStart.newToken);
+    yield put(startExamSuccess(resStart.id));
   }
   catch (error) {
     yield put(startExamFailure(error));
