@@ -104,6 +104,7 @@ export function* finishExamTask(action) {
     const timestampResult = yield call(api.updateSubmittedTime, action.payload.id, now);
     const deActivateResult = yield call(api.deActivate, action.payload.id, 'Waiting for Grading');
     console.log(timestampResult, deActivateResult);
+    localStorage.removeItem('agree');
     yield put(finishExamSuccess());
   }
   catch (error) {

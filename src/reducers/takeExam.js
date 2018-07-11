@@ -162,7 +162,7 @@ const TakeExam = (state = initialState, action) => {
     case actionTypes.TAKE_EXAM_FINISH_EXAM:
       return {
         ...state,
-        // nothing to update state yet...
+        saveStatus: ' '
       };
     default:
       return state;
