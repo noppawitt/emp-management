@@ -46,7 +46,7 @@ exports.updateAnswer = (req, res, next) => {
           .catch(next);
       }
       // after we make sure it exist update it
-      TakeExam.updateAnswer(object.id, object.answerList, new Date())
+      TakeExam.updateAnswer(object.id, object.answerList, new Date(), new Date())
         .then((result) => {
           if (result === null) res.json('Update Complete');
           else res.json('Something wrong :'.concat(result));
