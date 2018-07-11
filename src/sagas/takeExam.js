@@ -22,7 +22,6 @@ export function* fetchTestExamTask(action) {
   try {
     const randomExIdList = yield call(api.fetchRandomExIdList, action.payload.id);
     const examList = yield call(api.fetchExamSpecifyId, randomExIdList);
-    console.log(examList);
     const categoryList = [];
     const subCategoryList = [];
     Object(examList).map((item) => {
@@ -62,8 +61,8 @@ export function* fetchTestExamTask(action) {
     }
     const start = moment();
     yield put(fetchProgress(progressResult));
-    yield put(fetchTakeExamSuccess(examList, (tempProgressResult.startTime) ? moment(tempProgressResult.startTime) : start));
-    if (!tempProgressResult.startTime) {
+    yield put(fetchTakeExamSuccess(examList, (tempProgressResult !== null && tempProgressResult.startTime !== null) ? moment(tempProgressResult.startTime) : start));
+    if (tempProgressResult !== null && tempProgressResult.startTime === null) {
       yield call(api.updateStartTimeTakeExam, {
         startTime: start,
         id: action.payload.id
