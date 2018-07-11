@@ -24,7 +24,8 @@
         "no-param-reassign": "off",
         "no-mixed-operators": "off",
         "no-continue": "off",
-        "class-methods-use-this": "off"
+        "class-methods-use-this": "off",
+        "no-await-in-loop": "off"
     },
     "plugins": [
         "import",
