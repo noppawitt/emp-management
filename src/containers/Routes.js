@@ -14,10 +14,6 @@ import ExamLoginPage from './pages/ExamLoginPage';
 import TakeExamAgreementPage from './pages/TakeExamAgreementPage';
 import TakeExamPage from './pages/TakeExamPage';
 
-// build these compenents
-import GradeExamPage from './pages/GradeExamPage';
-import ViewResultPage from './pages/ViewResultPage';
-
 const Routes = () => (
   <Switch>
     <Route path="/login" component={LoginPage} />
@@ -29,8 +25,6 @@ const Routes = () => (
     <PrivateRoute path="/employee" component={EmployeePage} />
     <PrivateRoute path="/exam/*" component={ExamPage} />
     <PrivateRoute path="/recruitment/*" component={RecruitmentPage} />
-    <PrivateRoute path="/grade_exam" component={GradeExamPage} />
-    <PrivateRoute path="/view_result" component={ViewResultPage} />
     <Route path="/examlogin" component={ExamLoginPage} />
     <ExamRoute path="/takeexam_agreement" component={TakeExamAgreementPage} />
     <ExamRoute path="/takeexam" component={TakeExamPage} />

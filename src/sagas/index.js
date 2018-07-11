@@ -9,7 +9,6 @@ import timesheetSaga from './timesheet';
 import examSaga from './exam';
 import recruitmentSaga from './recruitment';
 import examAuthSaga from './examAuth';
-import viewResultSaga from './viewResult';
 import takeExamSaga from './takeExam';
 import takeExamAgreementSaga from './takeExamAgreement';
 
@@ -25,7 +24,6 @@ export default function* rootSaga() {
     recruitmentSaga(),
     examSaga(),
     examAuthSaga(),
-    viewResultSaga(),
     takeExamSaga(),
     takeExamAgreementSaga(),
   ]);

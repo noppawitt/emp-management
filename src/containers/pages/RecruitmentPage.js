@@ -28,7 +28,9 @@ const RecruitmentPage = ({
   startDate,
   endDate,
   onClickActivate,
-  alivePassword }) => {
+  alivePassword,
+  onClickGrade,
+}) => {
   const handleSort = (key) => {
     if (sortKey !== key) {
       sortByKey(key, 'ascending');
@@ -53,6 +55,7 @@ const RecruitmentPage = ({
           endDate={endDate}
           onClickActivate={onClickActivate}
           alivePassword={alivePassword}
+          onClickGrade={onClickGrade}
         />}
     </div>
   );
@@ -71,6 +74,7 @@ RecruitmentPage.propTypes = {
   endDate: PropTypes.string.isRequired,
   onClickActivate: PropTypes.func.isRequired,
   alivePassword: PropTypes.func.isRequired,
+  onClickGrade: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -93,7 +97,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(checkPasswordStatusRequest(cid)),
     dispatch(openModal(modalNames.ACTIVATE)),
   ),
-  // add Grade function
+  // build & fix Grade function
+  onClickGrade: cid => dispatch(openModal(modalNames.GRADING_EXAM, cid)),
 });
 
 const enhance = compose(
