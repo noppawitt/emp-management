@@ -103,7 +103,7 @@ export function* finishExamTask(action) {
   try {
     const now = moment();
     const timestampResult = yield call(api.updateSubmittedTime, action.payload.id, now);
-    const deActivateResult = yield call(api.deActivate, action.payload.id, 'Waiting for Grading');
+    const deActivateResult = yield call(api.deActivate, action.payload.id, 'deactive');
     console.log(timestampResult, deActivateResult);
     yield put(finishExamSuccess());
   }

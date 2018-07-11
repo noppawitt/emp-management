@@ -13,8 +13,8 @@ import {
   uploadAnswerListRequest,
   checkProgressRequest,
   categoryChange,
-  finishExam,
   logout,
+  finishExamRequest,
 } from '../../actions/takeExam';
 import TakeExam from '../../components/TakeExam';
 import Loader from '../../components/Loader';
@@ -42,11 +42,11 @@ const TakeExamPage = ({
   ((localStorage.getItem('agree') === undefined
     || localStorage.getItem('agree') === null
     || localStorage.getItem('agree') !== 'agree') ?
-    <Redirect
-      to={{
+      <Redirect
+        to={{
         pathname: '/takeexam_agreement'
-      }}
-    />
+        }}
+      />
     : (isFetching ?
       <Loader /> :
       <TakeExam
@@ -117,14 +117,13 @@ const mapDispatchToProps = dispatch => ({
   // Submit is save and exit!
   onClickSubmit: (id, answerList) => compose(
     dispatch(uploadAnswerListRequest(id, answerList)),
-    dispatch(finishExam(id)),
+    dispatch(finishExamRequest(id)),
     dispatch(logout()),
   ),
   onClickCheckProgress: id => dispatch(checkProgressRequest(id)),
   onClickCategory: category => dispatch(categoryChange(category)),
   onClickLogout: (id, answerList) => compose(
     dispatch(uploadAnswerListRequest(id, answerList)),
-    // logout here
     dispatch(logout()),
   ),
 });

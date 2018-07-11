@@ -88,4 +88,8 @@ TakeExam.changeStatus = (id, status) => (
   db.oneOrNone('UPDATE recruitments SET status = $2 WHERE citizen_id =$1', [id, status])
 );
 
+TakeExam.expiredActivationLifetime = id => (
+  db.oneOrNone('UPDATE exam_users2 SET activation_lifetimes = 0 WHERE id = $1', [id])
+);
+
 module.exports = TakeExam;
