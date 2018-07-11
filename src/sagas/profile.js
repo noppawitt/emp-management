@@ -1,4 +1,4 @@
-import { call, put, takeEvery, all, select } from 'redux-saga/effects';
+import { call, put, takeEvery, all, select, take } from 'redux-saga/effects';
 import * as actionTypes from '../constants/actionTypes';
 import {
   fetchProfileSuccess,
@@ -16,7 +16,12 @@ import api from '../services/api';
 
 export function* fetchProfileTask(action) {
   try {
-    const can = yield select(getAccessControl);
+    // Wait until access control fetching complete
+    let can = yield select(getAccessControl);
+    while (!can) {
+      yield take();
+      can = yield select(getAccessControl);
+    }
     const profile = {};
     profile.general = yield call(api.fetchGeneralProfile, action.payload.userId);
     profile.work = yield call(api.fetchWorkProfile, action.payload.userId);

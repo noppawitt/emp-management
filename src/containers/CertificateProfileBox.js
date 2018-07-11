@@ -6,6 +6,7 @@ import ProfileBox from '../components/ProfileBox';
 import { openModal } from '../actions/modal';
 import { deleteProfileRequest } from '../actions/profile';
 import * as modalNames from '../constants/modalNames';
+import Can from './Can';
 
 const CertificateProfileBox = ({ certificatesProfile, onAddClick, onDeleteClick, can }) => (
   <Segment.Group raised size="large">
@@ -19,10 +20,11 @@ const CertificateProfileBox = ({ certificatesProfile, onAddClick, onDeleteClick,
             </Header.Content>
           </Header>
         </Grid.Column>
-        {can.hasCertificateAdd &&
-        <Grid.Column floated="right" computer={1} mobile={2}>
-          <Icon name="add" link size="large" onClick={onAddClick} />
-        </Grid.Column>}
+        <Can activity="hasCertificateAdd">
+          <Grid.Column floated="right" computer={1} mobile={2}>
+            <Icon name="add" link size="large" onClick={onAddClick} />
+          </Grid.Column>
+        </Can>
       </Grid>
     </Segment>
     {certificatesProfile.map(p => (<ProfileBox

@@ -1,1 +1,1 @@
-export const getAccessControl = state => state.accessControl;
+export const getAccessControl = state => state.accessControl.can;
