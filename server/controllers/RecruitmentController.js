@@ -11,7 +11,6 @@ exports.fetchAllRecruitment = (req, res, next) => {
 exports.checkPasswordStatus = (req, res, next) => {
   Recruitment.checkPasswordStatus(req.query.id)
     .then((passwordStatusObject) => {
-      console.log(passwordStatusObject);
       res.json(passwordStatusObject);
     })
     .catch(next);
@@ -45,7 +44,6 @@ exports.uploadRandomExIdList = (req, res, next) => {
   ));
   Recruitment.uploadRandomExIdList(randomExIdList, req.body.id, req.body.testDate)
     .then((ok) => {
-      console.log('ok?');
       res.json(ok);
     })
     .catch(next);

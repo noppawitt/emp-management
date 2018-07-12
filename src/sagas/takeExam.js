@@ -6,16 +6,12 @@ import {
   fetchTakeExamSuccess,
   uploadAnswerListFailure,
   uploadAnswerListSuccess,
-  checkProgressFailure,
-  checkProgressSuccess,
   fetchProgress,
   fetchCategory,
   fetchSubCategory,
   finishExamFailure,
   finishExamSuccess,
 } from '../actions/takeExam';
-import { openModal } from '../actions/modal';
-import * as modalNames from '../constants/modalNames';
 import api from '../services/api';
 
 export function* fetchTestExamTask(action) {
@@ -87,27 +83,11 @@ export function* uploadAnswerListTask(action) {
   }
 }
 
-export function* checkProgressTask(action) {
-  try {
-    const testDate = yield call(api.getTestDate, action.payload.id);
-    console.log('TEST date:', testDate);
-    const progressResult = yield call(api.checkProgress, action.payload.id, testDate);
-    const examProgress = yield put(checkProgressSuccess(progressResult));
-    yield put(openModal(modalNames.VIEW_EXAM_PROGRESS, {
-      examProgress: examProgress.payload.progressResult
-    }));
-  }
-  catch (error) {
-    yield put(checkProgressFailure(error));
-  }
-}
-
 export function* finishExamTask(action) {
   try {
     const testDate = yield call(api.getTestDate, action.payload.id);
-    const timestampResult = yield call(api.updateSubmittedTime, action.payload.id, testDate);
-    const deActivateResult = yield call(api.deActivate, action.payload.id, 'deactive');
-    console.log(timestampResult, deActivateResult);
+    yield call(api.updateSubmittedTime, action.payload.id, testDate);
+    yield call(api.deActivate, action.payload.id, 'deactive');
     localStorage.removeItem('agree');
     yield put(finishExamSuccess());
   }
@@ -124,10 +104,6 @@ export function* watchUploadAnswerListRequest() {
   yield takeEvery(actionTypes.TAKE_EXAM_UPLOAD_REQUEST, uploadAnswerListTask);
 }
 
-export function* watchCheckProgressRequest() {
-  yield takeEvery(actionTypes.TAKE_EXAM_CHECK_PROGRESS_REQUEST, checkProgressTask);
-}
-
 export function* watchFinishExamRequest() {
   yield takeEvery(actionTypes.TAKE_EXAM_FINISH_EXAM_REQUEST, finishExamTask);
 }
@@ -136,7 +112,6 @@ export default function* takeExamSaga() {
   yield all([
     watchFetchTakeExamRequest(),
     watchUploadAnswerListRequest(),
-    watchCheckProgressRequest(),
     watchFinishExamRequest(),
   ]);
 }

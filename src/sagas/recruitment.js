@@ -26,7 +26,6 @@ export function* fetchRecruitmentTask() {
     yield put(fetchRecruitmentSuccess(recruitments));
   }
   catch (error) {
-    console.log(error);
     yield put(fetchRecruitmentFailure(error));
   }
 }
@@ -84,8 +83,7 @@ export function* randomExamTask(action) {
       }
     }
     const testDate = yield call(api.getTestDate, action.payload.id);
-    const ok = yield call(api.uploadRandomExIdList, randomExIdList, action.payload.id, testDate);
-    console.log('random exam ok:', ok);
+    yield call(api.uploadRandomExIdList, randomExIdList, action.payload.id, testDate);
   }
   catch (error) {
     console.log('random exam error:', error);

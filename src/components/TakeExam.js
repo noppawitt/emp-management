@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-// import Modal from '../../components/modal';
 import {
   Segment,
   Grid,
@@ -74,7 +73,6 @@ const TakeExam = ({
   onClickSave,
   onClickSubmit,
   id,
-  onClickCheckProgress,
   onClickCategory,
   categoryList,
   saveStatus,
@@ -194,11 +192,6 @@ const TakeExam = ({
                 </Grid.Column>
               </Grid>
               <Segment>
-                {/* <Button icon labelPosition="left" color="green" onClick={() => onClickCheckProgress(id)}>
-                  <Icon name="search" />
-                  Check
-                </Button> */}
-                {console.log(onClickCheckProgress)}
                 <Button icon labelPosition="left" primary onClick={() => onClickSave(id, answerList)}>
                   <Icon name="save" />
                   Save
@@ -216,7 +209,6 @@ const TakeExam = ({
               </Segment>
             </Segment.Group>
           </Grid.Column>
-
         </Grid.Row>
       </Grid>
     </div>
@@ -235,7 +227,6 @@ TakeExam.propTypes = {
   onClickSave: PropTypes.func.isRequired,
   onClickSubmit: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
-  onClickCheckProgress: PropTypes.func.isRequired,
   onClickCategory: PropTypes.func.isRequired,
   categoryList: PropTypes.array.isRequired,
   saveStatus: PropTypes.string.isRequired,

@@ -11,7 +11,6 @@ import {
   onPickCheckboxAnswer,
   onInputTextAreaAnswer,
   uploadAnswerListRequest,
-  checkProgressRequest,
   categoryChange,
   logout,
   finishExamRequest,
@@ -33,7 +32,6 @@ const TakeExamPage = ({
   onClickSave,
   onClickSubmit,
   id,
-  onClickCheckProgress,
   onClickCategory,
   categoryList,
   saveStatus,
@@ -62,7 +60,6 @@ const TakeExamPage = ({
           onClickSave={onClickSave}
           onClickSubmit={onClickSubmit}
           id={id}
-          onClickCheckProgress={onClickCheckProgress}
           onClickCategory={onClickCategory}
           categoryList={categoryList}
           saveStatus={saveStatus}
@@ -86,7 +83,6 @@ TakeExamPage.propTypes = {
   onClickSave: PropTypes.func.isRequired,
   onClickSubmit: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
-  onClickCheckProgress: PropTypes.func.isRequired,
   onClickCategory: PropTypes.func.isRequired,
   categoryList: PropTypes.array.isRequired,
   saveStatus: PropTypes.string.isRequired,
@@ -123,7 +119,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(finishExamRequest(id)),
     dispatch(logout()),
   ),
-  onClickCheckProgress: id => dispatch(checkProgressRequest(id)),
   onClickCategory: category => dispatch(categoryChange(category)),
   onClickLogout: (id, answerList) => compose(
     dispatch(uploadAnswerListRequest(id, answerList)),

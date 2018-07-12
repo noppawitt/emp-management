@@ -102,27 +102,6 @@ export const uploadAnswerListFailure = message => ({
   }
 });
 
-export const checkProgressRequest = id => ({
-  type: actionTypes.TAKE_EXAM_CHECK_PROGRESS_REQUEST,
-  payload: {
-    id,
-  }
-});
-
-export const checkProgressSuccess = progressResult => ({
-  type: actionTypes.TAKE_EXAM_CHECK_PROGRESS_SUCCESS,
-  payload: {
-    progressResult,
-  }
-});
-
-export const checkProgressFailure = message => ({
-  type: actionTypes.TAKE_EXAM_CHECK_PROGRESS_FAILURE,
-  payload: {
-    message,
-  }
-});
-
 export const categoryChange = category => ({
   type: actionTypes.TAKE_EXAM_CATEGORY_CHANGE,
   payload: {

@@ -67,7 +67,6 @@ TakeExam.findUploadedAnswer = (id, type, testDate) => {
 };
 
 TakeExam.updateAnswer = (id, answerList, submittedTime, testDate) => {
-  console.log(id, '<<<');
   return db.oneOrNone('UPDATE exam_candidate_submitted SET (answer_list, submitted_time) = ($2, $3)'
     + ' WHERE id = $1 AND test_date = $4', [id, answerList, submittedTime, testDate]);
 };

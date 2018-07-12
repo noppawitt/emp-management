@@ -103,7 +103,6 @@ const TakeExam = (state = initialState, action) => {
       const copyAnswerList = [...state.answerList].slice();
       let indexAns = -1;
       for (let i = 0; i < copyAnswerList.length; i += 1) {
-        console.log(copyAnswerList[i].question);
         if (copyAnswerList[i].question === action.payload.exId) {
           indexAns = i;
           break;
@@ -116,7 +115,6 @@ const TakeExam = (state = initialState, action) => {
         answer: [action.payload.text],
         question: action.payload.exId
       };
-      console.log(copyAnswerList);
 
       return {
         ...state,
