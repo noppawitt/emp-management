@@ -4,7 +4,7 @@ exports.create = (req, res, next) => {
   const newWorkExperience = req.body.workExperience;
   WorkExperience.create(newWorkExperience, req.user.id)
     .then(() => {
-      WorkExperience.findByUserId(req.query.userId)
+      WorkExperience.findByUserId(newWorkExperience.userId)
         .then((workExperiences) => {
           res.json(workExperiences);
         })
@@ -14,11 +14,16 @@ exports.create = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-  WorkExperience.delete(req.body.id)
-    .then(() => {
-      WorkExperience.findByUserId(req.query.userId)
-        .then((workExperiences) => {
-          res.json(workExperiences);
+  WorkExperience.findById(req.body.id)
+    .then((workExperience) => {
+      const { userId } = workExperience;
+      WorkExperience.delete(req.body.id)
+        .then(() => {
+          WorkExperience.findByUserId(userId)
+            .then((workExperiences) => {
+              res.json(workExperiences);
+            })
+            .catch(next);
         })
         .catch(next);
     })

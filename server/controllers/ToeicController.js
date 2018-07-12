@@ -4,7 +4,7 @@ exports.create = (req, res, next) => {
   const newToeic = req.body.toeic;
   Toeic.create(newToeic, req.user.id)
     .then(() => {
-      Toeic.findByUserId(req.query.userId)
+      Toeic.findByUserId(newToeic.userId)
         .then((toeics) => {
           res.json(toeics);
         })
@@ -14,15 +14,19 @@ exports.create = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-  Toeic.delete(req.body.id)
-    .then(() => {
-      Toeic.findByUserId(req.query.userId)
-        .then((toeics) => {
-          res.json(toeics);
+  Toeic.findById(req.body.id)
+    .then((toeic) => {
+      const { userId } = toeic;
+      Toeic.delete(req.body.id)
+        .then(() => {
+          Toeic.findByUserId(userId)
+            .then((toeics) => {
+              res.json(toeics);
+            })
+            .catch(next);
         })
         .catch(next);
-    })
-    .catch(next);
+    });
 };
 
 exports.findByUserId = (req, res, next) => {
