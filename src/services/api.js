@@ -246,6 +246,13 @@ api.deleteAssetProfile = body => (
   })
 );
 
+api.deleteWorkExperienceProfile = body => (
+  callApi('/api/work-experience', {
+    method: 'work-experience',
+    body
+  })
+);
+
 // Employee
 
 api.createEmployee = body => (
