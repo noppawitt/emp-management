@@ -53,11 +53,16 @@ exports.findByUserId = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-  HasAsset.delete(req.body.id, req.user.id)
-    .then(() => {
-      HasAsset.findByUserId(req.query.userId)
-        .then((hasAssets) => {
-          res.json(hasAssets);
+  HasAsset.findById(req.body.id)
+    .then((hasAsset) => {
+      const { userId } = hasAsset;
+      HasAsset.delete(req.body.id, req.user.id)
+        .then(() => {
+          HasAsset.findByUserId(userId)
+            .then((hasAssets) => {
+              res.json(hasAssets);
+            })
+            .catch(next);
         })
         .catch(next);
     })
