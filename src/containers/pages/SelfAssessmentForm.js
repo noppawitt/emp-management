@@ -114,40 +114,37 @@ class SelfAssessmentForm extends React.Component {
         this.validateField();
         this.props.test(this.state);
     }
-
+    componentWillReceiveProps(nextProps){
+      if(nextProps.item.currentPage != this.props.item.currentPage){
+        this.setState({currentPage: nextProps.item.currentPage},this.animateChangePage());
+      }
+    }
     shouldComponentUpdate(nextProps, nextState) {
         let arrayCheck = true;
-
         if (nextState.goal1.length != this.state.goal1.length ||
             nextState.goal2.length != this.state.goal2.length ||
             nextState.goal3.lenght != this.state.goal3.lenght) {
             arrayCheck = false;
         } else {
-            console.log("test1")
-            console.log(nextState.goal1);
-            console.log(this.state.goal1);
             for (let i = 0; i < nextState.goal1.length; i++) {
                 if (nextState.goal1[i] != this.state.goal1[i]) {
                     arrayCheck = false;
-                    console.log("test2");
                 }
             }
 
             for (let i = 0; i < nextState.goal2.length; i++) {
                 if (nextState.goal2[i] != this.state.goal2[i]) {
                     arrayCheck = false;
-                    console.log("test3");
                 }
             }
 
             for (let i = 0; i < nextState.goal3.length; i++) {
                 if (nextState.goal3[i] != this.state.goal3[i]) {
                     arrayCheck = false;
-                    console.log("test4");
                 }
             }
         }
-
+        console.log(!arrayCheck)
         return (
             nextState.currentPage != this.state.currentPage ||
             nextState.majorResponsibilities != this.state.majorResponsibilities ||
