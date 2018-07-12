@@ -19,6 +19,9 @@ const createHasAsset = (newAsset, creatorId) => new Promise(async (resolve, reje
 exports.create = (req, res, next) => {
   if (req.body.ownFlag) {
     const newAsset = req.body;
+    if (req.file) {
+      newAsset.picture = `/server/storage/private/asset/${req.file.filename}`;
+    }
     createHasAsset(newAsset, req.user.id)
       .then(() => {
         HasAsset.findByUserId(req.user.id)

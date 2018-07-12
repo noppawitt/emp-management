@@ -54,7 +54,6 @@ exports.update = (req, res, next) => {
 };
 
 exports.updateProfileImg = (req, res, next) => {
-  console.log(req.body);
   const path = `/static/profile-img/${req.file.filename}`;
   // for admin
   if (req.accessControl.employeeInfoEditAll) {

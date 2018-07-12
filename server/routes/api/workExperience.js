@@ -5,4 +5,6 @@ router.post('/', WorkExperienceController.create);
 
 router.delete('/', WorkExperienceController.delete);
 
+router.get('/', WorkExperienceController.findByUserId);
+
 module.exports = router;
