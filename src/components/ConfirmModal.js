@@ -24,7 +24,7 @@ class ConfirmModal extends React.Component{
   }
   render(){
     return(
-      <div>
+      <div style={{display: 'inline-block'}}>
         {this.props.button ? <Button disabled={this.props.submitting|| this.props.disable}  onClick={this.openModal} color='blue'> Save </Button> : <Button color='grey' onClick={()=>{this.props.closeModal();this.props.clear()}}> Close </Button>}
         <Modal
           size='mini'

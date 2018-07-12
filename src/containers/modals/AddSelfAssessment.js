@@ -27,6 +27,7 @@ class AddSelfAssessment extends React.Component {
             submitting={this.props.submitting}
             size="large"
             disable={!this.props.edited}
+            onChangePage={(nextPage)=>{this.props.onChange({...this.props.item,currentPage: (this.props.item.currentPage+nextPage+4)%4})}}
           >
             <A test={this.props.onChange} profile={this.props.profile} item={this.props.profile.item}/>
           </Modal>

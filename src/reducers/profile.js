@@ -3,7 +3,8 @@ import * as actionTypes from '../constants/actionTypes';
 const initialState = {
   isFetching: true,
   edited: false,
-  proFetching: false
+  proFetching: false,
+  item: {currentPage: 0}
 };
 
 const profile = (state = initialState, action) => {

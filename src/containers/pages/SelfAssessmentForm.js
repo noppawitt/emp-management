@@ -117,23 +117,15 @@ class SelfAssessmentForm extends React.Component {
     }
 
     componentDidUpdate() {
-        this.state = this.props.item;
-        this.animateChangePage();
+        this.setState({...this.props.item},this.animateChangePage)
+        console.log(this.state.currentPage)
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-
-        currentPage: 0
+      console.log(            nextProps.item.currentPage != nextState.currentPage
+)
         return (
-            nextProps.item.currentPage != nextState.currentPage ||
-            nextProps.item.majorResponsibilities != nextState.majorResponsibilities ||
-            nextProps.item.significantAccomplishments != nextState.significantAccomplishments ||
-            nextProps.item.contribution != nextState.contribution ||
-            nextProps.item.strengths != nextState.strengths ||
-            nextProps.item.improvements != nextState.improvements ||
-            nextProps.item.goal1 != nextState.goal1 ||
-            nextProps.item.goal2 != nextState.goal2 ||
-            nextProps.item.goal3 != nextState.goal3
+            nextProps.item.currentPage != nextState.currentPage
         );
     }
 
@@ -141,8 +133,8 @@ class SelfAssessmentForm extends React.Component {
         return (
             <div className='self-assessment-form'>
                 <button onClick={() => {
-                    this.state = { ...this.state, currentPage: (this.state.currentPage + 1) % 4 };
-                    this.animateChangePage();
+                    console.log('cur '+this.state.currentPage)
+                  this.props.test({...this.state,currentPage: (this.state.currentPage+1)%4})
                 }}>
                     click
                 </button>
