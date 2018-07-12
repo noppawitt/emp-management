@@ -94,8 +94,12 @@ EmployeeInfo.findOwnByUserId = userId => (
   db.oneOrNone('SELECT first_name, last_name, nick_name, mobile_number, line_id, email, facebook_id, picture, address, first_name_th, last_name_th, gender, user_id FROM employee_info WHERE user_id = $1', [userId])
 );
 
-EmployeeInfo.updateProfileImg = (path, id) => (
-  db.none('UPDATE employee_info SET picture = $1 WHERE user_id = $2', [path, id])
+EmployeeInfo.updateProfileImg = (path, userId) => (
+  db.none('UPDATE employee_info SET picture = $1 WHERE user_id = $2', [path, userId])
+);
+
+EmployeeInfo.createLineCode = (userId, lineCode) => (
+  db.none('UPDATE employee_info SET line_code = $1 WHERE user_id = $2', [lineCode, userId])
 );
 
 module.exports = EmployeeInfo;
