@@ -28,6 +28,7 @@ export const VIEW_EXAM_PROGRESS = 'VIEW_EXAM_PROGRESS';
 
 // Grading Exam
 export const GRADING_EXAM = 'GRADING_EXAM';
+export const VIEW_RESULT = 'VIEW_RESULT';
 
 // Recruitment
 export const ACTIVATE = 'ACTIVATE';

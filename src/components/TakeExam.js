@@ -198,6 +198,7 @@ const TakeExam = ({
                   <Icon name="search" />
                   Check
                 </Button> */}
+                {console.log(onClickCheckProgress)}
                 <Button icon labelPosition="left" primary onClick={() => onClickSave(id, answerList)}>
                   <Icon name="save" />
                   Save

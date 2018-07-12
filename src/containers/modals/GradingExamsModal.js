@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { closeModal } from '../../actions/modal';
 import Modal from '../../components/Modal';
+import GradingForm from '../forms/GradingForm';
 
-const GradingExams = ({
+const GradingExamsModal = ({
   id,
   onSave,
   onClose,
@@ -17,17 +18,19 @@ const GradingExams = ({
     id={id}
   >
     Hello, {id}!
+    <GradingForm
+      isFetching={false}
+    />
   </Modal>
 );
 
-GradingExams.propTypes = {
+GradingExamsModal.propTypes = {
   id: PropTypes.string.isRequired,
   onSave: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  id: state.recruitment.id,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -36,4 +39,4 @@ const mapDispatchToProps = dispatch => ({
   onClose: () => dispatch(closeModal()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(GradingExams);
+export default connect(mapStateToProps, mapDispatchToProps)(GradingExamsModal);

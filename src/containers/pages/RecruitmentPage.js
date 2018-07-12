@@ -30,6 +30,7 @@ const RecruitmentPage = ({
   onClickActivate,
   alivePassword,
   onClickGrade,
+  onClickViewResult,
   today,
 }) => {
   const handleSort = (key) => {
@@ -57,6 +58,7 @@ const RecruitmentPage = ({
           onClickActivate={onClickActivate}
           alivePassword={alivePassword}
           onClickGrade={onClickGrade}
+          onClickViewResult={onClickViewResult}
           today={today}
         />}
     </div>
@@ -77,6 +79,7 @@ RecruitmentPage.propTypes = {
   onClickActivate: PropTypes.func.isRequired,
   alivePassword: PropTypes.func.isRequired,
   onClickGrade: PropTypes.func.isRequired,
+  onClickViewResult: PropTypes.func.isRequired,
   today: PropTypes.string.isRequired,
 };
 
@@ -101,7 +104,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(openModal(modalNames.ACTIVATE)),
   ),
   // build & fix Grade function
-  onClickGrade: cid => dispatch(openModal(modalNames.GRADING_EXAM, cid)),
+  onClickGrade: id => dispatch(openModal(modalNames.GRADING_EXAM, { id })),
+  onClickViewResult: id => dispatch(openModal(modalNames.VIEW_RESULT, { id })),
 });
 
 const enhance = compose(

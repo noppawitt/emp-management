@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { compose } from 'recompose';
 import { Table } from 'semantic-ui-react';
 import Loader from '../../components/Loader';
 
@@ -49,11 +48,5 @@ const mapStateToProps = state => ({
   userStatus: state.recruitment.userStatus,
   userStatusCode: state.recruitment.userStatusCode,
 });
-
-// const mapDispatchToProps = () => ({
-//   // another thing
-// });
-
-// const enhance = compose(connect(mapStateToProps, mapDispatchToProps));
 
 export default connect(mapStateToProps)(DisplayField);

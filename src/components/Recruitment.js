@@ -3,28 +3,19 @@ import PropTypes from 'prop-types';
 import { Segment, Button, Input, Table } from 'semantic-ui-react';
 import { formatDate } from 'react-day-picker/moment';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
-// import { formatDate, parseDate } from 'react-day-picker/moment';
-import { Link } from 'react-router-dom';
 
-// generate and query password to table temp user and set timeout for it
-// const ActivateUser = (cid) => {
-//   console.log(cid);
-// };
-
-// constant function for change status button
-const actionButtonController = (status, id, onClickActivate, onClickGrade, isToday) => {
+const actionButtonController = (status, id, onClickActivate, onClickGrade, onClickViewResult, isToday) => {
   switch (status) {
-    // edit link
     case 'Wait for Grading':
       return <Button onClick={() => onClickGrade(id)} fluid color="teal">Grade</Button>;
     case 'Pending':
       return <Button onClick={() => onClickActivate(id)} disabled={!isToday} fluid primary>Activate</Button>;
     case 'Complete':
-      return <Button as={Link} to="/view_result" fluid primary positive>View Result</Button>;
+      return <Button onClick={() => onClickViewResult(id)} fluid primary positive>View Result</Button>;
     case 'In Progress':
       return <Button fluid disabled>Pending</Button>;
     default:
-      return <Button fluid primary negative disabled>Error</Button>;
+      return <Button fluid negative disabled>Error</Button>;
   }
 };
 
@@ -41,6 +32,7 @@ const Recruitment = ({
   endDate,
   onClickActivate,
   onClickGrade,
+  onClickViewResult,
   today, }) => (
     <Segment.Group raised>
       <Segment className="horizontal segments">
@@ -93,7 +85,7 @@ const Recruitment = ({
                 <Table.Cell className="two wide">{recruitment.appointment}</Table.Cell>
                 <Table.Cell className="two wide">{recruitment.status}</Table.Cell>
                 <Table.Cell className="two wide">
-                  {actionButtonController(recruitment.status, recruitment.citizenId, onClickActivate, onClickGrade, recruitment.appointment === today)}
+                  {actionButtonController(recruitment.status, recruitment.citizenId, onClickActivate, onClickGrade, onClickViewResult, recruitment.appointment === today)}
                 </Table.Cell>
               </Table.Row>
             ))}
@@ -115,6 +107,7 @@ Recruitment.propTypes = {
   endDate: PropTypes.string.isRequired,
   onClickActivate: PropTypes.func.isRequired,
   onClickGrade: PropTypes.func.isRequired,
+  onClickViewResult: PropTypes.func.isRequired,
   today: PropTypes.string.isRequired,
 };
 
