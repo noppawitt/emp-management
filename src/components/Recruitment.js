@@ -12,13 +12,13 @@ import { Link } from 'react-router-dom';
 // };
 
 // constant function for change status button
-const actionButtonController = (status, id, onClickActivate, onClickGrade) => {
+const actionButtonController = (status, id, onClickActivate, onClickGrade, isToday) => {
   switch (status) {
     // edit link
     case 'Wait for Grading':
       return <Button onClick={() => onClickGrade(id)} fluid color="teal">Grade</Button>;
     case 'Pending':
-      return <Button onClick={() => onClickActivate(id)} fluid primary>Activate</Button>;
+      return <Button onClick={() => onClickActivate(id)} disabled={!isToday} fluid primary>Activate</Button>;
     case 'Complete':
       return <Button as={Link} to="/view_result" fluid primary positive>View Result</Button>;
     case 'In Progress':
@@ -40,7 +40,8 @@ const Recruitment = ({
   startDate,
   endDate,
   onClickActivate,
-  onClickGrade, }) => (
+  onClickGrade,
+  today, }) => (
     <Segment.Group raised>
       <Segment className="horizontal segments">
         <Segment>
@@ -92,7 +93,7 @@ const Recruitment = ({
                 <Table.Cell className="two wide">{recruitment.appointment}</Table.Cell>
                 <Table.Cell className="two wide">{recruitment.status}</Table.Cell>
                 <Table.Cell className="two wide">
-                  {actionButtonController(recruitment.status, recruitment.citizenId, onClickActivate, onClickGrade)}
+                  {actionButtonController(recruitment.status, recruitment.citizenId, onClickActivate, onClickGrade, recruitment.appointment === today)}
                 </Table.Cell>
               </Table.Row>
             ))}
@@ -114,6 +115,7 @@ Recruitment.propTypes = {
   endDate: PropTypes.string.isRequired,
   onClickActivate: PropTypes.func.isRequired,
   onClickGrade: PropTypes.func.isRequired,
+  today: PropTypes.string.isRequired,
 };
 
 export default Recruitment;

@@ -1,3 +1,4 @@
+import moment from 'moment';
 import * as actionTypes from '../constants/actionTypes';
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
   userStatusCode: 'N/A',
   lifetimesValue: null,
   lifetimesUnit: 1,
+  today: '',
 };
 
 const Recruitment = (state = initialState, action) => {
@@ -22,13 +24,14 @@ const Recruitment = (state = initialState, action) => {
     case actionTypes.RECRUITMENT_FETCH_REQUEST:
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
       };
     case actionTypes.RECRUITMENT_FETCH_SUCCESS:
       return {
         ...state,
         isFetching: false,
-        lists: action.payload.recruitments
+        lists: action.payload.recruitments,
+        today: moment().format('YYYY-MM-DD'),
       };
     case actionTypes.RECRUITMENT_FETCH_FAILURE:
       return {

@@ -30,6 +30,7 @@ const RecruitmentPage = ({
   onClickActivate,
   alivePassword,
   onClickGrade,
+  today,
 }) => {
   const handleSort = (key) => {
     if (sortKey !== key) {
@@ -56,6 +57,7 @@ const RecruitmentPage = ({
           onClickActivate={onClickActivate}
           alivePassword={alivePassword}
           onClickGrade={onClickGrade}
+          today={today}
         />}
     </div>
   );
@@ -75,6 +77,7 @@ RecruitmentPage.propTypes = {
   onClickActivate: PropTypes.func.isRequired,
   alivePassword: PropTypes.func.isRequired,
   onClickGrade: PropTypes.func.isRequired,
+  today: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
