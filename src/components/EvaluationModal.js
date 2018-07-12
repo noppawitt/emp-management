@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button, Icon} from 'semantic-ui-react';
 import ConfirmModal from './ConfirmModal';
+import './css/ConfirmModal.css'
 
 const ModalBasicExample = ({open}) => (
   <Modal trigger={<Button>Basic Modal</Button>} basic size='small'>
