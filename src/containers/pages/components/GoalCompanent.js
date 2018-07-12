@@ -27,10 +27,11 @@ class GoalComponent extends React.Component {
             <div>
                 <table className='goal-table'>
                     <tr>
-                        <th colSpan='2' className='underline'>
+                        <th colSpan='2'>
                             <span className='blue-text'>{this.props.header}</span>
                         </th>
                     </tr>
+                    <tr> <th  style={{paddingTop: '30px'}}></th></tr>
                     <tr>
                         <td>Description: What is the goal? {this.props.require && !this.state.goal[0] ? requiredMessage : ''}</td>
                         <td><textarea tabIndex='-1' onChange={(event) => {

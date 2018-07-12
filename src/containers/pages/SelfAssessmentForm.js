@@ -2,6 +2,8 @@ import React from 'react';
 import EmployeeInfo from './components/EmployeeInfoComponent';
 import GoalComponent from './components/GoalCompanent';
 import './css/SelfAssessmentForm.css'
+import logoBack from './pic/logo2.png'
+import logo from './pic/logo.png'
 
 const requiredMessage = <a style={{ color: 'red' }}>(Please enter your answer.)</a>
 
@@ -160,51 +162,51 @@ class SelfAssessmentForm extends React.Component {
     render() {
         return (
             <div className='self-assessment-form'>
-                <button onClick={() => {
+                {/*<button onClick={() => {
                     this.setState({ currentPage: (this.state.currentPage + 1) % 4 });
                 }}>
                     click
-                </button>
-                <div>
+                </button>*/}
+                <img className="logo_back" src={logoBack} />
+                <div style={{textAlign: 'center',marginBottom: '30px'}}>
+                    <img className="logo" src={logo} />
                     <h1>Self Assessment Form</h1>
-                    <h2>Playtorium Solutions Company Limited</h2>
-                    <EmployeeInfo {...this.state} />
                 </div>
                 <table className='pages-contrainer'>
                     <tr>
                         {/* Page One */}
                         <td>
-                            <div>
+                            <div style={{padding: '0px 10px'}}>
                                 <table className='major-respon-table'>
-                                    <tr><th className='underline'><span className='blue-text'>Major Responsibilities</span>
+                                    <tr><th><span className='blue-text'>Major Responsibilities</span>
                                         {!this.state.majorResponsibilities ? requiredMessage : ''}</th></tr>
                                     <tr><td><textarea tabIndex='-1' onChange={(event) => {
                                         this.setState({ majorResponsibilities: event.target.value });
                                     }}>{this.state.majorResponsibilities}</textarea></td></tr>
                                 </table>
                             </div>
-                            <div>
+                            <div style={{padding: '0px 10px'}}>
                                 <table className='sign-accom-table'>
-                                    <tr><th className='underline'><span className='blue-text'>Significant Accomplishments</span>
+                                    <tr><th><span className='blue-text'>Significant Accomplishments</span>
                                         {!this.state.significantAccomplishments ? <a style={{ color: 'red' }}>(Please enter your answer.)</a> : ''}</th></tr>
                                     <tr><td><textarea tabIndex='-1' onChange={(event) => {
                                         this.setState({ significantAccomplishments: event.target.value });
                                     }}>{this.state.significantAccomplishments}</textarea></td></tr>
                                 </table>
                             </div>
-                            <div>
+                            <div style={{padding: '0px 10px'}}>
                                 <table className='con-com-table'>
-                                    <tr><th className='underline'><span className='blue-text'>Contribution / Company Activities</span>
+                                    <tr><th><span className='blue-text'>Contribution / Company Activities</span>
                                         {!this.state.contribution ? <a style={{ color: 'red' }}>(Please enter your answer.)</a> : ''}</th></tr>
                                     <tr><td><textarea tabIndex='-1' onChange={(event) => {
                                         this.setState({ contribution: event.target.value });
                                     }}>{this.state.contribution}</textarea></td></tr>
                                 </table>
                             </div>
-                            <div>
+                            <div style={{padding: '0px 10px'}}>
                                 <table className='str-improve-table'>
                                     <tr>
-                                        <th colSpan='2' className='underline'><span className='blue-text'>Strengths/Improvements</span></th>
+                                        <th colSpan='2'><span className='blue-text'>Strengths/Improvements</span></th>
                                     </tr>
                                     <tr>
                                         <td><span>Strengths</span>
@@ -226,21 +228,21 @@ class SelfAssessmentForm extends React.Component {
 
                         {/* Page Two */}
                         <td>
-                            <div>
+                            <div style={{padding: '0px 10px'}}>
                                 <GoalComponent header='Goal 1 The Most Important * เป้าหมายสำคัญอันดับที่ 1' goal={this.state.goal1} onChange={this.goalOneHandler} require={true} />
                             </div>
                         </td>
 
                         {/* Page Three */}
                         <td>
-                            <div>
+                            <div style={{padding: '0px 10px'}}>
                                 <GoalComponent header='Goal 2 More Important * เป้าหมายสำคัญอันดับที่ 2' goal={this.state.goal2} onChange={this.goalTwoHandler} />
                             </div>
                         </td>
 
                         {/* Page Four */}
                         <td>
-                            <div>
+                            <div style={{padding: '0px 10px'}}>
                                 <GoalComponent header='Goal 3 Less Important * เป้าหมายสำคัญอันดับที่ 3' goal={this.state.goal3} onChange={this.goalThreeHandler} />
                             </div>
                         </td>
