@@ -30,6 +30,7 @@ export function* fetchProfileTask(action) {
     }
     profile.certificates = yield call(api.fetchCertificateProfile, action.payload.userId);
     profile.assets = yield call(api.fetchAssetProfile, action.payload.userId);
+    profile.workExperience = yield call(api.fetchWorkExperience, action.payload.userId);
     yield put(fetchProfileSuccess(profile));
   }
   catch (error) {
