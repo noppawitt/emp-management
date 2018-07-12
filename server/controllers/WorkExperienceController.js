@@ -16,3 +16,11 @@ exports.delete = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.findByUserId = (req, res, next) => {
+  WorkExperience.findByUserId(req.query.userId)
+    .then((workExperiences) => {
+      res.json(workExperiences);
+    })
+    .catch(next);
+};

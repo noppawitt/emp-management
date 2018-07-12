@@ -21,3 +21,9 @@ WorkExperience.create = (workExperience, id) => (
 WorkExperience.delete = id => (
   db.none('DELETE FROM work_experience WHERE id = $1', [id])
 );
+
+WorkExperience.findByUserId = userId => (
+  db.manyOrNone('SELECT * FROM work_experience WHERE user_id = $1', [userId])
+);
+
+module.exports = WorkExperience;
