@@ -44,7 +44,6 @@ class SelfAssessmentForm extends React.Component {
         this.goalOneHandler = this.goalOneHandler.bind(this);
         this.goalTwoHandler = this.goalTwoHandler.bind(this);
         this.goalThreeHandler = this.goalThreeHandler.bind(this);
-        this.updateReduxState = this.updateReduxState.bind(this);
         this.validateField = this.validateField.bind(this);
     }
 
@@ -64,18 +63,15 @@ class SelfAssessmentForm extends React.Component {
     }
 
     goalOneHandler(newGoal) {
-        this.state.goal1 = newGoal;
-        this.updateReduxState();
+        this.setState({ goal1: newGoal });
     }
 
     goalTwoHandler(newGoal) {
-        this.state.goal2 = newGoal;
-        this.updateReduxState();
+        this.setState({ goal2: newGoal });
     }
 
     goalThreeHandler(newGoal) {
-        this.state.goal3 = newGoal;
-        this.updateReduxState();
+        this.setState({ goal3: newGoal });
     }
 
     validateField() {
@@ -106,12 +102,7 @@ class SelfAssessmentForm extends React.Component {
             }
         }
 
-        this.state = { ...this.state, validate: isValid };
-    }
-
-    updateReduxState() {
-        this.validateField();
-        this.props.test(this.state);
+        this.setState({ validate: isValid });
     }
 
     animateChangePage() {
@@ -119,23 +110,53 @@ class SelfAssessmentForm extends React.Component {
     }
 
     componentDidUpdate() {
-        this.state = this.props.item;
         this.animateChangePage();
+        this.validateField();
+        this.props.test(this.state);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
+        let arrayCheck = true;
 
-        currentPage: 0
+        if (nextState.goal1.length != this.state.goal1.length ||
+            nextState.goal2.length != this.state.goal2.length ||
+            nextState.goal3.lenght != this.state.goal3.lenght) {
+            arrayCheck = false;
+        } else {
+            console.log("test1")
+            console.log(nextState.goal1);
+            console.log(this.state.goal1);
+            for (let i = 0; i < nextState.goal1.length; i++) {
+                if (nextState.goal1[i] != this.state.goal1[i]) {
+                    arrayCheck = false;
+                    console.log("test2");
+                }
+            }
+
+            for (let i = 0; i < nextState.goal2.length; i++) {
+                if (nextState.goal2[i] != this.state.goal2[i]) {
+                    arrayCheck = false;
+                    console.log("test3");
+                }
+            }
+
+            for (let i = 0; i < nextState.goal3.length; i++) {
+                if (nextState.goal3[i] != this.state.goal3[i]) {
+                    arrayCheck = false;
+                    console.log("test4");
+                }
+            }
+        }
+
         return (
-            nextProps.item.currentPage != nextState.currentPage ||
-            nextProps.item.majorResponsibilities != nextState.majorResponsibilities ||
-            nextProps.item.significantAccomplishments != nextState.significantAccomplishments ||
-            nextProps.item.contribution != nextState.contribution ||
-            nextProps.item.strengths != nextState.strengths ||
-            nextProps.item.improvements != nextState.improvements ||
-            nextProps.item.goal1 != nextState.goal1 ||
-            nextProps.item.goal2 != nextState.goal2 ||
-            nextProps.item.goal3 != nextState.goal3
+            nextState.currentPage != this.state.currentPage ||
+            nextState.majorResponsibilities != this.state.majorResponsibilities ||
+            nextState.significantAccomplishments != this.state.significantAccomplishments ||
+            nextState.contribution != this.state.contribution ||
+            nextState.strengths != this.state.strengths ||
+            nextState.improvements != this.state.improvements ||
+            nextState.validate != this.state.validate ||
+            !arrayCheck
         );
     }
 
@@ -143,8 +164,7 @@ class SelfAssessmentForm extends React.Component {
         return (
             <div className='self-assessment-form'>
                 <button onClick={() => {
-                    this.state = { ...this.state, currentPage: (this.state.currentPage + 1) % 4 };
-                    this.animateChangePage();
+                    this.setState({ currentPage: (this.state.currentPage + 1) % 4 });
                 }}>
                     click
                 </button>
@@ -162,11 +182,7 @@ class SelfAssessmentForm extends React.Component {
                                     <tr><th className='underline'><span className='blue-text'>Major Responsibilities</span>
                                         {!this.state.majorResponsibilities ? requiredMessage : ''}</th></tr>
                                     <tr><td><textarea tabIndex='-1' onChange={(event) => {
-                                        this.state = {
-                                            ...this.state,
-                                            majorResponsibilities: event.target.value
-                                        };
-                                        this.updateReduxState();
+                                        this.setState({ majorResponsibilities: event.target.value });
                                     }}>{this.state.majorResponsibilities}</textarea></td></tr>
                                 </table>
                             </div>
@@ -175,11 +191,7 @@ class SelfAssessmentForm extends React.Component {
                                     <tr><th className='underline'><span className='blue-text'>Significant Accomplishments</span>
                                         {!this.state.significantAccomplishments ? <a style={{ color: 'red' }}>(Please enter your answer.)</a> : ''}</th></tr>
                                     <tr><td><textarea tabIndex='-1' onChange={(event) => {
-                                        this.state = {
-                                            ...this.state,
-                                            significantAccomplishments: event.target.value
-                                        };
-                                        this.updateReduxState();
+                                        this.setState({ significantAccomplishments: event.target.value });
                                     }}>{this.state.significantAccomplishments}</textarea></td></tr>
                                 </table>
                             </div>
@@ -188,11 +200,7 @@ class SelfAssessmentForm extends React.Component {
                                     <tr><th className='underline'><span className='blue-text'>Contribution / Company Activities</span>
                                         {!this.state.contribution ? <a style={{ color: 'red' }}>(Please enter your answer.)</a> : ''}</th></tr>
                                     <tr><td><textarea tabIndex='-1' onChange={(event) => {
-                                        this.state = {
-                                            ...this.state,
-                                            contribution: event.target.value
-                                        };
-                                        this.updateReduxState();
+                                        this.setState({ contribution: event.target.value });
                                     }}>{this.state.contribution}</textarea></td></tr>
                                 </table>
                             </div>
@@ -205,20 +213,12 @@ class SelfAssessmentForm extends React.Component {
                                         <td><span>Strengths</span>
                                             {!this.state.strengths ? <a style={{ color: 'red' }}>(Please enter your answer.)</a> : ''}
                                             <textarea tabIndex='-1' onChange={(event) => {
-                                                this.state = {
-                                                    ...this.state,
-                                                    strengths: event.target.value
-                                                };
-                                                this.updateReduxState();
+                                                this.setState({ strengths: event.target.value });
                                             }}>{this.state.strengths}</textarea></td>
                                         <td><span>Improvements</span>
                                             {!this.state.improvements ? <a style={{ color: 'red' }}>(Please enter your answer.)</a> : ''}
                                             <textarea tabIndex='-1' onChange={(event) => {
-                                                this.state = {
-                                                    ...this.state,
-                                                    improvements: event.target.value
-                                                };
-                                                this.updateReduxState();
+                                                this.setState({ improvements: event.target.value });
                                             }
                                             }>{this.state.improvements}</textarea></td>
                                     </tr>
