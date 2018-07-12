@@ -194,10 +194,10 @@ const TakeExam = ({
                 </Grid.Column>
               </Grid>
               <Segment>
-                <Button icon labelPosition="left" color="green" onClick={() => onClickCheckProgress(id)}>
+                {/* <Button icon labelPosition="left" color="green" onClick={() => onClickCheckProgress(id)}>
                   <Icon name="search" />
                   Check
-                </Button>
+                </Button> */}
                 <Button icon labelPosition="left" primary onClick={() => onClickSave(id, answerList)}>
                   <Icon name="save" />
                   Save
@@ -215,6 +215,7 @@ const TakeExam = ({
               </Segment>
             </Segment.Group>
           </Grid.Column>
+
         </Grid.Row>
       </Grid>
     </div>

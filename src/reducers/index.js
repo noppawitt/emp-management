@@ -13,7 +13,6 @@ import exam from './exam';
 import recruitment from './recruitment';
 import examAuth from './examAuth';
 import takeExamAgreement from './takeExamAgreement';
-import viewResult from './viewResult';
 import takeExam from './takeExam';
 
 export default combineReducers({
@@ -31,6 +30,5 @@ export default combineReducers({
   exam,
   examAuth,
   takeExamAgreement,
-  viewResult,
   takeExam,
 });
