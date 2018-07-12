@@ -4,6 +4,8 @@ import ScoreTableManager from './components/ScoreTableManager';
 import EmployeeInfo from './components/EmployeeInfoComponent';
 import SignatureComponent from './components/SignatureComponent';
 import SupervisorCommentComponent from './components/SupervisorCommentComponent';
+import logoBack from './pic/logo2.png'
+import logo from './pic/logo.png'
 
 const questions = ['ความรู้ในงานและการพัฒนาตัวเอง (Knowledge and Improvement)',
     'คุณภาพงาน (Quality of Work)',
@@ -93,9 +95,10 @@ class PerformanceReviewForm extends React.Component {
     render() {
         return (
             <div className='main-container'>
+              <img className="logo_back" src={logoBack} />
                 <div className='profile'>
+                    <img className="logo" src={logo} />
                     <h1>Employee Performance Review Form</h1>
-                    <h2>Playtorium Solutions Company Limited</h2>
                 </div>
                 <EmployeeInfo {...this.state} mode={this.props.mode} />
                 <br />
