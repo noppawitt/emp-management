@@ -21,7 +21,6 @@ const ExamLoginPage = ({ dispatch, message }) => {
   return (
     <div style={{ backgroundColor: '#5c97b5' }}>
       <Container textAlign="center">
-        {console.log('exam login page')}
         <Grid.Row centered columns={2}>
           <br />
           <br />

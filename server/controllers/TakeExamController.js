@@ -40,9 +40,7 @@ exports.updateAnswer = (req, res, next) => {
       // if no old answer exist so create it first
       if (!isExist) {
         TakeExam.createBufferAnswer(object.id, object.answerList, object.testDate)
-          .then((result) => {
-            console.log('Create result', result);
-          })
+          .then((result) => { })
           .catch(next);
       }
       // after we make sure it exist update it
@@ -58,8 +56,6 @@ exports.updateAnswer = (req, res, next) => {
 
 exports.findUploadedAnswer = (req, res, next) => {
   const object = req.body;
-  const x = 'progress check';
-  console.log(x);
   TakeExam.findUploadedAnswer(object.id, 'progress check', object.testDate.toString())
     .then((result) => {
       // if result null > not exist > create it 1st
@@ -94,7 +90,6 @@ exports.updateSubmittedTime = (req, res, next) => {
 
 exports.deActivate = (req, res, next) => {
   if (req.body.status !== 'deactive') {
-    console.log('deactive status: not deactive type!');
     res.json('deactive status: not deactive type!');
   }
   else {
@@ -102,7 +97,6 @@ exports.deActivate = (req, res, next) => {
       .then(() => {
         TakeExam.expiredActivationLifetime(req.body.id)
           .then((retval) => {
-            console.log(req.body.id);
             res.json('deactive status: '.concat(retval === null ? 'OK' : 'Something wrong'));
           })
           .catch(next);

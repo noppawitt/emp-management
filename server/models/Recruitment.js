@@ -16,7 +16,6 @@ Recruitment.activatePassword = (id, lifetimes, today) => (
 );
 
 Recruitment.uploadRandomExIdList = (randomExIdList, id, testDate) => {
-  console.log('@Recruitment: Random Ex Id', randomExIdList);
   return db.oneOrNone('UPDATE exam_users2 SET random_ex_id_list = $1 WHERE id = $2 AND test_date = $3', [randomExIdList, id, testDate]);
 };
 

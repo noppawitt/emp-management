@@ -23,9 +23,6 @@ export const ADD_NEW_EXAM = 'ADD_NEW_EXAM';
 export const EDIT_EXAM = 'EDIT_EXAM';
 export const VIEW_EXAM = 'VIEW_EXAM';
 
-// Take Exam
-export const VIEW_EXAM_PROGRESS = 'VIEW_EXAM_PROGRESS';
-
 // Grading Exam
 export const GRADING_EXAM = 'GRADING_EXAM';
 

@@ -27,6 +27,7 @@ const examAuth = (state = initialState, action) => {
         ...state,
         isFetching: true,
         isAuthenticated: false,
+        message: ' ',
       };
     case actionTypes.EXAM_LOGIN_SUCCESS: {
       return {
@@ -50,6 +51,7 @@ const examAuth = (state = initialState, action) => {
         ...state,
         isAuthenticated: false,
         agreementStatus: '',
+        message: ' ',
       };
     default:
       return state;

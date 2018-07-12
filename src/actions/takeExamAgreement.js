@@ -16,7 +16,7 @@ export const clickAgree = (id, testdate) => ({
 });
 
 export const startExamSuccess = (message) => {
-  location.href = '/takeexam';
+  window.location.href = '/takeexam';
   return {
     type: actionTypes.TAKE_EXAM_AGREEMENT_START_EXAM_SUCCESS,
     payload: {

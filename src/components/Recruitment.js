@@ -3,13 +3,7 @@ import PropTypes from 'prop-types';
 import { Segment, Button, Input, Table } from 'semantic-ui-react';
 import { formatDate } from 'react-day-picker/moment';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
-// import { formatDate, parseDate } from 'react-day-picker/moment';
 import { Link } from 'react-router-dom';
-
-// generate and query password to table temp user and set timeout for it
-// const ActivateUser = (cid) => {
-//   console.log(cid);
-// };
 
 // constant function for change status button
 const actionButtonController = (status, id, onClickActivate, onClickGrade, isToday) => {
