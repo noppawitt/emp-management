@@ -187,6 +187,13 @@ api.updateAssetProfile = body => (
   })
 );
 
+api.createWorkExperienceProfile = body => (
+  callApi('/api/work-experience', {
+    method: 'POST',
+    body
+  })
+);
+
 api.createEducationProfile = body => (
   callApi('/api/educates', {
     method: 'POST',

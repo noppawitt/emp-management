@@ -39,7 +39,7 @@ export const updateProfileSuccess = profile => ({
 });
 
 export const updateProfileFailure = message => ({
-  type: actionTypes.PROFILE_FETCH_FAILURE,
+  type: actionTypes.PROFILE_UPDATE_FAILURE,
   payload: {
     message
   }

@@ -52,6 +52,11 @@ export function* updateProfileTask(action) {
           employeeWork: action.payload.form
         });
         break;
+      case 'addWorkExperienceProfile':
+        profile.workExperience = yield call(api.createWorkExperienceProfile, {
+          workExperience: action.payload.form
+        });
+        break;
       case 'editEducationProfile':
         profile.educations = yield call(api.updateEducationProfile, {
           educate: action.payload.form
