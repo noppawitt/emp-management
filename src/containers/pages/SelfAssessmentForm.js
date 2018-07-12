@@ -206,7 +206,7 @@ class SelfAssessmentForm extends React.Component {
                             <div style={{padding: '0px 10px'}}>
                                 <table className='str-improve-table'>
                                     <tr>
-                                        <th colSpan='2'><span className='blue-text'>Strengths/Improvements</span></th>
+                                        <th colSpan='2'><span className='blue-text'>Strengths / Improvements</span></th>
                                     </tr>
                                     <tr>
                                         <td><span>Strengths</span>
