@@ -93,26 +93,27 @@ export function* updateProfileTask(action) {
 
 export function* deleteProfileTask(action) {
   try {
+    let profile;
     switch (action.payload.profileType) {
-      case 'education':
-        yield call(api.deleteEducationProfile, {
+      case 'educations':
+        profile = yield call(api.deleteEducationProfile, {
           id: action.payload.profileId
         });
         break;
-      case 'certificate':
-        yield call(api.deleteCertificateProfile, {
+      case 'certificates':
+        profile = yield call(api.deleteCertificateProfile, {
           id: action.payload.profileId
         });
         break;
-      case 'asset':
-        yield call(api.deleteAssetProfile, {
+      case 'assets':
+        profile = yield call(api.deleteAssetProfile, {
           id: action.payload.profileId
         });
         break;
       default:
         yield put(deleteProfileFailure('Something gone wrong'));
     }
-    yield put(deleteProfileSuccess(action.payload.profileType, action.payload.profileId));
+    yield put(deleteProfileSuccess(action.payload.profileType, profile));
     yield put(closeModal());
   }
   catch (error) {
