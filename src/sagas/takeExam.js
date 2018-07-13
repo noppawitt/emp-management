@@ -16,7 +16,7 @@ import api from '../services/api';
 
 export function* fetchTestExamTask(action) {
   try {
-    const randomExIdList = yield call(api.fetchRandomExIdList, action.payload.id);
+    const randomExIdList = yield call(api.fetchRandomExIdList, action.payload.id); // <- error
     const examList = yield call(api.fetchExamSpecifyId, randomExIdList);
     const categoryList = [];
     const subCategoryList = [];
