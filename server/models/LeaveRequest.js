@@ -25,20 +25,18 @@ LeaveRequest.create = (leaveRequest, id) => (
 
 LeaveRequest.update = (leaveRequest, id) => (
   db.none(
-    'UPDATE leave_requests SET status = $1, updated_user = $2, updated_date = $3 WHERE leave_from = $4 AND leave_to = $5 AND user_id = $6',
+    'UPDATE leave_requests SET status = $1, updated_user = $2, updated_date = $3 WHERE code = $4',
     [
       leaveRequest.status,
       id,
       moment().format('YYYY-MM-DD HH:mm:ss'),
-      leaveRequest.leaveFrom,
-      leaveRequest.leaveTo,
-      leaveRequest.userId
+      leaveRequest.code
     ]
   )
 );
 
 LeaveRequest.findByUserId = userId => (
-  db.manyOrNone('SELECT DISTINCT (leave_from), (leave_to), user_id, purpose, leave_type, code, status FROM leave_requests WHERE user_id = $1 AND status != $2', [userId, 'Cancel'])
+  db.manyOrNone('SELECT DISTINCT (leave_from), (leave_to), (code), user_id, purpose, leave_type, status FROM leave_requests WHERE user_id = $1 AND status != $2', [userId, 'Cancel'])
 );
 
 LeaveRequest.findAll = () => (
