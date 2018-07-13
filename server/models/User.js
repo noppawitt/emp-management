@@ -43,7 +43,6 @@ User.create = (user, id) => (
 );
 
 User.findById = (id) => {
-  console.log(id, typeof id);
   return db.oneOrNone('SELECT * FROM users WHERE id = $1', [id]);
 };
 

@@ -415,8 +415,7 @@ api.checkProgress = (id, testDate, startTime) => (
 );
 
 api.uploadAnswer = (id, answerList, testDate) => {
-  console.log('????', id, testDate);
-  callApi(`/api/takeExam/uploadAnswer/`, {
+  return callApi(`/api/takeExam/uploadAnswer/`, {
     method: 'POST',
     body: {
       id,

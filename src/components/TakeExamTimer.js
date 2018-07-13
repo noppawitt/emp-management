@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import { connect } from 'react-redux';
+import { uploadAnswerListRequest } from '../actions/takeExam';
 import '../styles/TakeExamTimerStyle.css';
 
 const paddingZero = (number) => {
@@ -19,7 +21,7 @@ class TakeExamTimer extends Component {
 
     this.endTime = this.props.startTime.clone().add({ hours: 2, seconds: 1 });
     this.countDown = this.countDown.bind(this);
-    setInterval(this.countDown, 500);
+    this.intervalVar = setInterval(this.countDown, 1000);
   }
 
   countDown() {
@@ -38,6 +40,17 @@ class TakeExamTimer extends Component {
     else if (this.endTime.diff(current, 'seconds') <= 600) {
       status = 'warning';
     }
+
+    if (this.endTime.diff(current, 'seconds') <= -1800) {
+      console.log(this.props.startTime.format('HH:mm:ss'));
+      console.log(this.endTime.format('HH:mm:ss'));
+      console.log(current.format('HH:mm:ss'));
+      console.log(this.endTime.diff(current, 'seconds'));
+      console.log('timeout');
+      this.props.submit(this.props.id, this.props.answerList);
+      clearInterval(this.intervalVar);
+    }
+
     this.setState({ timer: showTime, timerStatus: status });
   }
 
@@ -48,4 +61,8 @@ class TakeExamTimer extends Component {
   }
 }
 
-export default TakeExamTimer;
+const mapDispatchToProps = dispatch => ({
+  submit: (id, answerList) => dispatch(uploadAnswerListRequest(id, answerList, false, true)),
+});
+
+export default connect(null, mapDispatchToProps)(TakeExamTimer);
