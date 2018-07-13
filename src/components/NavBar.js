@@ -4,7 +4,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { Menu, Container, Dropdown, Image } from 'semantic-ui-react';
 import bigLogo from '../images/big-logo.jpg';
 
-const Navbar = ({ username, onLogout }) => (
+const Navbar = ({ userId, username, onLogout }) => (
   <div>
     <Image src={bigLogo} />
     <Menu stackable attached borderless inverted size="huge">
@@ -27,7 +27,7 @@ const Navbar = ({ username, onLogout }) => (
         <Menu.Menu position="right">
           <Dropdown item pointing text={username}>
             <Dropdown.Menu>
-              <Dropdown.Item text="Profile" as={Link} to="/profile" />
+              <Dropdown.Item text="Profile" as={Link} to={`/profile/${userId}`} />
               <Dropdown.Item text="Log out" onClick={onLogout} />
             </Dropdown.Menu>
           </Dropdown>
@@ -38,6 +38,7 @@ const Navbar = ({ username, onLogout }) => (
 );
 
 Navbar.propTypes = {
+  userId: PropTypes.number.isRequired,
   username: PropTypes.string.isRequired,
   onLogout: PropTypes.func.isRequired
 };

@@ -16,11 +16,14 @@ import ProfilePictureModal from './modals/ProfilePictureModal';
 import EditProfilePictureModal from './modals/EditProfilePictureModal';
 import EditProjectModal from './modals/EditProjectModal';
 import AddMemberModal from './modals/AddMemberModal';
+import AddTimesheetModal from './modals/AddTimesheetModal';
+import EditTimesheetModal from './modals/EditTimesheetModal';
+import AddWorkExperienceProfileModal from './modals/AddWorkExperienceProfileModal';
 import AddProbation from './modals/AddProbation';
 import AddPerformance from './modals/AddPerformance';
 import AddSelfAssessment from './modals/AddSelfAssessment';
 
-const ModalContainer = ({ name, props }) => {
+const renderModal = ({ name, props }) => {
   switch (name) {
     case modalNames.EDIT_GENERAL_PROFILE:
       return <EditGeneralProfileModal {...props} />;
@@ -50,32 +53,37 @@ const ModalContainer = ({ name, props }) => {
       return <ProfilePictureModal {...props} />;
     case modalNames.EDIT_ASSET_PROFILE:
       return <EditEducationProfileModal {...props} />;
+    case modalNames.EDIT_PROFILE_PICTURE:
+      return <EditProfilePictureModal {...props} />;
+    case modalNames.ADD_TIMESHEET:
+      return <AddTimesheetModal {...props} />;
+    case modalNames.EDIT_TIMESHEET:
+      return <EditTimesheetModal {...props} />;
+    case modalNames.ADD_WORK_EXPERIENCE_PROFILE:
+      return <AddWorkExperienceProfileModal />;
     case modalNames.ADD_PROBATION:
       return <AddProbation {...props} />;
     case modalNames.ADD_PERFORMANCE:
       return <AddPerformance {...props} />;
     case modalNames.ADD_SELFASSESSMENT:
       return <AddSelfAssessment {...props} />;
-    case modalNames.EDIT_PROFILE_PICTURE:
-      return <EditProfilePictureModal {...props} />;
     default:
       return <div />;
   }
 };
 
-ModalContainer.defaultProps = {
-  name: null,
-  props: null
-};
+const ModalContainer = ({ stack }) => (
+  <div>
+    {stack.map(s => renderModal(s))}
+  </div>
+);
 
 ModalContainer.propTypes = {
-  name: PropTypes.string,
-  props: PropTypes.object
+  stack: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
-  name: state.modal.name,
-  props: state.modal.props
+  stack: state.modal.stack
 });
 
 export default connect(mapStateToProps)(ModalContainer);

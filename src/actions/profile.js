@@ -11,7 +11,7 @@ export const updateProbationStore = (item,type) =>({
 export const fetchProfileRequest = id => ({
   type: actionTypes.PROFILE_FETCH_REQUEST,
   payload: {
-    id
+    userId
   }
 });
 
@@ -47,7 +47,7 @@ export const updateProfileSuccess = profile => ({
 });
 
 export const updateProfileFailure = message => ({
-  type: actionTypes.PROFILE_FETCH_FAILURE,
+  type: actionTypes.PROFILE_UPDATE_FAILURE,
   payload: {
     message
   }
@@ -61,11 +61,11 @@ export const deleteProfileRequest = (profileType, profileId) => ({
   }
 });
 
-export const deleteProfileSuccess = (profileType, profileId) => ({
+export const deleteProfileSuccess = (profileType, profile) => ({
   type: actionTypes.PROFILE_DELETE_SUCCESS,
   payload: {
     profileType,
-    profileId
+    profile
   }
 });
 

@@ -1,4 +1,4 @@
-import { call, put, takeEvery, all } from 'redux-saga/effects';
+import { call, put, takeEvery, all, select, take } from 'redux-saga/effects';
 import * as actionTypes from '../constants/actionTypes';
 import {
   fetchProfileSuccess,
@@ -7,6 +7,8 @@ import {
   updateProfileFailure,
   deleteProfileSuccess,
   deleteProfileFailure,
+  updateProfilePictureSuccess,
+  updateProfilePictureFailure,
   fetchProbationSuccess,
   fetchProbationFailure,
   fetchPerformanceSuccess,
@@ -15,6 +17,7 @@ import {
   fetchSelfAssessmentFailure
 } from '../actions/profile';
 import { closeModal } from '../actions/modal';
+import { getAccessControl } from '../selectors/accessControl';
 import api from '../services/api';
 import jwt from 'jsonwebtoken';
 
@@ -55,12 +58,21 @@ export function* fetchProbationTask(action){
 
 export function* fetchProfileTask(action) {
   try {
+    // Wait until access control fetching complete
+    let can = yield select(getAccessControl);
+    while (!can) {
+      yield take();
+      can = yield select(getAccessControl);
+    }
     const profile = {};
-    profile.general = yield call(api.fetchGeneralProfile, action.payload.id);
-    profile.work = yield call(api.fetchWorkProfile, action.payload.id);
-    profile.educations = yield call(api.fetchEducationProfile, action.payload.id);
-    profile.certificates = yield call(api.fetchCertificateProfile, action.payload.id);
-    profile.assets = yield call(api.fetchAssetProfile, action.payload.id);
+    profile.general = yield call(api.fetchGeneralProfile, action.payload.userId);
+    profile.work = yield call(api.fetchWorkProfile, action.payload.userId);
+    if (can.educateView) {
+      profile.educations = yield call(api.fetchEducationProfile, action.payload.userId);
+    }
+    profile.certificates = yield call(api.fetchCertificateProfile, action.payload.userId);
+    profile.assets = yield call(api.fetchAssetProfile, action.payload.userId);
+    profile.workExperience = yield call(api.fetchWorkExperience, action.payload.userId);
     if(token.type=='admin' || token.id == action.payload.id || token.type == 'md'){
       profile.eva = yield call(api.checkProbation, action.payload.id);
       profile.perf = yield call(api.checkPerformance, action.payload.id);
@@ -117,6 +129,11 @@ export function* updateProfileTask(action) {
           employeeWork: action.payload.form
         });
         break;
+      case 'addWorkExperienceProfile':
+        profile.workExperience = yield call(api.createWorkExperienceProfile, {
+          workExperience: action.payload.form
+        });
+        break;
       case 'editEducationProfile':
         profile.educations = yield call(api.updateEducationProfile, {
           educate: action.payload.form
@@ -153,26 +170,27 @@ export function* updateProfileTask(action) {
 
 export function* deleteProfileTask(action) {
   try {
+    let profile;
     switch (action.payload.profileType) {
-      case 'education':
-        yield call(api.deleteEducationProfile, {
+      case 'educations':
+        profile = yield call(api.deleteEducationProfile, {
           id: action.payload.profileId
         });
         break;
-      case 'certificate':
-        yield call(api.deleteCertificateProfile, {
+      case 'certificates':
+        profile = yield call(api.deleteCertificateProfile, {
           id: action.payload.profileId
         });
         break;
-      case 'asset':
-        yield call(api.deleteAssetProfile, {
+      case 'assets':
+        profile = yield call(api.deleteAssetProfile, {
           id: action.payload.profileId
         });
         break;
       default:
         yield put(deleteProfileFailure('Something gone wrong'));
     }
-    yield put(deleteProfileSuccess(action.payload.profileType, action.payload.profileId));
+    yield put(deleteProfileSuccess(action.payload.profileType, profile));
     yield put(closeModal());
   }
   catch (error) {
@@ -180,8 +198,18 @@ export function* deleteProfileTask(action) {
   }
 }
 
-export function* uploadProfilePictureTask(action) {
-  yield console.log(action);
+export function* updateProfilePictureTask(action) {
+  try {
+    const formData = new FormData();
+    formData.append('userId', action.payload.userId);
+    formData.append('profileImage', action.payload.picture);
+    const { path } = yield call(api.updateProfilePicture, formData);
+    yield put(updateProfilePictureSuccess(`${path}?time=${new Date()}`));
+    yield put(closeModal());
+  }
+  catch (error) {
+    yield put(updateProfilePictureFailure(error));
+  }
 }
 
 export function* watchFetchProfileRequest() {
@@ -196,8 +224,8 @@ export function* watchDeleteProfileRequest() {
   yield takeEvery(actionTypes.PROFILE_DELETE_REQUEST, deleteProfileTask);
 }
 
-export function* watchUploadProfilePictureTask() {
-  yield takeEvery(actionTypes.PROFILE_PICTURE_UPLOAD_REQUEST, uploadProfilePictureTask);
+export function* watchUpdateProfilePictureRequest() {
+  yield takeEvery(actionTypes.PROFILE_PICTURE_UPDATE_REQUEST, updateProfilePictureTask);
 }
 
 export function* watchFetchProbationRequest() {
@@ -217,6 +245,7 @@ export default function* profileSaga() {
     watchFetchProfileRequest(),
     watchUpdateProfileRequest(),
     watchDeleteProfileRequest(),
+    watchUpdateProfilePictureRequest(),
     watchFetchProbationRequest(),
     watchFetchPerformanceRequest(),
     watchFetchSelfAssessmentRequest()

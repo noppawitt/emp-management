@@ -17,3 +17,12 @@ export const getVisibleProjects = (state) => {
       return 0;
     });
 };
+
+export const projectsToOptions = (state) => {
+  if (!state.project.lists) return [];
+  const options = [];
+  state.project.lists.forEach((project) => {
+    options.push({ key: project.id, value: project.id, text: `${project.id} ${project.name}` });
+  });
+  return options;
+};

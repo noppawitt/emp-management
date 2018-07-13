@@ -11,8 +11,13 @@ import * as validator from '../../utils/validator';
 
 const validate = (values) => {
   const errors = {};
+<<<<<<< HEAD
   errors.startDate = validator.required(values.startDate);
   errors.endDate = validator.required(values.endDate);
+=======
+  errors.userId = validator.required(values.userId);
+  errors.role = validator.required(values.role);
+>>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
   return errors;
 };
 
@@ -55,12 +60,16 @@ const enhance = compose(
     }
   }),
   reduxForm({
+<<<<<<< HEAD
     form: 'addProject',
     initialValues: {
       from: null,
       to: null,
       description: null
     },
+=======
+    form: 'addMember',
+>>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
     validate
   })
 );

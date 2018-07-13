@@ -4,6 +4,7 @@ import { logout } from '../actions/auth';
 import NavBar from '../components/NavBar';
 
 const mapStateToProps = state => ({
+  userId: state.auth.id,
   username: state.auth.username
 });
 

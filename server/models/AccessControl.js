@@ -74,4 +74,11 @@ AccessControl.findAll = () => (
   db.manyOrNone('SELECT * FROM access_control')
 );
 
+<<<<<<< HEAD
+=======
+AccessControl.findById = id => (
+  db.one('SELECT * FROM access_control WHERE id = $1', [id])
+);
+
+>>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
 module.exports = AccessControl;

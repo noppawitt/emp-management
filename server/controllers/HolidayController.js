@@ -18,10 +18,19 @@ exports.update = (req, res, next) => {
     .catch(next);
 };
 
-exports.findAll = (req, res, next) => {
-  Holiday.findAll()
-    .then((holidays) => {
-      res.json(holidays);
-    })
-    .catch(next);
+exports.findHolidays = (req, res, next) => {
+  if (req.query.month && req.query.year) {
+    Holiday.findByYearAndMonth(req.query.year, req.query.month)
+      .then((holidays) => {
+        res.json(holidays);
+      })
+      .catch(next);
+  }
+  else if (req.query.year) {
+    Holiday.findByYear(req.query.year)
+      .then((holidays) => {
+        res.json(holidays);
+      })
+      .catch(next);
+  }
 };
