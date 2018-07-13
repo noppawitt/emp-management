@@ -11,14 +11,10 @@ import { leaveTypesOptions, durationsOptions } from '../../utils/options';
 const validate = (values) => {
   const errors = {};
   errors.leaveType = validator.required(values.leaveType);
-  errors.leaveFrom = validator.required(values.leaveFrom);
   errors.leaveFrom = validator.dateBefore(values.leaveFrom, values.leaveTo);
-  errors.leaveTo = validator.required(values.leaveTo);
   errors.leaveTo = validator.dateAfter(values.leaveTo, values.leaveFrom);
-  errors.timeIn = validator.required(values.timeIn);
-  errors.timeIn = validator.timeBefore(values.timeIn, values.timeOut);
-  errors.timeOut = validator.required(values.timeOut);
-  errors.timeOut = validator.timeAfter(values.timeOut, values.timeIn);
+  errors.startTime = validator.startTimeCheck(values.startTime, values.endTime);
+  errors.endTime = validator.endTimeCheck(values.endTime, values.startTime);
   errors.purpose = validator.required(values.purpose);
   return errors;
 };
@@ -31,10 +27,36 @@ const remark = `1. พนักงานจะใช้สิทธิ์ลา�
 
 const CreateLeaveRequestForm = ({ handleSubmit, submitting, duration, resetStartTime, resetEndTime }) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="leaveType" as={Form.Select} component={Input} label="Leave type" placeholder="Leave type" options={leaveTypesOptions} disabled={submitting} />
+    <Field
+      name="leaveType"
+      as={Form.Select}
+      component={Input}
+      label="Leave type"
+      placeholder="Leave type"
+      options={leaveTypesOptions}
+      disabled={submitting}
+    />
     <Form.Group widths="equal">
-      <Field name="leaveFrom" as={Form.Input} component={Input} type="date" label="From" placeholder="From" disabled={submitting} />
-      <Field name="leaveTo" as={Form.Input} component={Input} type="date" label="To" placeholder="To" disabled={submitting} />
+      <Field
+        name="leaveFrom"
+        as={Form.Input}
+        component={Input}
+        type="date"
+        label="From"
+        placeholder="From"
+        disabled={submitting}
+        validate={validator.required}
+      />
+      <Field
+        name="leaveTo"
+        as={Form.Input}
+        component={Input}
+        type="date"
+        label="To"
+        placeholder="To"
+        disabled={submitting}
+        validate={validator.required}
+      />
     </Form.Group>
     <Field
       name="duration"
@@ -48,10 +70,36 @@ const CreateLeaveRequestForm = ({ handleSubmit, submitting, duration, resetStart
     />
     {duration === 'Specific time' &&
     <Form.Group widths="equal">
-      <Field name="startTime" as={Form.Input} component={Input} type="time" label="Start time" placeholder="Start time" disabled={submitting} />
-      <Field name="endTime" as={Form.Input} component={Input} type="time" label="End time" placeholder="End time" disabled={submitting} />
+      <Field
+        name="startTime"
+        as={Form.Input}
+        component={Input}
+        type="time"
+        label="Start time"
+        placeholder="Start time"
+        disabled={submitting}
+        validate={validator.required}
+      />
+      <Field
+        name="endTime"
+        as={Form.Input}
+        component={Input}
+        type="time"
+        label="End time"
+        placeholder="End time"
+        disabled={submitting}
+        validate={validator.required}
+      />
     </Form.Group>}
-    <Field name="purpose" as={Form.TextArea} component={Input} autoHeight label="Purpose" placeholder="Purpose" disabled={submitting} />
+    <Field
+      name="purpose"
+      as={Form.TextArea}
+      component={Input}
+      autoHeight
+      label="Purpose"
+      placeholder="Purpose"
+      disabled={submitting}
+    />
     <Form.TextArea autoHeight readOnly label="Remark" value={remark} />
   </Form>
 );

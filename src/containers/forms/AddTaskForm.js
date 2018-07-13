@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import { Field, FieldArray, reduxForm } from 'redux-form';
-import { Grid, Form, Segment, Icon, Button } from 'semantic-ui-react';
+import { Grid, Form, Segment, Icon, Button, Responsive } from 'semantic-ui-react';
 import moment from 'moment';
 import Input from '../../components/Input';
 import { getFormInitialValues } from '../../selectors/timesheet';
@@ -34,6 +34,9 @@ const renderTasks = ({ fields }) => (
                   <Field name={`${task}.timeIn`} as={Form.Input} component={Input} label="Time in" type="time" />
                   <Field name={`${task}.timeOut`} as={Form.Input} component={Input} label="Time out" type="time" />
                 </Form.Group>
+              </Grid.Column>
+              <Grid.Column floated="right" width={6}>
+                {fields.get(i).remark.map(remark => (<p style={{ color: 'red' }}>{remark}</p>)) }
               </Grid.Column>
             </Grid.Row>
             <Grid.Column width={16}>

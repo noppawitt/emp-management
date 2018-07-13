@@ -16,16 +16,88 @@ const validate = (values) => {
   return errors;
 };
 
+// const Honors = [
+//   { key: '1', value: '1', text: 'เกียรตินิยมอันดับที่ 1' },
+//   { key: '2', value: '2', text: 'เกียรตินิยมอันดับที่ 2' },
+
+// ];
 const EditEducationProfileForm = ({ masterTable, universityId, facultyId, handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="universityId" as={Form.Select} component={Input} label="University" placeholder="University" options={masterTableToOptions(masterTable.universities)} disabled={submitting} />
-    <Field name="degreeId" as={Form.Select} component={Input} label="Degree" placeholder="Degree" options={masterTableToOptions(masterTable.degrees)} disabled={submitting} />
-    <Field name="facultyId" as={Form.Select} component={Input} label="Faculty" placeholder="Faculty" options={masterTableToOptions(getFacultiesByUniversityId(masterTable.faculties, universityId))} disabled={submitting} />
-    <Field name="majorId" as={Form.Select} component={Input} label="Major" placeholder="Major" options={masterTableToOptions(getMajorsByFacultyId(masterTable.majors, facultyId))} disabled={submitting} />
-    <Field name="program" as={Form.Input} component={Input} label="Program" placeholder="Program" disabled={submitting} />
-    <Field name="honorFlag" as={Form.Input} component={Input} label="Honor" placeholder="Honor" disabled={submitting} />
-    <Field name="gpax" as={Form.Input} component={Input} label="Gpax" placeholder="Gpax" disabled={submitting} />
-    <Field name="graduationDate" as={Form.Input} component={Input} type="date" label="Graduation date" placeholder="Graduation date" disabled={submitting} />
+    <Field
+      name="universityId"
+      as={Form.Select}
+      component={Input}
+      label="University"
+      placeholder="University"
+      options={masterTableToOptions(masterTable.universities)}
+      disabled={submitting}
+      validate={validator.required}
+    />
+    <Field
+      name="degreeId"
+      as={Form.Select}
+      component={Input}
+      label="Degree"
+      placeholder="Degree"
+      options={masterTableToOptions(masterTable.degrees)}
+      disabled={submitting}
+      validate={validator.required}
+    />
+    <Field
+      name="facultyId"
+      as={Form.Select}
+      component={Input}
+      label="Faculty"
+      placeholder="Faculty"
+      options={masterTableToOptions(getFacultiesByUniversityId(masterTable.faculties, universityId))}
+      disabled={submitting}
+      validate={validator.required}
+    />
+    <Field
+      name="majorId"
+      as={Form.Select}
+      component={Input}
+      label="Major"
+      placeholder="Major"
+      options={masterTableToOptions(getMajorsByFacultyId(masterTable.majors, facultyId))}
+      disabled={submitting}
+      validate={validator.required}
+    />
+    <Field
+      name="program"
+      as={Form.Input}
+      component={Input}
+      label="Program"
+      placeholder="Program"
+      disabled={submitting}
+    />
+    <Field
+      name="honorFlag"
+      as={Form.Input}
+      component={Input}
+      label="Honor"
+      placeholder="Honor"
+      disabled={submitting}
+    />
+    <Field
+      name="gpax"
+      as={Form.Input}
+      component={Input}
+      label="Gpax"
+      placeholder="Gpax"
+      disabled={submitting}
+      validate={validator.gpax}
+    />
+    <Field
+      name="graduationDate"
+      as={Form.Input}
+      component={Input}
+      type="date"
+      label="Graduation date"
+      placeholder="Graduation date"
+      disabled={submitting}
+      validate={validator.date}
+    />
   </Form>
 );
 
