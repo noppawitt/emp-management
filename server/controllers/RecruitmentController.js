@@ -63,7 +63,6 @@ exports.grading = (req, res, next) => {
           Recruitment.fetchCandidateAnswer(req.body.id, req.body.testDate)
             .then((answerQuery) => {
               const resultList = [];
-              console.log('Ans Qry:', answerQuery);
               // foreach exId let compare the answer
               object.randomExIdList.map((exId) => {
                 Object(examQuery).map((eachExam) => {
@@ -113,10 +112,9 @@ exports.grading = (req, res, next) => {
                   }
                 });
               });
-              console.log('ResultList', resultList);
               Recruitment.uploadResult(resultList)
-                .then((returnStatus) => {
-                  res.json(returnStatus);
+                .then(() => {
+                  res.json('OK');
                 })
                 .catch(next);
             })
@@ -131,6 +129,19 @@ exports.fetchExam = (req, res, next) => {
   Recruitment.fetchExam(req.body.id, req.body.testDate)
     .then((exam) => {
       res.json(exam);
+    })
+    .catch(next);
+};
+
+exports.changeStatus = (req, res, next) => {
+  Recruitment.changeStatus(req.body.id, req.body.status)
+    .then(() => {
+      Recruitment.checkStatus(req.body.id)
+        .then((object) => {
+          console.log(object.status);
+          res.json(object.status === req.body.status ? 'OK' : 'Something Wrong');
+        })
+        .catch(next);
     })
     .catch(next);
 };

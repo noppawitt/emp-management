@@ -50,26 +50,37 @@ Recruitment.fetchCandidateAnswer = (id, testDate) => (
   db.manyOrNone('SELECT * FROM exam_candidate_submitted WHERE id = $1 AND test_date = $2', [id, testDate])
 );
 
-Recruitment.uploadResult = (resultList) => {
-  let retval = '';
-  retval += Object(resultList).map(eachObject => (
-    db.oneOrNone(
-      'INSERT INTO exam_result (cd_id, ex_id, test_date, ex_question, ex_choices, ex_type, cd_answer, point, status, ex_correct)'
-      + ' VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
-      [
-        eachObject.cd_id,
-        eachObject.ex_id,
-        eachObject.test_date,
-        eachObject.ex_question,
-        eachObject.ex_choices,
-        eachObject.ex_type,
-        eachObject.cd_answer,
-        eachObject.point,
-        eachObject.status,
-        eachObject.ex_correct]
-    )
-  ));
-  return retval;
-};
+Recruitment.uploadResult = resultList => (
+  db.tx((t) => {
+    const queryList = [];
+    Object(resultList).map((eachObject) => {
+      const aquery = t.none(
+        'INSERT INTO exam_result (cd_id, ex_id, test_date, ex_question, ex_choices, ex_type, cd_answer, point, status, ex_correct)'
+        + ' VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
+        [
+          eachObject.cd_id,
+          eachObject.ex_id,
+          eachObject.test_date,
+          eachObject.ex_question,
+          eachObject.ex_choices,
+          eachObject.ex_type,
+          eachObject.cd_answer,
+          eachObject.point,
+          eachObject.status,
+          eachObject.ex_correct]
+      );
+      queryList.push(aquery);
+    });
+    return t.batch(queryList);
+  })
+);
+
+Recruitment.changeStatus = (id, status) => (
+  db.oneOrNone('UPDATE recruitments SET status = $2 WHERE citizen_id = $1', [id, status])
+);
+
+Recruitment.checkStatus = id => (
+  db.oneOrNone('SELECT status FROM recruitments WHERE citizen_id = $1', [id])
+);
 
 module.exports = Recruitment;

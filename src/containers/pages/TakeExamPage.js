@@ -12,8 +12,6 @@ import {
   onInputTextAreaAnswer,
   uploadAnswerListRequest,
   categoryChange,
-  logout,
-  finishExamRequest,
 } from '../../actions/takeExam';
 import TakeExam from '../../components/TakeExam';
 import Loader from '../../components/Loader';
@@ -112,18 +110,10 @@ const mapDispatchToProps = dispatch => ({
   onClickRadio: (choice, currentActivePage, pickedAnswer, exId) => dispatch(onPickRadioAnswer(choice, currentActivePage, pickedAnswer, exId)),
   onClickCheckbox: (choice, currentActivePage, pickedAnswer, exId) => dispatch(onPickCheckboxAnswer(choice, currentActivePage, pickedAnswer, exId)),
   onInputTextArea: (text, currentActivePage, exId) => dispatch(onInputTextAreaAnswer(text, currentActivePage, exId)),
-  onClickSave: (id, answerList) => dispatch(uploadAnswerListRequest(id, answerList)),
-  // Submit is save and exit!
-  onClickSubmit: (id, answerList) => compose(
-    dispatch(uploadAnswerListRequest(id, answerList)),
-    dispatch(finishExamRequest(id)),
-    dispatch(logout()),
-  ),
   onClickCategory: category => dispatch(categoryChange(category)),
-  onClickLogout: (id, answerList) => compose(
-    dispatch(uploadAnswerListRequest(id, answerList)),
-    dispatch(logout()),
-  ),
+  onClickSave: (id, answerList) => dispatch(uploadAnswerListRequest(id, answerList, false, false)),
+  onClickSubmit: (id, answerList) => dispatch(uploadAnswerListRequest(id, answerList, false, true)),
+  onClickLogout: (id, answerList) => dispatch(uploadAnswerListRequest(id, answerList, true, true)),
 });
 
 const enhance = compose(

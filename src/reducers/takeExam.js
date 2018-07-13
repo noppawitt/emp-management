@@ -169,6 +169,7 @@ const TakeExam = (state = initialState, action) => {
     case actionTypes.TAKE_EXAM_FINISH_EXAM_REQUEST:
       return {
         ...state,
+        isFetching: true,
       };
     case actionTypes.TAKE_EXAM_FINISH_EXAM_SUCCESS:
       return {
@@ -182,12 +183,13 @@ const TakeExam = (state = initialState, action) => {
         pickedAnswer: [],
         answerList: [],
         progressResult: [],
-        saveStatus: ' '
+        saveStatus: ' ',
       };
     case actionTypes.TAKE_EXAM_FINISH_EXAM_FAILURE:
       return {
         ...state,
         message: action.payload.message,
+        isFetching: false,
       };
     default:
       return state;

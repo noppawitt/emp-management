@@ -15,4 +15,6 @@ router.post('/grading', RecruitmentController.grading);
 
 router.post('/fetchExam', RecruitmentController.fetchExam);
 
+router.post('/changeStatus', RecruitmentController.changeStatus);
+
 module.exports = router;

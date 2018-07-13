@@ -9,8 +9,10 @@ import {
   fetchProgress,
   fetchCategory,
   fetchSubCategory,
+  finishExamRequest,
   finishExamFailure,
   finishExamSuccess,
+  logout,
 } from '../actions/takeExam';
 import api from '../services/api';
 
@@ -76,8 +78,16 @@ export function* fetchTestExamTask(action) {
 export function* uploadAnswerListTask(action) {
   try {
     const testDate = yield call(api.getTakeExamTestDate, action.payload.id);
+    console.log('upload:', testDate);
     const progress = yield call(api.uploadAnswer, action.payload.id, action.payload.answerList, testDate);
     yield put(uploadAnswerListSuccess(progress));
+    console.log('xxxx', action.payload.isLogoutRequest, 'xxxx');
+    if (action.payload.isLogoutRequest) {
+      yield put(finishExamRequest(action.payload.id));
+    }
+    if (action.payload.isEndExam) {
+      yield put(logout());
+    }
   }
   catch (error) {
     yield put(uploadAnswerListFailure(error));
@@ -86,7 +96,8 @@ export function* uploadAnswerListTask(action) {
 
 export function* finishExamTask(action) {
   try {
-    const testDate = yield call(api.getTestDate, action.payload.id);
+    const testDate = yield call(api.getTakeExamTestDate, action.payload.id);
+    console.log('finish', testDate);
     yield call(api.updateSubmittedTime, action.payload.id, testDate);
     yield call(api.deActivate, action.payload.id, 'deactive');
     localStorage.removeItem('agree');

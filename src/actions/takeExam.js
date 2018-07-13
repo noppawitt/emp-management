@@ -80,11 +80,13 @@ export const onInputTextAreaAnswer = (text, currentActivePage, exId) => ({
   },
 });
 
-export const uploadAnswerListRequest = (id, answerList) => ({
+export const uploadAnswerListRequest = (id, answerList, isLogoutRequest, isEndExam) => ({
   type: actionTypes.TAKE_EXAM_UPLOAD_REQUEST,
   payload: {
     id,
     answerList,
+    isLogoutRequest,
+    isEndExam,
   }
 });
 

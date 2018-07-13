@@ -304,6 +304,16 @@ api.fetchExam = (id, testDate) => (
   })
 );
 
+api.changeStatus = (id, status) => (
+  callApi(`/api/recruitments/changeStatus`, {
+    method: 'POST',
+    body: {
+      id,
+      status,
+    }
+  })
+);
+
 // Exam
 
 api.uploadImageExam = body => (
@@ -403,7 +413,8 @@ api.checkProgress = (id, testDate) => (
   })
 );
 
-api.uploadAnswer = (id, answerList, testDate) => (
+api.uploadAnswer = (id, answerList, testDate) => {
+  console.log('????', id, testDate);
   callApi(`/api/takeExam/uploadAnswer/`, {
     method: 'POST',
     body: {
@@ -411,8 +422,8 @@ api.uploadAnswer = (id, answerList, testDate) => (
       answerList,
       testDate,
     }
-  })
-);
+  });
+};
 
 api.updateSubmittedTime = (id, time, testDate) => (
   callApi(`/api/takeExam/updateSubmittedTime`, {

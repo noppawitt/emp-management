@@ -1,16 +1,17 @@
 import { call, put, takeEvery, all } from 'redux-saga/effects';
 import * as actionTypes from '../constants/actionTypes';
 import {
-  fetchRecruitmentSuccess,
+  fetchRecruitmentRequest,
   fetchRecruitmentFailure,
+  fetchRecruitmentSuccess,
   checkPasswordStatusRequest,
-  checkPasswordStatusSuccess,
   checkPasswordStatusFailure,
-  activatePasswordSuccess,
+  checkPasswordStatusSuccess,
   activatePasswordFailure,
-  updateUserStatus,
-  fetchResultSuccess,
+  activatePasswordSuccess,
   fetchResultFailure,
+  fetchResultSuccess,
+  updateUserStatus,
 } from '../actions/recruitment';
 import api from '../services/api';
 import * as modalNames from '../constants/modalNames';
@@ -99,6 +100,10 @@ export function* evaluateExamTask(action) {
     yield call(api.grading, action.payload.id, action.payload.testDate);
     const examList = yield call(api.fetchExam, action.payload.id, action.payload.testDate);
     console.log('>> fetchResult:', examList);
+    const retval = yield call(api.changeStatus(action.payload.id, 'Complete'));
+    if (retval === 'OK') {
+      yield put(fetchRecruitmentRequest());
+    }
     // put fetchSuccess for update state?
     yield put(fetchResultSuccess(examList));
     // after update result of evaluation exam list state

@@ -34,6 +34,7 @@ exports.fetchExamSpecifyId = (req, res, next) => {
 };
 
 exports.updateAnswer = (req, res, next) => {
+  console.log('????', req.body);
   const object = req.body;
   TakeExam.findUploadedAnswer(object.id, 'existing check', object.testDate)
     .then((isExist) => {
@@ -73,6 +74,7 @@ exports.findUploadedAnswer = (req, res, next) => {
 };
 
 exports.updateStartTime = (req, res, next) => {
+  console.log('????', req.body);
   TakeExam.updateStartTime(req.body.startTime, req.body.id, req.body.testDate)
     .then((result) => {
       res.json(result);
@@ -81,6 +83,7 @@ exports.updateStartTime = (req, res, next) => {
 };
 
 exports.updateSubmittedTime = (req, res, next) => {
+  console.log('????', req.body);
   TakeExam.updateSubmittedTime(req.body.id, req.body.time, req.body.testDate)
     .then((retval) => {
       res.json(retval);

@@ -9,7 +9,7 @@ jwtOptions.secretOrKey = process.env.JWT_SECRET;
 
 module.exports = (passport) => {
   const strategy = new JwtStrategy(jwtOptions, (jwtPayload, cb) => {
-    if (jwtPayload.testdate !== null || jwtPayload.testdate !== undefined) {
+    if (jwtPayload.testdate !== null && jwtPayload.testdate !== undefined) {
       ExamUser.findById(jwtPayload.id)
         .then((user) => {
           if (user) {

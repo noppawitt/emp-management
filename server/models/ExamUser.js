@@ -23,9 +23,10 @@ ExamUser.create = (user, id) => (
   })
 );
 
-ExamUser.findById = id => (
-  db.oneOrNone('SELECT * FROM exam_users2 WHERE id = $1 AND test_date = $2', [id, moment().format('YYYY-MM-DD')])
-);
+ExamUser.findById = (id) => {
+  console.log(id, typeof id);
+  return db.oneOrNone('SELECT * FROM exam_users2 WHERE id = $1 AND test_date = $2', [id, moment().format('YYYY-MM-DD')]);
+};
 
 // User.findAll = () => (
 // db.manyOrNone('SELECT users.id, employee_info.first_name, employee_info.last_name, employee_info.nick_name,
