@@ -70,7 +70,7 @@ const EvaProfileBox = ({performanceProfile, evaProfile, selfProfile, openProbati
                 performanceProfile.length==0 || performanceProfile[0].year<(new Date()).getFullYear() ? 'green' : 'blue'
               }
             >
-              <Dropdown trigger={AngleDownButton} options={optionsPerf} />
+              <Dropdown trigger={AngleDownButton} options={optionsPerf} disabled={type!='admin' && performanceProfile.length==0}/>
               <Button onClick={() => {fetchPerformance(profileId,(new Date()).getFullYear());openPerformanceModal();}}
                 disabled={type!='admin' && performanceProfile.length==0}>
                 {performanceProfile.length==0 || performanceProfile[0].year<(new Date()).getFullYear() ? 'Add Performance' : 'Performance'}
@@ -84,7 +84,7 @@ const EvaProfileBox = ({performanceProfile, evaProfile, selfProfile, openProbati
                 evaProfile.length!=0 && type=='admin' && evaProfile[0].passPro==false && evaProfile[0].continued==true && evaProfile[0].mdSignDate!=null ? 'green' : 'blue'
               }
             >
-              <Dropdown trigger={AngleDownButton} options={optionsPro} />
+              <Dropdown trigger={AngleDownButton} options={optionsPro} disabled={(type!='admin' && evaProfile.length==0) || !selfProfile}/>
               <Button onClick={() => {
                   if(!(evaProfile.length==0 && type=='admin') && !(evaProfile.length!=0 && type=='admin' && evaProfile[0].passPro==false && evaProfile[0].continued==true && evaProfile[0].mdSignDate!=null))
                     fetchProbation(profileId,evaProfile[0].probationId);
