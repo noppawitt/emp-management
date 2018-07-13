@@ -73,7 +73,7 @@ const EvaProfileBox = ({performanceProfile, evaProfile, selfProfile, openProbati
               <Dropdown trigger={AngleDownButton} options={optionsPerf} disabled={type!='admin' && performanceProfile.length==0}/>
               <Button onClick={() => {fetchPerformance(profileId,(new Date()).getFullYear());openPerformanceModal();}}
                 disabled={type!='admin' && performanceProfile.length==0}>
-                {performanceProfile.length==0 || performanceProfile[0].year<(new Date()).getFullYear() ? 'Add Performance' : 'Performance'}
+                {performanceProfile.length==0 || performanceProfile[0].year<(new Date()).getFullYear() ? 'Create Performance' : 'Performance'}
               </Button>
             </Button.Group>
         </div>
@@ -98,7 +98,7 @@ const EvaProfileBox = ({performanceProfile, evaProfile, selfProfile, openProbati
               </Button>
             </Button.Group>
         </div>
-            <Button icon labelPosition='left' icon={'angle right'} content={selfProfile ? 'Self Assessment' : 'Add Self Assessment'} onClick={()=>{if(selfProfile!=null)fetchSelfAssessment(profileId);openSelfAssessmentModal()}} color={selfProfile ? 'yellow':'green'}/>
+            <Button icon labelPosition='left' icon={'angle right'} content={selfProfile ? 'Self Assessment' : 'Create Self Assessment'} onClick={()=>{if(selfProfile!=null)fetchSelfAssessment(profileId);openSelfAssessmentModal()}} color={selfProfile ? 'yellow':'green'}/>
 
       </Segment>
 

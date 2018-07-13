@@ -11,7 +11,7 @@ class AddSelfAssessment extends React.Component {
   constructor(props) {
     super(props);
     this.state = props;
-    this.type = (this.props.profile.eva == null ? 'addProbation' : 'updateProbation')
+    this.type = (this.props.profile.selfInfo == null ? 'addProbation' : 'updateProbation')
   }
   componentDidMount() {
     console.log(this.state.edited);
@@ -21,7 +21,7 @@ class AddSelfAssessment extends React.Component {
       <div>
         {this.props.fetching ? <Loader /> :
           <Modal
-            header={this.props.profile.eva == null ? 'Add Probation':'View Probation'}
+            header={this.props.profile.selfInfo == null ? 'Add SelfAssessment':'View SelfAssessment'}
             onClose={()=>{this.props.onClose();this.props.clear();}}
             onClick={()=>this.props.onSubmit(this.props.item,(this.props.profile.selfInfo == null ? 'addSelfAssessment':'updateSelfAssessment'))}
             submitting={this.props.submitting}
