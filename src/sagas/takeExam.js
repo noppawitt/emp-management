@@ -75,7 +75,7 @@ export function* fetchTestExamTask(action) {
 
 export function* uploadAnswerListTask(action) {
   try {
-    const testDate = yield call(api.getTestDate, action.payload.id);
+    const testDate = yield call(api.getTakeExamTestDate, action.payload.id);
     const progress = yield call(api.uploadAnswer, action.payload.id, action.payload.answerList, testDate);
     yield put(uploadAnswerListSuccess(progress));
   }
