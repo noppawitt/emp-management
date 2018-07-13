@@ -39,7 +39,7 @@ class SelfAssessmentForm extends React.Component {
             goal1: ['', '', '', '', ''],
             goal2: ['', '', '', '', ''],
             goal3: ['', '', '', '', ''],
-            currentPage: 0
+            currentPage: 0,
         }
 
         this.animateChangePage = this.animateChangePage.bind(this);
@@ -74,6 +74,11 @@ class SelfAssessmentForm extends React.Component {
 
     goalThreeHandler(newGoal) {
         this.setState({ goal3: newGoal });
+    }
+
+    componentDidMount() {
+      this.setState({totalPage: document.getElementsByClassName('pages-contrainer')[0].rows[0].cells.length},()=>{document.getElementsByClassName('pages-contrainer')[0].style.width = `${this.state.totalPage*100}%`})
+
     }
 
     validateField() {

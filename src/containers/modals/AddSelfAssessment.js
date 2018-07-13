@@ -29,6 +29,8 @@ class AddSelfAssessment extends React.Component {
             disable={!this.props.edited}
             navButton={true}
             onChangePage={(nextPage)=>{this.props.onChange({...this.props.item,currentPage: (this.props.item.currentPage+nextPage+4)%4})}}
+            currentPage={this.props.item.currentPage}
+            totalPage={4}
           >
             <A test={this.props.onChange} profile={this.props.profile} item={this.props.profile.item}/>
           </Modal>

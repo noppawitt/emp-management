@@ -23,7 +23,7 @@ const ModalBasicExample = ({open}) => (
   </Modal>
 )
 
-const EvaluationModal = ({ header, buttonName, onClose, onClick, submitting, children, confirm, size, disable, onChangePage, navButton}) => (
+const EvaluationModal = ({ header, buttonName, onClose, onClick, submitting, children, confirm, size, disable, onChangePage, navButton, currentPage, totalPage}) => (
   <Modal
     dimmer="blurring"
     size="small"
@@ -40,9 +40,10 @@ const EvaluationModal = ({ header, buttonName, onClose, onClick, submitting, chi
     </Modal.Content>
     <Modal.Actions>
         {navButton ?
-          <div>
-          <Button floated="left" color="blue"  onClick={()=>onChangePage(-1)}>Back</Button>
-          <Button floated="left" color="blue"  onClick={()=>onChangePage(1)}>Next</Button></div> : ''}
+          <div className="navDiv">
+          <Button className='back' icon='arrow left' color="blue"  onClick={()=>onChangePage(-1)}></Button>
+          <span>Page {currentPage+1}/{totalPage}</span>
+          <Button className='next' icon='arrow right' color="blue"  onClick={()=>onChangePage(1)}></Button></div> : ''}
         <ConfirmModal submitting={submitting} onClickHandle={onClick} disable={disable}/>
     </Modal.Actions>
   </Modal>

@@ -15,7 +15,8 @@ const profile = (state = initialState, action) => {
         edited: false,
         evaInfo: null,
         perfInfo: null,
-        selfInfo: null
+        selfInfo: null,
+        item: {currentPage: 0}
       }
     case actionTypes.UPDATE_PROBATION_STORE:
       var edited;
