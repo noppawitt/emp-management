@@ -119,3 +119,25 @@ export const randomExam = id => ({
     id,
   }
 });
+
+export const evaluateExam = (id, testDate) => ({
+  type: actionTypes.VIEW_RESULT_EVALUATE_EXAM,
+  payload: {
+    id,
+    testDate,
+  }
+});
+
+export const fetchResultSuccess = examList => ({
+  type: actionTypes.VIEW_RESULT_FETCH_SUCCESS,
+  payload: {
+    examList,
+  }
+});
+
+export const fetchResultFailure = message => ({
+  type: actionTypes.VIEW_RESULT_FETCH_FAILURE,
+  payload: {
+    message,
+  }
+});

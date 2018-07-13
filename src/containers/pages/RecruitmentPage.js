@@ -9,6 +9,7 @@ import {
   filterStartDateRecruitment,
   filterEndDateRecruitment,
   checkPasswordStatusRequest,
+  evaluateExam,
 } from '../../actions/recruitment';
 import Recruitment from '../../components/Recruitment';
 import Loader from '../../components/Loader';
@@ -91,6 +92,7 @@ const mapStateToProps = state => ({
   startDate: state.startDate,
   endDate: state.endDate,
   alivePassword: state.recruitment.alivePassword,
+  today: state.recruitment.today,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -104,8 +106,11 @@ const mapDispatchToProps = dispatch => ({
     dispatch(openModal(modalNames.ACTIVATE)),
   ),
   // build & fix Grade function
-  onClickGrade: id => dispatch(openModal(modalNames.GRADING_EXAM, { id })),
-  onClickViewResult: id => dispatch(openModal(modalNames.VIEW_RESULT, { id })),
+  onClickGrade: (id, testDate) => dispatch(evaluateExam(id, testDate)),
+  onClickViewResult: id => compose(
+    dispatch(),
+    dispatch(openModal(modalNames.VIEW_RESULT, { id })),
+  ),
 });
 
 const enhance = compose(

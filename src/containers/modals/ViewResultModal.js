@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { closeModal } from '../../actions/modal';
 import Modal from '../../components/Modal';
+import ResultForm from '../forms/ResultForm';
 
 const ViewResultModal = ({
   id,
@@ -17,6 +18,9 @@ const ViewResultModal = ({
     id={id}
   >
     Hello, {id}!
+    <ResultForm
+      id={id}
+    />
   </Modal>
 );
 
@@ -27,6 +31,7 @@ ViewResultModal.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  modalName: state.modal.name,
 });
 
 const mapDispatchToProps = dispatch => ({

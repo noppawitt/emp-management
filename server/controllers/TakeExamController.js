@@ -40,7 +40,7 @@ exports.updateAnswer = (req, res, next) => {
       // if no old answer exist so create it first
       if (!isExist) {
         TakeExam.createBufferAnswer(object.id, object.answerList, object.testDate)
-          .then((result) => { })
+          .then(() => { })
           .catch(next);
       }
       // after we make sure it exist update it

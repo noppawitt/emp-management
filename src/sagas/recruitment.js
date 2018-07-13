@@ -9,8 +9,12 @@ import {
   activatePasswordSuccess,
   activatePasswordFailure,
   updateUserStatus,
+  fetchResultSuccess,
+  fetchResultFailure,
 } from '../actions/recruitment';
 import api from '../services/api';
+import * as modalNames from '../constants/modalNames';
+import { openModal } from '../actions/modal';
 
 const shuffle = (a) => {
   for (let i = a.length - 1; i >= 0; i -= 1) {
@@ -90,6 +94,21 @@ export function* randomExamTask(action) {
   }
 }
 
+export function* evaluateExamTask(action) {
+  try {
+    yield call(api.grading, action.payload.id, action.payload.testDate);
+    const examList = yield call(api.fetchExam, action.payload.id, action.payload.testDate);
+    console.log('>> fetchResult:', examList);
+    // put fetchSuccess for update state?
+    yield put(fetchResultSuccess(examList));
+    // after update result of evaluation exam list state
+    yield put(openModal(modalNames.VIEW_RESULT));
+  }
+  catch (error) {
+    yield put(fetchResultFailure(error));
+  }
+}
+
 export function* watchFetchRecruitmentRequest() {
   yield takeEvery(actionTypes.RECRUITMENT_FETCH_REQUEST, fetchRecruitmentTask);
 }
@@ -106,11 +125,16 @@ export function* watchRandomExamRequest() {
   yield takeEvery(actionTypes.RECRUITMENT_RANDOM_EXAM, randomExamTask);
 }
 
+export function* watchEvaluateExam() {
+  yield takeEvery(actionTypes.VIEW_RESULT_EVALUATE_EXAM, evaluateExamTask);
+}
+
 export default function* recruitmentSaga() {
   yield all([
     watchFetchRecruitmentRequest(),
     watchCheckPasswordStatusRequest(),
     watchActivateUserRequest(),
     watchRandomExamRequest(),
+    watchEvaluateExam(),
   ]);
 }
