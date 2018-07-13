@@ -54,8 +54,22 @@ Project.findById = id => (
   db.one('SELECT * FROM projects WHERE id = $1', [id])
 );
 
+Project.findByYear = year => (
+  db.manyOrNone('SELECT * FROM projects WHERE EXTRACT(year from start_date) = $1 ORDER BY id', [year])
+);
+
 Project.findMemberProject = projectId => (
-  db.manyOrNone('SELECT employee_info.user_id, employee_work.user_id, has_projects.user_id, employee_info.first_name, employee_info.last_name, employee_work.position_id, positions.id, positions.name, has_projects.role FROM has_projects, employee_info, employee_work, positions WHERE has_projects.user_id = employee_info.user_id AND has_projects.user_id = employee_work.user_id AND employee_work.position_id = positions.id  AND has_projects.project_id = $1', [projectId])
+  db.manyOrNone('SELECT employee_info.user_id, employee_work.user_id, has_projects.user_id, employee_info.first_name, employee_info.last_name, employee_work.position_id, positions.id AS position_id, positions.name, has_projects.role FROM has_projects, employee_info, employee_work, positions WHERE has_projects.user_id = employee_info.user_id AND has_projects.user_id = employee_work.user_id AND employee_work.position_id = positions.id  AND has_projects.project_id = $1', [projectId])
+);
+
+Project.findProjectByTimesheet = (userId, year, month) => (
+  db.manyOrNone(`SELECT DISTINCT timesheets.project_id, projects.name FROM timesheets INNER JOIN projects ON
+  timesheets.project_id = projects.id AND EXTRACT(year from timesheets.date) = $1 AND
+  EXTRACT(month from timesheets.date) = $2 AND timesheets.user_id = $3`, [year, month, userId])
+);
+
+Project.delete = id => (
+  db.none('DELETE FROM projects WHERE id = $1', [id])
 );
 
 module.exports = Project;

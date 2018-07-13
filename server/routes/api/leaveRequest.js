@@ -1,12 +1,11 @@
 const router = require('express').Router();
 const LeaveRequestController = require('../../controllers/LeaveRequestController');
+const { can } = require('../../middlewares');
 
 router.post('/', LeaveRequestController.create);
 
-router.put('/', LeaveRequestController.update);
+router.put('/', can(['leaveRequestApprove', 'leaveRequestCancelAll', 'leaveRequestCancelOwn']), LeaveRequestController.update);
 
-router.get('/', LeaveRequestController.findByUserId);
-
-router.get('/all-request', LeaveRequestController.findAll);
+router.get('/', can(['leaveRequestViewAll', 'leaveRequestViewOwn']), LeaveRequestController.findLeaveRequest);
 
 module.exports = router;

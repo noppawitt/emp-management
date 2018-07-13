@@ -1,12 +1,13 @@
 const router = require('express').Router();
 const ProjectController = require('../../controllers/ProjectController');
+const { can } = require('../../middlewares');
 
-router.post('/', ProjectController.create);
+router.post('/', can(['projectAdd']), ProjectController.create);
 
-router.put('/', ProjectController.update);
+router.put('/', can('projectEdit'), ProjectController.update);
 
-router.get('/:id', ProjectController.findById);
+router.get('/', can(['projectViewAll', 'projectViewOwn']), ProjectController.find);
 
-router.get('/', ProjectController.findAll);
+router.delete('/', can(['projectDelete']), ProjectController.delete);
 
 module.exports = router;

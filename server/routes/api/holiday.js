@@ -5,6 +5,6 @@ router.post('/', HolidayController.create);
 
 router.put('/', HolidayController.update);
 
-router.get('/', HolidayController.findAll);
+router.get('/', HolidayController.findHolidays);
 
 module.exports = router;

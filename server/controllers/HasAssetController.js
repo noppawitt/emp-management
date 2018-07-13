@@ -19,9 +19,12 @@ const createHasAsset = (newAsset, creatorId) => new Promise(async (resolve, reje
 exports.create = (req, res, next) => {
   if (req.body.ownFlag) {
     const newAsset = req.body;
+    if (req.file) {
+      newAsset.picture = `/server/storage/private/asset/${req.file.filename}`;
+    }
     createHasAsset(newAsset, req.user.id)
       .then(() => {
-        HasAsset.findByUserId(req.user.id)
+        HasAsset.findByUserId(req.query.userId)
           .then((hasAssets) => {
             res.json(hasAssets);
           })
@@ -33,7 +36,7 @@ exports.create = (req, res, next) => {
     const newHasAsset = req.body;
     HasAsset.create(newHasAsset, req.user.id)
       .then(() => {
-        HasAsset.findByUserId(req.user.id)
+        HasAsset.findByUserId(req.query.userId)
           .then((hasAssets) => {
             res.json(hasAssets);
           });
@@ -41,20 +44,8 @@ exports.create = (req, res, next) => {
   }
 };
 
-exports.update = (req, res, next) => {
-  const editHasAsset = req.body.hasAsset;
-  HasAsset.update(editHasAsset, req.user.id)
-    .then(() => {
-      HasAsset.findByUserId(req.user.id)
-        .then((hasAssets) => {
-          res.json(hasAssets);
-        });
-    })
-    .catch(next);
-};
-
 exports.findByUserId = (req, res, next) => {
-  HasAsset.findByUserId(req.query.id)
+  HasAsset.findByUserId(req.query.userId)
     .then((hasAssets) => {
       res.json(hasAssets);
     })
@@ -62,11 +53,16 @@ exports.findByUserId = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-  HasAsset.delete(req.body.id, req.user.id)
-    .then(() => {
-      HasAsset.findByUserId(req.user.id)
-        .then((hasAssets) => {
-          res.json(hasAssets);
+  HasAsset.findById(req.body.id)
+    .then((hasAsset) => {
+      const { userId } = hasAsset;
+      HasAsset.delete(req.body.id, req.user.id)
+        .then(() => {
+          HasAsset.findByUserId(userId)
+            .then((hasAssets) => {
+              res.json(hasAssets);
+            })
+            .catch(next);
         })
         .catch(next);
     })

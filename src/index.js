@@ -7,8 +7,13 @@ import configureStore from './store/configureStore';
 import history from './history';
 import Routes from './containers/Routes';
 import './styles/main.scss';
+import { fetchMasterTableRequest } from './actions/masterTable';
+import { fetchAccessControlRequest } from './actions/accessControl';
 
 const store = configureStore();
+
+store.dispatch(fetchMasterTableRequest());
+store.dispatch(fetchAccessControlRequest());
 
 ReactDOM.render(
   <Provider store={store}>

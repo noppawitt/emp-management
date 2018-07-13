@@ -1,9 +1,9 @@
+const token = localStorage.getItem('token');
+
 const callApi = (endpoint, request) => {
   if (request && request.body) {
-    request.body = JSON.stringify(request.body);
+    request.body = request.body instanceof FormData ? request.body : JSON.stringify(request.body);
   }
-
-  const token = localStorage.getItem('token');
 
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -23,6 +23,30 @@ const callApi = (endpoint, request) => {
         return Promise.reject(body);
       }
       return Promise.resolve(body);
+    });
+};
+
+const download = (endpoint, request) => {
+  if (request && request.body) {
+    request.body = JSON.stringify(request.body);
+  }
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+  const requestWithHeaders = {
+    ...{ headers },
+    ...request
+  };
+
+  return fetch(endpoint, requestWithHeaders)
+    .then(response => response.blob().then(blob => ({ response, blob })))
+    .then(({ response, blob }) => {
+      if (!response.ok) {
+        return Promise.reject();
+      }
+      return Promise.resolve(blob);
     });
 };
 
@@ -49,6 +73,10 @@ api.hello = () => (
 );
 
 // Master table
+
+api.fetchMasterTable = () => (
+  callApi('/api/master-table')
+);
 
 api.fetchDepartments = () => (
   callApi('/api/departments')
@@ -95,29 +123,33 @@ api.fetchAssetTypes = () => (
 );
 
 api.fetchAcessTypes = () => (
-  callApi('api/access-control')
+  callApi('/api/access-control')
 );
 
 // Profile
 
-api.fetchGeneralProfile = id => (
-  callApi(`/api/employee-info?id=${id}`)
+api.fetchGeneralProfile = userId => (
+  callApi(`/api/employee-info?userId=${userId}`)
 );
 
-api.fetchWorkProfile = id => (
-  callApi(`/api/employee-work?id=${id}`)
+api.fetchWorkProfile = userId => (
+  callApi(`/api/employee-work?userId=${userId}`)
 );
 
-api.fetchEducationProfile = id => (
-  callApi(`/api/educates?id=${id}`)
+api.fetchEducationProfile = userId => (
+  callApi(`/api/educates?userId=${userId}`)
 );
 
-api.fetchCertificateProfile = id => (
-  callApi(`/api/has-certificates?id=${id}`)
+api.fetchCertificateProfile = userId => (
+  callApi(`/api/has-certificates?userId=${userId}`)
 );
 
-api.fetchAssetProfile = id => (
-  callApi(`/api/has-assets?id=${id}`)
+api.fetchAssetProfile = userId => (
+  callApi(`/api/has-assets?userId=${userId}`)
+);
+
+api.fetchWorkExperience = userId => (
+  callApi(`/api/work-experience?userId=${userId}`)
 );
 
 api.updateGeneralProfile = body => (
@@ -155,6 +187,13 @@ api.updateAssetProfile = body => (
   })
 );
 
+api.createWorkExperienceProfile = body => (
+  callApi('/api/work-experience', {
+    method: 'POST',
+    body
+  })
+);
+
 api.createEducationProfile = body => (
   callApi('/api/educates', {
     method: 'POST',
@@ -176,9 +215,11 @@ api.createAssetProfile = body => (
   })
 );
 
-api.uploadProfilePicture = body => (
-  callApi('upload-profile-img', {
-    headers: { 'Content-Type': 'multipart/form-data' },
+api.updateProfilePicture = body => (
+  callApi('/api/employee-info/upload-profile-img', {
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
     method: 'POST',
     body
   })
@@ -234,7 +275,7 @@ api.createProject = body => (
 // Project detail
 
 api.fetchProjectDetail = id => (
-  callApi(`/api/projects/${id}`)
+  callApi(`/api/projects?id=${id}`)
 );
 
 api.updateProjectDetail = body => (
@@ -245,8 +286,15 @@ api.updateProjectDetail = body => (
 );
 
 api.createMember = body => (
-  callApi(`/api/has-project`, {
+  callApi(`/api/has-projects`, {
     method: 'POST',
+    body
+  })
+);
+
+api.deleteMember = body => (
+  callApi(`/api/has-projects`, {
+    method: 'DELETE',
     body
   })
 );
@@ -260,8 +308,8 @@ api.createLeave = body => (
   })
 );
 
-api.fetchLeave = () => (
-  callApi('/api/leave-request')
+api.fetchLeave = (userId, year, month) => (
+  callApi(`/api/leave-request?userId=${userId}&year=${year}&month=${month}`)
 );
 
 api.updateLeave = body => (
@@ -269,6 +317,9 @@ api.updateLeave = body => (
     method: 'PUT',
     body
   })
+);
+api.fetchLeaveHistory = (userId, year) => (
+  callApi(`/api/leave-history?userId=${userId}&year=${year}`)
 );
 
 // Timesheet
@@ -280,15 +331,42 @@ api.createTimesheet = body => (
   })
 );
 
-api.fetchTimesheet = userId => (
-  callApi(`/api/timesheets/?id=${userId}`)
+api.fetchTimesheet = (userId, year, month) => (
+  callApi(`/api/timesheets/?userId=${userId}&year=${year}&month=${month}`)
 );
 
-api.updateTimestete = body => (
+api.updateTimesheet = body => (
   callApi('/api/timesheets', {
     method: 'PUT',
     body
   })
+);
+
+api.deleteTimesheet = body => (
+  callApi('/api/timesheets', {
+    method: 'DELETE',
+    body
+  })
+);
+
+api.fetchHolidays = (year, month) => (
+  callApi(`/api/holidays?year=${year}&month=${month}`)
+);
+
+// Report
+
+api.fetchOwnProject = (userId, year, month) => (
+  callApi(`/api/projects?userId=${userId}&year=${year}&month=${month}`)
+);
+
+api.downloadReport = (reportType, template, userId, projectId, year, month) => (
+  download(`/api/report?reportType=${reportType}&template=${template}&userId=${userId}&projectId=${projectId}&year=${year}&month=${month}`)
+);
+
+// Access Control
+
+api.fetchAccessControl = () => (
+  callApi(`/api/access-control`)
 );
 
 api.deleteTimesheet = body => (

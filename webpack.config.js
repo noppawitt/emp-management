@@ -17,7 +17,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: ['babel-loader', 'eslint-loader']
+        use: ['babel-loader']
       },
       {
         test: /\.css$/,
@@ -57,7 +57,7 @@ module.exports = {
     hot: true,
     historyApiFallback: true,
     proxy: [{
-      context: ['/auth', '/api'],
+      context: ['/auth', '/api', '/static'],
       target: 'http://localhost:3000',
     }]
   }

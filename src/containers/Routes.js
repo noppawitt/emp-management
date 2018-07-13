@@ -10,21 +10,21 @@ import ProfilePage from './pages/ProfilePage';
 import EmployeePage from './pages/EmployeePage';
 import ReportPage from './pages/ReportPage';
 import AddTaskPage from './pages/AddTaskPage';
-import SelfAssessmentForm from './pages/SelfAssessmentForm';
+import ManageLeave from './pages/ManageLeave';
 
 const Routes = () => (
   <Switch>
     <Route path="/login" component={LoginPage} />
     <Route exact path="/" render={() => <Redirect to="/timesheet" />} />
-    <PrivateRoute path="/timesheet" component={TimesheetPage} />
+    <PrivateRoute exact path="/timesheet" component={TimesheetPage} />
+    <PrivateRoute path="/timesheet/new" component={AddTaskPage} />
     <PrivateRoute path="/leave" component={LeavePage} />
     <PrivateRoute exact path="/project" component={ProjectPage} />
     <PrivateRoute path="/project/:id" component={ProjectDetailPage} />
-    <PrivateRoute path="/profile/:id?" component={ProfilePage} />
+    <PrivateRoute path="/profile/:id" component={ProfilePage} />
     <PrivateRoute path="/employee" component={EmployeePage} />
     <PrivateRoute path="/report" component={ReportPage} />
-    <PrivateRoute path="/addtask" component={AddTaskPage} />
-    <PrivateRoute path="/self" component={SelfAssessmentForm} />
+    <PrivateRoute path="/manageleave" component={ManageLeave} />
   </Switch>
 );
 
