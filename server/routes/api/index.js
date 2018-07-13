@@ -25,7 +25,6 @@ const leaveRequest = require('./leaveRequest');
 const recruitment = require('./recruitment');
 const exam = require('./exam');
 const takeExam = require('./takeExam');
-const viewResult = require('./viewResult');
 const takeExamAgreement = require('./takeExamAgreement');
 
 router.use('/employee-info', employeeInfo);
@@ -81,7 +80,5 @@ router.use('/takeExam', takeExam);
 router.use('/takeexamagreement', takeExamAgreement);
 
 router.use('/exam', exam);
-
-router.use('/viewResult', viewResult);
 
 module.exports = router;

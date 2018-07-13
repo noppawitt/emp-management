@@ -1,14 +1,18 @@
 const router = require('express').Router();
 const RecruitmentController = require('../../controllers/RecruitmentController');
 
+router.get('/', RecruitmentController.fetchAllRecruitment);
+
 router.get('/checkPasswordStatus', RecruitmentController.checkPasswordStatus);
+
+router.get('/getTestDate', RecruitmentController.getTestDate);
 
 router.post('/activatePassword', RecruitmentController.activatePassword);
 
 router.post('/uploadRandomExIdList', RecruitmentController.uploadRandomExIdList);
 
-router.get('/getTestDate', RecruitmentController.getTestDate);
+router.post('/grading', RecruitmentController.grading);
 
-router.get('/', RecruitmentController.fetchAllRecruitment);
+router.post('/fetchExam', RecruitmentController.fetchExam);
 
 module.exports = router;

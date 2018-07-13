@@ -281,6 +281,28 @@ api.getTestDate = id => (
   callApi(`/api/recruitments/getTestDate/?id=${id}`)
 );
 
+// Recruitment : View Result Part
+
+api.grading = (id, testDate) => (
+  callApi(`/api/recruitments/grading/`, {
+    method: 'POST',
+    body: {
+      id,
+      testDate,
+    }
+  })
+);
+
+api.fetchExam = (id, testDate) => (
+  callApi(`/api/recruitments/fetchExam/`, {
+    method: 'POST',
+    body: {
+      id,
+      testDate,
+    }
+  })
+);
+
 // Exam
 
 api.uploadImageExam = body => (
@@ -315,28 +337,6 @@ api.editExam = body => (
   callApi('/api/exam', {
     method: 'PUT',
     body
-  })
-);
-
-// view exam result
-
-api.grading = (id, testDate) => (
-  callApi(`/api/viewresult/grading/`, {
-    method: 'POST',
-    body: {
-      id,
-      testDate,
-    }
-  })
-);
-
-api.fetchExam = (id, testDate) => (
-  callApi(`/api/viewresult/fetchExam/`, {
-    method: 'POST',
-    body: {
-      id,
-      testDate,
-    }
   })
 );
 
