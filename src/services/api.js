@@ -7,7 +7,7 @@ const callApi = (endpoint, request) => {
   const examToken = localStorage.getItem('examToken');
 
   const headers = {
-    Authorization: (token) ? `Bearer ${token}` : `Bearer ${examToken}`,
+    Authorization: (endpoint.includes('takeExam') || endpoint.includes('takeexamagreement')) ? `Bearer ${examToken}` : `Bearer ${token}`,
     Accept: 'application/json',
     'Content-Type': 'application/json',
   };
