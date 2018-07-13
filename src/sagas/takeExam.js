@@ -49,6 +49,7 @@ export function* fetchTestExamTask(action) {
     yield put(fetchCategory(examAmountPerCategory));
     yield put(fetchSubCategory(examAmountPerSubCategory));
     const testDate = yield call(api.getTakeExamTestDate, action.payload.id);
+    console.log('>>HERE', testDate);
     const tempProgressResult = yield call(api.checkProgress, action.payload.id, testDate);
     const progressResult = [];
     if (tempProgressResult !== null) {

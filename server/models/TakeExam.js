@@ -88,4 +88,10 @@ TakeExam.expiredActivationLifetime = id => (
   db.oneOrNone('UPDATE exam_users2 SET activation_lifetimes = 0 WHERE id = $1', [id])
 );
 
+TakeExam.getTestDate = id => (
+  // refactor + change column when merge
+  // appointment > test_date that similar to interview_date (appointment)
+  db.one('SELECT appointment FROM recruitments WHERE citizen_id = $1', [id])
+);
+
 module.exports = TakeExam;

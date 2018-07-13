@@ -104,3 +104,11 @@ exports.deActivate = (req, res, next) => {
       .catch(next);
   }
 };
+
+exports.getTestDate = (req, res, next) => {
+  TakeExam.getTestDate(req.query.id)
+    .then((testDate) => {
+      res.json(testDate.appointment);
+    })
+    .catch(next);
+};

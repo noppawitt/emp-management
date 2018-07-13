@@ -10,7 +10,8 @@ import {
   Checkbox,
   Pagination,
   Icon,
-  TextArea, } from 'semantic-ui-react';
+  TextArea,
+} from 'semantic-ui-react';
 import Loader from '../../components/Loader';
 import { pageChange } from '../../actions/takeExam';
 
@@ -119,7 +120,7 @@ const GradingForm = ({
                                 />
                               </p>
                             </Form.Field>
-                      ))}
+                        ))}
                       {row.exType !== 'Choices' &&
                         <Form.Field>
                           <TextArea
@@ -152,7 +153,7 @@ const GradingForm = ({
           </Grid>
         </Segment>
       </Segment.Group>
-);
+  );
 
 GradingForm.propTypes = {
   isFetching: PropTypes.bool.isRequired,
