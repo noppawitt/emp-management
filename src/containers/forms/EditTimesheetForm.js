@@ -20,7 +20,7 @@ const validate = (values) => {
 
 const EditTimesheetForm = ({ handleSubmit, submitting, projects }) => (
   <Form onSubmit={handleSubmit}>
-    <Field 
+    <Field
       name="projectId"
       as={Form.Dropdown}
       component={Input}

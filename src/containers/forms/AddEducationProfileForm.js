@@ -120,7 +120,7 @@ const mapStateToProps = state => ({
   universityId: selector(state, 'universityId'),
   facultyId: selector(state, 'facultyId'),
   initialValues: {
-    userId: state.profile.id
+    userId: state.profile.userId
   }
 });
 

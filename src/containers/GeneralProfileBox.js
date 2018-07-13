@@ -5,6 +5,7 @@ import { Segment, Grid, Header, Icon } from 'semantic-ui-react';
 import { openModal } from '../actions/modal';
 import * as modalNames from '../constants/modalNames';
 import ProfilePicture from '../components/ProfilePicture';
+import Can from '../containers/Can';
 
 const stylebox = {
   backgroundSize: 'contain 300px 100px',
@@ -31,8 +32,12 @@ const GeneralProfileBox = ({ generalProfile, onEditClick, onProfilePictureClick,
       <Header size="huge">{generalProfile.firstName} {generalProfile.lastName} ({generalProfile.nickName})<Icon color={generalProfile.gender === 'Male' ? 'blue' : 'pink'} name={generalProfile.gender === 'Male' ? 'mars' : 'venus'} /></Header>
       <Header size="huge">{generalProfile.firstNameTh} {generalProfile.lastNameTh}</Header>
       <Header size="small">ID: {generalProfile.userId}</Header>
-      {can.employeeInfoViewAll && <Header size="small">Citizen ID: {generalProfile.citizenId}</Header>}
-      {can.employeeInfoViewAll && <Header size="small">Birth date: {generalProfile.birthday}</Header>}
+      <Can activity="employeeInfoViewAll">
+        <Header size="small">Citizen ID: {generalProfile.citizenId}</Header>
+      </Can>
+      <Can activity="employeeViewAll">
+        <Header size="small">Birth date: {generalProfile.birthday}</Header>
+      </Can>
       <Header size="small">Mobile No: {generalProfile.mobileNumber}</Header>
       <Header size="small">Email: {generalProfile.email}</Header>
       <Header size="small">Facebook: {generalProfile.facebookId}</Header>
@@ -54,7 +59,7 @@ GeneralProfileBox.propTypes = {
 const mapStateToProps = state => ({
   userId: state.auth.id,
   profileId: state.profile.userId,
-  can: state.accessControl
+  can: state.accessControl.can
 });
 
 const mapDispatchToProps = dispatch => ({

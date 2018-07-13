@@ -29,8 +29,7 @@ const AddAssetProfileForm = ({ masterTable, handleSubmit, submitting, ownFlag })
       as={Form.Select}
       component={Input}
       label="Owner"
-      options={ownFlagOptions} 
-      validate={validator.required} 
+      options={ownFlagOptions}
     />
     {ownFlag ?
       <Field
@@ -38,7 +37,7 @@ const AddAssetProfileForm = ({ masterTable, handleSubmit, submitting, ownFlag })
         as={Form.Input}
         component={Input}
         label="Asset name"
-        disabled={submitting} 
+        disabled={submitting}
         validate={validator.required}
       /> :
       <Field
@@ -69,15 +68,16 @@ const AddAssetProfileForm = ({ masterTable, handleSubmit, submitting, ownFlag })
       label="Date"
       disabled={submitting}
       validate={[validator.required, validator.date]}
-     />
+    />
     {ownFlag &&
       <Field
         name="description"
         as={Form.TextArea}
         component={Input}
         autoHeight
-        label="Description" 
-        disabled={submitting} />
+        label="Description"
+        disabled={submitting}
+      />
     }
   </Form>
 );
@@ -94,7 +94,7 @@ const selector = formValueSelector('addAssetProfile');
 const mapStateToProps = state => ({
   masterTable: state.masterTable,
   initialValues: {
-    userId: state.profile.id,
+    userId: state.profile.userId,
     ownFlag: true
   },
   ownFlag: selector(state, 'ownFlag')

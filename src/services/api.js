@@ -148,6 +148,10 @@ api.fetchAssetProfile = userId => (
   callApi(`/api/has-assets?userId=${userId}`)
 );
 
+api.fetchWorkExperience = userId => (
+  callApi(`/api/work-experience?userId=${userId}`)
+);
+
 api.updateGeneralProfile = body => (
   callApi('/api/employee-info', {
     method: 'PUT',
@@ -179,6 +183,13 @@ api.updateCertificateProfile = body => (
 api.updateAssetProfile = body => (
   callApi('/api/has-assets', {
     method: 'PUT',
+    body
+  })
+);
+
+api.createWorkExperienceProfile = body => (
+  callApi('/api/work-experience', {
+    method: 'POST',
     body
   })
 );

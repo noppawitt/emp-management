@@ -6,6 +6,7 @@ import ProfileBox from '../components/ProfileBox';
 import { openModal } from '../actions/modal';
 import { deleteProfileRequest } from '../actions/profile';
 import * as modalNames from '../constants/modalNames';
+import Can from './Can';
 
 const CertificateProfileBox = ({ certificatesProfile, onAddClick, onDeleteClick, can }) => (
   <Segment.Group raised size="large">
@@ -19,10 +20,11 @@ const CertificateProfileBox = ({ certificatesProfile, onAddClick, onDeleteClick,
             </Header.Content>
           </Header>
         </Grid.Column>
-        {can.hasCertificateAdd &&
-        <Grid.Column floated="right" computer={1} mobile={2}>
-          <Icon name="add" link size="large" onClick={onAddClick} />
-        </Grid.Column>}
+        <Can activity="hasCertificateAdd">
+          <Grid.Column floated="right" computer={1} mobile={2}>
+            <Icon name="add" link size="large" onClick={onAddClick} />
+          </Grid.Column>
+        </Can>
       </Grid>
     </Segment>
     {certificatesProfile.map(p => (<ProfileBox
@@ -31,8 +33,7 @@ const CertificateProfileBox = ({ certificatesProfile, onAddClick, onDeleteClick,
         { key: 'name', title: 'Name', value: p.name },
         { key: 'institute', title: 'Institute', value: p.institute },
         { key: 'certificateDate', title: 'Certificate date', value: p.certificateDate },
-        { key: 'score', title: 'Score', value: p.score },
-        { key: 'description', title: 'Description', value: p.description },
+        { key: 'score', title: 'Score', value: p.score }
       ]}
       onDeleteClick={() => onDeleteClick(p.id)}
       deleted={can.hasCertificateDelete}
@@ -48,7 +49,7 @@ CertificateProfileBox.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  can: state.accessControl
+  can: state.accessControl.can
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -56,7 +57,7 @@ const mapDispatchToProps = dispatch => ({
   onDeleteClick: profileId => dispatch(openModal(modalNames.CONFIRM, {
     header: 'Delete confirmation',
     description: 'Are you sure to delete certification profile?',
-    onConfirm: () => dispatch(deleteProfileRequest('certificate', profileId))
+    onConfirm: () => dispatch(deleteProfileRequest('certificates', profileId))
   }))
 });
 

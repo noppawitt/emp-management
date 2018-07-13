@@ -60,6 +60,10 @@ Timesheet.findSummaryTimesheet = year => (
   ORDER BY users.id, timesheets.project_id, month`, [8, year])
 );
 
+Timesheet.findById = id => (
+  db.oneOrNone('SELECT * FROM timesheets WHERE id = $1', [id])
+);
+
 Timesheet.findByMonthAndYear = (month, year, userId) => (
   db.manyOrNone(`SELECT timesheets.id, timesheets.project_id, projects.name, timesheets.date, 
   timesheets.time_in, timesheets.time_out, timesheets.task, timesheets.description, timesheets.totalhours

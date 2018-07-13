@@ -49,7 +49,7 @@ const profile = (state = initialState, action) => {
     case actionTypes.PROFILE_DELETE_SUCCESS:
       return {
         ...state,
-        [`${action.payload.profileType}s`]: state[`${action.payload.profileType}s`].filter(p => p.userId !== action.payload.profileId),
+        [action.payload.profileType]: action.payload.profile,
         isDeleting: false
       };
     case actionTypes.PROFILE_DELETE_FAILURE:

@@ -1,4 +1,5 @@
 const db = require('../db');
+const moment = require('moment');
 
 const User = {};
 
@@ -110,6 +111,10 @@ User.findAll = () => (
 
 User.findByName = (firstName, lastName) => (
   db.oneOrNone('SELECT * FROM employee_info WHERE first_name = $1 AND last_name = $2', [firstName, lastName])
+);
+
+User.hasRefreshToken = refreshToken => (
+  db.oneOrNone('SELECT refresh_token FROM users WHERE refresh_token = $1', [refreshToken])
 );
 
 // User.createAdmin = user => (
