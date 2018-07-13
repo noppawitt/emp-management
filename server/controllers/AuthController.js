@@ -54,3 +54,27 @@ exports.signup = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.refreshToken = (req, res, next) => {
+  const { refreshToken } = req.body;
+  User.getRefreshToken(refreshToken)
+    .then((user) => {
+      if (user.refreshToken) {
+        const token = jwt.sign({
+          id: user.id,
+          username: user.username
+        }, jwtSecret);
+        res.json({
+          id: user.id,
+          username: user.username,
+          token
+        });
+      }
+      else {
+        res.status(401).json({
+          message: `Invalid Access Token.`
+        });
+      }
+    })
+    .catch(next);
+};
