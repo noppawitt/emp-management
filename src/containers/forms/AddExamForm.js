@@ -63,6 +63,7 @@ const examCategoryOptions = (exams, subjectNoFilter) => {
 
   return [...new Set(subjectNoFilter)];
 };
+
 examCategoryOptions.propTypes = {
   subjectNoFilter: PropTypes.array.isRequired
 };
@@ -76,6 +77,7 @@ const examSubCategoryOptions = (exams, examCategory, subjectNoFilter) => {
 
   return [...new Set(subjectNoFilter)];
 };
+
 examSubCategoryOptions.propTypes = {
   subjectNoFilter: PropTypes.array.isRequired,
   examCategory: PropTypes.string.isRequired
@@ -90,6 +92,7 @@ const renderCheckBox = ({ input, label }) => (
     />
   </Form.Field>
 );
+
 renderCheckBox.propTypes = {
   input: PropTypes.object.isRequired,
   label: PropTypes.string.isRequired

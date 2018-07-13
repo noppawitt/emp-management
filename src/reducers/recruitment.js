@@ -120,6 +120,21 @@ const Recruitment = (state = initialState, action) => {
         ...state,
         // nothing to update state yet
       };
+    case actionTypes.VIEW_RESULT_EVALUATE_EXAM:
+      return {
+        ...state,
+        // nothing to update state
+      };
+    case actionTypes.VIEW_RESULT_FETCH_SUCCESS:
+      return {
+        ...state,
+        resultList: action.payload.examList,
+      };
+    case actionTypes.VIEW_RESULT_FETCH_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message,
+      };
     default:
       return state;
   }

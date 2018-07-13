@@ -12,12 +12,11 @@ Recruitment.checkPasswordStatus = id => (
 
 Recruitment.activatePassword = (id, lifetimes, today) => (
   db.oneOrNone('UPDATE exam_users2 SET activation_lifetimes = $2, latest_activated_password_time = $3 WHERE id = $1', [id, lifetimes, today])
-  // .then(db.oneOrNone('SELECT id, birthdate, lastest_activated_password_time, activation_lifetimes FROM exam_users WHERE id = $1', [cid]))
 );
 
-Recruitment.uploadRandomExIdList = (randomExIdList, id, testDate) => {
-  return db.oneOrNone('UPDATE exam_users2 SET random_ex_id_list = $1 WHERE id = $2 AND test_date = $3', [randomExIdList, id, testDate]);
-};
+Recruitment.uploadRandomExIdList = (randomExIdList, id, testDate) => (
+  db.oneOrNone('UPDATE exam_users2 SET random_ex_id_list = $1 WHERE id = $2 AND test_date = $3', [randomExIdList, id, testDate])
+);
 
 Recruitment.getTestDate = id => (
   // refactor + change column when merge

@@ -1,10 +1,8 @@
 const router = require('express').Router();
 const ViewResultController = require('../../controllers/ViewResultController');
 
-router.get('/', ViewResultController.findByUserId);
+router.post('/grading', ViewResultController.grading);
 
-router.get('/grading', ViewResultController.grading);
-
-router.get('/fetchUngradedExam', ViewResultController.fetchUngradedExam);
+router.post('/fetchExam', ViewResultController.fetchExam);
 
 module.exports = router;

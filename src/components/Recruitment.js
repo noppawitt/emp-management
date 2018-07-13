@@ -4,12 +4,12 @@ import { Segment, Button, Input, Table } from 'semantic-ui-react';
 import { formatDate } from 'react-day-picker/moment';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 
-const actionButtonController = (status, id, onClickActivate, onClickGrade, onClickViewResult, isToday) => {
+const actionButtonController = (status, id, onClickActivate, onClickGrade, onClickViewResult, appointment, testDate) => {
   switch (status) {
     case 'Wait for Grading':
-      return <Button onClick={() => onClickGrade(id)} fluid color="teal">Grade</Button>;
+      return <Button onClick={() => onClickGrade(id, testDate)} fluid color="teal">Grade</Button>;
     case 'Pending':
-      return <Button onClick={() => onClickActivate(id)} disabled={!isToday} fluid primary>Activate</Button>;
+      return <Button onClick={() => onClickActivate(id)} disabled={appointment !== testDate} fluid primary>Activate</Button>;
     case 'Complete':
       return <Button onClick={() => onClickViewResult(id)} fluid primary positive>View Result</Button>;
     case 'In Progress':
@@ -19,7 +19,6 @@ const actionButtonController = (status, id, onClickActivate, onClickGrade, onCli
   }
 };
 
-// const Recruitment = ({ recruitments, onSearchChange, handleSort, sortKey, direction }) => (
 const Recruitment = ({
   recruitments,
   onSearchChange,
@@ -85,7 +84,15 @@ const Recruitment = ({
                 <Table.Cell className="two wide">{recruitment.appointment}</Table.Cell>
                 <Table.Cell className="two wide">{recruitment.status}</Table.Cell>
                 <Table.Cell className="two wide">
-                  {actionButtonController(recruitment.status, recruitment.citizenId, onClickActivate, onClickGrade, onClickViewResult, recruitment.appointment === today)}
+                  {actionButtonController(
+                    recruitment.status,
+                    recruitment.citizenId,
+                    onClickActivate,
+                    onClickGrade,
+                    onClickViewResult,
+                    recruitment.appointment,
+                    today
+                  )}
                 </Table.Cell>
               </Table.Row>
             ))}
@@ -93,7 +100,7 @@ const Recruitment = ({
         </Table>
       </Segment>
     </Segment.Group>
-);
+  );
 
 Recruitment.propTypes = {
   recruitments: PropTypes.array.isRequired,

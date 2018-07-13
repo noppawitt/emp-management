@@ -2,12 +2,12 @@ const db = require('../db');
 
 const ViewResult = {};
 
-ViewResult.findByUserId = userId => (
-  db.oneOrNone('SELECT * FROM examResults WHERE user_id = $1', [userId])
+ViewResult.fetchExam = (id, testDate) => (
+  db.manyOrNone('SELECT * FROM exam_result WHERE cd_id = $1 AND test_date = $2', [id, testDate])
 );
 
-ViewResult.fetchRandomExIdList = id => (
-  db.oneOrNone('SELECT random_ex_id_list FROM exam_users2 WHERE id = $1', [id])
+ViewResult.fetchRandomExIdList = (id, testDate) => (
+  db.oneOrNone('SELECT random_ex_id_list FROM exam_users2 WHERE id = $1 AND test_date = $2', [id, testDate])
 );
 
 ViewResult.fetchExamSpecifyId = id => (
@@ -23,8 +23,8 @@ ViewResult.fetchExamSpecifyId = id => (
     + ' FROM exams WHERE ex_id = ANY ($1)', [id])
 );
 
-ViewResult.fetchCandidateAnswer = id => (
-  db.manyOrNone('SELECT * FROM exam_candidate_submitted WHERE id = $1', [id])
+ViewResult.fetchCandidateAnswer = (id, testDate) => (
+  db.manyOrNone('SELECT * FROM exam_candidate_submitted WHERE id = $1 AND test_date = $2', [id, testDate])
 );
 
 ViewResult.uploadResult = (resultList) => {

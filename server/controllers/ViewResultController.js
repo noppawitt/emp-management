@@ -1,25 +1,18 @@
 const ViewResult = require('../models/ViewResult');
 
-exports.findByUserId = (req, res, next) => {
-  ViewResult.findByUserId(req.user.id)
-    .then((results) => {
-      res.json(results);
-    })
-    .catch(next);
-};
-
 exports.grading = (req, res, next) => {
   // fetch a random-ed id list
-  ViewResult.fetchRandomExIdList(req.query.id)
+  ViewResult.fetchRandomExIdList(req.body.id, req.body.testDate)
     .then((object) => {
       // send random-ed list to get an exam list
       ViewResult.fetchExamSpecifyId(object.randomExIdList)
         .then((examQuery) => {
           // console.log('EXAM QUERY:', examQuery);
           // fetch candidate answer
-          ViewResult.fetchCandidateAnswer(req.query.id)
+          ViewResult.fetchCandidateAnswer(req.body.id, req.body.testDate)
             .then((answerQuery) => {
               const resultList = [];
+              console.log('Ans Qry:', answerQuery);
               // foreach exId let compare the answer
               object.randomExIdList.map((exId) => {
                 Object(examQuery).map((eachExam) => {
@@ -39,11 +32,6 @@ exports.grading = (req, res, next) => {
                     });
                     let point = [0, 0];
                     let status;
-                    // in case of 1 coorect answer,
-                    // point is correctCount(0 or 1) / 1 that is itself
-                    // &
-                    // in case of many correct ones,
-                    // point is depend on ration of correctCount and amount of correct answer
                     if (eachExam.exType === 'Choices') {
                       point = [correctCount, eachExam.exAnswerLength];
                       status = 'Graded';
@@ -61,10 +49,10 @@ exports.grading = (req, res, next) => {
                     resultList.push({
                       ex_id: exId,
                       cd_id: answerQuery[0].id,
-                      test_date: answerQuery[0].testDate,
+                      test_date: req.body.testDate,
                       ex_question: eachExam.exQuestion,
                       ex_choices: eachExam.exType === 'Choices' ? eachExam.exChoice : [],
-                      ex_answer: answerTemp,
+                      cd_answer: answerTemp,
                       ex_correct: eachExam.exAnswer,
                       ex_type: eachExam.exType,
                       point,
@@ -87,10 +75,10 @@ exports.grading = (req, res, next) => {
     .catch(next);
 };
 
-exports.fetchUngradedExam = (req, res, next) => {
-  ViewResult.fetchUngradedExam(req.query.id)
-    .then((ungradedExam) => {
-      res.json(ungradedExam);
+exports.fetchExam = (req, res, next) => {
+  ViewResult.fetchExam(req.body.id, req.body.testDate)
+    .then((exam) => {
+      res.json(exam);
     })
     .catch(next);
 };

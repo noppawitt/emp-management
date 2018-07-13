@@ -320,16 +320,24 @@ api.editExam = body => (
 
 // view exam result
 
-api.grading = id => (
-  callApi(`/api/viewresult/grading/?id=${id}`)
+api.grading = (id, testDate) => (
+  callApi(`/api/viewresult/grading/`, {
+    method: 'POST',
+    body: {
+      id,
+      testDate,
+    }
+  })
 );
 
-api.fetchUngradedExam = id => (
-  callApi(`/api/viewresult/fetchUngradedExam/?id=${id}`)
-);
-
-api.fetchExamResult = id => (
-  callApi(`/api/viewresult/?id=${id}`)
+api.fetchExam = (id, testDate) => (
+  callApi(`/api/viewresult/fetchExam/`, {
+    method: 'POST',
+    body: {
+      id,
+      testDate,
+    }
+  })
 );
 
 // Exam Auth
