@@ -29,7 +29,7 @@ class ConfirmModal extends React.Component{
         <Modal
           size='mini'
           open={this.state.open}
-          closeOnRootNodeClick={false}
+          onClose={this.closeModal}
         >
           <Modal.Header icon='archive' content='Confirmation' />
           <Modal.Content>

@@ -22,7 +22,7 @@ class AddSelfAssessment extends React.Component {
         {this.props.fetching ? <Loader /> :
           <Modal
             header={this.props.profile.eva == null ? 'Add Probation':'View Probation'}
-            onClose={()=>{this.props.onClose()}}
+            onClose={()=>{this.props.onClose();this.props.clear();}}
             onClick={()=>this.props.onSubmit(this.props.item,(this.props.profile.selfInfo == null ? 'addSelfAssessment':'updateSelfAssessment'))}
             submitting={this.props.submitting}
             size="large"

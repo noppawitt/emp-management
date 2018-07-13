@@ -188,7 +188,7 @@ class SelfAssessmentForm extends React.Component {
                             <div style={{padding: '0px 10px'}}>
                                 <table className='sign-accom-table'>
                                     <tr><th><span className='blue-text'>Significant Accomplishments</span>
-                                        {!this.state.significantAccomplishments ? <a style={{ color: 'red' }}>(Please enter your answer.)</a> : ''}</th></tr>
+                                        {!this.state.significantAccomplishments ? <a style={{ color: 'red'}}>(Please enter your answer.)</a> : ''}</th></tr>
                                     <tr><td><textarea tabIndex='-1' onChange={(event) => {
                                         this.setState({ significantAccomplishments: event.target.value });
                                     }}>{this.state.significantAccomplishments}</textarea></td></tr>
@@ -196,7 +196,7 @@ class SelfAssessmentForm extends React.Component {
                             </div>
                             <div style={{padding: '0px 10px'}}>
                                 <table className='con-com-table'>
-                                    <tr><th><span className='blue-text'>Contribution / Company Activities</span>
+                                    <tr><th><span className='blue-text'>Contribution/ Company Activities</span>
                                         {!this.state.contribution ? <a style={{ color: 'red' }}>(Please enter your answer.)</a> : ''}</th></tr>
                                     <tr><td><textarea tabIndex='-1' onChange={(event) => {
                                         this.setState({ contribution: event.target.value });
@@ -206,7 +206,7 @@ class SelfAssessmentForm extends React.Component {
                             <div style={{padding: '0px 10px'}}>
                                 <table className='str-improve-table'>
                                     <tr>
-                                        <th colSpan='2'><span className='blue-text'>Strengths / Improvements</span></th>
+                                        <th colSpan='2'><span className='blue-text'>Strengths/ Improvements</span></th>
                                     </tr>
                                     <tr>
                                         <td><span>Strengths</span>
