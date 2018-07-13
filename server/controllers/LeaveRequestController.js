@@ -2,6 +2,7 @@ const LeaveRequest = require('../models/LeaveRequest');
 const Holiday = require('../models/Holiday');
 const moment = require('moment');
 const mail = require('../mail');
+const hash = require('object-hash');
 
 const calTotalHours = (timeIn, timeOut) => new Promise((resolve, reject) => {
   try {
@@ -75,9 +76,10 @@ const createLeaveRequest = (newLeaveRequest, holidays, id) => new Promise(async 
       if (m.isoWeekday() !== 6 && m.isoWeekday() !== 7) {
         if (!isHoliday(holidays, m)) {
           const totalhours = await calTotalHours(newLeaveRequest.startTime, newLeaveRequest.endTime);
+          const code = `${newLeaveRequest.userId}-${moment()}`;
+          newLeaveRequest.code = hash(code);
           newLeaveRequest.leaveDate = m.format('YYYY-MM-DD');
           newLeaveRequest.totalhours = totalhours;
-          newLeaveRequest.code = 'playtorium';
           LeaveRequest.create(newLeaveRequest, id);
         }
       }
