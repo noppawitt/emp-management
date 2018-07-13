@@ -403,12 +403,13 @@ api.fetchExamSpecifyId = idList => (
   })
 );
 
-api.checkProgress = (id, testDate) => (
+api.checkProgress = (id, testDate, startTime) => (
   callApi(`/api/takeExam/checkProgress/`, {
     method: 'POST',
     body: {
       id,
       testDate,
+      startTime,
     }
   })
 );
@@ -443,13 +444,6 @@ api.deActivate = (id, status) => (
       id,
       status,
     }
-  })
-);
-
-api.updateStartTimeTakeExam = body => (
-  callApi('/api/takeExam/updateStartTime/', {
-    method: 'PUT',
-    body
   })
 );
 

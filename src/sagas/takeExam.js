@@ -52,23 +52,16 @@ export function* fetchTestExamTask(action) {
     yield put(fetchSubCategory(examAmountPerSubCategory));
     const testDate = yield call(api.getTakeExamTestDate, action.payload.id);
     console.log('>>HERE', testDate);
-    const tempProgressResult = yield call(api.checkProgress, action.payload.id, testDate);
+    const startTime = moment();
+    const tempProgressResult = yield call(api.checkProgress, action.payload.id, testDate, startTime);
     const progressResult = [];
     if (tempProgressResult !== null) {
       for (let i = 0; i < tempProgressResult.answerList.length; i += 1) {
         progressResult.push(JSON.parse(tempProgressResult.answerList[i]));
       }
     }
-    const start = moment();
     yield put(fetchProgress(progressResult));
-    yield put(fetchTakeExamSuccess(examList, (tempProgressResult !== null && tempProgressResult.startTime !== null) ? moment(tempProgressResult.startTime) : start));
-    if (tempProgressResult !== null && tempProgressResult.startTime === null) {
-      yield call(api.updateStartTimeTakeExam, {
-        startTime: start,
-        id: action.payload.id,
-        testDate,
-      });
-    }
+    yield put(fetchTakeExamSuccess(examList, (tempProgressResult !== null && tempProgressResult.startTime !== null) ? moment(tempProgressResult.startTime) : startTime));
   }
   catch (error) {
     yield put(fetchTakeExamFailure(error));

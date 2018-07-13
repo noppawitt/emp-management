@@ -13,8 +13,6 @@ router.post('/checkProgress', TakeExamController.findUploadedAnswer);
 
 router.post('/uploadAnswer', TakeExamController.updateAnswer);
 
-router.put('/updateStartTime', TakeExamController.updateStartTime);
-
 router.post('/updateSubmittedTime', TakeExamController.updateSubmittedTime);
 
 router.post('/deActivate', TakeExamController.deActivate);

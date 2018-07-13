@@ -46,10 +46,10 @@ TakeExam.fetchExamSpecifyId = idList => (
     + ' FROM exams WHERE ex_id = ANY ($1)', [idList])
 );
 
-TakeExam.createBufferAnswer = (id, answerList, testDate) => (
+TakeExam.createBufferAnswer = (id, answerList, testDate, startTime) => (
   db.oneOrNone(
-    'INSERT INTO exam_candidate_submitted (id, answer_list, test_date) VALUES ($1, $2, $3)',
-    [id, answerList, testDate]
+    'INSERT INTO exam_candidate_submitted (id, answer_list, test_date, start_time) VALUES ($1, $2, $3, $4)',
+    [id, answerList, testDate, moment(startTime).format('YYYY-MM-DD HH:mm:ss')]
   )
 );
 
@@ -69,11 +69,6 @@ TakeExam.findUploadedAnswer = (id, type, testDate) => {
 TakeExam.updateAnswer = (id, answerList, submittedTime, testDate) => {
   return db.oneOrNone('UPDATE exam_candidate_submitted SET (answer_list, submitted_time) = ($2, $3)'
     + ' WHERE id = $1 AND test_date = $4', [id, answerList, submittedTime, testDate]);
-};
-
-TakeExam.updateStartTime = (startTime, id, testDate) => {
-  const start = moment(startTime).format('YYYY-MM-DD HH:mm:ss');
-  return db.none('UPDATE exam_candidate_submitted SET start_time = $1 WHERE id = $2 AND test_date = $3', [start, id, testDate]);
 };
 
 TakeExam.updateSubmittedTime = (id, time, testDate) => (

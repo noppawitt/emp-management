@@ -62,22 +62,13 @@ exports.findUploadedAnswer = (req, res, next) => {
       // if result null > not exist > create it 1st
       // initialize answerList with empty list
       if (!result) {
-        TakeExam.createBufferAnswer(object.id, [], object.testDate)
+        TakeExam.createBufferAnswer(object.id, [], object.testDate, object.startTime)
           .then((createresult) => {
             res.json(createresult);
           })
           .catch(next);
       }
       else res.json(result);
-    })
-    .catch(next);
-};
-
-exports.updateStartTime = (req, res, next) => {
-  console.log('????', req.body);
-  TakeExam.updateStartTime(req.body.startTime, req.body.id, req.body.testDate)
-    .then((result) => {
-      res.json(result);
     })
     .catch(next);
 };
