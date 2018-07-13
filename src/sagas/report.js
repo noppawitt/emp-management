@@ -9,7 +9,7 @@ import {
 } from '../actions/report';
 import api from '../services/api';
 
-export function* fetchOwnProjectTask(action) {
+function* fetchOwnProjectTask(action) {
   try {
     const projects = yield call(api.fetchOwnProject, action.payload.userId, action.payload.year, action.payload.month);
     yield put(fetchOwnProjectSuccess(projects));
@@ -19,7 +19,7 @@ export function* fetchOwnProjectTask(action) {
   }
 }
 
-export function* downloadReportTask(action) {
+function* downloadReportTask(action) {
   try {
     const { reportType, template, userId, projectId, year, month } = action.payload;
     const file = yield call(api.downloadReport, reportType, template, userId, projectId, year, month);
@@ -36,11 +36,11 @@ export function* downloadReportTask(action) {
   }
 }
 
-export function* watchFetchOwnProjectTask() {
+function* watchFetchOwnProjectTask() {
   yield takeEvery(actionTypes.OWN_PROJECT_FETCH_REQUEST, fetchOwnProjectTask);
 }
 
-export function* watchDownloadReportTask() {
+function* watchDownloadReportTask() {
   yield takeEvery(actionTypes.REPORT_DOWNLOAD_REQUEST, downloadReportTask);
 }
 

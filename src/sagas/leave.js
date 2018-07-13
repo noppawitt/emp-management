@@ -14,7 +14,7 @@ import {
 import { closeModal } from '../actions/modal';
 import api from '../services/api';
 
-export function* createLeaveTask(action) {
+function* createLeaveTask(action) {
   try {
     yield call(api.createLeave, { leaveRequest: action.payload.form });
     const leaves = yield call(api.fetchLeave, action.payload.form.userId, moment(action.payload.form.leaveFrom).format('YYYY'), moment(action.payload.form.leaveFrom).format('MM'));
@@ -28,7 +28,7 @@ export function* createLeaveTask(action) {
   }
 }
 
-export function* fetchLeaveTask(action) {
+function* fetchLeaveTask(action) {
   try {
     const leaves = yield call(api.fetchLeave, action.payload.userId, action.payload.year, action.payload.month);
     yield put(fetchLeaveSuccess(leaves));
@@ -38,7 +38,7 @@ export function* fetchLeaveTask(action) {
   }
 }
 
-export function* updateLeaveTask(action) {
+function* updateLeaveTask(action) {
   try {
     yield call(api.updateLeave, {
       leaveRequests: [{
@@ -57,7 +57,7 @@ export function* updateLeaveTask(action) {
   }
 }
 
-export function* fetchLeaveHistoryTask(action) {
+function* fetchLeaveHistoryTask(action) {
   try {
     const leaves = yield call(api.fetchLeaveHistory, action.payload.userId, action.payload.year);
     yield put(fetchLeaveHistorySuccess(leaves));
@@ -67,19 +67,19 @@ export function* fetchLeaveHistoryTask(action) {
   }
 }
 
-export function* watchCreateLeaveRequest() {
+function* watchCreateLeaveRequest() {
   yield takeEvery(actionTypes.LEAVE_CREATE_REQUEST, createLeaveTask);
 }
 
-export function* watchFetchLeaveRequest() {
+function* watchFetchLeaveRequest() {
   yield takeEvery(actionTypes.LEAVE_FETCH_REQUEST, fetchLeaveTask);
 }
 
-export function* watchUpdateLeaveRequest() {
+function* watchUpdateLeaveRequest() {
   yield takeEvery(actionTypes.LEAVE_UPDATE_REQUEST, updateLeaveTask);
 }
 
-export function* watchFetchLeaveHistoryRequest() {
+function* watchFetchLeaveHistoryRequest() {
   yield takeEvery(actionTypes.LEAVE_HISTORY_FETCH_REQUEST, fetchLeaveHistoryTask);
 }
 

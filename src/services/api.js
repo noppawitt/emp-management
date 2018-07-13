@@ -1,4 +1,4 @@
-const token = localStorage.getItem('token');
+const token = localStorage.getItem('accessToken');
 
 const callApi = (endpoint, request) => {
   if (request && request.body) {
@@ -58,6 +58,13 @@ api.login = form => (
   callApi('/auth/login', {
     method: 'POST',
     body: form
+  })
+);
+
+api.refreshToken = body => (
+  callApi('/auth/token', {
+    method: 'POST',
+    body
   })
 );
 

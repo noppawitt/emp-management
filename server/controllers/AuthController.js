@@ -9,14 +9,18 @@ exports.signin = (req, res, next) => {
     .then((user) => {
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
-          const token = jwt.sign({
+          const accessToken = jwt.sign({
             id: user.id,
             username: user.username
-          }, jwtSecret);
+          }, jwtSecret, { expiresIn: 60 });
+          const refreshToken = jwt.sign({
+            id: user.id
+          }, jwtSecret, { expiresIn: '15d' });
           res.json({
             id: user.id,
             username: user.username,
-            token
+            accessToken,
+            refreshToken
           });
         }
         else {

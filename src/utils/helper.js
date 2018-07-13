@@ -29,3 +29,11 @@ export const handleReduxFormSubmit = (dispatch, action, values, ...args) => (
     dispatch(action(values, resolve, reject, ...args))
   ))
 );
+
+export const getItem = (key) => {
+  localStorage.getItem(key);
+};
+
+export const setItem = (key, value) => {
+  localStorage.setItem(key, value);
+};

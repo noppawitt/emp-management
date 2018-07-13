@@ -58,7 +58,8 @@ export const signup = form => (dispatch) => {
 };
 
 export const logout = () => {
-  localStorage.removeItem('token');
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
   history.push('/login');
   return ({
     type: actionTypes.LOGOUT

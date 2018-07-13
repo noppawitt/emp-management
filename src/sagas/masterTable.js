@@ -3,7 +3,7 @@ import * as actionTypes from '../constants/actionTypes';
 import { fetchMasterTableSucesss, fetchMasterTableFailure } from '../actions/masterTable';
 import api from '../services/api';
 
-export function* fetchMasterTableTask() {
+function* fetchMasterTableTask() {
   try {
     const masterTable = yield call(api.fetchMasterTable);
     yield put(fetchMasterTableSucesss(masterTable));
@@ -13,7 +13,7 @@ export function* fetchMasterTableTask() {
   }
 }
 
-export function* watchFetchMasterTableRequest() {
+function* watchFetchMasterTableRequest() {
   yield takeEvery(actionTypes.MASTER_TABLE_FETCH_REQUEST, fetchMasterTableTask);
 }
 
