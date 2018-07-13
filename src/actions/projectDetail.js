@@ -66,8 +66,6 @@ export const createMemberFailure = message => ({
     message
   }
 });
-<<<<<<< HEAD
-=======
 
 export const deleteMemberRequest = (userId, projectId) => ({
   type: actionTypes.MEMBER_DELETE_REQUEST,
@@ -90,4 +88,3 @@ export const deleteMemberFailure = message => ({
     message
   }
 });
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6

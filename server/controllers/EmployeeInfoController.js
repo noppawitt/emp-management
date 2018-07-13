@@ -54,12 +54,10 @@ exports.update = (req, res, next) => {
 };
 
 exports.updateProfileImg = (req, res, next) => {
-<<<<<<< HEAD
   EmployeeInfo.updateProfileImg(`/static/${req.file.destination}/${req.file.filename}`, req.user.id)
     .then(() => {
       res.json('upload complete!!!');
     });
-=======
   const path = `/static/profile-img/${req.file.filename}`;
   // for admin
   if (req.accessControl.employeeInfoEditAll) {
@@ -84,5 +82,4 @@ exports.updateProfileImg = (req, res, next) => {
       });
     }
   }
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
 };

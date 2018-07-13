@@ -2,10 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Item, Segment, Input, Button, Icon } from 'semantic-ui-react';
 import PageHeader from './PageHeader';
-<<<<<<< HEAD
 import image from '../images/cat.jpg';
-=======
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
 import history from '../history';
 
 const items = employee => (

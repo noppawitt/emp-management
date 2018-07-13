@@ -1,13 +1,10 @@
 import moment from 'moment';
 
 export const fillTimesheetsToFullMonth = (state) => {
-<<<<<<< HEAD
   if (!state.timesheet.lists) return [];
   const year = moment(state.timesheet.lists[0].date).format('YYYY');
   const month = moment(state.timesheet.lists[0].date).format('MM');
-=======
   const { year, month } = state.timesheet;
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
   const firstDay = moment(`${year}-${month}-01`);
   const lastDay = moment(`${year}-${month}-${firstDay.daysInMonth()}`);
   const n = 6 + (firstDay.isoWeekday() % 7) + firstDay.daysInMonth() - (lastDay.isoWeekday() % 7);
@@ -15,7 +12,6 @@ export const fillTimesheetsToFullMonth = (state) => {
   // first date of last month
   const date = moment(firstDay).add(-(firstDay.isoWeekday() % 7), 'days');
   for (let i = 0; i < n; i += 1) {
-<<<<<<< HEAD
     timesheets.push({ date: date.format('YYYY-MM-DD') });
     date.add(1, 'days');
   }
@@ -23,7 +19,6 @@ export const fillTimesheetsToFullMonth = (state) => {
     const index = timesheets.findIndex(t => t.date === state.timesheet.lists[i].date);
     timesheets[index] = state.timesheet.lists[i];
   }
-=======
     const tasks = state.timesheet.lists.filter(l => l.date === date.format('YYYY-MM-DD'));
     if (tasks.length > 0) {
       timesheets.push(tasks);
@@ -60,6 +55,5 @@ export const getFormInitialValues = (state) => {
   timesheets.forEach((timesheet) => {
     timesheet.userId = state.auth.id;
   });
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
   return timesheets;
 };

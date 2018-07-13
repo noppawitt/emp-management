@@ -1,16 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-<<<<<<< HEAD
 import { Icon, Table, Grid, Progress, Button, Modal } from 'semantic-ui-react';
 import moment from 'moment';
 import PageHeader from './PageHeader';
-=======
 import { Icon, Table, Grid, Progress, Button, Select, Popup, Segment } from 'semantic-ui-react';
 import moment from 'moment';
 import PageHeader from './PageHeader';
 import history from '../history';
 import { getYearOptions, getMonthOptions } from '../utils/options';
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
 
 class Timesheet extends React.Component {
   constructor(props) {
@@ -20,7 +17,6 @@ class Timesheet extends React.Component {
       holidaycolor: 'rgb(221, 225, 230)',
       ButtonRedcolor: '#FF0000',
       textWorkcolor: '#2185CD',
-<<<<<<< HEAD
       textHolidaycolor: '#999999',
       iconRedcolor: 'red',
       iconBluecolor: 'blue',
@@ -151,7 +147,6 @@ class Timesheet extends React.Component {
         </Grid.Column>
       </Table.Cell>
     );
-=======
       textAnotherDay: '#999999',
       iconRedcolor: 'red',
       iconBluecolor: 'blue',
@@ -165,7 +160,6 @@ class Timesheet extends React.Component {
     this.buttonOfHoliday = this.buttonOfHoliday.bind(this);
     this.leavedayCell = this.leavedayCell.bind(this);
     this.popUpEdit = this.popUpEdit.bind(this);
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
   }
   drawCell(arrayDate) {
     if (moment(arrayDate[0].date).format('MM') !== this.props.month) {
@@ -392,7 +386,7 @@ class Timesheet extends React.Component {
     );
   }
   render() {
-<<<<<<< HEAD
+
     const progressBar = percentWork => <div> <Progress percent={percentWork} active color="blue" progress /> </div>;
 
     return (
@@ -422,7 +416,6 @@ class Timesheet extends React.Component {
                 </Table.Row>
               ))
             }
-=======
     let progressColor;
     if (this.props.percent < 30) progressColor = 'red';
     else if (this.props.percent < 70) progressColor = 'yellow';
@@ -466,7 +459,6 @@ class Timesheet extends React.Component {
                 {this.drawCell(this.props.timesheets[i + 6])}
               </Table.Row>
             ))}
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
           </Table.Body>
         </Table>
         <Modal trigger={<Button>New Task</Button>} />
@@ -476,9 +468,7 @@ class Timesheet extends React.Component {
 }
 
 Timesheet.propTypes = {
-<<<<<<< HEAD
   timesheets: PropTypes.array.isRequired
-=======
   timesheets: PropTypes.array.isRequired,
   leaves: PropTypes.array.isRequired,
   holidays: PropTypes.array.isRequired,
@@ -489,7 +479,6 @@ Timesheet.propTypes = {
   percent: PropTypes.number.isRequired,
   onAddClick: PropTypes.func.isRequired,
   onEditClick: PropTypes.func.isRequired
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
 };
 
 export default Timesheet;

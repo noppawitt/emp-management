@@ -2,23 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Segment, Grid, Header, Icon, Table, Button } from 'semantic-ui-react';
 
-<<<<<<< HEAD
 const membersDetail = memberDetail => (
   <Table.Row>
-=======
 const membersDetail = (memberDetail, projectId, onDeleteClick) => (
   <Table.Row key={memberDetail.userId}>
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
     <Table.Cell>{memberDetail.userId || '-'}</Table.Cell>
     <Table.Cell>{memberDetail.firstName || '-'}{' '}{memberDetail.lastName || '-'}</Table.Cell>
     <Table.Cell>{memberDetail.name || '-'}</Table.Cell>
     <Table.Cell>{memberDetail.role || '-'}</Table.Cell>
     <Table.Cell>
-<<<<<<< HEAD
       <Button animated="fade" style={{ borderStyle: 'solid', borderColor: '#FF0000', backgroundColor: 'white', borderWidth: '1px' }} >
-=======
       <Button animated="fade" style={{ borderStyle: 'solid', borderColor: '#FF0000', backgroundColor: 'white', borderWidth: '1px' }} onClick={() => onDeleteClick(memberDetail.userId, projectId)}>
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
         <Button.Content visible><font color="#FF0000" >Delete</font></Button.Content>
         <Button.Content hidden > <Icon color="red" name="user delete" /> </Button.Content>
       </Button>
@@ -26,11 +20,8 @@ const membersDetail = (memberDetail, projectId, onDeleteClick) => (
   </Table.Row>
 );
 
-<<<<<<< HEAD
 const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick }) => (
-=======
 const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteMemberClick }) => (
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
   <Segment.Group raised size="large" >
     <Segment>
       <Grid padded>
@@ -50,11 +41,8 @@ const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteM
       </Grid>
     </Segment>
     <Segment>
-<<<<<<< HEAD
       <Grid Columns={2} padded>
-=======
       <Grid columns={2} padded>
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
         <Grid.Column width={1} only="large screen" />
         <Grid.Column computer={4} mobile={16} tablet={4}><font size="4"><b>Project No. :</b></font></Grid.Column>
         <Grid.Column computer={11} mobile={16} tablet={11}>{projectDetail.id || '-'}</Grid.Column>
@@ -62,11 +50,8 @@ const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteM
         <Grid.Column computer={4} mobile={16} tablet={4} ><font size="4"><b>Project Name :</b></font></Grid.Column>
         <Grid.Column computer={11} mobile={16} tablet={11} >{projectDetail.name || '-'}</Grid.Column>
         <Grid.Column width={1} only="large screen" />
-<<<<<<< HEAD
         <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>Quotation Number :</b></font></Grid.Column>
-=======
         <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>Quotation No. :</b></font></Grid.Column>
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
         <Grid.Column computer={11} tablet={11} mobile={16}>{projectDetail.quotationId || '-'}</Grid.Column>
         <Grid.Column width={1} only="large screen" />
         <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>Customer :</b></font></Grid.Column>
@@ -75,11 +60,8 @@ const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteM
         <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>Purchased Order :</b></font></Grid.Column>
         <Grid.Column computer={11} tablet={11} mobile={16}>{projectDetail.purchasedOrder || '-'}</Grid.Column>
         <Grid.Column width={1} only="large screen" />
-<<<<<<< HEAD
         <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>Quotation No. :</b></font></Grid.Column>
-=======
         <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>Amount :</b></font></Grid.Column>
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
         <Grid.Column computer={11} tablet={11} mobile={16}>{projectDetail.amount || '-'}</Grid.Column>
         <Grid.Column width={1} only="large screen" />
         <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>Form :</b></font></Grid.Column>
@@ -127,11 +109,8 @@ const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteM
           </Table.Row>
         </Table.Header>
         <Table.Body>
-<<<<<<< HEAD
           {projectDetail.members.map(memberDetail => membersDetail(memberDetail))}
-=======
           {projectDetail.members.map(memberDetail => membersDetail(memberDetail, projectDetail.id, onDeleteMemberClick))}
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
         </Table.Body>
       </Table>
     </Segment>
@@ -141,12 +120,9 @@ const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteM
 ProjectDetail.propTypes = {
   projectDetail: PropTypes.object.isRequired,
   onEditClick: PropTypes.func.isRequired,
-<<<<<<< HEAD
   onAddMemberClick: PropTypes.func.isRequired
-=======
   onAddMemberClick: PropTypes.func.isRequired,
   onDeleteMemberClick: PropTypes.func.isRequired
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
 };
 
 export default ProjectDetail;

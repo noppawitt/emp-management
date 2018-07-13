@@ -2,11 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Segment, Button, Icon, Table, Menu, Grid, Select } from 'semantic-ui-react';
 import PageHeader from './PageHeader';
-<<<<<<< HEAD
-=======
 import ProgressBar from './ProgressBar';
 
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
 
 const months = [
   { key: 1, value: '01', text: 'January' },
@@ -28,7 +25,6 @@ for (let y = 2018; y <= 2118; y += 1) {
   years.push({ key: y, value: y.toString(), text: y });
 }
 
-<<<<<<< HEAD
 const Leave = ({ leaves, onAddClick, onCancelClick, userId, onFilterChange }) => (
   <div>
     <PageHeader text="Leave Request" icon="envelope" />
@@ -98,7 +94,6 @@ const Leave = ({ leaves, onAddClick, onCancelClick, userId, onFilterChange }) =>
         </Table>
       </Segment>
     </Segment.Group>
-=======
 const Leave = ({ leaves, leaveHistory, onAddClick, onCancelClick, userId, fetchLeave, year, month }) => (
   <div>
     <PageHeader text="Leave Request" icon="envelope" />
@@ -195,7 +190,6 @@ const Leave = ({ leaves, leaveHistory, onAddClick, onCancelClick, userId, fetchL
         </Segment.Group>
       </Grid.Row>
     </Grid>
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
   </div>
 );
 
@@ -205,13 +199,10 @@ Leave.propTypes = {
   onAddClick: PropTypes.func.isRequired,
   onCancelClick: PropTypes.func.isRequired,
   userId: PropTypes.number.isRequired,
-<<<<<<< HEAD
   onFilterChange: PropTypes.func.isRequired
-=======
   fetchLeave: PropTypes.func.isRequired,
   year: PropTypes.string.isRequired,
   month: PropTypes.string.isRequired
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
 };
 
 export default Leave;

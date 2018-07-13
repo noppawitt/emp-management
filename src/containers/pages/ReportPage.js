@@ -1,5 +1,5 @@
 import React from 'react';
-<<<<<<< HEAD
+
 import { Segment, Grid, Button } from 'semantic-ui-react';
 
 const ButtonExampleConditionals = () => (
@@ -27,7 +27,6 @@ const ReportPage = () => (
 );
 
 export default ReportPage;
-=======
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
@@ -123,4 +122,3 @@ const enhance = compose(
 );
 
 export default enhance(ReportPage);
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6

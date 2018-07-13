@@ -3,24 +3,13 @@ const LeaveRequest = require('../models/LeaveRequest');
 const HasProject = require('../models/HasProject');
 const Project = require('../models/Project');
 const EmployeeInfo = require('../models/EmployeeInfo');
-const Holiday = require('../models/Holiday');
-<<<<<<< HEAD
-=======
-const User = require('../models/User');
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
-const Excel = require('exceljs');
+const Holiday = require('../models/Holiday');const User = require('../models/User');const Excel = require('exceljs');
 const moment = require('moment');
 
 const getProjectDetail = excelType => new Promise(async (resolve, reject) => {
   try {
     const project = await HasProject.findByProjectIdAndUserId(excelType.projectId, excelType.userId);
-    project.detail = await Project.findById(excelType.projectId);
-<<<<<<< HEAD
-    project.user = await EmployeeInfo.findById(excelType.userId);
-=======
-    project.user = await EmployeeInfo.findAllByUserId(excelType.userId);
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
-    project.timesheet = await Timesheet.findTimesheetInProject(excelType.year, excelType.month, excelType.projectId, excelType.userId);
+    project.detail = await Project.findById(excelType.projectId);    project.user = await EmployeeInfo.findById(excelType.userId);    project.user = await EmployeeInfo.findAllByUserId(excelType.userId);    project.timesheet = await Timesheet.findTimesheetInProject(excelType.year, excelType.month, excelType.projectId, excelType.userId);
     project.leave = await LeaveRequest.findByYearAndMonth(excelType.year, excelType.month, excelType.userId);
     project.holiday = await Holiday.findByYearAndMonth(excelType.year, excelType.month);
     resolve(project);
@@ -44,11 +33,8 @@ const fillRow = (worksheet, day) => {
 };
 
 const fillBorderAllRow = (worksheet, row) => {
-<<<<<<< HEAD
   const column = ['B', 'C', 'D', 'F', 'I', 'L', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V'];
-=======
   const column = ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'];
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
   for (let i = 0; i < column.length; i += 1) {
     worksheet.getCell(`${column[i]}${row}`).border = {
       top: { style: 'thin' },
@@ -59,7 +45,6 @@ const fillBorderAllRow = (worksheet, row) => {
   }
 };
 
-<<<<<<< HEAD
 exports.createReport = (req, res, next) => {
   const { excelType } = req.body;
   if (excelType.reportType === 'Timesheet (Normal)' || excelType.reportType === 'Timesheet (Special)') {
@@ -174,7 +159,6 @@ exports.createReport = (req, res, next) => {
                 project = timesheet.projectId;
               }
             });
-=======
 const fillBorderFixColumn = (worksheet, row, column) => {
   for (let i = 0; i < column.length; i += 1) {
     worksheet.getCell(`${column[i]}${row}`).border = {
@@ -1122,13 +1106,11 @@ exports.createReport = (req, res, next) => {
         worksheet.getCell('C4').value = `${time.format('DD/MM/YY')} ${time.format('HH:mm')}`;
         writeAvailableDate(worksheet, excelType, column)
           .then(() => {
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             res.setHeader('Content-Disposition', `attachment; filename="Timesheet_Summary_${excelType.year}.xlsx`);
             workbook.xlsx.write(res);
           })
           .catch(next);
-<<<<<<< HEAD
         // let row = 4;
         // User.findAll()
         //   .then(async (users) => {
@@ -1154,13 +1136,10 @@ exports.createReport = (req, res, next) => {
         //     }
         //   })
         //   .catch(next);
-=======
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
       })
       .catch(next);
   }
 };
-<<<<<<< HEAD
 // const workbook = new Excel.Workbook();
 // workbook.xlsx.readFile('server/storage/report/excel.xlsx')
 //   .then(() => {
@@ -1170,5 +1149,3 @@ exports.createReport = (req, res, next) => {
 //     workbook.xlsx.write(res);
 //   })
 //   .catch(next);
-=======
->>>>>>> 2ef84c28b7d073fae1de484c4f2e765e8e8276f6
