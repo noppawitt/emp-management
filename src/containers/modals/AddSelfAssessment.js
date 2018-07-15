@@ -21,18 +21,21 @@ class AddSelfAssessment extends React.Component {
       <div>
         {this.props.fetching ? <Loader /> :
           <Modal
-            header={this.props.profile.selfInfo == null ? 'Add SelfAssessment':'View SelfAssessment'}
+            header={this.props.profile.selfInfo == null ? 'Create SelfAssessment':'View SelfAssessment'}
             onClose={()=>{this.props.onClose();this.props.clear();}}
-            onClick={()=>this.props.onSubmit(this.props.item,(this.props.profile.selfInfo == null ? 'addSelfAssessment':'updateSelfAssessment'))}
+            onClick={()=>this.props.onSave(this.props.item,(this.props.profile.self == null ? 'addSelfAssessment':'updateSelfAssessment'))}
+            onSubmit={()=>this.props.onSubmit(null,'submitSelfAssessment')}
+            submit={true}
             submitting={this.props.submitting}
             size="large"
-            disable={!this.props.edited}
+            disable={!this.props.edited || (this.props.profile.selfInfo && this.props.profile.selfInfo.submit)}
+            disableSubmit={this.props.edited || !this.props.profile.self || (this.props.profile.selfInfo && this.props.profile.selfInfo.submit)}
             navButton={true}
-            onChangePage={(nextPage)=>{this.props.onChange({...this.props.item,currentPage: (this.props.item.currentPage+nextPage+4)%4})}}
+            onChangePage={(nextPage)=>{this.props.onChange({...this.props.item,currentPage: (this.props.item.currentPage+nextPage+4)%4},'page')}}
             currentPage={this.props.item.currentPage}
             totalPage={4}
           >
-            <A test={this.props.onChange} profile={this.props.profile} item={this.props.profile.item}/>
+            <A test={(item)=>{this.props.onChange(item,'selfassessment')}} profile={this.props.profile} item={this.props.profile.item}  mode={this.props.profile.selfInfo ? this.props.profile.selfInfo.submit==true ? 'view':'edit':'edit'}/>
           </Modal>
         }
       </div>
@@ -65,12 +68,14 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   clear: () => dispatch(clearProbationStore()),
   onClose: () => dispatch(closeModal()),
+  onSave: (item, type) => (new Promise((resolve, reject) => (
+    dispatch(updateProfileRequest(item, resolve, reject, type))
+  ))),
   onSubmit: (item, type) => (new Promise((resolve, reject) => (
     dispatch(updateProfileRequest(item, resolve, reject, type))
   ))),
-
   onClick: () => dispatch(submit('addProbationProfile')),
-  onChange: (item) => dispatch(updateProbationStore(item,'selfassessment'))
+  onChange: (item,type) => dispatch(updateProbationStore(item,type))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddSelfAssessment);

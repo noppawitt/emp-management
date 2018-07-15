@@ -23,7 +23,7 @@ const ModalBasicExample = ({open}) => (
   </Modal>
 )
 
-const EvaluationModal = ({ header, buttonName, onClose, onClick, submitting, children, confirm, size, disable, onChangePage, navButton, currentPage, totalPage}) => (
+const EvaluationModal = ({ header, buttonName, onClose, onClick, submitting, children, confirm, size, disable, onChangePage, navButton, currentPage, totalPage, submit, onSubmit, disableSubmit}) => (
   <Modal
     dimmer="blurring"
     size="small"
@@ -44,7 +44,8 @@ const EvaluationModal = ({ header, buttonName, onClose, onClick, submitting, chi
           <Button className='back' icon='arrow left' color="blue"  onClick={()=>onChangePage(-1)}></Button>
           <span>Page {currentPage+1}/{totalPage}</span>
           <Button className='next' icon='arrow right' color="blue"  onClick={()=>onChangePage(1)}></Button></div> : ''}
-        <ConfirmModal submitting={submitting} onClickHandle={onClick} disable={disable}/>
+        {submit ? <Button disabled={submitting|| disable} loading={submitting} onClick={onClick} color='blue'> Save </Button> : ''}
+        <ConfirmModal submitting={submitting} onClickHandle={submit ? onSubmit:onClick} disable={submit ? disableSubmit:disable} buttonName={submit ? "Submit":"Save"}/>
     </Modal.Actions>
   </Modal>
 );
@@ -57,6 +58,7 @@ EvaluationModal.defaultProps = {
   confirm: false,
   size: 'small'
 };
+//        {submit ? <ConfirmModal submitting={submitting} disable={disableSubmit} onClickHandle={onSubmit} buttonName="Submit"/> : ''}
 
 EvaluationModal.propTypes = {
   header: PropTypes.string.isRequired,

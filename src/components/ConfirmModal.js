@@ -22,10 +22,15 @@ class ConfirmModal extends React.Component{
   componentWillMount(){
     console.log('asdasdasd  '+ this.props.button);
   }
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.confirmed){
+      this.setState({open: false})
+    }
+  }
   render(){
     return(
       <div style={{display: 'inline-block'}}>
-        {this.props.button ? <Button disabled={this.props.submitting|| this.props.disable}  onClick={this.openModal} color='blue'> Save </Button> : <Button color='grey' onClick={()=>{this.props.closeModal();this.props.clear()}}> Close </Button>}
+        {this.props.button ? <Button disabled={this.props.submitting|| this.props.disable}  onClick={this.openModal} color='blue'> {this.props.buttonName} </Button> : <Button color='grey' onClick={()=>{this.props.closeModal();this.props.clear()}}> Close </Button>}
         <Modal
           size='mini'
           open={this.state.open}
@@ -55,7 +60,8 @@ class ConfirmModal extends React.Component{
 const mapStateToProps = state => ({
   button:
     state.auth.type == 'User' && ((state.profile.evaInfo && state.profile.evaInfo.emSignDate) || (state.profile.perfInfo && state.profile.perf.emSignDate)) ? false :
-    state.auth.type == 'admin' && ((state.profile.evaInfo && state.profile.evaInfo.supSignDate) || (state.profile.perfInfo && state.profile.perfInfo.supSignDate)) ? false : true
+    state.auth.type == 'admin' && ((state.profile.evaInfo && state.profile.evaInfo.supSignDate) || (state.profile.perfInfo && state.profile.perfInfo.supSignDate)) ? false : true,
+  confirmed: state.profile.confirmed
 });
 
 const mapDispatchToProps = dispatch => ({

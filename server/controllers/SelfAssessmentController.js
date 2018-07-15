@@ -41,3 +41,14 @@ exports.update = (req,res,next) => {
     })
     .catch(next);
 }
+
+exports.submit = (req,res,next) => {
+  SelfAssessment.submitSelfAssessment(req.user.id)
+    .then(()=>{
+      SelfAssessment.checkExist(req.user.id)
+        .then( exist =>{
+          res.json(exist)
+        })
+    })
+    .catch(next);
+}

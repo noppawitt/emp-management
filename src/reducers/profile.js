@@ -30,6 +30,8 @@ const profile = (state = initialState, action) => {
       }else if(action.payload.type=='selfassessment'){
         if(action.payload.item.validate) edited = true;
         else edited = false;
+      }else if(action.payload.type=='page'){
+        edited = false;
       }
       return {
         ...state,
@@ -113,6 +115,7 @@ const profile = (state = initialState, action) => {
       return {
         ...state,
         submitting: true,
+        confirmed: false,
         form: action.payload.form
       };
     case actionTypes.PROFILE_UPDATE_SUCCESS:
@@ -120,14 +123,15 @@ const profile = (state = initialState, action) => {
         ...state,
         submitting: false,
         edited:false,
-        item:null,
+        item: {currentPage: 0},
+        confirmed: true,
         ...action.payload.profile
       };
     case actionTypes.PROFILE_UPDATE_FAILURE:
       return {
         ...state,
         submitting: false,
-        item:null,
+        item: {currentPage: 0},
         message: action.payload.message
       };
     case actionTypes.PROFILE_DELETE_REQUEST:

@@ -80,3 +80,7 @@
 a{
   margin-left: 5px;
 }
+
+textarea:disabled{
+  border-color: rgb(234, 234, 234);
+}

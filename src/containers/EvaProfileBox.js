@@ -13,7 +13,7 @@ const AngleDownButton = (
 )
 
 const EvaProfileBox = ({performanceProfile, evaProfile, selfProfile, openProbationModal, id, openPerformanceModal, type, fetchProbation, profileId, fetchPerformance, openSelfAssessmentModal, fetchSelfAssessment}) => {
-  console.log(evaProfile);
+  console.log(!selfProfile || !selfProfile.submited)
   const optionsPerf = [
     {
       key: 'user',
@@ -46,7 +46,6 @@ const EvaProfileBox = ({performanceProfile, evaProfile, selfProfile, openProbati
     }
     else optionsPro.push({text: 'Continued Probation '+ (evaProfile.length-i-1),onClick: () => {fetchProbation(profileId,evaProfile[i].probationId);openProbationModal();}})
   }
-
   return (
 
     <Segment.Group raised size="large">
@@ -67,13 +66,13 @@ const EvaProfileBox = ({performanceProfile, evaProfile, selfProfile, openProbati
         <div className="buttonGroup">
             <Button.Group
               color={
-                performanceProfile.length==0 || performanceProfile[0].year<(new Date()).getFullYear() ? 'green' : 'blue'
+                (performanceProfile.length==0 || performanceProfile[0].year<(new Date()).getFullYear()) && type=='admin' ? 'green' : 'blue'
               }
             >
               <Dropdown trigger={AngleDownButton} options={optionsPerf} disabled={type!='admin' && performanceProfile.length==0}/>
               <Button onClick={() => {fetchPerformance(profileId,(new Date()).getFullYear());openPerformanceModal();}}
                 disabled={type!='admin' && performanceProfile.length==0}>
-                {performanceProfile.length==0 || performanceProfile[0].year<(new Date()).getFullYear() ? 'Create Performance' : 'Performance'}
+                {(performanceProfile.length==0 || performanceProfile[0].year<(new Date()).getFullYear()) && type=='admin' ? 'Create Performance' : 'Performance'}
               </Button>
             </Button.Group>
         </div>
@@ -93,12 +92,16 @@ const EvaProfileBox = ({performanceProfile, evaProfile, selfProfile, openProbati
                 disabled={(type!='admin' && evaProfile.length==0) || !selfProfile}>
                 {
                   evaProfile.length==0 && type=='admin' ? 'Create Probation':
-                  evaProfile.length!=0 && type=='admin' && evaProfile[0].passPro==false && evaProfile[0].continued==true && evaProfile[0].mdSignDate!=null ? 'Create Continue Probation' : 'View Probation'
+                  evaProfile.length!=0 && type=='admin' && evaProfile[0].passPro==false && evaProfile[0].continued==true && evaProfile[0].mdSignDate!=null ? 'Create Continue Probation' : 'Probation'
                 }
               </Button>
             </Button.Group>
         </div>
-            <Button icon labelPosition='left' icon={'angle right'} content={selfProfile ? 'Self Assessment' : 'Create Self Assessment'} onClick={()=>{if(selfProfile!=null)fetchSelfAssessment(profileId);openSelfAssessmentModal()}} color={selfProfile ? 'yellow':'green'}/>
+            <Button icon labelPosition='left' icon={'angle right'}
+              disabled={(type!='User' && (!selfProfile || !selfProfile.submited))}
+              content={selfProfile || type=='admin' ? 'Self Assessment' : 'Create Self Assessment'}
+              onClick={()=>{if(selfProfile!=null)fetchSelfAssessment(profileId);openSelfAssessmentModal()}}
+              color={selfProfile || type=='admin' ? 'yellow':'green'}/>
 
       </Segment>
 
