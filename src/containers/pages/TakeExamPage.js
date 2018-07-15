@@ -113,7 +113,7 @@ const mapDispatchToProps = dispatch => ({
   onClickCategory: category => dispatch(categoryChange(category)),
   onClickSave: (id, answerList) => dispatch(uploadAnswerListRequest(id, answerList, false, false)),
   onClickSubmit: (id, answerList) => dispatch(uploadAnswerListRequest(id, answerList, false, true)),
-  onClickLogout: (id, answerList) => dispatch(uploadAnswerListRequest(id, answerList, true, true)),
+  onClickLogout: (id, answerList) => dispatch(uploadAnswerListRequest(id, answerList, true, false)),
 });
 
 const enhance = compose(

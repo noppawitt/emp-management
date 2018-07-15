@@ -378,10 +378,6 @@ api.startExam = body => (
 
 // Take Exam
 
-api.getTakeExamTestDate = id => (
-  callApi(`/api/takeExam/getTestDate/?id=${id}`)
-);
-
 api.fetchEPRList = id => (
   callApi(`/api/takeExam/fetchEPRList/?id=${id}`)
 );
@@ -390,8 +386,8 @@ api.fetchExamId = () => (
   callApi(`/api/takeExam/fetchExamId`)
 );
 
-api.fetchRandomExIdList = id => (
-  callApi(`/api/takeExam/fetchRandomExIdList/?id=${id}`)
+api.fetchRandomExIdList = (id, testDate) => (
+  callApi(`/api/takeExam/fetchRandomExIdList/?id=${id}&testDate=${testDate}`)
 );
 
 api.fetchExamSpecifyId = idList => (
@@ -414,16 +410,16 @@ api.checkProgress = (id, testDate, startTime) => (
   })
 );
 
-api.uploadAnswer = (id, answerList, testDate) => {
-  return callApi(`/api/takeExam/uploadAnswer/`, {
+api.uploadAnswer = (id, answerList, testDate) => (
+  callApi(`/api/takeExam/uploadAnswer/`, {
     method: 'POST',
     body: {
       id,
       answerList,
       testDate,
     }
-  });
-};
+  })
+);
 
 api.updateSubmittedTime = (id, time, testDate) => (
   callApi(`/api/takeExam/updateSubmittedTime`, {

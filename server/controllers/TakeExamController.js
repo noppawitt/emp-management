@@ -17,7 +17,7 @@ exports.fetchExamId = (req, res, next) => {
 };
 
 exports.fetchRandomExIdList = (req, res, next) => {
-  TakeExam.fetchRandomExIdList(req.query.id)
+  TakeExam.fetchRandomExIdList(req.query.id, req.query.testDate.toString())
     .then((List) => {
       res.json(List);
     })
@@ -95,12 +95,4 @@ exports.deActivate = (req, res, next) => {
       })
       .catch(next);
   }
-};
-
-exports.getTestDate = (req, res, next) => {
-  TakeExam.getTestDate(req.query.id)
-    .then((testDate) => {
-      res.json(testDate.appointment);
-    })
-    .catch(next);
 };

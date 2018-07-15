@@ -42,11 +42,6 @@ class TakeExamTimer extends Component {
     }
 
     if (this.endTime.diff(current, 'seconds') <= -1800) {
-      console.log(this.props.startTime.format('HH:mm:ss'));
-      console.log(this.endTime.format('HH:mm:ss'));
-      console.log(current.format('HH:mm:ss'));
-      console.log(this.endTime.diff(current, 'seconds'));
-      console.log('timeout');
       this.props.submit(this.props.id, this.props.answerList);
       clearInterval(this.intervalVar);
     }
