@@ -48,7 +48,7 @@ export const sortRecruitment = (sortKey, direction) => ({
   }
 });
 
-export const activatePasswordRequest = (id, activationLifetimes) => ({
+export const activateUserRequest = (id, activationLifetimes) => ({
   type: actionTypes.RECRUITMENT_ACTIVATE_REQUEST,
   payload: {
     id,
@@ -56,36 +56,36 @@ export const activatePasswordRequest = (id, activationLifetimes) => ({
   }
 });
 
-export const activatePasswordSuccess = message => ({
+export const activateUserSuccess = message => ({
   type: actionTypes.RECRUITMENT_ACTIVATE_SUCCESS,
   payload: {
     message,
   }
 });
 
-export const activatePasswordFailure = error => ({
+export const activateUserFailure = error => ({
   type: actionTypes.RECRUITMENT_ACTIVATE_FAILURE,
   payload: {
     error,
   }
 });
 
-export const checkPasswordStatusRequest = id => ({
-  type: actionTypes.RECRUITMENT_CHECK_PASSWORD_STATUS_REQUEST,
+export const checkUserStatusRequest = id => ({
+  type: actionTypes.RECRUITMENT_CHECK_USER_STATUS_REQUEST,
   payload: {
     id,
   }
 });
 
-export const checkPasswordStatusSuccess = passwordObject => ({
-  type: actionTypes.RECRUITMENT_CHECK_PASSWORD_STATUS_SUCCESS,
+export const checkUserStatusSuccess = passwordObject => ({
+  type: actionTypes.RECRUITMENT_CHECK_USER_STATUS_SUCCESS,
   payload: {
     passwordObject,
   }
 });
 
-export const checkPasswordStatusFailure = error => ({
-  type: actionTypes.RECRUITMENT_CHECK_PASSWORD_STATUS_FAILURE,
+export const checkUserStatusFailure = error => ({
+  type: actionTypes.RECRUITMENT_CHECK_USER_STATUS_FAILURE,
   payload: {
     error,
   }

@@ -1,4 +1,5 @@
 const Recruitment = require('../models/Recruitment');
+const moment = require('moment');
 
 exports.fetchAllRecruitment = (req, res, next) => {
   Recruitment.fetchAllRecruitment()
@@ -8,8 +9,8 @@ exports.fetchAllRecruitment = (req, res, next) => {
     .catch(next);
 };
 
-exports.checkPasswordStatus = (req, res, next) => {
-  Recruitment.checkPasswordStatus(req.query.id)
+exports.checkUserStatus = (req, res, next) => {
+  Recruitment.checkUserStatus(req.query.id)
     .then((passwordStatusObject) => {
       res.json(passwordStatusObject);
     })
@@ -24,15 +25,32 @@ exports.getTestDate = (req, res, next) => {
     .catch(next);
 };
 
-exports.activatePassword = (req, res, next) => {
-  // function didn't handle if no user in exam_users2
-  Recruitment.activatePassword(
-    req.body.id,
-    req.body.lifetimes < 1 ? 0 : req.body.lifetimes,
-    req.body.lifetimes < 1 ? null : req.body.testDate,
-  )
-    .then((message) => {
-      res.json(message);
+exports.activateUser = (req, res, next) => {
+  Recruitment.checkExamUser(req.body.id, req.body.testDate)
+    .then((retval) => {
+      if (retval === null) {
+        Recruitment.createExamUser(
+          req.body.id,
+          req.body.testDate,
+          moment(),
+          null,
+          0,
+          0,
+          null,
+          0,
+        )
+          .then()
+          .catch(next);
+      }
+      Recruitment.activateUser(
+        req.body.id,
+        req.body.lifetimes < 1 ? 0 : req.body.lifetimes,
+        req.body.lifetimes < 1 ? null : req.body.testDate,
+      )
+        .then((message) => {
+          res.json(message);
+        })
+        .catch(next);
     })
     .catch(next);
 };

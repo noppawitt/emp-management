@@ -4,11 +4,11 @@ import {
   fetchRecruitmentRequest,
   fetchRecruitmentFailure,
   fetchRecruitmentSuccess,
-  checkPasswordStatusRequest,
-  checkPasswordStatusFailure,
-  checkPasswordStatusSuccess,
-  activatePasswordFailure,
-  activatePasswordSuccess,
+  checkUserStatusRequest,
+  checkUserStatusFailure,
+  checkUserStatusSuccess,
+  activateUserFailure,
+  activateUserSuccess,
   fetchResultFailure,
   fetchResultSuccess,
   updateUserStatus,
@@ -35,12 +35,12 @@ export function* fetchRecruitmentTask() {
   }
 }
 
-export function* checkPasswordStatusTask(action) {
+export function* checkUserStatusTask(action) {
   try {
-    const passwordObject = yield call(api.checkPasswordStatus, action.payload.id);
+    const object = yield call(api.checkUserStatus, action.payload.id);
     const today = (new Date()).getTime();
-    const createdDay = new Date(passwordObject.latestActivatedPasswordTime).getTime();
-    const lifetimes = passwordObject.activationLifetimes;
+    const createdDay = new Date(object.latestActivatedTime).getTime();
+    const lifetimes = object.activationLifetimes;
     const msInDay = 1000 * 60 * 60 * 24;
     const isExpired = today - createdDay > lifetimes * msInDay;
     const expireDateString = new Date(createdDay + (lifetimes * msInDay)).toString();
@@ -50,22 +50,22 @@ export function* checkPasswordStatusTask(action) {
     else {
       yield put(updateUserStatus('Password alive@@Expire on : '.concat(expireDateString), 200));
     }
-    yield put(checkPasswordStatusSuccess(passwordObject));
+    yield put(checkUserStatusSuccess(object));
   }
   catch (error) {
-    yield put(checkPasswordStatusFailure(error));
+    yield put(checkUserStatusFailure(error));
   }
 }
 
-export function* activatePasswordTask(action) {
+export function* activateUserTask(action) {
   try {
     const testDate = yield call(api.getTestDate, action.payload.id);
-    const message = yield call(api.activatePassword, action.payload.id, action.payload.activationLifetimes, testDate);
-    yield put(activatePasswordSuccess(message));
-    yield put(checkPasswordStatusRequest(action.payload.id));
+    const message = yield call(api.activateUser, action.payload.id, action.payload.activationLifetimes, testDate);
+    yield put(activateUserSuccess(message));
+    yield put(checkUserStatusRequest(action.payload.id));
   }
   catch (error) {
-    yield put(activatePasswordFailure(error));
+    yield put(activateUserFailure(error));
   }
 }
 
@@ -118,12 +118,12 @@ export function* watchFetchRecruitmentRequest() {
   yield takeEvery(actionTypes.RECRUITMENT_FETCH_REQUEST, fetchRecruitmentTask);
 }
 
-export function* watchCheckPasswordStatusRequest() {
-  yield takeEvery(actionTypes.RECRUITMENT_CHECK_PASSWORD_STATUS_REQUEST, checkPasswordStatusTask);
+export function* watchCheckUserStatusRequest() {
+  yield takeEvery(actionTypes.RECRUITMENT_CHECK_USER_STATUS_REQUEST, checkUserStatusTask);
 }
 
 export function* watchActivateUserRequest() {
-  yield takeEvery(actionTypes.RECRUITMENT_ACTIVATE_REQUEST, activatePasswordTask);
+  yield takeEvery(actionTypes.RECRUITMENT_ACTIVATE_REQUEST, activateUserTask);
 }
 
 export function* watchRandomExamRequest() {
@@ -137,7 +137,7 @@ export function* watchEvaluateExam() {
 export default function* recruitmentSaga() {
   yield all([
     watchFetchRecruitmentRequest(),
-    watchCheckPasswordStatusRequest(),
+    watchCheckUserStatusRequest(),
     watchActivateUserRequest(),
     watchRandomExamRequest(),
     watchEvaluateExam(),

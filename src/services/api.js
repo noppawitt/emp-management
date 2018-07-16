@@ -252,12 +252,12 @@ api.fetchAllRecruitment = () => (
   callApi(`/api/recruitments`)
 );
 
-api.checkPasswordStatus = id => (
-  callApi(`/api/recruitments/checkPasswordStatus/?id=${id}`)
+api.checkUserStatus = id => (
+  callApi(`/api/recruitments/checkUserStatus/?id=${id}`)
 );
 
-api.activatePassword = (id, lifetimes, testDate) => (
-  callApi(`/api/recruitments/activatePassword/`, {
+api.activateUser = (id, lifetimes, testDate) => (
+  callApi(`/api/recruitments/activateUser/`, {
     method: 'POST',
     body: {
       id,

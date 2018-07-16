@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { closeModal } from '../../actions/modal';
 import {
-  activatePasswordRequest,
+  activateUserRequest,
   updateLifetimesValue,
   updateLifetimesUnit,
   randomExam,
@@ -70,7 +70,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onClose: () => dispatch(closeModal()),
   onClickActivate: (id, activationLifetimes) => compose(
-    dispatch(activatePasswordRequest(id, activationLifetimes)),
+    dispatch(activateUserRequest(id, activationLifetimes)),
     dispatch(randomExam(id)),
   ),
   onLifetimesValueChange: e => dispatch(updateLifetimesValue(e.target.value)),

@@ -6,26 +6,27 @@ const ExamUser = {};
 // if you uncommend any commend-ed don't forget to change query table
 // from user to examUser or something else that is correct
 
-ExamUser.create = (user, id) => (
-  db.tx((transaction) => {
-    const query = transaction.one(
-      'INSERT INTO exam_users2 (id, password, created_user, updated_user, type, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING 1',
-      [
-        user.id,
-        user.password,
-        id,
-        id,
-        user.type,
-        user.status
-      ]
-    );
-    return transaction.batch([query]);
-  })
-);
+// query of ExamUser.create wrong!
+// ExamUser.create = (user, id) => (
+//   db.tx((transaction) => {
+//     const query = transaction.one(
+//       'INSERT INTO exam_users2 (id, password, created_user, updated_user, type, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING 1',
+//       [
+//         user.id,
+//         user.password,
+//         id,
+//         id,
+//         user.type,
+//         user.status
+//       ]
+//     );
+//     return transaction.batch([query]);
+//   })
+// );
 
-ExamUser.findById = (id) => {
-  return db.oneOrNone('SELECT * FROM exam_users2 WHERE id = $1 AND test_date = $2', [id, moment().format('YYYY-MM-DD')]);
-};
+ExamUser.findById = id => (
+  db.oneOrNone('SELECT * FROM exam_users2 WHERE id = $1 AND test_date = $2', [id, moment().format('YYYY-MM-DD')])
+);
 
 // User.findAll = () => (
 // db.manyOrNone('SELECT users.id, employee_info.first_name, employee_info.last_name, employee_info.nick_name,

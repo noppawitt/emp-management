@@ -8,7 +8,7 @@ import {
   filterRecruitment,
   filterStartDateRecruitment,
   filterEndDateRecruitment,
-  checkPasswordStatusRequest,
+  checkUserStatusRequest,
   evaluateExam,
 } from '../../actions/recruitment';
 import Recruitment from '../../components/Recruitment';
@@ -102,7 +102,7 @@ const mapDispatchToProps = dispatch => ({
   onStartDateChange: date => dispatch(filterStartDateRecruitment(date)),
   onEndDateChange: date => dispatch(filterEndDateRecruitment(date)),
   onClickActivate: cid => compose(
-    dispatch(checkPasswordStatusRequest(cid)),
+    dispatch(checkUserStatusRequest(cid)),
     dispatch(openModal(modalNames.ACTIVATE)),
   ),
   // build & fix Grade function
