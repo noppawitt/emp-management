@@ -7,6 +7,7 @@ import { Form } from 'semantic-ui-react';
 import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
 import { masterTableToOptions, getFacultiesByUniversityId, getMajorsByFacultyId } from '../../utils/helper';
+import { honorOption } from '../../utils/options';
 
 const validate = (values) => {
   const errors = {};
@@ -14,11 +15,6 @@ const validate = (values) => {
   errors.endDate = validator.required(values.endDate);
   return errors;
 };
-
-// const Honors = [
-//   { key: '1', value: '1', text: 'เกียรตินิยมอันดับ 1' },
-//   { key: '2', value: '2', text: 'เกียรตินิยมอันดับ 2' }
-// ];
 
 const AddEducationProfileForm = ({ masterTable, universityId, facultyId, handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
@@ -72,11 +68,13 @@ const AddEducationProfileForm = ({ masterTable, universityId, facultyId, handleS
     />
     <Field
       name="honorFlag"
-      as={Form.Input}
+      as={Form.Select}
       component={Input}
       label="Honor"
       placeholder="Honor"
+      options={honorOption}
       disabled={submitting}
+      validate={validator.required}
     />
     <Field
       name="gpax"

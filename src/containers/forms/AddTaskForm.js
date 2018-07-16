@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import { Field, FieldArray, reduxForm } from 'redux-form';
-import { Grid, Form, Segment, Icon, Button, Responsive } from 'semantic-ui-react';
+import { Grid, Form, Segment, Icon, Button } from 'semantic-ui-react';
 import moment from 'moment';
 import Input from '../../components/Input';
 import { getFormInitialValues } from '../../selectors/timesheet';
 
 const isWeekend = day => moment(day).isoWeekday() === 6 || moment(day).isoWeekday() === 7;
-
 const renderTasks = ({ fields }) => (
   <div>
     {fields.map((task, i) => (

@@ -8,6 +8,7 @@ import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
 import { masterTableToOptions, getFacultiesByUniversityId, getMajorsByFacultyId } from '../../utils/helper';
 import { getEducationProfile } from '../../selectors/profile';
+import { honorOption } from '../../utils/options';
 
 const validate = (values) => {
   const errors = {};
@@ -16,11 +17,6 @@ const validate = (values) => {
   return errors;
 };
 
-// const Honors = [
-//   { key: '1', value: '1', text: 'เกียรตินิยมอันดับที่ 1' },
-//   { key: '2', value: '2', text: 'เกียรตินิยมอันดับที่ 2' },
-
-// ];
 const EditEducationProfileForm = ({ masterTable, universityId, facultyId, handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Field
@@ -73,11 +69,13 @@ const EditEducationProfileForm = ({ masterTable, universityId, facultyId, handle
     />
     <Field
       name="honorFlag"
-      as={Form.Input}
+      as={Form.select}
       component={Input}
       label="Honor"
       placeholder="Honor"
+      options={honorOption}
       disabled={submitting}
+      validate={validator.required}
     />
     <Field
       name="gpax"
@@ -86,7 +84,7 @@ const EditEducationProfileForm = ({ masterTable, universityId, facultyId, handle
       label="Gpax"
       placeholder="Gpax"
       disabled={submitting}
-      validate={validator.gpax}
+      validate={[validator.gpax, validator.required]}
     />
     <Field
       name="graduationDate"

@@ -11,7 +11,7 @@ export const maxLength25 = maxLength(25);
 export const maxLength30 = maxLength(30);
 export const maxLength50 = maxLength(50);
 export const maxLength100 = maxLength(100);
-export const check2Decimal = value => (value && /\d+(\.\d{2})?/.test(value) ? undefined : 'Decimal must be less than or equal 2 characters');
+export const check2Decimal = value => (value && /^\S*(?=.*[1-9])\d*(?:\.\d{1,2})?\S*$/.test(value) ? undefined : 'Decimal must be less than or equal 2 characters');
 export const email = value => (
   value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ? 'Invalid email address' : undefined
 );
