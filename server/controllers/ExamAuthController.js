@@ -9,28 +9,21 @@ exports.signin = (req, res, next) => {
   ExamUser.findById(req.body.id)
     .then((user) => {
       if (user) {
-        if (req.body.password === user.birthdate) {
-          if (moment(user.testDate).add({ days: user.activationLifetimes }).diff(moment()) > 0) {
-            const token = jwt.sign({
-              id: user.id,
-              agreementStatus: user.agreementStatus,
-              testdate: user.testDate,
-            }, jwtSecret);
-            res.json({
-              id: user.id,
-              token,
-              agreementStatus: user.agreementStatus,
-              testdate: user.testDate,
-            });
-          }
-          else {
-            const err = new Error('This user is not activated');
-            err.status = 401;
-            next(err);
-          }
+        if (moment(user.testDate).add({ days: user.activationLifetimes }).diff(moment()) > 0) {
+          const token = jwt.sign({
+            id: user.id,
+            agreementStatus: user.agreementStatus,
+            testdate: user.testDate,
+          }, jwtSecret);
+          res.json({
+            id: user.id,
+            token,
+            agreementStatus: user.agreementStatus,
+            testdate: user.testDate,
+          });
         }
         else {
-          const err = new Error('Incorrect password');
+          const err = new Error('This user is not activated');
           err.status = 401;
           next(err);
         }

@@ -96,3 +96,12 @@ exports.deActivate = (req, res, next) => {
       .catch(next);
   }
 };
+
+exports.sendMail = (req, res, next) => {
+  TakeExam.getName(req.body.id, req.body.currentTime)
+    .then((name) => {
+      console.log(name);
+      res.json('test');
+    })
+    .catch(next);
+};

@@ -378,6 +378,16 @@ api.startExam = body => (
 
 // Take Exam
 
+api.sendMailFinishExam = (id, currentTime) => (
+  callApi('/api/takeExam/sendMail', {
+    method: 'POST',
+    body: {
+      id,
+      currentTime,
+    }
+  })
+);
+
 api.fetchEPRList = id => (
   callApi(`/api/takeExam/fetchEPRList/?id=${id}`)
 );

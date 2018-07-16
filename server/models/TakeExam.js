@@ -83,4 +83,8 @@ TakeExam.expiredActivationLifetime = id => (
   db.oneOrNone('UPDATE exam_users2 SET activation_lifetimes = 0 WHERE id = $1', [id])
 );
 
+TakeExam.getName = (id, current) => (
+  db.oneOrNone('SELECT first_name, last_name FROM recruitments WHERE citizen_id = $1 AND appointment = $2', [id, current])
+);
+
 module.exports = TakeExam;

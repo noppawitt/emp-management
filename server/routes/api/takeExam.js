@@ -17,4 +17,6 @@ router.post('/updateSubmittedTime', TakeExamController.updateSubmittedTime);
 
 router.post('/deActivate', TakeExamController.deActivate);
 
+router.post('/sendMail', TakeExamController.sendMail);
+
 module.exports = router;
