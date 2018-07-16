@@ -46,7 +46,7 @@ const EvaluationModal = ({ header, buttonName, onClose, onClick, submitting, chi
           <span>Page {currentPage+1}/{totalPage}</span>
           <Button className='next' icon='arrow right' color="blue"  onClick={()=>onChangePage(1)}></Button></div> : ''}
         {submit ? <Button disabled={submitting|| disable} loading={submitting} onClick={onClick} color='blue'> {disable? <Icon name='check' fitted style={{margin:'0 0'}}/>:'Save'} </Button> : ''}
-        <ConfirmModal submitting={submitting} onClickHandle={submit ? onSubmit:onClick} disable={submit ? disableSubmit:disable} buttonName={submit ? "Submit":"Save"}/>
+        <ConfirmModal submitting={submitting} onClickHandle={submit ? onSubmit:onClick} disable={submit ? disableSubmit:disable} buttonName={submit ? "Submit":"Save"} submit={submit}/>
     </Modal.Actions>
   </Modal>
 );

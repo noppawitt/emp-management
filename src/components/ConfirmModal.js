@@ -30,7 +30,7 @@ class ConfirmModal extends React.Component{
   render(){
     return(
       <div style={{display: 'inline-block'}}>
-        {this.props.button ? <Button disabled={this.props.submitting|| this.props.disable}  onClick={this.openModal} color='blue'> {this.props.buttonName} </Button> : <Button color='grey' onClick={()=>{this.props.closeModal();this.props.clear()}}> Close </Button>}
+        {this.props.button ? <Button disabled={this.props.submitting|| this.props.disable}  onClick={this.openModal} color={this.props.submit ? 'green':'blue'}> {this.props.buttonName} </Button> : <Button color='grey' onClick={()=>{this.props.closeModal();this.props.clear()}}> Close </Button>}
         <Modal
           size='mini'
           open={this.state.open}
@@ -39,6 +39,7 @@ class ConfirmModal extends React.Component{
           <Modal.Header icon='archive' content='Confirmation' />
           <Modal.Content>
             <p>
+              {this.props.submit ? <span>Once submitted, you will not be able to edit<br/></span>:''}
               Are you sure ?
             </p>
           </Modal.Content>
