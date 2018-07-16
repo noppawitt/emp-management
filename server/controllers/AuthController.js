@@ -12,7 +12,7 @@ exports.signin = (req, res, next) => {
           const accessToken = jwt.sign({
             id: user.id,
             username: user.username
-          }, jwtSecret, { expiresIn: 900 });
+          }, jwtSecret, { expiresIn: 3600 });
           const refreshToken = jwt.sign({
             id: user.id,
             username: user.username
@@ -71,7 +71,7 @@ exports.refreshToken = (req, res, next) => {
         const accessToken = jwt.sign({
           id,
           username
-        }, jwtSecret, { expiresIn: 900 });
+        }, jwtSecret, { expiresIn: 3600 });
         res.json({
           accessToken
         });

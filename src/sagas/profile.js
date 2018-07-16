@@ -120,6 +120,11 @@ function* deleteProfileTask(action) {
           id: action.payload.profileId
         });
         break;
+      case 'workExperience':
+        profile = yield call(api.deleteWorkExperienceProfile, {
+          id: action.payload.profileId
+        });
+        break;
       default:
         yield put(deleteProfileFailure('Something gone wrong'));
     }
