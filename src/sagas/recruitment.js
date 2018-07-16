@@ -37,7 +37,8 @@ export function* fetchRecruitmentTask() {
 
 export function* checkUserStatusTask(action) {
   try {
-    const object = yield call(api.checkUserStatus, action.payload.id);
+    const testDate = yield call(api.getTestDate, action.payload.id);
+    const object = yield call(api.checkUserStatus, action.payload.id, testDate);
     const today = (new Date()).getTime();
     const createdDay = new Date(object.latestActivatedTime).getTime();
     const lifetimes = object.activationLifetimes;

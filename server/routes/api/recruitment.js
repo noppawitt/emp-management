@@ -3,9 +3,9 @@ const RecruitmentController = require('../../controllers/RecruitmentController')
 
 router.get('/', RecruitmentController.fetchAllRecruitment);
 
-router.get('/checkUserStatus', RecruitmentController.checkUserStatus);
-
 router.get('/getTestDate', RecruitmentController.getTestDate);
+
+router.post('/checkUserStatus', RecruitmentController.checkUserStatus);
 
 router.post('/activateUser', RecruitmentController.activateUser);
 
