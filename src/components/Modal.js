@@ -13,7 +13,7 @@ const Modal = ({ header, buttonName, onClose, onClick, submitting, children, con
     <SUIModal.Header>
       {header}
     </SUIModal.Header>
-    <SUIModal.Content>
+    <SUIModal.Content scrolling>
       {children}
     </SUIModal.Content>
     <SUIModal.Actions>

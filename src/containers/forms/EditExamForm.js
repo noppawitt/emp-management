@@ -147,6 +147,7 @@ const EditExamForm = ({ handleSubmit, submitting, examType, exams, examCategory,
     <Field name="examType" as={Form.Select} component={Input} label="Exam Type" placeholder="-- Exam Type --" options={examTypeOptions} disabled={submitting} required />
     {examType === 'Choices' && <FieldArray name="choices" component={renderChoices} disabled={submitting} />}
     <Field hidden name="examId" as={Form.Input} component={Input} type="hidden" />
+    <br />
   </Form>
 );
 

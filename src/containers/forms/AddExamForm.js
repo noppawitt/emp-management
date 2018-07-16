@@ -149,6 +149,7 @@ const AddExamForm = ({ handleSubmit, submitting, examType, exams, examCategory }
     <ExamRichTextEditor quiz="" />
     <Field name="examType" as={Form.Select} component={Input} label="Exam Type" placeholder="-- Exam Type --" options={examTypeOptions} disabled={submitting} required />
     {examType === 'Choices' && <FieldArray name="choices" component={renderChoices} />}
+    <br />
   </Form>
 );
 
