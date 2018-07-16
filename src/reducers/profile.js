@@ -125,6 +125,7 @@ const profile = (state = initialState, action) => {
         edited:false,
         item: {currentPage: 0},
         confirmed: true,
+        saved: true,
         ...action.payload.profile
       };
     case actionTypes.PROFILE_UPDATE_FAILURE:
