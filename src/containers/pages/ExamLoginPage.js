@@ -6,16 +6,13 @@ import { examLoginRequest } from '../../actions/examAuth';
 
 const ExamLoginPage = ({ dispatch, message }) => {
   let id;
-  let password;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(examLoginRequest({
       id: id.value,
-      password: password.value,
     }));
     id.value = '';
-    password.value = '';
   };
 
   return (
@@ -47,15 +44,6 @@ const ExamLoginPage = ({ dispatch, message }) => {
                   </label>
                 </Form.Field>
                 <Form.Field>
-                  <label htmlFor="password">
-                    <input
-                      id="password"
-                      type="password"
-                      placeholder="password"
-                      style={{ borderRadius: '15px' }}
-                      ref={(node) => { password = node; }}
-                    />
-                  </label>
                   {message !== ' ' && <div style={{ color: 'red' }}><strong>{message}</strong></div>}
                   <br />
                   <Button primary type="submit">Submit</Button>

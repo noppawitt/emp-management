@@ -88,9 +88,8 @@ export function* finishExamTask(action) {
   try {
     const currentTime = moment();
     yield call(api.updateSubmittedTime, action.payload.id, currentTime, currentTime.format('YYYY-MM-DD'));
-    console.log('test2');
+    yield call(api.sendMailFinishExam, action.payload.id, currentTime.format('YYYY-MM-DD'));
     yield call(api.deActivate, action.payload.id, 'deactive');
-    console.log('test3');
     yield put(finishExamSuccess());
     yield put(logout());
   }
