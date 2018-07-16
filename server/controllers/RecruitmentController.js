@@ -10,9 +10,27 @@ exports.fetchAllRecruitment = (req, res, next) => {
 };
 
 exports.checkUserStatus = (req, res, next) => {
-  Recruitment.checkUserStatus(req.query.id)
-    .then((passwordStatusObject) => {
-      res.json(passwordStatusObject);
+  Recruitment.checkExamUser(req.body.id, req.body.testDate)
+    .then((retval) => {
+      if (retval === null) {
+        Recruitment.createExamUser(
+          req.body.id,
+          req.body.testDate,
+          moment(),
+          null,
+          0,
+          0,
+          null,
+          0,
+        )
+          .then()
+          .catch(next);
+      }
+      Recruitment.checkUserStatus(req.body.id)
+        .then((object) => {
+          res.json(object);
+        })
+        .catch(next);
     })
     .catch(next);
 };

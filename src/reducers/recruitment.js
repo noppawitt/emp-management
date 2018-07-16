@@ -71,7 +71,7 @@ const Recruitment = (state = initialState, action) => {
     case actionTypes.RECRUITMENT_CHECK_USER_STATUS_SUCCESS:
       return {
         ...state,
-        passwordObject: action.payload.passwordObject,
+        passwordObject: action.payload.object,
         isModalFetching: false,
       };
     case actionTypes.RECRUITMENT_CHECK_USER_STATUS_FAILURE:

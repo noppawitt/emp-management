@@ -252,8 +252,14 @@ api.fetchAllRecruitment = () => (
   callApi(`/api/recruitments`)
 );
 
-api.checkUserStatus = id => (
-  callApi(`/api/recruitments/checkUserStatus/?id=${id}`)
+api.checkUserStatus = (id, testDate) => (
+  callApi(`/api/recruitments/checkUserStatus/`, {
+    method: 'POST',
+    body: {
+      id,
+      testDate,
+    }
+  })
 );
 
 api.activateUser = (id, lifetimes, testDate) => (

@@ -77,10 +77,10 @@ export const checkUserStatusRequest = id => ({
   }
 });
 
-export const checkUserStatusSuccess = passwordObject => ({
+export const checkUserStatusSuccess = object => ({
   type: actionTypes.RECRUITMENT_CHECK_USER_STATUS_SUCCESS,
   payload: {
-    passwordObject,
+    object,
   }
 });
 
