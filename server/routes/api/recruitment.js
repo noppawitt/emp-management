@@ -3,11 +3,11 @@ const RecruitmentController = require('../../controllers/RecruitmentController')
 
 router.get('/', RecruitmentController.fetchAllRecruitment);
 
-router.get('/checkPasswordStatus', RecruitmentController.checkPasswordStatus);
+router.get('/checkUserStatus', RecruitmentController.checkUserStatus);
 
 router.get('/getTestDate', RecruitmentController.getTestDate);
 
-router.post('/activatePassword', RecruitmentController.activatePassword);
+router.post('/activateUser', RecruitmentController.activateUser);
 
 router.post('/uploadRandomExIdList', RecruitmentController.uploadRandomExIdList);
 

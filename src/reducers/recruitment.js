@@ -62,19 +62,19 @@ const Recruitment = (state = initialState, action) => {
         sortKey: action.payload.sortKey,
         direction: action.payload.direction
       };
-    case actionTypes.RECRUITMENT_CHECK_PASSWORD_STATUS_REQUEST:
+    case actionTypes.RECRUITMENT_CHECK_USER_STATUS_REQUEST:
       return {
         ...state,
         id: action.payload.id,
         isModalFetching: true,
       };
-    case actionTypes.RECRUITMENT_CHECK_PASSWORD_STATUS_SUCCESS:
+    case actionTypes.RECRUITMENT_CHECK_USER_STATUS_SUCCESS:
       return {
         ...state,
         passwordObject: action.payload.passwordObject,
         isModalFetching: false,
       };
-    case actionTypes.RECRUITMENT_CHECK_PASSWORD_STATUS_FAILURE:
+    case actionTypes.RECRUITMENT_CHECK_USER_STATUS_FAILURE:
       return {
         ...state,
         message: action.payload.message,

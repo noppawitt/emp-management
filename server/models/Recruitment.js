@@ -6,12 +6,29 @@ Recruitment.fetchAllRecruitment = () => (
   db.manyOrNone('SELECT * FROM recruitments')
 );
 
-Recruitment.checkPasswordStatus = id => (
-  db.oneOrNone('SELECT id, birthdate, latest_activated_password_time, activation_lifetimes FROM exam_users2 WHERE id = $1', [id])
+Recruitment.checkUserStatus = id => (
+  db.oneOrNone('SELECT id, latest_activated_time, activation_lifetimes FROM exam_users2 WHERE id = $1', [id])
 );
 
-Recruitment.activatePassword = (id, lifetimes, today) => (
-  db.oneOrNone('UPDATE exam_users2 SET activation_lifetimes = $2, latest_activated_password_time = $3 WHERE id = $1', [id, lifetimes, today])
+Recruitment.checkExamUser = (id, testDate) => (
+  db.oneOrNone('SELECT 1 FROM exam_users2 WHERE id = $1 AND test_date = $2', [id, testDate])
+);
+
+Recruitment.createExamUser = (id, testDate, createDate, updateDate, createUser, updateUser, latestActivatedTime, activationLifetimes) => (
+  db.none(
+    'INSERT INTO exam_users2'
+      + '(id, test_date, created_date, updated_date, created_user, updated_user, '
+      + 'latest_activated_time, activation_lifetimes, agreement_status) '
+      + 'VALUES ($1, $2, $3, $4, $5, $6, $7, $8 ,$9)',
+    [
+      id, testDate, createDate, updateDate, createUser, updateUser,
+      latestActivatedTime, activationLifetimes, 'Not Read'
+    ]
+  )
+);
+
+Recruitment.activateUser = (id, lifetimes, today) => (
+  db.oneOrNone('UPDATE exam_users2 SET activation_lifetimes = $2, latest_activated_time = $3 WHERE id = $1', [id, lifetimes, today])
 );
 
 Recruitment.uploadRandomExIdList = (randomExIdList, id, testDate) => (
