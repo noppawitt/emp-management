@@ -21,7 +21,7 @@ class AddSelfAssessment extends React.Component {
       <div>
         {this.props.fetching ? <Loader /> :
           <Modal
-            header={this.props.profile.selfInfo == null ? 'Create SelfAssessment':'View SelfAssessment'}
+            header={this.props.profile.selfInfo == null ? 'Create Self Assessment':'View Self Assessment'}
             onClose={()=>{this.props.onClose();this.props.clear();}}
             onClick={()=>this.props.onSave(this.props.item,(this.props.profile.self == null ? 'addSelfAssessment':'updateSelfAssessment'))}
             onSubmit={()=>this.props.onSubmit(null,'submitSelfAssessment')}
