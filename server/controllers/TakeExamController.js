@@ -1,4 +1,5 @@
 const TakeExam = require('../models/TakeExam');
+const mail = require('../mail');
 
 exports.fetchEPRList = (req, res, next) => {
   TakeExam.fetchEPRList(req.query.id)
@@ -101,7 +102,24 @@ exports.sendMail = (req, res, next) => {
   TakeExam.getName(req.body.id, req.body.currentTime)
     .then((name) => {
       console.log(name);
-      res.json('test');
+      const mailOptions = {
+        from: process.env.MAIL_USER,
+        to: 'bestmaxger@hotmail.com',
+        subject: '[Exam]' + name.firstName + ' ' + name.lastName + 'has already finished take exam.',
+        html: `<div>
+        <p>${name.firstName} ${name.lastName} has already finished take exam.</p>
+        <p>Please check the result in Playtorium HR site</p>
+        <div>`
+      };
+      mail.sendMail(mailOptions, (err, info) => {
+        if (err) {
+          console.log(err);
+        }
+        else {
+          console.log(info);
+        }
+      });
+      res.json('Send mail success!');
     })
     .catch(next);
 };
