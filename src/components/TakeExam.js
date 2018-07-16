@@ -115,7 +115,7 @@ const TakeExam = ({
                                 </h1>
                               </Grid.Column>
                               <Grid.Column width={6} style={{ textAlign: 'right' }}>
-                                <TakeExamTimer startTime={startTime} />
+                                {(startTime) ? <TakeExamTimer startTime={startTime} id={id} answerList={answerList} /> : <div>&nbsp;</div>}
                               </Grid.Column>
                             </Grid.Row>
                           </Grid>
@@ -230,12 +230,8 @@ TakeExam.propTypes = {
   onClickCategory: PropTypes.func.isRequired,
   categoryList: PropTypes.array.isRequired,
   saveStatus: PropTypes.string.isRequired,
-  startTime: PropTypes.instanceOf(moment),
+  startTime: PropTypes.instanceOf(moment).isRequired,
   onClickLogout: PropTypes.func.isRequired,
-};
-
-TakeExam.defaultProps = {
-  startTime: moment('00:00:00', 'HH:mm:ss')
 };
 
 export default TakeExam;

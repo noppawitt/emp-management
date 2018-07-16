@@ -30,8 +30,8 @@ TakeExam.fetchExamId = () => (
     + ' ORDER BY ex_category, ex_subcategory, ex_type')
 );
 
-TakeExam.fetchRandomExIdList = id => (
-  db.oneOrNone('SELECT random_ex_id_list FROM exam_users2 WHERE id = $1', [id])
+TakeExam.fetchRandomExIdList = (id, testDate) => (
+  db.oneOrNone('SELECT random_ex_id_list FROM exam_users2 WHERE id = $1 AND test_date = $2', [id, testDate])
 );
 
 TakeExam.fetchExamSpecifyId = idList => (
@@ -81,12 +81,6 @@ TakeExam.changeStatus = (id, status) => (
 
 TakeExam.expiredActivationLifetime = id => (
   db.oneOrNone('UPDATE exam_users2 SET activation_lifetimes = 0 WHERE id = $1', [id])
-);
-
-TakeExam.getTestDate = id => (
-  // refactor + change column when merge
-  // appointment > test_date that similar to interview_date (appointment)
-  db.one('SELECT appointment FROM recruitments WHERE citizen_id = $1', [id])
 );
 
 module.exports = TakeExam;

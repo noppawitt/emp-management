@@ -18,7 +18,9 @@ import api from '../services/api';
 
 export function* fetchTestExamTask(action) {
   try {
-    const randomExIdList = yield call(api.fetchRandomExIdList, action.payload.id); // <- error
+    const startTime = moment();
+
+    const randomExIdList = yield call(api.fetchRandomExIdList, action.payload.id, startTime.format('YYYY-MM-DD'));
     const examList = yield call(api.fetchExamSpecifyId, randomExIdList);
     const categoryList = [];
     const subCategoryList = [];
@@ -50,10 +52,8 @@ export function* fetchTestExamTask(action) {
     }
     yield put(fetchCategory(examAmountPerCategory));
     yield put(fetchSubCategory(examAmountPerSubCategory));
-    const testDate = yield call(api.getTakeExamTestDate, action.payload.id);
-    console.log('>>HERE', testDate);
-    const startTime = moment();
-    const tempProgressResult = yield call(api.checkProgress, action.payload.id, testDate, startTime);
+
+    const tempProgressResult = yield call(api.checkProgress, action.payload.id, startTime.format('YYYY-MM-DD'), startTime);
     const progressResult = [];
     if (tempProgressResult !== null) {
       for (let i = 0; i < tempProgressResult.answerList.length; i += 1) {
@@ -70,15 +70,12 @@ export function* fetchTestExamTask(action) {
 
 export function* uploadAnswerListTask(action) {
   try {
-    const testDate = yield call(api.getTakeExamTestDate, action.payload.id);
-    console.log('upload:', testDate);
-    const progress = yield call(api.uploadAnswer, action.payload.id, action.payload.answerList, testDate);
+    const progress = yield call(api.uploadAnswer, action.payload.id, action.payload.answerList, moment().format('YYYY-MM-DD'));
     yield put(uploadAnswerListSuccess(progress));
-    console.log('xxxx', action.payload.isLogoutRequest, 'xxxx');
-    if (action.payload.isLogoutRequest) {
+    if (action.payload.isEndExam) {
       yield put(finishExamRequest(action.payload.id));
     }
-    if (action.payload.isEndExam) {
+    if (action.payload.isLogoutRequest) {
       yield put(logout());
     }
   }
@@ -89,12 +86,13 @@ export function* uploadAnswerListTask(action) {
 
 export function* finishExamTask(action) {
   try {
-    const testDate = yield call(api.getTakeExamTestDate, action.payload.id);
-    console.log('finish', testDate);
-    yield call(api.updateSubmittedTime, action.payload.id, testDate);
+    const currentTime = moment();
+    yield call(api.updateSubmittedTime, action.payload.id, currentTime, currentTime.format('YYYY-MM-DD'));
+    console.log('test2');
     yield call(api.deActivate, action.payload.id, 'deactive');
-    localStorage.removeItem('agree');
+    console.log('test3');
     yield put(finishExamSuccess());
+    yield put(logout());
   }
   catch (error) {
     yield put(finishExamFailure(error));

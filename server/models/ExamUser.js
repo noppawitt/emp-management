@@ -24,7 +24,6 @@ ExamUser.create = (user, id) => (
 );
 
 ExamUser.findById = (id) => {
-  console.log(id, typeof id);
   return db.oneOrNone('SELECT * FROM exam_users2 WHERE id = $1 AND test_date = $2', [id, moment().format('YYYY-MM-DD')]);
 };
 

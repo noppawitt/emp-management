@@ -99,8 +99,7 @@ const Recruitment = ({
           </Table.Body>
         </Table>
       </Segment>
-    </Segment.Group>
-  );
+    </Segment.Group>);
 
 Recruitment.propTypes = {
   recruitments: PropTypes.array.isRequired,

@@ -17,7 +17,7 @@ exports.fetchExamId = (req, res, next) => {
 };
 
 exports.fetchRandomExIdList = (req, res, next) => {
-  TakeExam.fetchRandomExIdList(req.query.id)
+  TakeExam.fetchRandomExIdList(req.query.id, req.query.testDate.toString())
     .then((List) => {
       res.json(List);
     })
@@ -34,7 +34,6 @@ exports.fetchExamSpecifyId = (req, res, next) => {
 };
 
 exports.updateAnswer = (req, res, next) => {
-  console.log('????', req.body);
   const object = req.body;
   TakeExam.findUploadedAnswer(object.id, 'existing check', object.testDate)
     .then((isExist) => {
@@ -74,7 +73,6 @@ exports.findUploadedAnswer = (req, res, next) => {
 };
 
 exports.updateSubmittedTime = (req, res, next) => {
-  console.log('????', req.body);
   TakeExam.updateSubmittedTime(req.body.id, req.body.time, req.body.testDate)
     .then((retval) => {
       res.json(retval);
@@ -97,12 +95,4 @@ exports.deActivate = (req, res, next) => {
       })
       .catch(next);
   }
-};
-
-exports.getTestDate = (req, res, next) => {
-  TakeExam.getTestDate(req.query.id)
-    .then((testDate) => {
-      res.json(testDate.appointment);
-    })
-    .catch(next);
 };
