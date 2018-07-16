@@ -258,7 +258,7 @@ api.deleteAssetProfile = body => (
 
 api.deleteWorkExperienceProfile = body => (
   callApi('/api/work-experience', {
-    method: 'work-experience',
+    method: 'DELETE',
     body
   })
 );
