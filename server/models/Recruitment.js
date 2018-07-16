@@ -17,9 +17,9 @@ Recruitment.checkExamUser = (id, testDate) => (
 Recruitment.createExamUser = (id, testDate, createDate, updateDate, createUser, updateUser, latestActivatedTime, activationLifetimes) => (
   db.none(
     'INSERT INTO exam_users2'
-      + '(id, test_date, created_date, updated_date, created_user, updated_user, '
-      + 'latest_activated_time, activation_lifetimes, agreement_status) '
-      + 'VALUES ($1, $2, $3, $4, $5, $6, $7, $8 ,$9)',
+    + '(id, test_date, created_date, updated_date, created_user, updated_user, '
+    + 'latest_activated_time, activation_lifetimes, agreement_status) '
+    + 'VALUES ($1, $2, $3, $4, $5, $6, $7, $8 ,$9)',
     [
       id, testDate, createDate, updateDate, createUser, updateUser,
       latestActivatedTime, activationLifetimes, 'Not Read'
@@ -72,8 +72,11 @@ Recruitment.uploadResult = resultList => (
     const queryList = [];
     Object(resultList).map((eachObject) => {
       const aquery = t.none(
-        'INSERT INTO exam_result (cd_id, ex_id, test_date, ex_question, ex_choices, ex_type, cd_answer, point, status, ex_correct)'
-        + ' VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
+        ' INSERT INTO exam_result (cd_id, ex_id, test_date, ex_question, ex_choices, ex_type, cd_answer, point, status, ex_correct)'
+        + ' VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)'
+        + ' ON CONFLICT (cd_id, ex_id, test_date)'
+        + ' DO UPDATE SET ex_question = $4, ex_choices = $5, ex_type = $6, cd_answer = $7,'
+        + ' point = $8, status = $9, ex_correct = $10',
         [
           eachObject.cd_id,
           eachObject.ex_id,

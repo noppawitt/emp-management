@@ -101,7 +101,7 @@ export function* evaluateExamTask(action) {
     yield call(api.grading, action.payload.id, action.payload.testDate);
     const examList = yield call(api.fetchExam, action.payload.id, action.payload.testDate);
     console.log('>> fetchResult:', examList);
-    const retval = yield call(api.changeStatus(action.payload.id, 'Complete'));
+    const retval = yield call(api.changeStatus, action.payload.id, 'Complete');
     if (retval === 'OK') {
       yield put(fetchRecruitmentRequest());
     }

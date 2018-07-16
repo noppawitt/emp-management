@@ -91,15 +91,12 @@ exports.grading = (req, res, next) => {
   // fetch a random-ed id list
   Recruitment.fetchRandomExIdList(req.body.id, req.body.testDate)
     .then((object) => {
-      // send random-ed list to get an exam list
       Recruitment.fetchExamSpecifyId(object.randomExIdList)
         .then((examQuery) => {
           // console.log('EXAM QUERY:', examQuery);
-          // fetch candidate answer
           Recruitment.fetchCandidateAnswer(req.body.id, req.body.testDate)
             .then((answerQuery) => {
               const resultList = [];
-              // foreach exId let compare the answer
               object.randomExIdList.map((exId) => {
                 Object(examQuery).map((eachExam) => {
                   if (eachExam.exId === exId) {
@@ -149,8 +146,9 @@ exports.grading = (req, res, next) => {
                 });
               });
               Recruitment.uploadResult(resultList)
-                .then(() => {
-                  res.json('OK');
+                .then((retval) => {
+                  console.log(retval);
+                  res.json(retval === null ? 'OK' : 'Something wrong');
                 })
                 .catch(next);
             })
@@ -174,7 +172,6 @@ exports.changeStatus = (req, res, next) => {
     .then(() => {
       Recruitment.checkStatus(req.body.id)
         .then((object) => {
-          console.log(object.status);
           res.json(object.status === req.body.status ? 'OK' : 'Something Wrong');
         })
         .catch(next);
