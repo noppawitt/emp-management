@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Segment, Button, Icon, Table, Menu, Grid, Select } from 'semantic-ui-react';
 import PageHeader from './PageHeader';
 import ProgressBar from './ProgressBar';
-import { getMonthOptions, getYearOptions } from  '../utils/options';
+import { getMonthOptions, getYearOptions } from '../utils/options';
 
 const Leave = ({ leaves, leaveHistory, onAddClick, onCancelClick, userId, fetchLeave, year, month }) => (
   <div>

@@ -35,9 +35,9 @@ export const getFormInitialValues = (state) => {
         if (i === 0 && tasks.length === 1) { remark.push(`*you heve ${task.projectId} ${task.timeIn}-${task.timeOut} on this day`); }
         else if (i === 0 && tasks.length !== 1) { remark.push(`*you heve ${task.projectId} ${task.timeIn}-${task.timeOut}`); }
         else if (i === tasks.length - 1) { remark.push(`*${task.projectId} ${task.timeIn}-${task.timeOut} on this day`); }
-        else { remark.push(`*${task.projectId} ${task.timeIn}-${task.timeOut}`);
+        else {
+          remark.push(`*${task.projectId} ${task.timeIn}-${task.timeOut}`);
         }
-
       });
       timesheets.push({
         userId: state.auth.id,
