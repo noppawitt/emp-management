@@ -13,7 +13,7 @@ import {
 import { closeModal } from '../actions/modal';
 import api from '../services/api';
 
-export function* fetchProjectDetailTask(action) {
+function* fetchProjectDetailTask(action) {
   try {
     const projectDetail = yield call(api.fetchProjectDetail, action.payload.projectId);
     yield put(fetchProjectDetailSuccess(projectDetail));
@@ -22,8 +22,7 @@ export function* fetchProjectDetailTask(action) {
     yield put(fetchProjectDetailFailure(error));
   }
 }
-
-export function* updateProjectDetailTask(action) {
+function* updateProjectDetailTask(action) {
   try {
     const projectDetail = yield call(api.updateProjectDetail, { project: action.payload.form });
     yield put(updateProjectDetailSuccess(projectDetail));
@@ -36,7 +35,7 @@ export function* updateProjectDetailTask(action) {
   }
 }
 
-export function* createMemberTask(action) {
+function* createMemberTask(action) {
   try {
     const members = yield call(api.createMember, { hasProject: action.payload.form });
     yield put(createMemberSuccess(members));
@@ -48,8 +47,7 @@ export function* createMemberTask(action) {
     action.payload.reject();
   }
 }
-
-export function* deleteMemberTask(action) {
+function* deleteMemberTask(action) {
   try {
     const members = yield call(api.deleteMember, {
       userId: action.payload.userId,
@@ -63,19 +61,19 @@ export function* deleteMemberTask(action) {
   }
 }
 
-export function* watchFetchProjectDetailRequest() {
+function* watchFetchProjectDetailRequest() {
   yield takeEvery(actionTypes.PROJECT_DETAIL_FETCH_REQUEST, fetchProjectDetailTask);
 }
 
-export function* watchUpdateProjectDetailRequest() {
+function* watchUpdateProjectDetailRequest() {
   yield takeEvery(actionTypes.PROJECT_DETAIL_UPDATE_REQUEST, updateProjectDetailTask);
 }
 
-export function* watchCreateMemberRequest() {
+function* watchCreateMemberRequest() {
   yield takeEvery(actionTypes.MEMBER_CREATE_REQUEST, createMemberTask);
 }
 
-export function* watchDeleteMemberRequest() {
+function* watchDeleteMemberRequest() {
   yield takeEvery(actionTypes.MEMBER_DELETE_REQUEST, deleteMemberTask);
 }
 

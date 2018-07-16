@@ -3,7 +3,7 @@ import * as actionTypes from '../constants/actionTypes';
 import { fetchAccessControlSuccess, fetchAccessControlFailure } from '../actions/accessControl';
 import api from '../services/api';
 
-export function* fetchAccessControlTask() {
+function* fetchAccessControlTask() {
   try {
     const accessControl = yield call(api.fetchAccessControl);
     yield put(fetchAccessControlSuccess(accessControl));
@@ -13,7 +13,7 @@ export function* fetchAccessControlTask() {
   }
 }
 
-export function* watchFetchAccessControlTask() {
+function* watchFetchAccessControlTask() {
   yield takeLatest(actionTypes.ACCESS_CONTROL_FETCH_REQUEST, fetchAccessControlTask);
 }
 

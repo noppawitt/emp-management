@@ -1,10 +1,11 @@
-const token = localStorage.getItem('token');
+let token;
 
 const callApi = (endpoint, request) => {
   if (request && request.body) {
     request.body = request.body instanceof FormData ? request.body : JSON.stringify(request.body);
   }
 
+  token = localStorage.getItem('accessToken');
   const headers = {
     Authorization: `Bearer ${token}`,
     Accept: 'application/json',
@@ -30,6 +31,8 @@ const download = (endpoint, request) => {
   if (request && request.body) {
     request.body = JSON.stringify(request.body);
   }
+
+  token = localStorage.getItem('accessToken');
 
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -58,6 +61,13 @@ api.login = form => (
   callApi('/auth/login', {
     method: 'POST',
     body: form
+  })
+);
+
+api.refreshToken = body => (
+  callApi('/auth/token', {
+    method: 'POST',
+    body
   })
 );
 
@@ -242,6 +252,13 @@ api.deleteCertificateProfile = body => (
 api.deleteAssetProfile = body => (
   callApi('/api/has-assets', {
     method: 'DELETE',
+    body
+  })
+);
+
+api.deleteWorkExperienceProfile = body => (
+  callApi('/api/work-experience', {
+    method: 'work-experience',
     body
   })
 );

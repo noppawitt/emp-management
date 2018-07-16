@@ -12,8 +12,8 @@ import { fetchAccessControlRequest } from './actions/accessControl';
 
 const store = configureStore();
 
-store.dispatch(fetchMasterTableRequest());
-store.dispatch(fetchAccessControlRequest());
+// store.dispatch(fetchMasterTableRequest());
+// store.dispatch(fetchAccessControlRequest());
 
 ReactDOM.render(
   <Provider store={store}>
