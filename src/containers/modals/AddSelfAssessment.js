@@ -24,7 +24,7 @@ class AddSelfAssessment extends React.Component {
             header={this.props.profile.selfInfo == null ? 'Create Self Assessment':'View Self Assessment'}
             onClose={()=>{this.props.onClose();this.props.clear();}}
             onClick={()=>this.props.onSave(this.props.item,(this.props.profile.self == null ? 'addSelfAssessment':'updateSelfAssessment'))}
-            onSubmit={()=>this.props.onSubmit(null,'submitSelfAssessment')}
+            onSubmit={()=>this.props.onSubmit(this.props.item,'submitSelfAssessment')}
             submit={true}
             submitting={this.props.submitting}
             size="large"

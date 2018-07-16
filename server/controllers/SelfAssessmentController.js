@@ -1,4 +1,6 @@
 const SelfAssessment = require('../models/SelfAssessment')
+const EmployeeInfo = require('../models/EmployeeInfo')
+const mail = require('../mail');
 
 exports.check = (req,res,next) => {
   console.log('check self');
@@ -43,6 +45,26 @@ exports.update = (req,res,next) => {
 }
 
 exports.submit = (req,res,next) => {
+  EmployeeInfo.findById(req.user.id)
+  .then((empInfo) => {
+    const mailOptions = {
+      from: 'i.plas.sa.tic@gmail.com',
+      to: 'ruby.pwn@hotmail.com',
+      subject: 'Probation',
+      html:
+        `
+          <p>SelfAssessment of ${empInfo.firstName} ${empInfo.lastName} already submitted</p>
+        `
+    };
+    mail.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.log(err);
+      }
+      else {
+        console.log(info);
+      }
+    });
+  })
   SelfAssessment.submitSelfAssessment(req.user.id)
     .then(()=>{
       SelfAssessment.checkExist(req.user.id)

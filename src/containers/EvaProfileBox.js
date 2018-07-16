@@ -83,13 +83,13 @@ const EvaProfileBox = ({performanceProfile, evaProfile, selfProfile, openProbati
                 evaProfile.length!=0 && type=='admin' && evaProfile[0].passPro==false && evaProfile[0].continued==true && evaProfile[0].mdSignDate!=null ? 'green' : 'blue'
               }
             >
-              <Dropdown trigger={AngleDownButton} options={optionsPro} disabled={(type!='admin' && evaProfile.length==0) || !selfProfile}/>
+              <Dropdown trigger={AngleDownButton} options={optionsPro} disabled={(type!='admin' && evaProfile.length==0) || !selfProfile || !selfProfile.submited}/>
               <Button onClick={() => {
                   if(!(evaProfile.length==0 && type=='admin') && !(evaProfile.length!=0 && type=='admin' && evaProfile[0].passPro==false && evaProfile[0].continued==true && evaProfile[0].mdSignDate!=null))
                     fetchProbation(profileId,evaProfile[0].probationId);
                   openProbationModal();}
                 }
-                disabled={(type!='admin' && evaProfile.length==0) || !selfProfile}>
+                disabled={(type!='admin' && evaProfile.length==0) || !selfProfile || !selfProfile.submited}>
                 {
                   evaProfile.length==0 && type=='admin' ? 'Create Probation':
                   evaProfile.length!=0 && type=='admin' && evaProfile[0].passPro==false && evaProfile[0].continued==true && evaProfile[0].mdSignDate!=null ? 'Create Continue Probation' : 'Probation'

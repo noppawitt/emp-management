@@ -47,7 +47,7 @@ class ConfirmModal extends React.Component{
             <Button color='red'  onClick={this.closeModal}>
               <Icon name='remove' /> No
             </Button>
-            <Button onClick={this.props.onClickHandle} color='green' loading={this.props.submitting}>
+            <Button onClick={this.props.onClickHandle} color='green' loading={this.props.submitting} disabled={this.props.submitting}>
               <Icon name='checkmark' /> Yes
             </Button>
           </Modal.Actions>
