@@ -1,32 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Modal as SUIModal } from 'semantic-ui-react';
 import { closeModal } from '../../actions/modal';
-import Modal from '../../components/Modal';
 import ResultForm from '../forms/ResultForm';
 
-const ViewResultModal = ({
-  id,
-  onSave,
-  onClose,
-}) => (
-  <Modal
-    header={'View Result :'.concat(id)}
-    buttonName="OK"
-    onSave={onSave}
+const ViewResultModal = ({ id, appointment, onClose, }) => (
+  <SUIModal
+    dimmer="blurring"
+    size="fullscreen"
+    closeIcon
+    open
     onClose={onClose}
-    id={id}
   >
-    Hello, {id}!
-    <ResultForm
-      id={id}
-    />
-  </Modal>
+    <SUIModal.Header>
+      Exam result of ID: {id} (on {appointment})
+    </SUIModal.Header>
+    <SUIModal.Content scrolling>
+      <ResultForm id={id} />
+    </SUIModal.Content>
+  </SUIModal>
 );
 
 ViewResultModal.propTypes = {
   id: PropTypes.string.isRequired,
-  onSave: PropTypes.func.isRequired,
+  appointment: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
@@ -35,8 +33,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  // edit save button function!
-  onSave: () => dispatch(),
   onClose: () => dispatch(closeModal()),
 });
 

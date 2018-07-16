@@ -11,7 +11,7 @@ const actionButtonController = (status, id, onClickActivate, onClickGrade, onCli
     case 'Pending':
       return <Button onClick={() => onClickActivate(id)} disabled={appointment !== testDate} fluid primary>Activate</Button>;
     case 'Complete':
-      return <Button onClick={() => onClickViewResult(id)} fluid primary positive>View Result</Button>;
+      return <Button onClick={() => onClickViewResult(id, appointment)} fluid primary positive>View Result</Button>;
     case 'In Progress':
       return <Button fluid disabled>Pending</Button>;
     default:

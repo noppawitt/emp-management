@@ -107,10 +107,7 @@ const mapDispatchToProps = dispatch => ({
   ),
   // build & fix Grade function
   onClickGrade: (id, testDate) => dispatch(evaluateExam(id, testDate)),
-  onClickViewResult: id => compose(
-    dispatch(),
-    dispatch(openModal(modalNames.VIEW_RESULT, { id })),
-  ),
+  onClickViewResult: (id, appointment) => dispatch(openModal(modalNames.VIEW_RESULT, { id, appointment })),
 });
 
 const enhance = compose(
