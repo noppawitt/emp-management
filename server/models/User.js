@@ -113,8 +113,12 @@ User.findByName = (firstName, lastName) => (
   db.oneOrNone('SELECT * FROM employee_info WHERE first_name = $1 AND last_name = $2', [firstName, lastName])
 );
 
-User.hasRefreshToken = refreshToken => (
-  db.oneOrNone('SELECT refresh_token FROM users WHERE refresh_token = $1', [refreshToken])
+User.getRefreshToken = userId => (
+  db.oneOrNone('SELECT refresh_token FROM users WHERE id = $1', [userId])
+);
+
+User.updateRefreshToken = (userId, refreshToken) => (
+  db.none('UPDATE users SET refresh_token = $1 WHERE id = $2', [refreshToken, userId])
 );
 
 // User.createAdmin = user => (

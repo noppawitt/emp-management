@@ -1,10 +1,11 @@
-const token = localStorage.getItem('accessToken');
+let token;
 
 const callApi = (endpoint, request) => {
   if (request && request.body) {
     request.body = request.body instanceof FormData ? request.body : JSON.stringify(request.body);
   }
 
+  token = localStorage.getItem('accessToken');
   const headers = {
     Authorization: `Bearer ${token}`,
     Accept: 'application/json',
@@ -30,6 +31,8 @@ const download = (endpoint, request) => {
   if (request && request.body) {
     request.body = JSON.stringify(request.body);
   }
+
+  token = localStorage.getItem('accessToken');
 
   const headers = {
     Authorization: `Bearer ${token}`,

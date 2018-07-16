@@ -12,16 +12,19 @@ exports.signin = (req, res, next) => {
           const accessToken = jwt.sign({
             id: user.id,
             username: user.username
-          }, jwtSecret, { expiresIn: 60 });
+          }, jwtSecret, { expiresIn: 900 });
           const refreshToken = jwt.sign({
-            id: user.id
-          }, jwtSecret, { expiresIn: '15d' });
-          res.json({
             id: user.id,
-            username: user.username,
-            accessToken,
-            refreshToken
-          });
+            username: user.username
+          }, jwtSecret);
+          User.updateRefreshToken(user.id, refreshToken)
+            .then(() => res.json({
+              id: user.id,
+              username: user.username,
+              accessToken,
+              refreshToken
+            }))
+            .catch(next);
         }
         else {
           const err = new Error('Incorrect password');
@@ -61,22 +64,21 @@ exports.signup = (req, res, next) => {
 
 exports.refreshToken = (req, res, next) => {
   const { refreshToken } = req.body;
-  User.getRefreshToken(refreshToken)
-    .then((user) => {
-      if (user.refreshToken) {
-        const token = jwt.sign({
-          id: user.id,
-          username: user.username
-        }, jwtSecret);
+  const { id, username } = jwt.decode(refreshToken);
+  User.getRefreshToken(id)
+    .then((data) => {
+      if (data.refreshToken === refreshToken) {
+        const accessToken = jwt.sign({
+          id,
+          username
+        }, jwtSecret, { expiresIn: 900 });
         res.json({
-          id: user.id,
-          username: user.username,
-          token
+          accessToken
         });
       }
       else {
         res.status(401).json({
-          message: `Invalid Access Token.`
+          message: 'Invalid refresh token'
         });
       }
     })
