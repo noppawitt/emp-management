@@ -1,3 +1,4 @@
+import moment from 'moment';
 import * as actionTypes from '../constants/actionTypes';
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   progressResult: [],
   saveStatus: ' ',
   testDate: 'YYYY-MM-DD',
+  today: '',
 };
 
 const TakeExam = (state = initialState, action) => {
@@ -48,7 +50,8 @@ const TakeExam = (state = initialState, action) => {
         pickedAnswer: (state.progressResult === null
           || state.progressResult.length === 0) ?
           '' : state.progressResult[0].answer,
-        startTime: action.payload.startTime
+        startTime: action.payload.startTime,
+        today: moment().format('YYYY-MM-DD'),
       };
     }
     case actionTypes.TAKE_EXAM_FETCH_FAILURE:

@@ -290,18 +290,8 @@ api.getTestDate = id => (
 
 // Recruitment : View Result Part
 
-api.grading = (id, testDate) => (
-  callApi(`/api/recruitments/grading/`, {
-    method: 'POST',
-    body: {
-      id,
-      testDate,
-    }
-  })
-);
-
-api.fetchExam = (id, testDate) => (
-  callApi(`/api/recruitments/fetchExam/`, {
+api.fetchResultExam = (id, testDate) => (
+  callApi(`/api/recruitments/fetchResultExam`, {
     method: 'POST',
     body: {
       id,
@@ -426,16 +416,17 @@ api.checkProgress = (id, testDate, startTime) => (
   })
 );
 
-api.uploadAnswer = (id, answerList, testDate) => (
-  callApi(`/api/takeExam/uploadAnswer/`, {
+api.uploadAnswer = (id, answerList, testDate) => {
+  console.log(testDate);
+  return callApi(`/api/takeExam/uploadAnswer/`, {
     method: 'POST',
     body: {
       id,
       answerList,
       testDate,
     }
-  })
-);
+  });
+};
 
 api.updateSubmittedTime = (id, time, testDate) => (
   callApi(`/api/takeExam/updateSubmittedTime`, {
@@ -454,6 +445,16 @@ api.deActivate = (id, status) => (
     body: {
       id,
       status,
+    }
+  })
+);
+
+api.grading = (id, testDate) => (
+  callApi(`/api/takeExam/grading/`, {
+    method: 'POST',
+    body: {
+      id,
+      testDate,
     }
   })
 );

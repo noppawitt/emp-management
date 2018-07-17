@@ -80,15 +80,19 @@ export const onInputTextAreaAnswer = (text, currentActivePage, exId) => ({
   },
 });
 
-export const uploadAnswerListRequest = (id, answerList, isLogoutRequest, isEndExam) => ({
-  type: actionTypes.TAKE_EXAM_UPLOAD_REQUEST,
-  payload: {
-    id,
-    answerList,
-    isLogoutRequest,
-    isEndExam,
-  }
-});
+export const uploadAnswerListRequest = (id, answerList, isLogoutRequest, isEndExam, testDate) => {
+  console.log('ACTION', testDate);
+  return {
+    type: actionTypes.TAKE_EXAM_UPLOAD_REQUEST,
+    payload: {
+      id,
+      answerList,
+      isLogoutRequest,
+      isEndExam,
+      testDate,
+    }
+  };
+};
 
 export const uploadAnswerListSuccess = progress => ({
   type: actionTypes.TAKE_EXAM_UPLOAD_SUCCESS,
