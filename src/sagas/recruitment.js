@@ -162,11 +162,11 @@ export function* fetchGradingTask(action) {
 export function* viewResultTask(action) {
   try {
     const resultList = yield call(api.fetchGradingExam, action.payload.id, action.payload.testDate);
-    // const categoryListRaw = [];
-    // for (let i = 0; i < resultList.length; i += 1) {
-    //   categoryListRaw.push(resultList.exCategory);
-    // }
-    // const categoryList = [...new Set(categoryListRaw)];
+    const categoryListRaw = [];
+    for (let i = 0; i < resultList.length; i += 1) {
+      categoryListRaw.push(resultList[i].exCategory);
+    }
+    const categoryList = [...new Set(categoryListRaw)];
     yield put(openModal(modalNames.VIEW_RESULT, { id: action.payload.id, testDate: action.payload.testDate, resultList, categoryList }));
   }
   catch (error) {
