@@ -42,8 +42,28 @@ Recruitment.getTestDate = id => (
 );
 
 // Recruitment : View Result part
+// 456 refactor
+// exCorrect , exAnswer for more clear-&-clean-ness
+// maybe ex_choices or ex_choice too
 Recruitment.fetchGradingExam = (id, testDate) => (
-  db.manyOrNone('SELECT * FROM exam_result WHERE cd_id = $1 AND test_date = $2', [id, testDate])
+  db.manyOrNone(
+    'SELECT'
+    + ' exam_result.cd_id AS cd_id,'
+    + ' exam_result.ex_id AS ex_id,'
+    + ' exam_result.test_date AS test_date,'
+    + ' exam_result.cd_answer AS cd_answer,'
+    + ' exam_result.point AS point,'
+    + ' exam_result.status AS status,'
+    + ' exams.ex_type AS ex_type,'
+    + ' exams.ex_choice AS ex_choices,'
+    + ' exams.ex_answer AS ex_correct,'
+    + ' exams.ex_question AS ex_question'
+    + ' FROM exam_result, exams'
+    + ' WHERE exam_result.ex_id = exams.ex_id'
+    + ' AND exam_result.cd_id = $1'
+    + ' AND exam_result.test_date = $2',
+    [id, testDate]
+  )
 );
 
 Recruitment.changeStatus = (id, status) => (

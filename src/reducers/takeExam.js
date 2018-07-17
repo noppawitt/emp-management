@@ -32,6 +32,7 @@ const TakeExam = (state = initialState, action) => {
       };
     case actionTypes.TAKE_EXAM_FETCH_SUCCESS: {
       const initialAnswerList = [];
+      // 123
       for (let i = 0; i < action.payload.examList.length; i += 1) {
         initialAnswerList.push({ answer: [], question: action.payload.examList[i].exId });
       }
@@ -76,6 +77,7 @@ const TakeExam = (state = initialState, action) => {
         currentActivePage: action.payload.value,
       };
     case actionTypes.TAKE_EXAM_ON_PICK_RADIO: {
+      // 123
       const tempAns = state.answerList.slice();
       for (let i = 0; i < tempAns.length; i += 1) {
         if (tempAns[i].question === action.payload.exId) {
@@ -88,6 +90,7 @@ const TakeExam = (state = initialState, action) => {
       };
     }
     case actionTypes.TAKE_EXAM_ON_PICK_CHECKBOX: {
+      // 123
       const tempAns = state.answerList.slice();
       for (let i = 0; i < tempAns.length; i += 1) {
         if (tempAns[i].question === action.payload.exId) {
@@ -101,16 +104,16 @@ const TakeExam = (state = initialState, action) => {
       };
     }
     case actionTypes.TAKE_EXAM_ON_INPUT_TEXTAREA: {
+      // 123
       const tempAns = [...state.answerList].slice();
       for (let i = 0; i < tempAns.length; i += 1) {
         if (tempAns[i].question === action.payload.exId) {
           tempAns[i].answer = [action.payload.text];
         }
       }
-
       return {
         ...state,
-        answerList: tempAns
+        answerList: tempAns,
       };
     }
     case actionTypes.TAKE_EXAM_UPLOAD_REQUEST:
@@ -171,6 +174,7 @@ const TakeExam = (state = initialState, action) => {
         currentActivePage: 1,
         activeCategory: '',
         categoryList: [],
+        // 123
         answerList: [],
         progressResult: [],
         saveStatus: ' ',

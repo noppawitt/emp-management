@@ -59,7 +59,7 @@ const showAnswerText = (exId, pickedAnswer) => {
 };
 
 const GradingForm = ({
-  gradingId,
+  // gradingId,
   isFetching,
   gradingList,
   currentModalActivePage,
@@ -154,7 +154,7 @@ const GradingForm = ({
 
 GradingForm.propTypes = {
   isFetching: PropTypes.bool.isRequired,
-  gradingId: PropTypes.string.isRequired,
+  // gradingId: PropTypes.string.isRequired,
   gradingList: PropTypes.array.isRequired,
   currentModalActivePage: PropTypes.string.isRequired,
   onPageChange: PropTypes.func.isRequired,

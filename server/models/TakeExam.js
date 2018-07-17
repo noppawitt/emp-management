@@ -68,22 +68,22 @@ TakeExam.uploadResult = resultList => (
     const queryList = [];
     Object(resultList).map((eachObject) => {
       const aquery = t.none(
-        ' INSERT INTO exam_result (cd_id, ex_id, test_date, ex_question, ex_choices, ex_type, cd_answer, point, status, ex_correct)'
-        + ' VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)'
+        ' INSERT INTO exam_result (cd_id, ex_id, test_date, cd_answer, point, status)'
+        + ' VALUES ($1, $2, $3, $4, $5, $6)'
         + ' ON CONFLICT (cd_id, ex_id, test_date)'
-        + ' DO UPDATE SET ex_question = $4, ex_choices = $5, ex_type = $6, cd_answer = $7,'
-        + ' point = $8, status = $9, ex_correct = $10',
+        + ' DO UPDATE SET cd_answer = $4, point = $5, status = $6',
         [
           eachObject.cd_id,
           eachObject.ex_id,
           eachObject.test_date,
-          eachObject.ex_question,
-          eachObject.ex_choices,
-          eachObject.ex_type,
+          // eachObject.ex_question,
+          // eachObject.ex_choices,
+          // eachObject.ex_type,
           eachObject.cd_answer,
           eachObject.point,
           eachObject.status,
-          eachObject.ex_correct]
+          // eachObject.ex_correct
+        ]
       );
       queryList.push(aquery);
     });

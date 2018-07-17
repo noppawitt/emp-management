@@ -18,7 +18,7 @@ exports.fetchExamId = (req, res, next) => {
 };
 
 exports.fetchRandomExIdList = (req, res, next) => {
-  TakeExam.fetchRandomExIdList(req.query.id, req.query.testDate.toString())
+  TakeExam.fetchRandomExIdList(req.body.id, req.body.testDate.toString())
     .then((List) => {
       res.json(List);
     })
@@ -144,11 +144,11 @@ exports.grading = (req, res, next) => {
                       ex_id: exId,
                       cd_id: answerQuery[0].id,
                       test_date: req.body.testDate,
-                      ex_question: eachExam.exQuestion,
-                      ex_choices: eachExam.exType === 'Choices' ? eachExam.exChoice : [],
+                      // ex_question: eachExam.exQuestion,
+                      // ex_choices: eachExam.exType === 'Choices' ? eachExam.exChoice : [],
                       cd_answer: tempAnswerList,
-                      ex_correct: eachExam.exAnswer,
-                      ex_type: eachExam.exType,
+                      // ex_correct: eachExam.exAnswer,
+                      // ex_type: eachExam.exType,
                       point,
                       status,
                     });
@@ -176,11 +176,15 @@ exports.sendMail = (req, res, next) => {
       let messageStatus = '<p>You can see the result in Playtorium HR site.</p>';
       if (req.body.needCheck) {
         messageStatus = '<p style="color: red">There are some questions that haven\'t checked yet. Please check those questions in Playtorium HR site.</p>';
-      }      
+      }
       const mailOptions = {
         from: process.env.MAIL_USER,
         to: 'bestmaxger@hotmail.com',
-        subject: '[Exam] ' + name.firstName + ' ' + name.lastName + ' has already finished take exam.',
+        subject: '[Exam] '
+          .concat(name.firstName)
+          .concat(' ')
+          .concat(name.lastName)
+          .concat(' has already finished take exam.'),
         html: `<div>
         <p>${name.firstName} ${name.lastName} has already finished take exam.</p>
         ${messageStatus}

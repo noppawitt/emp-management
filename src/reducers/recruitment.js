@@ -130,7 +130,7 @@ const Recruitment = (state = initialState, action) => {
         // nothing to update state
       };
     case actionTypes.GRADING_FETCH_SUCCESS:
-      console.log('>>>', action.payload.resultList);
+      console.log('>>>', action.payload.gradingList);
       return {
         ...state,
         gradingId: action.payload.gradingId,

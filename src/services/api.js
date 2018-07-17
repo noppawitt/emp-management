@@ -247,7 +247,7 @@ api.fetchTimesheet = id => (
 );
 
 // Recruitment
-
+// 456
 api.fetchAllRecruitment = () => (
   callApi(`/api/recruitments`)
 );
@@ -262,24 +262,24 @@ api.checkUserStatus = (id, testDate) => (
   })
 );
 
-api.activateUser = (id, lifetimes, testDate) => (
+api.activateUser = (id, testDate, lifetimes) => (
   callApi(`/api/recruitments/activateUser/`, {
     method: 'POST',
     body: {
       id,
-      lifetimes,
       testDate,
+      lifetimes,
     }
   })
 );
 
-api.uploadRandomExIdList = (randomExIdList, id, testDate) => (
+api.uploadRandomExIdList = (id, testDate, randomExIdList) => (
   callApi(`/api/recruitments/uploadRandomExIdList/`, {
     method: 'POST',
     body: {
-      randomExIdList,
       id,
       testDate,
+      randomExIdList,
     }
   })
 );
@@ -288,7 +288,7 @@ api.getTestDate = id => (
   callApi(`/api/recruitments/getTestDate/?id=${id}`)
 );
 
-// Recruitment : View Result Part
+// Recruitment : Grading Part
 
 api.fetchGradingExam = (id, testDate) => (
   callApi(`/api/recruitments/fetchGradingExam`, {
@@ -364,7 +364,7 @@ api.examLogin = form => (
 );
 
 // Take Exam Agreement
-
+// 456
 api.startExam = body => (
   callApi('/api/takeexamagreement/acceptagreement', {
     method: 'PUT',
@@ -394,7 +394,13 @@ api.fetchExamId = () => (
 );
 
 api.fetchRandomExIdList = (id, testDate) => (
-  callApi(`/api/takeExam/fetchRandomExIdList/?id=${id}&testDate=${testDate}`)
+  callApi(`/api/takeExam/fetchRandomExIdList/`, {
+    method: 'POST',
+    body: {
+      id,
+      testDate,
+    }
+  })
 );
 
 api.fetchExamSpecifyId = idList => (
