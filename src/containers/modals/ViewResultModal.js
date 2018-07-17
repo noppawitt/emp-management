@@ -1,39 +1,56 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Modal as SUIModal } from 'semantic-ui-react';
+import { Modal as SUIModal, Grid, Menu } from 'semantic-ui-react';
 import { closeModal } from '../../actions/modal';
-import ResultForm from '../forms/ResultForm';
 
-const ViewResultModal = ({ id, appointment, onClose, }) => (
-  <SUIModal
-    dimmer="blurring"
-    size="fullscreen"
-    closeIcon
-    open
-    onClose={onClose}
-  >
-    <SUIModal.Header>
-      Exam result of ID: {id} (on {appointment})
-    </SUIModal.Header>
-    <SUIModal.Content scrolling>
-      <ResultForm id={id} />
-    </SUIModal.Content>
-  </SUIModal>
-);
+class ViewResultModal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { currentCategory: 'overall' };
+    this.handleCategory = this.handleCategory.bind(this);
+  }
 
-ViewResultModal.propTypes = {
-  id: PropTypes.string.isRequired,
-  appointment: PropTypes.string.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
+  handleCategory(e, { name }) {
+    this.setState({ currentCategory: name });
+  }
 
-const mapStateToProps = state => ({
-  modalName: state.modal.name,
-});
+  render() {
+    return (
+      <SUIModal
+        dimmer="blurring"
+        size="large"
+        closeIcon
+        open
+        onClose={this.props.onClose}
+      >
+        <SUIModal.Header>
+          Exam result of ID: {this.props.id} (on {this.props.testDate})
+        </SUIModal.Header>
+        <SUIModal.Content scrolling>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column width={4}>
+                <Menu vertical color="teal">
+                  <Menu.Item name="overall" active={this.state.currentCategory === 'overall'} onClick={this.handleCategory}>
+                    Overall
+                  </Menu.Item>
+                  <Menu.Item>
+                    <Menu.Header>Category</Menu.Header>
+                  </Menu.Item>
+                </Menu>
+              </Grid.Column>
+              <Grid.Column width={12}>
+                Test2
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </SUIModal.Content>
+      </SUIModal>);
+  }
+}
 
 const mapDispatchToProps = dispatch => ({
   onClose: () => dispatch(closeModal()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ViewResultModal);
+export default connect(null, mapDispatchToProps)(ViewResultModal);

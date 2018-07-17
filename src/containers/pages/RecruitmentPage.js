@@ -10,6 +10,7 @@ import {
   filterEndDateRecruitment,
   checkUserStatusRequest,
   fetchGradingRequest,
+  viewResult,
 } from '../../actions/recruitment';
 import Recruitment from '../../components/Recruitment';
 import Loader from '../../components/Loader';
@@ -107,7 +108,7 @@ const mapDispatchToProps = dispatch => ({
   ),
   // build & fix Grade function
   onClickGrade: (id, testDate) => dispatch(fetchGradingRequest(id, testDate)),
-  onClickViewResult: (id, appointment) => dispatch(openModal(modalNames.VIEW_RESULT, { id, appointment })),
+  onClickViewResult: (id, testDate) => dispatch(viewResult(id, testDate)),
 });
 
 const enhance = compose(
