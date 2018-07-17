@@ -7,7 +7,6 @@ const initialState = {
   currentActivePage: 1,
   activeCategory: '',
   categoryList: [],
-  pickedAnswer: [],
   answerList: [],
   progressResult: [],
   saveStatus: ' ',
@@ -25,7 +24,6 @@ const TakeExam = (state = initialState, action) => {
         currentActivePage: 1,
         activeCategory: '',
         categoryList: [],
-        pickedAnswer: [],
         answerList: [],
         progressResult: [],
         saveStatus: ' '
@@ -45,9 +43,6 @@ const TakeExam = (state = initialState, action) => {
           || state.progressResult.length === 0) ?
           initialAnswerList :
           state.progressResult,
-        pickedAnswer: (state.progressResult === null
-          || state.progressResult.length === 0) ?
-          '' : state.progressResult[0].answer,
         startTime: action.payload.startTime
       };
     }
@@ -76,50 +71,43 @@ const TakeExam = (state = initialState, action) => {
       return {
         ...state,
         currentActivePage: action.payload.value,
-        pickedAnswer: state.answerList[action.payload.value - 1] === { answer: '', question: '' } ?
-          { answer: '', question: '' } : state.answerList[action.payload.value - 1].answer,
       };
-    case actionTypes.TAKE_EXAM_ON_PICK_RADIO:
-      return {
-        ...state,
-        pickedAnswer: [action.payload.choice],
-        answerList: [...state.answerList.slice(0, action.payload.currentActivePage - 1), {
-          answer: [action.payload.choice],
-          question: action.payload.exId,
-        }, ...state.answerList.slice(action.payload.currentActivePage)]
-      };
-    case actionTypes.TAKE_EXAM_ON_PICK_CHECKBOX:
-      return {
-        ...state,
-        pickedAnswer: state.pickedAnswer.includes(action.payload.choice) ?
-          [...state.pickedAnswer].splice(state.pickedAnswer.indexOf(action.payload.choice), 1) :
-          [...state.pickedAnswer].push(action.payload.choice),
-        answerList: [...state.answerList.slice(0, action.payload.currentActivePage - 1), {
-          answer: [action.payload.choice],
-          question: action.payload.exId,
-        }, ...state.answerList.slice(action.payload.currentActivePage)]
-      };
-    case actionTypes.TAKE_EXAM_ON_INPUT_TEXTAREA: {
-      const copyAnswerList = [...state.answerList].slice();
-      let indexAns = -1;
-      for (let i = 0; i < copyAnswerList.length; i += 1) {
-        if (copyAnswerList[i].question === action.payload.exId) {
-          indexAns = i;
-          break;
-        }
-        if (indexAns === -1 && copyAnswerList[i].question === '') {
-          indexAns = i;
+    case actionTypes.TAKE_EXAM_ON_PICK_RADIO: {
+      const tempAns = state.answerList.slice();
+      for (let i = 0; i < tempAns.length; i += 1) {
+        if (tempAns[i].question === action.payload.exId) {
+          tempAns[i].answer = [action.payload.choice];
         }
       }
-      copyAnswerList[indexAns] = {
-        answer: [action.payload.text],
-        question: action.payload.exId
+      return {
+        ...state,
+        answerList: tempAns
       };
+    }
+    case actionTypes.TAKE_EXAM_ON_PICK_CHECKBOX: {
+      const tempAns = state.answerList.slice();
+      for (let i = 0; i < tempAns.length; i += 1) {
+        if (tempAns[i].question === action.payload.exId) {
+          const addChoice = tempAns[i].answer.slice().push(action.payload.choice);
+          tempAns[i].answer = [...new Set(addChoice)];
+        }
+      }
+      return {
+        ...state,
+        answerList: tempAns
+      };
+    }
+    case actionTypes.TAKE_EXAM_ON_INPUT_TEXTAREA: {
+      const tempAns = [...state.answerList].slice();
+      for (let i = 0; i < tempAns.length; i += 1) {
+        if (tempAns[i].question === action.payload.exId) {
+          tempAns[i].answer = [action.payload.text];
+        }
+      }
 
       return {
         ...state,
-        pickedAnswer: [action.payload.text],
-        answerList: copyAnswerList
+        answerList: tempAns
       };
     }
     case actionTypes.TAKE_EXAM_UPLOAD_REQUEST:
@@ -180,7 +168,6 @@ const TakeExam = (state = initialState, action) => {
         currentActivePage: 1,
         activeCategory: '',
         categoryList: [],
-        pickedAnswer: [],
         answerList: [],
         progressResult: [],
         saveStatus: ' ',
