@@ -5,8 +5,7 @@ import { compose } from 'recompose';
 import { Field, reduxForm, formValueSelector, change } from 'redux-form';
 import { Form } from 'semantic-ui-react';
 import Input from '../../components/Input';
-import *
-as validator from '../../utils/validator';
+import * as validator from '../../utils/validator';
 import { paymentTypeOptions, workingDayOptions } from '../../utils/options';
 
 const validate = (values) => {
@@ -93,7 +92,7 @@ const AddProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType }
         placeholder="From"
         type="date"
         disabled={submitting}
-        validate={validator.required}
+        validate={[validator.required, validator.date]}
       />
       <Field
         name="endDate"
@@ -103,7 +102,7 @@ const AddProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType }
         placeholder="To"
         type="date"
         disabled={submitting}
-        validate={validator.required}
+        validate={[validator.required, validator.date]}
       />
     </Form.Group>
     <Field
@@ -125,6 +124,7 @@ const AddProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType }
       placeholder="Working day"
       options={workingDayOptions}
       disabled={submitting}
+      validate={validator.required}
     />}
     <Field
       name="description"
