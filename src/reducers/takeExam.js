@@ -33,7 +33,7 @@ const TakeExam = (state = initialState, action) => {
     case actionTypes.TAKE_EXAM_FETCH_SUCCESS: {
       const initialAnswerList = [];
       for (let i = 0; i < action.payload.examList.length; i += 1) {
-        initialAnswerList.push({ answer: '', question: action.payload.examList[i].exId });
+        initialAnswerList.push({ answer: [], question: action.payload.examList[i].exId });
       }
 
       return {

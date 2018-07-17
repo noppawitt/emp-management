@@ -374,12 +374,13 @@ api.startExam = body => (
 
 // Take Exam
 
-api.sendMailFinishExam = (id, currentTime) => (
+api.sendMailFinishExam = (id, currentTime, needCheck) => (
   callApi('/api/takeExam/sendMail', {
     method: 'POST',
     body: {
       id,
       currentTime,
+      needCheck,
     }
   })
 );
@@ -405,13 +406,14 @@ api.fetchExamSpecifyId = idList => (
   })
 );
 
-api.checkProgress = (id, testDate, startTime) => (
+api.checkProgress = (id, testDate, startTime, answerList) => (
   callApi(`/api/takeExam/checkProgress/`, {
     method: 'POST',
     body: {
       id,
       testDate,
       startTime,
+      answerList,
     }
   })
 );
