@@ -142,6 +142,7 @@ export function* fetchGradingTask(action) {
       yield put(fetchRecruitmentRequest());
     }
     const object = countTheCategory(gradingExamList);
+    console.log('after function we got this >', object);
     yield put(fetchGradingSuccess(
       gradingExamList,
       action.payload.id,

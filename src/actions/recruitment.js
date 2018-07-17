@@ -128,11 +128,13 @@ export const fetchGradingRequest = (id, testDate) => ({
   }
 });
 
-export const fetchGradingSuccess = (gradingList, gradingId) => ({
+export const fetchGradingSuccess = (gradingList, gradingId, examAmountPerCategory, examAmountPerSubCategory) => ({
   type: actionTypes.GRADING_FETCH_SUCCESS,
   payload: {
     gradingList,
     gradingId,
+    examAmountPerCategory,
+    examAmountPerSubCategory,
   }
 });
 

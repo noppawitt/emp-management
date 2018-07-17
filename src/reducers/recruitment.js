@@ -138,6 +138,9 @@ const Recruitment = (state = initialState, action) => {
         // variable initialization for new modal
         currentModalActivePage: 1,
         // activeModalCategory: action.payload.resultList,
+        modalCategoryList: action.payload.examAmountPerCategory,
+        modalSubCategoryList: action.payload.examAmountPerSubCategory,
+
       };
     case actionTypes.GRADING_FETCH_FAILURE:
       return {
