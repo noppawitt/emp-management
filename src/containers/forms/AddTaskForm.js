@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { compose, lifecycle } from 'recompose';
+import { compose } from 'recompose';
 import { Field, FieldArray, reduxForm } from 'redux-form';
 import { Grid, Form, Segment, Icon, Button } from 'semantic-ui-react';
 import moment from 'moment';

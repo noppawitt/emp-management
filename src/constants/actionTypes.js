@@ -16,6 +16,7 @@ export const LOGOUT = 'LOGOUT';
 // Modal
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
+export const CLEAR_MODAL = 'CLEAR_MODAL';
 
 // Master table
 export const MASTER_TABLE_FETCH_REQUEST = 'MASTER_TABLE_FETCH_REQUEST';

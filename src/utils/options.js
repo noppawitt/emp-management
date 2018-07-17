@@ -71,7 +71,7 @@ export const engineerOptions = [
   { key: 'non-engineer', value: false, text: 'Non-Engineer' }
 ];
 
-export const honorOption = [
+export const honorOptions = [
   { key: '1', value: '1', text: 'เกียรตินิยมอันดับที่ 1' },
   { key: '2', value: '2', text: 'เกียรตินิยมอันดับที่ 2' },
   { key: '3', value: '-', text: '-' }
