@@ -10,6 +10,9 @@ import timesheetSaga from './timesheet';
 import holidaySaga from './holiday';
 import reportSaga from './report';
 import accessControlSaga from './accessControl';
+import erpSaga from './erp';
+import erpDetailSaga from './erpdetail';
+import erpApproveSaga from './erpapprove';
 
 export default function* rootSaga() {
   yield all([
@@ -23,6 +26,9 @@ export default function* rootSaga() {
     leaveSaga(),
     timesheetSaga(),
     holidaySaga(),
-    reportSaga()
+    reportSaga(),
+    erpSaga(),
+    erpDetailSaga(),
+    erpApproveSaga(),
   ]);
 }

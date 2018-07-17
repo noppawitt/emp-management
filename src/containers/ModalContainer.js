@@ -58,6 +58,10 @@ const renderModal = ({ name, props }) => {
       return <EditTimesheetModal {...props} />;
     case modalNames.ADD_WORK_EXPERIENCE_PROFILE:
       return <AddWorkExperienceProfileModal />;
+    case modalNames.ERPAPPROVE_REJECT:
+      return <ApproveRejectModal {...props} />;
+    // case modalNames.CREATE_ERP_REQUEST:
+    //   return <CreateErpRequestModal {...props} />;
     default:
       return <div />;
   }

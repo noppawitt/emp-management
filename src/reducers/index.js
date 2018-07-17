@@ -13,6 +13,10 @@ import timesheet from './timesheet';
 import holiday from './holiday';
 import report from './report';
 import accessControl from './accessControl';
+import erp from './erp';
+import addrow from './addrow';
+import erpdetail from './erpdetail';
+import erpapprove from './erpapprove';
 
 export default combineReducers({
   form: formReducer,
@@ -28,5 +32,9 @@ export default combineReducers({
   timesheet,
   holiday,
   report,
-  accessControl
+  accessControl,
+  erp,
+  addrow,
+  erpdetail,
+  erpapprove,
 });
