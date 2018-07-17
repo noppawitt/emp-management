@@ -405,13 +405,14 @@ api.fetchExamSpecifyId = idList => (
   })
 );
 
-api.checkProgress = (id, testDate, startTime) => (
+api.checkProgress = (id, testDate, startTime, answerList) => (
   callApi(`/api/takeExam/checkProgress/`, {
     method: 'POST',
     body: {
       id,
       testDate,
       startTime,
+      answerList,
     }
   })
 );

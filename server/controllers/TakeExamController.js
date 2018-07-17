@@ -62,7 +62,7 @@ exports.findUploadedAnswer = (req, res, next) => {
       // if result null > not exist > create it 1st
       // initialize answerList with empty list
       if (!result) {
-        TakeExam.createBufferAnswer(object.id, [], object.testDate, object.startTime)
+        TakeExam.createBufferAnswer(object.id, object.answerList, object.testDate, object.startTime)
           .then((createresult) => {
             res.json(createresult);
           })

@@ -53,7 +53,11 @@ export function* fetchTestExamTask(action) {
     yield put(fetchCategory(examAmountPerCategory));
     yield put(fetchSubCategory(examAmountPerSubCategory));
 
-    const tempProgressResult = yield call(api.checkProgress, action.payload.id, startTime.format('YYYY-MM-DD'), startTime);
+    const initialAnswerList = [];
+    for (let i = 0; i < randomExIdList.randomExIdList.length; i += 1) {
+      initialAnswerList.push(JSON.stringify({ answer: [], question: randomExIdList.randomExIdList[i] }));
+    }
+    const tempProgressResult = yield call(api.checkProgress, action.payload.id, startTime.format('YYYY-MM-DD'), startTime, initialAnswerList);
     const progressResult = [];
     if (tempProgressResult !== null) {
       for (let i = 0; i < tempProgressResult.answerList.length; i += 1) {
