@@ -2,7 +2,6 @@ import { call, put, takeEvery, all, select, take } from 'redux-saga/effects';
 import * as actionTypes from '../constants/actionTypes';
 import { fetchAccessControlRequest, fetchAccessControlSuccess, fetchAccessControlFailure } from '../actions/accessControl';
 import { getAccessControl } from '../selectors/accessControl';
-import { getAuth } from '../selectors/auth';
 import api from '../services/api';
 
 function* fetchAccessControlTask() {
@@ -21,11 +20,10 @@ function* watchFetchAccessControlTask() {
 
 function* watchAccessControl() {
   while (true) {
-    const { isAuthenticated } = yield select(getAuth);
-    const can = yield select(getAccessControl);
-    if (isAuthenticated && !can) {
+    const { can } = yield select(getAccessControl);
+    yield take(actionTypes.BOOTSTRAP);
+    if (!can) {
       yield put(fetchAccessControlRequest());
-      yield take(actionTypes.ACCESS_CONTROL_FETCH_SUCCESS);
     }
   }
 }

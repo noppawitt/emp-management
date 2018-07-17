@@ -2,7 +2,6 @@ import { call, put, takeEvery, all, select, take } from 'redux-saga/effects';
 import * as actionTypes from '../constants/actionTypes';
 import { fetchMasterTableRequest, fetchMasterTableSucesss, fetchMasterTableFailure } from '../actions/masterTable';
 import { getMasterTable } from '../selectors/masterTable';
-import { getAuth } from '../selectors/auth';
 import api from '../services/api';
 
 function* fetchMasterTableTask() {
@@ -21,11 +20,10 @@ function* watchFetchMasterTableRequest() {
 
 function* watchFetchMasterTable() {
   while (true) {
-    const { isAuthenticated } = yield select(getAuth);
     const masterTable = yield select(getMasterTable);
-    if (isAuthenticated && !Object.keys(masterTable).length) {
+    yield take(actionTypes.BOOTSTRAP);
+    if (!Object.keys(masterTable).length) {
       yield put(fetchMasterTableRequest());
-      yield take(actionTypes.MASTER_TABLE_FETCH_SUCCESS);
     }
   }
 }

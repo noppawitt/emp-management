@@ -1,4 +1,5 @@
-export const ADD_TODO = 'ADD_TODO';
+// Bootstrap
+export const BOOTSTRAP = 'BOOTSTRAP';
 
 // Login
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';

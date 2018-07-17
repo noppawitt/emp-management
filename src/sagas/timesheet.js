@@ -23,7 +23,7 @@ function* createTimesheetTask(action) {
     yield put(createTimesheetSuccess(timesheets));
     yield put(closeModal());
     action.payload.resolve();
-    if (action.payload.isArray) history.push('/timesheet');
+    if (action.payload.isArray) yield history.push('/timesheet');
   }
   catch (error) {
     yield put(createTimesheetFailure(error));

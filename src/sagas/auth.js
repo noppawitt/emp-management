@@ -6,28 +6,7 @@ import api from '../services/api';
 import history from '../history';
 import { getItem, setItem, getExpiryTime } from '../utils/helper';
 import { getAuth } from '../selectors/auth';
-
-// export function* loginTask(action) {
-//   try {
-//     const user = yield call(api.login, action.payload.form);
-//     localStorage.setItem('token', user.token);
-//     yield put(loginSuccess(user));
-//     history.push('/');
-//   }
-//   catch (error) {
-//     yield put(loginFailure(error));
-//   }
-// }
-
-// export function* watchLogin() {
-//   yield takeEvery(actionTypes.LOGIN_REQUEST, loginTask);
-// }
-
-// export default function* authSaga() {
-//   yield all([
-//     watchLogin()
-//   ]);
-// }
+import { bootstrap } from '../actions/bootstrap';
 
 function* authFlow() {
   while (true) {
@@ -44,13 +23,14 @@ function* authFlow() {
         yield setItem('accessToken', accessToken);
         yield setItem('refreshToken', user.refreshToken);
         yield put(loginSuccess(user));
-        history.push('/');
+        yield history.push('/');
       }
       catch (error) {
         yield put(loginFailure(error));
         continue;
       }
     }
+    yield put(bootstrap());
     let loggedOut;
     while (!loggedOut) {
       const { expired } = yield race({
