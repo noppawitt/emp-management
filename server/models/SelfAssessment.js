@@ -4,7 +4,7 @@ const moment = require('moment');
 const SelfAssessment={};
 
 SelfAssessment.checkExist = (id) => (
-  db.oneOrNone("SELECT 1 as exist FROM SelfAssessment WHERE user_id=$1",[id])
+  db.oneOrNone("SELECT submit as submited FROM SelfAssessment WHERE user_id=$1",[id])
 )
 
 SelfAssessment.findById = (id) => (
@@ -43,6 +43,14 @@ SelfAssessment.updateSelfAssessment = (selfAssessmentInfo,id) => (
     id,
     moment().format('YYYY-MM-DD HH:mm:ss'),
     selfAssessmentInfo.employeeID
+  ])
+)
+
+SelfAssessment.submitSelfAssessment = (id) => (
+  db.none("UPDATE SelfAssessment SET submit=$1 WHERE user_id=$2",
+  [
+    true,
+    id
   ])
 )
 

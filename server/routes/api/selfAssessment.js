@@ -5,5 +5,6 @@ router.get('/check', SelfAssessmentController.check);
 router.get('/', SelfAssessmentController.find);
 router.post('/', SelfAssessmentController.create);
 router.put('/', SelfAssessmentController.update);
+router.put('/submit', SelfAssessmentController.submit);
 
 module.exports = router;

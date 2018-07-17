@@ -14,6 +14,10 @@
 }
 
 .goal-table td textarea {
+    font-size: 14px;
+}
+
+.goal-table td textarea {
     border-radius: 7px;
     border-width: thin;
     padding: 1%;

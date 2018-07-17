@@ -39,7 +39,7 @@ class SelfAssessmentForm extends React.Component {
             goal1: ['', '', '', '', ''],
             goal2: ['', '', '', '', ''],
             goal3: ['', '', '', '', ''],
-            currentPage: 0
+            currentPage: 0,
         }
 
         this.animateChangePage = this.animateChangePage.bind(this);
@@ -76,6 +76,11 @@ class SelfAssessmentForm extends React.Component {
         this.setState({ goal3: newGoal });
     }
 
+    componentDidMount() {
+      this.setState({totalPage: document.getElementsByClassName('pages-contrainer')[0].rows[0].cells.length},()=>{document.getElementsByClassName('pages-contrainer')[0].style.width = `${this.state.totalPage*100}%`})
+
+    }
+
     validateField() {
         let isValid = true;
 
@@ -107,18 +112,18 @@ class SelfAssessmentForm extends React.Component {
         this.setState({ validate: isValid });
     }
 
-    animateChangePage() {
-        document.getElementsByClassName('pages-contrainer')[0].style.left = this.state.currentPage * (-100) + '%';
+    animateChangePage(nextPage) {
+      console.log(this.state.currentPage)
+        document.getElementsByClassName('pages-contrainer')[0].style.left = nextPage * (-100) + '%';
     }
 
     componentDidUpdate() {
-        this.animateChangePage();
         this.validateField();
         this.props.test(this.state);
     }
     componentWillReceiveProps(nextProps){
       if(nextProps.item.currentPage != this.props.item.currentPage){
-        this.setState({currentPage: nextProps.item.currentPage},this.animateChangePage());
+        this.setState({currentPage: nextProps.item.currentPage},this.animateChangePage(nextProps.item.currentPage));
       }
     }
     shouldComponentUpdate(nextProps, nextState) {
@@ -148,7 +153,6 @@ class SelfAssessmentForm extends React.Component {
         }
         console.log(!arrayCheck)
         return (
-            nextState.currentPage != this.state.currentPage ||
             nextState.majorResponsibilities != this.state.majorResponsibilities ||
             nextState.significantAccomplishments != this.state.significantAccomplishments ||
             nextState.contribution != this.state.contribution ||
@@ -168,9 +172,11 @@ class SelfAssessmentForm extends React.Component {
                     click
                 </button>*/}
                 <img className="logo_back" src={logoBack} />
-                <div style={{textAlign: 'center',marginBottom: '30px'}}>
+                <div style={{textAlign: 'center',marginBottom: '30px', padding: '0px 10px'}}>
                     <img className="logo" src={logo} />
-                    <h1>Self Assessment Form</h1>
+                    <h1 style={{marginBottom: '50px'}}>Self Assessment Form</h1>
+                    <EmployeeInfo {...this.state} addSelf='true' mode={this.props.mode}/>
+
                 </div>
                 <table className='pages-contrainer'>
                     <tr>
@@ -180,7 +186,7 @@ class SelfAssessmentForm extends React.Component {
                                 <table className='major-respon-table'>
                                     <tr><th><span className='blue-text'>Major Responsibilities</span>
                                         {!this.state.majorResponsibilities ? requiredMessage : ''}</th></tr>
-                                    <tr><td><textarea tabIndex='-1' onChange={(event) => {
+                                      <tr><td><textarea tabIndex='-1' disabled={this.props.mode=='view'} onChange={(event) => {
                                         this.setState({ majorResponsibilities: event.target.value });
                                     }}>{this.state.majorResponsibilities}</textarea></td></tr>
                                 </table>
@@ -189,7 +195,7 @@ class SelfAssessmentForm extends React.Component {
                                 <table className='sign-accom-table'>
                                     <tr><th><span className='blue-text'>Significant Accomplishments</span>
                                         {!this.state.significantAccomplishments ? <a style={{ color: 'red'}}>(Please enter your answer.)</a> : ''}</th></tr>
-                                    <tr><td><textarea tabIndex='-1' onChange={(event) => {
+                                    <tr><td><textarea tabIndex='-1' disabled={this.props.mode=='view'} onChange={(event) => {
                                         this.setState({ significantAccomplishments: event.target.value });
                                     }}>{this.state.significantAccomplishments}</textarea></td></tr>
                                 </table>
@@ -198,7 +204,7 @@ class SelfAssessmentForm extends React.Component {
                                 <table className='con-com-table'>
                                     <tr><th><span className='blue-text'>Contribution/ Company Activities</span>
                                         {!this.state.contribution ? <a style={{ color: 'red' }}>(Please enter your answer.)</a> : ''}</th></tr>
-                                    <tr><td><textarea tabIndex='-1' onChange={(event) => {
+                                    <tr><td><textarea tabIndex='-1' disabled={this.props.mode=='view'} onChange={(event) => {
                                         this.setState({ contribution: event.target.value });
                                     }}>{this.state.contribution}</textarea></td></tr>
                                 </table>
@@ -211,12 +217,12 @@ class SelfAssessmentForm extends React.Component {
                                     <tr>
                                         <td><span>Strengths</span>
                                             {!this.state.strengths ? <a style={{ color: 'red' }}>(Please enter your answer.)</a> : ''}
-                                            <textarea tabIndex='-1' onChange={(event) => {
+                                            <textarea tabIndex='-1' disabled={this.props.mode=='view'} onChange={(event) => {
                                                 this.setState({ strengths: event.target.value });
                                             }}>{this.state.strengths}</textarea></td>
                                         <td><span>Improvements</span>
                                             {!this.state.improvements ? <a style={{ color: 'red' }}>(Please enter your answer.)</a> : ''}
-                                            <textarea tabIndex='-1' onChange={(event) => {
+                                            <textarea tabIndex='-1' disabled={this.props.mode=='view'} onChange={(event) => {
                                                 this.setState({ improvements: event.target.value });
                                             }
                                             }>{this.state.improvements}</textarea></td>
@@ -229,21 +235,21 @@ class SelfAssessmentForm extends React.Component {
                         {/* Page Two */}
                         <td>
                             <div style={{padding: '0px 10px'}}>
-                                <GoalComponent header='Goal 1 The Most Important * เป้าหมายสำคัญอันดับที่ 1' goal={this.state.goal1} onChange={this.goalOneHandler} require={true} />
+                                <GoalComponent header='Goal 1 The Most Important * เป้าหมายสำคัญอันดับที่ 1' goal={this.state.goal1} onChange={this.goalOneHandler} require={true} mode={this.props.mode}/>
                             </div>
                         </td>
 
                         {/* Page Three */}
                         <td>
                             <div style={{padding: '0px 10px'}}>
-                                <GoalComponent header='Goal 2 More Important * เป้าหมายสำคัญอันดับที่ 2' goal={this.state.goal2} onChange={this.goalTwoHandler} />
+                                <GoalComponent header='Goal 2 More Important * เป้าหมายสำคัญอันดับที่ 2' goal={this.state.goal2} onChange={this.goalTwoHandler} mode={this.props.mode}/>
                             </div>
                         </td>
 
                         {/* Page Four */}
                         <td>
                             <div style={{padding: '0px 10px'}}>
-                                <GoalComponent header='Goal 3 Less Important * เป้าหมายสำคัญอันดับที่ 3' goal={this.state.goal3} onChange={this.goalThreeHandler} />
+                                <GoalComponent header='Goal 3 Less Important * เป้าหมายสำคัญอันดับที่ 3' goal={this.state.goal3} onChange={this.goalThreeHandler} mode={this.props.mode}/>
                             </div>
                         </td>
                     </tr >

@@ -89,6 +89,11 @@ export function* updateProfileTask(action) {
   try {
     const profile = {};
     switch (action.payload.type) {
+      case 'submitSelfAssessment' :
+        profile.self = yield call(api.submitSelfAssessment,{
+          selfAssessmentInfo: action.payload.form
+        });
+        break;
       case 'addSelfAssessment' :
         profile.self = yield call(api.addSelfAssessment,{
           selfAssessmentInfo: action.payload.form
@@ -159,7 +164,7 @@ export function* updateProfileTask(action) {
         action.payload.reject();
     }
     yield put(updateProfileSuccess(profile));
-    yield put(closeModal());
+    if(action.payload.type!='updateSelfAssessment' && action.payload.type!='addSelfAssessment')yield put(closeModal());
     action.payload.resolve();
   }
   catch (error) {

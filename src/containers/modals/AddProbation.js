@@ -21,7 +21,7 @@ class AddProbation extends React.Component{
       <div>
         {this.props.fetching ? <Loader/> :
           <Modal
-            header={this.props.profile.evaInfo == null ? 'Add Probation':'View Probation'}
+            header={this.props.profile.evaInfo == null ? 'Create Probation':'View Probation'}
             onClose={()=>{this.props.onClose();this.props.clear();}}
             onClick={()=>this.props.onSubmit(this.props.item,(this.props.profile.evaInfo == null ? 'addProbation':'updateProbation'))}
             submitting={this.props.submitting}

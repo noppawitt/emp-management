@@ -22,7 +22,7 @@ class AddPerformance extends React.Component{
       <div>
         {this.props.fetching ? <Loader/> :
           <Modal
-            header={!this.props.profile.perfInfo ? 'Add Performance':'View Performance'}
+            header={!this.props.profile.perfInfo ? 'Create Performance':'View Performance'}
             onClose={()=>{this.props.onClose();this.props.clear();}}
             onClick={()=>this.props.onSubmit(this.props.item,(!this.props.profile.perfInfo ? 'addPerformance':'updatePerformance'))}
             submitting={this.props.submitting}

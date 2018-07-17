@@ -26,6 +26,16 @@ class EmployeeInfo extends React.Component {
     render() {
         return (
             <div className='info-container' >
+              {this.props.addSelf && this.props.mode=='edit'?
+                <table>
+                    <tr>
+                        <td>Supervisor:</td>
+                        <td>{this.state.supervisor}</td>
+                        <td>{this.state.showEndProDate ? 'Probatoin ' : ''} Start Date</td>
+                        <td>{this.state.startDate.format('DD/MM/YYYY')}</td>
+                    </tr>
+                </table>
+                :
                 <table>
                     <tr>
                         <td colSpan='4' className='underline'>
@@ -64,6 +74,7 @@ class EmployeeInfo extends React.Component {
                         }} disabled={this.props.mode != 'edit'} /> : ''}</td>
                     </tr>
                 </table>
+              }
             </div>
         );
     }
