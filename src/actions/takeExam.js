@@ -115,10 +115,11 @@ export const categoryChange = category => ({
   }
 });
 
-export const finishExamRequest = id => ({
+export const finishExamRequest = (id, testDate) => ({
   type: actionTypes.TAKE_EXAM_FINISH_EXAM_REQUEST,
   payload: {
     id,
+    testDate,
   }
 });
 

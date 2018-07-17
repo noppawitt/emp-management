@@ -173,14 +173,17 @@ exports.grading = (req, res, next) => {
 exports.sendMail = (req, res, next) => {
   TakeExam.getName(req.body.id, req.body.currentTime)
     .then((name) => {
-      console.log(name);
+      let messageStatus = '<p>You can see the result in Playtorium HR site.</p>';
+      if (req.body.needCheck) {
+        messageStatus = '<p style="color: red">There are some questions that haven\'t checked yet. Please check those questions in Playtorium HR site.</p>';
+      }      
       const mailOptions = {
         from: process.env.MAIL_USER,
         to: 'bestmaxger@hotmail.com',
-        subject: '[Exam]' + name.firstName + ' ' + name.lastName + 'has already finished take exam.',
+        subject: '[Exam] ' + name.firstName + ' ' + name.lastName + ' has already finished take exam.',
         html: `<div>
         <p>${name.firstName} ${name.lastName} has already finished take exam.</p>
-        <p>Please check the result in Playtorium HR site</p>
+        ${messageStatus}
         <div>`
       };
       mail.sendMail(mailOptions, (err, info) => {

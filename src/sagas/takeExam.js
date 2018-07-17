@@ -77,8 +77,7 @@ export function* uploadAnswerListTask(action) {
     const progress = yield call(api.uploadAnswer, action.payload.id, action.payload.answerList, action.payload.testDate);
     yield put(uploadAnswerListSuccess(progress));
     if (action.payload.isEndExam) {
-      yield call(api.grading, action.payload.id, action.payload.testDate);
-      yield put(finishExamRequest(action.payload.id));
+      yield put(finishExamRequest(action.payload.id, action.payload.testDate));
     }
     if (action.payload.isLogoutRequest) {
       yield put(logout());
@@ -93,7 +92,10 @@ export function* finishExamTask(action) {
   try {
     const currentTime = moment();
     yield call(api.updateSubmittedTime, action.payload.id, currentTime, currentTime.format('YYYY-MM-DD'));
-    // yield call(api.sendMailFinishExam, action.payload.id, currentTime.format('YYYY-MM-DD'));
+
+    const needCheck = yield call(api.grading, action.payload.id, action.payload.testDate);
+    yield call(api.sendMailFinishExam, action.payload.id, currentTime.format('YYYY-MM-DD'), needCheck);
+
     yield call(api.deActivate, action.payload.id, 'deactive');
     yield put(finishExamSuccess());
     yield put(logout());

@@ -374,12 +374,13 @@ api.startExam = body => (
 
 // Take Exam
 
-api.sendMailFinishExam = (id, currentTime) => (
+api.sendMailFinishExam = (id, currentTime, needCheck) => (
   callApi('/api/takeExam/sendMail', {
     method: 'POST',
     body: {
       id,
       currentTime,
+      needCheck,
     }
   })
 );
