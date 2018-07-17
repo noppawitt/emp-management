@@ -10,9 +10,9 @@ exports.createLineCode = (req, res, next) => {
 };
 
 exports.findUserInfo = (req, res, next) => {
-  EmployeeInfo.findOwnByUserId(req.query.userId)
-    .then((employeeInfo) => {
-      res.json(employeeInfo);
+  EmployeeInfo.findInfoAll()
+    .then((employeeInfos) => {
+      res.json(employeeInfos);
     })
     .catch(next);
 };
