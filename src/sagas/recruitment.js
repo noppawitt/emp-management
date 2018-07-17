@@ -26,6 +26,42 @@ const shuffle = (a) => {
   return a;
 };
 
+const countTheCategory = (examList) => {
+  const categoryList = [];
+  const subCategoryList = [];
+
+  Object(examList).map((item) => {
+    const subCategoryString = [item.exCategory, item.exSubcategory].join(' ');
+    if (!categoryList.includes(item.exCategory)) categoryList.push(item.exCategory);
+    if (!subCategoryList.includes(subCategoryString)) subCategoryList.push(subCategoryString);
+    return 1;
+  });
+
+  const examAmountPerCategory = [];
+  const examAmountPerSubCategory = [];
+  for (let i = 0; i < categoryList.length; i += 1) {
+    let count = 0;
+    for (let j = 0; j < examList.length; j += 1) {
+      if (categoryList[i] === examList[j].exCategory) { count += 1; }
+    }
+    examAmountPerCategory.push([categoryList[i], count]);
+  }
+
+  for (let i = 0; i < subCategoryList.length; i += 1) {
+    let count = 0;
+    for (let j = 0; j < examList.length; j += 1) {
+      if (categoryList[i] === examList[j].exCategory
+        && subCategoryList[i] === examList[j].exSubcategory) { count += 1; }
+    }
+    examAmountPerSubCategory.push([subCategoryList[i], count]);
+  }
+
+  return {
+    examAmountPerCategory,
+    examAmountPerSubCategory,
+  };
+};
+
 export function* fetchRecruitmentTask() {
   try {
     const recruitments = yield call(api.fetchAllRecruitment);
@@ -62,7 +98,7 @@ export function* checkUserStatusTask(action) {
 export function* activateUserTask(action) {
   try {
     const testDate = yield call(api.getTestDate, action.payload.id);
-    const message = yield call(api.activateUser, action.payload.id, action.payload.activationLifetimes, testDate);
+    const message = yield call(api.activateUser, action.payload.id, testDate, action.payload.activationLifetimes);
     yield put(activateUserSuccess(message));
     yield put(checkUserStatusRequest(action.payload.id));
   }
@@ -90,7 +126,7 @@ export function* randomExamTask(action) {
       }
     }
     const testDate = yield call(api.getTestDate, action.payload.id);
-    yield call(api.uploadRandomExIdList, randomExIdList, action.payload.id, testDate);
+    yield call(api.uploadRandomExIdList, action.payload.id, testDate, randomExIdList);
   }
   catch (error) {
     console.log('random exam error:', error);
@@ -106,7 +142,14 @@ export function* fetchGradingTask(action) {
     if (retval === 'OK') {
       yield put(fetchRecruitmentRequest());
     }
-    yield put(fetchGradingSuccess(gradingExamList, action.payload.id));
+    const object = countTheCategory(gradingExamList);
+    yield put(fetchGradingSuccess(
+      gradingExamList,
+      action.payload.id,
+      // don't forget to add this two on action and reducer
+      object.examAmountPerCategory,
+      object.examAmountPerSubCategory
+    ));
     yield put(openModal(modalNames.GRADING_EXAM));
   }
   catch (error) {

@@ -16,43 +16,54 @@ import {
 } from '../actions/takeExam';
 import api from '../services/api';
 
+const countTheCategory = (examList) => {
+  const categoryList = [];
+  const subCategoryList = [];
+
+  Object(examList).map((item) => {
+    const subCategoryString = [item.exCategory, item.exSubcategory].join(' ');
+    if (!categoryList.includes(item.exCategory)) categoryList.push(item.exCategory);
+    if (!subCategoryList.includes(subCategoryString)) subCategoryList.push(subCategoryString);
+    return 1;
+  });
+
+  const examAmountPerCategory = [];
+  const examAmountPerSubCategory = [];
+  for (let i = 0; i < categoryList.length; i += 1) {
+    let count = 0;
+    for (let j = 0; j < examList.length; j += 1) {
+      if (categoryList[i] === examList[j].exCategory) { count += 1; }
+    }
+    examAmountPerCategory.push([categoryList[i], count]);
+  }
+
+  for (let i = 0; i < subCategoryList.length; i += 1) {
+    let count = 0;
+    for (let j = 0; j < examList.length; j += 1) {
+      if (categoryList[i] === examList[j].exCategory
+        && subCategoryList[i] === examList[j].exSubcategory) { count += 1; }
+    }
+    examAmountPerSubCategory.push([subCategoryList[i], count]);
+  }
+
+  return {
+    examAmountPerCategory,
+    examAmountPerSubCategory,
+  };
+};
+
 export function* fetchTestExamTask(action) {
   try {
     const startTime = moment();
 
     const randomExIdList = yield call(api.fetchRandomExIdList, action.payload.id, startTime.format('YYYY-MM-DD'));
     const examList = yield call(api.fetchExamSpecifyId, randomExIdList);
-    const categoryList = [];
-    const subCategoryList = [];
-    Object(examList).map((item) => {
-      if (!categoryList.includes(item.exCategory)) categoryList.push(item.exCategory);
-      if (!subCategoryList.includes([item.exCategory, item.exSubcategory].join(' '))) subCategoryList.push([item.exCategory, item.exSubcategory].join(' '));
-      return 1;
-    });
-    const examAmountPerCategory = [];
-    const examAmountPerSubCategory = [];
-    for (let i = 0; i < categoryList.length; i += 1) {
-      let count = 0;
-      for (let j = 0; j < examList.length; j += 1) {
-        if (categoryList[i] === examList[j].exCategory) {
-          count += 1;
-        }
-      }
-      examAmountPerCategory.push([categoryList[i], count]);
-    }
 
-    for (let i = 0; i < subCategoryList.length; i += 1) {
-      let count = 0;
-      for (let j = 0; j < examList.length; j += 1) {
-        if (categoryList[i] === examList[j].exCategory && subCategoryList[i] === examList[j].exSubcategory) {
-          count += 1;
-        }
-      }
-      examAmountPerSubCategory.push([subCategoryList[i], count]);
-    }
-    yield put(fetchCategory(examAmountPerCategory));
-    yield put(fetchSubCategory(examAmountPerSubCategory));
+    const object = countTheCategory(examList);
+    yield put(fetchCategory(object.examAmountPerCategory));
+    yield put(fetchSubCategory(object.examAmountPerSubCategory));
 
+    // 123
     const initialAnswerList = [];
     for (let i = 0; i < randomExIdList.randomExIdList.length; i += 1) {
       initialAnswerList.push(JSON.stringify({ answer: [], question: randomExIdList.randomExIdList[i] }));
@@ -65,7 +76,12 @@ export function* fetchTestExamTask(action) {
       }
     }
     yield put(fetchProgress(progressResult));
-    yield put(fetchTakeExamSuccess(examList, (tempProgressResult !== null && tempProgressResult.startTime !== null) ? moment(tempProgressResult.startTime) : startTime));
+    yield put(fetchTakeExamSuccess(
+      examList,
+      tempProgressResult !== null && tempProgressResult.startTime !== null ?
+        moment(tempProgressResult.startTime) :
+        startTime
+    ));
   }
   catch (error) {
     yield put(fetchTakeExamFailure(error));
@@ -74,6 +90,7 @@ export function* fetchTestExamTask(action) {
 
 export function* uploadAnswerListTask(action) {
   try {
+    // 123
     const progress = yield call(api.uploadAnswer, action.payload.id, action.payload.answerList, action.payload.testDate);
     yield put(uploadAnswerListSuccess(progress));
     if (action.payload.isEndExam) {

@@ -44,6 +44,7 @@ exports.getTestDate = (req, res, next) => {
 };
 
 exports.activateUser = (req, res, next) => {
+  console.log('???', req.body);
   Recruitment.checkExamUser(req.body.id, req.body.testDate)
     .then((retval) => {
       if (retval === null) {
@@ -66,6 +67,7 @@ exports.activateUser = (req, res, next) => {
         req.body.lifetimes < 1 ? null : req.body.testDate,
       )
         .then((message) => {
+          console.log('??', message);
           res.json(message);
         })
         .catch(next);
