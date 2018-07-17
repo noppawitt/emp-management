@@ -1,4 +1,5 @@
-export const ADD_TODO = 'ADD_TODO';
+// Bootstrap
+export const BOOTSTRAP = 'BOOTSTRAP';
 
 // Login
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
@@ -16,6 +17,7 @@ export const LOGOUT = 'LOGOUT';
 // Modal
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
+export const CLEAR_MODAL = 'CLEAR_MODAL';
 
 // Master table
 export const MASTER_TABLE_FETCH_REQUEST = 'MASTER_TABLE_FETCH_REQUEST';

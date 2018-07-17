@@ -17,7 +17,7 @@ import api from '../services/api';
 function* fetchProfileTask(action) {
   try {
     // Wait until access control fetching complete
-    let can = yield select(getAccessControl);
+    let { can } = yield select(getAccessControl);
     while (!can) {
       yield take(actionTypes.ACCESS_CONTROL_FETCH_SUCCESS);
       can = yield select(getAccessControl);

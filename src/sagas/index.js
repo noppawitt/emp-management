@@ -13,7 +13,6 @@ import accessControlSaga from './accessControl';
 
 export default function* rootSaga() {
   yield all([
-    authSaga(),
     accessControlSaga(),
     masterTableSaga(),
     profileSaga(),
@@ -23,6 +22,7 @@ export default function* rootSaga() {
     leaveSaga(),
     timesheetSaga(),
     holidaySaga(),
-    reportSaga()
+    reportSaga(),
+    authSaga(),
   ]);
 }

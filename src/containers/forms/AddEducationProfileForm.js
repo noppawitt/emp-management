@@ -7,7 +7,7 @@ import { Form } from 'semantic-ui-react';
 import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
 import { masterTableToOptions, getFacultiesByUniversityId, getMajorsByFacultyId } from '../../utils/helper';
-import { honorOption } from '../../utils/options';
+import { honorOptions } from '../../utils/options';
 
 const validate = (values) => {
   const errors = {};
@@ -72,7 +72,7 @@ const AddEducationProfileForm = ({ masterTable, universityId, facultyId, handleS
       component={Input}
       label="Honor"
       placeholder="Honor"
-      options={honorOption}
+      options={honorOptions}
       disabled={submitting}
       validate={validator.required}
     />

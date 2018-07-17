@@ -21,9 +21,9 @@ function* watchFetchMasterTableRequest() {
 function* watchFetchMasterTable() {
   while (true) {
     const masterTable = yield select(getMasterTable);
+    yield take(actionTypes.BOOTSTRAP);
     if (!Object.keys(masterTable).length) {
       yield put(fetchMasterTableRequest());
-      yield take(actionTypes.MASTER_TABLE_FETCH_SUCCESS);
     }
   }
 }

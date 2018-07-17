@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { submit, isSubmitting } from 'redux-form';
 import { openModal, closeModal } from '../../actions/modal';
-import { updateTimesheetRequest } from '../../actions/timesheet';
+import { updateTimesheetRequest, deleteTimesheetRequest } from '../../actions/timesheet';
 import Modal from '../../components/Modal';
 import EditTimesheetForm from '../forms/EditTimesheetForm';
 import { handleReduxFormSubmit } from '../../utils/helper';
@@ -16,7 +16,7 @@ const EditTimesheetModal = ({ onClose, onSubmit, submitting, onClick, id, onDele
     onClick={onClick}
     submitting={submitting}
     deleted
-    onDelete={onDelete}
+    onDelete={() => onDelete(id)}
   >
     <EditTimesheetForm id={id} onSubmit={values => onSubmit(values)} />
   </Modal>
@@ -40,7 +40,11 @@ const mapDispatchToProps = dispatch => ({
   onClose: () => dispatch(closeModal()),
   onSubmit: values => handleReduxFormSubmit(dispatch, updateTimesheetRequest, values),
   onClick: () => dispatch(submit('editTimesheet')),
-  onDelete: () => dispatch(openModal(modalNames.CONFIRM))
+  onDelete: timesheetId => dispatch(openModal(modalNames.CONFIRM, {
+    header: 'Delete confirmation',
+    description: 'Are you sure to delete this timesheet?',
+    onConfirm: () => dispatch(deleteTimesheetRequest(timesheetId))
+  }))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditTimesheetModal);
