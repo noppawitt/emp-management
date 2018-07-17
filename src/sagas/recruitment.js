@@ -31,9 +31,10 @@ const countTheCategory = (examList) => {
   const subCategoryList = [];
 
   Object(examList).map((item) => {
-    const subCategoryString = [item.exCategory, item.exSubcategory].join(' ');
     if (!categoryList.includes(item.exCategory)) categoryList.push(item.exCategory);
-    if (!subCategoryList.includes(subCategoryString)) subCategoryList.push(subCategoryString);
+    if (!subCategoryList.includes([item.exCategory, item.exSubCategory].join(' '))) {
+      subCategoryList.push([item.exCategory, item.exSubCategory].join(' '));
+    }
     return 1;
   });
 
@@ -51,7 +52,7 @@ const countTheCategory = (examList) => {
     let count = 0;
     for (let j = 0; j < examList.length; j += 1) {
       if (categoryList[i] === examList[j].exCategory
-        && subCategoryList[i] === examList[j].exSubcategory) { count += 1; }
+        && subCategoryList[i].split(' ')[1] === examList[j].exSubCategory) { count += 1; }
     }
     examAmountPerSubCategory.push([subCategoryList[i], count]);
   }
@@ -143,6 +144,7 @@ export function* fetchGradingTask(action) {
       yield put(fetchRecruitmentRequest());
     }
     const object = countTheCategory(gradingExamList);
+    console.log('after function we got this >', object);
     yield put(fetchGradingSuccess(
       gradingExamList,
       action.payload.id,

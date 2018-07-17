@@ -21,6 +21,8 @@ const initialState = {
   currentModalActivePage: '',
   activeModalCategory: '',
   gradingList: [],
+  modalCategoryList: [],
+  modalSubCategoryList: [],
 };
 
 const Recruitment = (state = initialState, action) => {
@@ -136,8 +138,11 @@ const Recruitment = (state = initialState, action) => {
         gradingId: action.payload.gradingId,
         gradingList: action.payload.gradingList,
         // variable initialization for new modal
+        // activeModalCategory: action.payload.examAmo,
         currentModalActivePage: 1,
-        // activeModalCategory: action.payload.resultList,
+        modalCategoryList: action.payload.examAmountPerCategory,
+        modalSubCategoryList: action.payload.examAmountPerSubCategory,
+
       };
     case actionTypes.GRADING_FETCH_FAILURE:
       return {
