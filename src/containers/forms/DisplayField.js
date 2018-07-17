@@ -11,7 +11,6 @@ const DisplayField = ({ isFetching, passwordObject, userStatus, userStatusCode }
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>User ID</Table.HeaderCell>
-          <Table.HeaderCell>Password</Table.HeaderCell>
           <Table.HeaderCell>Last activated</Table.HeaderCell>
           <Table.HeaderCell>Approximately lifetimes (day)</Table.HeaderCell>
           <Table.HeaderCell>Password status</Table.HeaderCell>
@@ -20,7 +19,6 @@ const DisplayField = ({ isFetching, passwordObject, userStatus, userStatusCode }
       <Table.Body>
         <Table.Row>
           <Table.Cell>{passwordObject.id}</Table.Cell>
-          <Table.Cell>{passwordObject.birthdate}</Table.Cell>
           <Table.Cell>{new Date(passwordObject.latestActivatedTime).toDateString()}</Table.Cell>
           <Table.Cell>{passwordObject.activationLifetimes}</Table.Cell>
           <Table.Cell

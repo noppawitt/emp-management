@@ -77,7 +77,8 @@ const TakeExam = ({
   categoryList,
   saveStatus,
   startTime,
-  onClickLogout, }) =>
+  onClickLogout,
+  today, }) =>
   (
     <div>
       <br />
@@ -192,15 +193,15 @@ const TakeExam = ({
                 </Grid.Column>
               </Grid>
               <Segment>
-                <Button icon labelPosition="left" primary onClick={() => onClickSave(id, answerList)}>
+                <Button icon labelPosition="left" primary onClick={() => onClickSave(id, answerList, today)}>
                   <Icon name="save" />
                   Save
                 </Button>
-                <Button icon labelPosition="left" secondary onClick={() => onClickSubmit(id, answerList)}>
+                <Button icon labelPosition="left" secondary onClick={() => onClickSubmit(id, answerList, today)}>
                   <Icon name="send" />
                   Submit
                 </Button>
-                <Button floated="right" icon labelPosition="left" negative onClick={() => onClickLogout(id, answerList)}>
+                <Button floated="right" icon labelPosition="left" negative onClick={() => onClickLogout(id, answerList, today)}>
                   <Icon name="sign out" />
                   Log out
                 </Button>
@@ -232,6 +233,7 @@ TakeExam.propTypes = {
   saveStatus: PropTypes.string.isRequired,
   startTime: PropTypes.instanceOf(moment).isRequired,
   onClickLogout: PropTypes.func.isRequired,
+  today: PropTypes.string.isRequired,
 };
 
 export default TakeExam;

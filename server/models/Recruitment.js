@@ -17,12 +17,12 @@ Recruitment.checkExamUser = (id, testDate) => (
 Recruitment.createExamUser = (id, testDate, createDate, updateDate, createUser, updateUser, latestActivatedTime, activationLifetimes) => (
   db.none(
     'INSERT INTO exam_users2'
-      + '(id, test_date, created_date, updated_date, created_user, updated_user, '
-      + 'latest_activated_time, activation_lifetimes, agreement_status) '
-      + 'VALUES ($1, $2, $3, $4, $5, $6, $7, $8 ,$9)',
+    + '(id, test_date, created_date, updated_date, created_user, updated_user, '
+    + 'latest_activated_time, activation_lifetimes, agreement_status) '
+    + 'VALUES ($1, $2, $3, $4, $5, $6, $7, $8 ,$9)',
     [
       id, testDate, createDate, updateDate, createUser, updateUser,
-      latestActivatedTime, activationLifetimes, 'Not Read'
+      latestActivatedTime, activationLifetimes, 'NotRead'
     ]
   )
 );
@@ -42,54 +42,8 @@ Recruitment.getTestDate = id => (
 );
 
 // Recruitment : View Result part
-Recruitment.fetchExam = (id, testDate) => (
+Recruitment.fetchResultExam = (id, testDate) => (
   db.manyOrNone('SELECT * FROM exam_result WHERE cd_id = $1 AND test_date = $2', [id, testDate])
-);
-
-Recruitment.fetchRandomExIdList = (id, testDate) => (
-  db.oneOrNone('SELECT random_ex_id_list FROM exam_users2 WHERE id = $1 AND test_date = $2', [id, testDate])
-);
-
-Recruitment.fetchExamSpecifyId = id => (
-  db.manyOrNone('SELECT'
-    + ' ex_id'
-    + ', ex_category'
-    + ', ex_subcategory'
-    + ', ex_type'
-    + ', ex_question'
-    + ', ex_choice'
-    + ', ex_answer'
-    + ', ARRAY_LENGTH(ex_answer, 1) as ex_answer_length'
-    + ' FROM exams WHERE ex_id = ANY ($1)', [id])
-);
-
-Recruitment.fetchCandidateAnswer = (id, testDate) => (
-  db.manyOrNone('SELECT * FROM exam_candidate_submitted WHERE id = $1 AND test_date = $2', [id, testDate])
-);
-
-Recruitment.uploadResult = resultList => (
-  db.tx((t) => {
-    const queryList = [];
-    Object(resultList).map((eachObject) => {
-      const aquery = t.none(
-        'INSERT INTO exam_result (cd_id, ex_id, test_date, ex_question, ex_choices, ex_type, cd_answer, point, status, ex_correct)'
-        + ' VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
-        [
-          eachObject.cd_id,
-          eachObject.ex_id,
-          eachObject.test_date,
-          eachObject.ex_question,
-          eachObject.ex_choices,
-          eachObject.ex_type,
-          eachObject.cd_answer,
-          eachObject.point,
-          eachObject.status,
-          eachObject.ex_correct]
-      );
-      queryList.push(aquery);
-    });
-    return t.batch(queryList);
-  })
 );
 
 Recruitment.changeStatus = (id, status) => (

@@ -98,16 +98,13 @@ export function* randomExamTask(action) {
 
 export function* evaluateExamTask(action) {
   try {
-    yield call(api.grading, action.payload.id, action.payload.testDate);
-    const examList = yield call(api.fetchExam, action.payload.id, action.payload.testDate);
-    console.log('>> fetchResult:', examList);
-    const retval = yield call(api.changeStatus(action.payload.id, 'Complete'));
+    const resultExamList = yield call(api.fetchResultExam, action.payload.id, action.payload.testDate);
+    console.log('>> fetchResult:', resultExamList);
+    const retval = yield call(api.changeStatus, action.payload.id, 'Complete');
     if (retval === 'OK') {
       yield put(fetchRecruitmentRequest());
     }
-    // put fetchSuccess for update state?
-    yield put(fetchResultSuccess(examList));
-    // after update result of evaluation exam list state
+    yield put(fetchResultSuccess(resultExamList));
     yield put(openModal(modalNames.VIEW_RESULT));
   }
   catch (error) {

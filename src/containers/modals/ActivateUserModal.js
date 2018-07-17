@@ -11,11 +11,11 @@ import {
 } from '../../actions/recruitment';
 import DisplayField from '../forms/DisplayField';
 import ExamModal from '../../components/ExamModal';
-
+// refactor passwordObject to something better than object
 const ActivateUserModal = ({
   onClose,
   onClickActivate,
-  passwordObject,
+  object,
   isFetching,
   userStatus,
   userStatusCode,
@@ -29,7 +29,7 @@ const ActivateUserModal = ({
       isFetching={isFetching}
       onClose={onClose}
       onClickActivate={onClickActivate}
-      passwordObject={passwordObject}
+      passwordObject={object}
       onLifetimesValueChange={onLifetimesValueChange}
       onLifetimesUnitChange={onLifetimesUnitChange}
       lifetimesValue={lifetimesValue}
@@ -37,7 +37,7 @@ const ActivateUserModal = ({
     >
       <DisplayField
         isFetching={isFetching}
-        passwordObject={passwordObject}
+        passwordObject={object}
         userStatus={userStatus}
         userStatusCode={userStatusCode}
       />
@@ -48,7 +48,7 @@ ActivateUserModal.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onClickActivate: PropTypes.func.isRequired,
-  passwordObject: PropTypes.object.isRequired,
+  object: PropTypes.object.isRequired,
   userStatus: PropTypes.string.isRequired,
   userStatusCode: PropTypes.string.isRequired,
   onLifetimesValueChange: PropTypes.func.isRequired,
@@ -59,7 +59,7 @@ ActivateUserModal.propTypes = {
 
 const mapStateToProps = state => ({
   modalName: state.modal.name,
-  passwordObject: state.recruitment.passwordObject,
+  object: state.recruitment.passwordObject,
   isFetching: state.recruitment.isModalFetching,
   userStatus: state.recruitment.userStatus,
   userStatusCode: state.recruitment.userStatusCode,

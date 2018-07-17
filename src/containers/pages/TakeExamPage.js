@@ -35,7 +35,8 @@ const TakeExamPage = ({
   saveStatus,
   startTime,
   onClickLogout,
-  agreementStatus, }) =>
+  agreementStatus,
+  today, }) =>
   ((agreementStatus === 'NotRead')
     ? <Redirect
       to={{
@@ -63,6 +64,7 @@ const TakeExamPage = ({
           saveStatus={saveStatus}
           startTime={startTime}
           onClickLogout={onClickLogout}
+          today={today}
         />
       </div>)
   );
@@ -87,6 +89,7 @@ TakeExamPage.propTypes = {
   startTime: PropTypes.instanceOf(moment).isRequired,
   onClickLogout: PropTypes.func.isRequired,
   agreementStatus: PropTypes.string.isRequired,
+  today: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -102,6 +105,7 @@ const mapStateToProps = state => ({
   saveStatus: state.takeExam.saveStatus,
   startTime: state.takeExam.startTime,
   agreementStatus: state.examAuth.agreementStatus,
+  today: state.takeExam.today,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -111,9 +115,9 @@ const mapDispatchToProps = dispatch => ({
   onClickCheckbox: (choice, currentActivePage, pickedAnswer, exId) => dispatch(onPickCheckboxAnswer(choice, currentActivePage, pickedAnswer, exId)),
   onInputTextArea: (text, currentActivePage, exId) => dispatch(onInputTextAreaAnswer(text, currentActivePage, exId)),
   onClickCategory: category => dispatch(categoryChange(category)),
-  onClickSave: (id, answerList) => dispatch(uploadAnswerListRequest(id, answerList, false, false)),
-  onClickSubmit: (id, answerList) => dispatch(uploadAnswerListRequest(id, answerList, false, true)),
-  onClickLogout: (id, answerList) => dispatch(uploadAnswerListRequest(id, answerList, true, false)),
+  onClickSave: (id, answerList, today) => { console.log('>>>', today); dispatch(uploadAnswerListRequest(id, answerList, false, false, today)); },
+  onClickSubmit: (id, answerList, today) => dispatch(uploadAnswerListRequest(id, answerList, false, true, today)),
+  onClickLogout: (id, answerList, today) => dispatch(uploadAnswerListRequest(id, answerList, true, false, today)),
 });
 
 const enhance = compose(
