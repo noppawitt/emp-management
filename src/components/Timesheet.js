@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Table, Grid, Progress, Button, Select, Popup, Segment } from 'semantic-ui-react';
+import { Icon, Table, Grid, Progress, Button, Select, Popup } from 'semantic-ui-react';
 import moment from 'moment';
 import PageHeader from './PageHeader';
 import history from '../history';
@@ -240,12 +240,15 @@ class Timesheet extends React.Component {
   }
   popUpEdit(arrayDate) {
     return (
-      <div style={{ maxWidth: '220px' }}>
-        <Grid celled="internally" >
-          {arrayDate.map(onesheet => (
+      <div >
+        <Grid celled="internally" style={{ width: '275px' }}>
+          {arrayDate.map((onesheet, i) => (
             <Grid.Row style={{ cursor: 'pointer' }} onClick={() => this.props.onEditClick(onesheet.id)}>
-              <h3 style={{ margin: '0', marginTop: '10px' }}>{onesheet.name}</h3><br />
-              <h3 style={{ margin: '0', marginBottom: '10px' }}>{onesheet.timeIn} - {onesheet.timeOut}</h3>
+              <div style={{ textAlign: 'center', width: '100%' }}>
+                <h3 style={{ margin: '0', marginTop: '10px' }}>{onesheet.projectId}</h3>
+                <br />
+                <h3 style={{ margin: '0', marginBottom: '10px' }}>{onesheet.timeIn} - {onesheet.timeOut}</h3>
+              </div>
             </Grid.Row>
           ))}
         </Grid>

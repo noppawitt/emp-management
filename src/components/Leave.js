@@ -3,27 +3,7 @@ import PropTypes from 'prop-types';
 import { Segment, Button, Icon, Table, Menu, Grid, Select } from 'semantic-ui-react';
 import PageHeader from './PageHeader';
 import ProgressBar from './ProgressBar';
-
-
-const months = [
-  { key: 1, value: '01', text: 'January' },
-  { key: 2, value: '02', text: 'Fabuary' },
-  { key: 3, value: '03', text: 'March' },
-  { key: 4, value: '04', text: 'April' },
-  { key: 5, value: '05', text: 'May' },
-  { key: 6, value: '06', text: 'June' },
-  { key: 7, value: '07', text: 'July' },
-  { key: 8, value: '08', text: 'August' },
-  { key: 9, value: '09', text: 'September' },
-  { key: 10, value: '10', text: 'October' },
-  { key: 11, value: '11', text: 'Novemver' },
-  { key: 12, value: '12', text: 'December' },
-];
-
-const years = [];
-for (let y = 2018; y <= 2118; y += 1) {
-  years.push({ key: y, value: y.toString(), text: y });
-}
+import { getMonthOptions, getYearOptions } from '../utils/options';
 
 const Leave = ({ leaves, leaveHistory, onAddClick, onCancelClick, userId, fetchLeave, year, month }) => (
   <div>
@@ -52,10 +32,10 @@ const Leave = ({ leaves, leaveHistory, onAddClick, onCancelClick, userId, fetchL
           <Segment>
             <Grid>
               <Grid.Column width={3}>
-                <Select placeholder="Year" defaultValue={year} options={years} onChange={(e, { value }) => fetchLeave(userId, value, month)} />
+                <Select placeholder="Year" defaultValue={year} options={getYearOptions()} onChange={(e, { value }) => fetchLeave(userId, value, month)} />
               </Grid.Column>
               <Grid.Column width={3}>
-                <Select placeholder="Month" defaultValue={month} options={months} onChange={(e, { value }) => fetchLeave(userId, year, value)} />
+                <Select placeholder="Month" defaultValue={month} options={getMonthOptions()} onChange={(e, { value }) => fetchLeave(userId, year, value)} />
               </Grid.Column>
               <Grid.Column width={10}>
                 <Button icon labelPosition="left" floated="right" onClick={onAddClick} color="blue" >

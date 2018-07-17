@@ -9,7 +9,6 @@ import Input from '../../components/Input';
 import { getFormInitialValues } from '../../selectors/timesheet';
 
 const isWeekend = day => moment(day).isoWeekday() === 6 || moment(day).isoWeekday() === 7;
-
 const renderTasks = ({ fields }) => (
   <div>
     {fields.map((task, i) => (
@@ -34,6 +33,9 @@ const renderTasks = ({ fields }) => (
                   <Field name={`${task}.timeIn`} as={Form.Input} component={Input} label="Time in" type="time" />
                   <Field name={`${task}.timeOut`} as={Form.Input} component={Input} label="Time out" type="time" />
                 </Form.Group>
+              </Grid.Column>
+              <Grid.Column floated="right" width={6}>
+                {fields.get(i).remark.map(remark => (<p style={{ color: 'red' }}>{remark}</p>)) }
               </Grid.Column>
             </Grid.Row>
             <Grid.Column width={16}>

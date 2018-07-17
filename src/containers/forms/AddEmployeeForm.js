@@ -54,7 +54,7 @@ const AddEmployeeForm = ({ handleSubmit, submitting, masterTable, setDefaultProb
       component={Input}
       label="Citizen ID"
       disabled={submitting}
-      validate={[validator.required, validator.number, validator.length13]}
+      validate={[validator.required, validator.number, validator.digiLength13]}
     />
     <Field
       name="gender"

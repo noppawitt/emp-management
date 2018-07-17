@@ -12,7 +12,7 @@ import { closeModal } from '../actions/modal';
 import history from '../history';
 import api from '../services/api';
 
-export function* createTimesheetTask(action) {
+function* createTimesheetTask(action) {
   try {
     const timesheets = yield call(
       api.createTimesheet,
@@ -29,11 +29,13 @@ export function* createTimesheetTask(action) {
   }
 }
 
-export function* fetchTimesheetTask(action) {
+function* fetchTimesheetTask(action) {
   try {
-    const timesheets = yield call(api.fetchTimesheet, action.payload.userId, action.payload.year, action.payload.month);
-    const leaves = yield call(api.fetchLeave, action.payload.userId, action.payload.year, action.payload.month);
-    const holidays = yield call(api.fetchHolidays, action.payload.year, action.payload.month);
+    const [timesheets, leaves, holidays] = yield all([
+      call(api.fetchTimesheet, action.payload.userId, action.payload.year, action.payload.month),
+      call(api.fetchLeave, action.payload.userId, action.payload.year, action.payload.month),
+      call(api.fetchHolidays, action.payload.year, action.payload.month)
+    ]);
     yield put(fetchTimesheetSuccess(timesheets, leaves, holidays));
   }
   catch (error) {
@@ -41,7 +43,7 @@ export function* fetchTimesheetTask(action) {
   }
 }
 
-export function* updateTimesheetTask(action) {
+function* updateTimesheetTask(action) {
   try {
     const timesheets = yield call(api.updateTimesheet, { timesheet: action.payload.form });
     yield put(closeModal());
@@ -54,15 +56,15 @@ export function* updateTimesheetTask(action) {
   }
 }
 
-export function* watchCreateTimesheetRequest() {
+function* watchCreateTimesheetRequest() {
   yield takeEvery(actionTypes.TIMESHEET_CREATE_REQUEST, createTimesheetTask);
 }
 
-export function* watchFetchTimesheetRequest() {
+function* watchFetchTimesheetRequest() {
   yield takeEvery(actionTypes.TIMESHEET_FETCH_REQUEST, fetchTimesheetTask);
 }
 
-export function* watchUpdateTimesheetRequest() {
+function* watchUpdateTimesheetRequest() {
   yield takeEvery(actionTypes.TIMESHEET_UPDATE_REQUEST, updateTimesheetTask);
 }
 

@@ -14,23 +14,33 @@ import { closeModal } from '../actions/modal';
 import { getAccessControl } from '../selectors/accessControl';
 import api from '../services/api';
 
-export function* fetchProfileTask(action) {
+function* fetchProfileTask(action) {
   try {
     // Wait until access control fetching complete
     let can = yield select(getAccessControl);
     while (!can) {
-      yield take();
+      yield take(actionTypes.ACCESS_CONTROL_FETCH_SUCCESS);
       can = yield select(getAccessControl);
     }
-    const profile = {};
-    profile.general = yield call(api.fetchGeneralProfile, action.payload.userId);
-    profile.work = yield call(api.fetchWorkProfile, action.payload.userId);
+    const [general, work, certificates, assets, workExperience] = yield all([
+      call(api.fetchGeneralProfile, action.payload.userId),
+      call(api.fetchWorkProfile, action.payload.userId),
+      call(api.fetchCertificateProfile, action.payload.userId),
+      call(api.fetchAssetProfile, action.payload.userId),
+      call(api.fetchWorkExperience, action.payload.userId)
+    ]);
+    let educations;
     if (can.educateView) {
-      profile.educations = yield call(api.fetchEducationProfile, action.payload.userId);
+      educations = yield call(api.fetchEducationProfile, action.payload.userId);
     }
-    profile.certificates = yield call(api.fetchCertificateProfile, action.payload.userId);
-    profile.assets = yield call(api.fetchAssetProfile, action.payload.userId);
-    profile.workExperience = yield call(api.fetchWorkExperience, action.payload.userId);
+    const profile = {
+      general,
+      work,
+      certificates,
+      assets,
+      workExperience,
+      educations
+    };
     yield put(fetchProfileSuccess(profile));
   }
   catch (error) {
@@ -38,7 +48,7 @@ export function* fetchProfileTask(action) {
   }
 }
 
-export function* updateProfileTask(action) {
+function* updateProfileTask(action) {
   try {
     const profile = {};
     switch (action.payload.type) {
@@ -91,7 +101,7 @@ export function* updateProfileTask(action) {
   }
 }
 
-export function* deleteProfileTask(action) {
+function* deleteProfileTask(action) {
   try {
     let profile;
     switch (action.payload.profileType) {
@@ -110,6 +120,11 @@ export function* deleteProfileTask(action) {
           id: action.payload.profileId
         });
         break;
+      case 'workExperience':
+        profile = yield call(api.deleteWorkExperienceProfile, {
+          id: action.payload.profileId
+        });
+        break;
       default:
         yield put(deleteProfileFailure('Something gone wrong'));
     }
@@ -121,7 +136,7 @@ export function* deleteProfileTask(action) {
   }
 }
 
-export function* updateProfilePictureTask(action) {
+function* updateProfilePictureTask(action) {
   try {
     const formData = new FormData();
     formData.append('userId', action.payload.userId);
@@ -135,19 +150,19 @@ export function* updateProfilePictureTask(action) {
   }
 }
 
-export function* watchFetchProfileRequest() {
+function* watchFetchProfileRequest() {
   yield takeEvery(actionTypes.PROFILE_FETCH_REQUEST, fetchProfileTask);
 }
 
-export function* watchUpdateProfileRequest() {
+function* watchUpdateProfileRequest() {
   yield takeEvery(actionTypes.PROFILE_UPDATE_REQUEST, updateProfileTask);
 }
 
-export function* watchDeleteProfileRequest() {
+function* watchDeleteProfileRequest() {
   yield takeEvery(actionTypes.PROFILE_DELETE_REQUEST, deleteProfileTask);
 }
 
-export function* watchUpdateProfilePictureRequest() {
+function* watchUpdateProfilePictureRequest() {
   yield takeEvery(actionTypes.PROFILE_PICTURE_UPDATE_REQUEST, updateProfilePictureTask);
 }
 

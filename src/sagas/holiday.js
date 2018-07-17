@@ -7,7 +7,7 @@ import {
 // import { closeModal } from '../actions/modal';
 import api from '../services/api';
 
-export function* fetchHolidayTask(action) {
+function* fetchHolidayTask(action) {
   try {
     const holidays = yield call(api.fetchHolidays, action.payload.userId, action.payload.year, action.payload.month);
     yield put(fetchHolidaySuccess(holidays));
@@ -17,7 +17,7 @@ export function* fetchHolidayTask(action) {
   }
 }
 
-export function* watchFetchHolidayRequest() {
+function* watchFetchHolidayRequest() {
   yield takeEvery(actionTypes.HOLIDAY_FETCH_REQUEST, fetchHolidayTask);
 }
 

@@ -46,13 +46,14 @@ export const durationsOptions = [
 ];
 
 export const paymentTypeOptions = [
+  { key: 'Turnkey', value: 'Turnkey', text: 'Turnkey' },
   { key: 'Man-month', value: 'Man-month', text: 'Man-month' },
-  { key: 'Man-day', value: 'Man-day', text: 'Man-day' },
+  { key: 'Man-day', value: 'Man-day', text: 'Man-day' }
 ];
 
 export const workingDayOptions = [
   { key: 22, value: 22, text: '22 days per month' },
-  { key: 20, value: 20, text: '20 days per month' },
+  { key: 20, value: 20, text: '20 days per month' }
 ];
 
 export const statusOptions = [
@@ -68,4 +69,10 @@ export const genderOptions = [
 export const engineerOptions = [
   { key: 'engineer', value: true, text: 'Engineer' },
   { key: 'non-engineer', value: false, text: 'Non-Engineer' }
+];
+
+export const honorOption = [
+  { key: '1', value: '1', text: 'เกียรตินิยมอันดับที่ 1' },
+  { key: '2', value: '2', text: 'เกียรตินิยมอันดับที่ 2' },
+  { key: '3', value: '-', text: '-' }
 ];
