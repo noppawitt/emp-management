@@ -290,8 +290,8 @@ api.getTestDate = id => (
 
 // Recruitment : View Result Part
 
-api.fetchResultExam = (id, testDate) => (
-  callApi(`/api/recruitments/fetchResultExam`, {
+api.fetchGradingExam = (id, testDate) => (
+  callApi(`/api/recruitments/fetchGradingExam`, {
     method: 'POST',
     body: {
       id,

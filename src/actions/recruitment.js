@@ -120,24 +120,32 @@ export const randomExam = id => ({
   }
 });
 
-export const evaluateExam = (id, testDate) => ({
-  type: actionTypes.VIEW_RESULT_EVALUATE_EXAM,
+export const fetchGradingRequest = (id, testDate) => ({
+  type: actionTypes.GRADING_FETCH_REQUEST,
   payload: {
     id,
     testDate,
   }
 });
 
-export const fetchResultSuccess = examList => ({
-  type: actionTypes.VIEW_RESULT_FETCH_SUCCESS,
+export const fetchGradingSuccess = (gradingList, gradingId) => ({
+  type: actionTypes.GRADING_FETCH_SUCCESS,
   payload: {
-    examList,
+    gradingList,
+    gradingId,
   }
 });
 
-export const fetchResultFailure = message => ({
-  type: actionTypes.VIEW_RESULT_FETCH_FAILURE,
+export const fetchGradingFailure = message => ({
+  type: actionTypes.GRADING_FETCH_FAILURE,
   payload: {
     message,
+  }
+});
+
+export const modalPageChange = value => ({
+  type: actionTypes.GRADING_MODAL_PAGINATION_CHANGE,
+  payload: {
+    value,
   }
 });

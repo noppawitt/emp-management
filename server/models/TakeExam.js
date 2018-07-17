@@ -111,10 +111,10 @@ TakeExam.findUploadedAnswer = (id, type, testDate) => {
   return null;
 };
 
-TakeExam.updateAnswer = (id, answerList, submittedTime, testDate) => {
-  return db.oneOrNone('UPDATE exam_candidate_submitted SET (answer_list, submitted_time) = ($2, $3)'
-    + ' WHERE id = $1 AND test_date = $4', [id, answerList, submittedTime, testDate]);
-};
+TakeExam.updateAnswer = (id, answerList, submittedTime, testDate) => (
+  db.oneOrNone('UPDATE exam_candidate_submitted SET (answer_list, submitted_time) = ($2, $3)'
+    + ' WHERE id = $1 AND test_date = $4', [id, answerList, submittedTime, testDate])
+);
 
 TakeExam.updateSubmittedTime = (id, time, testDate) => (
   db.oneOrNone('UPDATE exam_candidate_submitted SET submitted_time = $2 WHERE id = $1 AND test_date = $3', [id, moment(time).format('YYYY-MM-DD HH:mm:ss'), testDate])

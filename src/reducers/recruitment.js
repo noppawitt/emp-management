@@ -17,6 +17,10 @@ const initialState = {
   lifetimesValue: null,
   lifetimesUnit: 1,
   today: '',
+  gradingId: '',
+  currentModalActivePage: '',
+  activeModalCategory: '',
+  gradingList: [],
 };
 
 const Recruitment = (state = initialState, action) => {
@@ -120,20 +124,30 @@ const Recruitment = (state = initialState, action) => {
         ...state,
         // nothing to update state yet
       };
-    case actionTypes.VIEW_RESULT_EVALUATE_EXAM:
+    case actionTypes.GRADING_FETCH_REQUEST:
       return {
         ...state,
         // nothing to update state
       };
-    case actionTypes.VIEW_RESULT_FETCH_SUCCESS:
+    case actionTypes.GRADING_FETCH_SUCCESS:
+      console.log('>>>', action.payload.resultList);
       return {
         ...state,
-        resultList: action.payload.examList,
+        gradingId: action.payload.gradingId,
+        gradingList: action.payload.gradingList,
+        // variable initialization for new modal
+        currentModalActivePage: 1,
+        // activeModalCategory: action.payload.resultList,
       };
-    case actionTypes.VIEW_RESULT_FETCH_FAILURE:
+    case actionTypes.GRADING_FETCH_FAILURE:
       return {
         ...state,
         message: action.payload.message,
+      };
+    case actionTypes.GRADING_MODAL_PAGINATION_CHANGE:
+      return {
+        ...state,
+        currentModalActivePage: action.payload.value,
       };
     default:
       return state;

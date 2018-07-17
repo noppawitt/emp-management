@@ -9,8 +9,8 @@ import {
   checkUserStatusSuccess,
   activateUserFailure,
   activateUserSuccess,
-  fetchResultFailure,
-  fetchResultSuccess,
+  fetchGradingFailure,
+  fetchGradingSuccess,
   updateUserStatus,
 } from '../actions/recruitment';
 import api from '../services/api';
@@ -96,19 +96,20 @@ export function* randomExamTask(action) {
   }
 }
 
-export function* evaluateExamTask(action) {
+export function* fetchGradingTask(action) {
   try {
-    const resultExamList = yield call(api.fetchResultExam, action.payload.id, action.payload.testDate);
-    console.log('>> fetchResult:', resultExamList);
-    const retval = yield call(api.changeStatus, action.payload.id, 'Complete');
+    const gradingExamList = yield call(api.fetchGradingExam, action.payload.id, action.payload.testDate);
+    console.log('>> fetchResult:', gradingExamList);
+    // dont forget to change last parameter to 'Complete'
+    const retval = yield call(api.changeStatus, action.payload.id, 'Wait for Grading');
     if (retval === 'OK') {
       yield put(fetchRecruitmentRequest());
     }
-    yield put(fetchResultSuccess(resultExamList));
-    yield put(openModal(modalNames.VIEW_RESULT));
+    yield put(fetchGradingSuccess(gradingExamList, action.payload.id));
+    yield put(openModal(modalNames.GRADING_EXAM));
   }
   catch (error) {
-    yield put(fetchResultFailure(error));
+    yield put(fetchGradingFailure(error));
   }
 }
 
@@ -129,7 +130,7 @@ export function* watchRandomExamRequest() {
 }
 
 export function* watchEvaluateExam() {
-  yield takeEvery(actionTypes.VIEW_RESULT_EVALUATE_EXAM, evaluateExamTask);
+  yield takeEvery(actionTypes.GRADING_FETCH_REQUEST, fetchGradingTask);
 }
 
 export default function* recruitmentSaga() {

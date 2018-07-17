@@ -87,8 +87,8 @@ exports.uploadRandomExIdList = (req, res, next) => {
 
 // Recruitment : View Result part
 
-exports.fetchResultExam = (req, res, next) => {
-  Recruitment.fetchResultExam(req.body.id, req.body.testDate)
+exports.fetchGradingExam = (req, res, next) => {
+  Recruitment.fetchGradingExam(req.body.id, req.body.testDate)
     .then((exam) => {
       res.json(exam);
     })

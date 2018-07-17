@@ -42,7 +42,7 @@ Recruitment.getTestDate = id => (
 );
 
 // Recruitment : View Result part
-Recruitment.fetchResultExam = (id, testDate) => (
+Recruitment.fetchGradingExam = (id, testDate) => (
   db.manyOrNone('SELECT * FROM exam_result WHERE cd_id = $1 AND test_date = $2', [id, testDate])
 );
 

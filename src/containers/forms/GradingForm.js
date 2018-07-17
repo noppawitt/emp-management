@@ -59,12 +59,12 @@ const showAnswerText = (exId, pickedAnswer) => {
 };
 
 const GradingForm = ({
-  id,
+  gradingId,
   isFetching,
-  examList,
-  currentActivePage,
+  gradingList,
+  currentModalActivePage,
   onPageChange,
-  activeCategory,
+  activeModalCategory,
   onClickCategory, }) => (
     isFetching ?
       <Loader /> :
@@ -75,10 +75,10 @@ const GradingForm = ({
               <Grid.Column width={3}>
                 <Menu fluid vertical tabular>
                   <Menu.Item header name="Category menu" />
-                  {examList && examList.map(item => (
+                  {gradingList && gradingList.map(item => (
                     <Menu.Item
                       name={item[0]}
-                      active={activeCategory === item[0]}
+                      active={activeModalCategory === item[0]}
                       onClick={() => { onClickCategory(item[0]); pageChange(1); }}
                     />
                   ))}
@@ -86,18 +86,15 @@ const GradingForm = ({
               </Grid.Column>
               <Grid.Column width={10}>
                 <h1>
-                  Question {currentActivePage} from {filterExam(examList, activeCategory).length}
+                  Question {currentModalActivePage} from {gradingList && filterExam(gradingList, activeModalCategory).length}
                 </h1>
-                <h2>
-                  Applicant ID: {id}
-                </h2>
               </Grid.Column>
-              {filterExam(examList, activeCategory).length > 0
-                && filterExam(examList, activeCategory).map((row, i) => (
-                  i === currentActivePage - 1 ?
+              {gradingList && filterExam(gradingList, activeModalCategory).length > 0
+                && filterExam(gradingList, activeModalCategory).map((row, i) => (
+                  i === currentModalActivePage - 1 ?
                     <Form>
                       <br />
-                      {questionRenderer(row.exQuestion, row.exSubcategory)}
+                      {row.exQuestion && row.exSubcategory && questionRenderer(row.exQuestion, row.exSubcategory)}
                       <br />
                       {row.exType === 'Choices'
                         && row.exChoice.map((answer, j) => (
@@ -107,7 +104,7 @@ const GradingForm = ({
                                 <Radio
                                   label={(j + 1).toString().concat('. ').concat(answer)}
                                   value={answer}
-                                  checked={showAnswerCheckRadio(row.exId, row.cdAnswer, answer)}
+                                  checked={row.cdAnswer && showAnswerCheckRadio(row.exId, row.cdAnswer, answer)}
                                 />
                               </p>
                             </Form.Field> :
@@ -116,7 +113,7 @@ const GradingForm = ({
                                 <Checkbox
                                   label={(j + 1).toString().concat('. ').concat(answer)}
                                   value={answer}
-                                  checked={showAnswerCheckRadio(row.exId, row.cdAnswer, answer)}
+                                  checked={row.cdAnswer && showAnswerCheckRadio(row.exId, row.cdAnswer, answer)}
                                 />
                               </p>
                             </Form.Field>
@@ -124,21 +121,21 @@ const GradingForm = ({
                       {row.exType !== 'Choices' &&
                         <Form.Field>
                           <TextArea
-                            value={showAnswerText(row.exId, answerList)}
+                            value={row.cdAnswer && showAnswerText(row.exId, row.cdAnswer)}
                             placeholder="No answer.."
                           />
                         </Form.Field>
                       }
                     </Form> : ''
                 ))}
-              {!examList && <h1>Fetch fail somewhere!</h1>}
+              {!gradingList && <h1>Fetch fail somewhere!</h1>}
             </Grid.Row>
             <Grid.Row>
               <Grid.Column with={15}>
                 <Pagination
                   floated="right"
-                  onPageChange={(e, activePage) => onPageChange(activePage)}
-                  activePage={currentActivePage}
+                  onPageChange={(e, object) => { console.log(object); onPageChange(object.activePage); }}
+                  activePage={currentModalActivePage}
                   boundaryRange={1}
                   siblingRange={1}
                   ellipsisItem={{ content: <Icon name="ellipsis horizontal" />, icon: true }}
@@ -146,7 +143,7 @@ const GradingForm = ({
                   lastItem={{ content: <Icon name="angle double right" />, icon: true }}
                   prevItem={{ content: <Icon name="angle left" />, icon: true }}
                   nextItem={{ content: <Icon name="angle right" />, icon: true }}
-                  totalPages={categoryLengthCalculate(examList, activeCategory)}
+                  totalPages={(gradingList && categoryLengthCalculate(gradingList, activeModalCategory)) || (!gradingList && 5)}
                 />
               </Grid.Column>
             </Grid.Row>
@@ -157,16 +154,20 @@ const GradingForm = ({
 
 GradingForm.propTypes = {
   isFetching: PropTypes.bool.isRequired,
-  id: PropTypes.string.isRequired,
-  examList: PropTypes.array.isRequired,
-  currentActivePage: PropTypes.string.isRequired,
+  gradingId: PropTypes.string.isRequired,
+  gradingList: PropTypes.array.isRequired,
+  currentModalActivePage: PropTypes.string.isRequired,
   onPageChange: PropTypes.func.isRequired,
-  activeCategory: PropTypes.string.isRequired,
+  activeModalCategory: PropTypes.string.isRequired,
   onClickCategory: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = () => ({
+const mapStateToProps = state => ({
   // isFetching: state.recruitment.isModalFetching,
+  gradingList: state.recruitment.gradingList,
+  gradingId: state.recruitment.gradingId,
+  currentActivePage: state.recruitment.currentModalActivePage,
+  activeModalCategory: state.recruitment.activeModalCategory,
 });
 
 export default connect(mapStateToProps)(GradingForm);

@@ -11,7 +11,7 @@ router.post('/activateUser', RecruitmentController.activateUser);
 
 router.post('/uploadRandomExIdList', RecruitmentController.uploadRandomExIdList);
 
-router.post('/fetchResultExam', RecruitmentController.fetchResultExam);
+router.post('/fetchGradingExam', RecruitmentController.fetchGradingExam);
 
 router.post('/changeStatus', RecruitmentController.changeStatus);
 
