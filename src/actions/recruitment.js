@@ -151,3 +151,18 @@ export const modalPageChange = value => ({
     value,
   }
 });
+
+export const viewResult = (id, testDate) => ({
+  type: actionTypes.VIEW_RESULT_EVALUATE_EXAM,
+  payload: {
+    id,
+    testDate,
+  }
+});
+
+export const fetchResultFailure = message => ({
+  type: actionTypes.VIEW_RESULT_FETCH_FAILURE,
+  payload: {
+    message,
+  }
+});

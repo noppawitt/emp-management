@@ -12,6 +12,7 @@ import {
   fetchGradingFailure,
   fetchGradingSuccess,
   updateUserStatus,
+  fetchResultFailure,
 } from '../actions/recruitment';
 import api from '../services/api';
 import * as modalNames from '../constants/modalNames';
@@ -157,6 +158,16 @@ export function* fetchGradingTask(action) {
   }
 }
 
+export function* viewResultTask(action) {
+  try {
+    const resultList = yield call(api.fetchGradingExam, action.payload.id, action.payload.testDate);
+    yield put(openModal(modalNames.VIEW_RESULT, { id: action.payload.id, testDate: action.payload.testDate, resultList }));
+  }
+  catch (error) {
+    yield put(fetchResultFailure(error));
+  }
+}
+
 export function* watchFetchRecruitmentRequest() {
   yield takeEvery(actionTypes.RECRUITMENT_FETCH_REQUEST, fetchRecruitmentTask);
 }
@@ -177,6 +188,10 @@ export function* watchEvaluateExam() {
   yield takeEvery(actionTypes.GRADING_FETCH_REQUEST, fetchGradingTask);
 }
 
+export function* watchViewResult() {
+  yield takeEvery(actionTypes.VIEW_RESULT_EVALUATE_EXAM, viewResultTask);
+}
+
 export default function* recruitmentSaga() {
   yield all([
     watchFetchRecruitmentRequest(),
@@ -184,5 +199,6 @@ export default function* recruitmentSaga() {
     watchActivateUserRequest(),
     watchRandomExamRequest(),
     watchEvaluateExam(),
+    watchViewResult(),
   ]);
 }
