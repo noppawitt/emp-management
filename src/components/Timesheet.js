@@ -298,7 +298,6 @@ class Timesheet extends React.Component {
             ))}
           </Table.Body>
         </Table>
-        <Modal trigger={<Button>New Task</Button>} />
       </div>
     );
   }
