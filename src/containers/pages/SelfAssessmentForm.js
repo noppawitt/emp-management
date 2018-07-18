@@ -182,37 +182,37 @@ class SelfAssessmentForm extends React.Component {
                     <tr>
                         {/* Page One */}
                         <td>
-                            <div style={{padding: '0px 10px'}}>
+                            <div className='table-div' style={{padding: '0px 10px'}}>
                                 <table className='major-respon-table'>
-                                    <tr><th><span className='blue-text'>Major Responsibilities</span>
+                                    <tr><th><span className='header-self-text'>Major Responsibilities</span>
                                         {!this.state.majorResponsibilities ? requiredMessage : ''}</th></tr>
                                       <tr><td><textarea tabIndex='-1' disabled={this.props.mode=='view'} onChange={(event) => {
                                         this.setState({ majorResponsibilities: event.target.value });
                                     }}>{this.state.majorResponsibilities}</textarea></td></tr>
                                 </table>
                             </div>
-                            <div style={{padding: '0px 10px'}}>
+                            <div className='table-div' style={{padding: '0px 10px'}}>
                                 <table className='sign-accom-table'>
-                                    <tr><th><span className='blue-text'>Significant Accomplishments</span>
+                                    <tr><th><span className='header-self-text'>Significant Accomplishments</span>
                                         {!this.state.significantAccomplishments ? <a style={{ color: 'red'}}>(Please enter your answer.)</a> : ''}</th></tr>
                                     <tr><td><textarea tabIndex='-1' disabled={this.props.mode=='view'} onChange={(event) => {
                                         this.setState({ significantAccomplishments: event.target.value });
                                     }}>{this.state.significantAccomplishments}</textarea></td></tr>
                                 </table>
                             </div>
-                            <div style={{padding: '0px 10px'}}>
+                            <div className='table-div' style={{padding: '0px 10px'}}>
                                 <table className='con-com-table'>
-                                    <tr><th><span className='blue-text'>Contribution/ Company Activities</span>
+                                    <tr><th><span className='header-self-text'>Contribution/ Company Activities</span>
                                         {!this.state.contribution ? <a style={{ color: 'red' }}>(Please enter your answer.)</a> : ''}</th></tr>
                                     <tr><td><textarea tabIndex='-1' disabled={this.props.mode=='view'} onChange={(event) => {
                                         this.setState({ contribution: event.target.value });
                                     }}>{this.state.contribution}</textarea></td></tr>
                                 </table>
                             </div>
-                            <div style={{padding: '0px 10px'}}>
+                            <div className='table-div' style={{padding: '0px 10px'}}>
                                 <table className='str-improve-table'>
                                     <tr>
-                                        <th colSpan='2'><span className='blue-text'>Strengths/ Improvements</span></th>
+                                        <th colSpan='2'><span className='header-self-text'>Strengths/ Improvements</span></th>
                                     </tr>
                                     <tr>
                                         <td><span>Strengths</span>
