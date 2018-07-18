@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Segment, Input, Table, Menu, Button, Icon } from 'semantic-ui-react';
+import { Segment, Input, Table, Button, Icon, Pagination } from 'semantic-ui-react';
 import history from '../history';
 import PageHeader from './PageHeader';
 
-const Project = ({ projects, onAddClick, onSearchChange, sortKey, direction, handleSort }) => (
+const Project = ({ projects, onAddClick, onSearchChange, sortKey, direction, handleSort, currentPage, totalPages, handlePageChange }) => (
   <div>
     <PageHeader text="Project" icon="paste" />
     <Segment.Group raised>
@@ -46,18 +46,7 @@ const Project = ({ projects, onAddClick, onSearchChange, sortKey, direction, han
           <Table.Footer>
             <Table.Row>
               <Table.HeaderCell colSpan="7">
-                <Menu floated="right" pagination>
-                  <Menu.Item as="a" icon>
-                    <Icon name="chevron left" />
-                  </Menu.Item>
-                  <Menu.Item as="a">1</Menu.Item>
-                  <Menu.Item as="a">2</Menu.Item>
-                  <Menu.Item as="a">3</Menu.Item>
-                  <Menu.Item as="a">4</Menu.Item>
-                  <Menu.Item as="a" icon>
-                    <Icon name="chevron right" />
-                  </Menu.Item>
-                </Menu>
+                <Pagination activePage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
               </Table.HeaderCell>
             </Table.Row>
           </Table.Footer>
@@ -73,7 +62,10 @@ Project.propTypes = {
   onSearchChange: PropTypes.func.isRequired,
   sortKey: PropTypes.string.isRequired,
   direction: PropTypes.string.isRequired,
-  handleSort: PropTypes.func.isRequired
+  handleSort: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  handlePageChange: PropTypes.func.isRequired
 };
 
 export default Project;

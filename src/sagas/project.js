@@ -21,7 +21,6 @@ function* fetchProjectTask(action) {
 
 function* createProjectTask(action) {
   try {
-    console.log(action.form);
     yield call(api.createProject, {
       project: action.payload.form
     });
