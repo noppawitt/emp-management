@@ -4,7 +4,7 @@ const { can } = require('../../middlewares');
 
 router.post('/', can(['projectAdd']), ProjectController.create);
 
-router.put('/', can('projectEdit'), ProjectController.update);
+router.put('/', can(['projectEdit']), ProjectController.update);
 
 router.get('/', can(['projectViewAll', 'projectViewOwn']), ProjectController.find);
 
