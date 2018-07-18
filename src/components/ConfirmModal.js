@@ -21,6 +21,7 @@ class ConfirmModal extends React.Component{
   }
   componentWillMount(){
     console.log('asdasdasd  '+ this.props.button);
+    console.log('')
   }
   componentWillReceiveProps(nextProps) {
     if(nextProps.confirmed){
@@ -60,8 +61,8 @@ class ConfirmModal extends React.Component{
 
 const mapStateToProps = state => ({
   button:
-    state.accessControl.can.mdSign && ((state.profile.evaInfo && state.profile.evaInfo.mdSignDate) || (state.profile.perfInfo && state.profile.perf.mdSignDate)) ? false :
-    state.accessControl.can.supSign && !state.accessControl.can.mdSign && ((state.profile.evaInfo && state.profile.evaInfo.supSignDate) || (state.profile.perfInfo && state.profile.perf.supSignDate)) ? false :
+    state.accessControl.can.mdSign && ((state.profile.evaInfo && state.profile.evaInfo.mdSignDate) || (state.profile.perfInfo && state.profile.perfInfo.mdSignDate)) ? false :
+    state.accessControl.can.supSign && !state.accessControl.can.mdSign && ((state.profile.evaInfo && state.profile.evaInfo.supSignDate) || (state.profile.perfInfo && state.profile.perfInfo.supSignDate)) ? false :
     state.accessControl.can.emSign && ((state.profile.evaInfo && state.profile.evaInfo.emSignDate) || (state.profile.perfInfo && state.profile.perfInfo.emSignDate)) ? false : true,
   confirmed: state.profile.confirmed
 });
