@@ -65,3 +65,10 @@ export const changeProjectPage = page => ({
     page
   }
 });
+
+export const changeHasPoNumber = value => ({
+  type: actionTypes.CHANGE_HAS_PO_NUMBER,
+  payload: {
+    value
+  }
+});

@@ -5,7 +5,8 @@ const initialState = {
   searchText: '',
   sortKey: null,
   direction: null,
-  currentPage: 1
+  currentPage: 1,
+  hasPoNumber: false
 };
 
 const project = (state = initialState, action) => {
@@ -57,6 +58,11 @@ const project = (state = initialState, action) => {
       return {
         ...state,
         currentPage: action.payload.page
+      };
+    case actionTypes.CHANGE_HAS_PO_NUMBER:
+      return {
+        ...state,
+        hasPoNumber: action.payload.value
       };
     default:
       return state;

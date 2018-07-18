@@ -10,14 +10,14 @@ import { paymentTypeOptions, workingDayOptions } from '../../utils/options';
 
 const validate = (values) => {
   const errors = {};
-  errors.name = validator.required(values.required);
-  errors.quotationId = validator.required(values.required);
-  errors.customer = validator.required(values.required);
-  errors.purchasedOrder = validator.required(values.required);
-  errors.amount = validator.required(values.required);
+  errors.name = validator.required(values.name);
+  errors.quotationId = validator.required(values.quotationId);
+  errors.customer = validator.required(values.customer);
+  errors.purchasedOrder = validator.required(values.purchasedOrder);
+  errors.amount = validator.required(values.amount);
   errors.startDate = validator.dateBefore(values.startDate, values.endDate);
   errors.endDate = validator.dateAfter(values.endDate, values.startDate);
-  errors.paymentType = validator.required(values.required);
+  errors.paymentType = validator.required(values.paymentType);
   return errors;
 };
 
