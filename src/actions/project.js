@@ -58,3 +58,10 @@ export const sortProject = (sortKey, direction) => ({
     direction
   }
 });
+
+export const changeProjectPage = page => ({
+  type: actionTypes.CHANGE_PROJECT_PAGE,
+  payload: {
+    page
+  }
+});

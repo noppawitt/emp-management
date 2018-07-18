@@ -57,7 +57,6 @@ User.create = async (user, id) => (
     ]
   )
     .then((result) => {
-      console.log(result.id);
       db.none(
         'INSERT INTO employee_info (first_name, last_name, citizen_id, created_user, updated_user, email, gender, picture, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
         [
