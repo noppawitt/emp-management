@@ -12,7 +12,7 @@ const AngleDownButton = (
   <Button icon="angle down" ></Button>
 )
 
-const EvaProfileBox = ({canCreate, performanceProfile, evaProfile, selfProfile, openProbationModal, openPerformanceModal, type, fetchProbation, profileId, fetchPerformance, openSelfAssessmentModal, fetchSelfAssessment, id}) => {
+const EvaProfileBox = ({performanceProfile, evaProfile, selfProfile, openProbationModal, openPerformanceModal, type, fetchProbation, profileId, fetchPerformance, openSelfAssessmentModal, fetchSelfAssessment, id}) => {
 
   const optionsPerf = [
     {
@@ -46,11 +46,11 @@ const EvaProfileBox = ({canCreate, performanceProfile, evaProfile, selfProfile, 
   )
   
   const cantClickProbation = (
-    (type!='1' && evaProfile.length==0) || !selfProfile || !selfProfile.submited || !canCreate
+    (type!='1' && evaProfile.length==0) || !selfProfile || !selfProfile.submited
   )
 
   const cantClickPerformance = (
-    (type!='1' && performanceProfile.length==0) || !canCreate
+    (type!='1' && performanceProfile.length==0)
   )
 
   performanceProfile.map(perf =>
@@ -84,20 +84,19 @@ const EvaProfileBox = ({canCreate, performanceProfile, evaProfile, selfProfile, 
         <div className="buttonGroup">
             <Button.Group
               color={
-                canCreatePerformance  && canCreate ? 'green' : 'blue'
+                canCreatePerformance ? 'green' : 'blue'
               }
             >
               <Dropdown trigger={AngleDownButton} options={optionsPerf} disabled={cantClickPerformance}/>
               <Button onClick={() => {if(!canCreatePerformance)fetchPerformance(profileId,(new Date()).getFullYear());openPerformanceModal();}}
                 disabled={cantClickPerformance}>
-                {canCreatePerformance  && canCreate ? 'Create Performance' : 'Performance'}
+                {canCreatePerformance? 'Create Performance' : 'Performance'}
               </Button>
             </Button.Group>
         </div>
         <div className="buttonGroup">
             <Button.Group
               color={
-                !canCreate ? 'blue' :
                 canCreateProbation ? 'green':
                 canCreateContinueProbation ? 'green' : 'blue'
               }
@@ -110,7 +109,6 @@ const EvaProfileBox = ({canCreate, performanceProfile, evaProfile, selfProfile, 
                 }
                 disabled={cantClickProbation}>
                 {
-                  !canCreate ?  'Probation' :
                   canCreateProbation ? 'Create Probation':
                   canCreateContinueProbation ? 'Create Continue Probation' : 'Probation'
                 }

@@ -29,6 +29,11 @@ class EmployeeInfo extends React.Component {
               {this.props.addSelf && this.props.mode=='edit'?
                 <table>
                     <tr>
+                        <td colSpan='4' className='underline'>
+                            <span className='blue-text'>Information</span>
+                        </td>
+                    </tr>
+                    <tr>
                         <td>Supervisor:</td>
                         <td>{this.state.supervisor}</td>
                         <td>{this.state.showEndProDate ? 'Probatoin ' : ''} Start Date</td>
