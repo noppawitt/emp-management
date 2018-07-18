@@ -12,8 +12,8 @@ const AngleDownButton = (
   <Button icon="angle down" ></Button>
 )
 
-const EvaProfileBox = ({performanceProfile, evaProfile, selfProfile, openProbationModal, id, openPerformanceModal, type, fetchProbation, profileId, fetchPerformance, openSelfAssessmentModal, fetchSelfAssessment}) => {
-  console.log(!selfProfile || !selfProfile.submited)
+const EvaProfileBox = ({canCreate, performanceProfile, evaProfile, selfProfile, openProbationModal, openPerformanceModal, type, fetchProbation, profileId, fetchPerformance, openSelfAssessmentModal, fetchSelfAssessment}) => {
+
   const optionsPerf = [
     {
       key: 'user',
@@ -25,6 +25,7 @@ const EvaProfileBox = ({performanceProfile, evaProfile, selfProfile, openProbati
       disabled: true,
     }
   ]
+
   const optionsPro = [
     {
       text: 'Probation List',
@@ -32,12 +33,29 @@ const EvaProfileBox = ({performanceProfile, evaProfile, selfProfile, openProbati
     }
   ]
 
+  const canCreateProbation = (
+    evaProfile.length==0 && type=='1'
+  )
+
+  const canCreateContinueProbation = (
+    evaProfile.length!=0 && type=='1' && evaProfile[0].passPro==false && evaProfile[0].continued==true && evaProfile[0].mdSignDate!=null
+  )
+
+  const canCreatePerformance = (
+    (performanceProfile.length==0 || performanceProfile[0].year<(new Date()).getFullYear()) && type=='1'
+  )
+  
+  const cantClickProbation = (
+    (type!='1' && evaProfile.length==0) || !selfProfile || !selfProfile.submited || !canCreate
+  )
+
+  const cantClickPerformance = (
+    (type!='1' && performanceProfile.length==0) || !canCreate
+  )
+
   performanceProfile.map(perf =>
     optionsPerf.push({text: perf.year ,onClick: () => {fetchPerformance(profileId,perf.year);openPerformanceModal()}})
   )
-  // evaProfile.map(pro =>
-  //   optionsPro.push({text: pro.probationId ,onClick: () => {fetchProbation(profileId,pro.probationId);openProbationModal()}})
-  // )
 
   for(let i = 0;i<evaProfile.length;i++){
     if(i==evaProfile.length-1){
@@ -66,42 +84,44 @@ const EvaProfileBox = ({performanceProfile, evaProfile, selfProfile, openProbati
         <div className="buttonGroup">
             <Button.Group
               color={
-                (performanceProfile.length==0 || performanceProfile[0].year<(new Date()).getFullYear()) && type=='admin' ? 'green' : 'blue'
+                canCreatePerformance  && canCreate ? 'green' : 'blue'
               }
             >
-              <Dropdown trigger={AngleDownButton} options={optionsPerf} disabled={type!='admin' && performanceProfile.length==0}/>
-              <Button onClick={() => {fetchPerformance(profileId,(new Date()).getFullYear());openPerformanceModal();}}
-                disabled={type!='admin' && performanceProfile.length==0}>
-                {(performanceProfile.length==0 || performanceProfile[0].year<(new Date()).getFullYear()) && type=='admin' ? 'Create Performance' : 'Performance'}
+              <Dropdown trigger={AngleDownButton} options={optionsPerf} disabled={cantClickPerformance}/>
+              <Button onClick={() => {if(!canCreatePerformance)fetchPerformance(profileId,(new Date()).getFullYear());openPerformanceModal();}}
+                disabled={cantClickPerformance}>
+                {canCreatePerformance  && canCreate ? 'Create Performance' : 'Performance'}
               </Button>
             </Button.Group>
         </div>
         <div className="buttonGroup">
             <Button.Group
               color={
-                evaProfile.length==0 && type=='admin' ? 'green':
-                evaProfile.length!=0 && type=='admin' && evaProfile[0].passPro==false && evaProfile[0].continued==true && evaProfile[0].mdSignDate!=null ? 'green' : 'blue'
+                !canCreate ? 'blue' :
+                canCreateProbation ? 'green':
+                canCreateContinueProbation ? 'green' : 'blue'
               }
             >
-              <Dropdown trigger={AngleDownButton} options={optionsPro} disabled={(type!='admin' && evaProfile.length==0) || !selfProfile || !selfProfile.submited}/>
+              <Dropdown trigger={AngleDownButton} options={optionsPro} disabled={cantClickProbation}/>
               <Button onClick={() => {
-                  if(!(evaProfile.length==0 && type=='admin') && !(evaProfile.length!=0 && type=='admin' && evaProfile[0].passPro==false && evaProfile[0].continued==true && evaProfile[0].mdSignDate!=null))
-                    fetchProbation(profileId,evaProfile[0].probationId);
+                  if(!canCreateProbation && !canCreateContinueProbation)
+                    fetchProbation(profileId,evaProfile[0].id);
                   openProbationModal();}
                 }
-                disabled={(type!='admin' && evaProfile.length==0) || !selfProfile || !selfProfile.submited}>
+                disabled={cantClickProbation}>
                 {
-                  evaProfile.length==0 && type=='admin' ? 'Create Probation':
-                  evaProfile.length!=0 && type=='admin' && evaProfile[0].passPro==false && evaProfile[0].continued==true && evaProfile[0].mdSignDate!=null ? 'Create Continue Probation' : 'Probation'
+                  !canCreate ?  'Probation' :
+                  canCreateProbation ? 'Create Probation':
+                  canCreateContinueProbation ? 'Create Continue Probation' : 'Probation'
                 }
               </Button>
             </Button.Group>
         </div>
             <Button icon labelPosition='left' icon={'angle right'}
-              disabled={(type!='User' && (!selfProfile || !selfProfile.submited))}
-              content={selfProfile || type=='admin' ? 'Self Assessment' : 'Create Self Assessment'}
+              disabled={(type!='2' && (!selfProfile || !selfProfile.submited))}
+              content={selfProfile || type=='1' ? 'Self Assessment' : 'Create Self Assessment'}
               onClick={()=>{if(selfProfile!=null)fetchSelfAssessment(profileId);openSelfAssessmentModal()}}
-              color={selfProfile || type=='admin' ? 'yellow':'green'}/>
+              color={selfProfile || type=='1' ? 'yellow':'green'}/>
 
       </Segment>
 
@@ -121,9 +141,9 @@ EvaProfileBox.propTypes = {
 };
 // <Button icon labelPosition='left' disabled={type!='admin' && !evaProfile} icon={evaProfile==null ? 'plus':'angle right'} content={!evaProfile && type=='admin' ? 'Create Probation':'View Probation'} onClick={()=>{fetchProbation(profileId);openProbationModal()}} color={!evaProfile && type=='admin' ? 'green':'blue'}/>
 const mapStateToProps = state => ({
-  profileId: state.profile.id,
-  id: state.auth.id,
-  type: state.auth.type
+  profileId: state.profile.userId,
+  type: state.auth.type,
+  id: state.auth.id
 })
 
 const mapDispatchToProps = dispatch =>({

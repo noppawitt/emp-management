@@ -45,7 +45,7 @@ exports.update = (req,res,next) => {
 }
 
 exports.submit = (req,res,next) => {
-  EmployeeInfo.findById(req.user.id)
+  EmployeeInfo.findAllByUserId(req.user.id)
   .then((empInfo) => {
     const mailOptions = {
       from: 'i.plas.sa.tic@gmail.com',
@@ -65,6 +65,7 @@ exports.submit = (req,res,next) => {
       }
     });
   })
+  console.log(req.user.id);
   SelfAssessment.submitSelfAssessment(req.user.id)
     .then(()=>{
       SelfAssessment.checkExist(req.user.id)

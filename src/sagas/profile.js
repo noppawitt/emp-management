@@ -72,11 +72,13 @@ export function* fetchProfileTask(action) {
     }
     profile.certificates = yield call(api.fetchCertificateProfile, action.payload.userId);
     profile.assets = yield call(api.fetchAssetProfile, action.payload.userId);
-    profile.workExperience = yield call(api.fetchWorkExperience, action.payload.userId);
-    if(token.type=='admin' || token.id == action.payload.id || token.type == 'md'){
-      profile.eva = yield call(api.checkProbation, action.payload.id);
-      profile.perf = yield call(api.checkPerformance, action.payload.id);
-      profile.self = yield call(api.checkSelfAssessment, action.payload.id);
+    if(can.workExperienceView){
+      profile.workExperience = yield call(api.fetchWorkExperience, action.payload.userId);
+    }
+    if(can.evaViewOwn){
+      profile.eva = yield call(api.checkProbation, action.payload.userId);
+      profile.perf = yield call(api.checkPerformance, action.payload.userId);
+      profile.self = yield call(api.checkSelfAssessment, action.payload.userId);
     }
     yield put(fetchProfileSuccess(profile));
   }

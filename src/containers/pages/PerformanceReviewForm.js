@@ -60,7 +60,7 @@ class PerformanceReviewForm extends React.Component {
                 employeeSignDate: this.props.profile.perfInfo.emSignDate,
                 supervisorSignDate: this.props.profile.perfInfo.supSignDate,
                 MDSignDate: this.props.profile.perfInfo.mdSignDate,
-                performanceId: this.props.profile.perfInfo.performanceId,
+                performanceId: this.props.profile.perfInfo.id,
                 level: this.props.profile.perfInfo.levelId
             })
         }

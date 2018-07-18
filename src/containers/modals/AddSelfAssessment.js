@@ -28,14 +28,14 @@ class AddSelfAssessment extends React.Component {
             submit={true}
             submitting={this.props.submitting}
             size="large"
-            disable={!this.props.edited || (this.props.profile.selfInfo && this.props.profile.selfInfo.submit)}
-            disableSubmit={this.props.edited || !this.props.profile.self || (this.props.profile.selfInfo && this.props.profile.selfInfo.submit)}
+            disable={!this.props.edited || (this.props.profile.selfInfo && this.props.profile.selfInfo.submited)}
+            disableSubmit={this.props.edited || !this.props.profile.self || (this.props.profile.selfInfo && this.props.profile.selfInfo.submited)}
             navButton={true}
             onChangePage={(nextPage)=>{this.props.onChange({...this.props.item,currentPage: (this.props.item.currentPage+nextPage+4)%4},'page')}}
             currentPage={this.props.item.currentPage}
             totalPage={4}
           >
-            <A test={(item)=>{this.props.onChange(item,'selfassessment')}} profile={this.props.profile} item={this.props.profile.item}  mode={this.props.profile.selfInfo ? this.props.profile.selfInfo.submit==true ? 'view':'edit':'edit'}/>
+            <A test={(item)=>{this.props.onChange(item,'selfassessment')}} profile={this.props.profile} item={this.props.profile.item}  mode={this.props.profile.selfInfo ? this.props.profile.selfInfo.submited==true ? 'view':'edit':'edit'}/>
           </Modal>
         }
       </div>

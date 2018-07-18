@@ -150,7 +150,7 @@ class ProbationForm extends React.Component {
                 MDSignDate: this.props.profile.evaInfo.mdSignDate,
                 endProbationDate: this.props.profile.evaInfo.passProDate,
                 level: this.props.profile.evaInfo.levelId,
-                proId: this.props.profile.evaInfo.probationId
+                proId: this.props.profile.evaInfo.id
             })
         }
     }
