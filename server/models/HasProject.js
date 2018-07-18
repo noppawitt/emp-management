@@ -4,25 +4,31 @@ const moment = require('moment');
 const HasProject = {};
 
 HasProject.create = (hasProject, id) => (
-  db.one(
-    'INSERT INTO has_projects (user_id, project_id, role, created_user, updated_user) VALUES ($1, $2, $3, $4, $5) RETURNING 1',
+  db.none(
+    'INSERT INTO has_projects (user_id, project_id, role, created_user, updated_user, from, to, amount) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
     [
       hasProject.userId,
       hasProject.projectId,
       hasProject.role,
       id,
-      id
+      id,
+      hasProject.from,
+      hasProject.to,
+      hasProject.amount
     ]
   )
 );
 
 HasProject.update = (hasProject, id) => (
   db.one(
-    'UPDATE has_projects SET role = $1, updated_user = $2, updated_date = $3 WHERE id = $4',
+    'UPDATE has_projects SET role = $1, updated_user = $2, updated_date = $3, from  = $4, to = $5, amount = $6 WHERE id = $7',
     [
       hasProject.role,
       id,
       moment().format('YYYY-MM-DD HH:mm:ss'),
+      hasProject.from,
+      hasProject.to,
+      hasProject.amount,
       hasProject.id
     ]
   )
