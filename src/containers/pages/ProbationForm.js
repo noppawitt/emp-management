@@ -131,6 +131,7 @@ class ProbationForm extends React.Component {
 
     componentWillMount() {
         if (this.props.profile.evaInfo != null) {
+            console.log('level'+this.props.profile.evaInfo.levelId)
             this.setState({
                 expectedScore: this.props.profile.evaInfo.expectedScore,
                 score: this.props.profile.evaInfo.score,
