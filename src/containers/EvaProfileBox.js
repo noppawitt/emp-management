@@ -12,7 +12,7 @@ const AngleDownButton = (
   <Button icon="angle down" ></Button>
 )
 
-const EvaProfileBox = ({performanceProfile, evaProfile, selfProfile, openProbationModal, openPerformanceModal, type, fetchProbation, profileId, fetchPerformance, openSelfAssessmentModal, fetchSelfAssessment, id}) => {
+const EvaProfileBox = ({can, performanceProfile, evaProfile, selfProfile, openProbationModal, openPerformanceModal, type, fetchProbation, profileId, fetchPerformance, openSelfAssessmentModal, fetchSelfAssessment, id}) => {
 
   const optionsPerf = [
     {
@@ -34,15 +34,15 @@ const EvaProfileBox = ({performanceProfile, evaProfile, selfProfile, openProbati
   ]
 
   const canCreateProbation = (
-    evaProfile.length==0 && type=='1'
+    evaProfile.length==0 && can.probationAdd
   )
 
   const canCreateContinueProbation = (
-    evaProfile.length!=0 && type=='1' && evaProfile[0].passPro==false && evaProfile[0].continued==true && evaProfile[0].mdSignDate!=null
+    evaProfile.length!=0 && can.probationAdd && evaProfile[0].passPro==false && evaProfile[0].continued==true && evaProfile[0].mdSignDate!=null
   )
 
   const canCreatePerformance = (
-    (performanceProfile.length==0 || performanceProfile[0].year<(new Date()).getFullYear()) && type=='1'
+    (performanceProfile.length==0 || performanceProfile[0].year<(new Date()).getFullYear()) && can.performanceAdd
   )
   
   const cantClickProbation = (
@@ -141,7 +141,8 @@ EvaProfileBox.propTypes = {
 const mapStateToProps = state => ({
   profileId: state.profile.userId,
   type: state.auth.type,
-  id: state.auth.id
+  id: state.auth.id,
+  can: state.accessControl.can
 })
 
 const mapDispatchToProps = dispatch =>({
