@@ -1,15 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Segment, Input, Table, Button, Icon, Pagination } from 'semantic-ui-react';
+import { Segment, Input, Table, Button, Icon, Pagination, Checkbox } from 'semantic-ui-react';
 import history from '../history';
 import PageHeader from './PageHeader';
 
-const Project = ({ projects, onAddClick, onSearchChange, sortKey, direction, handleSort, currentPage, totalPages, handlePageChange }) => (
+const Project = ({
+  projects,
+  onAddClick,
+  onSearchChange,
+  sortKey,
+  direction,
+  handleSort,
+  currentPage,
+  totalPages,
+  handlePageChange,
+  handleHasPoNumberChange
+}) => (
   <div>
     <PageHeader text="Project" icon="paste" />
     <Segment.Group raised>
       <Segment>
         <Input icon="search" placeholder="Search projects..." onChange={onSearchChange} />
+        <Checkbox toggle label="PO No." onChange={handleHasPoNumberChange} />
         <Button icon labelPosition="left" floated="right" onClick={onAddClick} color="blue" >
           <Icon name="add" />
           Add New Project
@@ -65,7 +77,8 @@ Project.propTypes = {
   handleSort: PropTypes.func.isRequired,
   currentPage: PropTypes.number.isRequired,
   totalPages: PropTypes.number.isRequired,
-  handlePageChange: PropTypes.func.isRequired
+  handlePageChange: PropTypes.func.isRequired,
+  handleHasPoNumberChange: PropTypes.func.isRequired
 };
 
 export default Project;

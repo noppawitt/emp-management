@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
-import { fetchProjectRequest, filterProject, sortProject, changeProjectPage } from '../../actions/project';
+import { fetchProjectRequest, filterProject, sortProject, changeProjectPage, changeHasPoNumber } from '../../actions/project';
 import { openModal } from '../../actions/modal';
 import * as modalNames from '../../constants/modalNames';
 import Project from '../../components/Project';
@@ -19,7 +19,8 @@ const ProjectPage = ({
   sortByKey,
   currentPage,
   totalPages,
-  handlePageChange
+  handlePageChange,
+  handleHasPoNumberChange
 }) => {
   const handleSort = (key) => {
     if (sortKey !== key) {
@@ -43,6 +44,7 @@ const ProjectPage = ({
           currentPage={currentPage}
           totalPages={totalPages}
           handlePageChange={handlePageChange}
+          handleHasPoNumberChange={handleHasPoNumberChange}
         />}
     </div>
   );
@@ -62,7 +64,8 @@ ProjectPage.propTypes = {
   sortByKey: PropTypes.func.isRequired,
   currentPage: PropTypes.number.isRequired,
   totalPages: PropTypes.number.isRequired,
-  handlePageChange: PropTypes.func.isRequired
+  handlePageChange: PropTypes.func.isRequired,
+  handleHasPoNumberChange: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -79,7 +82,8 @@ const mapDispatchToProps = dispatch => ({
   onAddClick: () => dispatch(openModal(modalNames.ADD_PROJECT)),
   onSearchChange: e => dispatch(filterProject(e.target.value)),
   sortByKey: (key, direction) => dispatch(sortProject(key, direction)),
-  handlePageChange: (e, { activePage }) => dispatch(changeProjectPage(activePage))
+  handlePageChange: (e, { activePage }) => dispatch(changeProjectPage(activePage)),
+  handleHasPoNumberChange: (e, { checked }) => dispatch(changeHasPoNumber(checked))
 });
 
 const enhance = compose(
