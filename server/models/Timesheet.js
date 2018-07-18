@@ -4,12 +4,11 @@ const moment = require('moment');
 const Timesheet = {};
 
 Timesheet.create = (timesheet, id) => (
-  db.one(
+  db.none(
     `INSERT INTO timesheets (user_id, date, project_id, time_in, time_out, totalhours, created_user, updated_user, task, description)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-      ON CONFLICT (user_id, date, project_id) DO UPDATE
-      SET project_id = $3, time_in = $4, time_out = $5, totalhours = $6, updated_user = $8, task = $9, description = $10
-      RETURNING 1`,
+      ON CONFLICT (user_id, date, project_id, time_in) DO UPDATE
+      SET project_id = $3, time_in = $4, time_out = $5, totalhours = $6, updated_user = $8, task = $9, description = $10`,
     [
       timesheet.userId,
       timesheet.date,
