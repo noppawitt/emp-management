@@ -367,8 +367,8 @@ api.deleteTimesheet = body => (
 );
 
 api.fetchHolidays = (year, month = null) => {
-  if (month) callApi(`/api/holidays?year=${year}&month=${month}`);
-  else callApi(`/api/holidays?year=${year}`);
+  if (month) return callApi(`/api/holidays?year=${year}&month=${month}`);
+  return callApi(`/api/holidays?year=${year}`);
 };
 
 // Report
