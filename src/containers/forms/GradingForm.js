@@ -11,23 +11,23 @@ import {
   Pagination,
   Icon,
   TextArea,
+  Input,
+  Button,
 } from 'semantic-ui-react';
 import Loader from '../../components/Loader';
 import { pageChange } from '../../actions/takeExam';
 
 const questionRenderer = (question, subcategory) => (
   <div>
-    <div dangerouslySetInnerHTML={{ __thml: question }} />
+    <div dangerouslySetInnerHTML={{ __html: question }} />
     <strong>(Topic: {subcategory.slice(0, 1).toUpperCase().concat(subcategory.slice(1))})</strong>
   </div>
 );
 
-const categoryLengthCalculate = (examList, activeCategory) => {
-  let pageNumber = 0;
-  for (let i = 0; i < examList.length; i += 1) {
-    pageNumber += (examList[i].exCategory === activeCategory) ? 1 : 0;
-  }
-  return pageNumber;
+const answerColorRenderer = (pickedAnswer, answer, solve) => {
+  if (solve.includes(answer)) return 'green';
+  else if (pickedAnswer.includes(answer)) return 'red';
+  return 'grey';
 };
 
 const filterExam = (examList, activeCategory) => {
@@ -40,13 +40,20 @@ const filterExam = (examList, activeCategory) => {
   return filter;
 };
 
-const showAnswerCheckRadio = (exId, pickedAnswer, answer) => {
+const showAnswerCheckRadio = (pickedAnswer, answer) => {
   for (let i = 0; i < pickedAnswer.length; i += 1) {
-    if (pickedAnswer[i].question === exId && pickedAnswer[i].answer.includes(answer)) {
-      return true;
-    }
+    if (pickedAnswer[i].includes(answer)) return true;
   }
+
   return false;
+};
+
+const categoryLengthCalculate = (examList, activeCategory) => {
+  let pageNumber = 0;
+  for (let i = 0; i < examList.length; i += 1) {
+    pageNumber += (examList[i].exCategory === activeCategory) ? 1 : 0;
+  }
+  return pageNumber;
 };
 
 const showAnswerText = (exId, pickedAnswer) => {
@@ -58,14 +65,33 @@ const showAnswerText = (exId, pickedAnswer) => {
   return undefined;
 };
 
+const validateScore = (score, fullScore) => {
+  if (!score || !Number.isInteger(score)) {
+    return 'scoreError';
+  }
+  else if (!fullScore || !Number.isInteger(fullScore)) {
+    return 'fullScoreError';
+  }
+  else if (score > fullScore) {
+    return 'scoreExceed';
+  }
+  return 'OK';
+};
+
 const GradingForm = ({
-  // gradingId,
+  gradingId,
   isFetching,
   gradingList,
-  currentModalActivePage,
+  currentActiveModalPage,
   onPageChange,
   activeModalCategory,
-  onClickCategory, }) => (
+  onClickModalCategory,
+  modalCategoryList,
+  onInputCommentTextArea,
+  onScoreChange,
+  onFullScoreChange,
+  onClickSave,
+  onClickSend, }) => (
     isFetching ?
       <Loader /> :
       <Segment.Group>
@@ -75,67 +101,93 @@ const GradingForm = ({
               <Grid.Column width={3}>
                 <Menu fluid vertical tabular>
                   <Menu.Item header name="Category menu" />
-                  {gradingList && gradingList.map(item => (
+                  {modalCategoryList && modalCategoryList.map(item => (
                     <Menu.Item
                       name={item[0]}
                       active={activeModalCategory === item[0]}
-                      onClick={() => { onClickCategory(item[0]); pageChange(1); }}
+                      onClick={() => { onClickModalCategory(item[0]); pageChange(1); }}
                     />
                   ))}
                 </Menu>
               </Grid.Column>
-              <Grid.Column width={10}>
+              <Grid.Column width={12}>
                 <h1>
-                  Question {currentModalActivePage} from {gradingList && filterExam(gradingList, activeModalCategory).length}
+                  Applicant ID: {gradingId}
+                  Question {currentActiveModalPage} from {filterExam(gradingList, activeModalCategory).length}
                 </h1>
-              </Grid.Column>
-              {gradingList && filterExam(gradingList, activeModalCategory).length > 0
-                && filterExam(gradingList, activeModalCategory).map((row, i) => (
-                  i === currentModalActivePage - 1 ?
-                    <Form>
-                      <br />
-                      {row.exQuestion && row.exSubcategory && questionRenderer(row.exQuestion, row.exSubcategory)}
-                      <br />
-                      {row.exType === 'Choices'
-                        && row.exChoice.map((answer, j) => (
+                {gradingList && filterExam(gradingList, activeModalCategory).length > 0
+                  && filterExam(gradingList, activeModalCategory).map((row, i) => (
+                    i === currentActiveModalPage - 1 ?
+                      <Form>
+                        <br />
+                        {questionRenderer(row.exQuestion, row.exSubCategory)}
+                        <br />
+                        {row.exType === 'Choices' && row.exChoices.map((answer, j) => (
                           row.exAnswerLength === 1 ?
                             <Form.Field>
-                              <p>
-                                <Radio
-                                  label={(j + 1).toString().concat('. ').concat(answer)}
-                                  value={answer}
-                                  checked={row.cdAnswer && showAnswerCheckRadio(row.exId, row.cdAnswer, answer)}
-                                />
+                              <p style={{ color: answerColorRenderer(row.cdAnswer, answer, row.exCorrect) }}>
+                                <Radio disabled checked={showAnswerCheckRadio(row.cdAnswer, answer)} />
+                                &nbsp;{(j + 1).toString().concat('. ').concat(answer)}
                               </p>
                             </Form.Field> :
                             <Form.Field>
-                              <p>
-                                <Checkbox
-                                  label={(j + 1).toString().concat('. ').concat(answer)}
-                                  value={answer}
-                                  checked={row.cdAnswer && showAnswerCheckRadio(row.exId, row.cdAnswer, answer)}
-                                />
+                              <p style={{ color: answerColorRenderer(row.cdAnswer, answer, row.exCorrect) }}>
+                                <Checkbox disabled checked={showAnswerCheckRadio(row.cdAnswer, answer)} />
+                                &nbsp;{(j + 1).toString().concat('. ').concat(answer)}
                               </p>
                             </Form.Field>
                         ))}
-                      {row.exType !== 'Choices' &&
-                        <Form.Field>
-                          <TextArea
-                            value={row.cdAnswer && showAnswerText(row.exId, row.cdAnswer)}
-                            placeholder="No answer.."
+                        {row.exType !== 'Choices' &&
+                          <Form.Field>
+                            <Grid>
+                              <Grid.Row>
+                                <Grid.Column width={8}>
+                                  Answer:<br />
+                                  <TextArea
+                                    disabled
+                                    value={row.cdAnswer && showAnswerText(row.exId, row.cdAnswer)}
+                                    placeholder="No answer.."
+                                  />
+                                </Grid.Column>
+                                <Grid.Column width={8}>
+                                  Comment:<br />
+                                  <TextArea
+                                    value={row.comment}
+                                    placeholder="Comment.."
+                                    onInput={(e, { value }) => onInputCommentTextArea(value, currentActiveModalPage, row.exId)}
+                                  />
+                                </Grid.Column>
+                              </Grid.Row>
+                            </Grid>
+                          </Form.Field>
+                        }
+                      </Form> : ''
+                  ))}
+                {!gradingList && <h1>Fetch fail somewhere!</h1>}
+                <br />
+                {gradingList && filterExam(gradingList, activeModalCategory).length > 0
+                  && filterExam(gradingList, activeModalCategory).map((row, i) => (
+                    i === currentActiveModalPage - 1 ?
+                      row.exType === 'Choices' ?
+                        <div>Point : {row.exType === 'Choices' && row.point[0]} / {row.exType === 'Choices' && row.point[1]}</div> :
+                        <div>
+                          <Input
+                            placeholder="Score.."
+                            value={row.point[0] === 'UNKNOWN' ? '' : row.point[0]}
+                            onChange={e => onScoreChange(e, row.exId)}
+                          />&nbsp;
+                          <Input
+                            placeholder="Full Score.."
+                            value={row.point[1] === 'UNKNOWN' ? '' : row.point[1]}
+                            onChange={e => onFullScoreChange(e, row.exId)}
                           />
-                        </Form.Field>
-                      }
-                    </Form> : ''
-                ))}
-              {!gradingList && <h1>Fetch fail somewhere!</h1>}
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column with={15}>
+                        </div>
+                      : <div />
+                  ))}
                 <Pagination
                   floated="right"
-                  onPageChange={(e, object) => { console.log(object); onPageChange(object.activePage); }}
-                  activePage={currentModalActivePage}
+                  onPageChange={(e, object) => onPageChange(object.activePage)}
+                  activePage={currentActiveModalPage}
                   boundaryRange={1}
                   siblingRange={1}
                   ellipsisItem={{ content: <Icon name="ellipsis horizontal" />, icon: true }}
@@ -149,25 +201,56 @@ const GradingForm = ({
             </Grid.Row>
           </Grid>
         </Segment>
+        <Segment>
+          {/* add onClick of these buttons */}
+          <Button
+            icon
+            labelPosition="left"
+            positive
+            onClick={() => onClickSave(gradingList)}
+          >
+            <Icon name="save" />
+            Save
+          </Button>
+          {/*
+            add function that disable submit button
+            until grader will input all pair of score!
+           */}
+          <Button
+            icon
+            labelPosition="left"
+            secondary
+            onClick={() => onClickSend(gradingList)}
+          >
+            <Icon name="send" />
+            Send
+          </Button>
+        </Segment>
       </Segment.Group>
   );
 
 GradingForm.propTypes = {
   isFetching: PropTypes.bool.isRequired,
-  // gradingId: PropTypes.string.isRequired,
+  gradingId: PropTypes.string.isRequired,
   gradingList: PropTypes.array.isRequired,
-  currentModalActivePage: PropTypes.string.isRequired,
+  currentActiveModalPage: PropTypes.string.isRequired,
   onPageChange: PropTypes.func.isRequired,
   activeModalCategory: PropTypes.string.isRequired,
-  onClickCategory: PropTypes.func.isRequired,
+  onClickModalCategory: PropTypes.func.isRequired,
+  modalCategoryList: PropTypes.array.isRequired,
+  onInputCommentTextArea: PropTypes.func.isRequired,
+  onScoreChange: PropTypes.func.isRequired,
+  onFullScoreChange: PropTypes.func.isRequired,
+  onClickSave: PropTypes.func.isRequired,
+  onClickSend: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  // isFetching: state.recruitment.isModalFetching,
   gradingList: state.recruitment.gradingList,
   gradingId: state.recruitment.gradingId,
-  currentActivePage: state.recruitment.currentModalActivePage,
+  currentActiveModalPage: state.recruitment.currentActiveModalPage,
   activeModalCategory: state.recruitment.activeModalCategory,
+  modalCategoryList: state.recruitment.modalCategoryList,
 });
 
 export default connect(mapStateToProps)(GradingForm);

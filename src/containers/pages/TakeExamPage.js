@@ -115,7 +115,7 @@ const mapDispatchToProps = dispatch => ({
   onClickCheckbox: (choice, currentActivePage, pickedAnswer, exId) => dispatch(onPickCheckboxAnswer(choice, currentActivePage, pickedAnswer, exId)),
   onInputTextArea: (text, currentActivePage, exId) => dispatch(onInputTextAreaAnswer(text, currentActivePage, exId)),
   onClickCategory: category => dispatch(categoryChange(category)),
-  onClickSave: (id, answerList, today) => { console.log('>>>', today); dispatch(uploadAnswerListRequest(id, answerList, false, false, today)); },
+  onClickSave: (id, answerList, today) => dispatch(uploadAnswerListRequest(id, answerList, false, false, today)),
   onClickSubmit: (id, answerList, today) => dispatch(uploadAnswerListRequest(id, answerList, false, true, today)),
   onClickLogout: (id, answerList, today) => dispatch(uploadAnswerListRequest(id, answerList, true, false, today)),
 });

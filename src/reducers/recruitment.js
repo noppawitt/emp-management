@@ -129,7 +129,7 @@ const Recruitment = (state = initialState, action) => {
     case actionTypes.GRADING_FETCH_REQUEST:
       return {
         ...state,
-        // nothing to update state
+        isModalFetching: true,
       };
     case actionTypes.GRADING_FETCH_SUCCESS:
       console.log('>>>', action.payload.gradingList);
@@ -137,9 +137,10 @@ const Recruitment = (state = initialState, action) => {
         ...state,
         gradingId: action.payload.gradingId,
         gradingList: action.payload.gradingList,
+        isModalFetching: false,
         // variable initialization for new modal
-        // activeModalCategory: action.payload.examAmo,
-        currentModalActivePage: 1,
+        activeModalCategory: action.payload.gradingList[0].exCategory,
+        currentActiveModalPage: 1,
         modalCategoryList: action.payload.examAmountPerCategory,
         modalSubCategoryList: action.payload.examAmountPerSubCategory,
 
@@ -147,13 +148,69 @@ const Recruitment = (state = initialState, action) => {
     case actionTypes.GRADING_FETCH_FAILURE:
       return {
         ...state,
+        isModalFetching: false,
         message: action.payload.message,
       };
     case actionTypes.GRADING_MODAL_PAGINATION_CHANGE:
       return {
         ...state,
-        currentModalActivePage: action.payload.value,
+        currentActiveModalPage: action.payload.value,
       };
+    case actionTypes.GRADING_MODAL_CATEGORY_CHANGE:
+      return {
+        ...state,
+        currentActiveModalPage: 1,
+        activeModalCategory: action.payload.category,
+      };
+    case actionTypes.GRADING_MODAL_ON_INPUT_COMMENT: {
+      const tempGradingList = [...state.gradingList].slice();
+      for (let i = 0; i < tempGradingList.length; i += 1) {
+        if (tempGradingList[i].exId === action.payload.exId) {
+          tempGradingList[i] = {
+            ...tempGradingList[i],
+            comment: action.payload.text,
+          };
+        }
+      }
+      return {
+        ...state,
+        gradingList: tempGradingList,
+      };
+    }
+    case actionTypes.GRADING_MODAL_ON_SCORE_CHANGE: {
+      const tempGradingList = [...state.gradingList].slice();
+      for (let i = 0; i < tempGradingList.length; i += 1) {
+        if (tempGradingList[i].exId === action.payload.exId) {
+          const tempPoint = tempGradingList[i].point;
+          tempPoint[0] = action.payload.value;
+          tempGradingList[i] = {
+            ...tempGradingList[i],
+            point: tempPoint,
+          };
+        }
+      }
+      return {
+        ...state,
+        gradingList: tempGradingList,
+      };
+    }
+    case actionTypes.GRADING_MODAL_ON_FULLSCORE_CHANGE: {
+      const tempGradingList = [...state.gradingList].slice();
+      for (let i = 0; i < tempGradingList.length; i += 1) {
+        if (tempGradingList[i].exId === action.payload.exId) {
+          const tempPoint = tempGradingList[i].point;
+          tempPoint[1] = action.payload.value;
+          tempGradingList[i] = {
+            ...tempGradingList[i],
+            point: tempPoint,
+          };
+        }
+      }
+      return {
+        ...state,
+        gradingList: tempGradingList,
+      };
+    }
     default:
       return state;
   }

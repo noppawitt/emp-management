@@ -152,6 +152,13 @@ export const modalPageChange = value => ({
   }
 });
 
+export const modalCategoryChange = category => ({
+  type: actionTypes.GRADING_MODAL_CATEGORY_CHANGE,
+  payload: {
+    category,
+  }
+});
+
 export const viewResult = (id, testDate) => ({
   type: actionTypes.VIEW_RESULT_EVALUATE_EXAM,
   payload: {
@@ -164,5 +171,29 @@ export const fetchResultFailure = message => ({
   type: actionTypes.VIEW_RESULT_FETCH_FAILURE,
   payload: {
     message,
+  }
+});
+
+export const onInputModalComment = (text, currentActiveModalPage, exId) => ({
+  type: actionTypes.GRADING_MODAL_ON_INPUT_COMMENT,
+  payload: {
+    text,
+    currentActiveModalPage,
+    exId,
+  }
+});
+
+export const onScoreModalChange = (value, exId) => ({
+  type: actionTypes.GRADING_MODAL_ON_SCORE_CHANGE,
+  payload: {
+    value,
+    exId,
+  }
+});
+export const onFullScoreModalChange = (value, exId) => ({
+  type: actionTypes.GRADING_MODAL_ON_FULLSCORE_CHANGE,
+  payload: {
+    value,
+    exId,
   }
 });
