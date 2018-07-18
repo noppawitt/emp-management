@@ -7,8 +7,8 @@ import { Button, Form } from 'semantic-ui-react';
 import PageHeader from '../../components/PageHeader';
 import Input from '../../components/Input';
 import { getYearOptions, getMonthOptions } from '../../utils/options';
-import { fetchOwnProjectRequest, downloadReportRequest } from '../../actions/report';
-import { projectsToOptions } from '../../selectors/report';
+import { fetchOwnProjectRequest, downloadReportRequest, fetchProjectMemberRequest } from '../../actions/report';
+import { projectsToOptions, projectDetailToMemberOptions } from '../../selectors/report';
 
 const reportOptions = [
   { key: 'normal', value: 'Timesheet (Normal)', text: 'Timesheet (Normal)' },
@@ -26,7 +26,7 @@ const templateOptions = [
   { key: 'MFEC', value: 'MFEC', text: 'MFEC' }
 ];
 
-const ReportPage = ({ fetchOwnProject, userId, year, month, reportType, projectOptions, handleSubmit, downloadReport }) => (
+const ReportPage = ({ fetchOwnProject, userId, year, month, reportType, projectOptions, memberOptions, handleSubmit, downloadReport, fetchProjectMember }) => (
   <div>
     <PageHeader text="Report" icon="file powerpoint" />
     <Form onSubmit={handleSubmit(downloadReport)}>
@@ -37,11 +37,11 @@ const ReportPage = ({ fetchOwnProject, userId, year, month, reportType, projectO
         <Field name="month" as={Form.Select} component={Input} label="Month" placeholder="Month" onChange={(e, newValue) => fetchOwnProject(userId, year, newValue)} options={getMonthOptions()} />}
       </Form.Group>
       {(reportType !== 'Summary Timesheet (Year)' && reportType !== 'Summary Leave') &&
-      <Field name="projectId" as={Form.Select} component={Input} label="Project" placeholder="Project" options={projectOptions} />}
+      <Field name="projectId" as={Form.Select} component={Input} label="Project" placeholder="Project" onChange={(e, newValue) => fetchProjectMember(newValue)} options={projectOptions} />}
       {(reportType !== 'Summary Timesheet (Year)' && reportType !== 'Summary Leave') &&
       <Field name="template" as={Form.Select} component={Input} label="Template" placeholder="Template" options={templateOptions} />}
       {(reportType === 'Timesheet (Normal) per Person' || reportType === 'Timesheet (Special) per Person') &&
-      <Field name="userId" as={Form.Select} component={Input} label="Employee" placeholder="Employee" onChange={(e, newValue) => fetchOwnProject(newValue, year, month)} options={reportOptions} />}
+      <Field name="userId" as={Form.Select} component={Input} label="Employee" placeholder="Employee" options={memberOptions} />}
       <Button type="submit">Download</Button>
     </Form>
   </div>
@@ -49,8 +49,10 @@ const ReportPage = ({ fetchOwnProject, userId, year, month, reportType, projectO
 
 ReportPage.propTypes = {
   fetchOwnProject: PropTypes.func.isRequired,
+  fetchProjectMember: PropTypes.func.isRequired,
   reportType: PropTypes.string.isRequired,
   projectOptions: PropTypes.array.isRequired,
+  memberOptions: PropTypes.array.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   downloadReport: PropTypes.func.isRequired,
   userId: PropTypes.number.isRequired,
@@ -72,12 +74,14 @@ const mapStateToProps = state => ({
   year: state.report.year,
   month: state.report.month,
   reportType: selector(state, 'reportType'),
-  projectOptions: projectsToOptions(state)
+  projectOptions: projectsToOptions(state),
+  memberOptions: projectDetailToMemberOptions(state)
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchOwnProject: (userId, year, month) => dispatch(fetchOwnProjectRequest(userId, year, month)),
-  downloadReport: values => dispatch(downloadReportRequest(values))
+  downloadReport: values => dispatch(downloadReportRequest(values)),
+  fetchProjectMember: projectId => dispatch(fetchProjectMemberRequest(projectId))
 });
 
 const enhance = compose(

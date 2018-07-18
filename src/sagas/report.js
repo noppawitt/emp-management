@@ -5,7 +5,9 @@ import {
   fetchOwnProjectSuccess,
   fetchOwnProjectFailure,
   downloadReportSuccess,
-  downloadReportFailure
+  downloadReportFailure,
+  fetchProjectMemberFailure,
+  fetchProjectMemberSuccess
 } from '../actions/report';
 import api from '../services/api';
 
@@ -16,6 +18,16 @@ function* fetchOwnProjectTask(action) {
   }
   catch (error) {
     yield put(fetchOwnProjectFailure(error));
+  }
+}
+
+function* fetchProjectMember(action) {
+  try {
+    const projectDetial = yield call(api.fetchProjectDetail, action.payload.projectId);
+    yield put(fetchProjectMemberSuccess(projectDetial));
+  }
+  catch (error) {
+    yield put(fetchProjectMemberFailure(error));
   }
 }
 
@@ -44,9 +56,14 @@ function* watchDownloadReportTask() {
   yield takeEvery(actionTypes.REPORT_DOWNLOAD_REQUEST, downloadReportTask);
 }
 
+function* watchFetchOwnProjectMember() {
+  yield takeEvery(actionTypes.PROJECT_MEMBER_FETCH_REQUEST, fetchProjectMember);
+}
+
 export default function* reportSaga() {
   yield all([
     watchFetchOwnProjectTask(),
-    watchDownloadReportTask()
+    watchDownloadReportTask(),
+    watchFetchOwnProjectMember()
   ]);
 }
