@@ -29,7 +29,7 @@ class AddProbation extends React.Component{
             disable={!this.props.edited}
           >
             <A test={this.props.onChange} profile={this.props.profile} mode={!this.props.profile.evaInfo || (this.props.can.probationAdd && !this.props.profile.evaInfo.emSignDate) ? 'edit' : 'view'}
-              role={this.props.type == '1' ? 'supervisor': this.props.can.mdSign ? 'md':'employee'}/>
+              role={this.props.can.mdSign ? 'md':this.props.can.supSign ? 'supervisor':'employee'}/>
           </Modal>
         }
       </div>
