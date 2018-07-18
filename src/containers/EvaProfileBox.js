@@ -12,7 +12,7 @@ const AngleDownButton = (
   <Button icon="angle down" ></Button>
 )
 
-const EvaProfileBox = ({canCreate, performanceProfile, evaProfile, selfProfile, openProbationModal, openPerformanceModal, type, fetchProbation, profileId, fetchPerformance, openSelfAssessmentModal, fetchSelfAssessment}) => {
+const EvaProfileBox = ({canCreate, performanceProfile, evaProfile, selfProfile, openProbationModal, openPerformanceModal, type, fetchProbation, profileId, fetchPerformance, openSelfAssessmentModal, fetchSelfAssessment, id}) => {
 
   const optionsPerf = [
     {
@@ -118,7 +118,7 @@ const EvaProfileBox = ({canCreate, performanceProfile, evaProfile, selfProfile, 
             </Button.Group>
         </div>
             <Button icon labelPosition='left' icon={'angle right'}
-              disabled={((type!='2'&& profileId==id) && (!selfProfile || !selfProfile.submited))}
+              disabled={((type!='2'&& profileId!=id) && (!selfProfile || !selfProfile.submited))}
               content={selfProfile || type=='1' ? 'Self Assessment' : 'Create Self Assessment'}
               onClick={()=>{if(selfProfile!=null)fetchSelfAssessment(profileId);openSelfAssessmentModal()}}
               color={selfProfile || type=='1' ? 'yellow':'green'}/>
