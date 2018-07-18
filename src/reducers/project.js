@@ -4,7 +4,8 @@ const initialState = {
   lists: [],
   searchText: '',
   sortKey: null,
-  direction: null
+  direction: null,
+  currentPage: 1
 };
 
 const project = (state = initialState, action) => {
@@ -51,6 +52,11 @@ const project = (state = initialState, action) => {
         ...state,
         sortKey: action.payload.sortKey,
         direction: action.payload.direction
+      };
+    case actionTypes.CHANGE_PROJECT_PAGE:
+      return {
+        ...state,
+        currentPage: action.payload.page
       };
     default:
       return state;
