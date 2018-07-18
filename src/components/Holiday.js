@@ -11,7 +11,7 @@ const test = [{ date: '2018-06-18', dateName: 'fortest' }, { date: '2018-07-18',
 
 const oneRow = (date, dateName) => (
   <Table.Row>
-    <Table.Cell>
+    <Table.Cell width={5}>
       {(moment(date).format('YYYY') === yNow) && (moment(date).format('MM') === mNow) &&
       <Label ribbon color="yellow">This month</Label>
       }
