@@ -32,7 +32,7 @@ class ProbationForm extends React.Component {
             employeeID: this.props.profile.work.userId || '-',
             level: this.props.profile.work.levelId || '-',
             startDate: this.props.profile.work.startDate || '-',
-            supervisor: this.props.profile.work.bossname || '-',
+            supervisor: this.props.profile.work.bossName || '-',
             expectedScore: null,
             score: null,
             endProbationDate: this.props.profile.evaInfo == null && this.props.profile.eva.length!=0 ? this.props.profile.eva[0].continuedDate:this.props.profile.work.probationDate,

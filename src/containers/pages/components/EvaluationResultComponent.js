@@ -264,7 +264,7 @@ class EvaluationResultComponent extends React.Component {
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    Transporation Allowance
+                                                    Transportation Allowance
                                                 </td>
                                                 <td>
                                                     <input type='number' min='0' value={this.state.transporationAllowance ? this.state.transporationAllowance : ''} onChange={(event) => {
@@ -366,7 +366,7 @@ class EvaluationResultComponent extends React.Component {
                                                         };
                                                         this.updateParentComponent();
                                                     }} checked={this.state.continued} />
-                                                    &nbsp;Continued probation untill
+                                                    &nbsp;Continued probation until
                                                 </td>
                                                 <td>
                                                     {this.state.continued ?
