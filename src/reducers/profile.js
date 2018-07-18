@@ -24,7 +24,8 @@ const profile = (state = initialState, action) => {
         if(action.payload.item.passPro && !action.payload.item.confirmed) {
           if(action.payload.item.basedSalary || action.payload.item.mobile || action.payload.item.transporationAllowance || action.payload.item.otherAllowance)edited = true;
           else edited = false;
-        }else edited = true;
+        }else if(action.payload.item.passPro == action.payload.item.notPassPro) edited = false;
+        else edited = true;
       }else if(action.payload.type=='performance'){
         edited = true
       }else if(action.payload.type=='selfassessment'){
