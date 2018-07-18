@@ -46,11 +46,11 @@ const EvaProfileBox = ({can, performanceProfile, evaProfile, selfProfile, openPr
   )
   
   const cantClickProbation = (
-    (type!='1' && evaProfile.length==0) || !selfProfile || !selfProfile.submited
+    (!can.probationAdd && evaProfile.length==0) || !selfProfile || !selfProfile.submited
   )
 
   const cantClickPerformance = (
-    (type!='1' && performanceProfile.length==0)
+    (!can.performanceAdd && performanceProfile.length==0)
   )
 
   performanceProfile.map(perf =>
