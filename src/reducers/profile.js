@@ -19,7 +19,7 @@ const profile = (state = initialState, action) => {
         item: {currentPage: 0}
       }
     case actionTypes.UPDATE_PROBATION_STORE:
-      var edited;
+      var edited = state.edited;
       if(action.payload.type=='probation'){
         if(action.payload.item.passPro && !action.payload.item.confirmed) {
           if(action.payload.item.basedSalary || action.payload.item.mobile || action.payload.item.transporationAllowance || action.payload.item.otherAllowance)edited = true;
@@ -31,7 +31,7 @@ const profile = (state = initialState, action) => {
         if(action.payload.item.validate) edited = true;
         else edited = false;
       }else if(action.payload.type=='page'){
-        edited = false;
+        if(edited!=true)edited = false;
       }
       return {
         ...state,

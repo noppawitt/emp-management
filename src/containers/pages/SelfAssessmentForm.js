@@ -30,7 +30,7 @@ class SelfAssessmentForm extends React.Component {
             employeeID: this.props.profile.work.userId || '-',
             level: this.props.profile.work.levelId || '-',
             startDate: this.props.profile.work.startDate || '-',
-            supervisor: this.props.profile.work.bossname || '-',
+            supervisor: this.props.profile.work.bossName || '-',
             majorResponsibilities: '',
             significantAccomplishments: '',
             contribution: '',
