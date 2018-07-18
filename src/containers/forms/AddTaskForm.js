@@ -15,10 +15,11 @@ const validate = (values) => {
   errors.endDate = validator.dateAfter(values.endDate, values.startDate);
   if (values.timesheets.length) {
     console.log('not have timesheets');
-  } else {
+  }
+  else {
     const timeSheetArrayErrors = [];
     values.timesheets.forEach((task, taskIndex) => {
-      const taskErrors = {}
+      const taskErrors = {};
       taskErrors.timeIn = validator.timeBefore(task.timeIn, task.timeOut);
       taskErrors.timeOut = validator.timeAfter(task.timeOut, task.timeIn);
       timeSheetArrayErrors[taskIndex] = taskErrors;
