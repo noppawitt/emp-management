@@ -19,7 +19,7 @@ const Profile = ({profile, type, id, profileId, can}) => (
     <Grid centered>
       <Grid.Column computer={12} mobile={16}>
         <GeneralProfileBox generalProfile={profile.general} />
-        <Can activity="evaViewOwn" conditions={[id==profileId || can.probationAdd]}>
+        <Can activity="evaViewOwn" conditions={[id==profileId || can.evaView]}>
           <EvaProfileBox evaProfile={profile.eva} performanceProfile={profile.perf} selfProfile={profile.self}/>
         </Can>
         <WorkProfileBox workProfile={profile.work} />
