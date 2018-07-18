@@ -506,6 +506,31 @@ const writeAvailableDate = (worksheet, excelType, column) => new Promise(async (
   }
 });
 
+const writeSummaryTimesheetMonth = (timesheets, worksheet) => new Promise(async (resolve, reject) => {
+  try {
+    let row = 7;
+    await timesheets.forEach((timesheet) => {
+      worksheet.getCell(`D${row}`).value = `${timesheet.userId} ${timesheet.name}`;
+      worksheet.getCell(`E${row}`).value = timesheet.days;
+      worksheet.getCell(`F${row}`).value = timesheet.amount;
+      worksheet.getCell(`G${row}`).value = {
+        formula: `E${row}*F${row}`,
+        result: undefined
+      };
+      row += 1;
+    });
+    worksheet.getCell(`D${row}`).value = 'Total';
+    worksheet.getCell(`G${row}`).value = {
+      formula: `SUM(G7:G${row - 1})`,
+      result: undefined
+    };
+    resolve(worksheet);
+  }
+  catch (error) {
+    reject(error);
+  }
+});
+
 exports.createReport = (req, res, next) => {
   const excelType = {};
   excelType.reportType = req.query.reportType;
@@ -872,7 +897,7 @@ exports.createReport = (req, res, next) => {
   }
   else if (excelType.reportType === 'Summary Timesheet (Year)') {
     if (req.accessControl.reportSummaryTimesheetYear) {
-      const filename = 'server/storage/private/report/Playtorium_Summary_Timesheet.xlsx';
+      const filename = 'server/storage/private/report/Playtorium_Summary_Timesheet_Year.xlsx';
       const workbook = new Excel.Workbook();
       workbook.xlsx.readFile(filename)
         .then(() => {
@@ -937,6 +962,34 @@ exports.createReport = (req, res, next) => {
         message: `You don't have permission to do this.`
       });
     }
+  }
+  else if (excelType.reportType === 'Summary Timesheet (Month)') {
+    const filename = 'server/storage/private/report/Playtorium_Summary_Timesheet_Month.xlsx';
+    const workbook = new Excel.Workbook();
+    workbook.xlsx.readFile(filename)
+      .then(async () => {
+        const project = await Project.findById(excelType.projectId);
+        const timesheets = await Timesheet.findSummaryTimesheetInMonth(excelType.projectId, excelType.year, excelType.month);
+        console.log(timesheets);
+        const worksheet = workbook.getWorksheet('Summary Month');
+        worksheet.getCell('D3').value = `${moment.months(parseInt(excelType.month, 10) + 1)}-${excelType.year}`;
+        worksheet.getCell('D4').value = excelType.projectId;
+        worksheet.getCell('D5').value = project.paymentType;
+        // if (project.paymentType === 'Man-month') {
+          
+        // }
+        // else if (project.paymentType === 'Man-day') {
+
+        // }
+        writeSummaryTimesheetMonth(timesheets, worksheet)
+          .then(() => {
+            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            res.setHeader('Content-Disposition', `attachment; filename="Timesheet_Summary_${excelType.year}.xlsx`);
+            workbook.xlsx.write(res);
+          })
+          .catch(next);
+      })
+      .catch(next);
   }
   else if (excelType.reportType === 'Summary Leave') {
     if (req.accessControl.reportSummaryLeave) {

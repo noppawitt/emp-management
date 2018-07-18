@@ -59,7 +59,7 @@ Project.findByYear = year => (
 );
 
 Project.findMemberProject = projectId => (
-  db.manyOrNone('SELECT employee_info.user_id, employee_work.user_id, has_projects.user_id, employee_info.first_name, employee_info.last_name, employee_work.position_id, positions.id AS position_id, positions.name, has_projects.role, has_project.from, has_project.to FROM has_projects, employee_info, employee_work, positions WHERE has_projects.user_id = employee_info.user_id AND has_projects.user_id = employee_work.user_id AND employee_work.position_id = positions.id  AND has_projects.project_id = $1', [projectId])
+  db.manyOrNone('SELECT employee_info.user_id, employee_work.user_id, has_projects.user_id, employee_info.first_name, employee_info.last_name, employee_work.position_id, positions.id AS position_id, positions.name, has_projects.role, has_projects.start_date, has_projects.end_date FROM has_projects, employee_info, employee_work, positions WHERE has_projects.user_id = employee_info.user_id AND has_projects.user_id = employee_work.user_id AND employee_work.position_id = positions.id  AND has_projects.project_id = $1', [projectId])
 );
 
 Project.findProjectByTimesheet = (userId, year, month) => (
