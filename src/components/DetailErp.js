@@ -6,7 +6,7 @@ import { Table, Button, Segment, Input, Label, Icon } from 'semantic-ui-react';
 // import { connect } from 'react-redux';
 // import { Field, reduxForm, reset } from 'redux-form';
 // import * as validator from '../utils/validator';
-import AddRowDetail from '../containers/forms/AddRowDetail';
+import AddRowDetail from '../containers/forms/Addrowdetail';
 
 const imgreader = (imgFile) => {
   const localImageUrl = window.URL.createObjectURL(imgFile);

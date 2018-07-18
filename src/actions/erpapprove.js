@@ -57,26 +57,3 @@ export const modalApproveOpen = () => ({
 export const modalApproveClose = () => ({
   type: actionTypes.ERPAPPROVE_MODAL_CLOSE
 });
-
-
-// export const updateErpRequest = (userId, leave) => ({
-//   type: actionTypes.ERP_UPDATE_REQUEST,
-//   payload: {
-//     userId,
-//     leave
-//   }
-// });
-
-// export const updateErpSuccess = leaves => ({
-//   type: actionTypes.ERP_UPDATE_SUCCESS,
-//   payload: {
-//     leaves
-//   }
-// });
-
-// export const updateErpFailure = message => ({
-//   type: actionTypes.ERP_UPDATE_FAILURE,
-//   payload: {
-//     message
-//   }
-// });

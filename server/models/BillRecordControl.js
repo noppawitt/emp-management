@@ -68,6 +68,7 @@ billrecord.createBillData = (rec_id, data, userid) => {
 billrecord.createBillData2 = (rec_id, data, userid) => (
   db.tx((t) => {
     const queries = data.map((l) => {
+      console.log(data);
       return t.one(
         'INSERT INTO billdata (bill_record_id, field_1, field_2, field_3, field_4, field_5, created_date,created_user) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING id',
         [rec_id, l.field_1, l.field_2, l.field_3, l.field_4, l.field_5, moment().format('YYYY-MM-DD HH:mm:ss'), userid], a => +a.id
@@ -136,7 +137,10 @@ billrecord.deleteByBillId = (rec_id, app_id) => (
 billrecord.getImage = (rec_id) => (
   db.manyOrNone('SELECT * FROM billimageupload WHERE bill_record_id=$1', [rec_id])
 )
-// Department.findById = id => (
-//   db.oneOrNone('SELECT * FROM departments WHERE id = $1', [id])
-// );
+
+billrecord.createChildUserBill = (parent, child_id) => (
+  db.one ('INSERT INTO public.childusersbill(parent, priority, created_date, created_user, child_id) VALUES ($1, $2, $3, $4, $5) RETURNING id',
+  [parent, 0, moment().format('YYYY-MM-DD HH:mm:ss'), child_id,child_id])
+)
+
 module.exports = billrecord;

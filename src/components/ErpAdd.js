@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -186,7 +185,7 @@ const ErpAdd = ({ addrow, arraddrow, img, handleDropdown, handleSubmit, handleDe
           {img.map((image, index) => (
             <div>
               <Label> {image.files[0].name} </Label>
-              <a href={imgreader(image.files[0])} target="_blank" rel="noopener noreferrer" > <Icon name="eye" color="black"/> </a>
+              <a href={imgreader(image.files[0])} target="_blank" rel="noopener noreferrer" > <Icon name="eye" color="black" /> </a>
               <Icon name="delete" color="red" onClick={() => handleDeleteUpload(index)} />
             </div>
           ))}

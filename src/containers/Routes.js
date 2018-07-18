@@ -11,6 +11,10 @@ import EmployeePage from './pages/EmployeePage';
 import ReportPage from './pages/ReportPage';
 import AddTaskPage from './pages/AddTaskPage';
 import ManageLeave from './pages/ManageLeave';
+import ErpPage from './pages/ErpPage';
+import ErpApprovePage from './pages/ErpApprovePage';
+import ErpAddPage from './pages/ErpAddPage';
+import ErpBillRecord from './forms/EditBillRecord';
 
 const Routes = () => (
   <Switch>

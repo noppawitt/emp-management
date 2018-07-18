@@ -81,16 +81,16 @@ const ErpApprove = ({ erpApprove, onApproveClick, onRejectClick, genExcel }) => 
               </Table.Cell>
               <Table.Cell> <Moment format="YYYY-MM-DD HH:mm" date={i.data[0].createdDate} /> </Table.Cell>
               <Table.Cell>
-                {i.approvement2 === '0' &&
+                {i.approvement2 === 0 &&
                   <div>
                     <Button inverted color="green" onClick={() => onApproveClick(i.id, '')}>Approve</Button>
                     <Button inverted color="red" onClick={() => onRejectClick(i.id)} >Reject</Button>
                   </div>
                 }
-                {i.approvement2 === '1' &&
+                {i.approvement2 === 1 &&
                   <div>
-                    {i.approvement1 === '1' && 'Approved'}
-                    {i.approvement1 === '2' && 'Rejected'}
+                    {i.approvement1 === 1 && 'Approved'}
+                    {i.approvement1 === 2 && 'Rejected'}
                   </div>
                 }
               </Table.Cell>

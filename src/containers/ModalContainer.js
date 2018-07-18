@@ -19,6 +19,8 @@ import AddMemberModal from './modals/AddMemberModal';
 import AddTimesheetModal from './modals/AddTimesheetModal';
 import EditTimesheetModal from './modals/EditTimesheetModal';
 import AddWorkExperienceProfileModal from './modals/AddWorkExperienceProfileModal';
+import ApproveRejectModal from './modals/ApproveRejectModal';
+// import CreateErpRequestModal from './modals/CreateErpRequestModal';
 
 const renderModal = ({ name, props }) => {
   switch (name) {

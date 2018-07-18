@@ -6771,6 +6771,17 @@ react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
+react-moment@^0.7.9:
+  version "0.7.9"
+  resolved "https://registry.yarnpkg.com/react-moment/-/react-moment-0.7.9.tgz#fc6b5bf8952d27f134a42abfd7f42df2c839c1d7"
+
+react-number-format@^3.4.3:
+  version "3.4.3"
+  resolved "https://registry.yarnpkg.com/react-number-format/-/react-number-format-3.4.3.tgz#8bccc08e4ecfb9553548574589af457541a706fd"
+  dependencies:
+    babel-runtime "^6.26.0"
+    prop-types "^15.6.0"
+
 react-overlays@^0.7.0:
   version "0.7.4"
   resolved "https://registry.yarnpkg.com/react-overlays/-/react-overlays-0.7.4.tgz#ef2ec652c3444ab8aa014262b18f662068e56d5c"
@@ -8044,6 +8055,10 @@ text-table@^0.2.0, text-table@~0.2.0:
 textextensions@2:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/textextensions/-/textextensions-2.2.0.tgz#38ac676151285b658654581987a0ce1a4490d286"
+
+thai-baht-text@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/thai-baht-text/-/thai-baht-text-1.0.7.tgz#bc99f31428794a133032e1918c417d0dc6487277"
 
 through2@^2.0.0:
   version "2.0.3"
