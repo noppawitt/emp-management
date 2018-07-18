@@ -26,6 +26,7 @@ const AddCertificateProfileForm = ({ masterTable, handleSubmit, submitting }) =>
       placeholder="Certificate"
       options={masterTableToOptions(masterTable.certificates)}
       disabled={submitting}
+      validate={validator.required}
     />
     <Field
       name="score"
@@ -34,6 +35,7 @@ const AddCertificateProfileForm = ({ masterTable, handleSubmit, submitting }) =>
       label="Score"
       placeholder="Score"
       disabled={submitting}
+      validate={[validator.required, validator.number]}
     />
     <Field
       name="certificateDate"
@@ -43,6 +45,7 @@ const AddCertificateProfileForm = ({ masterTable, handleSubmit, submitting }) =>
       label="Certificate date"
       placeholder="Certificate date"
       disabled={submitting}
+      validate={[validator.required, validator.date]}
     />
   </Form>
 );

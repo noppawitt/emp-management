@@ -40,5 +40,10 @@ export const setItem = (key, value) => {
 
 export const isExpired = (accessToken) => {
   const { exp } = jwt.decode(accessToken);
-  return exp * 1000 <= new Date();
+  return exp * 1000 <= Date.now();
+};
+
+export const getExpiryTime = (accessToken) => {
+  const { exp } = jwt.decode(accessToken);
+  return exp * 1000 - Date.now();
 };

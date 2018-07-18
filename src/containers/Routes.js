@@ -15,6 +15,7 @@ import ErpPage from './pages/ErpPage';
 import ErpApprovePage from './pages/ErpApprovePage';
 import ErpAddPage from './pages/ErpAddPage';
 import ErpBillRecord from './forms/EditBillRecord';
+import HolidayPage from './pages/HolidayPage';
 
 const Routes = () => (
   <Switch>
@@ -29,10 +30,14 @@ const Routes = () => (
     <PrivateRoute path="/employee" component={EmployeePage} />
     <PrivateRoute path="/report" component={ReportPage} />
     <PrivateRoute path="/manageleave" component={ManageLeave} />
+<<<<<<< HEAD
     <PrivateRoute exact path="/erp" component={ErpPage} />
     <PrivateRoute path="/erp/:id" component={ErpBillRecord} />
     <PrivateRoute path="/erpApprove" component={ErpApprovePage} />
     <PrivateRoute path="/add" component={ErpAddPage} />
+=======
+    <PrivateRoute path="/holiday" component={HolidayPage} />
+>>>>>>> 358698f4b6808cbba978eb9ac942cda19c155ad6
   </Switch>
 );
 

@@ -242,7 +242,7 @@ class Timesheet extends React.Component {
     return (
       <div >
         <Grid celled="internally" style={{ width: '275px' }}>
-          {arrayDate.map((onesheet, i) => (
+          {arrayDate.map(onesheet => (
             <Grid.Row style={{ cursor: 'pointer' }} onClick={() => this.props.onEditClick(onesheet.id)}>
               <div style={{ textAlign: 'center', width: '100%' }}>
                 <h3 style={{ margin: '0', marginTop: '10px' }}>{onesheet.projectId}</h3>

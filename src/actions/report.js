@@ -45,3 +45,24 @@ export const fetchOwnProjectFailure = message => ({
     message
   }
 });
+
+export const fetchProjectMemberRequest = projectId => ({
+  type: actionTypes.PROJECT_MEMBER_FETCH_REQUEST,
+  payload: {
+    projectId
+  }
+});
+
+export const fetchProjectMemberSuccess = projectDetail => ({
+  type: actionTypes.PROJECT_MEMBER_FETCH_SUCCESS,
+  payload: {
+    projectDetail
+  }
+});
+
+export const fetchProjectMemberFailure = message => ({
+  type: actionTypes.PROJECT_MEMBER_FETCH_FAILURE,
+  payload: {
+    message
+  }
+});

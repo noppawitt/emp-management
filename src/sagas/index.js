@@ -16,7 +16,6 @@ import erpApproveSaga from './erpapprove';
 
 export default function* rootSaga() {
   yield all([
-    authSaga(),
     accessControlSaga(),
     masterTableSaga(),
     profileSaga(),
@@ -30,5 +29,6 @@ export default function* rootSaga() {
     erpSaga(),
     erpDetailSaga(),
     erpApproveSaga(),
+    authSaga(),
   ]);
 }

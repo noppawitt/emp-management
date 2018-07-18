@@ -1,12 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { compose, lifecycle } from 'recompose';
+import { compose } from 'recompose';
 import { Field, FieldArray, reduxForm } from 'redux-form';
 import { Grid, Form, Segment, Icon, Button } from 'semantic-ui-react';
 import moment from 'moment';
 import Input from '../../components/Input';
+import * as validator from '../../utils/validator';
 import { getFormInitialValues } from '../../selectors/timesheet';
+
+const validate = (values) => {
+  const errors = {};
+  errors.startDate = validator.dateBefore(values.startDate, values.endDate);
+  errors.endDate = validator.dateAfter(values.endDate, values.startDate);
+  if (values.timesheets.length) {
+    console.log('not have timesheets');
+  } else {
+    const timeSheetArrayErrors = [];
+    values.timesheets.forEach((task, taskIndex) => {
+      const taskErrors = {}
+      taskErrors.timeIn = validator.timeBefore(task.timeIn, task.timeOut);
+      taskErrors.timeOut = validator.timeAfter(task.timeOut, task.timeIn);
+      timeSheetArrayErrors[taskIndex] = taskErrors;
+    });
+  }
+  return errors;
+};
 
 const isWeekend = day => moment(day).isoWeekday() === 6 || moment(day).isoWeekday() === 7;
 const renderTasks = ({ fields }) => (
@@ -74,7 +93,8 @@ const enhance = compose(
   connect(mapStateToProps),
   reduxForm({
     form: 'addTask',
-    enableReinitialize: true
+    enableReinitialize: true,
+    validate
   })
 );
 

@@ -6,9 +6,11 @@ import {
   fetchTimesheetSuccess,
   fetchTimesheetFailure,
   updateTimesheetSuccess,
-  updateTimesheetFailure
+  updateTimesheetFailure,
+  deleteTimesheetSuccess,
+  deleteTimesheetFailure
 } from '../actions/timesheet';
-import { closeModal } from '../actions/modal';
+import { closeModal, clearModal } from '../actions/modal';
 import history from '../history';
 import api from '../services/api';
 
@@ -21,7 +23,7 @@ function* createTimesheetTask(action) {
     yield put(createTimesheetSuccess(timesheets));
     yield put(closeModal());
     action.payload.resolve();
-    if (action.payload.isArray) history.push('/timesheet');
+    if (action.payload.isArray) yield history.push('/timesheet');
   }
   catch (error) {
     yield put(createTimesheetFailure(error));
@@ -56,6 +58,17 @@ function* updateTimesheetTask(action) {
   }
 }
 
+function* deleteTimesheetTask(action) {
+  try {
+    yield call(api.deleteTimesheet, { id: action.payload.timesheetId });
+    yield put(deleteTimesheetSuccess(action.payload.timesheetId));
+    yield put(clearModal());
+  }
+  catch (error) {
+    yield put(deleteTimesheetFailure(error));
+  }
+}
+
 function* watchCreateTimesheetRequest() {
   yield takeEvery(actionTypes.TIMESHEET_CREATE_REQUEST, createTimesheetTask);
 }
@@ -68,10 +81,15 @@ function* watchUpdateTimesheetRequest() {
   yield takeEvery(actionTypes.TIMESHEET_UPDATE_REQUEST, updateTimesheetTask);
 }
 
+function* watchDeleteTimesheetRequest() {
+  yield takeEvery(actionTypes.TIMESHEET_DELETE_REQUEST, deleteTimesheetTask);
+}
+
 export default function* timesheetSaga() {
   yield all([
     watchCreateTimesheetRequest(),
     watchFetchTimesheetRequest(),
-    watchUpdateTimesheetRequest()
+    watchUpdateTimesheetRequest(),
+    watchDeleteTimesheetRequest()
   ]);
 }

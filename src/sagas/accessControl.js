@@ -20,10 +20,10 @@ function* watchFetchAccessControlTask() {
 
 function* watchAccessControl() {
   while (true) {
-    const can = yield select(getAccessControl);
+    const { can } = yield select(getAccessControl);
+    yield take(actionTypes.BOOTSTRAP);
     if (!can) {
       yield put(fetchAccessControlRequest());
-      yield take(actionTypes.ACCESS_CONTROL_FETCH_SUCCESS);
     }
   }
 }
