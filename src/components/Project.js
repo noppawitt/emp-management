@@ -23,7 +23,7 @@ const Project = ({ projects, onAddClick, onSearchChange, sortKey, direction, han
               <Table.HeaderCell sorted={sortKey === 'name' ? direction : null} onClick={() => handleSort('name')}>Name</Table.HeaderCell>
               <Table.HeaderCell sorted={sortKey === 'customer' ? direction : null} onClick={() => handleSort('customer')}>Customer</Table.HeaderCell>
               <Table.HeaderCell sorted={sortKey === 'quotationId' ? direction : null} onClick={() => handleSort('quotationId')}>Quo No.</Table.HeaderCell>
-              <Table.HeaderCell sorted={sortKey === 'startDate' ? direction : null} onClick={() => handleSort('startDate')}>From</Table.HeaderCell>
+              <Table.HeaderCell sorted={sortKey === 'purchasedOrder' ? direction : null} onClick={() => handleSort('purchasedOrder')}>PO No.</Table.HeaderCell>
               <Table.HeaderCell sorted={sortKey === 'endDate' ? direction : null} onClick={() => handleSort('endDate')}>To</Table.HeaderCell>
               <Table.HeaderCell sorted={sortKey === 'status' ? direction : null} onClick={() => handleSort('status')}>Status</Table.HeaderCell>
             </Table.Row>
@@ -36,7 +36,7 @@ const Project = ({ projects, onAddClick, onSearchChange, sortKey, direction, han
                 <Table.Cell>{project.name}</Table.Cell>
                 <Table.Cell>{project.customer}</Table.Cell>
                 <Table.Cell>{project.quotationId}</Table.Cell>
-                <Table.Cell>{project.startDate}</Table.Cell>
+                <Table.Cell>{project.purchasedOrder}</Table.Cell>
                 <Table.Cell>{project.endDate}</Table.Cell>
                 <Table.Cell>{project.status}</Table.Cell>
               </Table.Row>
