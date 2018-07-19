@@ -5,6 +5,7 @@ import { compose } from 'recompose';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { Form } from 'semantic-ui-react';
 import Input from '../../components/Input';
+import Can from '../Can';
 import * as validator from '../../utils/validator';
 import { masterTableToOptions } from '../../utils/helper';
 
@@ -24,13 +25,15 @@ const AddAssetProfileForm = ({ masterTable, handleSubmit, submitting, ownFlag })
       disabled={submitting}
       validate={validator.required}
     />
-    <Field
-      name="ownFlag"
-      as={Form.Select}
-      component={Input}
-      label="Owner"
-      options={ownFlagOptions}
-    />
+    <Can activity="hasAssetAddAll">
+      <Field
+        name="ownFlag"
+        as={Form.Select}
+        component={Input}
+        label="Owner"
+        options={ownFlagOptions}
+      />
+    </Can>
     {ownFlag ?
       <Field
         name="name"

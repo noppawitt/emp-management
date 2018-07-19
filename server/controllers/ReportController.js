@@ -78,6 +78,9 @@ const calOT = (timeIn, timeOut) => new Promise((resolve, reject) => {
       case '18:30':
         timeOut = '18:00';
         break;
+      case '00:00':
+        timeOut = '24:00';
+        break;
       default:
         break;
     }
@@ -88,7 +91,16 @@ const calOT = (timeIn, timeOut) => new Promise((resolve, reject) => {
     const timeOutHour = moment(timeOut, 'HH:mm').hour();
     if (timeOutHour >= 19) {
       endTime = moment.duration('18:00', 'HH:mm');
-      if (timeInHour <= 12) {
+      if (timeInHour < 9) {
+        const startTime1 = moment.duration('9:00', 'HH:mm');
+        const diff1 = startTime1.subtract(startTime);
+        const endTime1 = moment.duration('19:00', 'HH:mm');
+        endTime = moment.duration(timeOut, 'HH:mm');
+        const diff2 = endTime.subtract(endTime1);
+        totalhours.holidayWork = 8;
+        totalhours.holidayNonWork = diff1.hours() + diff2.hours() + (diff1.minutes() / 60) + (diff2.minutes() / 60);
+      }
+      else if (timeInHour <= 12) {
         const diff1 = endTime.subtract(startTime);
         const hour1 = diff1.hours() - 1;
         const min1 = diff1.minutes() / 60;
@@ -117,9 +129,24 @@ const calOT = (timeIn, timeOut) => new Promise((resolve, reject) => {
       }
     }
     else if (timeOutHour <= 18) {
-      const diff = endTime.subtract(startTime);
+      let diff = endTime.subtract(startTime);
       const min = (diff.minutes() / 60);
-      if (timeInHour <= 12 && timeOutHour <= 12) {
+      if (timeInHour < 9 && timeOutHour < 9) {
+        totalhours.holidayNonWork = diff.hours() + min;
+      }
+      else if (timeInHour < 9 && (timeOutHour === 9 || (timeOutHour > 9 && timeOutHour <= 12))) {
+        totalhours.holidayNonWork = diff.hours() + min;
+        diff = endTime.subtract(moment.duration('09:00', 'HH:mm'));
+        totalhours.holidayNonWork -= (diff.hours() + (diff.minutes() / 60));
+        totalhours.holidayWork = diff.hours() + (diff.minutes() / 60);
+      }
+      else if (timeInHour < 9 && timeOutHour <= 18) {
+        totalhours.holidayNonWork = diff.hours() + min;
+        diff = endTime.subtract(moment.duration('09:00', 'HH:mm'));
+        totalhours.holidayNonWork -= (diff.hours() + (diff.minutes() / 60));
+        totalhours.holidayWork = diff.hours() + (diff.minutes() / 60) - 1;
+      }
+      else if (timeInHour <= 12 && timeOutHour <= 12) {
         totalhours.holidayWork = diff.hours() + min;
       }
       else if (timeInHour <= 12 && timeOutHour <= 18) {
@@ -149,7 +176,9 @@ const writeSpecialTimesheet = (excelType, holidayDates, worksheet, numberOfDayIn
                 worksheet.getCell(`I${day + 7}`).value = holidayWorkHour.holidayNonWork;
               }
               else {
-                worksheet.getCell(`F${day + 7}`).value = holidayWorkHour.holidayWork;
+                if (holidayWorkHour.holidayWork !== 0) {
+                  worksheet.getCell(`F${day + 7}`).value = holidayWorkHour.holidayWork;
+                }
                 if (holidayWorkHour.holidayNonWork !== 0) {
                   worksheet.getCell(`G${day + 7}`).value = holidayWorkHour.holidayNonWork;
                 }
@@ -517,12 +546,17 @@ const writeSummaryTimesheetMonth = (timesheets, worksheet) => new Promise(async 
         formula: `E${row}*F${row}`,
         result: undefined
       };
-      row += 1;
+      row += 2;
     });
+    worksheet.getCell(`D${row}`).alignment = { horizontal: 'right' };
     worksheet.getCell(`D${row}`).value = 'Total';
     worksheet.getCell(`G${row}`).value = {
       formula: `SUM(G7:G${row - 1})`,
       result: undefined
+    };
+    worksheet.getCell(`G${row}`).border = {
+      top: { style: 'thin' },
+      bottom: { style: 'double' }
     };
     resolve(worksheet);
   }
