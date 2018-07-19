@@ -30,7 +30,7 @@ const ReportPage = ({ fetchOwnProject, userId, year, month, reportType, projectO
   <div>
     <PageHeader text="Report" icon="file powerpoint" />
     <Form onSubmit={handleSubmit(downloadReport)}>
-      <Field name="reportType" as={Form.Select} component={Input} label="Report type" placeholder="Report type" options={reportOptions} />
+      <Field name="reportType" as={Form.Select} component={Input} label="Report type" placeholder="Report type" options={reportOptions} onChange={(e, newValue) => fetchOwnProject(userId, year, month, newValue)} />
       <Form.Group widths="equal">
         <Field name="year" as={Form.Select} component={Input} label="Year" placeholder="Year" onChange={(e, newValue) => fetchOwnProject(userId, newValue, month)} options={getYearOptions()} />
         {(reportType !== 'Summary Timesheet (Year)' && reportType !== 'Summary Leave') &&
@@ -79,7 +79,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchOwnProject: (userId, year, month) => dispatch(fetchOwnProjectRequest(userId, year, month)),
+  fetchOwnProject: (userId, year, month, reportType = null) => dispatch(fetchOwnProjectRequest(userId, year, month, reportType)),
   downloadReport: values => dispatch(downloadReportRequest(values)),
   fetchProjectMember: projectId => dispatch(fetchProjectMemberRequest(projectId))
 });
