@@ -6,7 +6,6 @@ import ProfileBox from '../components/ProfileBox';
 import { openModal } from '../actions/modal';
 import { deleteProfileRequest } from '../actions/profile';
 import * as modalNames from '../constants/modalNames';
-import Can from './Can';
 
 const AssetProfileBox = ({ assetsProfile, onAddClick, onDeleteClick, can }) => (
   <Segment.Group raised size="large">
@@ -20,11 +19,9 @@ const AssetProfileBox = ({ assetsProfile, onAddClick, onDeleteClick, can }) => (
             </Header.Content>
           </Header>
         </Grid.Column>
-        <Can activity="hasAssetAdd">
-          <Grid.Column floated="right" computer={1} mobile={2}>
-            <Icon name="add" link size="large" onClick={onAddClick} />
-          </Grid.Column>
-        </Can>
+        <Grid.Column floated="right" computer={1} mobile={2}>
+          <Icon name="add" link size="large" onClick={onAddClick} />
+        </Grid.Column>
       </Grid>
     </Segment>
     {assetsProfile.map(p => (<ProfileBox

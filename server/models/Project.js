@@ -47,7 +47,7 @@ Project.update = (project, id) => (
 );
 
 Project.findAll = () => (
-  db.manyOrNone('SELECT projects.id, projects.name, projects.customer, projects.quotation_id, projects.purchased_order, projects.start_date, projects.end_date, projects.status  FROM projects WHERE status = $1', ['In Progress'])
+  db.manyOrNone('SELECT projects.id AS project_id, projects.name, projects.customer, projects.quotation_id, projects.purchased_order, projects.start_date, projects.end_date, projects.status  FROM projects WHERE status = $1', ['In Progress'])
 );
 
 Project.findById = id => (
