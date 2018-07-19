@@ -377,7 +377,7 @@ api.fetchHolidays = (year, month = null) => {
 
 // Report
 
-api.fetchOwnProject = (userId,year, month) => {
+api.fetchOwnProject = (userId, year, month) => {
   if (userId) return callApi(`/api/projects?userId=${userId}&year=${year}&month=${month}`);
   return callApi(`/api/projects?year=${year}&month=${month}`);
 };

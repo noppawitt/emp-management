@@ -1,5 +1,5 @@
 import React from 'react';
-import ManageLeave from '../../components/ManegeLeave';
+import ManageLeave from '../../components/ManageLeave';
 
 const ManageLeavePage = () => (
   <ManageLeave />
