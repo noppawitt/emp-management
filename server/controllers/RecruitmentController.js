@@ -26,7 +26,7 @@ exports.checkUserStatus = (req, res, next) => {
           .then()
           .catch(next);
       }
-      Recruitment.checkUserStatus(req.body.id)
+      Recruitment.checkUserStatus(req.body.id, req.body.testDate)
         .then((object) => {
           res.json(object);
         })
@@ -93,6 +93,14 @@ exports.fetchGradingExam = (req, res, next) => {
   Recruitment.fetchGradingExam(req.body.id, req.body.testDate)
     .then((exam) => {
       res.json(exam);
+    })
+    .catch(next);
+};
+
+exports.uploadGradeProgress = (req, res, next) => {
+  Recruitment.uploadGradeProgress(req.body.gradingList)
+    .then((message) => {
+      res.json(message);
     })
     .catch(next);
 };

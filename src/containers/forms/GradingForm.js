@@ -13,6 +13,7 @@ import {
   TextArea,
   Input,
   Button,
+  Label,
 } from 'semantic-ui-react';
 import Loader from '../../components/Loader';
 import { pageChange } from '../../actions/takeExam';
@@ -65,15 +66,36 @@ const showAnswerText = (exId, pickedAnswer) => {
   return undefined;
 };
 
-const validateScore = (score, fullScore) => {
-  if (!score || !Number.isInteger(score)) {
-    return 'scoreError';
+const isPositive = string => (
+  !((Number(string) * 100) % 10) && Number(string) > 0
+);
+
+const isNonNegative = string => (
+  (!((Number(string) * 100) % 10) && Number(string) > 0) || Number(string) === 0
+);
+
+const scoreValidityCheck = (score, isAllowZero) => (
+  isAllowZero ?
+    !score || !isNonNegative(score, isAllowZero) :
+    !score || !isPositive(score, isAllowZero)
+);
+
+const scoreHandle = (score, fullScore) => {
+  if (scoreValidityCheck(score, true)
+    && (scoreValidityCheck(fullScore, true))) {
+    return 'bothScoreValueError';
   }
-  else if (!fullScore || !Number.isInteger(fullScore)) {
-    return 'fullScoreError';
+  if (scoreValidityCheck(score, true)) {
+    return 'scoreValueError';
   }
-  else if (score > fullScore) {
-    return 'scoreExceed';
+  else if (scoreValidityCheck(fullScore, true)) {
+    return 'fullScoreValueError';
+  }
+  else if (Number(score) > Number(fullScore)) {
+    console.log(score, fullScore);
+    return fullScore > 0 ?
+      'scoreValueExceed' :
+      'scoreWithNoFullScore';
   }
   return 'OK';
 };
@@ -91,7 +113,9 @@ const GradingForm = ({
   onScoreChange,
   onFullScoreChange,
   onClickSave,
-  onClickSend, }) => (
+  onClickSend,
+  updateScoreStatus,
+}) => (
     isFetching ?
       <Loader /> :
       <Segment.Group>
@@ -154,7 +178,7 @@ const GradingForm = ({
                                   <TextArea
                                     value={row.comment}
                                     placeholder="Comment.."
-                                    onInput={(e, { value }) => onInputCommentTextArea(value, currentActiveModalPage, row.exId)}
+                                    onInput={(e, { value }) => onInputCommentTextArea(value, row.exId)}
                                   />
                                 </Grid.Column>
                               </Grid.Row>
@@ -170,20 +194,48 @@ const GradingForm = ({
                     i === currentActiveModalPage - 1 ?
                       row.exType === 'Choices' ?
                         <div>Point : {row.exType === 'Choices' && row.point[0]} / {row.exType === 'Choices' && row.point[1]}</div> :
-                        <div>
-                          <Input
-                            placeholder="Score.."
-                            value={row.point[0] === 'UNKNOWN' ? '' : row.point[0]}
-                            onChange={e => onScoreChange(e, row.exId)}
-                          />&nbsp;
-                          <Input
-                            placeholder="Full Score.."
-                            value={row.point[1] === 'UNKNOWN' ? '' : row.point[1]}
-                            onChange={e => onFullScoreChange(e, row.exId)}
-                          />
-                        </div>
+                        <Grid>
+                          <Grid.Row>
+                            <Grid.Column width={2}>Point</Grid.Column>
+                            <Grid.Column width={14}>
+                              <Input
+                                placeholder="Score.."
+                                value={row.point[0] === 'UNKNOWN' || row.point[0] === '' ? '' : row.point[0]}
+                                onChange={(e) => {
+                                  onScoreChange(e, row.exId);
+                                  const scoreStatus = scoreHandle(e.target.value, row.point[1]);
+                                  updateScoreStatus(scoreStatus, row.exId);
+                                }}
+                              />&nbsp;
+                              {(row.scoreWarning || row.point[0] === 'UNKNOWN') &&
+                                <Label basic color="red" pointing="left">
+                                  {row.scoreWarning}
+                                </Label>
+                              }
+                            </Grid.Column>
+                          </Grid.Row>
+                          <Grid.Row>
+                            <Grid.Column width={2}>Full Point</Grid.Column>
+                            <Grid.Column width={14}>
+                              <Input
+                                placeholder="Full Score.."
+                                value={row.point[1] === 'UNKNOWN' || row.point[1] === '' ? '' : row.point[1]}
+                                onChange={(e) => {
+                                  onFullScoreChange(e, row.exId);
+                                  const scoreStatus = scoreHandle(row.point[0], e.target.value);
+                                  updateScoreStatus(scoreStatus, row.exId);
+                                }}
+                              />&nbsp;
+                              {(row.fullScoreWarning || row.point[1] === 'UNKNOWN') &&
+                                <Label basic color="red" pointing="left">
+                                  {row.fullScoreWarning}
+                                </Label>
+                              }
+                            </Grid.Column>
+                          </Grid.Row>
+                        </Grid>
                       : <div />
-                  ))}
+                ))}
                 <Pagination
                   floated="right"
                   onPageChange={(e, object) => onPageChange(object.activePage)}
@@ -243,6 +295,7 @@ GradingForm.propTypes = {
   onFullScoreChange: PropTypes.func.isRequired,
   onClickSave: PropTypes.func.isRequired,
   onClickSend: PropTypes.func.isRequired,
+  updateScoreStatus: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({

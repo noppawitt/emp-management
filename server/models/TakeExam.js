@@ -67,7 +67,7 @@ TakeExam.uploadResult = resultList => (
   db.tx((t) => {
     const queryList = [];
     Object(resultList).map((eachObject) => {
-      const aquery = t.none(
+      const query = t.none(
         ' INSERT INTO exam_result (cd_id, ex_id, test_date, cd_answer, point, status)'
         + ' VALUES ($1, $2, $3, $4, $5, $6)'
         + ' ON CONFLICT (cd_id, ex_id, test_date)'
@@ -85,7 +85,7 @@ TakeExam.uploadResult = resultList => (
           // eachObject.ex_correct
         ]
       );
-      queryList.push(aquery);
+      queryList.push(query);
     });
     return t.batch(queryList);
   })

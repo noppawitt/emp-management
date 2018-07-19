@@ -300,6 +300,15 @@ api.fetchGradingExam = (id, testDate) => (
   })
 );
 
+api.uploadGradeProgress = gradingList => (
+  callApi(`/api/recruitments/uploadGradeProgress`, {
+    method: 'POST',
+    body: {
+      gradingList,
+    }
+  })
+);
+
 api.changeStatus = (id, status) => (
   callApi(`/api/recruitments/changeStatus`, {
     method: 'POST',

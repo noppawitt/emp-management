@@ -131,20 +131,34 @@ const Recruitment = (state = initialState, action) => {
         ...state,
         isModalFetching: true,
       };
-    case actionTypes.GRADING_FETCH_SUCCESS:
-      console.log('>>>', action.payload.gradingList);
+    case actionTypes.GRADING_FETCH_SUCCESS: {
+      const tempGradingList = action.payload.gradingList.slice();
+      for (let i = 0; i < tempGradingList.length; i += 1) {
+        if (tempGradingList[i].point[0] === 'UNKNOWN') {
+          tempGradingList[i] = {
+            ...tempGradingList[i],
+            scoreWarning: '*required',
+          };
+        }
+        if (tempGradingList[i].point[1] === 'UNKNOWN') {
+          tempGradingList[i] = {
+            ...tempGradingList[i],
+            fullScoreWarning: '*required',
+          };
+        }
+      }
       return {
         ...state,
         gradingId: action.payload.gradingId,
-        gradingList: action.payload.gradingList,
+        gradingList: tempGradingList,
         isModalFetching: false,
         // variable initialization for new modal
         activeModalCategory: action.payload.gradingList[0].exCategory,
         currentActiveModalPage: 1,
         modalCategoryList: action.payload.examAmountPerCategory,
         modalSubCategoryList: action.payload.examAmountPerSubCategory,
-
       };
+    }
     case actionTypes.GRADING_FETCH_FAILURE:
       return {
         ...state,
@@ -159,7 +173,6 @@ const Recruitment = (state = initialState, action) => {
     case actionTypes.GRADING_MODAL_CATEGORY_CHANGE:
       return {
         ...state,
-        currentActiveModalPage: 1,
         activeModalCategory: action.payload.category,
       };
     case actionTypes.GRADING_MODAL_ON_INPUT_COMMENT: {
@@ -203,6 +216,85 @@ const Recruitment = (state = initialState, action) => {
           tempGradingList[i] = {
             ...tempGradingList[i],
             point: tempPoint,
+          };
+        }
+      }
+      return {
+        ...state,
+        gradingList: tempGradingList,
+      };
+    }
+    case actionTypes.GRADING_MODAL_SAVE_REQUEST: {
+      const tempGradingList = [...state.gradingList].slice();
+      for (let i = 0; i < tempGradingList.length; i += 1) {
+        const tempPoint = tempGradingList[i].point;
+        if (tempPoint[0].substring(tempPoint[0].length - 1) === '.') {
+          tempPoint[0] = tempPoint[0].substring(0, tempPoint[0].length - 1);
+        }
+        if (tempPoint[1].substring(tempPoint[1].length - 1) === '.') {
+          tempPoint[1] = tempPoint[1].substring(0, tempPoint[1].length - 1);
+        }
+        tempGradingList[i] = {
+          ...tempGradingList[i],
+          point: tempPoint,
+        };
+      }
+      return {
+        ...state,
+        isModalFetching: true,
+        gradingList: tempGradingList,
+      };
+    }
+    case actionTypes.GRADING_MODAL_SAVE_FAILURE:
+      return {
+        ...state,
+        isModalFetching: false,
+        message: action.payload.message,
+      };
+    case actionTypes.GRADING_MODAL_SAVE_SUCCESS:
+      return {
+        ...state,
+        isModalFetching: false,
+      };
+    case actionTypes.GRADING_MODAL_SEND_REQUEST:
+      return {
+        ...state,
+        isModalFetching: true,
+      };
+    case actionTypes.GRADING_MODAL_SEND_FAILURE:
+      return {
+        ...state,
+        isModalFetching: false,
+        message: action.payload.message,
+      };
+    case actionTypes.GRADING_MODAL_SEND_SUCCESS:
+      return {
+        ...state,
+        isModalFetching: false,
+      };
+    case actionTypes.GRADING_MODAL_INPUT_WARNING: {
+      let tempScoreWarning = '';
+      let tempFullScoreWarning = '';
+      if (['bothScoreValueError', 'scoreValueError'].includes(action.payload.scoreStatus)) {
+        tempScoreWarning = 'Please insert an non negative (1 decimal place or integer)';
+      }
+      if (['bothScoreValueError', 'fullScoreValueError'].includes(action.payload.scoreStatus)) {
+        tempFullScoreWarning = 'Please insert an non negative (1 decimal place or integer)';
+      }
+      if (action.payload.scoreStatus === 'scoreValueExceed') {
+        tempScoreWarning = 'Score can\'t more than Fullscore';
+        tempFullScoreWarning = 'Score can\'t more than Fullscore';
+      }
+      else if (action.payload.scoreStatus === 'scoreWithNoFullScore') {
+        tempScoreWarning = 'Non-zero isn\'t allow for Scroll when Fullscore is zero';
+      }
+      const tempGradingList = [...state.gradingList].slice();
+      for (let i = 0; i < tempGradingList.length; i += 1) {
+        if (tempGradingList[i].exId === action.payload.exId) {
+          tempGradingList[i] = {
+            ...tempGradingList[i],
+            scoreWarning: tempScoreWarning,
+            fullScoreWarning: tempFullScoreWarning,
           };
         }
       }

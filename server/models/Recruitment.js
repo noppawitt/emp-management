@@ -6,8 +6,9 @@ Recruitment.fetchAllRecruitment = () => (
   db.manyOrNone('SELECT * FROM recruitments')
 );
 
-Recruitment.checkUserStatus = id => (
-  db.oneOrNone('SELECT id, latest_activated_time, activation_lifetimes FROM exam_users2 WHERE id = $1', [id])
+Recruitment.checkUserStatus = (id, testDate) => (
+  db.oneOrNone('SELECT id, latest_activated_time, activation_lifetimes'
+    + ' FROM exam_users2 WHERE id = $1 AND test_date = $2', [id, testDate])
 );
 
 Recruitment.checkExamUser = (id, testDate) => (
@@ -54,6 +55,7 @@ Recruitment.fetchGradingExam = (id, testDate) => (
     + ' exam_result.cd_answer AS cd_answer,'
     + ' exam_result.point AS point,'
     + ' exam_result.status AS status,'
+    + ' exam_result.comment AS comment,'
     + ' exams.ex_type AS ex_type,'
     + ' exams.ex_choice AS ex_choices,'
     + ' exams.ex_answer AS ex_correct,'
@@ -67,6 +69,33 @@ Recruitment.fetchGradingExam = (id, testDate) => (
     + ' AND exam_result.test_date = $2',
     [id, testDate]
   )
+);
+
+Recruitment.uploadGradeProgress = gradingList => (
+  db.tx((t) => {
+    const queryList = [];
+    Object(gradingList).map((eachOne) => {
+      const query = t.oneOrNone(
+        'UPDATE exam_result SET'
+        + ' status = $4,'
+        + ' point = $5,'
+        + ' comment = $6'
+        + ' WHERE cd_id = $1'
+        + ' AND ex_id = $2'
+        + ' AND test_date = $3',
+        [
+          eachOne.cdId,
+          eachOne.exId,
+          eachOne.testDate,
+          eachOne.status,
+          eachOne.point,
+          eachOne.comment,
+        ]
+      );
+      queryList.push(query);
+    });
+    return t.batch(queryList);
+  })
 );
 
 Recruitment.changeStatus = (id, status) => (

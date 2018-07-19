@@ -10,22 +10,30 @@ import {
   onInputModalComment,
   onScoreModalChange,
   onFullScoreModalChange,
+  saveGradingListRequest,
+  sendGradingListRequest,
+  scoreStatusHandle,
 } from '../../actions/recruitment';
 
 const GradingExamsModal = ({
   isModalFetching,
   gradingId,
+  onClose,
   onPageChange,
   onClickModalCategory,
   onInputCommentTextArea,
   onScoreChange,
   onFullScoreChange,
+  onClickSave,
+  onClickSend,
+  updateScoreStatus,
 }) => (
   <SUIModal
     dimmer="blurring"
     size="fullscreen"
     open
     header={'Grading Exams :'.concat(gradingId)}
+    onClose={onClose}
     gradingId={gradingId}
   >
     <SUIModal.Content>
@@ -37,6 +45,9 @@ const GradingExamsModal = ({
         onInputCommentTextArea={onInputCommentTextArea}
         onScoreChange={onScoreChange}
         onFullScoreChange={onFullScoreChange}
+        onClickSave={onClickSave}
+        onClickSend={onClickSend}
+        updateScoreStatus={updateScoreStatus}
       />
     </SUIModal.Content>
   </SUIModal>
@@ -45,11 +56,15 @@ const GradingExamsModal = ({
 GradingExamsModal.propTypes = {
   isModalFetching: PropTypes.bool.isRequired,
   gradingId: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
   onPageChange: PropTypes.func.isRequired,
   onClickModalCategory: PropTypes.func.isRequired,
   onInputCommentTextArea: PropTypes.func.isRequired,
   onScoreChange: PropTypes.func.isRequired,
   onFullScoreChange: PropTypes.func.isRequired,
+  onClickSave: PropTypes.func.isRequired,
+  onClickSend: PropTypes.func.isRequired,
+  updateScoreStatus: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -61,10 +76,17 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   // edit save button function!
   onPageChange: value => dispatch(modalPageChange(value)),
-  onClickModalCategory: category => dispatch(modalCategoryChange(category)),
-  onInputCommentTextArea: (text, currentActiveModalPage, exId) => dispatch(onInputModalComment(text, currentActiveModalPage, exId)),
+  onClickModalCategory: (category) => {
+    dispatch(modalCategoryChange(category));
+    dispatch(modalPageChange(1));
+  },
+  onInputCommentTextArea: (text, exId) => dispatch(onInputModalComment(text, exId)),
   onScoreChange: (e, exId) => dispatch(onScoreModalChange(e.target.value, exId)),
   onFullScoreChange: (e, exId) => dispatch(onFullScoreModalChange(e.target.value, exId)),
+  onClose: () => dispatch(closeModal()),
+  onClickSave: gradingList => dispatch(saveGradingListRequest(gradingList)),
+  onClickSend: gradingList => dispatch(sendGradingListRequest(gradingList)),
+  updateScoreStatus: (scoreStatus, exId) => dispatch(scoreStatusHandle(scoreStatus, exId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GradingExamsModal);

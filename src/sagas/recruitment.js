@@ -13,6 +13,11 @@ import {
   fetchGradingSuccess,
   updateUserStatus,
   fetchResultFailure,
+  saveGradingListFailure,
+  saveGradingListSuccess,
+  sendGradingListFailure,
+  sendGradingListSuccess,
+  saveGradingListRequest,
 } from '../actions/recruitment';
 import api from '../services/api';
 import * as modalNames from '../constants/modalNames';
@@ -174,6 +179,29 @@ export function* viewResultTask(action) {
   }
 }
 
+export function* saveGradingTask(action) {
+  try {
+    yield call(api.uploadGradeProgress, action.payload.gradingList);
+    yield put(saveGradingListSuccess());
+  }
+  catch (error) {
+    yield put(saveGradingListFailure(error));
+  }
+}
+
+export function* sendGradingTask(action) {
+  try {
+    // call save
+    yield put(saveGradingListRequest(action.payload.gradingList));
+    // then do something next!
+    yield call(api.xxx, action.payload.gradingList);
+    yield put(sendGradingListSuccess());
+  }
+  catch (error) {
+    yield put(sendGradingListFailure(error));
+  }
+}
+
 export function* watchFetchRecruitmentRequest() {
   yield takeEvery(actionTypes.RECRUITMENT_FETCH_REQUEST, fetchRecruitmentTask);
 }
@@ -190,12 +218,20 @@ export function* watchRandomExamRequest() {
   yield takeEvery(actionTypes.RECRUITMENT_RANDOM_EXAM, randomExamTask);
 }
 
-export function* watchEvaluateExam() {
+export function* watchGradingExam() {
   yield takeEvery(actionTypes.GRADING_FETCH_REQUEST, fetchGradingTask);
 }
 
 export function* watchViewResult() {
   yield takeEvery(actionTypes.VIEW_RESULT_EVALUATE_EXAM, viewResultTask);
+}
+
+export function* watchSaveGradingRequest() {
+  yield takeEvery(actionTypes.GRADING_MODAL_SAVE_REQUEST, saveGradingTask);
+}
+
+export function* watchSendGradingRequest() {
+  yield takeEvery(actionTypes.GRADING_MODAL_SEND_REQUEST, sendGradingTask);
 }
 
 export default function* recruitmentSaga() {
@@ -204,7 +240,9 @@ export default function* recruitmentSaga() {
     watchCheckUserStatusRequest(),
     watchActivateUserRequest(),
     watchRandomExamRequest(),
-    watchEvaluateExam(),
+    watchGradingExam(),
     watchViewResult(),
+    watchSaveGradingRequest(),
+    watchSendGradingRequest(),
   ]);
 }

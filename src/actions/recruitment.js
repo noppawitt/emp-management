@@ -174,11 +174,10 @@ export const fetchResultFailure = message => ({
   }
 });
 
-export const onInputModalComment = (text, currentActiveModalPage, exId) => ({
+export const onInputModalComment = (text, exId) => ({
   type: actionTypes.GRADING_MODAL_ON_INPUT_COMMENT,
   payload: {
     text,
-    currentActiveModalPage,
     exId,
   }
 });
@@ -194,6 +193,54 @@ export const onFullScoreModalChange = (value, exId) => ({
   type: actionTypes.GRADING_MODAL_ON_FULLSCORE_CHANGE,
   payload: {
     value,
+    exId,
+  }
+});
+
+export const saveGradingListRequest = gradingList => ({
+  type: actionTypes.GRADING_MODAL_SAVE_REQUEST,
+  payload: {
+    gradingList,
+  }
+});
+
+export const saveGradingListFailure = message => ({
+  type: actionTypes.GRADING_MODAL_SAVE_FAILURE,
+  payload: {
+    message,
+  }
+});
+
+export const saveGradingListSuccess = () => ({
+  type: actionTypes.GRADING_MODAL_SAVE_SUCCESS,
+  payload: {
+  }
+});
+
+export const sendGradingListRequest = gradingList => ({
+  type: actionTypes.GRADING_MODAL_SEND_REQUEST,
+  payload: {
+    gradingList,
+  }
+});
+
+export const sendGradingListFailure = message => ({
+  type: actionTypes.GRADING_MODAL_SEND_FAILURE,
+  payload: {
+    message,
+  }
+});
+
+export const sendGradingListSuccess = () => ({
+  type: actionTypes.GRADING_MODAL_SEND_SUCCESS,
+  payload: {
+  }
+});
+
+export const scoreStatusHandle = (scoreStatus, exId) => ({
+  type: actionTypes.GRADING_MODAL_INPUT_WARNING,
+  payload: {
+    scoreStatus,
     exId,
   }
 });

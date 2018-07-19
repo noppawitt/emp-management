@@ -13,6 +13,8 @@ router.post('/uploadRandomExIdList', RecruitmentController.uploadRandomExIdList)
 
 router.post('/fetchGradingExam', RecruitmentController.fetchGradingExam);
 
+router.post('/uploadGradeProgress', RecruitmentController.uploadGradeProgress);
+
 router.post('/changeStatus', RecruitmentController.changeStatus);
 
 module.exports = router;
