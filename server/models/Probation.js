@@ -40,7 +40,7 @@ Probation.insertProbation = (probationInfo,id) =>(
 
 Probation.updateProbation = (probationInfo,id) =>(
   db.none(
-    "UPDATE Probation SET pass_pro_date=$1, based_salary=$2, mobile=$3, transporation_allowance=$4, other_allowance=$5, pass_pro=$6, confirmed_by_employment=$7, sup_comment=$8, em_sign_date=$9, sup_sign_date=$10, md_sign_date=$11, continued=$12, score=$13, expected_score=$14, updated_user=$15, terminated_date=$16, continued_date=$17, updated_date=$18 WHERE user_id=$19 AND id=$20",
+    "UPDATE Probation SET pass_pro_date=$1, based_salary=$2, mobile=$3, transporation_allowance=$4, other_allowance=$5, pass_pro=$6, confirmed_by_employment=$7, sup_comment=$8, em_sign_date=$9, sup_sign_date=$10, md_sign_date=$11, continued=$12, score=$13, expected_score=$14, updated_user=$15, terminated_date=$16, continued_date=$17, em_sign_name=$18, sup_sign_name=$19, md_sign_name=$20, updated_date=$21 WHERE user_id=$22 AND id=$23",
     [
       probationInfo.endProbationDate,
       probationInfo.basedSalary,
@@ -59,6 +59,9 @@ Probation.updateProbation = (probationInfo,id) =>(
       id,
       probationInfo.terminationDate,
       probationInfo.continuedDate,
+      probationInfo.employeeSignName,
+      probationInfo.supervisorSignName,
+      probationInfo.MDSignName,
       moment().format('YYYY-MM-DD HH:mm:ss'),
       probationInfo.employeeID,
       probationInfo.proId
