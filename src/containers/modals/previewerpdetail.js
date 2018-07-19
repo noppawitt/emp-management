@@ -168,7 +168,7 @@ const PreviewErpDetail = ({ arraddrow }) => {
     case '1': {
       let sum = 0;
       arraddrow[1].forEach((element) => {
-        sum += Number.parseInt(element.field_4, 10);
+        sum += Number.parseFloat(element.field_4, 10);
       });
       return (
         <div>
@@ -187,7 +187,7 @@ const PreviewErpDetail = ({ arraddrow }) => {
     case '2': {
       let sum = 0;
       arraddrow[1].forEach((element) => {
-        sum += Number.parseInt(element.field_4, 10);
+        sum += Number.parseFloat(element.field_4, 10);
       });
       return (
         <div>
@@ -206,7 +206,7 @@ const PreviewErpDetail = ({ arraddrow }) => {
     case '3': {
       let sum = 0;
       arraddrow[1].forEach((element) => {
-        sum += Number.parseInt(element.field_4, 10);
+        sum += Number.parseFloat(element.field_4, 10);
       });
       return (
         <div>
@@ -225,7 +225,7 @@ const PreviewErpDetail = ({ arraddrow }) => {
     case '4': {
       let sum = 0;
       arraddrow[1].forEach((element) => {
-        sum += Number.parseInt(element.field_4, 10);
+        sum += Number.parseFloat(element.field_4, 10);
       });
       return (
         <div>

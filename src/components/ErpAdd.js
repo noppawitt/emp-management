@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -5,6 +6,7 @@ import { compose } from 'recompose';
 import { reduxForm, reset } from 'redux-form';
 import { Button, Segment, Table, Modal, Input, Label, Dropdown, Icon } from 'semantic-ui-react';
 import NumberFormat from 'react-number-format';
+
 import PreviewErpDetail from '../containers/modals/PreviewErpDetail';
 import AddRow from '../containers/forms/Addrow';
 
@@ -24,15 +26,15 @@ const table = (arraddrow, addrow, handleSubmit, handleDeleteRow) => {
   switch (arraddrow[0][0].data) {
     case '1':
       return (
-        <Table celled >
+        <Table celled fixed>
           <Table.Header>
             <Table.Row >
-              <Table.HeaderCell>Item</Table.HeaderCell>
-              <Table.HeaderCell >Suppliers/Customers</Table.HeaderCell>
-              <Table.HeaderCell >Description</Table.HeaderCell>
-              <Table.HeaderCell >Project No.</Table.HeaderCell>
-              <Table.HeaderCell >Amount (Baht)</Table.HeaderCell>
-              <Table.HeaderCell />
+              <Table.HeaderCell width={2} >Item</Table.HeaderCell>
+              <Table.HeaderCell width={5} >Suppliers/Customers</Table.HeaderCell>
+              <Table.HeaderCell width={5} >Description</Table.HeaderCell>
+              <Table.HeaderCell width={5} >Project No.</Table.HeaderCell>
+              <Table.HeaderCell width={5} >Amount (Baht)</Table.HeaderCell>
+              <Table.HeaderCell width={2} />
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -58,15 +60,15 @@ const table = (arraddrow, addrow, handleSubmit, handleDeleteRow) => {
       );
     case '2':
       return (
-        <Table celled>
+        <Table celled fixed >
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Item</Table.HeaderCell>
-              <Table.HeaderCell>ช่วงเวลาใช้เงิน Advance</Table.HeaderCell>
-              <Table.HeaderCell>กำหนดเคลียร์คืน</Table.HeaderCell>
-              <Table.HeaderCell>Description</Table.HeaderCell>
-              <Table.HeaderCell>Amount (Baht)</Table.HeaderCell>
-              <Table.HeaderCell />
+              <Table.HeaderCell width={2} >Item</Table.HeaderCell>
+              <Table.HeaderCell width={5} >ช่วงเวลาใช้เงิน Advance</Table.HeaderCell>
+              <Table.HeaderCell width={5} >กำหนดเคลียร์คืน</Table.HeaderCell>
+              <Table.HeaderCell width={5} >Description</Table.HeaderCell>
+              <Table.HeaderCell width={5} >Amount (Baht)</Table.HeaderCell>
+              <Table.HeaderCell width={2} />
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -92,15 +94,15 @@ const table = (arraddrow, addrow, handleSubmit, handleDeleteRow) => {
       );
     case '3':
       return (
-        <Table celled>
+        <Table celled fixed>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Item</Table.HeaderCell>
-              <Table.HeaderCell>ช่วงเวลาใช้เงิน Advance</Table.HeaderCell>
-              <Table.HeaderCell>กำหนดเคลียร์คืน</Table.HeaderCell>
-              <Table.HeaderCell>Description</Table.HeaderCell>
-              <Table.HeaderCell>Amount (Baht)</Table.HeaderCell>
-              <Table.HeaderCell />
+              <Table.HeaderCell width={2} >Item</Table.HeaderCell>
+              <Table.HeaderCell width={5} >ช่วงเวลาใช้เงิน Advance</Table.HeaderCell>
+              <Table.HeaderCell width={5} >กำหนดเคลียร์คืน</Table.HeaderCell>
+              <Table.HeaderCell width={5} >Description</Table.HeaderCell>
+              <Table.HeaderCell width={5} >Amount (Baht)</Table.HeaderCell>
+              <Table.HeaderCell width={2} />
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -126,20 +128,22 @@ const table = (arraddrow, addrow, handleSubmit, handleDeleteRow) => {
       );
     case '4':
       return (
-        <Table celled>
+        <Table celled fixed >
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>ว / ด / ป</Table.HeaderCell>
-              <Table.HeaderCell>กรณีวันหยุดให้ระบุวันด้วย</Table.HeaderCell>
-              <Table.HeaderCell>รายการ</Table.HeaderCell>
-              <Table.HeaderCell>จำนวนเงิน</Table.HeaderCell>
-              <Table.HeaderCell>หมายเหตุ</Table.HeaderCell>
-              <Table.HeaderCell />
+              <Table.HeaderCell width={1} />
+              <Table.HeaderCell width={3} >ว / ด / ป</Table.HeaderCell>
+              <Table.HeaderCell width={3} >กรณีวันหยุดให้ระบุวันด้วย</Table.HeaderCell>
+              <Table.HeaderCell width={3} >รายการ</Table.HeaderCell>
+              <Table.HeaderCell width={3} >จำนวนเงิน</Table.HeaderCell>
+              <Table.HeaderCell width={3} >หมายเหตุ</Table.HeaderCell>
+              <Table.HeaderCell width={1} />
             </Table.Row>
           </Table.Header>
           <Table.Body>
             {addrow.map((i, index) => (
               <Table.Row>
+                <Table.Cell width={1} />
                 <Table.Cell>{i.field_1}</Table.Cell>
                 <Table.Cell>{i.field_2}</Table.Cell>
                 <Table.Cell>{i.field_3}</Table.Cell>
@@ -150,6 +154,7 @@ const table = (arraddrow, addrow, handleSubmit, handleDeleteRow) => {
             ))}
           </Table.Body>
           <Table.Footer>
+            <Table.HeaderCell width={1} />
             <Table.HeaderCell colSpan="5">
               <AddRow arraddrow={arraddrow} onSubmit={handleSubmit} />
             </Table.HeaderCell>

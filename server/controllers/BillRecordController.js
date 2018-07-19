@@ -49,16 +49,16 @@ exports.create = (req, res, next) => {
           BillRecordControl.createApproveBill(record, req.user.id)
             .then((approvebill) => {
               const approvebill_rec_id = approvebill.id;
-              console.log(approvebill_rec_id)
+              // console.log(approvebill_rec_id);
               BillRecordControl.findApprover(req.user.id)
-                .then(approverarray => {
-                  console.log(approverarray)
+                .then((approverarray) => {
+                  // console.log(approverarray);
                   BillRecordControl.createApproveData(approvebill_rec_id, approverarray, req.user.id)
-                    .then(outputbill => {
+                    .then((outputbill) => {
                       res.json(record);
-                    })
-                })
-            })
+                    });
+                });
+            });
         }).catch(next);
       // const billapprove = BillRecordControl.createApproveBill(record, req.user.id);
       // .then(approvebill_rec_id => {
@@ -122,29 +122,29 @@ exports.findAll = (req, res, next) => {
 exports.findAllRecordErp = (req, res, next) => {
   const userid = req.user.id;
   BillRecordControl.findUser(userid)
-    .then(data_user => {
+    .then((data_user) => {
       BillRecordControl.findAll(userid)
-        .then(data_erp_record => {
+        .then((data_erp_record) => {
           const fetching = [];
           fetching.push({ "fetchuser": data_user });
           fetching.push({ "fetchall": data_erp_record });
           BillRecordControl.findBillDataById(data_erp_record)
-            .then(data_erpdetail_record => {
+            .then((data_erpdetail_record) => {
               for (var i = 0; i < fetching[1].fetchall.length; i++) {
-                fetching[1].fetchall[i]["data"] = []
-                fetching[1].fetchall[i]["data"].push(data_erpdetail_record[i][0]);
+                fetching[1].fetchall[i]['data'] = []
+                fetching[1].fetchall[i]['data'].push(data_erpdetail_record[i][0]);
                 // console.log(data_erpdetail_record[i][0])
               }
               BillRecordControl.findChildOfApprover(userid)
-                .then(count_child => {
+                .then((count_child) => {
                   // console.log(count_child);
-                  var count_bool
-                  if (count_child.count > 0) {
-                    count_bool = true;
-                  } else {
-                    count_bool = false;
-                  }
-                  fetching.push({ "approveBoolean": count_bool });
+                  var count_bool = true;
+                  // if (count_child.count > 0) {
+                  //   count_bool = true;
+                  // } else {
+                  //   count_bool = false;
+                  // }
+                  fetching.push({ approveBoolean: count_bool });
                   res.json(fetching)
                 })
             })
@@ -156,9 +156,9 @@ exports.findAllRecordErp = (req, res, next) => {
 
 exports.createChildUser = (req, res, next) => {
   BillRecordControl.createChildUserBill(req.body.parent, req.body.child)
-  .then(data => {
-    res.json(data);
-  })
-  .catch(error => {console.log(error)})
-  
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => { console.log(error) })
+
 }

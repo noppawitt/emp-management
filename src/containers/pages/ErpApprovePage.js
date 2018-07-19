@@ -6,7 +6,8 @@ import {
   fetchErpApproveRequest,
   approveErpRequest,
   commentChange,
-  deleteComment
+  deleteComment,
+  changePagination
 } from '../../actions/erpapprove';
 import {
   generateExcel
@@ -16,8 +17,9 @@ import * as modalNames from '../../constants/modalNames';
 import Loader from '../../components/Loader';
 import ErpApprove from '../../components/ErpApprove';
 
-const ErpPage = ({ isFetching, erpApprove, onApproveClick, onRejectClick, commentHandleChange, nowComment, clearComment, genExcel, onClose }) => (
+const ErpPage = ({ isFetching, erpApprove, onApproveClick, onRejectClick, commentHandleChange, nowComment, clearComment, genExcel, onClose, activePage, handlePaginationChange }) => (
   <div>
+    {console.log(activePage)}
     {isFetching ? <Loader /> : <ErpApprove
       erpApprove={erpApprove}
       onApproveClick={onApproveClick}
@@ -27,6 +29,8 @@ const ErpPage = ({ isFetching, erpApprove, onApproveClick, onRejectClick, commen
       clearComment={clearComment}
       genExcel={genExcel}
       onClose={onClose}
+      activePage={activePage}
+      handlePaginationChange={handlePaginationChange}
     />}
   </div>
 );
@@ -45,11 +49,14 @@ ErpPage.propTypes = {
   clearComment: PropTypes.func.isRequired,
   genExcel: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  activePage: PropTypes.number.isRequired,
+  handlePaginationChange: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   isFetching: state.erpapprove.isFetching,
   erpApprove: [...state.erpapprove.lists],
+  activePage: state.erpapprove.activePage,
   nowComment: state.erpapprove.comment,
 });
 
@@ -61,6 +68,7 @@ const mapDispatchToProps = dispatch => ({
     onConfirm: () => dispatch(approveErpRequest(approveId, value))
   })),
   onRejectClick: approveId => dispatch(openModal(modalNames.ERPAPPROVE_REJECT, { id: approveId })),
+  handlePaginationChange: (e, { activePage }) => dispatch(changePagination(activePage)),
   commentHandleChange: value => dispatch(commentChange(value)),
   clearComment: () => dispatch(deleteComment()),
   genExcel: id => dispatch(generateExcel(id)),

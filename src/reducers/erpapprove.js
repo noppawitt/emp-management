@@ -12,6 +12,7 @@ const erp = (state = initialState, action) => {
     case actionTypes.ERPAPPROVE_FETCH_REQUEST:
       return {
         ...state,
+        isFetching: true,
         form: action.payload.form
       };
     case actionTypes.ERPAPPROVE_FETCH_SUCCESS:
@@ -19,7 +20,8 @@ const erp = (state = initialState, action) => {
         ...state,
         isFetching: false,
         lists: action.payload.erpapprove,
-        comment: state.comment
+        comment: state.comment,
+        activePage: state.activePage
       };
     case actionTypes.ERPAPPROVE_FETCH_FAILURE:
       return {
@@ -53,6 +55,12 @@ const erp = (state = initialState, action) => {
       return {
         ...state,
         modalapprove: false,
+      };
+    case actionTypes.ERPAPPROVE_CHANGE_PAGINATION:
+      return {
+        ...state,
+        list: [...state.lists],
+        activePage: action.payload.activePage
       };
     default:
       return {

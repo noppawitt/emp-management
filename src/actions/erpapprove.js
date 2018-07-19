@@ -57,3 +57,10 @@ export const modalApproveOpen = () => ({
 export const modalApproveClose = () => ({
   type: actionTypes.ERPAPPROVE_MODAL_CLOSE
 });
+
+export const changePagination = activePage => ({
+  type: actionTypes.ERPAPPROVE_CHANGE_PAGINATION,
+  payload: {
+    activePage
+  }
+});

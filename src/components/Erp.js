@@ -9,15 +9,15 @@ const Erp = ({ erps, onDeleteClick, onSearchChange, activePage, handlePagination
   <div>
     <Menu pointing secondary>
       <Menu.Item name="Bill List" active />
-      {erps[2].approveBoolean && <Menu.Item name="Approve" href="/erpApprove" /> }
+      {erps[2].approveBoolean && <Menu.Item name="Approve" onClick={() => history.push('/erpApprove')} /> }
     </Menu>
     <Grid columns={3} relaxed>
       <Grid.Column>
         <Message>
           <Message.Header>Full Name</Message.Header>
           <p>
-            {erps[0].fetchuser.firstName}
-            {erps[0].fetchuser.lastName}
+            {erps[0].fetchuser.firstName} {erps[0].fetchuser.lastName}
+            ( {erps[0].fetchuser.firstNameTh} {erps[0].fetchuser.lastNameTh} )
           </p>
         </Message>
       </Grid.Column>
@@ -43,7 +43,7 @@ const Erp = ({ erps, onDeleteClick, onSearchChange, activePage, handlePagination
     <Segment.Group raised >
       <Segment>
         <Input icon="search" placeholder="Search..." onChange={onSearchChange} />
-        <Button href="/add" floated="right"> Add Bill </Button>
+        <Button onClick={() => history.push('/add')} floated="right"> Add Bill </Button>
       </Segment>
       <Segment>
         <Table celled selectable >
@@ -60,7 +60,7 @@ const Erp = ({ erps, onDeleteClick, onSearchChange, activePage, handlePagination
           </Table.Header>
 
           <Table.Body>
-            {getVisibleErps(erps, searchText).map((i, index) => activePage === Math.ceil((index + 1) / 10) && (
+            {getVisibleErps(erps, searchText).map((i, index) => activePage === Math.ceil((index + 1) / 20) && (
               <Table.Row key={i.id} >
                 <Table.Cell> {index + 1} </Table.Cell>
                 <Table.Cell>
@@ -78,11 +78,11 @@ const Erp = ({ erps, onDeleteClick, onSearchChange, activePage, handlePagination
                 </Table.Cell>
                 <Table.Cell> {erps[1].fetchall[index].comment} </Table.Cell>
                 <Table.Cell>
-                  <Icon name="edit" size="big" onClick={() => history.push(`/erp/${i.id}`)} />
                   <Icon name="file excel outline" size="big" color="green" onClick={() => genExcel(i.id)} />
+                  {i.statusapproveid === 0 && <Icon name="edit" size="big" onClick={() => history.push(`/erp/${i.id}`)} /> }
                 </Table.Cell>
                 <Table.Cell>
-                  <Icon name="delete" color="red" onClick={() => onDeleteClick(i.id)} />
+                  {i.statusapproveid === 0 && <Icon name="delete" color="red" onClick={() => onDeleteClick(i.id)} /> }
                 </Table.Cell>
               </Table.Row>
             ))}
@@ -91,7 +91,7 @@ const Erp = ({ erps, onDeleteClick, onSearchChange, activePage, handlePagination
             <Table.Row>
               <Table.HeaderCell colSpan="7">
                 <Pagination
-                  totalPages={Math.ceil(getVisibleErps(erps, searchText).length / 10)}
+                  totalPages={Math.ceil(getVisibleErps(erps, searchText).length / 20)}
                   activePage={activePage}
                   onPageChange={handlePaginationChange}
                   ellipsisItem={{ content: <Icon name="ellipsis horizontal" />, icon: true }}

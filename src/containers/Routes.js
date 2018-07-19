@@ -30,14 +30,11 @@ const Routes = () => (
     <PrivateRoute path="/employee" component={EmployeePage} />
     <PrivateRoute path="/report" component={ReportPage} />
     <PrivateRoute path="/manageleave" component={ManageLeave} />
-<<<<<<< HEAD
     <PrivateRoute exact path="/erp" component={ErpPage} />
     <PrivateRoute path="/erp/:id" component={ErpBillRecord} />
     <PrivateRoute path="/erpApprove" component={ErpApprovePage} />
     <PrivateRoute path="/add" component={ErpAddPage} />
-=======
     <PrivateRoute path="/holiday" component={HolidayPage} />
->>>>>>> 358698f4b6808cbba978eb9ac942cda19c155ad6
   </Switch>
 );
 

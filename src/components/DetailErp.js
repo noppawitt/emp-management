@@ -13,24 +13,21 @@ const imgreader = (imgFile) => {
   return localImageUrl;
 };
 
-const arrayHeader = [
-  ['Item', 'Suppliers/Customers', 'Description', 'Project No.', 'Amount (Baht)'],
-  ['Item', 'ช่วงเวลาใช้เงิน Advance', 'กำหนดเคลียร์คืน', 'Description', 'Amount (Baht)'],
-  ['Item', 'ช่วงเวลาใช้เงิน Advance', 'กำหนดเคลียร์คืน', 'Description', 'Amount (Baht)'],
-  ['Item', 'ว / ด / ป', 'กรณีวันหยุดให้ระบุ', 'รายการ', 'จำนวนเงิน', 'หมายเหตุ']
-];
-
 const headerBill = ['ใบขออนุมัติเบิกค่าใช้จ่าย', 'ใบขออนุมัติเบิกเงินทดรองจ่าย', 'ใบเคลียร์เงินทดรองจ่าย', 'ใบขอเบิกค่าพาหนะ / อื่นๆ'];
 
 const table = (erpdetail, selector, deleteRow, handleSubmit) => {
   switch (selector) {
     case 1:
       return (
-        <Table celled>
+        <Table celled fixed>
           <Table.Header>
-            <Table.Row>
-              {arrayHeader[selector - 1].map(header => (<Table.HeaderCell>{header}</Table.HeaderCell>))}
-              <Table.HeaderCell />
+            <Table.Row >
+              <Table.HeaderCell width={2} >Item</Table.HeaderCell>
+              <Table.HeaderCell width={5} >Suppliers/Customers</Table.HeaderCell>
+              <Table.HeaderCell width={5} >Description</Table.HeaderCell>
+              <Table.HeaderCell width={5} >Project No.</Table.HeaderCell>
+              <Table.HeaderCell width={5} >Amount (Baht)</Table.HeaderCell>
+              <Table.HeaderCell width={2} />
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -56,11 +53,15 @@ const table = (erpdetail, selector, deleteRow, handleSubmit) => {
       );
     case 2:
       return (
-        <Table celled>
+        <Table celled fixed >
           <Table.Header>
             <Table.Row>
-              {arrayHeader[selector - 1].map(header => (<Table.HeaderCell>{header}</Table.HeaderCell>))}
-              <Table.HeaderCell />
+              <Table.HeaderCell width={2} >Item</Table.HeaderCell>
+              <Table.HeaderCell width={5} >ช่วงเวลาใช้เงิน Advance</Table.HeaderCell>
+              <Table.HeaderCell width={5} >กำหนดเคลียร์คืน</Table.HeaderCell>
+              <Table.HeaderCell width={5} >Description</Table.HeaderCell>
+              <Table.HeaderCell width={5} >Amount (Baht)</Table.HeaderCell>
+              <Table.HeaderCell width={2} />
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -86,11 +87,15 @@ const table = (erpdetail, selector, deleteRow, handleSubmit) => {
       );
     case 3:
       return (
-        <Table celled>
+        <Table celled fixed>
           <Table.Header>
             <Table.Row>
-              {arrayHeader[selector - 1].map(header => (<Table.HeaderCell>{header}</Table.HeaderCell>))}
-              <Table.HeaderCell />
+              <Table.HeaderCell width={2} >Item</Table.HeaderCell>
+              <Table.HeaderCell width={5} >ช่วงเวลาใช้เงิน Advance</Table.HeaderCell>
+              <Table.HeaderCell width={5} >กำหนดเคลียร์คืน</Table.HeaderCell>
+              <Table.HeaderCell width={5} >Description</Table.HeaderCell>
+              <Table.HeaderCell width={5} >Amount (Baht)</Table.HeaderCell>
+              <Table.HeaderCell width={2} />
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -116,17 +121,20 @@ const table = (erpdetail, selector, deleteRow, handleSubmit) => {
       );
     case 4:
       return (
-        <Table celled>
+        <Table celled fixed >
           <Table.Header>
             <Table.Row>
-              {arrayHeader[selector - 1].map(header => (<Table.HeaderCell>{header}</Table.HeaderCell>))}
-              <Table.HeaderCell />
+              <Table.HeaderCell width={3} >ว / ด / ป</Table.HeaderCell>
+              <Table.HeaderCell width={3} >กรณีวันหยุดให้ระบุวันด้วย</Table.HeaderCell>
+              <Table.HeaderCell width={3} >รายการ</Table.HeaderCell>
+              <Table.HeaderCell width={3} >จำนวนเงิน</Table.HeaderCell>
+              <Table.HeaderCell width={3} >หมายเหตุ</Table.HeaderCell>
+              <Table.HeaderCell width={1} />
             </Table.Row>
           </Table.Header>
           <Table.Body>
             {erpdetail.lists.map((data, index) => (
               <Table.Row >
-                <Table.Cell>{index + 1}</Table.Cell>
                 <Table.Cell>{data.field1}</Table.Cell>
                 <Table.Cell>{data.field2}</Table.Cell>
                 <Table.Cell>{data.field3}</Table.Cell>

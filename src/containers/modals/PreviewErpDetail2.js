@@ -168,7 +168,7 @@ const PreviewErpDetail2 = (e) => {
     case 1: {
       let sum = 0;
       e.bill.data.forEach((element) => {
-        sum += parseInt(element.field4, 10);
+        sum += parseFloat(element.field4, 10);
       });
       return (
         <div>
@@ -187,7 +187,7 @@ const PreviewErpDetail2 = (e) => {
     case 2: {
       let sum = 0;
       e.bill.data.forEach((element) => {
-        sum += parseInt(element.field4, 10);
+        sum += parseFloat(element.field4, 10);
       });
       return (
         <div>
@@ -206,7 +206,7 @@ const PreviewErpDetail2 = (e) => {
     case 3: {
       let sum = 0;
       e.bill.data.forEach((element) => {
-        sum += parseInt(element.field4, 10);
+        sum += parseFloat(element.field4, 10);
       });
       return (
         <div>
@@ -225,7 +225,7 @@ const PreviewErpDetail2 = (e) => {
     case 4: {
       let sum = 0;
       e.bill.data.forEach((element) => {
-        sum += parseInt(element.field4, 10);
+        sum += parseFloat(element.field4, 10);
       });
       return (
         <div>

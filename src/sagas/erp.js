@@ -55,10 +55,9 @@ export function* fetchErpTask() {
 
 export function* genExcelTask(action) {
   try {
-    console.log(action.payload);
+    // console.log(action.payload);
     const excel = yield call(api.getExcel, action.payload.id);
-    // console.log('sdasdfa');
-    console.log(excel);
+    // console.log(excel);
     saveAs(excel);
     // yield put()
   }

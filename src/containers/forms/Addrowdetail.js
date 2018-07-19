@@ -12,11 +12,11 @@ const AddRowDetail = ({ handleSubmit, num }) => {
     case 1:
       return (
         <Form onSubmit={handleSubmit} >
-          <Form.Group>
+          <Form.Group widths="equal">
             <Field as={Form.Input} component={Input} name="field1" type="text" label="Suppliers/Customers" placeholder="Suppliers/Customers" validate={validator.required} />
             <Field as={Form.Input} component={Input} name="field2" type="text" label="Description" placeholder="Description" validate={validator.required} />
             <Field as={Form.Input} component={Input} name="field3" type="text" label="Project No." placeholder="Project No." validate={validator.required} />
-            <Field as={Form.Input} component={Input} name="field4" type="text" label="Amount (Baht)" placeholder="Amount (Baht)" validate={[validator.required, validator.number]} />
+            <Field as={Form.Input} component={Input} name="field4" type="text" label="Amount (Baht)" placeholder="Amount (Baht)" validate={[validator.required, validator.check2Decimal]} />
           </Form.Group>
           <Button type="submit" >Add Row</Button>
         </Form>
@@ -24,11 +24,11 @@ const AddRowDetail = ({ handleSubmit, num }) => {
     case 2:
       return (
         <Form onSubmit={handleSubmit} >
-          <Form.Group>
+          <Form.Group widths="equal">
             <Field as={Form.Input} component={Input} name="field1" type="text" label="ช่วงเวลาใช้เงิน Advance" placeholder="ช่วงเวลาใช้เงิน Advance" validate={validator.required} />
-            <Field as={Form.Input} component={Input} name="field2" type="text" label="กำหนดเคลียร์คืน" placeholder="กำหนดเคลียร์คืน" validate={validator.required} />
+            <Field as={Form.Input} component={Input} name="field2" type="date" label="กำหนดเคลียร์คืน" placeholder="กำหนดเคลียร์คืน" validate={[validator.required, validator.date]} />
             <Field as={Form.Input} component={Input} name="field3" type="text" label="Description" placeholder="Description" validate={validator.required} />
-            <Field as={Form.Input} component={Input} name="field4" type="text" label="Amount (Baht)" placeholder="Amount (Baht)" validate={[validator.required, validator.number]} />
+            <Field as={Form.Input} component={Input} name="field4" type="text" label="Amount (Baht)" placeholder="Amount (Baht)" validate={[validator.required, validator.check2Decimal]} />
           </Form.Group>
           <Button type="submit" >Add Row</Button>
         </Form>
@@ -36,11 +36,11 @@ const AddRowDetail = ({ handleSubmit, num }) => {
     case 3:
       return (
         <Form onSubmit={handleSubmit} >
-          <Form.Group>
+          <Form.Group widths="equal">
             <Field as={Form.Input} component={Input} name="field1" type="text" label="ช่วงเวลาใช้เงิน Advance" placeholder="ช่วงเวลาใช้เงิน Advance" validate={validator.required} />
-            <Field as={Form.Input} component={Input} name="field2" type="text" label="กำหนดเคลียร์คืน" placeholder="กำหนดเคลียร์คืน" validate={validator.required} />
+            <Field as={Form.Input} component={Input} name="field2" type="date" label="กำหนดเคลียร์คืน" placeholder="กำหนดเคลียร์คืน" validate={[validator.required, validator.date]} />
             <Field as={Form.Input} component={Input} name="field3" type="text" label="Description" placeholder="Description" validate={validator.required} />
-            <Field as={Form.Input} component={Input} name="field4" type="text" label="Amount (Baht)" placeholder="Amount (Baht)" validate={[validator.required, validator.number]} />
+            <Field as={Form.Input} component={Input} name="field4" type="text" label="Amount (Baht)" placeholder="Amount (Baht)" validate={[validator.required, validator.check2Decimal]} />
           </Form.Group>
           <Button type="submit" >Add Row</Button>
         </Form>
@@ -48,11 +48,11 @@ const AddRowDetail = ({ handleSubmit, num }) => {
     case 4:
       return (
         <Form onSubmit={handleSubmit} >
-          <Form.Group>
-            <Field as={Form.Input} component={Input} name="field1" type="text" label="ว / ด / ป" placeholder="ว / ด / ป" validate={validator.required} />
-            <Field as={Form.Input} component={Input} name="field2" type="text" label="กรณีวันหยุดให้ระบุวันด้วย" placeholder="กรณีวันหยุดให้ระบุวันด้วย" />
+          <Form.Group widths="equal">
+            <Field as={Form.Input} component={Input} name="field1" type="date" label="ว / ด / ป" placeholder="ว / ด / ป" validate={validator.required} />
+            <Field as={Form.Input} component={Input} name="field2" type="date" label="กรณีวันหยุดให้ระบุวันด้วย" placeholder="กรณีวันหยุดให้ระบุวันด้วย" />
             <Field as={Form.Input} component={Input} name="field3" type="text" label="รายการ" placeholder="รายการ" validate={validator.required} />
-            <Field as={Form.Input} component={Input} name="field4" type="text" label="จำนวนเงิน" placeholder="จำนวนเงิน" validate={[validator.required, validator.number]} />
+            <Field as={Form.Input} component={Input} name="field4" type="text" label="จำนวนเงิน" placeholder="จำนวนเงิน" validate={[validator.required, validator.check2Decimal]} />
             <Field as={Form.Input} component={Input} name="field5" type="text" label="หมายเหตุ" placeholder="หมายเหตุ" />
           </Form.Group>
           <Button type="submit" >Add Row</Button>

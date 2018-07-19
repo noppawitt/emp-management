@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Menu, Table, Button, Icon, Pagination, Modal, Segment } from 'semantic-ui-react';
 import Moment from 'react-moment';
 import NumberFormat from 'react-number-format';
+import history from '../history';
 import PreviewErpDetail2 from '../containers/modals/PreviewErpDetail2';
 
 const amount = (i) => {
@@ -10,7 +11,7 @@ const amount = (i) => {
     case 1: {
       let sum = 0;
       i.data.forEach((element) => {
-        sum += parseInt(element.field4, 10);
+        sum += parseFloat(element.field4, 10);
       });
       return (
         <NumberFormat value={sum} displayType="text" thousandSeparator decimalScale="2" fixedDecimalScale />
@@ -19,7 +20,7 @@ const amount = (i) => {
     case 2: {
       let sum = 0;
       i.data.forEach((element) => {
-        sum += parseInt(element.field4, 10);
+        sum += parseFloat(element.field4, 10);
       });
       return (
         <NumberFormat value={sum} displayType="text" thousandSeparator decimalScale="2" fixedDecimalScale />
@@ -28,7 +29,7 @@ const amount = (i) => {
     case 3: {
       let sum = 0;
       i.data.forEach((element) => {
-        sum += parseInt(element.field4, 10);
+        sum += parseFloat(element.field4, 10);
       });
       return (
         <NumberFormat value={sum} displayType="text" thousandSeparator decimalScale="2" fixedDecimalScale />
@@ -37,7 +38,7 @@ const amount = (i) => {
     case 4: {
       let sum = 0;
       i.data.forEach((element) => {
-        sum += parseInt(element.field4, 10);
+        sum += parseFloat(element.field4, 10);
       });
       return (
         <NumberFormat value={sum} displayType="text" thousandSeparator decimalScale="2" fixedDecimalScale />
@@ -52,16 +53,17 @@ const amount = (i) => {
   }
 };
 
-const ErpApprove = ({ erpApprove, onApproveClick, onRejectClick, genExcel }) => (
+const ErpApprove = ({ erpApprove, onApproveClick, onRejectClick, genExcel, activePage, handlePaginationChange }) => (
   <div>
     <Menu pointing secondary>
-      <Menu.Item name="Bill" href="/erp" />
+      <Menu.Item name="Bill" onClick={() => history.push('/erp')} />
       <Menu.Item name="Approve" active />
     </Menu>
     <Segment raised>
       <Table celled>
         <Table.Header>
           <Table.Row>
+            <Table.HeaderCell>Item</Table.HeaderCell>
             <Table.HeaderCell>Created User</Table.HeaderCell>
             <Table.HeaderCell>Bill Type</Table.HeaderCell>
             <Table.HeaderCell>Amount</Table.HeaderCell>
@@ -72,8 +74,9 @@ const ErpApprove = ({ erpApprove, onApproveClick, onRejectClick, genExcel }) => 
         </Table.Header>
 
         <Table.Body>
-          {erpApprove.map(i => (
+          {erpApprove.map((i, index) => activePage === Math.ceil((index + 1) / 20) && (
             <Table.Row key={i.id}>
+              <Table.Cell> {index + 1} </Table.Cell>
               <Table.Cell> {i.firstNameTh} {i.lastNameTh} </Table.Cell>
               <Table.Cell> {i.name} </Table.Cell>
               <Table.Cell textAlign="right">
@@ -89,8 +92,9 @@ const ErpApprove = ({ erpApprove, onApproveClick, onRejectClick, genExcel }) => 
                 }
                 {i.approvement2 === 1 &&
                   <div>
-                    {i.approvement1 === 1 && 'Approved'}
-                    {i.approvement1 === 2 && 'Rejected'}
+                    {i.approvement1 === 1 && 'Approved On '}
+                    {i.approvement1 === 2 && 'Rejected On '}
+                    <Moment format="YYYY-MM-DD HH:mm" date={i.updatedDate} />
                   </div>
                 }
               </Table.Cell>
@@ -106,12 +110,11 @@ const ErpApprove = ({ erpApprove, onApproveClick, onRejectClick, genExcel }) => 
 
         <Table.Footer>
           <Table.Row>
-            <Table.HeaderCell colSpan="6">
+            <Table.HeaderCell colSpan="7">
               <Pagination
-                // totalPages={Math.ceil(getVisibleErps(erps, searchText).length / 10)}
-                totalPages={1}
-                // activePage={activePage}
-                // onPageChange={handlePaginationChange}
+                totalPages={Math.ceil(erpApprove.length / 20)}
+                activePage={activePage}
+                onPageChange={handlePaginationChange}
                 ellipsisItem={{ content: <Icon name="ellipsis horizontal" />, icon: true }}
                 firstItem={{ content: <Icon name="angle double left" />, icon: true }}
                 lastItem={{ content: <Icon name="angle double right" />, icon: true }}
@@ -131,6 +134,8 @@ ErpApprove.propTypes = {
   onApproveClick: PropTypes.func.isRequired,
   onRejectClick: PropTypes.func.isRequired,
   genExcel: PropTypes.func.isRequired,
+  activePage: PropTypes.number.isRequired,
+  handlePaginationChange: PropTypes.func.isRequired,
 };
 
 export default ErpApprove;

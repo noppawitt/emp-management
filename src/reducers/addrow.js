@@ -24,7 +24,6 @@ const addrow = (state = initialState, action) => {
         count: state.count - 1,
         name: state.name,
         props: state.props.filter((item, index) => index !== action.payload.index),
-        // props: [...(state.props.slice(0, state.props.length - 1))],
         img: [...state.img]
       };
     case actionTypes.ERPADD_CHANGE_ITEM:

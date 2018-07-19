@@ -24,7 +24,7 @@ exports.attachmentXLSX = (req, res, next) => {
 
       switch (typeOfSheet) {
         case 1:
-          var fileName = "server/storage/private/report/Playtorium_Timesheet_Sepecial_ver4.xlsx";
+          var fileName = "server/storage/private/xlsx/BOOK1.xlsx";
           workbook.xlsx.readFile(fileName)
             .then(() => {
               var worksheet = workbook.getWorksheet("BOOK");
@@ -48,7 +48,7 @@ exports.attachmentXLSX = (req, res, next) => {
             .catch(next);
           break;
         case 2:
-          var fileName = "server/storage/private/report/Playtorium_Timesheet_Sepecial_ver4.xlsx";
+          var fileName = "server/storage/private/xlsx/BOOK2.xlsx";
           workbook.xlsx.readFile(fileName)
             .then(() => {
               var worksheet = workbook.getWorksheet("BOOK");
@@ -72,7 +72,7 @@ exports.attachmentXLSX = (req, res, next) => {
             .catch(next);
           break;
         case 3:
-          var fileName = "server/storage/private/report/Playtorium_Timesheet_Sepecial_ver4.xlsx";
+          var fileName = "server/storage/private/xlsx/BOOK3.xlsx";
           workbook.xlsx.readFile(fileName)
             .then(() => {
               var worksheet = workbook.getWorksheet("BOOK");
@@ -96,7 +96,7 @@ exports.attachmentXLSX = (req, res, next) => {
             .catch(next);
           break;
         case 4:
-          var fileName = "server/storage/private/report/Playtorium_Timesheet_Sepecial_ver4.xlsx";
+          var fileName = "server/storage/private/xlsx/BOOK4.xlsx";
           workbook.xlsx.readFile(fileName)
             .then(() => {
               var worksheet = workbook.getWorksheet("BOOK");
