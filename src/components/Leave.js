@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Segment, Button, Icon, Table, Menu, Grid, Select } from 'semantic-ui-react';
+import { Segment, Button, Icon, Table, Menu, Grid, Select, Image } from 'semantic-ui-react';
 import PageHeader from './PageHeader';
 import ProgressBar from './ProgressBar';
 import { getMonthOptions, getYearOptions } from '../utils/options';
+import holidayIcon from '../images/holiday.png';
+import history from '../history';
+
 
 const Leave = ({ leaves, leaveHistory, onAddClick, onCancelClick, userId, fetchLeave, year, month }) => (
   <div>
@@ -40,7 +43,15 @@ const Leave = ({ leaves, leaveHistory, onAddClick, onCancelClick, userId, fetchL
               <Grid.Column width={10}>
                 <Button icon labelPosition="left" floated="right" onClick={onAddClick} color="blue" >
                   <Icon name="add" />
-                  Create New Leave Request
+                  New Request
+                </Button>
+                <Button icon labelPosition="left" floated="right" onClick={() => history.push('/holiday')} color="yellow" >
+                  <Icon >
+                    <div style={{ padding: '25%' }}>
+                      <Image style={{ margin: 'auto', filter: 'brightness(0) invert(1)' }} src={holidayIcon} />
+                    </div>
+                  </Icon>
+                  View Holidays
                 </Button>
               </Grid.Column>
             </Grid>
