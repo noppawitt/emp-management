@@ -1,6 +1,6 @@
 import React from 'react';
 import { Segment, Grid, Select, Button, Icon, Table, Menu } from 'semantic-ui-react';
-import PageHeader from '../../components/PageHeader';
+import PageHeader from './PageHeader';
 
 const months = [
   { key: 1, value: '01', text: 'January' },
@@ -46,12 +46,12 @@ const ManageLeave = () => (
         <Table fixed striped selectable celled>
           <Table.Header>
             <Table.Row>
+              <Table.HeaderCell>Employee</Table.HeaderCell>
               <Table.HeaderCell>Leave type</Table.HeaderCell>
               <Table.HeaderCell>From</Table.HeaderCell>
               <Table.HeaderCell>To</Table.HeaderCell>
               <Table.HeaderCell>Purpose</Table.HeaderCell>
               <Table.HeaderCell>Total</Table.HeaderCell>
-              <Table.HeaderCell>Status</Table.HeaderCell>
               <Table.HeaderCell />
             </Table.Row>
           </Table.Header>

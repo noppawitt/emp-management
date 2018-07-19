@@ -86,6 +86,7 @@ const mapDispatchToProps = dispatch => ({
   handleHasPoNumberChange: (e, { checked }) => dispatch(changeHasPoNumber(checked))
 });
 
+// TODO edit id fetch
 const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
