@@ -10,7 +10,8 @@ if (token) {
     isAuthenticated: true,
     id: user.id,
     username: user.username,
-    type: user.type
+    type: user.type,
+    name: user.name
   };
 }
 else {
@@ -35,7 +36,8 @@ const auth = (state = initialState, action) => {
         isAuthenticated: true,
         id: action.payload.user.id,
         username: action.payload.user.username,
-        type: action.payload.user.type
+        type: action.payload.user.type,
+        name: action.payload.user.name
       };
     case actionTypes.LOGIN_FAILURE:
       return {

@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt-nodejs');
 const User = require('../models/User');
+const EmployeeInfo = require('../models/EmployeeInfo');
 
 const jwtSecret = process.env.JWT_SECRET;
 
@@ -9,17 +10,22 @@ exports.signin = (req, res, next) => {
     .then((user) => {
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
-          const token = jwt.sign({
-            id: user.id,
-            username: user.username,
-            type: user.type,
-          }, jwtSecret);
-          res.json({
-            id: user.id,
-            username: user.username,
-            type: user.type,
-            token
-          });
+          EmployeeInfo.findOwnByUserId(user.id)
+            .then((info) => {
+              const token = jwt.sign({
+                id: user.id,
+                username: user.username,
+                type: user.type,
+                name: info.firstName + ' ' + info.lastName
+              }, jwtSecret);
+              res.json({
+                id: user.id,
+                username: user.username,
+                type: user.type,
+                name: info.firstName + ' ' + info.lastName,
+                token
+              });
+            })
         }
         else {
           const err = new Error('Incorrect password');

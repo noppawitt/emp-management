@@ -12,7 +12,6 @@ class AddPerformance extends React.Component{
   constructor(props){
     super(props);
     this.state = props;
-    this.type = (!this.props.profile.perfInfo ? 'addPerformance':'updatePerformance')
   }
   componentDidMount(){
     console.log(this.state.submitting);
@@ -29,7 +28,7 @@ class AddPerformance extends React.Component{
             size="large"
             disable={!this.props.edited}
           >
-            <A test={this.props.onChange} profile={this.props.profile} mode={!this.props.profile.perfInfo || (this.props.can.performanceAdd && !this.props.profile.perfInfo.emSignDate) ? 'edit' : 'view'} role={this.props.can.mdSign ? 'md':this.props.can.supSign ? 'supervisor':'employee'}/>
+            <A name={this.props.name} test={this.props.onChange} profile={this.props.profile} mode={!this.props.profile.perfInfo || (this.props.can.performanceAdd && !this.props.profile.perfInfo.emSignDate) ? 'edit' : 'view'} role={{employee: this.props.id == this.props.profile.userId, supervisor: this.props.can.supSign, md: this.props.can.mdSign}}/>
           </Modal>
         }
       </div>
@@ -49,7 +48,8 @@ AddPerformance.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  type: state.auth.type,
+  name: state.auth.name,
+  id: state.auth.id,
   item: state.profile.item,
   modalName: state.modal.name,
   profile: state.profile,
