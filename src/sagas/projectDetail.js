@@ -50,6 +50,7 @@ function* createMemberTask(action) {
     action.payload.reject();
   }
 }
+
 function* deleteMemberTask(action) {
   try {
     const members = yield call(api.deleteMember, {
