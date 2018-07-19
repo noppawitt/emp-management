@@ -34,6 +34,9 @@ class PerformanceReviewForm extends React.Component {
             supervisor: this.props.profile.work.bossName || '-',
             expectedScore: null,
             score: null,
+            employeeSignName: null,
+            supervisorSignName: null,
+            MDSignName: null,
             employeeSignDate: null,
             supervisorSignDate: null,
             MDSignDate: null
@@ -57,6 +60,9 @@ class PerformanceReviewForm extends React.Component {
                 expectedScore: this.props.profile.perfInfo.expectedScore,
                 score: this.props.profile.perfInfo.score,
                 supervisorComment: this.props.profile.perfInfo.supComment,
+                employeeSignName: this.props.profile.perfInfo.emSignName,
+                supervisorSignName: this.props.profile.perfInfo.supSignName,
+                MDSignName: this.props.profile.perfInfo.mdSignName,
                 employeeSignDate: this.props.profile.perfInfo.emSignDate,
                 supervisorSignDate: this.props.profile.perfInfo.supSignDate,
                 MDSignDate: this.props.profile.perfInfo.mdSignDate,
@@ -82,9 +88,14 @@ class PerformanceReviewForm extends React.Component {
         this.props.test(this.state);
     }
 
-    signatureHandler(newEmployeeSignDate, newSupervisorSignDate, newMDSignDate) {
+    signatureHandler(newEmployeeSignName, newEmployeeSignDate,
+        newSupervisorSignName, newSupervisorSignDate,
+        newMDSignName, newMDSignDate) {
         this.state = {
             ...this.state,
+            employeeSignName: newEmployeeSignName,
+            supervisorSignName: newSupervisorSignName,
+            MDSignName: newMDSignName,
             employeeSignDate: newEmployeeSignDate,
             supervisorSignDate: newSupervisorSignDate,
             MDSignDate: newMDSignDate
@@ -95,7 +106,7 @@ class PerformanceReviewForm extends React.Component {
     render() {
         return (
             <div className='main-container'>
-              <img className="logo_back" src={logoBack} />
+                <img className="logo_back" src={logoBack} />
                 <div className='profile'>
                     <img className="logo" src={logo} />
                     <h1>Employee Performance Review Form</h1>
@@ -110,7 +121,7 @@ class PerformanceReviewForm extends React.Component {
                 <br />
                 <SupervisorCommentComponent {...this.state} onChange={this.supervisorCommentHandler} mode={this.props.mode} />
                 <br />
-                <SignatureComponent {...this.state} role={this.props.role} onChange={this.signatureHandler} />
+                <SignatureComponent {...this.state} role={this.props.role} onChange={this.signatureHandler} authName={this.props.name} />
             </div>
         );
     }

@@ -8,6 +8,9 @@ class SignatureComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            employeeSignName: props.employeeSignName || null,
+            supervisorSignName: props.supervisorSignName || null,
+            MDSignName: props.MDSignName || null,
             employeeSignDate: props.employeeSignDate || null,
             supervisorSignDate: props.supervisorSignDate || null,
             MDSignDate: props.MDSignDate || null,
@@ -18,6 +21,7 @@ class SignatureComponent extends React.Component {
         this.EmployeeSignHandler = this.EmployeeSignHandler.bind(this);
         this.SupervisorSignHandler = this.SupervisorSignHandler.bind(this);
         this.MDSignHandler = this.MDSignHandler.bind(this);
+        this.SignatureButtonHandler = this.SignatureButtonHandler.bind(this);
 
         this.employeeSignButton = React.createRef();
         this.supervisorSignButton = React.createRef();
@@ -30,19 +34,8 @@ class SignatureComponent extends React.Component {
         this.supervisorSignButton.current.disabled = true;
         this.MDSignButton.current.disabled = true;
 
-        if (this.state.role == 'employee')
-            this.employeeSignButton.current.disabled = false;
-        else if (this.state.role == 'supervisor')
-            this.supervisorSignButton.current.disabled = false;
-        else if (this.state.role == 'md'){
-            this.MDSignButton.current.disabled = false;
-            this.supervisorSignButton.current.disabled = false;
-        }
-        else {
-            this.employeeSignButton.current.disabled = true;
-            this.supervisorSignButton.current.disabled = true;
-            this.MDSignButton.current.disabled = true;
-        }
+        this.SignatureButtonHandler();
+
         if (this.state.employeeSignDate)
             this.EmployeeSignHandler();
         else
@@ -58,16 +51,42 @@ class SignatureComponent extends React.Component {
     }
 
     componentDidUpdate() {
-        this.props.onChange(this.state.employeeSignDate, this.state.supervisorSignDate, this.state.MDSignDate);
+        this.SignatureButtonHandler();
+        this.props.onChange(this.state.employeeSignName, this.state.employeeSignDate,
+            this.state.supervisorSignName, this.state.supervisorSignDate,
+            this.state.MDSignName, this.state.MDSignDate);
+    }
+
+    SignatureButtonHandler() {
+        if (!this.state.employeeSignDate && this.state.role.employee)
+            this.employeeSignButton.current.disabled = false;
+        else if (!this.state.supervisorSignDate && this.state.role.supervisor)
+            this.supervisorSignButton.current.disabled = false;
+        else if (!this.state.MDSignDate && this.state.role.md) {
+            this.MDSignButton.current.disabled = false;
+            this.supervisorSignButton.current.disabled = false;
+        }
+        else {
+            this.employeeSignButton.current.disabled = true;
+            this.supervisorSignButton.current.disabled = true;
+            this.MDSignButton.current.disabled = true;
+        }
     }
 
     EmployeeSignHandler() {
-        this.setState({ employeeSignDate: moment().format('YYYY-MM-DD') });
+        this.setState({
+            employeeSignName: this.props.employeeSignName || this.props.authName,
+            employeeSignDate: this.props.employeeSignDate || moment().format('YYYY-MM-DD')
+        });
         document.getElementById('mark1').style.width = '2em';
         this.employeeSignButton.current.disabled = true;
     }
+
     SupervisorSignHandler() {
-        this.setState({ supervisorSignDate: moment().format('YYYY-MM-DD') });
+        this.setState({
+            supervisorSignName: this.props.supervisorSignName || this.props.authName,
+            supervisorSignDate: this.props.supervisorSignDate || moment().format('YYYY-MM-DD')
+        });
         document.getElementById('mark2').style.width = '2em';
         this.supervisorSignButton.current.disabled = true;
         // this.setState({
@@ -75,8 +94,12 @@ class SignatureComponent extends React.Component {
         //           onClose={()=>{this.setState({modal: '' , supervisorSignDate: moment().format('YYYY-MM-DD')})}}/>
         // })
     }
+
     MDSignHandler() {
-        this.setState({ MDSignDate: moment().format('YYYY-MM-DD') });
+        this.setState({
+            MDSignName: this.props.MDSignName || this.props.authName,
+            MDSignDate: this.props.MDSignDate || moment().format('YYYY-MM-DD')
+        });
         document.getElementById('mark3').style.width = '2em';
         this.MDSignButton.current.disabled = true;
     }
@@ -116,9 +139,9 @@ class SignatureComponent extends React.Component {
                                 </th>
                             </tr>
                             <tr>
-                                <td>{!this.state.employeeSignDate ? '' : this.props.name}</td>
-                                <td>{!this.state.supervisorSignDate ? '' : this.props.supervisor}</td>
-                                <td>{!this.state.MDSignDate ? '' : _MD_NAME_}</td>
+                                <td>{!this.state.employeeSignDate ? '' : this.state.employeeSignName}</td>
+                                <td>{!this.state.supervisorSignDate ? '' : this.state.supervisorSignName}</td>
+                                <td>{!this.state.MDSignDate ? '' : this.state.MDSignName}</td>
                             </tr>
                             <tr>
                                 <th>{!this.state.employeeSignDate ? '' : 'Date:'} <span className="date">{this.state.employeeSignDate ? moment(this.state.employeeSignDate).format('DD/MM/YYYY') : ''}</span></th>
