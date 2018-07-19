@@ -63,6 +63,15 @@ Timesheet.findById = id => (
   db.oneOrNone('SELECT * FROM timesheets WHERE id = $1', [id])
 );
 
+Timesheet.findSummaryTimesheetInMonth = (projectId, year, month) => (
+  db.manyOrNone(`SELECT timesheets.user_id as user_id, CONCAT(employee_info.first_name, ' ', employee_info.last_name) AS name, 
+  SUM(timesheets.totalhours) / $1 AS days, has_projects.amount AS amount FROM timesheets 
+  INNER JOIN employee_info ON timesheets.user_id = employee_info.user_id
+  INNER JOIN has_projects ON has_projects.user_id = timesheets.user_id AND has_projects.project_id = $4
+  WHERE EXTRACT(year from timesheets.date) = $2 AND EXTRACT(month from date) = $3 AND timesheets.project_id = $4 
+  GROUP BY timesheets.user_id, timesheets.project_id, name, amount`, [8, year, month, projectId])
+);
+
 Timesheet.findByMonthAndYear = (month, year, userId) => (
   db.manyOrNone(`SELECT timesheets.id, timesheets.project_id, projects.name, timesheets.date, 
   timesheets.time_in, timesheets.time_out, timesheets.task, timesheets.description, timesheets.totalhours

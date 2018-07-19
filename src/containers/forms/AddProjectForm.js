@@ -77,8 +77,8 @@ const AddProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType }
         name="amount"
         as={Form.Input}
         component={Input}
-        label="amount"
-        placeholder="amount"
+        label="Amount"
+        placeholder="Amount"
         disabled={submitting}
         validate={[validator.maxLength14, validator.check2Decimal]}
       />

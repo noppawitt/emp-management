@@ -5,15 +5,15 @@ const HasProject = {};
 
 HasProject.create = (hasProject, id) => (
   db.none(
-    'INSERT INTO has_projects (user_id, project_id, role, created_user, updated_user, from, to, amount) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+    'INSERT INTO has_projects (user_id, project_id, role, created_user, updated_user, start_date, end_date, amount) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
     [
       hasProject.userId,
       hasProject.projectId,
       hasProject.role,
       id,
       id,
-      hasProject.from,
-      hasProject.to,
+      hasProject.startDate,
+      hasProject.endDate,
       hasProject.amount
     ]
   )
@@ -21,13 +21,13 @@ HasProject.create = (hasProject, id) => (
 
 HasProject.update = (hasProject, id) => (
   db.one(
-    'UPDATE has_projects SET role = $1, updated_user = $2, updated_date = $3, from  = $4, to = $5, amount = $6 WHERE id = $7',
+    'UPDATE has_projects SET role = $1, updated_user = $2, updated_date = $3, start_date  = $4, end_date = $5, amount = $6 WHERE id = $7',
     [
       hasProject.role,
       id,
       moment().format('YYYY-MM-DD HH:mm:ss'),
-      hasProject.from,
-      hasProject.to,
+      hasProject.startDate,
+      hasProject.endDate,
       hasProject.amount,
       hasProject.id
     ]
