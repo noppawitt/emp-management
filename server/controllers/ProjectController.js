@@ -69,6 +69,13 @@ exports.find = async (req, res, next) => {
         })
         .catch(next);
     }
+    else if (req.query.month && req.query.year) {
+      Project.findByMonthAndYear(req.query.month, req.query.year)
+        .then((projects) => {
+          res.json(projects);
+        })
+        .catch(next);
+    }
     else {
       Project.findAll()
         .then((projects) => {
