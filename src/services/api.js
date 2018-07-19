@@ -316,6 +316,10 @@ api.deleteMember = body => (
   })
 );
 
+api.downloadFile = fileId => (
+  download(`/api/files/download?fileId=${fileId}`)
+);
+
 // Leave
 
 api.createLeave = body => (

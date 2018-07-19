@@ -8,13 +8,13 @@ exports.create = (req, res, next) => {
 };
 
 exports.findByProjectId = (req, res, next) => {
-  File.findByProjectId(req.body.projectId)
+  File.findByProjectId(req.query.projectId)
     .then(files => res.json(files))
     .catch(next);
 };
 
 exports.download = (req, res, next) => {
   File.findById(req.query.fileId)
-    .then(file => res.download(file.path))
+    .then(file => res.download(file.path, 'ggwp'))
     .catch(next);
 };

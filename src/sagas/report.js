@@ -36,10 +36,10 @@ function* downloadReportTask(action) {
     const { reportType, template, userId, projectId, year, month } = action.payload;
     const file = yield call(api.downloadReport, reportType, template, userId, projectId, year, month);
     if (reportType !== 'Summary Timesheet (Year)') {
-      saveAs(file, `${reportType}_${projectId}_${userId}_${year}_${month}`);
+      yield saveAs(file, `${reportType}_${projectId}_${userId}_${year}_${month}`);
     }
     else {
-      saveAs(file, `${reportType}_${year}`);
+      yield saveAs(file, `${reportType}_${year}`);
     }
     yield put(downloadReportSuccess());
   }

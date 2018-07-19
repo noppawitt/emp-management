@@ -1,4 +1,5 @@
 import { call, put, takeEvery, all } from 'redux-saga/effects';
+import { saveAs } from 'file-saver';
 import * as actionTypes from '../constants/actionTypes';
 import {
   fetchProjectDetailSuccess,
@@ -8,7 +9,9 @@ import {
   createMemberSuccess,
   createMemberFailure,
   deleteMemberSuccess,
-  deleteMemberFailure
+  deleteMemberFailure,
+  downloadFileSuccess,
+  downloadFileFailure
 } from '../actions/projectDetail';
 import { closeModal } from '../actions/modal';
 import api from '../services/api';
@@ -61,6 +64,17 @@ function* deleteMemberTask(action) {
   }
 }
 
+function* downloadFile(action) {
+  try {
+    const file = yield call(api.downloadFile, action.payload.fileId);
+    yield saveAs(file, action.payload.fileName);
+    yield put(downloadFileSuccess());
+  }
+  catch (error) {
+    yield put(downloadFileFailure(error));
+  }
+}
+
 function* watchFetchProjectDetailRequest() {
   yield takeEvery(actionTypes.PROJECT_DETAIL_FETCH_REQUEST, fetchProjectDetailTask);
 }
@@ -77,11 +91,16 @@ function* watchDeleteMemberRequest() {
   yield takeEvery(actionTypes.MEMBER_DELETE_REQUEST, deleteMemberTask);
 }
 
+function* watchDownloadFileRequest() {
+  yield takeEvery(actionTypes.FILE_DOWNLOAD_REQUEST, downloadFile);
+}
+
 export default function* projectDetailSaga() {
   yield all([
     watchFetchProjectDetailRequest(),
     watchUpdateProjectDetailRequest(),
     watchCreateMemberRequest(),
-    watchDeleteMemberRequest()
+    watchDeleteMemberRequest(),
+    watchDownloadFileRequest()
   ]);
 }
