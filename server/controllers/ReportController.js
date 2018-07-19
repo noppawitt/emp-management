@@ -166,7 +166,7 @@ const calOT = (timeIn, timeOut) => new Promise((resolve, reject) => {
 
 const writeSpecialTimesheet = (excelType, holidayDates, worksheet, numberOfDayInMonth) => new Promise((resolve, reject) => {
   try {
-    if (excelType.reportType === 'Timesheet (Special)') {
+    if (excelType.reportType === 'Timesheet (Special)' || excelType.reportType === 'Timesheet (Special) per Person') {
       for (let day = 1; day <= numberOfDayInMonth; day += 1) {
         if (worksheet.getCell(`D${day + 7}`).value && worksheet.getCell(`E${day + 7}`).value) {
           calOT(worksheet.getCell(`D${day + 7}`).value, worksheet.getCell(`E${day + 7}`).value)
