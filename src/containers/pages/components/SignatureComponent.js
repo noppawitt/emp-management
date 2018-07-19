@@ -18,6 +18,9 @@ class SignatureComponent extends React.Component {
             modal: ''
         };
 
+        this.isInitial = !(!this.state.employeeSignDate &&
+            !this.state.supervisorSignDate && !this.state.MDSignDate);
+
         this.EmployeeSignHandler = this.EmployeeSignHandler.bind(this);
         this.SupervisorSignHandler = this.SupervisorSignHandler.bind(this);
         this.MDSignHandler = this.MDSignHandler.bind(this);
@@ -51,6 +54,11 @@ class SignatureComponent extends React.Component {
     }
 
     componentDidUpdate() {
+        if (this.isInitial) {
+            this.isInitial = false;
+            return;
+        }
+
         this.SignatureButtonHandler();
         this.props.onChange(this.state.employeeSignName, this.state.employeeSignDate,
             this.state.supervisorSignName, this.state.supervisorSignDate,
@@ -60,11 +68,10 @@ class SignatureComponent extends React.Component {
     SignatureButtonHandler() {
         if (!this.state.employeeSignDate && this.state.role.employee)
             this.employeeSignButton.current.disabled = false;
-        else if (!this.state.supervisorSignDate && this.state.role.supervisor)
+        else if (this.state.employeeSignDate && !this.state.supervisorSignDate && this.state.role.supervisor)
             this.supervisorSignButton.current.disabled = false;
-        else if (!this.state.MDSignDate && this.state.role.md) {
+        else if (this.state.supervisorSignDate && !this.state.MDSignDate && this.state.role.md) {
             this.MDSignButton.current.disabled = false;
-            this.supervisorSignButton.current.disabled = false;
         }
         else {
             this.employeeSignButton.current.disabled = true;
