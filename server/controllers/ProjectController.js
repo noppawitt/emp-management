@@ -52,7 +52,7 @@ exports.update = (req, res, next) => {
 exports.find = async (req, res, next) => {
   if (req.accessControl.projectViewAll) {
     if (req.query.userId && req.query.year && req.query.month) {
-      Project.findProjectByTimesheet(req.query.userId, req.query.year, req.query.month)
+      Project.findAll()
         .then((projects) => {
           res.json(projects);
         })
