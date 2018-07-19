@@ -16,10 +16,6 @@ exports.checkUserStatus = (req, res, next) => {
         Recruitment.createExamUser(
           req.body.id,
           req.body.testDate,
-          moment(),
-          null,
-          0,
-          0,
           null,
           0,
         )
