@@ -441,4 +441,11 @@ api.updateSelfAssessment = body => (
     body
   })
 )
+
+api.submitSelfAssessment = body => (
+  callApi('/api/selfassessment/submit', {
+    method: 'PUT',
+    body
+  })
+)
 export default api;

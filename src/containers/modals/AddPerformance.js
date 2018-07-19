@@ -12,7 +12,6 @@ class AddPerformance extends React.Component{
   constructor(props){
     super(props);
     this.state = props;
-    this.type = (!this.props.profile.perfInfo ? 'addPerformance':'updatePerformance')
   }
   componentDidMount(){
     console.log(this.state.submitting);
@@ -22,14 +21,14 @@ class AddPerformance extends React.Component{
       <div>
         {this.props.fetching ? <Loader/> :
           <Modal
-            header={!this.props.profile.perfInfo ? 'Add Performance':'View Performance'}
+            header={!this.props.profile.perfInfo ? 'Create Performance':'View Performance'}
             onClose={()=>{this.props.onClose();this.props.clear();}}
             onClick={()=>this.props.onSubmit(this.props.item,(!this.props.profile.perfInfo ? 'addPerformance':'updatePerformance'))}
             submitting={this.props.submitting}
             size="large"
             disable={!this.props.edited}
           >
-            <A test={this.props.onChange} profile={this.props.profile} mode={!this.props.profile.perfInfo || (this.props.type=='admin' && !this.props.profile.perfInfo.emSignDate) ? 'edit' : 'view'} role={this.props.type == 'admin' ? 'supervisor':this.props.type =='md' ? 'md':'employee'}/>
+            <A name={this.props.name} test={this.props.onChange} profile={this.props.profile} mode={!this.props.profile.perfInfo || (this.props.can.performanceAdd && !this.props.profile.perfInfo.emSignDate) ? 'edit' : 'view'} role={{employee: this.props.id == this.props.profile.userId, supervisor: this.props.can.supSign, md: this.props.can.mdSign}}/>
           </Modal>
         }
       </div>
@@ -49,13 +48,15 @@ AddPerformance.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  type: state.auth.type,
+  name: state.auth.name,
+  id: state.auth.id,
   item: state.profile.item,
   modalName: state.modal.name,
   profile: state.profile,
   submitting: state.profile.submitting,
   edited: state.profile.edited,
-  fetching: state.profile.proFetching
+  fetching: state.profile.proFetching,
+  can: state.accessControl.can
 });
 
 const mapDispatchToProps = dispatch => ({

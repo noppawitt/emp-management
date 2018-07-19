@@ -5,6 +5,7 @@ import { compose, lifecycle } from 'recompose';
 import { fetchAccessControlRequest } from '../actions/accessControl';
 
 const Can = ({ activity, can, conditions, isFetching, children }) => {
+  conditions.every(c=>console.log('Hi'))
   if (isFetching) return <div />;
   else if (can[activity] && conditions.every(c => c)) return children;
   return <div />;

@@ -31,7 +31,7 @@ class PerformanceReviewForm extends React.Component {
             employeeID: this.props.profile.work.userId || '-',
             level: this.props.profile.work.levelId || '-',
             startDate: this.props.profile.work.startDate || '-',
-            supervisor: this.props.profile.work.bossname || '-',
+            supervisor: this.props.profile.work.bossName || '-',
             expectedScore: null,
             score: null,
             employeeSignDate: null,
@@ -60,7 +60,7 @@ class PerformanceReviewForm extends React.Component {
                 employeeSignDate: this.props.profile.perfInfo.emSignDate,
                 supervisorSignDate: this.props.profile.perfInfo.supSignDate,
                 MDSignDate: this.props.profile.perfInfo.mdSignDate,
-                performanceId: this.props.profile.perfInfo.performanceId,
+                performanceId: this.props.profile.perfInfo.id,
                 level: this.props.profile.perfInfo.levelId
             })
         }

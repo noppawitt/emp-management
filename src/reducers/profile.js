@@ -15,20 +15,24 @@ const profile = (state = initialState, action) => {
         edited: false,
         evaInfo: null,
         perfInfo: null,
-        selfInfo: null
+        selfInfo: null,
+        item: {currentPage: 0}
       }
     case actionTypes.UPDATE_PROBATION_STORE:
-      var edited;
+      var edited = state.edited;
       if(action.payload.type=='probation'){
         if(action.payload.item.passPro && !action.payload.item.confirmed) {
           if(action.payload.item.basedSalary || action.payload.item.mobile || action.payload.item.transporationAllowance || action.payload.item.otherAllowance)edited = true;
           else edited = false;
-        }else edited = true;
+        }else if(action.payload.item.passPro == action.payload.item.notPassPro) edited = false;
+        else edited = true;
       }else if(action.payload.type=='performance'){
         edited = true
       }else if(action.payload.type=='selfassessment'){
         if(action.payload.item.validate) edited = true;
         else edited = false;
+      }else if(action.payload.type=='page'){
+        if(edited!=true)edited = false;
       }
       return {
         ...state,
@@ -112,6 +116,7 @@ const profile = (state = initialState, action) => {
       return {
         ...state,
         submitting: true,
+        confirmed: false,
         form: action.payload.form
       };
     case actionTypes.PROFILE_UPDATE_SUCCESS:
@@ -119,14 +124,16 @@ const profile = (state = initialState, action) => {
         ...state,
         submitting: false,
         edited:false,
-        item:null,
+        item: {currentPage: 0},
+        confirmed: true,
+        saved: true,
         ...action.payload.profile
       };
     case actionTypes.PROFILE_UPDATE_FAILURE:
       return {
         ...state,
         submitting: false,
-        item:null,
+        item: {currentPage: 0},
         message: action.payload.message
       };
     case actionTypes.PROFILE_DELETE_REQUEST:

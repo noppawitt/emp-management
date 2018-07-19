@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button, Icon} from 'semantic-ui-react';
 import ConfirmModal from './ConfirmModal';
+import SavedModal from './SavedModal';
 import './css/ConfirmModal.css'
 
 const ModalBasicExample = ({open}) => (
@@ -23,7 +24,7 @@ const ModalBasicExample = ({open}) => (
   </Modal>
 )
 
-const EvaluationModal = ({ header, buttonName, onClose, onClick, submitting, children, confirm, size, disable, onChangePage, navButton}) => (
+const EvaluationModal = ({ header, buttonName, onClose, onClick, submitting, children, confirm, size, disable, onChangePage, navButton, currentPage, totalPage, submit, onSubmit, disableSubmit}) => (
   <Modal
     dimmer="blurring"
     size="small"
@@ -40,10 +41,12 @@ const EvaluationModal = ({ header, buttonName, onClose, onClick, submitting, chi
     </Modal.Content>
     <Modal.Actions>
         {navButton ?
-          <div>
-          <Button floated="left" color="blue"  onClick={()=>onChangePage(-1)}>Back</Button>
-          <Button floated="left" color="blue"  onClick={()=>onChangePage(1)}>Next</Button></div> : ''}
-        <ConfirmModal submitting={submitting} onClickHandle={onClick} disable={disable}/>
+          <div className="navDiv">
+          <Button className='back' icon='arrow left' color="blue"  onClick={()=>onChangePage(-1)}></Button>
+          <span>Page {currentPage+1}/{totalPage}</span>
+          <Button className='next' icon='arrow right' color="blue"  onClick={()=>onChangePage(1)}></Button></div> : ''}
+        {submit ? <Button disabled={submitting|| disable} loading={submitting} onClick={onClick} color='blue'> {disable? <Icon name='check' fitted style={{margin:'0 0'}}/>:'Save'} </Button> : ''}
+        <ConfirmModal submitting={submitting} onClickHandle={submit ? onSubmit:onClick} disable={submit ? disableSubmit:disable} buttonName={submit ? "Send":"Save"} submit={submit}/>
     </Modal.Actions>
   </Modal>
 );
@@ -56,6 +59,7 @@ EvaluationModal.defaultProps = {
   confirm: false,
   size: 'small'
 };
+//        {submit ? <ConfirmModal submitting={submitting} disable={disableSubmit} onClickHandle={onSubmit} buttonName="Submit"/> : ''}
 
 EvaluationModal.propTypes = {
   header: PropTypes.string.isRequired,

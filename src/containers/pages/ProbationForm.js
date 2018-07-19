@@ -32,7 +32,7 @@ class ProbationForm extends React.Component {
             employeeID: this.props.profile.work.userId || '-',
             level: this.props.profile.work.levelId || '-',
             startDate: this.props.profile.work.startDate || '-',
-            supervisor: this.props.profile.work.bossname || '-',
+            supervisor: this.props.profile.work.bossName || '-',
             expectedScore: null,
             score: null,
             endProbationDate: this.props.profile.evaInfo == null && this.props.profile.eva.length!=0 ? this.props.profile.eva[0].continuedDate:this.props.profile.work.probationDate,
@@ -131,6 +131,7 @@ class ProbationForm extends React.Component {
 
     componentWillMount() {
         if (this.props.profile.evaInfo != null) {
+            console.log('level'+this.props.profile.evaInfo.levelId)
             this.setState({
                 expectedScore: this.props.profile.evaInfo.expectedScore,
                 score: this.props.profile.evaInfo.score,
@@ -150,7 +151,7 @@ class ProbationForm extends React.Component {
                 MDSignDate: this.props.profile.evaInfo.mdSignDate,
                 endProbationDate: this.props.profile.evaInfo.passProDate,
                 level: this.props.profile.evaInfo.levelId,
-                proId: this.props.profile.evaInfo.probationId
+                proId: this.props.profile.evaInfo.id
             })
         }
     }

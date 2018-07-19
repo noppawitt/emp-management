@@ -21,15 +21,15 @@ class AddProbation extends React.Component{
       <div>
         {this.props.fetching ? <Loader/> :
           <Modal
-            header={this.props.profile.evaInfo == null ? 'Add Probation':'View Probation'}
+            header={this.props.profile.evaInfo == null ? 'Create Probation':'View Probation'}
             onClose={()=>{this.props.onClose();this.props.clear();}}
             onClick={()=>this.props.onSubmit(this.props.item,(this.props.profile.evaInfo == null ? 'addProbation':'updateProbation'))}
             submitting={this.props.submitting}
             size="large"
             disable={!this.props.edited}
           >
-            <A test={this.props.onChange} profile={this.props.profile} mode={!this.props.profile.evaInfo || (this.props.type=='admin' && !this.props.profile.evaInfo.emSignDate) ? 'edit' : 'view'}
-              role={this.props.type == 'admin' ? 'supervisor': this.props.type =='md' ? 'md':'employee'}/>
+            <A test={this.props.onChange} profile={this.props.profile} mode={!this.props.profile.evaInfo || (this.props.can.probationAdd && !this.props.profile.evaInfo.emSignDate) ? 'edit' : 'view'}
+              role={this.props.can.mdSign ? 'md':this.props.can.supSign ? 'supervisor':'employee'}/>
           </Modal>
         }
       </div>
@@ -56,7 +56,8 @@ const mapStateToProps = state => ({
   profile: state.profile,
   submitting: state.profile.submitting,
   edited: state.profile.edited,
-  fetching: state.profile.proFetching
+  fetching: state.profile.proFetching,
+  can: state.accessControl.can
 });
 
 const mapDispatchToProps = dispatch => ({

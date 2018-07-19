@@ -34,7 +34,7 @@ class GoalComponent extends React.Component {
                     <tr> <th  style={{paddingTop: '30px'}}></th></tr>
                     <tr>
                         <td>Description: What is the goal? {this.props.require && !this.state.goal[0] ? requiredMessage : ''}</td>
-                        <td><textarea tabIndex='-1' onChange={(event) => {
+                        <td><textarea tabIndex='-1' disabled={this.props.mode=='view'} onChange={(event) => {
                             let newGoal = this.state.goal.slice();
                             newGoal[0] = event.target.value;
                             this.props.onChange(newGoal);
@@ -42,7 +42,7 @@ class GoalComponent extends React.Component {
                     </tr>
                     <tr>
                         <td>First Step Plan: What is the first step towards achieving this goal? {this.props.require && !this.state.goal[1] ? requiredMessage : ''}</td>
-                        <td><textarea tabIndex='-1' onChange={(event) => {
+                        <td><textarea tabIndex='-1' disabled={this.props.mode=='view'} onChange={(event) => {
                           let newGoal = this.state.goal.slice();
                           newGoal[1] = event.target.value;
                           this.props.onChange(newGoal);
@@ -50,7 +50,7 @@ class GoalComponent extends React.Component {
                     </tr>
                     <tr>
                         <td>Evaluation: How will we know if the goal is achieved? What will happen or change? {this.props.require && !this.state.goal[2] ? requiredMessage : ''}</td>
-                        <td><textarea tabIndex='-1' onChange={(event) => {
+                        <td><textarea tabIndex='-1' disabled={this.props.mode=='view'} onChange={(event) => {
                           let newGoal = this.state.goal.slice();
                           newGoal[2] = event.target.value;
                           this.props.onChange(newGoal);
@@ -58,7 +58,7 @@ class GoalComponent extends React.Component {
                     </tr>
                     <tr>
                         <td>Support: What training or experience, or other support, could help? {this.props.require && !this.state.goal[3] ? requiredMessage : ''}</td>
-                        <td><textarea tabIndex='-1' onChange={(event) => {
+                        <td><textarea tabIndex='-1' disabled={this.props.mode=='view'} onChange={(event) => {
                           let newGoal = this.state.goal.slice();
                           newGoal[3] = event.target.value;
                           this.props.onChange(newGoal);
@@ -66,7 +66,7 @@ class GoalComponent extends React.Component {
                     </tr>
                     <tr>
                         <td>Timing: When will the goal be achieved? {this.props.require && !this.state.goal[4] ? requiredMessage : ''}</td>
-                        <td><textarea tabIndex='-1' onChange={(event) => {
+                        <td><textarea tabIndex='-1' disabled={this.props.mode=='view'} onChange={(event) => {
                           let newGoal = this.state.goal.slice();
                           newGoal[4] = event.target.value;
                           this.props.onChange(newGoal);

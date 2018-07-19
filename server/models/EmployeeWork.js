@@ -41,12 +41,12 @@ EmployeeWork.update = (employeeWork, id) => (
   )
 );
 
-EmployeeWork.findByUserId = userId => (
-  db.oneOrNone(`SELECT EW.*,CONCAT(EI.first_name,' ',EI.last_name) as bossName FROM employee_work EW,employee_info EI WHERE EW.user_id = $1 and EW.boss_id = EI.user_id`, [userId])
+EmployeeWork.findAllByUserId = userId => (
+  db.oneOrNone('SELECT * FROM employee_work WHERE user_id = $1', [userId])
 );
 
 EmployeeWork.findOwnByUserId = userId => (
-  db.oneOrNone('SELECT department_id, position_id, level_id, user_id FROM employee_work WHERE user_id = $1', [userId])
+  db.oneOrNone('SELECT department_id, position_id, level_id, user_id, boss_id, start_date, engineer FROM employee_work WHERE user_id = $1', [userId])
 );
 
 module.exports = EmployeeWork;

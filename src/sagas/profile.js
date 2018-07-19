@@ -72,11 +72,13 @@ export function* fetchProfileTask(action) {
     }
     profile.certificates = yield call(api.fetchCertificateProfile, action.payload.userId);
     profile.assets = yield call(api.fetchAssetProfile, action.payload.userId);
-    profile.workExperience = yield call(api.fetchWorkExperience, action.payload.userId);
-    if(token.type=='admin' || token.id == action.payload.id || token.type == 'md'){
-      profile.eva = yield call(api.checkProbation, action.payload.id);
-      profile.perf = yield call(api.checkPerformance, action.payload.id);
-      profile.self = yield call(api.checkSelfAssessment, action.payload.id);
+    if(can.workExperienceView){
+      profile.workExperience = yield call(api.fetchWorkExperience, action.payload.userId);
+    }
+    if(can.evaViewOwn){
+      profile.eva = yield call(api.checkProbation, action.payload.userId);
+      profile.perf = yield call(api.checkPerformance, action.payload.userId);
+      profile.self = yield call(api.checkSelfAssessment, action.payload.userId);
     }
     yield put(fetchProfileSuccess(profile));
   }
@@ -89,6 +91,11 @@ export function* updateProfileTask(action) {
   try {
     const profile = {};
     switch (action.payload.type) {
+      case 'submitSelfAssessment' :
+        profile.self = yield call(api.submitSelfAssessment,{
+          selfAssessmentInfo: action.payload.form
+        });
+        break;
       case 'addSelfAssessment' :
         profile.self = yield call(api.addSelfAssessment,{
           selfAssessmentInfo: action.payload.form
@@ -159,7 +166,7 @@ export function* updateProfileTask(action) {
         action.payload.reject();
     }
     yield put(updateProfileSuccess(profile));
-    yield put(closeModal());
+    if(action.payload.type!='updateSelfAssessment' && action.payload.type!='addSelfAssessment')yield put(closeModal());
     action.payload.resolve();
   }
   catch (error) {

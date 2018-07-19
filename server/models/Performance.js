@@ -29,7 +29,7 @@ Performance.insertPerformance = (performanceInfo,id) =>(
 
 Performance.updatePerformance = (performanceInfo,id) =>(
   db.none(
-    "UPDATE Performance SET score=$1, expected_score=$2, sup_comment=$3, em_sign_date=$4, sup_sign_date=$5, md_sign_date=$6, updated_user=$7, updated_date=$8 WHERE user_id=$9 and performance_id=$10",
+    "UPDATE Performance SET score=$1, expected_score=$2, sup_comment=$3, em_sign_date=$4, sup_sign_date=$5, md_sign_date=$6, updated_user=$7, updated_date=$8 WHERE user_id=$9 and id=$10",
     [
       performanceInfo.score,
       performanceInfo.expectedScore,
