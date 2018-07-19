@@ -13,7 +13,13 @@ import api from '../services/api';
 
 function* fetchOwnProjectTask(action) {
   try {
-    const projects = yield call(api.fetchOwnProject, action.payload.userId, action.payload.year, action.payload.month);
+    let projects;
+    if (action.payload.reportType === 'Timesheet (Normal) per Person' || action.payload.reportType === 'Timesheet (Special) per Person') {
+      projects = yield call(api.fetchOwnProject, null, action.payload.year, action.payload.month);
+    }
+    else {
+      projects = yield call(api.fetchOwnProject, action.payload.userId, action.payload.year, action.payload.month);
+    }
     yield put(fetchOwnProjectSuccess(projects));
   }
   catch (error) {

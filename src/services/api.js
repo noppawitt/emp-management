@@ -377,9 +377,10 @@ api.fetchHolidays = (year, month = null) => {
 
 // Report
 
-api.fetchOwnProject = (userId, year, month) => (
-  callApi(`/api/projects?userId=${userId}&year=${year}&month=${month}`)
-);
+api.fetchOwnProject = (userId,year, month) => {
+  if (userId) return callApi(`/api/projects?userId=${userId}&year=${year}&month=${month}`);
+  return callApi(`/api/projects?year=${year}&month=${month}`);
+};
 
 api.downloadReport = (reportType, template, userId, projectId, year, month) => (
   download(`/api/report?reportType=${reportType}&template=${template}&userId=${userId}&projectId=${projectId}&year=${year}&month=${month}`)

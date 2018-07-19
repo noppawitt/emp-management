@@ -10,7 +10,7 @@ import ProfilePage from './pages/ProfilePage';
 import EmployeePage from './pages/EmployeePage';
 import ReportPage from './pages/ReportPage';
 import AddTaskPage from './pages/AddTaskPage';
-import ManageLeave from './pages/ManageLeave';
+import ManageLeave from './pages/ManageLeavePage';
 import HolidayPage from './pages/HolidayPage';
 
 const Routes = () => (
