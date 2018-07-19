@@ -114,6 +114,11 @@ class SignatureComponent extends React.Component {
                                 </th>
                             </tr>
                             <tr>
+                                <td>{!this.state.employeeSignDate ? '' : this.props.name}</td>
+                                <td>{!this.state.supervisorSignDate ? '' : this.props.supervisor}</td>
+                                <td>{!this.state.MDSignDate ? '' : _MD_NAME_}</td>
+                            </tr>
+                            <tr>
                                 <th>{!this.state.employeeSignDate ? '' : 'Date:'} <span className="date">{this.state.employeeSignDate ? moment(this.state.employeeSignDate).format('DD/MM/YYYY') : ''}</span></th>
                                 <th>{!this.state.supervisorSignDate ? '' : 'Date:'} <span className="date">{this.state.supervisorSignDate ? moment(this.state.supervisorSignDate).format('DD/MM/YYYY') : ''}</span></th>
                                 <th>{!this.state.MDSignDate ? '' : 'Date:'} <span className="date">{this.state.MDSignDate ? moment(this.state.MDSignDate).format('DD/MM/YYYY') : ''}</span></th>
