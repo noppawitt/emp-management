@@ -9,7 +9,7 @@ import api from '../services/api';
 
 function* fetchHolidayTask(action) {
   try {
-    const holidays = yield call(api.fetchHolidays, action.payload.userId, action.payload.year, action.payload.month);
+    const holidays = yield call(api.fetchHolidays, action.payload.year, action.payload.month);
     yield put(fetchHolidaySuccess(holidays));
   }
   catch (error) {
