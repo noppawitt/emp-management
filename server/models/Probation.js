@@ -13,7 +13,7 @@ Probation.findProById = (id,proId) => (
 )
 
 Probation.insertProbation = (probationInfo,id) =>(
-  db.one("INSERT INTO Probation (user_id,pass_pro_date,based_salary,mobile,transporation_allowance,other_allowance,pass_pro,confirmed_by_employment,sup_comment,em_sign_date,sup_sign_date,md_sign_date,continued,score,expected_score,created_user,updated_user,terminated_date,continued_date,level_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14 , $15 , $16 , $17, $18, $19, $20) RETURNING 1",
+  db.one("INSERT INTO Probation (user_id,pass_pro_date,based_salary,mobile,transporation_allowance,other_allowance,pass_pro,confirmed_by_employment,sup_comment,em_sign_date,sup_sign_date,md_sign_date,continued,score,expected_score,created_user,updated_user,terminated_date,continued_date,level_id,em_sign_name, sup_sign_name, md_sign_name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14 , $15 , $16 , $17, $18, $19, $20, $21, $22, $23) RETURNING 1",
   [
     probationInfo.employeeID,
     probationInfo.endProbationDate,
@@ -24,9 +24,9 @@ Probation.insertProbation = (probationInfo,id) =>(
     probationInfo.passPro,
     probationInfo.confirmed,
     probationInfo.supervisorComment,
-    null,
-    null,
-    null,
+    probationInfo.employeeSignDate,
+    probationInfo.supervisorSignDate,
+    probationInfo.MDSignDate,
     probationInfo.continued,
     probationInfo.score,
     probationInfo.expectedScore,
@@ -34,7 +34,10 @@ Probation.insertProbation = (probationInfo,id) =>(
     id,
     probationInfo.terminationDate,
     probationInfo.continuedDate,
-    probationInfo.level
+    probationInfo.level,
+    probationInfo.employeeSignName,
+    probationInfo.supervisorSignName,
+    probationInfo.MDSignName,
   ])
 )
 
