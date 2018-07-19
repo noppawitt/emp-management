@@ -15,16 +15,12 @@ Recruitment.checkExamUser = (id, testDate) => (
   db.oneOrNone('SELECT 1 FROM exam_users2 WHERE id = $1 AND test_date = $2', [id, testDate])
 );
 
-Recruitment.createExamUser = (id, testDate, createDate, updateDate, createUser, updateUser, latestActivatedTime, activationLifetimes) => (
+Recruitment.createExamUser = (id, testDate, latestActivatedTime, activationLifetimes) => (
   db.none(
     'INSERT INTO exam_users2'
-    + '(id, test_date, created_date, updated_date, created_user, updated_user, '
-    + 'latest_activated_time, activation_lifetimes, agreement_status) '
-    + 'VALUES ($1, $2, $3, $4, $5, $6, $7, $8 ,$9)',
-    [
-      id, testDate, createDate, updateDate, createUser, updateUser,
-      latestActivatedTime, activationLifetimes, 'NotRead'
-    ]
+    + '(id, test_date, latest_activated_time, activation_lifetimes, agreement_status) '
+    + 'VALUES ($1, $2, $3, $4, $5)',
+    [id, testDate, latestActivatedTime, activationLifetimes, 'NotRead']
   )
 );
 
