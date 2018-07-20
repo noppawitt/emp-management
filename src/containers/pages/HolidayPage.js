@@ -32,7 +32,7 @@ const mapDispatchToProps = dispatch => ({
   fetchHolidays: year => dispatch(fetchHolidayRequest(year)),
   onDeleteHolidayClick: (holidayId, year) => dispatch(openModal(modalNames.CONFIRM, {
     header: 'Delete Confirmation',
-    description: 'Are you sure to delete this member?',
+    description: 'Are you sure to delete this holiday?',
     onConfirm: () => dispatch(deleteHolidayRequest(holidayId, year))
   }))
 });
