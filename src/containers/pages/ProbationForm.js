@@ -35,7 +35,7 @@ class ProbationForm extends React.Component {
             supervisor: this.props.profile.work.bossName || '-',
             expectedScore: null,
             score: null,
-            endProbationDate: this.props.profile.evaInfo == null && this.props.profile.eva.length!=0 ? this.props.profile.eva[0].continuedDate:this.props.profile.work.probationDate,
+            endProbationDate: this.props.profile.evaInfo == null && this.props.profile.eva.length != 0 ? this.props.profile.eva[0].continuedDate : this.props.profile.work.probationDate,
             passPro: true,
             notPassPro: false,
             confirmed: true,
@@ -98,8 +98,7 @@ class ProbationForm extends React.Component {
     }
 
     supervisorCommentHandler(newComment) {
-        this.state = { ...this.state, supervisorComment: newComment };
-        this.props.test(this.state);
+        this.setState({ supervisorComment: newComment });
     }
 
     evaluationResultHandler(newPassPro, newNotPassPro, newConfirmed, newContinued, newEndProbationDate,
@@ -125,21 +124,18 @@ class ProbationForm extends React.Component {
     signatureHandler(newEmployeeSignName, newEmployeeSignDate,
         newSupervisorSignName, newSupervisorSignDate,
         newMDSignName, newMDSignDate) {
-        this.state = {
-            ...this.state,
+        this.setState({
             employeeSignName: newEmployeeSignName,
             supervisorSignName: newSupervisorSignName,
             MDSignName: newMDSignName,
             employeeSignDate: newEmployeeSignDate,
             supervisorSignDate: newSupervisorSignDate,
             MDSignDate: newMDSignDate
-        };
-        this.props.test(this.state);
-    } 
+        })
+    }
 
     componentWillMount() {
         if (this.props.profile.evaInfo != null) {
-            console.log('level'+this.props.profile.evaInfo.levelId)
             this.setState({
                 expectedScore: this.props.profile.evaInfo.expectedScore,
                 score: this.props.profile.evaInfo.score,
@@ -179,13 +175,19 @@ class ProbationForm extends React.Component {
             nextState.endProbationDate != this.state.endProbationDate ||
             nextState.expectedScore != this.state.expectedScore ||
             nextState.terminationDate != this.state.terminationDate ||
-            nextState.continuedDate != this.state.continuedDate
+            nextState.continuedDate != this.state.continuedDate ||
+            nextState.employeeSignDate != this.state.employeeSignDate ||
+            nextState.supervisorSignDate != this.state.supervisorSignDate ||
+            nextState.MDSignDate != this.state.MDSignDate ||
+            nextState.employeeSignName != this.state.employeeSignName ||
+            nextState.supervisorSignName != this.state.supervisorSignName ||
+            nextState.MDSignName != this.state.MDSignName ||
+            nextState.supervisorComment != this.state.supervisorComment
         )
     }
 
     componentDidUpdate() {
         this.props.test(this.state);
-        console.log(this.state);
     }
 
     render() {
@@ -204,7 +206,7 @@ class ProbationForm extends React.Component {
                 </div>
                 <EvaluationResultComponent {...this.state} onChange={this.evaluationResultHandler} mode={this.props.mode} />
                 <SupervisorCommentComponent {...this.state} onChange={this.supervisorCommentHandler} mode={this.props.mode} />
-                <SignatureComponent {...this.state} role={this.props.role} onChange={this.signatureHandler} authName={this.props.name}/>
+                <SignatureComponent {...this.state} role={this.props.role} onChange={this.signatureHandler} authName={this.props.name} />
             </div>
         );
     }
