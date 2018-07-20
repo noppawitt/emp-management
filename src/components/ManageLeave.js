@@ -1,7 +1,7 @@
 import React from 'react';
 import { Segment, Grid, Select, Button, Icon, Table, Menu } from 'semantic-ui-react';
 import PageHeader from './PageHeader';
-import { getMonthOptions, getYearOptions } from '../utils/options'
+import { getMonthOptions, getYearOptions } from '../utils/options';
 
 const ManageLeave = () => (
   <div>
