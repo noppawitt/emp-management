@@ -23,12 +23,13 @@ export const downloadReportFailure = message => ({
   }
 });
 
-export const fetchOwnProjectRequest = (userId, year, month) => ({
+export const fetchOwnProjectRequest = (userId, year, month, reportType = null) => ({
   type: actionTypes.OWN_PROJECT_FETCH_REQUEST,
   payload: {
     userId,
     year,
     month,
+    reportType
   }
 });
 

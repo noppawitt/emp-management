@@ -27,7 +27,7 @@ const oneRow = (date, dateName) => (
       <div>
         {date}
       </div>
-      }    
+      }
     </Table.Cell>
     <Table.Cell>
       <Grid stackable>
@@ -36,7 +36,7 @@ const oneRow = (date, dateName) => (
             {dateName}
           </Grid.Column>
           <Grid.Column floated="right" width={6} >
-            <Button animated="fade" style={{ borderStyle: 'solid', borderColor: '#FF0000', backgroundColor: 'white', borderWidth: '1px' }} onClick={() => onDeleteClick(memberDetail.userId, projectId)}>
+            <Button animated="fade" style={{ borderStyle: 'solid', borderColor: '#FF0000', backgroundColor: 'white', borderWidth: '1px' }}>
               <Button.Content visible><font color="#FF0000" >Delete</font></Button.Content>
               <Button.Content hidden > <Icon color="red" name="x" /> </Button.Content>
             </Button>

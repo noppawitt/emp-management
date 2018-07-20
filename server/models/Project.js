@@ -59,7 +59,7 @@ Project.findByYear = year => (
 );
 
 Project.findByMonthAndYear = (month, year) => (
-  db.manyOrNone(`SELECT * FROM projects WHERE EXTRACT(month from start_date) => $1 AND EXTRACT(month from end_date) <= $1
+  db.manyOrNone(`SELECT id AS project_id, * FROM projects WHERE EXTRACT(month from start_date) >= $1 AND EXTRACT(month from end_date) <= $1
     AND EXTRACT(year from start_date) = $2`, [month, year])
 );
 

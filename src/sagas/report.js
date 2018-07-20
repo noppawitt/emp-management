@@ -13,7 +13,13 @@ import api from '../services/api';
 
 function* fetchOwnProjectTask(action) {
   try {
-    const projects = yield call(api.fetchOwnProject, action.payload.userId, action.payload.year, action.payload.month);
+    let projects;
+    if (action.payload.reportType === 'Timesheet (Normal) per Person' || action.payload.reportType === 'Timesheet (Special) per Person') {
+      projects = yield call(api.fetchOwnProject, null, action.payload.year, action.payload.month);
+    }
+    else {
+      projects = yield call(api.fetchOwnProject, action.payload.userId, action.payload.year, action.payload.month);
+    }
     yield put(fetchOwnProjectSuccess(projects));
   }
   catch (error) {
@@ -36,10 +42,10 @@ function* downloadReportTask(action) {
     const { reportType, template, userId, projectId, year, month } = action.payload;
     const file = yield call(api.downloadReport, reportType, template, userId, projectId, year, month);
     if (reportType !== 'Summary Timesheet (Year)') {
-      saveAs(file, `${reportType}_${projectId}_${userId}_${year}_${month}`);
+      yield saveAs(file, `${reportType}_${projectId}_${userId}_${year}_${month}`);
     }
     else {
-      saveAs(file, `${reportType}_${year}`);
+      yield saveAs(file, `${reportType}_${year}`);
     }
     yield put(downloadReportSuccess());
   }

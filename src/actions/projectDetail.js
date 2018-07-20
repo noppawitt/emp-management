@@ -88,3 +88,22 @@ export const deleteMemberFailure = message => ({
     message
   }
 });
+
+export const downloadFileRequest = (fileId, fileName) => ({
+  type: actionTypes.FILE_DOWNLOAD_REQUEST,
+  payload: {
+    fileId,
+    fileName
+  }
+});
+
+export const downloadFileSuccess = () => ({
+  type: actionTypes.FILE_DOWNLOAD_SUCCESS
+});
+
+export const downloadFileFailure = message => ({
+  type: actionTypes.FILE_DOWNLOAD_FAILURE,
+  payload: {
+    message
+  }
+});

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Segment, Grid, Header, Icon, Table, Button } from 'semantic-ui-react';
+import { Segment, Grid, Header, Icon, Table, Button, List } from 'semantic-ui-react';
 
 const membersDetail = (memberDetail, projectId, onDeleteClick) => (
   <Table.Row key={memberDetail.userId}>
@@ -17,7 +17,7 @@ const membersDetail = (memberDetail, projectId, onDeleteClick) => (
   </Table.Row>
 );
 
-const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteMemberClick }) => (
+const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteMemberClick, handleDownloadFile }) => (
   <Segment.Group raised size="large" >
     <Segment>
       <Grid padded>
@@ -70,7 +70,13 @@ const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteM
         <Grid.Column computer={11} tablet={11} mobile={16}>{projectDetail.status || '-'}</Grid.Column>
         <Grid.Column width={1} only="large screen" />
         <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>File :</b></font></Grid.Column>
-        <Grid.Column computer={11} tablet={11} mobile={16}>Requirment</Grid.Column>
+        <Grid.Column computer={11} tablet={11} mobile={16}>
+          <List>
+            {projectDetail.files.map(file => (
+              <List.Item as="a" onClick={() => handleDownloadFile(file.id, file.name)}>{`${file.name}`}</List.Item>
+            ))}
+          </List>
+        </Grid.Column>
       </Grid>
     </Segment>
     <Segment>
@@ -113,7 +119,8 @@ ProjectDetail.propTypes = {
   projectDetail: PropTypes.object.isRequired,
   onEditClick: PropTypes.func.isRequired,
   onAddMemberClick: PropTypes.func.isRequired,
-  onDeleteMemberClick: PropTypes.func.isRequired
+  onDeleteMemberClick: PropTypes.func.isRequired,
+  handleDownloadFile: PropTypes.func.isRequired
 };
 
 export default ProjectDetail;

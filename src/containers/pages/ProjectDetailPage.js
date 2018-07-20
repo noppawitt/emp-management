@@ -2,15 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
-import { fetchProjectDetailRequest, deleteMemberRequest } from '../../actions/projectDetail';
+import { fetchProjectDetailRequest, deleteMemberRequest, downloadFileRequest } from '../../actions/projectDetail';
 import Loader from '../../components/Loader';
 import ProjectDetail from '../../components/ProjectDetail';
 import { openModal } from '../../actions/modal';
 import * as modalNames from '../../constants/modalNames';
 
-const ProjectDetailPage = ({ isFetching, projectDetail, onEditClick, onAddMemberClick, onDeleteMemberClick }) => (
+const ProjectDetailPage = ({ isFetching, projectDetail, onEditClick, onAddMemberClick, onDeleteMemberClick, handleDownloadFile }) => (
   <div>
-    {isFetching ? <Loader /> : <ProjectDetail projectDetail={projectDetail} onEditClick={onEditClick} onAddMemberClick={onAddMemberClick} onDeleteMemberClick={onDeleteMemberClick} />}
+    {isFetching ?
+      <Loader /> :
+      <ProjectDetail
+        projectDetail={projectDetail}
+        onEditClick={onEditClick}
+        onAddMemberClick={onAddMemberClick}
+        onDeleteMemberClick={onDeleteMemberClick}
+        handleDownloadFile={handleDownloadFile}
+      />}
   </div>
 );
 
@@ -24,7 +32,8 @@ ProjectDetailPage.propTypes = {
   projectDetail: PropTypes.object,
   onEditClick: PropTypes.func.isRequired,
   onAddMemberClick: PropTypes.func.isRequired,
-  onDeleteMemberClick: PropTypes.func.isRequired
+  onDeleteMemberClick: PropTypes.func.isRequired,
+  handleDownloadFile: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -40,7 +49,8 @@ const mapDispatchToProps = dispatch => ({
     header: 'Delete Confirmation',
     description: 'Are you sure to delete this member?',
     onConfirm: () => dispatch(deleteMemberRequest(userId, projectId))
-  }))
+  })),
+  handleDownloadFile: (fileId, fileName) => dispatch(downloadFileRequest(fileId, fileName))
 });
 
 const enhance = compose(
