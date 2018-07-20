@@ -8,7 +8,7 @@ import { getYearOptions } from '../utils/options';
 const mNow = moment().format('MM');
 const yNow = moment().format('YYYY');
 
-const oneRow = (date, dateName) => (
+const oneRow = (date, dateName, id, onDeleteHolidayClick) => (
   <Table.Row>
     <Table.Cell width={5}>
       {(moment(date).format('YYYY') === yNow) && (moment(date).format('MM') === mNow) &&
@@ -27,7 +27,7 @@ const oneRow = (date, dateName) => (
       <div>
         {date}
       </div>
-      }    
+      }
     </Table.Cell>
     <Table.Cell>
       <Grid stackable>
@@ -36,7 +36,7 @@ const oneRow = (date, dateName) => (
             {dateName}
           </Grid.Column>
           <Grid.Column floated="right" width={6} >
-            <Button animated="fade" style={{ borderStyle: 'solid', borderColor: '#FF0000', backgroundColor: 'white', borderWidth: '1px' }} onClick={() => onDeleteClick(memberDetail.userId, projectId)}>
+            <Button animated="fade" style={{ borderStyle: 'solid', borderColor: '#FF0000', backgroundColor: 'white', borderWidth: '1px' }} onClick={() => onDeleteHolidayClick(id, moment(date).format('YYYY'))}>
               <Button.Content visible><font color="#FF0000" >Delete</font></Button.Content>
               <Button.Content hidden > <Icon color="red" name="x" /> </Button.Content>
             </Button>
@@ -46,7 +46,7 @@ const oneRow = (date, dateName) => (
     </Table.Cell>
   </Table.Row>
 );
-const Holiday = ({ fetchHolidays, holidays, year }) => (
+const Holiday = ({ fetchHolidays, onDeleteHolidayClick, holidays, year }) => (
   <div style={{ width: '60%', margin: 'auto' }}>
     <PageHeader text="Holiday" icon="calendar" />
     <Form.Select placeholder={year} defaultValue={year} options={getYearOptions()} onChange={(e, { value }) => fetchHolidays(value)} />
@@ -58,7 +58,7 @@ const Holiday = ({ fetchHolidays, holidays, year }) => (
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {holidays.map(day => oneRow(day.date, day.dateName))}
+        {holidays.map(day => oneRow(day.date, day.dateName, day.id, onDeleteHolidayClick))}
       </Table.Body>
     </Table>
   </div>
@@ -66,6 +66,7 @@ const Holiday = ({ fetchHolidays, holidays, year }) => (
 
 Holiday.propTypes = {
   fetchHolidays: PropTypes.func.isRequired,
+  onDeleteHolidayClick: PropTypes.func.isRequired,
   holidays: PropTypes.array.isRequired,
   year: PropTypes.string.isRequired
 };

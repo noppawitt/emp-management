@@ -132,6 +132,7 @@ const EditProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType 
       label="Description"
       placeholder="Description"
       disabled={submitting}
+      validate={validator.maxLength100}
     />
   </Form>
 );

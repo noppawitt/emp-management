@@ -1,26 +1,7 @@
 import React from 'react';
 import { Segment, Grid, Select, Button, Icon, Table, Menu } from 'semantic-ui-react';
 import PageHeader from './PageHeader';
-
-const months = [
-  { key: 1, value: '01', text: 'January' },
-  { key: 2, value: '02', text: 'Fabuary' },
-  { key: 3, value: '03', text: 'March' },
-  { key: 4, value: '04', text: 'April' },
-  { key: 5, value: '05', text: 'May' },
-  { key: 6, value: '06', text: 'June' },
-  { key: 7, value: '07', text: 'July' },
-  { key: 8, value: '08', text: 'August' },
-  { key: 9, value: '09', text: 'September' },
-  { key: 10, value: '10', text: 'October' },
-  { key: 11, value: '11', text: 'Novemver' },
-  { key: 12, value: '12', text: 'December' },
-];
-
-const years = [];
-for (let y = 2018; y <= 2118; y += 1) {
-  years.push({ key: y, value: y.toString(), text: y });
-}
+import { getMonthOptions, getYearOptions } from '../utils/options'
 
 const ManageLeave = () => (
   <div>
@@ -29,10 +10,10 @@ const ManageLeave = () => (
       <Segment>
         <Grid>
           <Grid.Column width={3}>
-            <Select placeholder="Year" defaultValue="2018" options={years} />
+            <Select placeholder="Year" defaultValue="2018" options={getYearOptions()} />
           </Grid.Column>
           <Grid.Column width={3}>
-            <Select placeholder="Month" defaultValue="07" options={months} />
+            <Select placeholder="Month" defaultValue="07" options={getMonthOptions()} />
           </Grid.Column>
           <Grid.Column width={10}>
             <Button icon labelPosition="left" floated="right" color="blue" >

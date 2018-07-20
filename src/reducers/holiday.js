@@ -27,14 +27,10 @@ const holiday = (state = initialState, action) => {
         isFetching: false,
         message: action.payload.message
       };
-    case actionTypes.HOLIDAY_DELETE_REQUEST:
-      return {
-        ...state,
-        projectId: action.payload.projectId
-      };
     case actionTypes.HOLIDAY_DELETE_SUCCESS:
       return {
-        ...state
+        ...state,
+        lists: action.payload.holidays
       };
     case actionTypes.HOLIDAY_DELETE_FAILURE:
       return {
