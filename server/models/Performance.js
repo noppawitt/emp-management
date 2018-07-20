@@ -12,18 +12,21 @@ Performance.findById = (id,year) => (
 )
 
 Performance.insertPerformance = (performanceInfo,id) =>(
-  db.one("INSERT INTO Performance (user_id,score,expected_score,sup_comment,em_sign_date,sup_sign_date,md_sign_date,created_user,updated_user,level_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING 1",
+  db.one("INSERT INTO Performance (user_id,score,expected_score,sup_comment,em_sign_date,sup_sign_date,md_sign_date,created_user,updated_user,level_id,em_sign_name, sup_sign_name, md_sign_name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING 1",
   [
     performanceInfo.employeeID,
     performanceInfo.score,
     performanceInfo.expectedScore,
     performanceInfo.supervisorComment,
-    null,
-    null,
-    null,
+    performanceInfo.employeeSignDate,
+    performanceInfo.supervisorSignDate,
+    performanceInfo.MDSignDate,
     id,
     id,
     performanceInfo.level,
+    performanceInfo.employeeSignName,
+    performanceInfo.supervisorSignName,
+    performanceInfo.MDSignName
   ])
 )
 

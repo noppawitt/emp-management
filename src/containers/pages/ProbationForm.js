@@ -49,7 +49,10 @@ class ProbationForm extends React.Component {
             continuedDate: null,
             employeeSignDate: null,
             supervisorSignDate: null,
-            MDSignDate: null
+            MDSignDate: null,
+            employeeSignName: null,
+            supervisorSignName: null,
+            MDSignName: null,
         };
 
         this.employeeStateHandler = this.employeeStateHandler.bind(this);
@@ -119,15 +122,20 @@ class ProbationForm extends React.Component {
         this.forceUpdate();
     }
 
-    signatureHandler(newEmployeeSignDate, newSupervisorSignDate, newMDSignDate) {
+    signatureHandler(newEmployeeSignName, newEmployeeSignDate,
+        newSupervisorSignName, newSupervisorSignDate,
+        newMDSignName, newMDSignDate) {
         this.state = {
             ...this.state,
+            employeeSignName: newEmployeeSignName,
+            supervisorSignName: newSupervisorSignName,
+            MDSignName: newMDSignName,
             employeeSignDate: newEmployeeSignDate,
             supervisorSignDate: newSupervisorSignDate,
             MDSignDate: newMDSignDate
         };
         this.props.test(this.state);
-    }
+    } 
 
     componentWillMount() {
         if (this.props.profile.evaInfo != null) {
@@ -151,7 +159,10 @@ class ProbationForm extends React.Component {
                 MDSignDate: this.props.profile.evaInfo.mdSignDate,
                 endProbationDate: this.props.profile.evaInfo.passProDate,
                 level: this.props.profile.evaInfo.levelId,
-                proId: this.props.profile.evaInfo.id
+                proId: this.props.profile.evaInfo.id,
+                employeeSignName: this.props.profile.evaInfo.emSignName,
+                supervisorSignName: this.props.profile.evaInfo.supSignName,
+                MDSignName: this.props.profile.evaInfo.mdSignName,
             })
         }
     }
@@ -193,7 +204,7 @@ class ProbationForm extends React.Component {
                 </div>
                 <EvaluationResultComponent {...this.state} onChange={this.evaluationResultHandler} mode={this.props.mode} />
                 <SupervisorCommentComponent {...this.state} onChange={this.supervisorCommentHandler} mode={this.props.mode} />
-                <SignatureComponent {...this.state} role={this.props.role} onChange={this.signatureHandler} />
+                <SignatureComponent {...this.state} role={this.props.role} onChange={this.signatureHandler} authName={this.props.name}/>
             </div>
         );
     }
