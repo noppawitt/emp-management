@@ -36,11 +36,7 @@ const oneRow = (date, dateName, id, onDeleteHolidayClick) => (
             {dateName}
           </Grid.Column>
           <Grid.Column floated="right" width={6} >
-<<<<<<< HEAD
             <Button animated="fade" style={{ borderStyle: 'solid', borderColor: '#FF0000', backgroundColor: 'white', borderWidth: '1px' }} onClick={() => onDeleteHolidayClick(id, moment(date).format('YYYY'))}>
-=======
-            <Button animated="fade" style={{ borderStyle: 'solid', borderColor: '#FF0000', backgroundColor: 'white', borderWidth: '1px' }}>
->>>>>>> cb122a70efbfc00258a9119d44e5fa6af724f1d5
               <Button.Content visible><font color="#FF0000" >Delete</font></Button.Content>
               <Button.Content hidden > <Icon color="red" name="x" /> </Button.Content>
             </Button>
