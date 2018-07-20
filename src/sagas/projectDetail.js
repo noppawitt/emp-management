@@ -11,7 +11,9 @@ import {
   deleteMemberSuccess,
   deleteMemberFailure,
   downloadFileSuccess,
-  downloadFileFailure
+  downloadFileFailure,
+  uploadFileSuccess,
+  uploadFileFailure
 } from '../actions/projectDetail';
 import { closeModal } from '../actions/modal';
 import api from '../services/api';
@@ -76,6 +78,19 @@ function* downloadFile(action) {
   }
 }
 
+function* uploadFile(action) {
+  try {
+    const formData = new FormData();
+    yield formData.append('projectId', action.payload.projectId);
+    yield formData.append('file', action.payload.file);
+    const files = yield call(api.uploadFile, formData);
+    yield put(uploadFileSuccess(files));
+  }
+  catch (error) {
+    yield put(uploadFileFailure(error));
+  }
+}
+
 function* watchFetchProjectDetailRequest() {
   yield takeEvery(actionTypes.PROJECT_DETAIL_FETCH_REQUEST, fetchProjectDetailTask);
 }
@@ -96,12 +111,17 @@ function* watchDownloadFileRequest() {
   yield takeEvery(actionTypes.FILE_DOWNLOAD_REQUEST, downloadFile);
 }
 
+function* watchUploadFileRequest() {
+  yield takeEvery(actionTypes.FILE_UPLOAD_REQUEST, uploadFile);
+}
+
 export default function* projectDetailSaga() {
   yield all([
     watchFetchProjectDetailRequest(),
     watchUpdateProjectDetailRequest(),
     watchCreateMemberRequest(),
     watchDeleteMemberRequest(),
-    watchDownloadFileRequest()
+    watchDownloadFileRequest(),
+    watchUploadFileRequest()
   ]);
 }

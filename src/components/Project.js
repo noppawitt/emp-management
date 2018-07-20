@@ -31,7 +31,7 @@ const Project = ({
         <Table fixed striped sortable selectable celled>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell sorted={sortKey === 'projectId' ? direction : null} onClick={() => handleSort('id')}>Proj No.</Table.HeaderCell>
+              <Table.HeaderCell sorted={sortKey === 'projectId' ? direction : null} onClick={() => handleSort('projectId')}>Proj No.</Table.HeaderCell>
               <Table.HeaderCell sorted={sortKey === 'name' ? direction : null} onClick={() => handleSort('name')}>Name</Table.HeaderCell>
               <Table.HeaderCell sorted={sortKey === 'customer' ? direction : null} onClick={() => handleSort('customer')}>Customer</Table.HeaderCell>
               <Table.HeaderCell sorted={sortKey === 'quotationId' ? direction : null} onClick={() => handleSort('quotationId')}>Quo No.</Table.HeaderCell>

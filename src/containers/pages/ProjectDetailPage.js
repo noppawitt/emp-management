@@ -2,13 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
-import { fetchProjectDetailRequest, deleteMemberRequest, downloadFileRequest } from '../../actions/projectDetail';
+import {
+  fetchProjectDetailRequest,
+  deleteMemberRequest,
+  downloadFileRequest,
+  uploadFileRequest,
+} from '../../actions/projectDetail';
 import Loader from '../../components/Loader';
 import ProjectDetail from '../../components/ProjectDetail';
 import { openModal } from '../../actions/modal';
 import * as modalNames from '../../constants/modalNames';
 
-const ProjectDetailPage = ({ isFetching, projectDetail, onEditClick, onAddMemberClick, onDeleteMemberClick, handleDownloadFile }) => (
+const ProjectDetailPage = ({
+  isFetching,
+  projectDetail,
+  onEditClick,
+  onAddMemberClick,
+  onDeleteMemberClick,
+  handleDownloadFile,
+  handleUploadFile
+}) => (
   <div>
     {isFetching ?
       <Loader /> :
@@ -18,6 +31,7 @@ const ProjectDetailPage = ({ isFetching, projectDetail, onEditClick, onAddMember
         onAddMemberClick={onAddMemberClick}
         onDeleteMemberClick={onDeleteMemberClick}
         handleDownloadFile={handleDownloadFile}
+        handleUploadFile={handleUploadFile}
       />}
   </div>
 );
@@ -33,7 +47,8 @@ ProjectDetailPage.propTypes = {
   onEditClick: PropTypes.func.isRequired,
   onAddMemberClick: PropTypes.func.isRequired,
   onDeleteMemberClick: PropTypes.func.isRequired,
-  handleDownloadFile: PropTypes.func.isRequired
+  handleDownloadFile: PropTypes.func.isRequired,
+  handleUploadFile: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -50,7 +65,8 @@ const mapDispatchToProps = dispatch => ({
     description: 'Are you sure to delete this member?',
     onConfirm: () => dispatch(deleteMemberRequest(userId, projectId))
   })),
-  handleDownloadFile: (fileId, fileName) => dispatch(downloadFileRequest(fileId, fileName))
+  handleDownloadFile: (fileId, fileName) => dispatch(downloadFileRequest(fileId, fileName)),
+  handleUploadFile: (file, projectId) => dispatch(uploadFileRequest(file, projectId))
 });
 
 const enhance = compose(
