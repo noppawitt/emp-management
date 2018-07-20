@@ -1,16 +1,28 @@
 let token;
 
 const callApi = (endpoint, request) => {
+  let isFormData;
+
   if (request && request.body) {
-    request.body = request.body instanceof FormData ? request.body : JSON.stringify(request.body);
+    if (request.body instanceof FormData) isFormData = true;
+    request.body = isFormData ? request.body : JSON.stringify(request.body);
   }
 
   token = localStorage.getItem('accessToken');
-  const headers = {
-    Authorization: `Bearer ${token}`,
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  };
+
+  let headers;
+  if (isFormData) {
+    headers = {
+      Authorization: `Bearer ${token}`
+    };
+  }
+  else {
+    headers = {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+  }
 
   const requestWithHeaders = {
     ...{ headers },

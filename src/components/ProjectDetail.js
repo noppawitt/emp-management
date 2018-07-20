@@ -74,7 +74,9 @@ const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteM
         <Grid.Column computer={11} tablet={11} mobile={16}>
           <List>
             {projectDetail.files.map(file => (
-              <List.Item as="a" onClick={() => handleDownloadFile(file.id, file.name)}>{`${file.name}`}</List.Item>
+              <div>
+                <List.Item as="a" onClick={() => handleDownloadFile(file.id, file.name)}>{`${file.name}`}</List.Item>
+              </div>
             ))}
           </List>
           <UploadFile onUploadSubmit={handleUploadFile} args={[projectDetail.projectId]} />
