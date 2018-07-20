@@ -19,7 +19,7 @@ function* fetchHolidayTask(action) {
 }
 function* deleteHolidayTask(action) {
   try {
-    const holidays = yield call(api.deleteHoliday, { holidayId: action.payload.holidayId, year: action.payload.year });
+    const holidays = yield call(api.deleteHoliday, { id: action.payload.id, year: action.payload.year });
     yield put(fetchHolidaySuccess(holidays));
     yield put(closeModal());
   }

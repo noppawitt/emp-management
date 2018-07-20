@@ -23,7 +23,7 @@ const oneRow = (date, dateName, id, onDeleteHolidayClick) => (
         </Grid.Row>
       </Grid>
       }
-      {(moment(date).format('YYYY') !== yNow) || (moment(date).format('MM') !== mNow) &&
+      {((moment(date).format('YYYY') !== yNow) || (moment(date).format('MM') !== mNow)) &&
       <div>
         {date}
       </div>
@@ -49,7 +49,16 @@ const oneRow = (date, dateName, id, onDeleteHolidayClick) => (
 const Holiday = ({ fetchHolidays, onDeleteHolidayClick, holidays, year }) => (
   <div style={{ width: '60%', margin: 'auto' }}>
     <PageHeader text="Holiday" icon="calendar" />
-    <Form.Select placeholder={year} defaultValue={year} options={getYearOptions()} onChange={(e, { value }) => fetchHolidays(value)} />
+    <Grid>
+      <Grid.Row>
+        <Grid.Column >
+          <Form.Select placeholder={year} defaultValue={year} options={getYearOptions()} onChange={(e, { value }) => fetchHolidays(value)} />
+        </Grid.Column>
+        <Grid.Column floated="right" width={3}>
+          <Button>Add</Button>
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
     <Table striped celled>
       <Table.Header>
         <Table.Row>
