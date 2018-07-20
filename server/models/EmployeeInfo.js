@@ -95,7 +95,7 @@ EmployeeInfo.findOwnByUserId = userId => (
 );
 
 EmployeeInfo.findInfoAll = () => (
-  db.manyOrNone('SELECT first_name, last_name, nick_name, mobile_number, line_id, email, facebook_id, picture, address, first_name_th, last_name_th, gender, user_id FROM employee_info WHERE status = $1', ['Active'])
+  db.manyOrNone('SELECT first_name, last_name, nick_name, mobile_number, line_id, email, facebook_id, picture, address, first_name_th, last_name_th, gender, user_id, line_code FROM employee_info WHERE status = $1', ['Active'])
 );
 
 EmployeeInfo.updateProfileImg = (path, userId, id) => (

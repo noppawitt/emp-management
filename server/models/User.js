@@ -56,7 +56,7 @@ User.create = async (user, id) => (
       user.type,
     ]
   )
-    .then((result) => {
+    .then(result => (
       db.none(
         'INSERT INTO employee_info (first_name, last_name, citizen_id, created_user, updated_user, email, gender, picture, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
         [
@@ -71,8 +71,8 @@ User.create = async (user, id) => (
           result.id
         ]
       )
-        .then(() => {
-          db.none(
+        .then(() => (
+          db.one(
             'INSERT INTO employee_work (department_id, level_id, start_date, probation_date, created_user, updated_user, contract_id, engineer, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING user_id',
             [
               user.departmentId,
@@ -85,10 +85,9 @@ User.create = async (user, id) => (
               user.engineer,
               result.id
             ]
-          );
-        });
-    })
-);
+          )
+        ))
+    )));
 
 User.findById = id => (
   db.oneOrNone('SELECT * FROM users WHERE id = $1', [id])
