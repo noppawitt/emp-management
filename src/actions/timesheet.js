@@ -100,3 +100,24 @@ export const updateInput = (key, value) => ({
     value
   }
 });
+
+export const fetchTimesheetProjectRequest = userId => ({
+  type: actionTypes.TIMESHEET_PROJECT_FETCH_REQUEST,
+  payload: {
+    userId
+  }
+});
+
+export const fetchTimesheetProjectSuccess = projects => ({
+  type: actionTypes.TIMESHEET_PROJECT_FETCH_SUCCESS,
+  payload: {
+    projects
+  }
+});
+
+export const fetchTimesheetProjectFailure = message => ({
+  type: actionTypes.TIMESHEET_PROJECT_FETCH_FAILURE,
+  payload: {
+    message
+  }
+});

@@ -45,10 +45,11 @@ export const fetchHolidayFailure = message => ({
   }
 });
 
-export const deleteHolidayRequest = holidayId => ({
+export const deleteHolidayRequest = (id, year) => ({
   type: actionTypes.HOLIDAY_DELETE_REQUEST,
   payload: {
-    holidayId
+    id,
+    year
   }
 });
 

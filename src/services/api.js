@@ -388,11 +388,21 @@ api.deleteTimesheet = body => (
     body
   })
 );
-
+//Holiday
 api.fetchHolidays = (year, month = null) => {
   if (month) return callApi(`/api/holidays?year=${year}&month=${month}`);
   return callApi(`/api/holidays?year=${year}`);
 };
+api.deleteHoliday = body => (
+  callApi('/api/holidays', {
+    method: 'DELETE',
+    body
+  })
+);
+
+api.fetchTimesheetProject = userId => (
+  callApi(`/api/has-projects?userId=${userId}`)
+);
 
 // Report
 

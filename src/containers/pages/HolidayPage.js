@@ -3,18 +3,21 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import Holiday from '../../components/Holiday';
-import { fetchHolidayRequest } from '../../actions/holiday';
+import { fetchHolidayRequest, deleteHolidayRequest } from '../../actions/holiday';
 import Loader from '../../components/Loader';
+import { openModal } from '../../actions/modal';
+import * as modalNames from '../../constants/modalNames';
 
-const HolidayPage = ({ fetchHolidays, holidays, isFetching, year }) => (
+const HolidayPage = ({ fetchHolidays, onDeleteHolidayClick, holidays, isFetching, year }) => (
   <div>
-    {isFetching ? <Loader /> : <Holiday fetchHolidays={fetchHolidays} holidays={holidays} year={year} />}
+    {isFetching ? <Loader /> : <Holiday fetchHolidays={fetchHolidays} holidays={holidays} year={year} onDeleteHolidayClick={onDeleteHolidayClick} />}
   </div>
 );
 
 HolidayPage.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   fetchHolidays: PropTypes.func.isRequired,
+  onDeleteHolidayClick: PropTypes.func.isRequired,
   holidays: PropTypes.array.isRequired,
   year: PropTypes.string.isRequired
 };
@@ -27,6 +30,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchHolidays: year => dispatch(fetchHolidayRequest(year)),
+  onDeleteHolidayClick: (holidayId, year) => dispatch(openModal(modalNames.CONFIRM, {
+    header: 'Delete Confirmation',
+    description: 'Are you sure to delete this holiday?',
+    onConfirm: () => dispatch(deleteHolidayRequest(holidayId, year))
+  }))
 });
 
 const enhance = compose(
