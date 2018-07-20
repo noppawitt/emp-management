@@ -40,4 +40,8 @@ Holiday.findByYearAndMonth = (year, month) => (
   db.manyOrNone('SELECT * FROM holidays WHERE EXTRACT(year from date) = $1 AND EXTRACT(month from date) = $2', [year, month])
 );
 
+Holiday.delete = id => (
+  db.none('DELETE FROM holidays WHERE id = $1', [id])
+);
+
 module.exports = Holiday;
