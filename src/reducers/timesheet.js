@@ -82,6 +82,16 @@ const timesheet = (state = initialState, action) => {
         ...state,
         message: action.payload.message
       };
+    case actionTypes.TIMESHEET_PROJECT_FETCH_SUCCESS:
+      return {
+        ...state,
+        projects: action.payload.projects
+      };
+    case actionTypes.TIMESHEET_PROJECT_FETCH_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
     default:
       return state;
   }

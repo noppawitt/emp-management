@@ -375,6 +375,10 @@ api.fetchHolidays = (year, month = null) => {
   return callApi(`/api/holidays?year=${year}`);
 };
 
+api.fetchTimesheetProject = userId => (
+  callApi(`/api/has-projects?userId=${userId}`)
+);
+
 // Report
 
 api.fetchOwnProject = (userId, year, month) => {

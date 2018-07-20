@@ -535,29 +535,34 @@ const writeAvailableDate = (worksheet, excelType, column) => new Promise(async (
   }
 });
 
-const writeSummaryTimesheetMonth = (timesheets, worksheet) => new Promise(async (resolve, reject) => {
+const writeSummaryTimesheetMonth = (timesheets, worksheet, project) => new Promise(async (resolve, reject) => {
   try {
     let row = 7;
-    await timesheets.forEach((timesheet) => {
-      worksheet.getCell(`D${row}`).value = `${timesheet.userId} ${timesheet.name}`;
-      worksheet.getCell(`E${row}`).value = timesheet.days;
-      worksheet.getCell(`F${row}`).value = timesheet.amount;
+    // if (project.paymentType === 'Man-month') {
+    //   const 
+    // }
+    if (project.paymentType === 'Man-day') {
+      await timesheets.forEach((timesheet) => {
+        worksheet.getCell(`D${row}`).value = `${timesheet.userId} ${timesheet.name}`;
+        worksheet.getCell(`E${row}`).value = timesheet.days;
+        worksheet.getCell(`F${row}`).value = timesheet.amount;
+        worksheet.getCell(`G${row}`).value = {
+          formula: `E${row}*F${row}`,
+          result: undefined
+        };
+        row += 2;
+      });
+      worksheet.getCell(`D${row}`).alignment = { horizontal: 'right' };
+      worksheet.getCell(`D${row}`).value = 'Total';
       worksheet.getCell(`G${row}`).value = {
-        formula: `E${row}*F${row}`,
+        formula: `SUM(G7:G${row - 1})`,
         result: undefined
       };
-      row += 2;
-    });
-    worksheet.getCell(`D${row}`).alignment = { horizontal: 'right' };
-    worksheet.getCell(`D${row}`).value = 'Total';
-    worksheet.getCell(`G${row}`).value = {
-      formula: `SUM(G7:G${row - 1})`,
-      result: undefined
-    };
-    worksheet.getCell(`G${row}`).border = {
-      top: { style: 'thin' },
-      bottom: { style: 'double' }
-    };
+      worksheet.getCell(`G${row}`).border = {
+        top: { style: 'thin' },
+        bottom: { style: 'double' }
+      };
+    }
     resolve(worksheet);
   }
   catch (error) {
@@ -1009,13 +1014,7 @@ exports.createReport = (req, res, next) => {
         worksheet.getCell('D3').value = `${moment.months(parseInt(excelType.month, 10) + 1)}-${excelType.year}`;
         worksheet.getCell('D4').value = excelType.projectId;
         worksheet.getCell('D5').value = project.paymentType;
-        // if (project.paymentType === 'Man-month') {
-          
-        // }
-        // else if (project.paymentType === 'Man-day') {
-
-        // }
-        writeSummaryTimesheetMonth(timesheets, worksheet)
+        writeSummaryTimesheetMonth(timesheets, worksheet, project)
           .then(() => {
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             res.setHeader('Content-Disposition', `attachment; filename="Timesheet_Summary_${excelType.year}.xlsx`);

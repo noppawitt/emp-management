@@ -29,7 +29,7 @@ exports.findByUserId = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-  Educate.delete(req.body.id, req.user.id)
+  Educate.delete(req.body.id)
     .then(() => {
       Educate.findByUserId(req.query.userId)
         .then((educates) => {

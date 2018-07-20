@@ -35,7 +35,7 @@ HasProject.update = (hasProject, id) => (
 );
 
 HasProject.findByUserId = userId => (
-  db.manyOrNone('SELECT * FROM has_projects WHERE user_id = $1', [userId])
+  db.manyOrNone('SELECT projects.name AS name, has_projects.* FROM has_projects INNER JOIN projects ON has_projects.project_id = projects.id WHERE user_id = $1', [userId])
 );
 
 HasProject.findByProjectIdAndUserId = (projectId, userId) => (

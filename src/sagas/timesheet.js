@@ -8,7 +8,9 @@ import {
   updateTimesheetSuccess,
   updateTimesheetFailure,
   deleteTimesheetSuccess,
-  deleteTimesheetFailure
+  deleteTimesheetFailure,
+  fetchTimesheetProjectSuccess,
+  fetchTimesheetProjectFailure
 } from '../actions/timesheet';
 import { closeModal, clearModal } from '../actions/modal';
 import history from '../history';
@@ -69,6 +71,16 @@ function* deleteTimesheetTask(action) {
   }
 }
 
+function* fetchTimesheetProject(action) {
+  try {
+    const projects = yield call(api.fetchTimesheetProject, action.payload.userId);
+    yield put(fetchTimesheetProjectSuccess(projects));
+  }
+  catch (error) {
+    yield put(fetchTimesheetProjectFailure());
+  }
+}
+
 function* watchCreateTimesheetRequest() {
   yield takeEvery(actionTypes.TIMESHEET_CREATE_REQUEST, createTimesheetTask);
 }
@@ -85,11 +97,16 @@ function* watchDeleteTimesheetRequest() {
   yield takeEvery(actionTypes.TIMESHEET_DELETE_REQUEST, deleteTimesheetTask);
 }
 
+function* watchFetchTimesheetProjectRequest() {
+  yield takeEvery(actionTypes.TIMESHEET_PROJECT_FETCH_REQUEST, fetchTimesheetProject);
+}
+
 export default function* timesheetSaga() {
   yield all([
     watchCreateTimesheetRequest(),
     watchFetchTimesheetRequest(),
     watchUpdateTimesheetRequest(),
-    watchDeleteTimesheetRequest()
+    watchDeleteTimesheetRequest(),
+    watchFetchTimesheetProjectRequest()
   ]);
 }
