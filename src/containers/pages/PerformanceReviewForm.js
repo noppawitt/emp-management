@@ -33,6 +33,7 @@ class PerformanceReviewForm extends React.Component {
             startDate: this.props.profile.work.startDate || '-',
             supervisor: this.props.profile.work.bossName || '-',
             expectedScore: null,
+            supervisorComment: null,
             score: null,
             employeeSignName: null,
             supervisorSignName: null,
@@ -74,8 +75,15 @@ class PerformanceReviewForm extends React.Component {
 
 
     shouldComponentUpdate(nextProps, nextState) {
-        return (nextState.score != this.state.score ||
-            nextState.expectedScore != this.state.expectedScore
+        return (nextState.supervisorComment != this.state.supervisorComment ||
+            nextState.score != this.state.score ||
+            nextState.expectedScore != this.state.expectedScore ||
+            nextState.employeeSignName != this.state.employeeSignName ||
+            nextState.supervisorSignName != this.state.supervisorSignName ||
+            nextState.MDSignName != this.state.MDSignDate ||
+            nextState.employeeSignDate != this.state.employeeSignDate ||
+            nextState.supervisorSignDate != this.state.supervisorSignDate ||
+            nextState.MDSignDate != this.state.MDSignDate
         )
     }
 
@@ -84,23 +92,20 @@ class PerformanceReviewForm extends React.Component {
     }
 
     supervisorCommentHandler(newComment) {
-        this.state = { ...this.state, supervisorComment: newComment };
-        this.props.test(this.state);
+        this.setState({ supervisorComment: newComment });
     }
 
     signatureHandler(newEmployeeSignName, newEmployeeSignDate,
         newSupervisorSignName, newSupervisorSignDate,
         newMDSignName, newMDSignDate) {
-        this.state = {
-            ...this.state,
+        this.setState({
             employeeSignName: newEmployeeSignName,
             supervisorSignName: newSupervisorSignName,
             MDSignName: newMDSignName,
             employeeSignDate: newEmployeeSignDate,
             supervisorSignDate: newSupervisorSignDate,
             MDSignDate: newMDSignDate
-        };
-        this.props.test(this.state);
+        });
     }
 
     render() {
