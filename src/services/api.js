@@ -388,6 +388,10 @@ api.deleteHoliday = body => (
   })
 );
 
+api.fetchTimesheetProject = userId => (
+  callApi(`/api/has-projects?userId=${userId}`)
+);
+
 // Report
 
 api.fetchOwnProject = (userId, year, month) => {

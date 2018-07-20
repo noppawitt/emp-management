@@ -18,14 +18,15 @@ exports.update = (req, res, next) => {
   const editHasProject = req.body.hasProject;
   HasProject.update(editHasProject, req.user.id)
     .then((updatedHasProject) => {
-      req.json(updatedHasProject);
+      res.json(updatedHasProject);
     })
     .catch(next);
 };
 
 exports.findByUserId = (req, res, next) => {
-  HasProject.findByUserId(req.query.id)
+  HasProject.findByUserId(req.query.userId)
     .then((hasProjects) => {
+      console.log(hasProjects);
       res.json(hasProjects);
     })
     .catch(next);

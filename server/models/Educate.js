@@ -45,8 +45,8 @@ Educate.findByUserId = userId => (
   db.manyOrNone('SELECT educates.id, educates.user_id, educates.university_id, universities.name AS university_name, educates.faculty_id, faculties.name AS faculty_name, educates.major_id, majors.name AS major_name, educates.degree_id, degrees.name AS degree_name, educates.gpax, educates.graduation_date, educates.program, educates.honor_flag FROM educates, universities, faculties, majors, degrees WHERE educates.university_id = universities.id AND educates.faculty_id = faculties.id AND educates.major_id = majors.id AND educates.degree_id = degrees.id AND user_id = $1 ORDER BY educates.graduation_date', [userId])
 );
 
-Educate.delete = (id, userId) => (
-  db.none('DELETE FROM educates WHERE id = $1 AND user_id = $2', [id, userId])
+Educate.delete = id => (
+  db.none('DELETE FROM educates WHERE id = $1', [id])
 );
 
 module.exports = Educate;

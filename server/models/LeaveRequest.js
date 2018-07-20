@@ -51,6 +51,10 @@ LeaveRequest.findByYearAndMonth = (year, month, userId) => (
   db.manyOrNone('SELECT DISTINCT (leave_from), (leave_to), user_id, purpose, leave_type, code, status FROM leave_requests WHERE extract(year from leave_date) = $1 AND extract(month from leave_date) = $2 AND user_id = $3 AND (status = $4 OR status = $5)', [year, month, userId, 'Approve', 'Pending'])
 );
 
+LeaveRequest.findSumLeaveInMonthAndYear = (year, month, userId) => (
+  db.manyOrNone('SELECT SUM(totalhours) / 8 FROM leave_requests WHERE EXTRACT(month form leave_date) = $1 AND EXTRACT(year from leave_date ) = $2 GROUP BY ')
+);
+
 LeaveRequest.findSummaryLeave = year => (
   db.manyOrNone(`SELECT users.id, CONCAT(employee_info.first_name, ' ', employee_info.last_name) as name, 
   employee_info.nick_name, employee_info.mobile_number, employee_work.start_date, leave_requests.leave_type, EXTRACT(month from leave_date) as month, SUM(totalhours) / $1 as days

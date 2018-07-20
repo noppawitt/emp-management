@@ -68,3 +68,12 @@ export const getFormInitialValues = (state) => {
   });
   return timesheets;
 };
+
+export const timesheetProjectsToOptions = (state) => {
+  if (!state.timesheet.projects) return [];
+  const options = [];
+  state.timesheet.projects.forEach((project) => {
+    options.push({ key: project.projectId, value: project.projectId, text: `${project.projectId} ${project.name}` });
+  });
+  return options;
+};
