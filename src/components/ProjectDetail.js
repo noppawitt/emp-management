@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Segment, Grid, Header, Icon, Table, Button, List } from 'semantic-ui-react';
+import UploadFile from '../components/UploadFile';
 
 const membersDetail = (memberDetail, projectId, onDeleteClick) => (
   <Table.Row key={memberDetail.userId}>
@@ -17,7 +18,7 @@ const membersDetail = (memberDetail, projectId, onDeleteClick) => (
   </Table.Row>
 );
 
-const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteMemberClick, handleDownloadFile }) => (
+const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteMemberClick, handleDownloadFile, handleUploadFile }) => (
   <Segment.Group raised size="large" >
     <Segment>
       <Grid padded>
@@ -76,6 +77,7 @@ const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteM
               <List.Item as="a" onClick={() => handleDownloadFile(file.id, file.name)}>{`${file.name}`}</List.Item>
             ))}
           </List>
+          <UploadFile onUploadSubmit={handleUploadFile} args={[projectDetail.projectId]} />
         </Grid.Column>
       </Grid>
     </Segment>
@@ -120,7 +122,8 @@ ProjectDetail.propTypes = {
   onEditClick: PropTypes.func.isRequired,
   onAddMemberClick: PropTypes.func.isRequired,
   onDeleteMemberClick: PropTypes.func.isRequired,
-  handleDownloadFile: PropTypes.func.isRequired
+  handleDownloadFile: PropTypes.func.isRequired,
+  handleUploadFile: PropTypes.func.isRequired
 };
 
 export default ProjectDetail;

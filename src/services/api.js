@@ -320,6 +320,13 @@ api.downloadFile = fileId => (
   download(`/api/files/download?fileId=${fileId}`)
 );
 
+api.uploadFile = body => (
+  callApi(`/api/files`, {
+    method: 'POST',
+    body
+  })
+);
+
 // Leave
 
 api.createLeave = body => (

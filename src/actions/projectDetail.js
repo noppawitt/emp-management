@@ -107,3 +107,25 @@ export const downloadFileFailure = message => ({
     message
   }
 });
+
+export const uploadFileRequest = (file, projectId) => ({
+  type: actionTypes.FILE_UPLOAD_REQUEST,
+  payload: {
+    file,
+    projectId
+  }
+});
+
+export const uploadFileSuccess = files => ({
+  type: actionTypes.FILE_UPLOAD_SUCCESS,
+  payload: {
+    files
+  }
+});
+
+export const uploadFileFailure = message => ({
+  type: actionTypes.FILE_UPLOAD_FAILURE,
+  payload: {
+    message
+  }
+});

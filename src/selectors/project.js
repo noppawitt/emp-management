@@ -5,7 +5,7 @@ const getFilteredProjects = (lists, searchText, hasPoNumber) => {
       if (hasPoNumber) return project.purchasedOrder;
       return project;
     })
-    .filter(project => regExp.test(project.id)
+    .filter(project => regExp.test(project.projectId)
     || regExp.test(project.name)
     || regExp.test(project.customer)
     || regExp.test(project.quotationId));
