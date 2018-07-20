@@ -80,7 +80,7 @@ class PerformanceReviewForm extends React.Component {
             nextState.expectedScore != this.state.expectedScore ||
             nextState.employeeSignName != this.state.employeeSignName ||
             nextState.supervisorSignName != this.state.supervisorSignName ||
-            nextState.MDSignName != this.state.MDSignDate ||
+            nextState.MDSignName != this.state.MDSignName ||
             nextState.employeeSignDate != this.state.employeeSignDate ||
             nextState.supervisorSignDate != this.state.supervisorSignDate ||
             nextState.MDSignDate != this.state.MDSignDate
