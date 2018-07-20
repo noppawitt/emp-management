@@ -13,7 +13,7 @@ LeaveHistory.create = (leave, id) => (
       leave.annualLeaveRemain,
       leave.sickLeaveRemain,
       leave.personalLeaveRemain,
-      leave.OrdinationLeave
+      leave.ordinationLeaveRemain
     ]
   )
 );

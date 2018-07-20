@@ -316,6 +316,17 @@ api.deleteMember = body => (
   })
 );
 
+api.downloadFile = fileId => (
+  download(`/api/files/download?fileId=${fileId}`)
+);
+
+api.uploadFile = body => (
+  callApi(`/api/files`, {
+    method: 'POST',
+    body
+  })
+);
+
 // Leave
 
 api.createLeave = body => (
@@ -379,7 +390,7 @@ api.deleteHoliday = body => (
 
 // Report
 
-api.fetchOwnProject = (userId,year, month) => {
+api.fetchOwnProject = (userId, year, month) => {
   if (userId) return callApi(`/api/projects?userId=${userId}&year=${year}&month=${month}`);
   return callApi(`/api/projects?year=${year}&month=${month}`);
 };

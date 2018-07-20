@@ -7,4 +7,6 @@ router.put('/', HolidayController.update);
 
 router.get('/', HolidayController.findHolidays);
 
+router.delete('/', HolidayController.delete);
+
 module.exports = router;

@@ -1,4 +1,5 @@
 import { call, put, takeEvery, all } from 'redux-saga/effects';
+import { saveAs } from 'file-saver';
 import * as actionTypes from '../constants/actionTypes';
 import {
   fetchProjectDetailSuccess,
@@ -8,7 +9,11 @@ import {
   createMemberSuccess,
   createMemberFailure,
   deleteMemberSuccess,
-  deleteMemberFailure
+  deleteMemberFailure,
+  downloadFileSuccess,
+  downloadFileFailure,
+  uploadFileSuccess,
+  uploadFileFailure
 } from '../actions/projectDetail';
 import { closeModal } from '../actions/modal';
 import api from '../services/api';
@@ -47,6 +52,7 @@ function* createMemberTask(action) {
     action.payload.reject();
   }
 }
+
 function* deleteMemberTask(action) {
   try {
     const members = yield call(api.deleteMember, {
@@ -58,6 +64,30 @@ function* deleteMemberTask(action) {
   }
   catch (error) {
     yield put(deleteMemberFailure(error));
+  }
+}
+
+function* downloadFile(action) {
+  try {
+    const file = yield call(api.downloadFile, action.payload.fileId);
+    yield saveAs(file, action.payload.fileName);
+    yield put(downloadFileSuccess());
+  }
+  catch (error) {
+    yield put(downloadFileFailure(error));
+  }
+}
+
+function* uploadFile(action) {
+  try {
+    const formData = new FormData();
+    yield formData.append('projectId', action.payload.projectId);
+    yield formData.append('file', action.payload.file);
+    const files = yield call(api.uploadFile, formData);
+    yield put(uploadFileSuccess(files));
+  }
+  catch (error) {
+    yield put(uploadFileFailure(error));
   }
 }
 
@@ -77,11 +107,21 @@ function* watchDeleteMemberRequest() {
   yield takeEvery(actionTypes.MEMBER_DELETE_REQUEST, deleteMemberTask);
 }
 
+function* watchDownloadFileRequest() {
+  yield takeEvery(actionTypes.FILE_DOWNLOAD_REQUEST, downloadFile);
+}
+
+function* watchUploadFileRequest() {
+  yield takeEvery(actionTypes.FILE_UPLOAD_REQUEST, uploadFile);
+}
+
 export default function* projectDetailSaga() {
   yield all([
     watchFetchProjectDetailRequest(),
     watchUpdateProjectDetailRequest(),
     watchCreateMemberRequest(),
-    watchDeleteMemberRequest()
+    watchDeleteMemberRequest(),
+    watchDownloadFileRequest(),
+    watchUploadFileRequest()
   ]);
 }

@@ -88,3 +88,44 @@ export const deleteMemberFailure = message => ({
     message
   }
 });
+
+export const downloadFileRequest = (fileId, fileName) => ({
+  type: actionTypes.FILE_DOWNLOAD_REQUEST,
+  payload: {
+    fileId,
+    fileName
+  }
+});
+
+export const downloadFileSuccess = () => ({
+  type: actionTypes.FILE_DOWNLOAD_SUCCESS
+});
+
+export const downloadFileFailure = message => ({
+  type: actionTypes.FILE_DOWNLOAD_FAILURE,
+  payload: {
+    message
+  }
+});
+
+export const uploadFileRequest = (file, projectId) => ({
+  type: actionTypes.FILE_UPLOAD_REQUEST,
+  payload: {
+    file,
+    projectId
+  }
+});
+
+export const uploadFileSuccess = files => ({
+  type: actionTypes.FILE_UPLOAD_SUCCESS,
+  payload: {
+    files
+  }
+});
+
+export const uploadFileFailure = message => ({
+  type: actionTypes.FILE_UPLOAD_FAILURE,
+  payload: {
+    message
+  }
+});

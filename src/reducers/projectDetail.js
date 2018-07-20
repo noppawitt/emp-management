@@ -63,6 +63,21 @@ const projectDetail = (state = {}, action) => {
         ...state,
         message: action.payload.message
       };
+    case actionTypes.FILE_DOWNLOAD_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
+    case actionTypes.FILE_UPLOAD_SUCCESS:
+      return {
+        ...state,
+        files: action.payload.files
+      };
+    case actionTypes.FILE_UPLOAD_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
     default:
       return state;
   }
