@@ -34,3 +34,15 @@ exports.findHolidays = (req, res, next) => {
       .catch(next);
   }
 };
+
+exports.delete = (req, res, next) => {
+  Holiday.delete(req.body.id)
+    .then(() => {
+      Holiday.findByYear(req.body.year)
+        .then((holidays) => {
+          res.json(holidays);
+        })
+        .catch(next);
+    })
+    .catch(next);
+};

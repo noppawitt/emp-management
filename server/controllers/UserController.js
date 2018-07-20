@@ -79,11 +79,12 @@ exports.create = (req, res, next) => {
               }
               User.create(newUser, req.user.id)
                 .then((result) => {
+                  console.log(result);
                   createLeaveHistory(result.userId, req.user.id)
                     .then(() => {
                       const mailOptions = {
                         from: process.env.MAIL_USER,
-                        to: newUser.username,
+                        to: 'tmark_s@hotmail.com',
                         subject: 'Playtorium Account Information',
                         html: mailAddUser(newUser.username, pass, name)
                       };
@@ -95,7 +96,11 @@ exports.create = (req, res, next) => {
                           console.log(info);
                         }
                       });
-                      res.end();
+                      User.findAll()
+                        .then((users) => {
+                          res.json(users);
+                        })
+                        .catch(next);
                     })
                     .catch(next);
                 })
