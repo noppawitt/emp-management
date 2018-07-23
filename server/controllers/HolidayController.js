@@ -3,8 +3,12 @@ const Holiday = require('../models/Holiday');
 exports.create = (req, res, next) => {
   const newHoliday = req.body.holiday;
   Holiday.create(newHoliday, req.user.id)
-    .then((createdHoliday) => {
-      res.json(createdHoliday);
+    .then(() => {
+      Holiday.findByYear(req.body.year)
+        .then((holidays) => {
+          res.json(holidays);
+        })
+        .catch(next);
     })
     .catch(next);
 };
