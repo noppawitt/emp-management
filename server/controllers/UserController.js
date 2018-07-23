@@ -79,7 +79,6 @@ exports.create = (req, res, next) => {
               }
               User.create(newUser, req.user.id)
                 .then((result) => {
-                  console.log(result);
                   createLeaveHistory(result.userId, req.user.id)
                     .then(() => {
                       const mailOptions = {

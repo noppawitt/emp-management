@@ -19,8 +19,8 @@ const validate = (values) => {
 const AddMemberForm = ({ handleSubmit, submitting, employeesOptions }) => (
   <Form onSubmit={handleSubmit}>
     <Form.Group widths="equal">
-      <Field name="Date" as={Form.Input} component={Input} search selection options={employeesOptions} label="Member" placeholder="Member" disabled={submitting} />
-      <Field name="Date Name" as={Form.Input} component={Input} label="Role" placeholder="Role" disabled={submitting} />
+      <Field name="userId" as={Form.Dropdown} component={Input} search selection options={employeesOptions} label="Member" placeholder="Member" disabled={submitting} />
+      <Field name="role" as={Form.Input} component={Input} label="Role" placeholder="Role" disabled={submitting} />
     </Form.Group>
   </Form>
 );

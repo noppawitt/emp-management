@@ -3,23 +3,23 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { submit, isSubmitting } from 'redux-form';
 import { closeModal } from '../../actions/modal';
-import { createMemberRequest } from '../../actions/projectDetail';
 import Modal from '../../components/Modal';
-import AddMemberForm from '../forms/AddMemberForm';
 import { handleReduxFormSubmit } from '../../utils/helper';
+import AddHolidayForm from '../forms/AddHolidayForm';
+import { createHolidayRequest } from '../../actions/holiday';
 
-const AddMemberModal = ({ onClose, onSubmit, submitting, onClick }) => (
+const AddHolidayModal = ({ onClose, onSubmit, submitting, onClick }) => (
   <Modal
-    header="Add member"
+    header="Add Holiday"
     onClose={onClose}
     onClick={onClick}
     submitting={submitting}
   >
-    <AddMemberForm onSubmit={values => onSubmit(values)} />
+    <AddHolidayForm onSubmit={values => onSubmit(values)} />
   </Modal>
 );
 
-AddMemberModal.propTypes = {
+AddHolidayModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
@@ -28,13 +28,13 @@ AddMemberModal.propTypes = {
 
 const mapStateToProps = state => ({
   modalName: state.modal.name,
-  submitting: isSubmitting('addMember')(state)
+  submitting: isSubmitting('addHoliday')(state)
 });
 
 const mapDispatchToProps = dispatch => ({
   onClose: () => dispatch(closeModal()),
-  onSubmit: values => handleReduxFormSubmit(dispatch, createMemberRequest, values),
-  onClick: () => dispatch(submit('addMember'))
+  onSubmit: values => handleReduxFormSubmit(dispatch, createHolidayRequest, values),
+  onClick: () => dispatch(submit('addHoliday'))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddMemberModal);
+export default connect(mapStateToProps, mapDispatchToProps)(AddHolidayModal);

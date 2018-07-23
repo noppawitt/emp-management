@@ -1,63 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { compose, lifecycle } from 'recompose';
+import { compose } from 'recompose';
 import { Field, reduxForm } from 'redux-form';
 import { Form } from 'semantic-ui-react';
-import { fetchEmployeeRequest } from '../../actions/employee';
-import { employeesToOptions } from '../../selectors/employee';
 import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
 
 const validate = (values) => {
   const errors = {};
-  errors.userId = validator.required(values.userId);
-  errors.role = validator.required(values.role);
+  errors.date = validator.required(values.date);
+  errors.holidayName = validator.required(values.holidayName);
   return errors;
 };
 
-const AddMemberForm = ({ handleSubmit, submitting, employeesOptions }) => (
+const AddMemberForm = ({ handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Form.Group widths="equal">
-      <Field name="userId" as={Form.Dropdown} component={Input} search selection options={employeesOptions} label="Member" placeholder="Member" disabled={submitting} />
-      <Field name="role" as={Form.Input} component={Input} label="Role" placeholder="Role" disabled={submitting} />
+      <Field name="date" as={Form.Input} component={Input} type="date" label="Date" placeholder="Date" disabled={submitting} validate={validator.date} />
+      <Field name="dateName" as={Form.Input} component={Input} label="Date Name" placeholder="Date Name" disabled={submitting} />
     </Form.Group>
   </Form>
 );
 
-AddMemberForm.defaultProps = {
-  employeesOptions: []
-};
-
 AddMemberForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
-  employeesOptions: PropTypes.array
 };
 
-const mapStateToProps = state => ({
-  employeesOptions: employeesToOptions(state),
-  initialValues: {
-    projectId: state.projectDetail.id
-  }
-});
-
-const mapDispatchToProps = dispatch => ({
-  fetchEmployee: () => dispatch(fetchEmployeeRequest())
-});
-
-const enhance = compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  lifecycle({
-    componentDidMount() {
-      const { fetchEmployee } = this.props;
-      fetchEmployee();
-    }
-  }),
-  reduxForm({
-    form: 'addMember',
-    validate
-  })
-);
+const enhance = compose(reduxForm({
+  form: 'addHoliday',
+  validate
+}));
 
 export default enhance(AddMemberForm);

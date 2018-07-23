@@ -46,7 +46,7 @@ const oneRow = (date, dateName, id, onDeleteHolidayClick) => (
     </Table.Cell>
   </Table.Row>
 );
-const Holiday = ({ fetchHolidays, onDeleteHolidayClick, holidays, year }) => (
+const Holiday = ({ fetchHolidays, onDeleteHolidayClick, holidays, year, onAddHolidayClick }) => (
   <div style={{ width: '60%', margin: 'auto' }}>
     <PageHeader text="Holiday" icon="calendar" />
     <Grid>
@@ -55,7 +55,7 @@ const Holiday = ({ fetchHolidays, onDeleteHolidayClick, holidays, year }) => (
           <Form.Select placeholder={year} defaultValue={year} options={getYearOptions()} onChange={(e, { value }) => fetchHolidays(value)} />
         </Grid.Column>
         <Grid.Column floated="right" width={3}>
-          <Button>Add</Button>
+          <Button onClick={onAddHolidayClick}>Add</Button>
         </Grid.Column>
       </Grid.Row>
     </Grid>
@@ -76,6 +76,7 @@ const Holiday = ({ fetchHolidays, onDeleteHolidayClick, holidays, year }) => (
 Holiday.propTypes = {
   fetchHolidays: PropTypes.func.isRequired,
   onDeleteHolidayClick: PropTypes.func.isRequired,
+  onAddHolidayClick: PropTypes.func.isRequired,
   holidays: PropTypes.array.isRequired,
   year: PropTypes.string.isRequired
 };

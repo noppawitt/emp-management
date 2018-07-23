@@ -26,7 +26,6 @@ exports.update = (req, res, next) => {
 exports.findByUserId = (req, res, next) => {
   HasProject.findByUserId(req.query.userId)
     .then((hasProjects) => {
-      console.log(hasProjects);
       res.json(hasProjects);
     })
     .catch(next);

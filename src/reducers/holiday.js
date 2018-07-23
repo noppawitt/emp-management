@@ -37,6 +37,16 @@ const holiday = (state = initialState, action) => {
         ...state,
         message: action.payload.message
       };
+    case actionTypes.HOLIDAY_CREATE_SUCCESS:
+      return {
+        ...state,
+        lists: action.payload.holidays
+      };
+    case actionTypes.HOLIDAY_CREATE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
     default:
       return state;
   }
