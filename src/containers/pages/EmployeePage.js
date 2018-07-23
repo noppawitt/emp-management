@@ -9,9 +9,17 @@ import * as modalNames from '../../constants/modalNames';
 import Loader from '../../components/Loader';
 import { getFilteredEmployee } from '../../selectors/employee';
 
-const EmployeePage = ({ isFetching, employees, onChange, onClick, masterTable, onDepartmentChange }) => (
+const EmployeePage = ({ isFetching, employees, onChange, onClick, departments, onDepartmentChange }) => (
   <div>
-    {isFetching ? <Loader /> : <Employee employees={employees} onChange={onChange} onClick={onClick} masterTable={masterTable} onDepartmentChange={onDepartmentChange} />}
+    {isFetching ?
+      <Loader /> :
+      <Employee
+        employees={employees}
+        onChange={onChange}
+        onClick={onClick}
+        departments={departments}
+        onDepartmentChange={onDepartmentChange}
+      />}
   </div>
 );
 
@@ -20,21 +28,21 @@ EmployeePage.propTypes = {
   employees: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
-  masterTable: PropTypes.object.isRequired,
+  departments: PropTypes.array.isRequired,
   onDepartmentChange: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   isFetching: state.employee.isFetching,
-  masterTable: state.masterTable,
-  employees: getFilteredEmployee(state.employee.lists, state.employee.filter, state.employee.department)
+  departments: state.masterTable.departments,
+  employees: getFilteredEmployee(state)
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchEmployee: () => dispatch(fetchEmployeeRequest()),
   onClick: () => dispatch(openModal(modalNames.ADD_EMPLOYEE)),
   onChange: e => dispatch(filterEmployee(e.target.value)),
-  onDepartmentChange: e => dispatch(filterDepartment(e.target.value))
+  onDepartmentChange: (e, { value }) => dispatch(filterDepartment(value))
 });
 
 const enhance = compose(

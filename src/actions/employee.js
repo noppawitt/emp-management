@@ -45,9 +45,9 @@ export const filterEmployee = text => ({
   }
 });
 
-export const filterDepartment = department => ({
+export const filterDepartment = departmentId => ({
   type: actionTypes.FILTER_DEPARTMENT,
   payload: {
-    department
+    departmentId
   }
 });
