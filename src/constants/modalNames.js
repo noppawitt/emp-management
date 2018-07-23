@@ -22,7 +22,7 @@ export const ADD_MEMBER = 'ADD_MEMBER';
 // Leave
 export const CREATE_LEAVE_REQUEST = 'CREATE_LEAVE_REQUEST';
 
-//Holiday
+// Holiday
 export const ADD_HOLIDAY = 'ADD_HOLIDAY';
 
 // Timesheet
