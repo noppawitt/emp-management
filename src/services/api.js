@@ -390,7 +390,6 @@ api.deleteTimesheet = body => (
 );
 
 // Holiday
-
 api.fetchHolidays = (year, month = null) => {
   if (month) return callApi(`/api/holidays?year=${year}&month=${month}`);
   return callApi(`/api/holidays?year=${year}`);
@@ -398,6 +397,12 @@ api.fetchHolidays = (year, month = null) => {
 api.deleteHoliday = body => (
   callApi('/api/holidays', {
     method: 'DELETE',
+    body
+  })
+);
+api.addHoliday = body => (
+  callApi('/api/holidays', {
+    method: 'POST',
     body
   })
 );

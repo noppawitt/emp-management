@@ -9,11 +9,8 @@ export const createHolidayRequest = (form, resolve, reject) => ({
   }
 });
 
-export const createHolidaySuccess = holiday => ({
+export const createHolidaySuccess = () => ({
   type: actionTypes.HOLIDAY_CREATE_SUCCESS,
-  payload: {
-    holiday
-  }
 });
 
 export const createHolidayFailure = message => ({

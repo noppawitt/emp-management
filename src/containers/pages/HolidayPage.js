@@ -8,9 +8,9 @@ import Loader from '../../components/Loader';
 import { openModal } from '../../actions/modal';
 import * as modalNames from '../../constants/modalNames';
 
-const HolidayPage = ({ fetchHolidays, onDeleteHolidayClick, holidays, isFetching, year }) => (
+const HolidayPage = ({ fetchHolidays, onDeleteHolidayClick, holidays, isFetching, year, onAddHolidayClick }) => (
   <div>
-    {isFetching ? <Loader /> : <Holiday fetchHolidays={fetchHolidays} holidays={holidays} year={year} onDeleteHolidayClick={onDeleteHolidayClick} />}
+    {isFetching ? <Loader /> : <Holiday fetchHolidays={fetchHolidays} holidays={holidays} year={year} onDeleteHolidayClick={onDeleteHolidayClick} onAddHolidayClick={onAddHolidayClick} />}
   </div>
 );
 
@@ -18,6 +18,7 @@ HolidayPage.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   fetchHolidays: PropTypes.func.isRequired,
   onDeleteHolidayClick: PropTypes.func.isRequired,
+  onAddHolidayClick: PropTypes.func.isRequired,
   holidays: PropTypes.array.isRequired,
   year: PropTypes.string.isRequired
 };
@@ -30,9 +31,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchHolidays: year => dispatch(fetchHolidayRequest(year)),
+  onAddHolidayClick: () => dispatch(openModal(modalNames.ADD_HOLIDAY, { })),
   onDeleteHolidayClick: (holidayId, year) => dispatch(openModal(modalNames.CONFIRM, {
     header: 'Delete Confirmation',
-    description: 'Are you sure to delete this holiday?',
+    description: 'Are you sure to delete this holiday?', 
     onConfirm: () => dispatch(deleteHolidayRequest(holidayId, year))
   }))
 });

@@ -19,6 +19,7 @@ import AddMemberModal from './modals/AddMemberModal';
 import AddTimesheetModal from './modals/AddTimesheetModal';
 import EditTimesheetModal from './modals/EditTimesheetModal';
 import AddWorkExperienceProfileModal from './modals/AddWorkExperienceProfileModal';
+import AddHolidayModal from './modals/AddHolidayModal';
 
 const renderModal = ({ name, props }) => {
   switch (name) {
@@ -58,6 +59,8 @@ const renderModal = ({ name, props }) => {
       return <EditTimesheetModal {...props} />;
     case modalNames.ADD_WORK_EXPERIENCE_PROFILE:
       return <AddWorkExperienceProfileModal />;
+    case modalNames.ADD_HOLIDAY:
+      return <AddHolidayModal />;
     default:
       return <div />;
   }
