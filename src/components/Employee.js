@@ -22,13 +22,13 @@ const items = employee => (
   </Grid.Column>
 );
 
-const Employee = ({ employees, onChange, onClick, masterTable, onDepartmentChange }) => (
+const Employee = ({ employees, onChange, onClick, departments, onDepartmentChange }) => (
   <div>
     <PageHeader icon="users" text="Employee" />
     <Segment.Group>
       <Segment>
         <Input icon="search" placeholder="Search employees..." onChange={onChange} />
-        <Select placeholder="Department" options={masterTableToOptions(masterTable.departments)} onChange={onDepartmentChange} />
+        <Select placeholder="Department" defaultValue={0} options={[{ key: 'all', value: 0, text: 'All' }, ...masterTableToOptions(departments)]} onChange={onDepartmentChange} />
         <Button icon labelPosition="left" color="blue" floated="right" onClick={onClick}>
           <Icon name="add user" />
           Add new employee
@@ -51,7 +51,7 @@ Employee.propTypes = {
   employees: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
-  masterTable: PropTypes.object.isRequired,
+  departments: PropTypes.array.isRequired,
   onDepartmentChange: PropTypes.func.isRequired
 };
 
