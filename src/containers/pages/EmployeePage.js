@@ -9,7 +9,7 @@ import * as modalNames from '../../constants/modalNames';
 import Loader from '../../components/Loader';
 import { getFilteredEmployee } from '../../selectors/employee';
 
-const EmployeePage = ({ isFetching, employees, onChange, onClick, departments, onDepartmentChange }) => (
+const EmployeePage = ({ isFetching, employees, onChange, onClick, departments, onDepartmentChange, filter, departmentId }) => (
   <div>
     {isFetching ?
       <Loader /> :
@@ -19,6 +19,8 @@ const EmployeePage = ({ isFetching, employees, onChange, onClick, departments, o
         onClick={onClick}
         departments={departments}
         onDepartmentChange={onDepartmentChange}
+        filter={filter}
+        departmentId={departmentId}
       />}
   </div>
 );
@@ -29,13 +31,17 @@ EmployeePage.propTypes = {
   onChange: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
   departments: PropTypes.array.isRequired,
-  onDepartmentChange: PropTypes.func.isRequired
+  onDepartmentChange: PropTypes.func.isRequired,
+  filter: PropTypes.string.isRequired,
+  departmentId: PropTypes.number.isRequired
 };
 
 const mapStateToProps = state => ({
   isFetching: state.employee.isFetching,
   departments: state.masterTable.departments,
-  employees: getFilteredEmployee(state)
+  employees: getFilteredEmployee(state),
+  filter: state.employee.filter,
+  departmentId: state.employee.departmentId
 });
 
 const mapDispatchToProps = dispatch => ({
