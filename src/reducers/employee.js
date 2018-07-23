@@ -3,7 +3,8 @@ import * as actionTypes from '../constants/actionTypes';
 const initialState = {
   isFetching: true,
   lists: [],
-  filter: ''
+  filter: '',
+  department: ''
 };
 
 const employee = (state = initialState, action) => {
@@ -26,7 +27,12 @@ const employee = (state = initialState, action) => {
     case actionTypes.FILTER_EMPLOYEE:
       return {
         ...state,
-        filter: action.payload.text
+        filter: action.payload.text,
+      };
+    case actionTypes.FILTER_DEPARTMENT:
+      return {
+        ...state,
+        department: action.payload.department
       };
     default:
       return state;

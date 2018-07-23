@@ -17,7 +17,9 @@ const Profile = ({ profile }) => (
       <Grid.Column computer={12} mobile={16}>
         <GeneralProfileBox generalProfile={profile.general} />
         <WorkProfileBox workProfile={profile.work} />
-        <WorkExperienceProfileBox workExperienceProfile={profile.workExperience} />
+        <Can activity="workExperienceView">
+          <WorkExperienceProfileBox workExperienceProfile={profile.workExperience} />
+        </Can>
         <Can activity="educateView">
           <EducationProfileBox educationsProfile={profile.educations} />
         </Can>

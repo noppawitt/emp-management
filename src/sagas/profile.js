@@ -22,13 +22,16 @@ function* fetchProfileTask(action) {
       yield take(actionTypes.ACCESS_CONTROL_FETCH_SUCCESS);
       can = yield select(getAccessControl);
     }
-    const [general, work, certificates, assets, workExperience] = yield all([
+    const [general, work, certificates, assets] = yield all([
       call(api.fetchGeneralProfile, action.payload.userId),
       call(api.fetchWorkProfile, action.payload.userId),
       call(api.fetchCertificateProfile, action.payload.userId),
-      call(api.fetchAssetProfile, action.payload.userId),
-      call(api.fetchWorkExperience, action.payload.userId)
+      call(api.fetchAssetProfile, action.payload.userId)
     ]);
+    let workExperiences;
+    if (can.workExperienceView) {
+      workExperiences = yield call(api.fetchWorkExperience, action.payload.userId);
+    }
     let educations;
     if (can.educateView) {
       educations = yield call(api.fetchEducationProfile, action.payload.userId);
@@ -38,7 +41,7 @@ function* fetchProfileTask(action) {
       work,
       certificates,
       assets,
-      workExperience,
+      workExperiences,
       educations
     };
     yield put(fetchProfileSuccess(profile));
