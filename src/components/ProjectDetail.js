@@ -18,7 +18,7 @@ const membersDetail = (memberDetail, projectId, onDeleteClick) => (
   </Table.Row>
 );
 
-const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteMemberClick, handleDownloadFile, handleUploadFile }) => (
+const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteMemberClick, handleDownloadFile, handleUploadFile, handleDeleteFile }) => (
   <Segment.Group raised size="large" >
     <Segment>
       <Grid padded>
@@ -74,9 +74,10 @@ const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteM
         <Grid.Column computer={11} tablet={11} mobile={16}>
           <List>
             {projectDetail.files.map(file => (
-              <div>
-                <List.Item as="a" onClick={() => handleDownloadFile(file.id, file.name)}>{`${file.name}`}</List.Item>
-              </div>
+              <List.Item key={file.id}>
+                <a href onClick={() => handleDownloadFile(file.id, file.name)}>{`${file.name} `}</a>
+                <a href onClick={() => handleDeleteFile(file.id)}>[delete]</a>
+              </List.Item>
             ))}
           </List>
           <UploadFile onUploadSubmit={handleUploadFile} args={[projectDetail.projectId]} />
@@ -125,7 +126,8 @@ ProjectDetail.propTypes = {
   onAddMemberClick: PropTypes.func.isRequired,
   onDeleteMemberClick: PropTypes.func.isRequired,
   handleDownloadFile: PropTypes.func.isRequired,
-  handleUploadFile: PropTypes.func.isRequired
+  handleUploadFile: PropTypes.func.isRequired,
+  handleDeleteFile: PropTypes.func.isRequired
 };
 
 export default ProjectDetail;

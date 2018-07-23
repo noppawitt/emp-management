@@ -7,6 +7,7 @@ import {
   deleteMemberRequest,
   downloadFileRequest,
   uploadFileRequest,
+  deleteFileRequest
 } from '../../actions/projectDetail';
 import Loader from '../../components/Loader';
 import ProjectDetail from '../../components/ProjectDetail';
@@ -20,7 +21,8 @@ const ProjectDetailPage = ({
   onAddMemberClick,
   onDeleteMemberClick,
   handleDownloadFile,
-  handleUploadFile
+  handleUploadFile,
+  handleDeleteFile
 }) => (
   <div>
     {isFetching ?
@@ -32,6 +34,7 @@ const ProjectDetailPage = ({
         onDeleteMemberClick={onDeleteMemberClick}
         handleDownloadFile={handleDownloadFile}
         handleUploadFile={handleUploadFile}
+        handleDeleteFile={handleDeleteFile}
       />}
   </div>
 );
@@ -48,7 +51,8 @@ ProjectDetailPage.propTypes = {
   onAddMemberClick: PropTypes.func.isRequired,
   onDeleteMemberClick: PropTypes.func.isRequired,
   handleDownloadFile: PropTypes.func.isRequired,
-  handleUploadFile: PropTypes.func.isRequired
+  handleUploadFile: PropTypes.func.isRequired,
+  handleDeleteFile: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -66,7 +70,12 @@ const mapDispatchToProps = dispatch => ({
     onConfirm: () => dispatch(deleteMemberRequest(userId, projectId))
   })),
   handleDownloadFile: (fileId, fileName) => dispatch(downloadFileRequest(fileId, fileName)),
-  handleUploadFile: (file, projectId) => dispatch(uploadFileRequest(file, projectId))
+  handleUploadFile: (file, projectId) => dispatch(uploadFileRequest(file, projectId)),
+  handleDeleteFile: fileId => dispatch(openModal(modalNames.CONFIRM, {
+    header: 'Delete Confirmation',
+    description: 'Are you sure to delete this file?',
+    onConfirm: () => dispatch(deleteFileRequest(fileId))
+  }))
 });
 
 const enhance = compose(

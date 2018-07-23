@@ -26,4 +26,8 @@ File.findByProjectId = projectId => (
   WHERE project_id = $1`, [projectId])
 );
 
+File.delete = fileId => (
+  db.none('DELETE FROM files WHERE id = $1', [fileId])
+);
+
 module.exports = File;

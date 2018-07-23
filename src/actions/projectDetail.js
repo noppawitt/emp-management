@@ -129,3 +129,24 @@ export const uploadFileFailure = message => ({
     message
   }
 });
+
+export const deleteFileRequest = fileId => ({
+  type: actionTypes.FILE_DELETE_RQUEST,
+  payload: {
+    fileId
+  }
+});
+
+export const deleteFileSuccess = fileId => ({
+  type: actionTypes.FILE_DELETE_SUCCESS,
+  payload: {
+    fileId
+  }
+});
+
+export const deleteFileFailure = message => ({
+  type: actionTypes.FILE_DELETE_FAILURE,
+  payload: {
+    message
+  }
+});
