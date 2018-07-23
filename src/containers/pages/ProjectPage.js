@@ -20,7 +20,9 @@ const ProjectPage = ({
   currentPage,
   totalPages,
   handlePageChange,
-  handleHasPoNumberChange
+  handleHasPoNumberChange,
+  searchText,
+  hasPoNumber
 }) => {
   const handleSort = (key) => {
     if (sortKey !== key) {
@@ -45,6 +47,8 @@ const ProjectPage = ({
           totalPages={totalPages}
           handlePageChange={handlePageChange}
           handleHasPoNumberChange={handleHasPoNumberChange}
+          searchText={searchText}
+          hasPoNumber={hasPoNumber}
         />}
     </div>
   );
@@ -65,7 +69,9 @@ ProjectPage.propTypes = {
   currentPage: PropTypes.number.isRequired,
   totalPages: PropTypes.number.isRequired,
   handlePageChange: PropTypes.func.isRequired,
-  handleHasPoNumberChange: PropTypes.func.isRequired
+  handleHasPoNumberChange: PropTypes.func.isRequired,
+  searchText: PropTypes.string.isRequired,
+  hasPoNumber: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -74,7 +80,9 @@ const mapStateToProps = state => ({
   sortKey: state.project.sortKey,
   direction: state.project.direction,
   currentPage: state.project.currentPage,
-  totalPages: getTotalPages(state)
+  totalPages: getTotalPages(state),
+  searchText: state.project.searchText,
+  hasPoNumber: state.project.hasPoNumber
 });
 
 const mapDispatchToProps = dispatch => ({
