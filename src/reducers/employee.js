@@ -11,10 +11,12 @@ const employee = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.EMPLOYEE_FETCH_REQUEST:
       return {
+        ...state,
         isFetching: true
       };
     case actionTypes.EMPLOYEE_FETCH_SUCCESS:
       return {
+        ...state,
         isFetching: false,
         lists: action.payload.employees
       };
@@ -32,7 +34,7 @@ const employee = (state = initialState, action) => {
     case actionTypes.FILTER_DEPARTMENT:
       return {
         ...state,
-        department: action.payload.department
+        departmentId: action.payload.departmentId
       };
     default:
       return state;

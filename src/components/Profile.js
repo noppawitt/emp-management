@@ -18,7 +18,7 @@ const Profile = ({ profile }) => (
         <GeneralProfileBox generalProfile={profile.general} />
         <WorkProfileBox workProfile={profile.work} />
         <Can activity="workExperienceView">
-          <WorkExperienceProfileBox workExperienceProfile={profile.workExperience} />
+          <WorkExperienceProfileBox workExperienceProfile={profile.workExperiences} />
         </Can>
         <Can activity="educateView">
           <EducationProfileBox educationsProfile={profile.educations} />
