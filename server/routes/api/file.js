@@ -24,4 +24,6 @@ router.get('/download', FileController.download);
 
 router.get('/', FileController.findByProjectId);
 
+router.delete('/', FileController.delete);
+
 module.exports = router;

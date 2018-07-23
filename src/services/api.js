@@ -339,6 +339,13 @@ api.uploadFile = body => (
   })
 );
 
+api.deleteFile = body => (
+  callApi(`/api/files`, {
+    method: 'DELETE',
+    body
+  })
+);
+
 // Leave
 
 api.createLeave = body => (
