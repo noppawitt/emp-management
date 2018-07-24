@@ -14,14 +14,16 @@ const Project = ({
   currentPage,
   totalPages,
   handlePageChange,
-  handleHasPoNumberChange
+  handleHasPoNumberChange,
+  searchText,
+  hasPoNumber
 }) => (
   <div>
     <PageHeader text="Project" icon="paste" />
     <Segment.Group raised>
       <Segment>
-        <Input icon="search" placeholder="Search projects..." onChange={onSearchChange} />
-        <Checkbox toggle label="PO No." onChange={handleHasPoNumberChange} />
+        <Input icon="search" placeholder="Search projects..." defaultValue={searchText} onChange={onSearchChange} />
+        <Checkbox toggle label="PO No." defaultChecked={hasPoNumber} onChange={handleHasPoNumberChange} />
         <Button icon labelPosition="left" floated="right" onClick={onAddClick} color="blue" >
           <Icon name="add" />
           Add New Project
@@ -78,7 +80,9 @@ Project.propTypes = {
   currentPage: PropTypes.number.isRequired,
   totalPages: PropTypes.number.isRequired,
   handlePageChange: PropTypes.func.isRequired,
-  handleHasPoNumberChange: PropTypes.func.isRequired
+  handleHasPoNumberChange: PropTypes.func.isRequired,
+  searchText: PropTypes.string.isRequired,
+  hasPoNumber: PropTypes.bool.isRequired
 };
 
 export default Project;

@@ -4,7 +4,8 @@ const initialState = {
   isFetching: true,
   lists: [],
   filter: '',
-  department: ''
+  department: '',
+  departmentId: 0
 };
 
 const employee = (state = initialState, action) => {
