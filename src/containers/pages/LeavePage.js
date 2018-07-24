@@ -11,6 +11,7 @@ import { openModal } from '../../actions/modal';
 import * as modalNames from '../../constants/modalNames';
 import Leave from '../../components/Leave';
 import Loader from '../../components/Loader';
+import { moment } from '../../../node_modules/moment';
 
 const LeavePage = ({ isFetching, isHistoryFetching, leaves, onAddClick, onCancelClick, userId, year, month, fetchLeave, leaveHistory }) => (
   <div>
@@ -75,6 +76,12 @@ const enhance = compose(
       const { fetchLeave, fetchLeaveHistory, userId, year, month } = this.props;
       fetchLeave(userId, year, month);
       fetchLeaveHistory(userId, year);
+    },
+    componentDidUpdate(prevProps) {
+      const { fetchLeaveHistory, userId, year } = this.props;
+      if (prevProps.leaveHistory.annualLeaveRemain !== this.props.leaveHistory.annualLeaveRemain) {
+        fetchLeaveHistory(userId, year);
+      }
     }
   })
 );

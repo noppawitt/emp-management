@@ -17,8 +17,11 @@ import api from '../services/api';
 function* createLeaveTask(action) {
   try {
     yield call(api.createLeave, { leaveRequest: action.payload.form });
+    const { userId } = action.payload.form;
     const leaves = yield call(api.fetchLeave, action.payload.form.userId, moment(action.payload.form.leaveFrom).format('YYYY'), moment(action.payload.form.leaveFrom).format('MM'));
     yield put(createLeaveSuccess(leaves));
+    const leaveHistory = yield call(api.fetchLeaveHistory, userId, moment().format('YYYY'));
+    yield put(fetchLeaveHistorySuccess(leaveHistory));
     yield put(closeModal());
     action.payload.resolve();
   }
@@ -51,6 +54,10 @@ function* updateLeaveTask(action) {
     });
     const leaves = yield call(api.fetchLeave, action.payload.userId, moment(action.payload.leaveFrom).format('YYYY'), moment(action.payload.leaveFrom).format('MM'));
     yield put(updateLeaveSuccess(leaves));
+    if (action.payload.leave.status === 'Cancel') {
+      const leaveHistory = yield call(api.fetchLeaveHistory, action.payload.userId, moment().format('YYYY'));
+      yield put(fetchLeaveHistorySuccess(leaveHistory));
+    }
     yield put(closeModal());
   }
   catch (error) {
