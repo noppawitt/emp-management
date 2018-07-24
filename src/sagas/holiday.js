@@ -30,7 +30,7 @@ function* deleteHolidayTask(action) {
 }
 function* addHolidayTask(action) {
   try {
-    const holidays = yield call(api.addHoliday, { holiday: { date: action.payload.form.date , dateName: action.payload.form.dateName }, year: moment(action.payload.form.date).format('YYYY') });
+    const holidays = yield call(api.addHoliday, { holiday: { date: action.payload.form.date, dateName: action.payload.form.dateName }, year: moment(action.payload.form.date).format('YYYY') });
     yield put(fetchHolidaySuccess(holidays));
     yield put(closeModal());
     action.payload.resolve();
