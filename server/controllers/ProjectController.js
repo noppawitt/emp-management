@@ -1,5 +1,6 @@
 const Project = require('../models/Project');
 const HasProject = require('../models/HasProject');
+const File = require('../models/File');
 
 const findHasProject = hasProjects => new Promise((resolve, reject) => {
   try {
@@ -63,9 +64,20 @@ exports.find = async (req, res, next) => {
           Project.findMemberProject(req.query.id)
             .then((members) => {
               project.members = members;
+            })
+            .then(() => File.findByProjectId(req.query.id))
+            .then((files) => {
+              project.files = files;
               res.json(project);
             })
             .catch(next);
+        })
+        .catch(next);
+    }
+    else if (req.query.month && req.query.year) {
+      Project.findByMonthAndYear(req.query.month, req.query.year)
+        .then((projects) => {
+          res.json(projects);
         })
         .catch(next);
     }

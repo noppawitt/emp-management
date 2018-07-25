@@ -25,11 +25,31 @@ export const getTimesheetById = (state, id) => state.timesheet.lists.find(t => t
 
 export const getFormInitialValues = (state) => {
   const { year, month, startDay, endDay, lists } = state.timesheet;
-  let timesheets = [];
+  const timesheets = [];
   for (let day = startDay; day <= endDay; day += 1) {
     const date = moment(`${year}-${month}-${day}`).format('YYYY-MM-DD');
     const tasks = lists.filter(l => l.date === date);
-    if (tasks.length > 0) timesheets = timesheets.concat(tasks);
+    const remark = [];
+    if (tasks.length > 0) {
+      tasks.forEach((task, i) => {
+        if (i === 0 && tasks.length === 1) { remark.push(`*you heve ${task.projectId} ${task.timeIn}-${task.timeOut} on this day`); }
+        else if (i === 0 && tasks.length !== 1) { remark.push(`*you heve ${task.projectId} ${task.timeIn}-${task.timeOut}`); }
+        else if (i === tasks.length - 1) { remark.push(`*${task.projectId} ${task.timeIn}-${task.timeOut} on this day`); }
+        else {
+          remark.push(`*${task.projectId} ${task.timeIn}-${task.timeOut}`);
+        }
+      });
+      timesheets.push({
+        userId: state.auth.id,
+        date,
+        timeIn: '09:00:00',
+        timeOut: '18:00:00',
+        projectId: state.timesheet.projectId,
+        task: state.timesheet.task,
+        description: '',
+        remark
+      });
+    }
     else {
       timesheets.push({
         userId: state.auth.id,
@@ -38,7 +58,8 @@ export const getFormInitialValues = (state) => {
         timeOut: '18:00:00',
         projectId: state.timesheet.projectId,
         task: state.timesheet.task,
-        description: ''
+        description: '',
+        remark
       });
     }
   }
@@ -46,4 +67,13 @@ export const getFormInitialValues = (state) => {
     timesheet.userId = state.auth.id;
   });
   return timesheets;
+};
+
+export const timesheetProjectsToOptions = (state) => {
+  if (!state.timesheet.projects) return [];
+  const options = [];
+  state.timesheet.projects.forEach((project) => {
+    options.push({ key: project.projectId, value: project.projectId, text: `${project.projectId} ${project.name}` });
+  });
+  return options;
 };

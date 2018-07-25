@@ -44,3 +44,10 @@ export const filterEmployee = text => ({
     text
   }
 });
+
+export const filterDepartment = departmentId => ({
+  type: actionTypes.FILTER_DEPARTMENT,
+  payload: {
+    departmentId
+  }
+});

@@ -4,32 +4,38 @@ const moment = require('moment');
 const HasProject = {};
 
 HasProject.create = (hasProject, id) => (
-  db.one(
-    'INSERT INTO has_projects (user_id, project_id, role, created_user, updated_user) VALUES ($1, $2, $3, $4, $5) RETURNING 1',
+  db.none(
+    'INSERT INTO has_projects (user_id, project_id, role, created_user, updated_user, start_date, end_date, amount) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
     [
       hasProject.userId,
       hasProject.projectId,
       hasProject.role,
       id,
-      id
+      id,
+      hasProject.startDate,
+      hasProject.endDate,
+      hasProject.amount
     ]
   )
 );
 
 HasProject.update = (hasProject, id) => (
   db.one(
-    'UPDATE has_projects SET role = $1, updated_user = $2, updated_date = $3 WHERE id = $4',
+    'UPDATE has_projects SET role = $1, updated_user = $2, updated_date = $3, start_date  = $4, end_date = $5, amount = $6 WHERE id = $7',
     [
       hasProject.role,
       id,
       moment().format('YYYY-MM-DD HH:mm:ss'),
+      hasProject.startDate,
+      hasProject.endDate,
+      hasProject.amount,
       hasProject.id
     ]
   )
 );
 
 HasProject.findByUserId = userId => (
-  db.manyOrNone('SELECT * FROM has_projects WHERE user_id = $1', [userId])
+  db.manyOrNone('SELECT projects.name AS name, has_projects.* FROM has_projects INNER JOIN projects ON has_projects.project_id = projects.id WHERE user_id = $1', [userId])
 );
 
 HasProject.findByProjectIdAndUserId = (projectId, userId) => (

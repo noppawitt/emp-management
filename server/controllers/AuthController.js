@@ -11,21 +11,27 @@ exports.signin = (req, res, next) => {
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
           EmployeeInfo.findOwnByUserId(user.id)
-            .then((info) => {
-              const token = jwt.sign({
+            .then((info)=>{
+              const accessToken = jwt.sign({
                 id: user.id,
-                username: user.username,
-                type: user.type,
-                name: info.firstName + ' ' + info.lastName
+                username: user.username
+              }, jwtSecret, { expiresIn: 3600 });
+              const refreshToken = jwt.sign({
+                id: user.id,
+                username: user.username
               }, jwtSecret);
-              res.json({
-                id: user.id,
-                username: user.username,
-                type: user.type,
-                name: info.firstName + ' ' + info.lastName,
-                token
-              });
+              User.updateRefreshToken(user.id, refreshToken)
+                .then(() => res.json({
+                  id: user.id,
+                  username: user.username,
+                  accessToken,
+                  refreshToken,
+                  type: user.type,
+                  name: info.firstName + ' ' + info.lastName,
+                }))
+                .catch(next);
             })
+            .catch(next);
         }
         else {
           const err = new Error('Incorrect password');
@@ -58,6 +64,29 @@ exports.signup = (req, res, next) => {
             res.json(createdUser);
           })
           .catch(next);
+      }
+    })
+    .catch(next);
+};
+
+exports.refreshToken = (req, res, next) => {
+  const { refreshToken } = req.body;
+  const { id, username } = jwt.decode(refreshToken);
+  User.getRefreshToken(id)
+    .then((data) => {
+      if (data.refreshToken === refreshToken) {
+        const accessToken = jwt.sign({
+          id,
+          username
+        }, jwtSecret, { expiresIn: 3600 });
+        res.json({
+          accessToken
+        });
+      }
+      else {
+        res.status(401).json({
+          message: 'Invalid refresh token'
+        });
       }
     })
     .catch(next);

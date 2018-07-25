@@ -3,15 +3,25 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import Employee from '../../components/Employee';
-import { fetchEmployeeRequest, filterEmployee } from '../../actions/employee';
+import { fetchEmployeeRequest, filterEmployee, filterDepartment } from '../../actions/employee';
 import { openModal } from '../../actions/modal';
 import * as modalNames from '../../constants/modalNames';
 import Loader from '../../components/Loader';
 import { getFilteredEmployee } from '../../selectors/employee';
 
-const EmployeePage = ({ isFetching, employees, onChange, onClick }) => (
+const EmployeePage = ({ isFetching, employees, onChange, onClick, departments, onDepartmentChange, filter, departmentId }) => (
   <div>
-    {isFetching ? <Loader /> : <Employee employees={employees} onChange={onChange} onClick={onClick} />}
+    {isFetching ?
+      <Loader /> :
+      <Employee
+        employees={employees}
+        onChange={onChange}
+        onClick={onClick}
+        departments={departments}
+        onDepartmentChange={onDepartmentChange}
+        filter={filter}
+        departmentId={departmentId}
+      />}
   </div>
 );
 
@@ -19,18 +29,26 @@ EmployeePage.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   employees: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  departments: PropTypes.array.isRequired,
+  onDepartmentChange: PropTypes.func.isRequired,
+  filter: PropTypes.string.isRequired,
+  departmentId: PropTypes.number.isRequired
 };
 
 const mapStateToProps = state => ({
   isFetching: state.employee.isFetching,
-  employees: getFilteredEmployee(state.employee.lists, state.employee.filter)
+  departments: state.masterTable.departments,
+  employees: getFilteredEmployee(state),
+  filter: state.employee.filter,
+  departmentId: state.employee.departmentId
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchEmployee: () => dispatch(fetchEmployeeRequest()),
   onClick: () => dispatch(openModal(modalNames.ADD_EMPLOYEE)),
-  onChange: e => dispatch(filterEmployee(e.target.value))
+  onChange: e => dispatch(filterEmployee(e.target.value)),
+  onDepartmentChange: (e, { value }) => dispatch(filterDepartment(value))
 });
 
 const enhance = compose(

@@ -6,7 +6,8 @@ const now = moment();
 const initialState = {
   year: now.format('YYYY'),
   month: now.format('MM'),
-  projects: []
+  projects: [],
+  projectDetail: null
 };
 
 const report = (state = initialState, action) => {
@@ -23,6 +24,21 @@ const report = (state = initialState, action) => {
         projects: action.payload.projects
       };
     case actionTypes.OWN_PROJECT_FETCH_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
+    case actionTypes.PROJECT_MEMBER_FETCH_REQUEST:
+      return {
+        ...state,
+        projectId: action.payload.projectId
+      };
+    case actionTypes.PROJECT_MEMBER_FETCH_SUCCESS:
+      return {
+        ...state,
+        projectDetail: action.payload.projectDetail
+      };
+    case actionTypes.PROJECT_MEMBER_FETCH_FAILURE:
       return {
         ...state,
         message: action.payload.message

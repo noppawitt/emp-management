@@ -1,17 +1,18 @@
 import jwt from 'jsonwebtoken';
 import * as actionTypes from '../constants/actionTypes';
+import { isExpired } from '../utils/helper';
 
 let initialState;
-const token = localStorage.getItem('token');
-if (token) {
-  const user = jwt.decode(token);
+const accessToken = localStorage.getItem('accessToken');
+if (accessToken) {
+  const { id, username, type, name } = jwt.decode(accessToken);
   initialState = {
     isFetching: false,
-    isAuthenticated: true,
-    id: user.id,
-    username: user.username,
-    type: user.type,
-    name: user.name
+    isAuthenticated: !isExpired(accessToken),
+    id,
+    username,
+    type,
+    name
   };
 }
 else {

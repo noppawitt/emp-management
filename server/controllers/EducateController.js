@@ -4,7 +4,7 @@ exports.create = (req, res, next) => {
   const newEducate = req.body.educate;
   Educate.create(newEducate, req.user.id)
     .then(() => {
-      Educate.findByUserId(req.query.userId)
+      Educate.findByUserId(newEducate.userId)
         .then((educates) => {
           res.json(educates);
         });
@@ -29,7 +29,7 @@ exports.findByUserId = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-  Educate.delete(req.body.id, req.user.id)
+  Educate.delete(req.body.id)
     .then(() => {
       Educate.findByUserId(req.query.userId)
         .then((educates) => {

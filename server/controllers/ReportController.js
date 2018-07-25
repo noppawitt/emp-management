@@ -78,6 +78,9 @@ const calOT = (timeIn, timeOut) => new Promise((resolve, reject) => {
       case '18:30':
         timeOut = '18:00';
         break;
+      case '00:00':
+        timeOut = '24:00';
+        break;
       default:
         break;
     }
@@ -88,7 +91,16 @@ const calOT = (timeIn, timeOut) => new Promise((resolve, reject) => {
     const timeOutHour = moment(timeOut, 'HH:mm').hour();
     if (timeOutHour >= 19) {
       endTime = moment.duration('18:00', 'HH:mm');
-      if (timeInHour <= 12) {
+      if (timeInHour < 9) {
+        const startTime1 = moment.duration('9:00', 'HH:mm');
+        const diff1 = startTime1.subtract(startTime);
+        const endTime1 = moment.duration('19:00', 'HH:mm');
+        endTime = moment.duration(timeOut, 'HH:mm');
+        const diff2 = endTime.subtract(endTime1);
+        totalhours.holidayWork = 8;
+        totalhours.holidayNonWork = diff1.hours() + diff2.hours() + (diff1.minutes() / 60) + (diff2.minutes() / 60);
+      }
+      else if (timeInHour <= 12) {
         const diff1 = endTime.subtract(startTime);
         const hour1 = diff1.hours() - 1;
         const min1 = diff1.minutes() / 60;
@@ -117,9 +129,24 @@ const calOT = (timeIn, timeOut) => new Promise((resolve, reject) => {
       }
     }
     else if (timeOutHour <= 18) {
-      const diff = endTime.subtract(startTime);
+      let diff = endTime.subtract(startTime);
       const min = (diff.minutes() / 60);
-      if (timeInHour <= 12 && timeOutHour <= 12) {
+      if (timeInHour < 9 && timeOutHour < 9) {
+        totalhours.holidayNonWork = diff.hours() + min;
+      }
+      else if (timeInHour < 9 && (timeOutHour === 9 || (timeOutHour > 9 && timeOutHour <= 12))) {
+        totalhours.holidayNonWork = diff.hours() + min;
+        diff = endTime.subtract(moment.duration('09:00', 'HH:mm'));
+        totalhours.holidayNonWork -= (diff.hours() + (diff.minutes() / 60));
+        totalhours.holidayWork = diff.hours() + (diff.minutes() / 60);
+      }
+      else if (timeInHour < 9 && timeOutHour <= 18) {
+        totalhours.holidayNonWork = diff.hours() + min;
+        diff = endTime.subtract(moment.duration('09:00', 'HH:mm'));
+        totalhours.holidayNonWork -= (diff.hours() + (diff.minutes() / 60));
+        totalhours.holidayWork = diff.hours() + (diff.minutes() / 60) - 1;
+      }
+      else if (timeInHour <= 12 && timeOutHour <= 12) {
         totalhours.holidayWork = diff.hours() + min;
       }
       else if (timeInHour <= 12 && timeOutHour <= 18) {
@@ -139,7 +166,7 @@ const calOT = (timeIn, timeOut) => new Promise((resolve, reject) => {
 
 const writeSpecialTimesheet = (excelType, holidayDates, worksheet, numberOfDayInMonth) => new Promise((resolve, reject) => {
   try {
-    if (excelType.reportType === 'Timesheet (Special)') {
+    if (excelType.reportType === 'Timesheet (Special)' || excelType.reportType === 'Timesheet (Special) per Person') {
       for (let day = 1; day <= numberOfDayInMonth; day += 1) {
         if (worksheet.getCell(`D${day + 7}`).value && worksheet.getCell(`E${day + 7}`).value) {
           calOT(worksheet.getCell(`D${day + 7}`).value, worksheet.getCell(`E${day + 7}`).value)
@@ -149,7 +176,9 @@ const writeSpecialTimesheet = (excelType, holidayDates, worksheet, numberOfDayIn
                 worksheet.getCell(`I${day + 7}`).value = holidayWorkHour.holidayNonWork;
               }
               else {
-                worksheet.getCell(`F${day + 7}`).value = holidayWorkHour.holidayWork;
+                if (holidayWorkHour.holidayWork !== 0) {
+                  worksheet.getCell(`F${day + 7}`).value = holidayWorkHour.holidayWork;
+                }
                 if (holidayWorkHour.holidayNonWork !== 0) {
                   worksheet.getCell(`G${day + 7}`).value = holidayWorkHour.holidayNonWork;
                 }
@@ -499,6 +528,41 @@ const writeAvailableDate = (worksheet, excelType, column) => new Promise(async (
           }
         });
     });
+    resolve(worksheet);
+  }
+  catch (error) {
+    reject(error);
+  }
+});
+
+const writeSummaryTimesheetMonth = (timesheets, worksheet, project) => new Promise(async (resolve, reject) => {
+  try {
+    let row = 7;
+    // if (project.paymentType === 'Man-month') {
+    //   const 
+    // }
+    if (project.paymentType === 'Man-day') {
+      await timesheets.forEach((timesheet) => {
+        worksheet.getCell(`D${row}`).value = `${timesheet.userId} ${timesheet.name}`;
+        worksheet.getCell(`E${row}`).value = timesheet.days;
+        worksheet.getCell(`F${row}`).value = timesheet.amount;
+        worksheet.getCell(`G${row}`).value = {
+          formula: `E${row}*F${row}`,
+          result: undefined
+        };
+        row += 2;
+      });
+      worksheet.getCell(`D${row}`).alignment = { horizontal: 'right' };
+      worksheet.getCell(`D${row}`).value = 'Total';
+      worksheet.getCell(`G${row}`).value = {
+        formula: `SUM(G7:G${row - 1})`,
+        result: undefined
+      };
+      worksheet.getCell(`G${row}`).border = {
+        top: { style: 'thin' },
+        bottom: { style: 'double' }
+      };
+    }
     resolve(worksheet);
   }
   catch (error) {
@@ -872,7 +936,7 @@ exports.createReport = (req, res, next) => {
   }
   else if (excelType.reportType === 'Summary Timesheet (Year)') {
     if (req.accessControl.reportSummaryTimesheetYear) {
-      const filename = 'server/storage/private/report/Playtorium_Summary_Timesheet.xlsx';
+      const filename = 'server/storage/private/report/Playtorium_Summary_Timesheet_Year.xlsx';
       const workbook = new Excel.Workbook();
       workbook.xlsx.readFile(filename)
         .then(() => {
@@ -937,6 +1001,28 @@ exports.createReport = (req, res, next) => {
         message: `You don't have permission to do this.`
       });
     }
+  }
+  else if (excelType.reportType === 'Summary Timesheet (Month)') {
+    const filename = 'server/storage/private/report/Playtorium_Summary_Timesheet_Month.xlsx';
+    const workbook = new Excel.Workbook();
+    workbook.xlsx.readFile(filename)
+      .then(async () => {
+        const project = await Project.findById(excelType.projectId);
+        const timesheets = await Timesheet.findSummaryTimesheetInMonth(excelType.projectId, excelType.year, excelType.month);
+        console.log(timesheets);
+        const worksheet = workbook.getWorksheet('Summary Month');
+        worksheet.getCell('D3').value = `${moment.months(parseInt(excelType.month, 10) + 1)}-${excelType.year}`;
+        worksheet.getCell('D4').value = excelType.projectId;
+        worksheet.getCell('D5').value = project.paymentType;
+        writeSummaryTimesheetMonth(timesheets, worksheet, project)
+          .then(() => {
+            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            res.setHeader('Content-Disposition', `attachment; filename="Timesheet_Summary_${excelType.year}.xlsx`);
+            workbook.xlsx.write(res);
+          })
+          .catch(next);
+      })
+      .catch(next);
   }
   else if (excelType.reportType === 'Summary Leave') {
     if (req.accessControl.reportSummaryLeave) {

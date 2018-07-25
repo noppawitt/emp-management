@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Item, Segment, Input, Button, Icon } from 'semantic-ui-react';
+import { Grid, Item, Segment, Input, Button, Icon, Select } from 'semantic-ui-react';
 import PageHeader from './PageHeader';
 import history from '../history';
+import { masterTableToOptions } from '../utils/helper';
 
 const items = employee => (
   <Grid.Column width={8}>
@@ -21,12 +22,13 @@ const items = employee => (
   </Grid.Column>
 );
 
-const Employee = ({ employees, onChange, onClick }) => (
+const Employee = ({ employees, onChange, onClick, departments, onDepartmentChange, filter, departmentId }) => (
   <div>
     <PageHeader icon="users" text="Employee" />
     <Segment.Group>
       <Segment>
-        <Input icon="search" placeholder="Search employees..." onChange={onChange} />
+        <Input icon="search" placeholder="Search employees..." defaultValue={filter} onChange={onChange} />
+        <Select placeholder="Department" defaultValue={departmentId} options={[{ key: 'all', value: 0, text: 'All' }, ...masterTableToOptions(departments)]} onChange={onDepartmentChange} />
         <Button icon labelPosition="left" color="blue" floated="right" onClick={onClick}>
           <Icon name="add user" />
           Add new employee
@@ -48,7 +50,11 @@ const Employee = ({ employees, onChange, onClick }) => (
 Employee.propTypes = {
   employees: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  departments: PropTypes.array.isRequired,
+  onDepartmentChange: PropTypes.func.isRequired,
+  filter: PropTypes.string.isRequired,
+  departmentId: PropTypes.number.isRequired
 };
 
 export default Employee;

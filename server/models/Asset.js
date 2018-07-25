@@ -38,7 +38,7 @@ Asset.update = (asset, id) => (
 );
 
 Asset.findAll = () => (
-  db.manyOrNone('SELECT * FROM assets')
+  db.manyOrNone('SELECT * FROM assets WHERE own_flag = $1', ['Company'])
 );
 
 module.exports = Asset;

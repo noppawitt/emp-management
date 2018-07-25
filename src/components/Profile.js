@@ -23,8 +23,8 @@ const Profile = ({profile, type, id, profileId, can}) => (
           <EvaProfileBox evaProfile={profile.eva} performanceProfile={profile.perf} selfProfile={profile.self}/>
         </Can>
         <WorkProfileBox workProfile={profile.work} />
-        <Can activity="workExperoenceView">
-          <WorkExperienceProfileBox workExperienceProfile={profile.workExperience} />
+        <Can activity="workExperienceView">
+          <WorkExperienceProfileBox workExperienceProfile={profile.workExperiences} />
         </Can>
         <Can activity="educateView">
           <EducationProfileBox educationsProfile={profile.educations} />

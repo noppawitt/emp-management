@@ -33,6 +33,12 @@ const AddworkExperienceProfileForm = ({ handleSubmit, submitting }) => (
       disabled={submitting}
       validator={validator.required}
     />
+    <Field
+      name="description"
+      as={Form.TextArea}
+      component={Input}
+      label="Description"
+    />
   </Form>
 );
 

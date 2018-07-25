@@ -68,6 +68,30 @@ const timesheet = (state = initialState, action) => {
         ...state,
         message: action.payload.message
       };
+    case actionTypes.TIMESHEET_DELETE_REQUEST:
+      return {
+        ...state
+      };
+    case actionTypes.TIMESHEET_DELETE_SUCCESS:
+      return {
+        ...state,
+        lists: state.lists.filter(l => l.id !== action.payload.timesheetId)
+      };
+    case actionTypes.TIMESHEET_DELETE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
+    case actionTypes.TIMESHEET_PROJECT_FETCH_SUCCESS:
+      return {
+        ...state,
+        projects: action.payload.projects
+      };
+    case actionTypes.TIMESHEET_PROJECT_FETCH_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
     default:
       return state;
   }

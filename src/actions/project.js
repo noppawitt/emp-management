@@ -58,3 +58,17 @@ export const sortProject = (sortKey, direction) => ({
     direction
   }
 });
+
+export const changeProjectPage = page => ({
+  type: actionTypes.CHANGE_PROJECT_PAGE,
+  payload: {
+    page
+  }
+});
+
+export const changeHasPoNumber = value => ({
+  type: actionTypes.CHANGE_HAS_PO_NUMBER,
+  payload: {
+    value
+  }
+});

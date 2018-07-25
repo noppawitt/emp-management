@@ -4,12 +4,11 @@ const moment = require('moment');
 const Timesheet = {};
 
 Timesheet.create = (timesheet, id) => (
-  db.one(
+  db.none(
     `INSERT INTO timesheets (user_id, date, project_id, time_in, time_out, totalhours, created_user, updated_user, task, description)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-      ON CONFLICT (user_id, date, project_id) DO UPDATE
-      SET project_id = $3, time_in = $4, time_out = $5, totalhours = $6, updated_user = $8, task = $9, description = $10
-      RETURNING 1`,
+      ON CONFLICT (user_id, date, project_id, time_in) DO UPDATE
+      SET project_id = $3, time_in = $4, time_out = $5, totalhours = $6, updated_user = $8, task = $9, description = $10`,
     [
       timesheet.userId,
       timesheet.date,
@@ -62,6 +61,15 @@ Timesheet.findSummaryTimesheet = year => (
 
 Timesheet.findById = id => (
   db.oneOrNone('SELECT * FROM timesheets WHERE id = $1', [id])
+);
+
+Timesheet.findSummaryTimesheetInMonth = (projectId, year, month) => (
+  db.manyOrNone(`SELECT timesheets.user_id as user_id, CONCAT(employee_info.first_name, ' ', employee_info.last_name) AS name, 
+  SUM(timesheets.totalhours) / $1 AS days, has_projects.amount AS amount FROM timesheets 
+  INNER JOIN employee_info ON timesheets.user_id = employee_info.user_id
+  INNER JOIN has_projects ON has_projects.user_id = timesheets.user_id AND has_projects.project_id = $4
+  WHERE EXTRACT(year from timesheets.date) = $2 AND EXTRACT(month from date) = $3 AND timesheets.project_id = $4 
+  GROUP BY timesheets.user_id, timesheets.project_id, name, amount`, [8, year, month, projectId])
 );
 
 Timesheet.findByMonthAndYear = (month, year, userId) => (

@@ -1,3 +1,5 @@
+export const getMasterTable = state => state.masterTable;
+
 export const getFacultiesByUniversityId = (state, universityId) => (
   state.masterTable.faculties.filter(faculty => faculty.universityId === universityId)
 );

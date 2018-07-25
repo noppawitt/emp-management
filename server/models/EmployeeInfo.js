@@ -94,6 +94,15 @@ EmployeeInfo.findOwnByUserId = userId => (
   db.oneOrNone('SELECT first_name, last_name, nick_name, mobile_number, line_id, email, facebook_id, picture, address, first_name_th, last_name_th, gender, user_id FROM employee_info WHERE user_id = $1', [userId])
 );
 
+EmployeeInfo.findInfoAll = () => (
+  db.manyOrNone(`SELECT first_name, last_name, nick_name, mobile_number, line_id, email, facebook_id, picture, address,  
+    first_name_th, last_name_th, gender, employee_info.user_id, line_code, positions.name AS position_name FROM employee_info 
+    INNER JOIN employee_work ON employee_work.user_id = employee_info.user_id
+    LEFT OUTER JOIN positions ON employee_work.position_id = positions.id
+    INNER JOIN users ON users.id = employee_info.user_id
+    WHERE users.status = $1 ORDER BY employee_info.user_id`, ['Active'])
+);
+
 EmployeeInfo.updateProfileImg = (path, userId, id) => (
   db.none(
     'UPDATE employee_info SET picture = $1, updated_user = $2, updated_date = $3 WHERE user_id = $4',

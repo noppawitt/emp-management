@@ -22,6 +22,9 @@ export const ADD_MEMBER = 'ADD_MEMBER';
 // Leave
 export const CREATE_LEAVE_REQUEST = 'CREATE_LEAVE_REQUEST';
 
+// Holiday
+export const ADD_HOLIDAY = 'ADD_HOLIDAY';
+
 // Timesheet
 export const ADD_TIMESHEET = 'CREATE_TIMESHEET';
 export const EDIT_TIMESHEET = 'EDIT_TIMESHEET';

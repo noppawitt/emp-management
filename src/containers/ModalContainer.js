@@ -22,6 +22,7 @@ import AddWorkExperienceProfileModal from './modals/AddWorkExperienceProfileModa
 import AddProbation from './modals/AddProbation';
 import AddPerformance from './modals/AddPerformance';
 import AddSelfAssessment from './modals/AddSelfAssessment';
+import AddHolidayModal from './modals/AddHolidayModal';
 
 const renderModal = ({ name, props }) => {
   switch (name) {
@@ -69,6 +70,8 @@ const renderModal = ({ name, props }) => {
       return <AddSelfAssessment {...props} />;
     case modalNames.EDIT_PROFILE_PICTURE:
       return <EditProfilePictureModal {...props} />;
+    case modalNames.ADD_HOLIDAY:
+      return <AddHolidayModal />;
     default:
       return <div />;
   }

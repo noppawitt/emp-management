@@ -7,7 +7,6 @@ const Contract = require('../models/Contract');
 
 exports.create = (req, res, next) => {
   const newEmployeeWork = req.body.employeeWork;
-  console.log(newEmployeeWork);
   EmployeeWork.create(newEmployeeWork, req.user.id)
     .then((createdEmployeeWork) => {
       res.json(createdEmployeeWork);

@@ -47,7 +47,7 @@ Project.update = (project, id) => (
 );
 
 Project.findAll = () => (
-  db.manyOrNone('SELECT projects.id, projects.name, projects.customer, projects.quotation_id, projects.start_date, projects.end_date, projects.status  FROM projects WHERE status = $1', ['In Progress'])
+  db.manyOrNone('SELECT projects.id AS project_id, projects.name, projects.customer, projects.quotation_id, projects.purchased_order, projects.start_date, projects.end_date, projects.status  FROM projects WHERE status = $1', ['In Progress'])
 );
 
 Project.findById = id => (
@@ -58,8 +58,17 @@ Project.findByYear = year => (
   db.manyOrNone('SELECT * FROM projects WHERE EXTRACT(year from start_date) = $1 ORDER BY id', [year])
 );
 
+Project.findByMonthAndYear = (month, year) => (
+  db.manyOrNone(`SELECT id AS project_id, * FROM projects WHERE EXTRACT(month from start_date) >= $1 AND EXTRACT(month from end_date) <= $1
+    AND EXTRACT(year from start_date) = $2`, [month, year])
+);
+
 Project.findMemberProject = projectId => (
-  db.manyOrNone('SELECT employee_info.user_id, employee_work.user_id, has_projects.user_id, employee_info.first_name, employee_info.last_name, employee_work.position_id, positions.id AS position_id, positions.name, has_projects.role FROM has_projects, employee_info, employee_work, positions WHERE has_projects.user_id = employee_info.user_id AND has_projects.user_id = employee_work.user_id AND employee_work.position_id = positions.id  AND has_projects.project_id = $1', [projectId])
+  db.manyOrNone(`SELECT employee_info.user_id, employee_work.user_id, has_projects.user_id, employee_info.first_name, 
+    employee_info.last_name, employee_work.position_id, positions.id AS position_id, positions.name, has_projects.role, 
+    has_projects.start_date, has_projects.end_date, has_projects.amount FROM has_projects, employee_info, employee_work, positions 
+    WHERE has_projects.user_id = employee_info.user_id AND has_projects.user_id = employee_work.user_id 
+    AND employee_work.position_id = positions.id  AND has_projects.project_id = $1 ORDER BY employee_info.user_id`, [projectId])
 );
 
 Project.findProjectByTimesheet = (userId, year, month) => (

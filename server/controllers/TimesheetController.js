@@ -20,6 +20,9 @@ const calTotalHours = (timeIn, timeOut) => new Promise((resolve, reject) => {
       case '18:30':
         timeOut = '18:00';
         break;
+      case '00:00':
+        timeOut = '24:00';
+        break;
       default:
         break;
     }

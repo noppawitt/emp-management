@@ -23,12 +23,13 @@ export const downloadReportFailure = message => ({
   }
 });
 
-export const fetchOwnProjectRequest = (userId, year, month) => ({
+export const fetchOwnProjectRequest = (userId, year, month, reportType = null) => ({
   type: actionTypes.OWN_PROJECT_FETCH_REQUEST,
   payload: {
     userId,
     year,
     month,
+    reportType
   }
 });
 
@@ -41,6 +42,27 @@ export const fetchOwnProjectSuccess = projects => ({
 
 export const fetchOwnProjectFailure = message => ({
   type: actionTypes.OWN_PROJECT_FETCH_FAILURE,
+  payload: {
+    message
+  }
+});
+
+export const fetchProjectMemberRequest = projectId => ({
+  type: actionTypes.PROJECT_MEMBER_FETCH_REQUEST,
+  payload: {
+    projectId
+  }
+});
+
+export const fetchProjectMemberSuccess = projectDetail => ({
+  type: actionTypes.PROJECT_MEMBER_FETCH_SUCCESS,
+  payload: {
+    projectDetail
+  }
+});
+
+export const fetchProjectMemberFailure = message => ({
+  type: actionTypes.PROJECT_MEMBER_FETCH_FAILURE,
   payload: {
     message
   }

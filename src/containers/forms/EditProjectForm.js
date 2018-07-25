@@ -10,7 +10,6 @@ import { statusOptions, paymentTypeOptions, workingDayOptions } from '../../util
 
 const validate = (values) => {
   const errors = {};
-  errors.id = validator.required(values.id);
   errors.name = validator.required(values.name);
   errors.quotationId = validator.required(values.quotationId);
   errors.customer = validator.required(values.customer);
@@ -18,8 +17,8 @@ const validate = (values) => {
   errors.amount = validator.required(values.amount);
   errors.startDate = validator.dateBefore(values.startDate, values.endDate);
   errors.endDate = validator.dateAfter(values.endDate, values.startDate);
-  errors.status = validator.required(values.status);
   errors.paymentType = validator.required(values.paymentType);
+  errors.status = validator.required(values.status);
   return errors;
 };
 
@@ -32,6 +31,7 @@ const EditProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType 
       label="Name"
       placeholder="Name"
       disabled={submitting}
+      validate={validator.maxLength50}
     />
     <Form.Group widths="equal">
       <Field
@@ -41,6 +41,8 @@ const EditProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType 
         label="Quotation No."
         placeholder="Quotation No."
         disabled={submitting}
+        validate={validator.maxLength25}
+
       />
       <Field
         name="customer"
@@ -49,6 +51,7 @@ const EditProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType 
         label="Customer"
         placeholder="Customer"
         disabled={submitting}
+        validate={validator.maxLength30}
       />
     </Form.Group>
     <Form.Group widths="equal">
@@ -59,6 +62,7 @@ const EditProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType 
         label="PO No."
         placeholder="PO No."
         disabled={submitting}
+        validate={validator.maxLength25}
       />
       <Field
         name="amount"
@@ -67,6 +71,7 @@ const EditProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType 
         label="Amount"
         placeholder="Amount"
         disabled={submitting}
+        validate={[validator.maxLength14, validator.check2Decimal]}
       />
     </Form.Group>
     <Form.Group widths="equal">
@@ -78,7 +83,7 @@ const EditProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType 
         placeholder="From"
         type="date"
         disabled={submitting}
-        validate={validator.required}
+        validate={[validator.required, validator.date]}
       />
       <Field
         name="endDate"
@@ -88,7 +93,7 @@ const EditProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType 
         placeholder="To"
         type="date"
         disabled={submitting}
-        validate={validator.required}
+        validate={[validator.required, validator.date]}
       />
     </Form.Group>
     <Field
@@ -127,6 +132,7 @@ const EditProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType 
       label="Description"
       placeholder="Description"
       disabled={submitting}
+      validate={validator.maxLength100}
     />
   </Form>
 );

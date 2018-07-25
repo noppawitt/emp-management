@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Grid, Segment, Header, Icon } from 'semantic-ui-react';
 import ProfileBox from '../components/ProfileBox';
+import { deleteProfileRequest } from '../actions/profile';
 import { openModal } from '../actions/modal';
 import * as modalNames from '../constants/modalNames';
 
-const WorkExperienceProfileBox = ({ workExperienceProfile, onAddClick, can }) => (
+const WorkExperienceProfileBox = ({ workExperienceProfile, onAddClick, onDeleteClick }) => (
   <Segment.Group raised size="large">
     <Segment padded>
       <Grid>
@@ -32,6 +33,8 @@ const WorkExperienceProfileBox = ({ workExperienceProfile, onAddClick, can }) =>
         { key: 'duration', title: 'Duration', value: p.duration },
         { key: 'description', title: 'Description', value: p.description }
       ]}
+      deleted
+      onDeleteClick={() => onDeleteClick(p.id)}
     />))}
   </Segment.Group>
 );
@@ -43,7 +46,7 @@ WorkExperienceProfileBox.defaultProps = {
 WorkExperienceProfileBox.propTypes = {
   workExperienceProfile: PropTypes.object,
   onAddClick: PropTypes.func.isRequired,
-  can: PropTypes.object.isRequired
+  onDeleteClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -51,7 +54,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onAddClick: () => dispatch(openModal(modalNames.ADD_WORK_EXPERIENCE_PROFILE))
+  onAddClick: () => dispatch(openModal(modalNames.ADD_WORK_EXPERIENCE_PROFILE)),
+  onDeleteClick: profileId => dispatch(openModal(modalNames.CONFIRM, {
+    header: 'Delete confirmation',
+    description: 'Are you sure to delete work experience profile?',
+    onConfirm: () => dispatch(deleteProfileRequest('workExperience', profileId))
+  }))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkExperienceProfileBox);

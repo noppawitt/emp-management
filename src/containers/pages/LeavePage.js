@@ -76,6 +76,15 @@ const enhance = compose(
       const { fetchLeave, fetchLeaveHistory, userId, year, month } = this.props;
       fetchLeave(userId, year, month);
       fetchLeaveHistory(userId, year);
+    },
+    componentDidUpdate(prevProps) {
+      const { fetchLeaveHistory, userId, year } = this.props;
+      if (prevProps.leaveHistory.annualLeaveRemain !== this.props.leaveHistory.annualLeaveRemain
+        || prevProps.leaveHistory.personalLeaveRemain !== this.props.leaveHistory.personalLeaveRemain
+        || prevProps.leaveHistory.sickLeaveRemain !== this.props.leaveHistory.sickLeaveRemain
+        || prevProps.leaveHistory.ordinationLeaveRemain !== this.props.leaveHistory.ordinationLeaveRemain) {
+        fetchLeaveHistory(userId, year);
+      }
     }
   })
 );

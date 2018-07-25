@@ -23,8 +23,10 @@ const modal = (state = initialState, action) => {
       };
     case actionTypes.CLOSE_MODAL:
       return {
-        stack: [...state.stack.slice(0, -1)]
+        stack: state.stack.slice(0, -1)
       };
+    case actionTypes.CLEAR_MODAL:
+      return initialState;
     default:
       return state;
   }

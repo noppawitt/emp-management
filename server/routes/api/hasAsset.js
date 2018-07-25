@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post('/', upload.single('assetImage'), can(['hasAssetAdd']), HasAssetController.create);
+router.post('/', upload.single('assetImage'), can(['hasAssetAddAll', 'hasAssetAddOwn']), HasAssetController.create);
 
 router.get('/', HasAssetController.findByUserId);
 

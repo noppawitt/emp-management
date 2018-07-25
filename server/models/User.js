@@ -1,4 +1,5 @@
 const db = require('../db');
+const moment = require('moment');
 
 const User = {};
 
@@ -55,8 +56,7 @@ User.create = async (user, id) => (
       user.type,
     ]
   )
-    .then((result) => {
-      console.log(result.id);
+    .then(result => (
       db.none(
         'INSERT INTO employee_info (first_name, last_name, citizen_id, created_user, updated_user, email, gender, picture, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
         [
@@ -71,8 +71,8 @@ User.create = async (user, id) => (
           result.id
         ]
       )
-        .then(() => {
-          db.none(
+        .then(() => (
+          db.one(
             'INSERT INTO employee_work (department_id, level_id, start_date, probation_date, created_user, updated_user, contract_id, engineer, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING user_id',
             [
               user.departmentId,
@@ -85,10 +85,9 @@ User.create = async (user, id) => (
               user.engineer,
               result.id
             ]
-          );
-        });
-    })
-);
+          )
+        ))
+    )));
 
 User.findById = id => (
   db.oneOrNone('SELECT * FROM users WHERE id = $1', [id])
@@ -99,17 +98,26 @@ User.findByUsername = username => (
 );
 
 User.findAll = () => (
-  db.manyOrNone(`SELECT users.id, employee_info.first_name, employee_info.last_name, employee_info.nick_name,
-  employee_info.mobile_number, employee_info.email, employee_info.picture, employee_work.department_id,
-  departments.name AS department_name, positions.name AS position_name FROM users INNER JOIN employee_info ON
-  users.id = employee_info.user_id AND users.status = $1 INNER JOIN employee_work ON users.id = employee_work.user_id
-  INNER JOIN departments ON employee_work.department_id = departments.id
+  db.manyOrNone(`SELECT users.id, employee_info.first_name, employee_info.last_name, employee_info.first_name_th,
+  employee_info.last_name_th, employee_info.nick_name, employee_info.mobile_number, employee_info.email, employee_info.picture, 
+  employee_work.department_id, departments.name AS department_name, positions.name AS position_name 
+  FROM users INNER JOIN employee_info ON users.id = employee_info.user_id AND users.status = $1 
+  INNER JOIN employee_work ON users.id = employee_work.user_id 
+  INNER JOIN departments ON employee_work.department_id = departments.id 
   LEFT OUTER JOIN positions ON employee_work.position_id = positions.id
   ORDER BY users.id`, ['Active'])
 );
 
 User.findByName = (firstName, lastName) => (
   db.oneOrNone('SELECT * FROM employee_info WHERE first_name = $1 AND last_name = $2', [firstName, lastName])
+);
+
+User.getRefreshToken = userId => (
+  db.oneOrNone('SELECT refresh_token FROM users WHERE id = $1', [userId])
+);
+
+User.updateRefreshToken = (userId, refreshToken) => (
+  db.none('UPDATE users SET refresh_token = $1 WHERE id = $2', [refreshToken, userId])
 );
 
 // User.createAdmin = user => (
