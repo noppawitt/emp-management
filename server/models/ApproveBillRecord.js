@@ -4,7 +4,7 @@ const moment = require('moment');
 const approvebillrecord = {};
 
 approvebillrecord.findAll = user_id => (
-  db.manyOrNone('SELECT b.id,b.bill_record_id,b.approvement_1,b.approvement_2,b.updated_date,c.child,d.first_name_th,d.last_name_th,e.type_id,f.name ' +
+  db.manyOrNone('SELECT b.id, b.bill_record_id, b.approvement_1, b.approvement_2, b.created_date, b.updated_date, c.child, d.first_name_th ,d.last_name_th, e.type_id, f.name ' +
     'FROM billapprovement as b, parentusersbill as c,employee_info as d,billrecord as e,typebill as f WHERE e.type_id=f.id AND e.id=b.bill_record_id AND d.user_id=c.child AND b.created_user=c.child AND c.parent_id=$1', [user_id])
 );
 approvebillrecord.findDetail = data => (
@@ -27,10 +27,11 @@ approvebillrecord.findApproveDataRecord = (rec_id, creator) => (
 );
 
 approvebillrecord.updateBillRecordByStatus = (status_value, app_rec_id, userid, comment) => (
-  db.manyOrNone('UPDATE billrecord SET statusapproveid = $1,updated_date=$2, updated_user=$3, ' +
+  db.manyOrNone(
+    'UPDATE billrecord SET statusapproveid = $1,updated_date=$2, updated_user=$3, ' +
     'comment=CONCAT((SELECT comment FROM billrecord WHERE id=(SELECT bill_record_id FROM billapprovement WHERE id=$4)),$5) ' +
     'WHERE id=( SELECT bill_record_id FROM billapprovement WHERE id=$6) RETURNING id',
-  [status_value, moment().format('YYYY-MM-DD HH:mm:ss'), userid, app_rec_id, comment, app_rec_id])
+    [status_value, moment().format('YYYY-MM-DD HH:mm:ss'), userid, app_rec_id, comment, app_rec_id])
 );
 // approvebillrecord.
 // approvebillrecord.updateApproveData = (rec_id,data,user_id) => (

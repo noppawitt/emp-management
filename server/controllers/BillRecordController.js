@@ -11,16 +11,16 @@ exports.findByUserId = (req, res, next) => {
 
 exports.findByDetailId = (req, res, next) => {
   let body_id = req.body.dataid;
-  console.log(req.body.dataid)
+  // console.log(req.body.dataid);
   BillRecordControl.findBilldataById(body_id)
     .then((billrecordsbyuserid) => {
       BillRecordControl.getImage(body_id)
-        .then(image => {
+        .then((image) => {
           res.json([billrecordsbyuserid, image]);
-        })
+        });
     })
     .catch(next);
-}
+};
 
 exports.createErpDetail = (req, res, next) => {
   let userid = req.user.id;
@@ -29,14 +29,14 @@ exports.createErpDetail = (req, res, next) => {
   const delbill = BillRecordControl.deleteErpDetail(data_id);
   const readdbill = BillRecordControl.createErpDetail(data_id, databody, userid);
   Promise.all([readdbill])
-    .then(data => {
+    .then((data) => {
       // console.log(data);
       res.json(data);
-    })
-}
+    });
+};
 
 exports.create = (req, res, next) => {
-  console.log(req.body);
+  // console.log(req.body);
   const recordbody = req.body.billrecord[0].data;
   const databody = req.body.billrecord[1].fieldlist;
   // console.log(req.body.billrecord[1].fieldlist);
@@ -64,7 +64,6 @@ exports.create = (req, res, next) => {
       // .then(approvebill_rec_id => {
       // })
       // .catch(next);
-
     })
     .catch(next);
 };
@@ -73,17 +72,17 @@ exports.deleteByBillId = (req, res, next) => {
   const record_id = req.body.id;
   // console.log(record_id);
   BillRecordControl.findApprovementId(record_id)
-    .then(app_id => {
+    .then((app_id) => {
       BillRecordControl.deleteByBillId(record_id, app_id.id)
-        .then(data => {
+        .then((data) => {
           console.log(data);
           res.json(data);
         })
         .catch(next);
-
     })
     .catch(next);
-}
+};
+
 exports.findAll = (req, res, next) => {
   const userid = req.user.id;
   BillRecordControl.findApprovement()
@@ -99,9 +98,9 @@ exports.findAll = (req, res, next) => {
               BillRecordControl.findBilldata()
                 .then((fetchoutput) => {
                   var i = 0;
-                  fetching[1].fetchall.forEach(element => {
+                  fetching[1].fetchall.forEach((element) => {
                     fetching[1].fetchall[i]["data"] = [];
-                    fetchoutput.forEach(element2 => {
+                    fetchoutput.forEach((element2) => {
                       if (element.id == element2.billRecordId) {
                         fetching[1].fetchall[i]["data"].push({ element2 });
                       }
@@ -109,7 +108,7 @@ exports.findAll = (req, res, next) => {
                     i++;
                   });
                   // fetching.push(fetchoutput);
-                  res.json(fetching)
+                  res.json(fetching);
                 }).catch(next);
             })
             .catch(next);
@@ -131,7 +130,7 @@ exports.findAllRecordErp = (req, res, next) => {
           BillRecordControl.findBillDataById(data_erp_record)
             .then((data_erpdetail_record) => {
               for (var i = 0; i < fetching[1].fetchall.length; i++) {
-                fetching[1].fetchall[i]['data'] = []
+                fetching[1].fetchall[i]['data'] = [];
                 fetching[1].fetchall[i]['data'].push(data_erpdetail_record[i][0]);
                 // console.log(data_erpdetail_record[i][0])
               }
@@ -139,26 +138,26 @@ exports.findAllRecordErp = (req, res, next) => {
                 .then((count_child) => {
                   // console.log(count_child);
                   var count_bool = true;
-                  // if (count_child.count > 0) {
-                  //   count_bool = true;
-                  // } else {
-                  //   count_bool = false;
-                  // }
+                  if (count_child.count > 0) {
+                    count_bool = true;
+                  }
+                  else {
+                    count_bool = false;
+                  }
                   fetching.push({ approveBoolean: count_bool });
-                  res.json(fetching)
-                })
-            })
+                  res.json(fetching);
+                });
+            });
         })
         .catch(next);
     })
     .catch(next);
-}
+};
 
 exports.createChildUser = (req, res, next) => {
   BillRecordControl.createChildUserBill(req.body.parent, req.body.child)
-    .then(data => {
+    .then((data) => {
       res.json(data);
     })
-    .catch(error => { console.log(error) })
-
-}
+    .catch((error) => { console.log(error); });
+};

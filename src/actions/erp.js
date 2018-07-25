@@ -141,9 +141,11 @@ export const disapproveErpFailure = message => ({
   }
 });
 
-export const generateExcel = id => ({
+export const generateExcel = (id, name, createDate) => ({
   type: actionTypes.ERP_GENERATE_EXCEL,
   payload: {
-    id
+    id,
+    name,
+    createDate
   }
 });

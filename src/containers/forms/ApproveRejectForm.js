@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { Form } from 'semantic-ui-react';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -19,11 +18,11 @@ import Input from '../../components/Input';
 // );
 
 const ApproveRejectForm = ({ id, onSubmit }) => (
-  <Form size="huge" >
-    <Form.Group onSubmit={onSubmit} >
-      <Field name="comment" as={Form.TextArea} style={{width:'100%'},{height:'100%'}} component={Input} placeholder="..." />
+  <Form >
+    <Form.Group onSubmit={onSubmit} widths="equal" >
+      <Field name="comment" as={Form.TextArea} component={Input} />
       {/* <Field name="id" as={Form.Input} component={Input} value={id} placeholeder="..." /> */}
-   </Form.Group>
+    </Form.Group>
   </Form>
 );
 
@@ -35,7 +34,7 @@ ApproveRejectForm.propTypes = {
 
 const mapStateToProps = state => ({
   initialValues: {
-    id: state.modal.props.id
+    id: state.modal.stack[1].props.id
   }
 });// const mapDispatchToProps = dispatch => ({
 //   onClose: () => dispatch(closeModal()),

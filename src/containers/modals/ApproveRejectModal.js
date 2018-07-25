@@ -10,12 +10,13 @@ import { handleReduxFormSubmit } from '../../utils/helper';
 
 const ApproveRejectModal = ({ id, onClose, onSubmit, submitting, onClick }) => (
   <Modal
-    header="Rejection"
+    header="Reject Confirmation"
     buttonName="Reject"
     onClose={onClose}
     onClick={onClick}
     submitting={submitting}
   >
+    Please provide rejection note
     <ApproveRejectForm id={id} onSubmit={onSubmit} />
   </Modal>
 );

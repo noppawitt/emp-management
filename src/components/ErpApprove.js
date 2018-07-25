@@ -72,7 +72,8 @@ const ErpApprove = ({ erpApprove, onApproveClick, onRejectClick, genExcel, activ
             <Table.HeaderCell />
           </Table.Row>
         </Table.Header>
-
+        {/* approvement2 is 1 = decided or 2 = not yet
+        approvement1 is 1 = approved or 2 = rejected */}
         <Table.Body>
           {erpApprove.map((i, index) => activePage === Math.ceil((index + 1) / 20) && (
             <Table.Row key={i.id}>
@@ -84,7 +85,11 @@ const ErpApprove = ({ erpApprove, onApproveClick, onRejectClick, genExcel, activ
               </Table.Cell>
               <Table.Cell> <Moment format="YYYY-MM-DD HH:mm" date={i.data[0].createdDate} /> </Table.Cell>
               <Table.Cell>
-                {i.approvement2 === 0 &&
+                <div>
+                  <Button inverted color="green" onClick={() => onApproveClick(i.id, '')}>Approve</Button>
+                  <Button inverted color="red" onClick={() => onRejectClick(i.id)} >Reject</Button>
+                </div>
+                {/* {i.approvement2 === 0 &&
                   <div>
                     <Button inverted color="green" onClick={() => onApproveClick(i.id, '')}>Approve</Button>
                     <Button inverted color="red" onClick={() => onRejectClick(i.id)} >Reject</Button>
@@ -96,13 +101,13 @@ const ErpApprove = ({ erpApprove, onApproveClick, onRejectClick, genExcel, activ
                     {i.approvement1 === 2 && 'Rejected On '}
                     <Moment format="YYYY-MM-DD HH:mm" date={i.updatedDate} />
                   </div>
-                }
+                } */}
               </Table.Cell>
               <Table.Cell>
                 <Modal trigger={<Icon name="eye" size="big" />} >
                   <PreviewErpDetail2 bill={i} />
                 </Modal>
-                <Icon name="file excel outline" color="green" size="big" onClick={() => genExcel(i.billRecordId)} />
+                <Icon name="file excel outline" color="green" size="big" onClick={() => genExcel(i.billRecordId, i.name, i.createdDate)} />
               </Table.Cell>
             </Table.Row>))}
         </Table.Body>

@@ -19,7 +19,6 @@ import ErpApprove from '../../components/ErpApprove';
 
 const ErpPage = ({ isFetching, erpApprove, onApproveClick, onRejectClick, commentHandleChange, nowComment, clearComment, genExcel, onClose, activePage, handlePaginationChange }) => (
   <div>
-    {console.log(activePage)}
     {isFetching ? <Loader /> : <ErpApprove
       erpApprove={erpApprove}
       onApproveClick={onApproveClick}
@@ -71,7 +70,7 @@ const mapDispatchToProps = dispatch => ({
   handlePaginationChange: (e, { activePage }) => dispatch(changePagination(activePage)),
   commentHandleChange: value => dispatch(commentChange(value)),
   clearComment: () => dispatch(deleteComment()),
-  genExcel: id => dispatch(generateExcel(id)),
+  genExcel: (id, name, createDate) => dispatch(generateExcel(id, name, createDate)),
   onClose: () => dispatch(closeModal()),
 });
 

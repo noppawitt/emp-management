@@ -20,15 +20,13 @@ export function* fetchErpApproveTask() {
 
 export function* approveMethodTask(action) {
   try {
-    console.log(action.payload.approveId);
     yield call(api.approveUpdate, {
       id: action.payload.approveId,
       comment: action.payload.comment,
       approvement: 1
     });
     yield put(closeModal());
-    yield put(closeModal());
-    window.location.reload();
+    // window.location.reload();
   }
   catch (error) {
     console.log(error);
@@ -44,7 +42,7 @@ export function* rejectMethodTask(action) {
       approvement: 2
     });
     yield put(closeModal());
-    window.location.reload();
+    // window.location.reload();
   }
   catch (error) {
     console.log(error);

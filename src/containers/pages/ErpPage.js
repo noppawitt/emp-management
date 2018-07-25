@@ -60,7 +60,7 @@ const mapDispatchToProps = dispatch => ({
   })),
   handlePaginationChange: (e, { activePage }) => dispatch(changePagination(activePage)),
   onSearchChange: e => dispatch(filterErp(e.target.value)),
-  genExcel: id => dispatch(generateExcel(id))
+  genExcel: (id, name, createDate) => dispatch(generateExcel(id, name, createDate))
 });
 
 const enhance = compose(

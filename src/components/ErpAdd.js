@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -200,7 +199,7 @@ const ErpAdd = ({ addrow, arraddrow, img, handleDropdown, handleSubmit, handleDe
           <PreviewErpDetail arraddrow={arraddrow} />
         </Modal>
         {addrow.length > 0 ?
-          <Button onClick={() => handleCreate(arraddrow)} floated="right" color="green" >Create</Button> :
+          <Button onClick={() => { handleCreate(arraddrow); document.getElementById('createButton').disabled = true; }} floated="right" color="green" id="createButton" disabled={false}>Create</Button> :
           <Button floated="right" color="green" disabled>Create</Button>
         }
       </Segment>

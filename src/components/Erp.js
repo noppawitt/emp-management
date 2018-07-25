@@ -78,11 +78,12 @@ const Erp = ({ erps, onDeleteClick, onSearchChange, activePage, handlePagination
                 </Table.Cell>
                 <Table.Cell> {erps[1].fetchall[index].comment} </Table.Cell>
                 <Table.Cell>
-                  <Icon name="file excel outline" size="big" color="green" onClick={() => genExcel(i.id)} />
+                  <Icon name="file excel outline" size="big" color="green" onClick={() => genExcel(i.id, i.name, i.createdDate)} />
                   {i.statusapproveid === 0 && <Icon name="edit" size="big" onClick={() => history.push(`/erp/${i.id}`)} /> }
                 </Table.Cell>
                 <Table.Cell>
-                  {i.statusapproveid === 0 && <Icon name="delete" color="red" onClick={() => onDeleteClick(i.id)} /> }
+                  {/* {i.statusapproveid === 0 && <Icon name="delete" color="red" onClick={() => onDeleteClick(i.id)} /> } */}
+                  <Icon name="delete" color="red" onClick={() => onDeleteClick(i.id)} />
                 </Table.Cell>
               </Table.Row>
             ))}

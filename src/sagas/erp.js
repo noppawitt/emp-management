@@ -58,7 +58,7 @@ export function* genExcelTask(action) {
     // console.log(action.payload);
     const excel = yield call(api.getExcel, action.payload.id);
     // console.log(excel);
-    saveAs(excel);
+    saveAs(excel, (action.payload.createDate.substring(0, 10)).concat(' ', action.payload.name));
     // yield put()
   }
   catch (error) {

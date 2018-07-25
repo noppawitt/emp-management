@@ -189,7 +189,7 @@ const Detailerp = ({ erpdetail, deleteRow, handleSubmit, createErpDetail, handle
           ))}
         </Segment>
         {erpdetail.lists.length > 0 ?
-          <Button onClick={() => createErpDetail(erpdetail)} color="green"> Save </Button> :
+          <Button onClick={() => { createErpDetail(erpdetail); document.getElementById('saveButton').disabled = true; }} color="green" id="saveButton"disabled={false}> Save </Button> :
           <Button color="green" disabled> Save </Button>
         }
       </Segment>
