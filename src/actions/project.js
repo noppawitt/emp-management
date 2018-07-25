@@ -1,9 +1,9 @@
 import * as actionTypes from '../constants/actionTypes';
 
-export const fetchProjectRequest = id => ({
+export const fetchProjectRequest = userId => ({
   type: actionTypes.PROJECT_FETCH_REQUEST,
   payload: {
-    id
+    userId
   }
 });
 

@@ -290,8 +290,8 @@ api.fetchEmployee = () => (
 
 // Project
 
-api.fetchProject = () => (
-  callApi('/api/projects')
+api.fetchProject = userId => (
+  callApi(`/api/projects?userId=${userId}`)
 );
 
 api.createProject = body => (
