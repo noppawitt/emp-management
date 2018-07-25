@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { Segment, Grid, Header, Icon, Table, Button, List } from 'semantic-ui-react';
 import UploadFile from '../components/UploadFile';
 
@@ -9,6 +10,8 @@ const membersDetail = (memberDetail, projectId, onDeleteClick) => (
     <Table.Cell>{memberDetail.firstName || '-'}{' '}{memberDetail.lastName || '-'}</Table.Cell>
     <Table.Cell>{memberDetail.name || '-'}</Table.Cell>
     <Table.Cell>{memberDetail.role || '-'}</Table.Cell>
+    <Table.Cell>{memberDetail.startDate ? moment(memberDetail.startDate).format('DD/MM/YYYY') : '-'}</Table.Cell>
+    <Table.Cell>{memberDetail.endDate ? moment(memberDetail.endDate).format('DD/MM/YYYY') : '-'}</Table.Cell>
     <Table.Cell>
       <Button animated="fade" style={{ borderStyle: 'solid', borderColor: '#FF0000', backgroundColor: 'white', borderWidth: '1px' }} onClick={() => onDeleteClick(memberDetail.userId, projectId)}>
         <Button.Content visible><font color="#FF0000" >Delete</font></Button.Content>
@@ -109,6 +112,8 @@ const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteM
             <Table.HeaderCell>Name</Table.HeaderCell>
             <Table.HeaderCell>Position</Table.HeaderCell>
             <Table.HeaderCell>Role</Table.HeaderCell>
+            <Table.HeaderCell>Start Date</Table.HeaderCell>
+            <Table.HeaderCell>End Date</Table.HeaderCell>
             <Table.HeaderCell />
           </Table.Row>
         </Table.Header>
