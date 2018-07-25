@@ -4,7 +4,7 @@ exports.create = (req, res, next) => {
   const newEducate = req.body.educate;
   Educate.create(newEducate, req.user.id)
     .then(() => {
-      Educate.findByUserId(req.query.userId)
+      Educate.findByUserId(newEducate.userId)
         .then((educates) => {
           res.json(educates);
         });

@@ -25,7 +25,7 @@ exports.create = (req, res, next) => {
       }
       createHasAsset(newAsset, req.user.id)
         .then(() => {
-          HasAsset.findByUserId(req.query.userId)
+          HasAsset.findByUserId(newAsset.userId)
             .then((hasAssets) => {
               res.json(hasAssets);
             })
@@ -37,7 +37,7 @@ exports.create = (req, res, next) => {
       const newHasAsset = req.body;
       HasAsset.create(newHasAsset, req.user.id)
         .then(() => {
-          HasAsset.findByUserId(req.query.userId)
+          HasAsset.findByUserId(newHasAsset.userId)
             .then((hasAssets) => {
               res.json(hasAssets);
             });
