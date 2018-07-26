@@ -20,13 +20,14 @@ export function* fetchErpApproveTask() {
 
 export function* approveMethodTask(action) {
   try {
-    yield call(api.approveUpdate, {
+    const approvesuccess = yield call(api.approveUpdate, {
       id: action.payload.approveId,
       comment: action.payload.comment,
+      type: action.payload.type,
       approvement: 1
     });
+    yield put(fetchErpApproveSuccess(approvesuccess));
     yield put(closeModal());
-    // window.location.reload();
   }
   catch (error) {
     console.log(error);
@@ -35,14 +36,14 @@ export function* approveMethodTask(action) {
 
 export function* rejectMethodTask(action) {
   try {
-    console.log(action.payload);
-    yield call(api.approveUpdate, {
+    const approvefail = yield call(api.approveUpdate, {
       id: action.payload.approveId.id,
       comment: action.payload.approveId.comment,
+      type: action.payload.type,
       approvement: 2
     });
+    yield put(fetchErpApproveSuccess(approvefail));
     yield put(closeModal());
-    // window.location.reload();
   }
   catch (error) {
     console.log(error);

@@ -34,7 +34,8 @@ ApproveRejectForm.propTypes = {
 
 const mapStateToProps = state => ({
   initialValues: {
-    id: state.modal.stack[1].props.id
+    id: state.modal.stack[1].props.id,
+    type: state.modal.stack[1].props.type
   }
 });// const mapDispatchToProps = dispatch => ({
 //   onClose: () => dispatch(closeModal()),

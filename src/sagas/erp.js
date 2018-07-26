@@ -27,7 +27,7 @@ export function* createErpTask(action) {
     const formData = new FormData();
 
     for (let i = 0; i < imgarray.length; i += 1) {
-      console.log(imgarray[i].files[0]);
+      console.log('1111');
       formData.append('addrow', imgarray[i].files[0]);
     }
     formData.append('idrecord', idrecord);
@@ -46,7 +46,6 @@ export function* fetchErpTask() {
   try {
     const erp = yield call(api.fetchErp);
     yield put(fetchErpSuccess(erp));
-    // browserHistory.push('/leave');
   }
   catch (error) {
     yield put(fetchErpFailure(error));
@@ -70,7 +69,7 @@ export function* deleteErpTask(action) {
   try {
     yield call(api.deleteErp, { id: action.payload.id });
     const erp = yield call(api.fetchErp);
-    console.log(erp);
+    // console.log(erp);
     yield put(deleteErpSuccess(erp));
     yield put(closeModal());
     // action.payload.resolve();

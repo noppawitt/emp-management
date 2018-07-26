@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Menu, Table, Button, Icon, Pagination, Modal, Segment } from 'semantic-ui-react';
@@ -53,7 +54,7 @@ const amount = (i) => {
   }
 };
 
-const ErpApprove = ({ erpApprove, onApproveClick, onRejectClick, genExcel, activePage, handlePaginationChange }) => (
+const ErpApprove = ({ erpApprove, onApproveClick, onRejectClick, genExcel, activePage, handlePaginationChange, userId }) => (
   <div>
     <Menu pointing secondary>
       <Menu.Item name="Bill" onClick={() => history.push('/erp')} />
@@ -85,23 +86,70 @@ const ErpApprove = ({ erpApprove, onApproveClick, onRejectClick, genExcel, activ
               </Table.Cell>
               <Table.Cell> <Moment format="YYYY-MM-DD HH:mm" date={i.data[0].createdDate} /> </Table.Cell>
               <Table.Cell>
-                <div>
-                  <Button inverted color="green" onClick={() => onApproveClick(i.id, '')}>Approve</Button>
-                  <Button inverted color="red" onClick={() => onRejectClick(i.id)} >Reject</Button>
-                </div>
-                {/* {i.approvement2 === 0 &&
-                  <div>
+                {userId === 10001 ?
+                  // md
+                  (i.bossId === 10001 ?
+                    // md+boss
+                    (i.approvement1 === 0 ?
+                      <div>
+                        <Button inverted color="green" onClick={() => onApproveClick(i.id, '', 0)}>Approve</Button>
+                        <Button inverted color="red" onClick={() => onRejectClick(i.id, 0)} >Reject</Button>
+                      </div> :
+                      (i.approvement2 === 0 ?
+                        <div>
+                          <Button inverted color="green" onClick={() => onApproveClick(i.id, '', 1)}>Approve</Button>
+                          <Button inverted color="red" onClick={() => onRejectClick(i.id, 1)} >Reject</Button>
+                        </div> :
+                        <div>
+                          {i.approvement1 === 1 && 'Approved On '}
+                          {i.approvement1 === 2 && 'Rejected On '}
+                          <Moment format="YYYY-MM-DD HH:mm" date={i.updatedDate} />
+                        </div>
+                      )
+                    ) :
+                    // md only
+                    (i.approvement1 === 0 ?
+                      <div>
+                        Waiting for Supervisor
+                      </div>
+                      :
+                      (i.approvement2 === 0 ?
+                        <div>
+                          <Button inverted color="green" onClick={() => onApproveClick(i.id, '', 1)}>Approve</Button>
+                          <Button inverted color="red" onClick={() => onRejectClick(i.id, 1)} >Reject</Button>
+                        </div> :
+                        <div>
+                          {i.approvement1 === 1 && 'Approved On '}
+                          {i.approvement1 === 2 && 'Rejected On '}
+                          <Moment format="YYYY-MM-DD HH:mm" date={i.updatedDate} />
+                        </div>
+                      )
+                    )
+
+                  )
+                  // not md
+                  : (i.approvement1 === 0 ? <div>
+                    <Button inverted color="green" onClick={() => onApproveClick(i.id, '', 0)}>Approve</Button>
+                    <Button inverted color="red" onClick={() => onRejectClick(i.id, 0)} >Reject</Button>
+                  </div> :
+                    <div>
+                      {i.approvement1 === 1 && 'Approved On '}
+                      {i.approvement1 === 2 && 'Rejected On '}
+                      <Moment format="YYYY-MM-DD HH:mm" date={i.updatedDate} />
+                    </div>
+                  )
+                }
+
+                {/* <div>
                     <Button inverted color="green" onClick={() => onApproveClick(i.id, '')}>Approve</Button>
                     <Button inverted color="red" onClick={() => onRejectClick(i.id)} >Reject</Button>
                   </div>
-                }
-                {i.approvement2 === 1 &&
-                  <div>
-                    {i.approvement1 === 1 && 'Approved On '}
-                    {i.approvement1 === 2 && 'Rejected On '}
-                    <Moment format="YYYY-MM-DD HH:mm" date={i.updatedDate} />
-                  </div>
-                } */}
+
+                <div>
+                  {i.approvement1 === 1 && 'Approved On '}
+                  {i.approvement1 === 2 && 'Rejected On '}
+                  <Moment format="YYYY-MM-DD HH:mm" date={i.updatedDate} />
+                </div> */}
               </Table.Cell>
               <Table.Cell>
                 <Modal trigger={<Icon name="eye" size="big" />} >
@@ -136,6 +184,7 @@ const ErpApprove = ({ erpApprove, onApproveClick, onRejectClick, genExcel, activ
 
 ErpApprove.propTypes = {
   erpApprove: PropTypes.array.isRequired,
+  userId: PropTypes.number.isRequired,
   onApproveClick: PropTypes.func.isRequired,
   onRejectClick: PropTypes.func.isRequired,
   genExcel: PropTypes.func.isRequired,

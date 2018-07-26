@@ -17,10 +17,11 @@ import * as modalNames from '../../constants/modalNames';
 import Loader from '../../components/Loader';
 import ErpApprove from '../../components/ErpApprove';
 
-const ErpPage = ({ isFetching, erpApprove, onApproveClick, onRejectClick, commentHandleChange, nowComment, clearComment, genExcel, onClose, activePage, handlePaginationChange }) => (
+const ErpPage = ({ isFetching, erpApprove, onApproveClick, onRejectClick, commentHandleChange, nowComment, clearComment, genExcel, onClose, activePage, handlePaginationChange, userId }) => (
   <div>
     {isFetching ? <Loader /> : <ErpApprove
       erpApprove={erpApprove}
+      userId={userId}
       onApproveClick={onApproveClick}
       onRejectClick={onRejectClick}
       commentHandleChange={commentHandleChange}
@@ -41,6 +42,7 @@ ErpPage.defaultProps = {
 ErpPage.propTypes = {
   isFetching: PropTypes.bool,
   erpApprove: PropTypes.array.isRequired,
+  userId: PropTypes.number.isRequired,
   onApproveClick: PropTypes.func.isRequired,
   onRejectClick: PropTypes.func.isRequired,
   commentHandleChange: PropTypes.func.isRequired,
@@ -57,16 +59,17 @@ const mapStateToProps = state => ({
   erpApprove: [...state.erpapprove.lists],
   activePage: state.erpapprove.activePage,
   nowComment: state.erpapprove.comment,
+  userId: state.auth.id,
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchErpApprove: () => dispatch(fetchErpApproveRequest()),
-  onApproveClick: (approveId, value) => dispatch(openModal(modalNames.CONFIRM, {
+  onApproveClick: (approveId, value, type) => dispatch(openModal(modalNames.CONFIRM, {
     header: 'Approve confirmation',
     description: 'Are you sure to approve this request ?',
-    onConfirm: () => dispatch(approveErpRequest(approveId, value))
+    onConfirm: () => dispatch(approveErpRequest(approveId, value, type))
   })),
-  onRejectClick: approveId => dispatch(openModal(modalNames.ERPAPPROVE_REJECT, { id: approveId })),
+  onRejectClick: (approveId, type) => dispatch(openModal(modalNames.ERPAPPROVE_REJECT, { id: approveId, type })),
   handlePaginationChange: (e, { activePage }) => dispatch(changePagination(activePage)),
   commentHandleChange: value => dispatch(commentChange(value)),
   clearComment: () => dispatch(deleteComment()),

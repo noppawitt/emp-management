@@ -21,21 +21,23 @@ export const fetchErpApproveFailure = messege => ({
   }
 });
 
-export const approveErpRequest = (approveId, comment) => ({
+export const approveErpRequest = (approveId, comment, type) => ({
   type: actionTypes.ERPAPPROVE_APPROVE_REQUEST,
   payload: {
     approveId,
-    comment
+    comment,
+    type
   }
 });
 
 // export const approveErpSuccess = ()
 
-export const rejectErpRequest = (approveId, comment) => ({
+export const rejectErpRequest = (approveId, comment, type) => ({
   type: actionTypes.ERPAPPROVE_REJECT_REQUEST,
   payload: {
     approveId,
-    comment
+    comment,
+    type
   }
 });
 

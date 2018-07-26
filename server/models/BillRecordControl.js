@@ -31,7 +31,7 @@ billrecord.findBillDataById = dataarray => (
 );
 
 billrecord.findChildOfApprover = userid => (
-  db.one('SELECT COUNT(*) FROM parentusersbill WHERE parent_id=$1', [userid])
+  db.one('SELECT COUNT(*) FROM employee_work WHERE boss_id=$1', [userid])
 );
 
 
@@ -83,14 +83,14 @@ billrecord.createApproveData = (rec_id, approver, userid) => (
     const queries = approver.map(l =>
       t.one(
         'INSERT INTO approvedata (approve_record_id, approve_status, approver, created_date, created_user) VALUES($1, $2, $3, $4, $5) RETURNING id',
-        [rec_id, 0, l.parent, moment().format('YYYY-MM-DD HH:mm:ss'), userid], a => +a.id
+        [rec_id, 0, l.bossId, moment().format('YYYY-MM-DD HH:mm:ss'), userid], a => +a.id
       ));
     return t.batch(queries);
   })
 );
 
 billrecord.findApprover = userid => (
-  db.many('SELECT * FROM childusersbill WHERE child_id=$1', [userid])
+  db.many('SELECT * FROM employee_work WHERE user_id=$1', [userid])
 );
 
 billrecord.findApprovementId = rec_id => (

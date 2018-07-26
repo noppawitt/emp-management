@@ -52,13 +52,14 @@ exports.create = (req, res, next) => {
               // console.log(approvebill_rec_id);
               BillRecordControl.findApprover(req.user.id)
                 .then((approverarray) => {
+                  approverarray.push({ bossId: 10001 });
                   // console.log(approverarray);
                   BillRecordControl.createApproveData(approvebill_rec_id, approverarray, req.user.id)
                     .then((outputbill) => {
                       res.json(record);
-                    });
-                });
-            });
+                    }).catch(next);
+                }).catch(next);
+            }).catch(next);
         }).catch(next);
       // const billapprove = BillRecordControl.createApproveBill(record, req.user.id);
       // .then(approvebill_rec_id => {

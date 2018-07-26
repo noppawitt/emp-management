@@ -43,11 +43,8 @@ export const addErpFailure = message => ({
   }
 });
 
-export const fetchErpRequest = erp => ({
+export const fetchErpRequest = () => ({
   type: actionTypes.ERP_FETCH_REQUEST,
-  payload: {
-    erp
-  }
 });
 
 export const fetchErpSuccess = erp => ({
