@@ -18,7 +18,8 @@ const leave = (state = initialState, action) => {
     case actionTypes.LEAVE_CREATE_SUCCESS:
       return {
         ...state,
-        lists: action.payload.leaves
+        lists: action.payload.leaves,
+        leaveHistory: action.payload.leave
       };
     case actionTypes.LEAVE_CREATE_FAILURE:
       return {
@@ -76,6 +77,17 @@ const leave = (state = initialState, action) => {
         ...state,
         isHistoryFetching: false,
         message: action.payload.message
+      };
+    case actionTypes.LEAVE_FETCH_ALL_REQUEST:
+      return {
+        ...state,
+        isFetching: true
+      };
+    case actionTypes.LEAVE_FETCH_ALL_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        lists: action.payload.leaves
       };
     default:
       return state;

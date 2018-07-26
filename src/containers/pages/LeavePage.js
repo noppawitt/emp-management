@@ -62,7 +62,7 @@ const mapDispatchToProps = dispatch => ({
   fetchLeaveHistory: (userId, year) => dispatch(fetchLeaveHistoryRequest(userId, year)),
   onAddClick: () => dispatch(openModal(modalNames.CREATE_LEAVE_REQUEST)),
   onCancelClick: (userId, leave) => dispatch(openModal(modalNames.CONFIRM, {
-    header: 'Cancel confirmation',
+    header: 'Cancel Confirmation',
     description: 'Are you sure to cancel this leave request ?',
     onConfirm: () => dispatch(updateLeaveRequest(userId, { ...leave, status: 'Cancel' }))
   }))

@@ -359,6 +359,10 @@ api.fetchLeave = (userId, year, month) => (
   callApi(`/api/leave-request?userId=${userId}&year=${year}&month=${month}`)
 );
 
+api.fetchLeaveAll = () => (
+  callApi('/api/leave-request')
+);
+
 api.updateLeave = body => (
   callApi('/api/leave-request', {
     method: 'PUT',
