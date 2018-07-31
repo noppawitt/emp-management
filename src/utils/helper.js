@@ -1,10 +1,12 @@
+import jwt from 'jsonwebtoken';
+
 export const masterTableToOptions = (masterTable = []) => {
   const options = [];
   masterTable.forEach((elem) => {
     const option = {};
     option.key = elem.id;
     option.text = elem.name;
-    option.value = elem.id.toString();
+    option.value = elem.id;
     options.push(option);
   });
   return options;
@@ -29,3 +31,19 @@ export const handleReduxFormSubmit = (dispatch, action, values, ...args) => (
     dispatch(action(values, resolve, reject, ...args))
   ))
 );
+
+export const getItem = key => localStorage.getItem(key);
+
+export const setItem = (key, value) => {
+  localStorage.setItem(key, value);
+};
+
+export const isExpired = (accessToken) => {
+  const { exp } = jwt.decode(accessToken);
+  return exp * 1000 <= Date.now();
+};
+
+export const getExpiryTime = (accessToken) => {
+  const { exp } = jwt.decode(accessToken);
+  return exp * 1000 - Date.now();
+};

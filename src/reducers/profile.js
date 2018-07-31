@@ -10,7 +10,7 @@ const profile = (state = initialState, action) => {
       return {
         ...state,
         isFetching: true,
-        id: action.payload.id
+        userId: action.payload.userId
       };
     case actionTypes.PROFILE_FETCH_SUCCESS:
       return {
@@ -49,7 +49,7 @@ const profile = (state = initialState, action) => {
     case actionTypes.PROFILE_DELETE_SUCCESS:
       return {
         ...state,
-        [`${action.payload.profileType}s`]: state[`${action.payload.profileType}s`].filter(p => p.id !== action.payload.profileId),
+        [action.payload.profileType]: action.payload.profile,
         isDeleting: false
       };
     case actionTypes.PROFILE_DELETE_FAILURE:
@@ -57,6 +57,23 @@ const profile = (state = initialState, action) => {
         ...state,
         message: action.payload.message,
         isDeleting: false
+      };
+    case actionTypes.PROFILE_PICTURE_UPDATE_REQUEST:
+      return {
+        ...state
+      };
+    case actionTypes.PROFILE_PICTURE_UPDATE_SUCCESS:
+      return {
+        ...state,
+        general: {
+          ...state.general,
+          picture: action.payload.pictureURL
+        }
+      };
+    case actionTypes.PROFILE_PICTURE_UPDATE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
       };
     default:
       return state;

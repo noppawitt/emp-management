@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { Link, NavLink } from 'react-router-dom';
 import { Menu, Container, Dropdown, Image } from 'semantic-ui-react';
 import bigLogo from '../images/big-logo.jpg';
+import Can from '../containers/Can';
 
-const Navbar = ({ username, onLogout }) => (
+const Navbar = ({ userId, username, onLogout }) => (
   <div>
     <Image src={bigLogo} />
     <Menu stackable attached borderless inverted size="huge">
@@ -33,7 +34,10 @@ const Navbar = ({ username, onLogout }) => (
         <Menu.Menu position="right">
           <Dropdown item pointing text={username}>
             <Dropdown.Menu>
-              <Dropdown.Item text="Profile" as={Link} to="/profile" />
+              <Dropdown.Item text="Profile" as={Link} to={`/profile/${userId}`} />
+              <Can activity="leaveRequestApprove">
+                <Dropdown.Item text="Leave Approval" as={Link} to="/leave-approval" />
+              </Can>
               <Dropdown.Item text="Log out" onClick={onLogout} />
             </Dropdown.Menu>
           </Dropdown>
@@ -44,6 +48,7 @@ const Navbar = ({ username, onLogout }) => (
 );
 
 Navbar.propTypes = {
+  userId: PropTypes.number.isRequired,
   username: PropTypes.string.isRequired,
   onLogout: PropTypes.func.isRequired
 };

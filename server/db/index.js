@@ -24,6 +24,7 @@ const options = {
 
 const pgp = require('pg-promise')(options);
 
+pgp.pg.defaults.poolSize = 15;
 pgp.pg.types.setTypeParser(1082, value => value);
 
 const config = {

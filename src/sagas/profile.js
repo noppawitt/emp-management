@@ -1,4 +1,4 @@
-import { call, put, takeEvery, all } from 'redux-saga/effects';
+import { call, put, takeEvery, all, select, take } from 'redux-saga/effects';
 import * as actionTypes from '../constants/actionTypes';
 import {
   fetchProfileSuccess,
@@ -6,19 +6,43 @@ import {
   updateProfileSuccess,
   updateProfileFailure,
   deleteProfileSuccess,
-  deleteProfileFailure
+  deleteProfileFailure,
+  updateProfilePictureSuccess,
+  updateProfilePictureFailure
 } from '../actions/profile';
 import { closeModal } from '../actions/modal';
+import { getAccessControl } from '../selectors/accessControl';
 import api from '../services/api';
 
-export function* fetchProfileTask(action) {
+function* fetchProfileTask(action) {
   try {
-    const profile = {};
-    profile.general = yield call(api.fetchGeneralProfile, action.payload.id);
-    profile.work = yield call(api.fetchWorkProfile, action.payload.id);
-    profile.educations = yield call(api.fetchEducationProfile, action.payload.id);
-    profile.certificates = yield call(api.fetchCertificateProfile, action.payload.id);
-    profile.assets = yield call(api.fetchAssetProfile, action.payload.id);
+    // Wait until access control fetching complete
+    let { can } = yield select(getAccessControl);
+    while (!can) {
+      yield take(actionTypes.ACCESS_CONTROL_FETCH_SUCCESS);
+      ({ can } = yield select(getAccessControl));
+    }
+    const calls = [
+      call(api.fetchGeneralProfile, action.payload.userId),
+      call(api.fetchWorkProfile, action.payload.userId),
+      call(api.fetchCertificateProfile, action.payload.userId),
+      call(api.fetchAssetProfile, action.payload.userId)
+    ];
+    if (can.workExperienceView) {
+      yield calls.push(call(api.fetchWorkExperience, action.payload.userId));
+    }
+    if (can.educateView) {
+      yield calls.push(call(api.fetchEducationProfile, action.payload.userId));
+    }
+    const [general, work, certificates, assets, workExperiences, educations] = yield all(calls);
+    const profile = {
+      general,
+      work,
+      certificates,
+      assets,
+      workExperiences,
+      educations
+    };
     yield put(fetchProfileSuccess(profile));
   }
   catch (error) {
@@ -26,7 +50,7 @@ export function* fetchProfileTask(action) {
   }
 }
 
-export function* updateProfileTask(action) {
+function* updateProfileTask(action) {
   try {
     const profile = {};
     switch (action.payload.type) {
@@ -38,6 +62,11 @@ export function* updateProfileTask(action) {
       case 'editWorkProfile':
         profile.work = yield call(api.updateWorkProfile, {
           employeeWork: action.payload.form
+        });
+        break;
+      case 'addWorkExperienceProfile':
+        profile.workExperience = yield call(api.createWorkExperienceProfile, {
+          workExperience: action.payload.form
         });
         break;
       case 'editEducationProfile':
@@ -58,6 +87,9 @@ export function* updateProfileTask(action) {
       case 'addAssetProfile':
         profile.assets = yield call(api.createAssetProfile, action.payload.form);
         break;
+      case 'profilePicture':
+        profile.general.picture = yield call(api.uploadProfilePicture, action.payload.form);
+        break;
       default:
         action.payload.reject();
     }
@@ -71,28 +103,34 @@ export function* updateProfileTask(action) {
   }
 }
 
-export function* deleteProfileTask(action) {
+function* deleteProfileTask(action) {
   try {
+    let profile;
     switch (action.payload.profileType) {
-      case 'education':
-        yield call(api.deleteEducationProfile, {
+      case 'educations':
+        profile = yield call(api.deleteEducationProfile, {
           id: action.payload.profileId
         });
         break;
-      case 'certificate':
-        yield call(api.deleteCertificateProfile, {
+      case 'certificates':
+        profile = yield call(api.deleteCertificateProfile, {
           id: action.payload.profileId
         });
         break;
-      case 'asset':
-        yield call(api.deleteAssetProfile, {
+      case 'assets':
+        profile = yield call(api.deleteAssetProfile, {
+          id: action.payload.profileId
+        });
+        break;
+      case 'workExperience':
+        profile = yield call(api.deleteWorkExperienceProfile, {
           id: action.payload.profileId
         });
         break;
       default:
         yield put(deleteProfileFailure('Something gone wrong'));
     }
-    yield put(deleteProfileSuccess(action.payload.profileType, action.payload.profileId));
+    yield put(deleteProfileSuccess(action.payload.profileType, profile));
     yield put(closeModal());
   }
   catch (error) {
@@ -100,22 +138,41 @@ export function* deleteProfileTask(action) {
   }
 }
 
-export function* watchFetchProfileRequest() {
+function* updateProfilePictureTask(action) {
+  try {
+    const formData = new FormData();
+    formData.append('userId', action.payload.userId);
+    formData.append('profileImage', action.payload.picture);
+    const { path } = yield call(api.updateProfilePicture, formData);
+    yield put(updateProfilePictureSuccess(`${path}?time=${new Date()}`));
+    yield put(closeModal());
+  }
+  catch (error) {
+    yield put(updateProfilePictureFailure(error));
+  }
+}
+
+function* watchFetchProfileRequest() {
   yield takeEvery(actionTypes.PROFILE_FETCH_REQUEST, fetchProfileTask);
 }
 
-export function* watchUpdateProfileRequest() {
+function* watchUpdateProfileRequest() {
   yield takeEvery(actionTypes.PROFILE_UPDATE_REQUEST, updateProfileTask);
 }
 
-export function* watchDeleteProfileRequest() {
+function* watchDeleteProfileRequest() {
   yield takeEvery(actionTypes.PROFILE_DELETE_REQUEST, deleteProfileTask);
+}
+
+function* watchUpdateProfilePictureRequest() {
+  yield takeEvery(actionTypes.PROFILE_PICTURE_UPDATE_REQUEST, updateProfilePictureTask);
 }
 
 export default function* profileSaga() {
   yield all([
     watchFetchProfileRequest(),
     watchUpdateProfileRequest(),
-    watchDeleteProfileRequest()
+    watchDeleteProfileRequest(),
+    watchUpdateProfilePictureRequest()
   ]);
 }

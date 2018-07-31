@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Modal as SUIModal, Button } from 'semantic-ui-react';
 
-const Modal = ({ header, buttonName, onClose, onClick, submitting, children, confirm, buttons }) => (
+const Modal = ({ header, buttonName, onClose, onClick, submitting, children, confirm, deleted, onDelete }) => (
   <SUIModal
     dimmer="blurring"
     size="small"
@@ -18,8 +18,8 @@ const Modal = ({ header, buttonName, onClose, onClick, submitting, children, con
       {children}
     </SUIModal.Content>
     <SUIModal.Actions>
-      {buttons.map(B => B)}
-      <Button color="blue" loading={submitting} disabled={submitting} onClick={() => onClick()}>{buttonName}</Button>
+      {deleted && <Button floated="left" color="red" disabled={submitting} onClick={onDelete}>Delete</Button>}
+      <Button color="blue" loading={submitting} disabled={submitting} onClick={onClick}>{buttonName}</Button>
       {confirm && <Button loading={submitting} disabled={submitting} onClick={onClose}>No</Button>}
     </SUIModal.Actions>
   </SUIModal>
@@ -28,7 +28,8 @@ const Modal = ({ header, buttonName, onClose, onClick, submitting, children, con
 Modal.defaultProps = {
   buttonName: 'Save',
   confirm: false,
-  buttons: [],
+  deleted: false,
+  onDelete: undefined
 };
 
 Modal.propTypes = {
@@ -39,7 +40,8 @@ Modal.propTypes = {
   submitting: PropTypes.bool.isRequired,
   children: PropTypes.element.isRequired,
   confirm: PropTypes.bool,
-  buttons: PropTypes.array,
+  deleted: PropTypes.bool,
+  onDelete: PropTypes.func
 };
 
 const mapStateToProps = state => ({

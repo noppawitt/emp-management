@@ -9,26 +9,73 @@ exports.create = (req, res, next) => {
     .catch(next);
 };
 
-exports.find = (req, res, next) => {
-  EmployeeInfo.findById(req.query.id)
-    .then((employeeInfo) => {
-      res.json(employeeInfo);
-    })
-    .catch(next);
+exports.findById = (req, res, next) => {
+  if (req.accessControl.employeeInfoViewAll) {
+    EmployeeInfo.findAllByUserId(req.query.userId)
+      .then((employeeInfo) => {
+        res.json(employeeInfo);
+      })
+      .catch(next);
+  }
+  else if (req.accessControl.employeeInfoViewOwn) {
+    EmployeeInfo.findOwnByUserId(req.query.userId)
+      .then((employeeInfo) => {
+        res.json(employeeInfo);
+      })
+      .catch(next);
+  }
 };
 
 exports.update = (req, res, next) => {
   const editEmployeeInfo = req.body.employeeInfo;
-  EmployeeInfo.update(editEmployeeInfo, req.user.id)
-    .then((updatedEmployeeInfo) => {
-      res.json(updatedEmployeeInfo);
-    })
-    .catch(next);
+  // for admin
+  if (req.accessControl.employeeInfoEditAll) {
+    EmployeeInfo.updateAll(editEmployeeInfo, req.user.id)
+      .then((updatedEmployeeInfo) => {
+        res.json(updatedEmployeeInfo);
+      })
+      .catch(next);
+  }
+  // for user
+  else if (req.accessControl.employeeInfoEditOwn) {
+    if (editEmployeeInfo.userId === req.user.id) {
+      EmployeeInfo.updateOwn(editEmployeeInfo, req.user.id)
+        .then((updatedEmployeeInfo) => {
+          res.json(updatedEmployeeInfo);
+        })
+        .catch(next);
+    }
+    else {
+      res.status(401).json({
+        message: `You don't have permission to do this.`
+      });
+    }
+  }
 };
 
 exports.updateProfileImg = (req, res, next) => {
-  EmployeeInfo.updateProfileImg(`${req.file.destination}/${req.file.filename}`, req.user.id)
-    .then(() => {
-      res.json('upload complete!!!');
-    });
+  const path = `/static/profile-img/${req.file.filename}`;
+  // for admin
+  if (req.accessControl.employeeInfoEditAll) {
+    EmployeeInfo.updateProfileImg(path, req.body.userId, req.user.id)
+      .then(() => {
+        res.json({ path });
+      })
+      .catch(next);
+  }
+  // for user
+  else if (req.accessControl.employeeInfoEditOwn) {
+    if (req.body.userId === req.user.id) {
+      EmployeeInfo.updateProfileImg(path, req.body.userId, req.user.id)
+        .then(() => {
+          res.json({ path });
+        })
+        .catch(next);
+    }
+    else {
+      res.status(401).json({
+        message: `You don't have permission to do this.`
+      });
+    }
+  }
 };

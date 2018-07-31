@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import auth from './auth';
-import todo from './todo';
 import modal from './modal';
 import profile from './profile';
 import masterTable from './masterTable';
@@ -16,11 +15,13 @@ import exam from './exam';
 import examAuth from './examAuth';
 import takeExamAgreement from './takeExamAgreement';
 import takeExam from './takeExam';
+import holiday from './holiday';
+import report from './report';
+import accessControl from './accessControl';
 
 export default combineReducers({
   form: formReducer,
   auth,
-  todo,
   modal,
   profile,
   masterTable,
@@ -35,4 +36,7 @@ export default combineReducers({
   examAuth,
   takeExamAgreement,
   takeExam,
+  holiday,
+  report,
+  accessControl
 });

@@ -6,16 +6,20 @@ const Input = ({ label, placeholder, input, meta, as: As, ...rest }) => {
   const handleChange = (e, { value }) => input.onChange(value);
   return (
     <Form.Field>
-      <As {...input} label={label} placeholder={placeholder} error={meta.error && meta.touched} onChange={handleChange} {...rest} />
+      <As {...input} label={label} placeholder={placeholder || label} error={meta.error && meta.touched} onChange={handleChange} {...rest} />
       {meta.touched && meta.error &&
       <Label basic color="red" pointing >{meta.error}</Label>}
     </Form.Field>
   );
 };
 
+Input.defaultProps = {
+  placeholder: ''
+};
+
 Input.propTypes = {
   label: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   input: PropTypes.object.isRequired,
   meta: PropTypes.object.isRequired,
   as: PropTypes.func.isRequired

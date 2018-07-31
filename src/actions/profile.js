@@ -1,9 +1,9 @@
 import * as actionTypes from '../constants/actionTypes';
 
-export const fetchProfileRequest = id => ({
+export const fetchProfileRequest = userId => ({
   type: actionTypes.PROFILE_FETCH_REQUEST,
   payload: {
-    id
+    userId
   }
 });
 
@@ -39,7 +39,7 @@ export const updateProfileSuccess = profile => ({
 });
 
 export const updateProfileFailure = message => ({
-  type: actionTypes.PROFILE_FETCH_FAILURE,
+  type: actionTypes.PROFILE_UPDATE_FAILURE,
   payload: {
     message
   }
@@ -53,16 +53,38 @@ export const deleteProfileRequest = (profileType, profileId) => ({
   }
 });
 
-export const deleteProfileSuccess = (profileType, profileId) => ({
+export const deleteProfileSuccess = (profileType, profile) => ({
   type: actionTypes.PROFILE_DELETE_SUCCESS,
   payload: {
     profileType,
-    profileId
+    profile
   }
 });
 
 export const deleteProfileFailure = message => ({
   type: actionTypes.PROFILE_DELETE_FAILURE,
+  payload: {
+    message
+  }
+});
+
+export const updateProfilePictureRequest = (picture, userId) => ({
+  type: actionTypes.PROFILE_PICTURE_UPDATE_REQUEST,
+  payload: {
+    picture,
+    userId
+  }
+});
+
+export const updateProfilePictureSuccess = pictureURL => ({
+  type: actionTypes.PROFILE_PICTURE_UPDATE_SUCCESS,
+  payload: {
+    pictureURL
+  }
+});
+
+export const updateProfilePictureFailure = message => ({
+  type: actionTypes.PROFILE_PICTURE_UPDATE_FAILURE,
   payload: {
     message
   }

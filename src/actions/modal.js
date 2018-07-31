@@ -9,5 +9,9 @@ export const openModal = (name, props) => ({
 });
 
 export const closeModal = () => ({
-  type: actionTypes.CLOSE_MODAL,
+  type: actionTypes.CLOSE_MODAL
+});
+
+export const clearModal = () => ({
+  type: actionTypes.CLEAR_MODAL
 });

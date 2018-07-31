@@ -1,9 +1,9 @@
 import * as actionTypes from '../constants/actionTypes';
 
-export const fetchProjectRequest = id => ({
+export const fetchProjectRequest = userId => ({
   type: actionTypes.PROJECT_FETCH_REQUEST,
   payload: {
-    id
+    userId
   }
 });
 
@@ -56,5 +56,19 @@ export const sortProject = (sortKey, direction) => ({
   payload: {
     sortKey,
     direction
+  }
+});
+
+export const changeProjectPage = page => ({
+  type: actionTypes.CHANGE_PROJECT_PAGE,
+  payload: {
+    page
+  }
+});
+
+export const changeHasPoNumber = value => ({
+  type: actionTypes.CHANGE_HAS_PO_NUMBER,
+  payload: {
+    value
   }
 });

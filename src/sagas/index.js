@@ -13,22 +13,28 @@ import examSaga from './exam';
 import examAuthSaga from './examAuth';
 import takeExamSaga from './takeExam';
 import takeExamAgreementSaga from './takeExamAgreement';
+import holidaySaga from './holiday';
+import reportSaga from './report';
+import accessControlSaga from './accessControl';
 
 export default function* rootSaga() {
-  yield all([
-    authSaga(),
-    profileSaga(),
-    masterTableSaga(),
-    employeeSaga(),
-    projectSaga(),
-    projectDetailSaga(),
-    leaveSaga(),
-    timesheetSaga(),
-    recruitmentSaga(),
-    recruitmentProfileSaga(),
-    examSaga(),
-    examAuthSaga(),
-    takeExamSaga(),
-    takeExamAgreementSaga(),
-  ]);
+    yield all([
+        accessControlSaga(),
+        masterTableSaga(),
+        profileSaga(),
+        employeeSaga(),
+        projectSaga(),
+        projectDetailSaga(),
+        leaveSaga(),
+        timesheetSaga(),
+        recruitmentSaga(),
+        recruitmentProfileSaga(),
+        examSaga(),
+        examAuthSaga(),
+        takeExamSaga(),
+        takeExamAgreementSaga(),
+        holidaySaga(),
+        reportSaga(),
+        authSaga(),
+    ]);
 }

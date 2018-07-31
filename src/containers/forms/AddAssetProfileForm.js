@@ -5,15 +5,9 @@ import { compose } from 'recompose';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { Form } from 'semantic-ui-react';
 import Input from '../../components/Input';
+import Can from '../Can';
 import * as validator from '../../utils/validator';
 import { masterTableToOptions } from '../../utils/helper';
-
-const validate = (values) => {
-  const errors = {};
-  errors.startDate = validator.required(values.startDate);
-  errors.endDate = validator.required(values.endDate);
-  return errors;
-};
 
 const ownFlagOptions = [
   { key: 'myself', value: true, text: 'Myself' },
@@ -22,18 +16,71 @@ const ownFlagOptions = [
 
 const AddAssetProfileForm = ({ masterTable, handleSubmit, submitting, ownFlag }) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="assetType" as={Form.Select} component={Input} label="Asset type" placeholder="Asset type" options={masterTableToOptions(masterTable.assetTypes)} disabled={submitting} />
-    <Field name="ownFlag" as={Form.Select} component={Input} label="Owner" placeholder="Owner" options={ownFlagOptions} />
+    <Field
+      name="assetTypeId"
+      as={Form.Select}
+      component={Input}
+      label="Asset type"
+      options={masterTableToOptions(masterTable.assetTypes)}
+      disabled={submitting}
+      validate={validator.required}
+    />
+    <Can activity="hasAssetAddAll">
+      <Field
+        name="ownFlag"
+        as={Form.Select}
+        component={Input}
+        label="Owner"
+        options={ownFlagOptions}
+      />
+    </Can>
     {ownFlag ?
-      <Field name="name" as={Form.Input} component={Input} label="Asset name" placeholder="Asset name" disabled={submitting} /> :
-      <Field name="assetId" as={Form.Select} component={Input} label="Asset name" placeholder="Asset name" options={masterTableToOptions(masterTable.assets)} disabled={submitting} />
+      <Field
+        name="name"
+        as={Form.Input}
+        component={Input}
+        label="Asset name"
+        disabled={submitting}
+        validate={validator.required}
+      /> :
+      <Field
+        name="assetId"
+        as={Form.Select}
+        component={Input}
+        label="Asset name"
+        options={masterTableToOptions(masterTable.assets)}
+        disabled={submitting}
+        validate={validator.required}
+      />
     }
     {ownFlag &&
-      <Field name="serialNumber" as={Form.Input} component={Input} label="Serial No." placeholder="Serial No." disabled={submitting} />
+      <Field
+        name="serialNumber"
+        as={Form.Input}
+        component={Input}
+        label="Serial No."
+        disabled={submitting}
+        validate={validator.required}
+      />
     }
-    <Field name="assetDate" as={Form.Input} component={Input} type="date" label="Date" placeholder="Date" disabled={submitting} />
+    <Field
+      name="assetDate"
+      as={Form.Input}
+      component={Input}
+      type="date"
+      label="Date"
+      disabled={submitting}
+      validate={[validator.required, validator.date]}
+    />
     {ownFlag &&
-      <Field name="description" as={Form.TextArea} component={Input} autoHeight label="Description" placeholder="Description" disabled={submitting} />
+      <Field
+        name="description"
+        as={Form.TextArea}
+        component={Input}
+        autoHeight
+        label="Description"
+        disabled={submitting}
+      />
     }
   </Form>
 );
@@ -50,7 +97,7 @@ const selector = formValueSelector('addAssetProfile');
 const mapStateToProps = state => ({
   masterTable: state.masterTable,
   initialValues: {
-    userId: state.profile.id,
+    userId: state.profile.userId,
     ownFlag: true
   },
   ownFlag: selector(state, 'ownFlag')
@@ -60,7 +107,6 @@ const enhance = compose(
   connect(mapStateToProps),
   reduxForm({
     form: 'addAssetProfile',
-    validate
   })
 );
 

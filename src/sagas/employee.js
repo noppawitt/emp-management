@@ -6,9 +6,10 @@ import {
   createEmployeeSuccess,
   createEmployeeFailure,
 } from '../actions/employee';
+import { closeModal } from '../actions/modal';
 import api from '../services/api';
 
-export function* fetchEmployeeTask() {
+function* fetchEmployeeTask() {
   try {
     const employees = yield call(api.fetchEmployee);
     yield put(fetchEmployeeSuccess(employees));
@@ -24,17 +25,20 @@ export function* createEmployeeTask(action) {
       user: action.payload.form
     });
     yield put(createEmployeeSuccess());
+    yield put(closeModal());
+    action.payload.resolve();
   }
   catch (error) {
     yield put(createEmployeeFailure(error));
+    action.payload.reject();
   }
 }
 
-export function* watchFetchEmployeeRequest() {
+function* watchFetchEmployeeRequest() {
   yield takeEvery(actionTypes.EMPLOYEE_FETCH_REQUEST, fetchEmployeeTask);
 }
 
-export function* watchCreateEmployeeRequest() {
+function* watchCreateEmployeeRequest() {
   yield takeEvery(actionTypes.EMPLOYEE_CREATE_REQUEST, createEmployeeTask);
 }
 

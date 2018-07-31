@@ -46,7 +46,8 @@ module.exports = {
   },
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/'
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -56,7 +57,7 @@ module.exports = {
     hot: true,
     historyApiFallback: true,
     proxy: [{
-      context: ['/auth', '/examauth', '/api', '/static'],
+      context: ['/auth', '/api', '/static'],
       target: 'http://localhost:3000',
     }]
   }

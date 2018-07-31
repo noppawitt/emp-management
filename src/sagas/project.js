@@ -9,9 +9,9 @@ import {
 import { closeModal } from '../actions/modal';
 import api from '../services/api';
 
-export function* fetchProjectTask(action) {
+function* fetchProjectTask(action) {
   try {
-    const projects = yield call(api.fetchProject, action.payload.id);
+    const projects = yield call(api.fetchProject, action.payload.userId);
     yield put(fetchProjectSuccess(projects));
   }
   catch (error) {
@@ -19,9 +19,8 @@ export function* fetchProjectTask(action) {
   }
 }
 
-export function* createProjectTask(action) {
+function* createProjectTask(action) {
   try {
-    console.log(action.form);
     yield call(api.createProject, {
       project: action.payload.form
     });
@@ -36,11 +35,11 @@ export function* createProjectTask(action) {
   }
 }
 
-export function* watchFetchProjectRequest() {
+function* watchFetchProjectRequest() {
   yield takeEvery(actionTypes.PROJECT_FETCH_REQUEST, fetchProjectTask);
 }
 
-export function* watchCreateProjectRequest() {
+function* watchCreateProjectRequest() {
   yield takeEvery(actionTypes.PROJECT_CREATE_REQUEST, createProjectTask);
 }
 

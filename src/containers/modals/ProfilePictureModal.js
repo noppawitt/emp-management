@@ -1,31 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Input, Image } from 'semantic-ui-react';
+import { Image, Modal } from 'semantic-ui-react';
 import { closeModal } from '../../actions/modal';
-import Modal from '../../components/Modal';
 
-const ProfilePictureModal = ({ profilePicture, onClick, onClose }) => (
+const ProfilePictureModal = ({ profilePicture, onClose }) => (
   <Modal
-    loading
-    header="Profile Picture"
-    buttons={[<Input type="file" />]}
-    onClick={onClick}
+    dimmer="blurring"
+    size="small"
+    closeIcon
+    open
     onClose={onClose}
-    submitting={false}
   >
-    <Image centered fluid src={profilePicture} />
+    <Modal.Header>
+      Profile Picture
+    </Modal.Header>
+    <Modal.Content image>
+      <Image centered src={profilePicture} />
+    </Modal.Content>
   </Modal>
 );
 
 ProfilePictureModal.propTypes = {
   profilePicture: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
-  onClick: () => dispatch(closeModal()),
   onClose: () => dispatch(closeModal())
 });
 

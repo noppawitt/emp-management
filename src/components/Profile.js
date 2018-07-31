@@ -2,22 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 import PageHeader from './PageHeader';
-import image from '../images/cat.jpg';
 import GeneralProfileBox from '../containers/GeneralProfileBox';
 import WorkProfileBox from '../containers/WorkProfileBox';
+import WorkExperienceProfileBox from '../containers/WorkExperienceProfileBox';
 import EducationProfileBox from '../containers/EducationProfileBox';
-import CertificateProfilxBox from '../containers/CertificateProfileBox';
+import CertificateProfileBox from '../containers/CertificateProfileBox';
 import AssetProfileBox from '../containers/AssetProfileBox';
+import Can from '../containers/Can';
 
 const Profile = ({ profile }) => (
   <div>
     <PageHeader icon="user" text="Profile" />
     <Grid centered>
       <Grid.Column computer={12} mobile={16}>
-        <GeneralProfileBox image={image} generalProfile={profile.general} />
+        <GeneralProfileBox generalProfile={profile.general} />
         <WorkProfileBox workProfile={profile.work} />
-        <EducationProfileBox educationsProfile={profile.educations} />
-        <CertificateProfilxBox certificatesProfile={profile.certificates} />
+        <Can activity="workExperienceView">
+          <WorkExperienceProfileBox workExperienceProfile={profile.workExperiences} />
+        </Can>
+        <Can activity="educateView">
+          <EducationProfileBox educationsProfile={profile.educations} />
+        </Can>
+        <CertificateProfileBox certificatesProfile={profile.certificates} />
         <AssetProfileBox assetsProfile={profile.assets} />
       </Grid.Column>
     </Grid>

@@ -5,7 +5,7 @@ const Asset = {};
 
 Asset.create = (asset, id) => (
   db.one(
-    'INSERT INTO assets (asset_type_id, name, description, own_flag, serial_number, created_user, updated_user, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id',
+    'INSERT INTO assets (asset_type_id, name, description, own_flag, serial_number, created_user, updated_user, status, picture) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id',
     [
       asset.assetTypeId,
       asset.name,
@@ -14,7 +14,8 @@ Asset.create = (asset, id) => (
       asset.serialNumber,
       id,
       id,
-      asset.status
+      'Active',
+      asset.picture
     ]
   )
 );
@@ -37,7 +38,7 @@ Asset.update = (asset, id) => (
 );
 
 Asset.findAll = () => (
-  db.manyOrNone('SELECT * FROM assets')
+  db.manyOrNone('SELECT * FROM assets WHERE own_flag = $1', ['Company'])
 );
 
 module.exports = Asset;

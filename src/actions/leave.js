@@ -23,8 +23,13 @@ export const createLeaveFailure = message => ({
   }
 });
 
-export const fetchLeaveRequest = () => ({
-  type: actionTypes.LEAVE_FETCH_REQUEST
+export const fetchLeaveRequest = (userId, year, month) => ({
+  type: actionTypes.LEAVE_FETCH_REQUEST,
+  payload: {
+    userId,
+    year,
+    month
+  }
 });
 
 export const fetchLeaveSuccess = leaves => ({
@@ -35,7 +40,7 @@ export const fetchLeaveSuccess = leaves => ({
 });
 
 export const fetchLeaveFailure = message => ({
-  type: actionTypes.LEAVE_FETCH_SUCCESS,
+  type: actionTypes.LEAVE_FETCH_FAILURE,
   payload: {
     message
   }
@@ -63,10 +68,35 @@ export const updateLeaveFailure = message => ({
   }
 });
 
-export const filterLeave = (key, value) => ({
-  type: actionTypes.FILTER_LEAVE,
+export const fetchLeaveHistoryRequest = (userId, year) => ({
+  type: actionTypes.LEAVE_HISTORY_FETCH_REQUEST,
   payload: {
-    key,
-    value
+    userId,
+    year
+  }
+});
+
+export const fetchLeaveHistorySuccess = leaveHistory => ({
+  type: actionTypes.LEAVE_HISTORY_FETCH_SUCCESS,
+  payload: {
+    leaveHistory
+  }
+});
+
+export const fetchLeaveHistoryFailure = message => ({
+  type: actionTypes.LEAVE_HISTORY_FETCH_FAILURE,
+  payload: {
+    message
+  }
+});
+
+export const fetchLeaveAllRequest = () => ({
+  type: actionTypes.LEAVE_FETCH_ALL_REQUEST
+});
+
+export const fetchLeaveAllSuccess = leaves => ({
+  type: actionTypes.LEAVE_FETCH_ALL_SUCCESS,
+  payload: {
+    leaves
   }
 });

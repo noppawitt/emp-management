@@ -19,8 +19,15 @@ import EditExamModal from './modals/EditExamModal';
 import ExamFullViewModal from './modals/ExamFullViewModal';
 import ActiveExamUserModal from './modals/ActiveExamUserModal';
 import GradingExamsModal from './modals/GradingExamsModal';
+import EditProfilePictureModal from './modals/EditProfilePictureModal';
+import EditProjectModal from './modals/EditProjectModal';
+import AddMemberModal from './modals/AddMemberModal';
+import AddTimesheetModal from './modals/AddTimesheetModal';
+import EditTimesheetModal from './modals/EditTimesheetModal';
+import AddWorkExperienceProfileModal from './modals/AddWorkExperienceProfileModal';
+import AddHolidayModal from './modals/AddHolidayModal';
 
-const ModalContainer = ({ name, props }) => {
+const renderModal = ({ name, props }) => {
   switch (name) {
     case modalNames.EDIT_GENERAL_PROFILE:
       return <EditGeneralProfileModal {...props} />;
@@ -40,6 +47,10 @@ const ModalContainer = ({ name, props }) => {
       return <AddEmployeeModal {...props} />;
     case modalNames.ADD_PROJECT:
       return <AddProjectModal {...props} />;
+    case modalNames.EDIT_PROJECT:
+      return <EditProjectModal />;
+    case modalNames.ADD_MEMBER:
+      return <AddMemberModal />;
     case modalNames.CREATE_LEAVE_REQUEST:
       return <CreateLeaveRequestModal {...props} />;
     case modalNames.CONFIRM:
@@ -56,24 +67,37 @@ const ModalContainer = ({ name, props }) => {
       return <ExamFullViewModal {...props} />;
     case modalNames.GRADING_EXAM:
       return <GradingExamsModal {...props} />;
+    case modalNames.VIEW_PROFILE_PICTURE:
+      return <ProfilePictureModal {...props} />;
+    case modalNames.EDIT_ASSET_PROFILE:
+      return <EditEducationProfileModal {...props} />;
+    case modalNames.EDIT_PROFILE_PICTURE:
+      return <EditProfilePictureModal {...props} />;
+    case modalNames.ADD_TIMESHEET:
+      return <AddTimesheetModal {...props} />;
+    case modalNames.EDIT_TIMESHEET:
+      return <EditTimesheetModal {...props} />;
+    case modalNames.ADD_WORK_EXPERIENCE_PROFILE:
+      return <AddWorkExperienceProfileModal />;
+    case modalNames.ADD_HOLIDAY:
+      return <AddHolidayModal />;
     default:
       return <div />;
   }
 };
 
-ModalContainer.defaultProps = {
-  name: null,
-  props: null
-};
+const ModalContainer = ({ stack }) => (
+  <div>
+    {stack.map(s => renderModal(s))}
+  </div>
+);
 
 ModalContainer.propTypes = {
-  name: PropTypes.string,
-  props: PropTypes.object
+  stack: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
-  name: state.modal.name,
-  props: state.modal.props
+  stack: state.modal.stack
 });
 
 export default connect(mapStateToProps)(ModalContainer);

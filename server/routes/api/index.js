@@ -30,6 +30,12 @@ const takeExam = require('./takeExam');
 const takeExamAgreement = require('./takeExamAgreement');
 
 router.use('/applicants', applicant);
+const masterATable = require('./masterTable');
+const workExperience = require('./workExperience');
+const leaveHistory = require('./leaveHistory');
+const toeic = require('./toeic');
+const promoteHistory = require('./promoteHistory');
+const line = require('./line');
 
 router.use('/employee-info', employeeInfo);
 
@@ -86,5 +92,16 @@ router.use('/exam', exam);
 router.use('/takeExam', takeExam);
 
 router.use('/takeexamagreement', takeExamAgreement);
+router.use('/master-table', masterATable);
+
+router.use('/work-experience', workExperience);
+
+router.use('/leave-history', leaveHistory);
+
+router.use('/toeic', toeic);
+
+router.use('/promote-history', promoteHistory);
+
+router.use('/line', line);
 
 module.exports = router;

@@ -1,9 +1,11 @@
 import * as actionTypes from '../constants/actionTypes';
 
-export const createEmployeeRequest = form => ({
+export const createEmployeeRequest = (form, resolve, reject) => ({
   type: actionTypes.EMPLOYEE_CREATE_REQUEST,
   payload: {
-    form
+    form,
+    resolve,
+    reject
   }
 });
 
@@ -40,5 +42,12 @@ export const filterEmployee = text => ({
   type: actionTypes.FILTER_EMPLOYEE,
   payload: {
     text
+  }
+});
+
+export const filterDepartment = departmentId => ({
+  type: actionTypes.FILTER_DEPARTMENT,
+  payload: {
+    departmentId
   }
 });

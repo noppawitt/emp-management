@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose, withState, withHandlers } from 'recompose';
-import { Image, Icon } from 'semantic-ui-react';
+import { Image, Icon, Transition } from 'semantic-ui-react';
 
 const wrapper = {
   position: 'relative',
   maxWidth: '150px',
   marginLeft: 'auto',
-  marginRight: 'auto'
+  marginRight: 'auto',
+  cursor: 'pointer'
 };
 
 const overlay = {
@@ -31,10 +32,15 @@ const stylecon = {
   marginTop: '10px'
 };
 
-const ProfilePicture = ({ image, isHover, onMouseEnter, onMouseLeave, onClick }) => (
-  <div style={wrapper}>
-    {isHover && <div style={overlay}><Icon style={stylecon} name="photo">&nbsp; Edit Profile</Icon></div>}
-    <Image style={{ display: 'block' }} src={image} size="small" centered onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} />
+const ProfilePicture = ({ image, isHover, onMouseEnter, onMouseLeave, onProfilePictureClick, onEditProfilePictureClick, editted }) => (
+  <div style={wrapper} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    {editted &&
+      <Transition visible={isHover} animation="fade" duration={500}>
+        <div style={overlay}>
+          <Icon style={stylecon} name="photo" onClick={onEditProfilePictureClick}>&nbsp; Update Picture</Icon>
+        </div>
+      </Transition>}
+    <Image style={{ display: 'block' }} src={image} size="small" centered onClick={onProfilePictureClick} />
   </div>
 );
 
@@ -43,7 +49,9 @@ ProfilePicture.propTypes = {
   isHover: PropTypes.bool.isRequired,
   onMouseEnter: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func.isRequired,
-  onClick: PropTypes.func.isRequired
+  onProfilePictureClick: PropTypes.func.isRequired,
+  onEditProfilePictureClick: PropTypes.func.isRequired,
+  editted: PropTypes.bool.isRequired
 };
 
 const enhance = compose(
