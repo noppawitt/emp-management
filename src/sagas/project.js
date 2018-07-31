@@ -11,7 +11,7 @@ import api from '../services/api';
 
 function* fetchProjectTask(action) {
   try {
-    const projects = yield call(api.fetchProject, action.payload.id);
+    const projects = yield call(api.fetchProject, action.payload.userId);
     yield put(fetchProjectSuccess(projects));
   }
   catch (error) {
@@ -21,7 +21,6 @@ function* fetchProjectTask(action) {
 
 function* createProjectTask(action) {
   try {
-    console.log(action.form);
     yield call(api.createProject, {
       project: action.payload.form
     });

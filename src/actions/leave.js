@@ -89,3 +89,14 @@ export const fetchLeaveHistoryFailure = message => ({
     message
   }
 });
+
+export const fetchLeaveAllRequest = () => ({
+  type: actionTypes.LEAVE_FETCH_ALL_REQUEST
+});
+
+export const fetchLeaveAllSuccess = leaves => ({
+  type: actionTypes.LEAVE_FETCH_ALL_SUCCESS,
+  payload: {
+    leaves
+  }
+});

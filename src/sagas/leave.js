@@ -9,7 +9,8 @@ import {
   updateLeaveFailure,
   updateLeaveSuccess,
   fetchLeaveHistoryFailure,
-  fetchLeaveHistorySuccess
+  fetchLeaveHistorySuccess,
+  fetchLeaveAllSuccess
 } from '../actions/leave';
 import { closeModal } from '../actions/modal';
 import api from '../services/api';
@@ -17,8 +18,11 @@ import api from '../services/api';
 function* createLeaveTask(action) {
   try {
     yield call(api.createLeave, { leaveRequest: action.payload.form });
+    const { userId } = action.payload.form;
     const leaves = yield call(api.fetchLeave, action.payload.form.userId, moment(action.payload.form.leaveFrom).format('YYYY'), moment(action.payload.form.leaveFrom).format('MM'));
     yield put(createLeaveSuccess(leaves));
+    const leaveHistory = yield call(api.fetchLeaveHistory, userId, moment().format('YYYY'));
+    yield put(fetchLeaveHistorySuccess(leaveHistory));
     yield put(closeModal());
     action.payload.resolve();
   }
@@ -49,8 +53,16 @@ function* updateLeaveTask(action) {
         code: action.payload.leave.code
       }]
     });
-    const leaves = yield call(api.fetchLeave, action.payload.userId, moment(action.payload.leaveFrom).format('YYYY'), moment(action.payload.leaveFrom).format('MM'));
-    yield put(updateLeaveSuccess(leaves));
+    if (action.payload.leave.status === 'Cancel') {
+      const leaves = yield call(api.fetchLeave, action.payload.userId, moment(action.payload.leaveFrom).format('YYYY'), moment(action.payload.leaveFrom).format('MM'));
+      yield put(updateLeaveSuccess(leaves));
+      const leaveHistory = yield call(api.fetchLeaveHistory, action.payload.userId, moment().format('YYYY'));
+      yield put(fetchLeaveHistorySuccess(leaveHistory));
+    }
+    else if (action.payload.leave.status === 'Approve' || action.payload.leave.status === 'Reject') {
+      const leaves = yield call(api.fetchLeaveAll);
+      yield put(fetchLeaveAllSuccess(leaves));
+    }
     yield put(closeModal());
   }
   catch (error) {
@@ -65,6 +77,16 @@ function* fetchLeaveHistoryTask(action) {
   }
   catch (error) {
     yield put(fetchLeaveHistoryFailure(error));
+  }
+}
+
+function* fetchLeaveAllTask(action) {
+  try {
+    const leaves = yield call(api.fetchLeaveAll);
+    yield put(fetchLeaveAllSuccess(leaves));
+  }
+  catch (error) {
+    yield put(fetchLeaveFailure(error));
   }
 }
 
@@ -84,11 +106,16 @@ function* watchFetchLeaveHistoryRequest() {
   yield takeEvery(actionTypes.LEAVE_HISTORY_FETCH_REQUEST, fetchLeaveHistoryTask);
 }
 
+function* watchFetchLeaveAllRequest() {
+  yield takeEvery(actionTypes.LEAVE_FETCH_ALL_REQUEST, fetchLeaveAllTask);
+}
+
 export default function* leaveSaga() {
   yield all([
     watchCreateLeaveRequest(),
     watchFetchLeaveRequest(),
     watchUpdateLeaveRequest(),
-    watchFetchLeaveHistoryRequest()
+    watchFetchLeaveHistoryRequest(),
+    watchFetchLeaveAllRequest()
   ]);
 }

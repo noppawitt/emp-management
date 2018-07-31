@@ -1,5 +1,6 @@
 const Project = require('../models/Project');
 const HasProject = require('../models/HasProject');
+const File = require('../models/File');
 
 const findHasProject = hasProjects => new Promise((resolve, reject) => {
   try {
@@ -63,9 +64,20 @@ exports.find = async (req, res, next) => {
           Project.findMemberProject(req.query.id)
             .then((members) => {
               project.members = members;
+            })
+            .then(() => File.findByProjectId(req.query.id))
+            .then((files) => {
+              project.files = files;
               res.json(project);
             })
             .catch(next);
+        })
+        .catch(next);
+    }
+    else if (req.query.month && req.query.year) {
+      Project.findByMonthAndYear(req.query.month, req.query.year)
+        .then((projects) => {
+          res.json(projects);
         })
         .catch(next);
     }
@@ -85,25 +97,28 @@ exports.find = async (req, res, next) => {
         })
         .catch(next);
     }
+    else if (req.query.userId) {
+      HasProject.findByUserId(req.query.userId)
+        .then((hasProjects) => {
+          res.json(hasProjects);
+        })
+        .catch(next);
+    }
     else if (req.query.id) {
-      const projects = await HasProject.findByUserId(req.user.id);
-      if (projects.some(project => project.projectId === req.query.id)) {
-        Project.findById(req.query.id)
-          .then((project) => {
-            Project.findMemberProject(req.params.id)
-              .then((members) => {
-                project.members = members;
-                res.json(project);
-              })
-              .catch(next);
-          })
-          .catch(next);
-      }
-      else {
-        res.status(401).json({
-          message: `You don't have permission to do this.`
-        });
-      }
+      Project.findById(req.query.id)
+        .then((project) => {
+          Project.findMemberProject(req.query.id)
+            .then((members) => {
+              project.members = members;
+            })
+            .then(() => File.findByProjectId(req.query.id))
+            .then((files) => {
+              project.files = files;
+              res.json(project);
+            })
+            .catch(next);
+        })
+        .catch(next);
     }
     else {
       const hasProjects = await HasProject.findByUserId(req.user.id);

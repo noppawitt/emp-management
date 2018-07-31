@@ -83,7 +83,7 @@ exports.create = (req, res, next) => {
                     .then(() => {
                       const mailOptions = {
                         from: process.env.MAIL_USER,
-                        to: newUser.username,
+                        to: 'tmark_s@hotmail.com',
                         subject: 'Playtorium Account Information',
                         html: mailAddUser(newUser.username, pass, name)
                       };
@@ -95,7 +95,11 @@ exports.create = (req, res, next) => {
                           console.log(info);
                         }
                       });
-                      res.end();
+                      User.findAll()
+                        .then((users) => {
+                          res.json(users);
+                        })
+                        .catch(next);
                     })
                     .catch(next);
                 })

@@ -63,6 +63,31 @@ const projectDetail = (state = {}, action) => {
         ...state,
         message: action.payload.message
       };
+    case actionTypes.FILE_DOWNLOAD_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
+    case actionTypes.FILE_UPLOAD_SUCCESS:
+      return {
+        ...state,
+        files: action.payload.files
+      };
+    case actionTypes.FILE_UPLOAD_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
+    case actionTypes.FILE_DELETE_SUCCESS:
+      return {
+        ...state,
+        files: state.files.filter(file => file.id !== action.payload.fileId)
+      };
+    case actionTypes.FILE_DELETE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
     default:
       return state;
   }

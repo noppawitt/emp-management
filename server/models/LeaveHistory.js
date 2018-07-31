@@ -13,13 +13,13 @@ LeaveHistory.create = (leave, id) => (
       leave.annualLeaveRemain,
       leave.sickLeaveRemain,
       leave.personalLeaveRemain,
-      leave.OrdinationLeave
+      leave.ordinationLeaveRemain
     ]
   )
 );
 
 LeaveHistory.findByUserIdAndYear = (userId, year) => (
-  db.one('SELECT * FROM leave_history WHERE user_id = $1 AND year = $2', [userId, year])
+  db.oneOrNone('SELECT * FROM leave_history WHERE user_id = $1 AND year = $2', [userId, year])
 );
 
 module.exports = LeaveHistory;

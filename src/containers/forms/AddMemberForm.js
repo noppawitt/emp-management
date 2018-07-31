@@ -13,6 +13,8 @@ const validate = (values) => {
   const errors = {};
   errors.userId = validator.required(values.userId);
   errors.role = validator.required(values.role);
+  errors.startDate = validator.required(values.startDate);
+  errors.endDate = validator.required(values.endDate);
   return errors;
 };
 
@@ -21,6 +23,13 @@ const AddMemberForm = ({ handleSubmit, submitting, employeesOptions }) => (
     <Form.Group widths="equal">
       <Field name="userId" as={Form.Dropdown} component={Input} search selection options={employeesOptions} label="Member" placeholder="Member" disabled={submitting} />
       <Field name="role" as={Form.Input} component={Input} label="Role" placeholder="Role" disabled={submitting} />
+    </Form.Group>
+    <Form.Group widths="equal">
+      <Field name="startDate" as={Form.Input} component={Input} type="date" label="Start Date" disabled={submitting} />
+      <Field name="endDate" as={Form.Input} component={Input} type="date" label="End Date" disabled={submitting} />
+    </Form.Group>
+    <Form.Group widths="equal">
+      <Field name="amount" as={Form.Input} component={Input} label="Amount" disabled={submitting} />
     </Form.Group>
   </Form>
 );

@@ -130,7 +130,7 @@ class Timesheet extends React.Component {
                 style={{ borderStyle: 'solid', borderColor: color, backgroundColor: 'white', borderWidth: '1px' }}
               >
                 <Button.Content visible><font color={color} >{Math.ceil(hour * 100) / 100} Hours</font></Button.Content>
-                <Button.Content hidden > <Icon color={iconcolor} name="pencil alternate" /> </Button.Content>
+                <Button.Content hidden > <Icon color={iconcolor} name="pencil" /> </Button.Content>
               </Button>}
             flowing
             on="click"
@@ -197,7 +197,7 @@ class Timesheet extends React.Component {
                   style={{ borderStyle: 'solid', borderColor: this.state.textWorkcolor, backgroundColor: 'white', borderWidth: '1px' }}
                 >
                   <Button.Content visible><font color={this.state.textWorkcolor}>{Math.ceil(hour * 100) / 100} Hours</font></Button.Content>
-                  <Button.Content hidden > <Icon color={this.state.iconBluecolor} name="pencil alternate" /> </Button.Content>
+                  <Button.Content hidden > <Icon color={this.state.iconBluecolor} name="pencil" /> </Button.Content>
                 </Button>}
               flowing
               on="click"

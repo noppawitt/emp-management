@@ -6,23 +6,29 @@ import { Field, FieldArray, reduxForm } from 'redux-form';
 import { Grid, Form, Segment, Icon, Button } from 'semantic-ui-react';
 import moment from 'moment';
 import Input from '../../components/Input';
-import * as validator from '../../utils/validator';
 import { getFormInitialValues } from '../../selectors/timesheet';
 
 const validate = (values) => {
   const errors = {};
-  errors.startDate = validator.dateBefore(values.startDate, values.endDate);
-  errors.endDate = validator.dateAfter(values.endDate, values.startDate);
-  if (values.timesheets.length) {
-    console.log('not have timesheets');
-  } else {
+  if (!values.timesheets || !values.timesheets.length) {
+    errors.timesheets = { _error: 'At least one task must be filled' };
+  }
+  else {
     const timeSheetArrayErrors = [];
     values.timesheets.forEach((task, taskIndex) => {
-      const taskErrors = {}
-      taskErrors.timeIn = validator.timeBefore(task.timeIn, task.timeOut);
-      taskErrors.timeOut = validator.timeAfter(task.timeOut, task.timeIn);
-      timeSheetArrayErrors[taskIndex] = taskErrors;
+      const taskErrors = {};
+      if (task.timeIn >= task.timeOut) {
+        taskErrors.timeIn = { _error: 'start time must be before end time' };
+        timeSheetArrayErrors[taskIndex] = taskErrors;
+      }
+      if (task.timeIn >= task.timeOut) {
+        taskErrors.timeOut = { _error: 'end time must be after start time' };
+        timeSheetArrayErrors[taskIndex] = taskErrors;
+      }
     });
+    if (timeSheetArrayErrors.length) {
+      errors.timesheets = timeSheetArrayErrors;
+    }
   }
   return errors;
 };

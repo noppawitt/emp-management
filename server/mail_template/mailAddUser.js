@@ -1,4 +1,4 @@
-module.exports = (username, password) => (
+module.exports = (username, password, name) => (
   `<html>
     <head>
         <title>Playtorium Solution</title>
@@ -31,7 +31,7 @@ module.exports = (username, password) => (
                             <div style="background-color: black; height: auto;">
                                 <h2 style="color: rgb(255, 255, 255); text-align: center;">Your Registration details</h2>
                             </div>
-                        <h2> ยินดีต้อนรับ คุณ </h2>
+                        <h2> ยินดีต้อนรับ คุณ${name}</h2>
                         <h2> นี่คือ Username และ Password สำหรับเข้าใช้งานระบบของบริษัท </h2>
                         <h2 style="margin-left: 1em">Username: ${username}</h2>
                         <h2 style="margin-left: 1em">Password: ${password}</h2>

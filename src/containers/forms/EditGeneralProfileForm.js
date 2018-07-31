@@ -49,6 +49,13 @@ const EditGeneralProfileForm = ({ handleSubmit, can }) => (
       label="Nick name"
       validate={validator.required}
     />
+    <Field
+      name="citizenId"
+      component={Input}
+      as={Form.Input}
+      label="Citizen ID"
+      validate={[validator.required, validator.number, validator.digiLength13]}
+    />
     {can.employeeInfoEditAll &&
     <Field
       name="birthday"

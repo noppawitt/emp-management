@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const EmployeeInfoController = require('../../controllers/EmployeeInfoController');
 const multer = require('multer');
 const mime = require('mime/lite');
+const EmployeeInfoController = require('../../controllers/EmployeeInfoController');
 const { can } = require('../../middlewares');
 
 const storage = multer.diskStorage({

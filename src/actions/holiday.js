@@ -1,66 +1,62 @@
 import * as actionTypes from '../constants/actionTypes';
 
 export const createHolidayRequest = (form, resolve, reject) => ({
+  type: actionTypes.HOLIDAY_CREATE_REQUEST,
   payload: {
-    type: actionTypes.HOLIDAY_CREATE_REQUEST,
     form,
     resolve,
     reject
   }
 });
 
-export const createHolidaySuccess = holiday => ({
-  payload: {
-    type: actionTypes.HOLIDAY_CREATE_SUCCESS,
-    holiday
-  }
+export const createHolidaySuccess = () => ({
+  type: actionTypes.HOLIDAY_CREATE_SUCCESS,
 });
 
 export const createHolidayFailure = message => ({
+  type: actionTypes.HOLIDAY_CREATE_FAILURE,
   payload: {
-    type: actionTypes.HOLIDAY_CREATE_FAILURE,
     message
   }
 });
 
-export const fetchHolidayRequest = (year, month) => ({
+export const fetchHolidayRequest = (year, month = null) => ({
+  type: actionTypes.HOLIDAY_FETCH_REQUEST,
   payload: {
-    type: actionTypes.HOLIDAY_FETCH_REQUEST,
     year,
     month
   }
 });
 
 export const fetchHolidaySuccess = holidays => ({
+  type: actionTypes.HOLIDAY_FETCH_SUCCESS,
   payload: {
-    type: actionTypes.HOLIDAY_FETCH_SUCCESS,
     holidays
   }
 });
 
 export const fetchHolidayFailure = message => ({
+  type: actionTypes.HOLIDAY_FETCH_FAILURE,
   payload: {
-    type: actionTypes.HOLIDAY_FETCH_FAILURE,
     message
   }
 });
 
-export const deleteHolidayRequest = holidayId => ({
+export const deleteHolidayRequest = (id, year) => ({
+  type: actionTypes.HOLIDAY_DELETE_REQUEST,
   payload: {
-    type: actionTypes.HOLIDAY_DELETE_REQUEST,
-    holidayId
+    id,
+    year
   }
 });
 
 export const deleteHolidaySuccess = () => ({
-  payload: {
-    type: actionTypes.HOLIDAY_DELETE_SUCCESS,
-  }
+  type: actionTypes.HOLIDAY_DELETE_SUCCESS
 });
 
 export const deleteHolidayFailure = message => ({
+  type: actionTypes.HOLIDAY_DELETE_FAILURE,
   payload: {
-    type: actionTypes.HOLIDAY_DELETE_FAILURE,
     message
   }
 });

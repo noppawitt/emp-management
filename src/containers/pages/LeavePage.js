@@ -62,7 +62,7 @@ const mapDispatchToProps = dispatch => ({
   fetchLeaveHistory: (userId, year) => dispatch(fetchLeaveHistoryRequest(userId, year)),
   onAddClick: () => dispatch(openModal(modalNames.CREATE_LEAVE_REQUEST)),
   onCancelClick: (userId, leave) => dispatch(openModal(modalNames.CONFIRM, {
-    header: 'Cancel confirmation',
+    header: 'Cancel Confirmation',
     description: 'Are you sure to cancel this leave request ?',
     onConfirm: () => dispatch(updateLeaveRequest(userId, { ...leave, status: 'Cancel' }))
   }))
@@ -75,6 +75,15 @@ const enhance = compose(
       const { fetchLeave, fetchLeaveHistory, userId, year, month } = this.props;
       fetchLeave(userId, year, month);
       fetchLeaveHistory(userId, year);
+    },
+    componentDidUpdate(prevProps) {
+      const { fetchLeaveHistory, userId, year } = this.props;
+      if (prevProps.leaveHistory.annualLeaveRemain !== this.props.leaveHistory.annualLeaveRemain
+        || prevProps.leaveHistory.personalLeaveRemain !== this.props.leaveHistory.personalLeaveRemain
+        || prevProps.leaveHistory.sickLeaveRemain !== this.props.leaveHistory.sickLeaveRemain
+        || prevProps.leaveHistory.ordinationLeaveRemain !== this.props.leaveHistory.ordinationLeaveRemain) {
+        fetchLeaveHistory(userId, year);
+      }
     }
   })
 );

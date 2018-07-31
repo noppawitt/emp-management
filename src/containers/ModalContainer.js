@@ -19,8 +19,12 @@ import AddMemberModal from './modals/AddMemberModal';
 import AddTimesheetModal from './modals/AddTimesheetModal';
 import EditTimesheetModal from './modals/EditTimesheetModal';
 import AddWorkExperienceProfileModal from './modals/AddWorkExperienceProfileModal';
+<<<<<<< HEAD
 import ApproveRejectModal from './modals/ApproveRejectModal';
 // import CreateErpRequestModal from './modals/CreateErpRequestModal';
+=======
+import AddHolidayModal from './modals/AddHolidayModal';
+>>>>>>> dcda0e315c1fba4c4e757b3e1fa3e94c228e24ec
 
 const renderModal = ({ name, props }) => {
   switch (name) {
@@ -64,6 +68,8 @@ const renderModal = ({ name, props }) => {
       return <ApproveRejectModal {...props} />;
     // case modalNames.CREATE_ERP_REQUEST:
     //   return <CreateErpRequestModal {...props} />;
+    case modalNames.ADD_HOLIDAY:
+      return <AddHolidayModal />;
     default:
       return <div />;
   }

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link, NavLink } from 'react-router-dom';
 import { Menu, Container, Dropdown, Image } from 'semantic-ui-react';
 import bigLogo from '../images/big-logo.jpg';
+import Can from '../containers/Can';
 
 const Navbar = ({ userId, username, onLogout }) => (
   <div>
@@ -31,6 +32,9 @@ const Navbar = ({ userId, username, onLogout }) => (
           <Dropdown item pointing text={username}>
             <Dropdown.Menu>
               <Dropdown.Item text="Profile" as={Link} to={`/profile/${userId}`} />
+              <Can activity="leaveRequestApprove">
+                <Dropdown.Item text="Leave Approval" as={Link} to="/leave-approval" />
+              </Can>
               <Dropdown.Item text="Log out" onClick={onLogout} />
             </Dropdown.Menu>
           </Dropdown>

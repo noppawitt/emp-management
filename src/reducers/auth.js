@@ -64,8 +64,7 @@ const auth = (state = initialState, action) => {
       };
     case actionTypes.LOGOUT:
       return {
-        ...state,
-        isAuthenticated: false
+        initialState
       };
     default:
       return state;

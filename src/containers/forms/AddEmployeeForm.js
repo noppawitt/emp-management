@@ -111,7 +111,6 @@ const AddEmployeeForm = ({ handleSubmit, submitting, masterTable, setDefaultProb
       disabled={submitting}
       validator={[validator.required, validator.date]}
     />
-    <button type="submit">test</button>
   </Form>
 );
 

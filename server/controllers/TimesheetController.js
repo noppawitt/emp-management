@@ -20,6 +20,9 @@ const calTotalHours = (timeIn, timeOut) => new Promise((resolve, reject) => {
       case '18:30':
         timeOut = '18:00';
         break;
+      case '00:00':
+        timeOut = '24:00';
+        break;
       default:
         break;
     }
@@ -156,7 +159,11 @@ exports.delete = (req, res, next) => {
       if (timesheet.userId === req.user.id) {
         Timesheet.delete(req.body.id)
           .then(() => {
-            res.json('Success');
+            Timesheet.findByUserId(req.body.id)
+              .then((timesheets) => {
+                res.json(timesheets);
+              })
+              .catch(next);
           })
           .catch(next);
       }
