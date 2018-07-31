@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { Field, reduxForm } from 'redux-form';
-import { rejectErpRequest } from '../../actions/erpapprove';
 import Input from '../../components/Input';
+
 // import { handleReduxFormSubmit } from '../../utils/helper';
 // const renderTextArea = ({input, meta: { touched, error, warning }}) => (
 //     <div>
@@ -17,17 +17,15 @@ import Input from '../../components/Input';
 //     </div>
 // );
 
-const ApproveRejectForm = ({ id, onSubmit }) => (
+const ApproveRejectForm = ({ onSubmit }) => (
   <Form >
     <Form.Group onSubmit={onSubmit} widths="equal" >
       <Field name="comment" as={Form.TextArea} component={Input} />
-      {/* <Field name="id" as={Form.Input} component={Input} value={id} placeholeder="..." /> */}
     </Form.Group>
   </Form>
 );
 
 ApproveRejectForm.propTypes = {
-  id: PropTypes.number.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
 
@@ -37,7 +35,8 @@ const mapStateToProps = state => ({
     id: state.modal.stack[1].props.id,
     type: state.modal.stack[1].props.type
   }
-});// const mapDispatchToProps = dispatch => ({
+});
+// const mapDispatchToProps = dispatch => ({
 //   onClose: () => dispatch(closeModal()),
 //   onClick: () => dispatch(submit('rejectApprove'))
 // });

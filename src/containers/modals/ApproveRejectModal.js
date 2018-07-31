@@ -36,7 +36,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onClose: () => dispatch(closeModal()),
-  onSubmit: values => {console.log(values);handleReduxFormSubmit(dispatch, rejectErpRequest, values)},
+  onSubmit: values => handleReduxFormSubmit(dispatch, rejectErpRequest, values),
   onClick: () => dispatch(submit('ApproveReject'))
 });
 
