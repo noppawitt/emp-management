@@ -7,7 +7,7 @@
   height: 100%;
   padding: 3%;
 }
-.main-container div{
+.main-container div:not(className='react-datepicker-wrapper'){
   margin-top: 2%;
 }
 .main-container table{
@@ -34,4 +34,37 @@
 }
 .ui.dimmer {
   position: fixed;
+}
+i.calendar.outline.icon.large.icon{
+  line-height: 0.83em; 
+}
+
+.calendar-container {
+  position: relative;
+  overflow: visible;
+}
+
+.react-datepicker-component {
+  position: relative !important;
+  top: 0 !important;
+}
+
+.react-datepicker-input {
+  position: relative !important;
+  background: white !important;
+  border: 0 !important;
+  font-weight: normal !important;
+  width: 80% !important;
+}
+
+.react-datepicker-component .react-datepicker-input input {
+  font-weight: normal !important;
+  padding-left: 0 !important;
+}
+
+.react-datepicker__input-container input {
+  border: 1px solid rgb(190, 190, 190);
+  padding: 3px;
+  border-radius: 4px;
+  outline: none;
 }

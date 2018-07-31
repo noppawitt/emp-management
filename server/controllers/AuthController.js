@@ -14,7 +14,9 @@ exports.signin = (req, res, next) => {
             .then((info)=>{
               const accessToken = jwt.sign({
                 id: user.id,
-                username: user.username
+                username: user.username,
+                type: user.type,
+                name: info.firstName + ' ' + info.lastName,
               }, jwtSecret, { expiresIn: 3600 });
               const refreshToken = jwt.sign({
                 id: user.id,

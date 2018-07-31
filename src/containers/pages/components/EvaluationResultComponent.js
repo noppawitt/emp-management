@@ -1,6 +1,8 @@
 import React from 'react';
 import './css/EvaluationResultComponent.css';
 import moment from 'moment';
+import DatePicker from 'react-datepicker';
+import { Icon } from 'semantic-ui-react';
 
 const validationMessage = {
     passProDateVilidation: "Pass Probation Date must after Start Date.",
@@ -182,7 +184,7 @@ class EvaluationResultComponent extends React.Component {
                                     &nbsp;Pass probationary period.Effective date on
                                 </td>
                                 <td>
-                                    <input type='date' value={this.state.passProDate} onChange={(event) => {
+                                    {/* <input type='date' value={this.state.passProDate} onChange={(event) => {
                                         if (event.target.value == '' || moment(event.target.value).isBefore(this.state.startDate))
                                             alert(validationMessage.passProDateVilidation);
                                         else {
@@ -199,7 +201,24 @@ class EvaluationResultComponent extends React.Component {
 
                                             this.updateParentComponent();
                                         }
-                                    }} />
+                                    }} /> */}
+                                    <DatePicker selected={moment(this.state.passProDate)}
+                                        onChangeRaw={(event) => {
+                                            console.log("test1");
+                                            console.log(event.target.value);
+                                            event.target.value = moment(this.state.passProDate).format('DD/MM/YYYY');
+                                        }}
+                                        onChange={(date) => {
+                                            console.log(this.state.endProbationDate)
+                                            this.state = {
+                                                ...this.state,
+                                                passProDate: date.format('YYYY-MM-DD')
+                                            }
+                                            this.updateParentComponent();
+                                        }}
+                                        id={'passProDatepicker'}
+                                        disabled={this.props.mode != 'edit'} dateFormat={'DD/MM/YYYY'} minDate={moment(this.state.startDate).add(1, 'days')} />
+                                    {this.props.mode =='edit' ?<Icon name='calendar outline icon' size="large" onClick={() => { document.getElementById('passProDatepicker').click() }} /> :''}
                                 </td>
                             </tr>
                             <tr>
@@ -342,17 +361,34 @@ class EvaluationResultComponent extends React.Component {
                                                 </td>
                                                 <td>
                                                     {!this.state.continued ?
-                                                        <input type='date' value={this.state.terminationDate ? this.state.terminationDate : ''} onChange={(event) => {
-                                                            if (moment(event.target.value).isAfter(this.state.passProDate)) {
+                                                        // <input type='date' value={this.state.terminationDate ? this.state.terminationDate : ''} onChange={(event) => {
+                                                        //     if (moment(event.target.value).isAfter(this.state.passProDate)) {
+                                                        //         this.state = {
+                                                        //             ...this.state,
+                                                        //             terminationDate: event.target.value
+                                                        //         };
+                                                        //         this.updateParentComponent();
+                                                        //     } else
+                                                        //         alert(validationMessage.terminationDateValidation);
+                                                        // }} disabled={this.state.continued} />
+                                                        <DatePicker selected={this.state.terminationDate ? moment(this.state.terminationDate) : null}
+                                                            onChangeRaw={(event) => {
+                                                                console.log("test1");
+                                                                console.log(event.target.value);
+                                                                event.target.value = moment(this.state.terminationDate).format('DD/MM/YYYY');
+                                                            }}
+                                                            onChange={(date) => {
+                                                                console.log(this.state.endProbationDate)
                                                                 this.state = {
                                                                     ...this.state,
-                                                                    terminationDate: event.target.value
-                                                                };
+                                                                    terminationDate: date.format('YYYY-MM-DD')
+                                                                }
                                                                 this.updateParentComponent();
-                                                            } else
-                                                                alert(validationMessage.terminationDateValidation);
-                                                        }} disabled={this.state.continued} />
+                                                            }}
+                                                            id={'terminateDatepicker'}
+                                                            disabled={this.props.mode != 'edit'} dateFormat={'DD/MM/YYYY'} minDate={moment(this.state.passProDate).add(1, 'days')} />
                                                         : ''}
+                                                     {!this.state.continued && this.props.mode =='edit' ? <Icon name='calendar outline icon' size="large" onClick={() => { document.getElementById('terminateDatepicker').click() }} /> : ''}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -370,14 +406,31 @@ class EvaluationResultComponent extends React.Component {
                                                 </td>
                                                 <td>
                                                     {this.state.continued ?
-                                                        <input type='date' value={this.state.continuedDate ? this.state.continuedDate : ''} onChange={(event) => {
-                                                            if (moment(event.target.value).isAfter(this.state.passProDate)) {
-                                                                this.state = { ...this.state, continuedDate: event.target.value };
+                                                        // <input type='date' value={this.state.continuedDate ? this.state.continuedDate : ''} onChange={(event) => {
+                                                        //     if (moment(event.target.value).isAfter(this.state.passProDate)) {
+                                                        //         this.state = { ...this.state, continuedDate: event.target.value };
+                                                        //         this.updateParentComponent();
+                                                        //     } else
+                                                        //         alert(validationMessage.continuedDateValidation);
+                                                        // }} disabled={!this.state.continued} />
+                                                        <DatePicker selected={this.state.continuedDate ? moment(this.state.continuedDate) : null}
+                                                            onChangeRaw={(event) => {
+                                                                console.log("test1");
+                                                                console.log(event.target.value);
+                                                                event.target.value = moment(this.state.continuedDate).format('DD/MM/YYYY');
+                                                            }}
+                                                            onChange={(date) => {
+                                                                console.log(this.state.endProbationDate)
+                                                                this.state = {
+                                                                    ...this.state,
+                                                                    continuedDate: date.format('YYYY-MM-DD')
+                                                                }
                                                                 this.updateParentComponent();
-                                                            } else
-                                                                alert(validationMessage.continuedDateValidation);
-                                                        }} disabled={!this.state.continued} />
+                                                            }}
+                                                            id={'continuedDatepicker'}
+                                                            disabled={this.props.mode != 'edit'} dateFormat={'DD/MM/YYYY'} minDate={moment(this.state.passProDate).add(1, 'days')} />
                                                         : ''}
+                                                     {this.state.continued && this.props.mode =='edit' ? <Icon name='calendar outline icon' size="large" onClick={() => { document.getElementById('continuedDatepicker').click() }} /> : ''}
                                                 </td>
                                             </tr>
                                         </table>

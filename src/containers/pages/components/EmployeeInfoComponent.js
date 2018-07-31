@@ -1,6 +1,8 @@
 import React from 'react';
 import './css/EmployeeInfoComponent.css'
 import moment from 'moment';
+import DatePicker from 'react-datepicker';
+import { Icon } from 'semantic-ui-react';
 
 const validationMessage = {
     endProbationDateValidation: "Probation End Date must not before Probation Start Date."
@@ -18,7 +20,6 @@ class EmployeeInfo extends React.Component {
         };
     }
 
-
     componentWillReceiveProps(props) {
         this.setState({ endProbationDate: props.endProbationDate })
     }
@@ -26,60 +27,68 @@ class EmployeeInfo extends React.Component {
     render() {
         return (
             <div className='info-container' >
-              {this.props.addSelf && this.props.mode=='edit'?
-                <table>
-                    <tr>
-                        <td colSpan='4' className='underline'>
-                            <span className='blue-text'>Information</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Supervisor:</td>
-                        <td>{this.state.supervisor}</td>
-                        <td>{this.state.showEndProDate ? 'Probatoin ' : ''} Start Date</td>
-                        <td>{this.state.startDate.format('DD/MM/YYYY')}</td>
-                    </tr>
-                </table>
-                :
-                <table>
-                    <tr>
-                        <td colSpan='4' className='underline'>
-                            <span className='blue-text'>Information</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Name:</td>
-                        <td>{this.state.name}</td>
-                        <td>Department:</td>
-                        <td>{this.state.department}</td>
-                    </tr>
-                    <tr>
-                        <td>Position:</td>
-                        <td>{this.state.position}</td>
-                        <td>EmployeeID:</td>
-                        <td>{this.state.employeeID}</td>
-                    </tr>
-                    <tr>
-                        <td>Level:</td>
-                        <td>{this.state.level}</td>
-                        <td>{this.state.showEndProDate ? 'Probatoin ' : ''} Start Date</td>
-                        <td>{this.state.startDate.format('DD/MM/YYYY')}</td>
-                    </tr>
-                    <tr>
-                        <td>Supervisor:</td>
-                        <td>{this.state.supervisor}</td>
-                        <td>{this.state.showEndProDate ? 'Probation End Date:' : ''}</td>
-                        <td>{this.state.showEndProDate ? <input type='date' value={this.state.endProbationDate} onChange={(event) => {
-                            console.log("test1");
-                            console.log(event.target.value);
-                            if (event.target.value == '' || moment(event.target.value).isBefore(this.state.startDate))
-                                alert(validationMessage.endProbationDateValidation);
-                            else
-                                this.props.onChange(event.target.value);
-                        }} disabled={this.props.mode != 'edit'} /> : ''}</td>
-                    </tr>
-                </table>
-              }
+                {this.props.addSelf && this.props.mode == 'edit' ?
+                    <table>
+                        <tr>
+                            <td colSpan='4' className='underline'>
+                                <span className='blue-text'>Information</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Supervisor:</td>
+                            <td>{this.state.supervisor}</td>
+                            <td>{this.state.showEndProDate ? 'Probatoin ' : ''} Start Date</td>
+                            <td>{this.state.startDate.format('DD/MM/YYYY')}</td>
+                        </tr>
+                    </table>
+                    :
+                    <table>
+                        <tr>
+                            <td colSpan='4' className='underline'>
+                                <span className='blue-text'>Information</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Name:</td>
+                            <td>{this.state.name}</td>
+                            <td>Department:</td>
+                            <td>{this.state.department}</td>
+                        </tr>
+                        <tr>
+                            <td>Position:</td>
+                            <td>{this.state.position}</td>
+                            <td>EmployeeID:</td>
+                            <td>{this.state.employeeID}</td>
+                        </tr>
+                        <tr>
+                            <td>Level:</td>
+                            <td>{this.state.level}</td>
+                            <td>{this.state.showEndProDate ? 'Probatoin ' : ''} Start Date</td>
+                            <td>{this.state.startDate.format('DD/MM/YYYY')}</td>
+                        </tr>
+                        <tr>
+                            <td>Supervisor:</td>
+                            <td>{this.state.supervisor}</td>
+                            <td>{this.state.showEndProDate ? 'Probation End Date:' : ''}</td>
+                            <td>{this.state.showEndProDate ?
+                                <DatePicker selected={moment(this.state.endProbationDate)}
+                                    onChangeRaw={(event) => {
+                                        console.log("test1");
+                                        console.log(event.target.value);
+                                        event.target.value = moment(this.state.endProbationDate).format('DD/MM/YYYY');
+                                    }}
+                                    onChange={(date) => {
+                                        console.log(this.state.endProbationDate)
+                                        if (date == null) {
+                                            this.props.onChange(null);
+                                        } else this.props.onChange(date.format('YYYY-MM-DD'));
+                                    }}
+                                    id={'probationEndDatepicker'}
+                                    disabled={this.props.mode != 'edit'} dateFormat={'DD/MM/YYYY'} className='sds' minDate={moment(this.state.startDate).add(1, 'days')} /> : ''}
+                                {this.state.showEndProDate && this.props.mode =='edit' ? <Icon name='calendar outline icon' size="large" onClick={() => { document.getElementById('probationEndDatepicker').click() }} />:''}</td>
+                        </tr>
+                    </table>
+                }
             </div>
         );
     }

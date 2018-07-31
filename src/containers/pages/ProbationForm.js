@@ -7,6 +7,7 @@ import EvaluationResultComponent from './components/EvaluationResultComponent';
 import SupervisorCommentComponent from './components/SupervisorCommentComponent';
 import logoBack from './pic/logo2.png'
 import logo from './pic/logo.png'
+import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 const questions = ['ความรู้ในงานและการพัฒนาตัวเอง (Knowledge and Improvement)',
     'คุณภาพงาน (Quality of Work)',
