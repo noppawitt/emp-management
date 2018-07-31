@@ -19,7 +19,7 @@ exports.update = (req, res, next) => {
 };
 
 exports.findByUserId = (req, res, next) => {
-  HasProject.findByUserId(req.user.id)
+  HasProject.findByUserId(req.query.id)
     .then((hasProjects) => {
       res.json(hasProjects);
     })

@@ -1,25 +1,11 @@
 const TakeExam = require('../models/TakeExam');
 const mail = require('../mail');
-
-exports.fetchEPRList = (req, res, next) => {
-  TakeExam.fetchEPRList(req.query.id)
-    .then((EPRList) => {
-      res.json(EPRList);
-    })
-    .catch(next);
-};
-
-exports.fetchExamId = (req, res, next) => {
-  TakeExam.fetchExamId()
-    .then((ExamIdObject) => {
-      res.json(ExamIdObject);
-    })
-    .catch(next);
-};
+const moment = require('moment');
 
 exports.fetchRandomExIdList = (req, res, next) => {
-  TakeExam.fetchRandomExIdList(req.body.id, req.body.testDate.toString())
+  TakeExam.fetchRandomExIdList(req.body.rowId.toString())
     .then((List) => {
+      console.log(List);
       res.json(List);
     })
     .catch(next);
@@ -36,16 +22,14 @@ exports.fetchExamSpecifyId = (req, res, next) => {
 
 exports.updateAnswer = (req, res, next) => {
   const object = req.body;
-  TakeExam.findUploadedAnswer(object.id, 'existing check', object.testDate)
-    .then((isExist) => {
-      // if no old answer exist so create it first
-      if (!isExist) {
-        TakeExam.createBufferAnswer(object.id, object.answerList, object.testDate)
-          .then(() => { })
+  TakeExam.findUploadedAnswer(object.rowId.toString(), 'existing check')
+    .then((retval) => {
+      if (!retval.isExist) {
+        TakeExam.createBufferAnswer(object.id, object.answerList, object.testDate, moment().format('YYYY-MM-DD'), object.rowId)
+          .then()
           .catch(next);
       }
-      // after we make sure it exist update it
-      TakeExam.updateAnswer(object.id, object.answerList, new Date(), object.testDate)
+      TakeExam.updateAnswer(object.rowId.toString(), object.answerList, new Date())
         .then((result) => {
           if (result === null) res.json('Update Complete');
           else res.json('Something wrong :'.concat(result));
@@ -57,15 +41,11 @@ exports.updateAnswer = (req, res, next) => {
 
 exports.findUploadedAnswer = (req, res, next) => {
   const object = req.body;
-  TakeExam.findUploadedAnswer(object.id, 'progress check', object.testDate.toString())
+  TakeExam.findUploadedAnswer(object.rowId.toString(), 'progress check')
     .then((result) => {
-      // if result null > not exist > create it 1st
-      // initialize answerList with empty list
       if (!result) {
-        TakeExam.createBufferAnswer(object.id, object.answerList, object.testDate, object.startTime)
-          .then((createresult) => {
-            res.json(createresult);
-          })
+        TakeExam.createBufferAnswer(object.id, object.answerList, object.testDate, object.startTime, object.rowId)
+          .then()
           .catch(next);
       }
       else res.json(result);
@@ -74,38 +54,31 @@ exports.findUploadedAnswer = (req, res, next) => {
 };
 
 exports.updateSubmittedTime = (req, res, next) => {
-  TakeExam.updateSubmittedTime(req.body.id, req.body.time, req.body.testDate)
-    .then((retval) => {
-      res.json(retval);
+  TakeExam.updateSubmittedTime(req.body.rowId, req.body.time)
+    .then(() => {
+      res.json('update submitted time complete');
     })
     .catch(next);
 };
 
 exports.deActivate = (req, res, next) => {
-  if (req.body.status !== 'deactive') {
-    res.json('deactive status: not deactive type!');
-  }
-  else {
-    TakeExam.changeStatus(req.body.id, 'Wait for Grading')
-      .then(() => {
-        TakeExam.expiredActivationLifetime(req.body.id)
-          .then((retval) => {
-            res.json('deactive status: '.concat(retval === null ? 'OK' : 'Something wrong'));
-          })
-          .catch(next);
-      })
-      .catch(next);
-  }
+  TakeExam.changeStatus(req.body.rowId, req.body.status)
+    .then(() => {
+      TakeExam.expiredActivationLifetime(req.body.rowId)
+        .then((retval) => {
+          res.json('deactive status: '.concat(retval === null ? 'OK' : 'Something wrong'));
+        })
+        .catch(next);
+    })
+    .catch(next);
 };
 
 exports.grading = (req, res, next) => {
-  // fetch a random-ed id list
-  TakeExam.fetchRandomExIdList(req.body.id, req.body.testDate)
+  TakeExam.fetchRandomExIdList(req.body.rowId)
     .then((object) => {
       TakeExam.fetchSolutionSpecifyId(object.randomExIdList)
         .then((examQuery) => {
-          // console.log('EXAM QUERY:', examQuery);
-          TakeExam.fetchCandidateAnswer(req.body.id, req.body.testDate)
+          TakeExam.fetchCandidateAnswer(req.body.rowId)
             .then((answerQuery) => {
               const resultList = [];
               object.randomExIdList.map((exId) => {
@@ -119,10 +92,11 @@ exports.grading = (req, res, next) => {
                       if (JSON.parse(eachAnswerList).question === exId) {
                         tempAnswerList = JSON.parse(eachAnswerList).answer === '' ? [] : JSON.parse(eachAnswerList).answer;
                         tempAnswerList.map((eachAnswer) => {
-                          // if candidate's answer is in solve count it!
                           if (eachExam.exAnswer.includes(eachAnswer)) correctCount += 1;
+                          return null;
                         });
                       }
+                      return null;
                     });
                     let point = [0, 0];
                     let status;
@@ -140,25 +114,31 @@ exports.grading = (req, res, next) => {
                     // if 'Choices - one:one:many':
                     // if 'Choices - some:many:many':
                     // if 'Choices - some:some:many':
+                    console.log(exId, ',', req.body.rowId);
                     resultList.push({
                       ex_id: exId,
                       cd_id: answerQuery[0].id,
-                      test_date: req.body.testDate,
+                      test_date: moment().format('YYYY-MM-DD'),
                       // ex_question: eachExam.exQuestion,
                       // ex_choices: eachExam.exType === 'Choices' ? eachExam.exChoice : [],
                       cd_answer: tempAnswerList,
+                      rowId: req.body.rowId,
                       // ex_correct: eachExam.exAnswer,
                       // ex_type: eachExam.exType,
                       point,
                       status,
                     });
                   }
+                  return null;
                 });
+                return null;
               });
+              console.log(resultList);
               TakeExam.uploadResult(resultList)
                 .then((retval) => {
                   // no any element that isn't null => all is null
-                  const isGradeNeed = resultList.filter(eachOne => eachOne.ex_type === 'Write-Up').length > 0;
+                  const isGradeNeed = resultList.filter(eachOne => eachOne.point[0] === 'UNKNOWN' && eachOne.point[1] === 'UNKNOWN').length > 0;
+                  console.log(isGradeNeed);
                   res.json(retval.filter(eachOne => eachOne === null).length === retval.length ? isGradeNeed : 'Something wrong');
                 })
                 .catch(next);
@@ -171,6 +151,7 @@ exports.grading = (req, res, next) => {
 };
 
 exports.sendMail = (req, res, next) => {
+  console.log('?>', req.body);
   TakeExam.getName(req.body.id, req.body.currentTime)
     .then((name) => {
       let messageStatus = '<p>You can see the result in Playtorium HR site.</p>';
@@ -199,6 +180,15 @@ exports.sendMail = (req, res, next) => {
         }
       });
       res.json('Send mail success!');
+    })
+    .catch(next);
+};
+
+exports.getRowId = (req, res, next) => {
+  TakeExam.getRowId(req.body.id, req.body.testDate)
+    .then((rowId) => {
+      console.log(req.body, rowId);
+      res.json(rowId);
     })
     .catch(next);
 };

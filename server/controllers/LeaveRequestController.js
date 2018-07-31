@@ -1,7 +1,18 @@
 const LeaveRequest = require('../models/LeaveRequest');
 const Holiday = require('../models/Holiday');
-
 const moment = require('moment');
+const nodemailer = require('nodemailer');
+const smtpTransport = require('nodemailer-smtp-transport');
+
+const transporter = nodemailer.createTransport(smtpTransport({
+  host: process.env.MAIL_HOST,
+  port: process.env.MAIL_PORT,
+  auth: {
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASS
+  },
+  secure: true
+}));
 
 exports.create = (req, res, next) => {
   const newLeaveRequest = req.body.leaveRequest;
@@ -23,22 +34,33 @@ exports.create = (req, res, next) => {
         .catch(next);
     }
   }
+  const mailOptions = {
+    from: process.env.MAIL_USER,
+    to: 'tmarks.thanapon@gmail.com',
+    subject: 'Hello',
+    html: `<p>Good Morning</p>`
+  };
+  transporter.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      console.log(info);
+    }
+  });
 };
 
 exports.update = (req, res, next) => {
-  const editLeaveRequestArray = req.body.leaveRequests;
-  editLeaveRequestArray.forEach((leaveRequest) => {
-    const editLeaveRequest = {};
-    editLeaveRequest.status = leaveRequest.status;
-    editLeaveRequest.leaveFrom = leaveRequest.leaveFrom;
-    editLeaveRequest.leaveTo = leaveRequest.leaveTo;
-    editLeaveRequest.userId = leaveRequest.userId;
-    LeaveRequest.update(editLeaveRequest, req.user.id)
-      .then((updatedLeaveRequest) => {
-        res.json(updatedLeaveRequest);
-      })
-      .catch(next);
-  });
+  const editLeaveRequest = req.body.leaveRequest;
+  LeaveRequest.update(editLeaveRequest, req.user.id)
+    .then(() => {
+      LeaveRequest.findByUserId(req.user.id)
+        .then((leaveRequests) => {
+          res.json(leaveRequests);
+        })
+        .catch(next);
+    })
+    .catch(next);
 };
 
 exports.findByUserId = (req, res, next) => {

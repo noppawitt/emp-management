@@ -51,6 +51,7 @@
     "dotenv": "^5.0.1",
     "draft-js": "^0.10.5",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
+    "exceljs": "^1.5.1",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "history": "^4.7.2",

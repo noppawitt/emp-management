@@ -22,10 +22,14 @@ const holiday = require('./holiday');
 const project = require('./project');
 const timesheet = require('./timesheet');
 const leaveRequest = require('./leaveRequest');
-const recruitment = require('./recruitment');
+const accessControl = require('./accessControl');
+const report = require('./report');
+const applicant = require('./applicant');
 const exam = require('./exam');
 const takeExam = require('./takeExam');
 const takeExamAgreement = require('./takeExamAgreement');
+
+router.use('/applicants', applicant);
 
 router.use('/employee-info', employeeInfo);
 
@@ -73,12 +77,14 @@ router.use('/timesheets', timesheet);
 
 router.use('/leave-request', leaveRequest);
 
-router.use('/recruitments', recruitment);
+router.use('/access-control', accessControl);
+
+router.use('/report', report);
+
+router.use('/exam', exam);
 
 router.use('/takeExam', takeExam);
 
 router.use('/takeexamagreement', takeExamAgreement);
-
-router.use('/exam', exam);
 
 module.exports = router;

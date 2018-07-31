@@ -10,7 +10,7 @@ router.put('/', EmployeeInfoController.update);
 
 const storage = multer.diskStorage({
   destination: (req, res, cb) => {
-    cb(null, 'storage/profile-img');
+    cb(null, 'server/storage/profile-img');
   },
   filename: (req, res, cb) => {
     cb(null, String(req.user.id));
