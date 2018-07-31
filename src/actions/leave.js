@@ -41,9 +41,10 @@ export const fetchLeaveFailure = message => ({
   }
 });
 
-export const updateLeaveRequest = leave => ({
+export const updateLeaveRequest = (userId, leave) => ({
   type: actionTypes.LEAVE_UPDATE_REQUEST,
   payload: {
+    userId,
     leave
   }
 });
@@ -59,5 +60,13 @@ export const updateLeaveFailure = message => ({
   type: actionTypes.LEAVE_UPDATE_FAILURE,
   payload: {
     message
+  }
+});
+
+export const filterLeave = (key, value) => ({
+  type: actionTypes.FILTER_LEAVE,
+  payload: {
+    key,
+    value
   }
 });

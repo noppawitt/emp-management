@@ -12,12 +12,13 @@ import AddAssetProfileModal from './modals/AddAssetProfileModal';
 import AddProjectModal from './modals/AddProjectModal';
 import CreateLeaveRequestModal from './modals/CreateLeaveRequestModal';
 import ConfirmModal from './modals/ConfirmModal';
+import ProfilePictureModal from './modals/ProfilePictureModal';
+import EditRecruitmentModal from './modals/EditRecruitmentModal';
 import AddExamModal from './modals/AddExamModal';
 import EditExamModal from './modals/EditExamModal';
-import ActivateUserModal from './modals/ActivateUserModal';
 import ExamFullViewModal from './modals/ExamFullViewModal';
+import ActiveExamUserModal from './modals/ActiveExamUserModal';
 import GradingExamsModal from './modals/GradingExamsModal';
-import ViewResultModal from './modals/ViewResultModal';
 
 const ModalContainer = ({ name, props }) => {
   switch (name) {
@@ -27,6 +28,8 @@ const ModalContainer = ({ name, props }) => {
       return <EditWorkProfileModal {...props} />;
     case modalNames.EDIT_EDUCATION_PROFILE:
       return <EditEducationProfileModal {...props} />;
+    case modalNames.EDIT_RECRUITMENT:
+      return <EditRecruitmentModal {...props} />;
     case modalNames.ADD_EDUCATION_PROFILE:
       return <AddEducationProfileModal {...props} />;
     case modalNames.ADD_CERTIFICATE_PROFILE:
@@ -41,18 +44,18 @@ const ModalContainer = ({ name, props }) => {
       return <CreateLeaveRequestModal {...props} />;
     case modalNames.CONFIRM:
       return <ConfirmModal {...props} />;
+    case modalNames.PROFILE_PICTURE:
+      return <ProfilePictureModal {...props} />;
+    case modalNames.ACTIVE_EXAM_USER:
+      return <ActiveExamUserModal {...props} />;
     case modalNames.ADD_NEW_EXAM:
       return <AddExamModal {...props} />;
     case modalNames.EDIT_EXAM:
       return <EditExamModal {...props} />;
     case modalNames.VIEW_EXAM:
       return <ExamFullViewModal {...props} />;
-    case modalNames.ACTIVATE:
-      return <ActivateUserModal {...props} />;
     case modalNames.GRADING_EXAM:
       return <GradingExamsModal {...props} />;
-    case modalNames.VIEW_RESULT:
-      return <ViewResultModal {...props} />;
     default:
       return <div />;
   }

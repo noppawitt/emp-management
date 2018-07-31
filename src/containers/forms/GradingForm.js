@@ -57,27 +57,14 @@ const categoryLengthCalculate = (examList, activeCategory) => {
   return pageNumber;
 };
 
-const showAnswerText = (exId, pickedAnswer) => {
-  for (let i = 0; i < pickedAnswer.length; i += 1) {
-    if (pickedAnswer[i].question === exId) {
-      return pickedAnswer[i].answer[0];
-    }
-  }
-  return undefined;
-};
-
 const isPositive = string => (
   !((Number(string) * 100) % 10) && Number(string) > 0
 );
 
-const isNonNegative = string => (
-  (!((Number(string) * 100) % 10) && Number(string) > 0) || Number(string) === 0
-);
-
 const scoreValidityCheck = (score, isAllowZero) => (
   isAllowZero ?
-    !score || !isNonNegative(score, isAllowZero) :
-    !score || !isPositive(score, isAllowZero)
+    !score || !isPositive(score) || Number(score) === 0 :
+    !score || !isPositive(score)
 );
 
 const scoreHandle = (score, fullScore) => {
@@ -115,7 +102,8 @@ const GradingForm = ({
   onClickSave,
   onClickSend,
   updateScoreStatus,
-}) => (
+  modalWarningExIdList,
+  rowId, }) => (
     isFetching ?
       <Loader /> :
       <Segment.Group>
@@ -169,7 +157,7 @@ const GradingForm = ({
                                   Answer:<br />
                                   <TextArea
                                     disabled
-                                    value={row.cdAnswer && showAnswerText(row.exId, row.cdAnswer)}
+                                    value={row.cdAnswer && row.cdAnswer[0]}
                                     placeholder="No answer.."
                                   />
                                 </Grid.Column>
@@ -204,10 +192,10 @@ const GradingForm = ({
                                 onChange={(e) => {
                                   onScoreChange(e, row.exId);
                                   const scoreStatus = scoreHandle(e.target.value, row.point[1]);
-                                  updateScoreStatus(scoreStatus, row.exId);
+                                  updateScoreStatus(scoreStatus, row.exId, gradingList, modalWarningExIdList);
                                 }}
                               />&nbsp;
-                              {(row.scoreWarning || row.point[0] === 'UNKNOWN') &&
+                              {((row.scoreWarning && row.scoreWarning !== ' ') || row.point[0] === 'UNKNOWN') &&
                                 <Label basic color="red" pointing="left">
                                   {row.scoreWarning}
                                 </Label>
@@ -223,10 +211,10 @@ const GradingForm = ({
                                 onChange={(e) => {
                                   onFullScoreChange(e, row.exId);
                                   const scoreStatus = scoreHandle(row.point[0], e.target.value);
-                                  updateScoreStatus(scoreStatus, row.exId);
+                                  updateScoreStatus(scoreStatus, row.exId, gradingList, modalWarningExIdList);
                                 }}
                               />&nbsp;
-                              {(row.fullScoreWarning || row.point[1] === 'UNKNOWN') &&
+                              {((row.fullScoreWarning && row.fullScoreWarning !== ' ') || row.point[1] === 'UNKNOWN') &&
                                 <Label basic color="red" pointing="left">
                                   {row.fullScoreWarning}
                                 </Label>
@@ -235,7 +223,7 @@ const GradingForm = ({
                           </Grid.Row>
                         </Grid>
                       : <div />
-                ))}
+                  ))}
                 <Pagination
                   floated="right"
                   onPageChange={(e, object) => onPageChange(object.activePage)}
@@ -259,7 +247,7 @@ const GradingForm = ({
             icon
             labelPosition="left"
             positive
-            onClick={() => onClickSave(gradingList)}
+            onClick={() => onClickSave(gradingList, rowId, modalWarningExIdList, gradingId)}
           >
             <Icon name="save" />
             Save
@@ -272,7 +260,7 @@ const GradingForm = ({
             icon
             labelPosition="left"
             secondary
-            onClick={() => onClickSend(gradingList)}
+            onClick={() => onClickSend(gradingList, rowId, modalWarningExIdList, gradingId)}
           >
             <Icon name="send" />
             Send
@@ -296,6 +284,7 @@ GradingForm.propTypes = {
   onClickSave: PropTypes.func.isRequired,
   onClickSend: PropTypes.func.isRequired,
   updateScoreStatus: PropTypes.func.isRequired,
+  modalWarningExIdList: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -304,6 +293,8 @@ const mapStateToProps = state => ({
   currentActiveModalPage: state.recruitment.currentActiveModalPage,
   activeModalCategory: state.recruitment.activeModalCategory,
   modalCategoryList: state.recruitment.modalCategoryList,
+  modalWarningExIdList: state.recruitment.modalWarningExIdList,
+  rowId: state.recruitment.rowId,
 });
 
 export default connect(mapStateToProps)(GradingForm);

@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { Grid, Item, Segment, Input, Button, Icon } from 'semantic-ui-react';
 import PageHeader from './PageHeader';
 import image from '../images/cat.jpg';
+import history from '../history';
 
 const items = employee => (
-  <Grid.Column width={8}>
-    <Segment raised>
+  <Grid.Column width={8} key={employee.id}>
+    <Segment raised style={{ cursor: 'pointer' }} onClick={() => history.push(`/profile/${employee.id}`)}>
       <Item.Group>
         <Item>
           <Item.Image size="small" src={image} />

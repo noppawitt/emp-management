@@ -1,52 +1,59 @@
-const dateCompare = (a, b) => {
-  if (Date.parse(a) < Date.parse(b)) { return -1; }
-  else if (Date.parse(a) > Date.parse(b)) { return 1; }
-  return 0;
-};
-
 export const getVisibleRecruitment = (state) => {
-  if (!state.recruitment.lists) return [];
-  // ignore special characters
+  if (!state.recruitment.data) return [];
   const regExp = new RegExp(state.recruitment.searchText.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&'), 'i');
-
-  let tempLists = state.recruitment.lists;
-  if (state.recruitment.isDateFilterChange && state.recruitment.startDate && state.recruitment.endDate) {
-    // filter with date from date picker
-    tempLists = tempLists.filter(recruitment =>
-      state.recruitment.startDate <= recruitment.appointment
-      && recruitment.appointment <= state.recruitment.endDate);
-  }
-  state.recruitment.isDateFilterChange = false;
-
-  return tempLists
-    .filter(recruitment => regExp.test(recruitment.citizenId)
-      || regExp.test(recruitment.firstName)
-      || regExp.test(recruitment.lastName)
-      || regExp.test(recruitment.firstNameTh)
-      || regExp.test(recruitment.lastNameTh)
-      || regExp.test(recruitment.position)
-      || regExp.test(recruitment.appointment)
-      || regExp.test(recruitment.status))
+  return state.recruitment.data
+    .filter(data => regExp.test(data.firstName)
+      || regExp.test(data.lastName)
+      || regExp.test(data.firstNameTh)
+      || regExp.test(data.lastNameTh)
+      || regExp.test(data.email)
+      || regExp.test(data.position)
+      || regExp.test(data.mobileNumber)
+      || regExp.test(data.citizenId)
+      || regExp.test(data.registrationDate)
+      || regExp.test(data.signDate)
+      || regExp.test(data.interviewDate)
+      || regExp.test(data.blacklistDate)
+      || regExp.test(data.firstDate)
+      || regExp.test(data.cancelDate))
     .sort((a, b) => {
       const direction = state.recruitment.direction === 'ascending' ? 1 : -1;
-      // sort by 'sortKey' first, then sort by Date
-      if (state.recruitment.sortKey === 'name') {
-        // name has 4 sub-components, that is 'firstName', 'lastName', 'firstNameTh', 'lastNameTh'
-        if (a.firstName < b.firstName) { return direction * -1; }
-        else if (a.firstName > b.firstName) { return direction; }
-        // if firstName equal go ahead to compare on 'lastName'
-        else if (a.lastName < b.lastName) { return direction * -1; }
-        else if (a.lastName > b.lastName) { return direction; }
-        // if firstName equal go ahead to compare on 'firstNameTh'
-        else if (a.firstNameTh < b.firstNameTh) { return direction * -1; }
-        else if (a.firstNameTh > b.firstNameTh) { return direction; }
-        // if firstName equal go ahead to compare on 'lastNameTh'
-        else if (a.lastNameTh < b.lastNameTh) { return direction * -1; }
-        else if (a.lastNameTh > b.lastNameTh) { return direction; }
-        return dateCompare(a.appointment, b.appointment);
+      if (a[state.recruitment.sortKey] < b[state.recruitment.sortKey]) {
+        return direction * -1;
       }
-      else if (a[state.recruitment.sortKey] < b[state.recruitment.sortKey]) { return direction * -1; }
-      else if (a[state.recruitment.sortKey] > b[state.recruitment.sortKey]) { return direction; }
-      return dateCompare(a.appointment, b.appointment);
+      else if (a[state.recruitment.sortKey] > b[state.recruitment.sortKey]) {
+        return direction;
+      }
+      return 0;
     });
 };
+
+export const getFilterRecruitment = (data, status) => {
+  if (!data) return [];
+  return data
+    .filter(row => row.status === status);
+};
+
+export const getRecruitmentByCitizen = (data, citizenId) => {
+  if (!data) return [];
+  return data.find(row => row.citizenId === citizenId);
+};
+
+export const getFilterRecruitmentTwoParam = (data, status, status2) => {
+  if (!data) return [];
+  return data
+    .filter(row => row.status === status
+      || row.status === status2);
+};
+
+// may be move to validator after merging
+export const validateDate = (date) => {
+  const regEx = new RegExp('([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))');
+  return regEx.test(date);
+};
+
+export const validateTime = (time) => {
+  const regEx = new RegExp('^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$');
+  return regEx.test(time);
+};
+

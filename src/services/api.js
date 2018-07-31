@@ -95,6 +95,10 @@ api.fetchAssetTypes = () => (
   callApi('/api/asset-types')
 );
 
+api.fetchAcessTypes = () => (
+  callApi('api/access-control')
+);
+
 // Profile
 
 api.fetchGeneralProfile = id => (
@@ -220,6 +224,19 @@ api.createProject = body => (
   })
 );
 
+// Project detail
+
+api.fetchProjectDetail = id => (
+  callApi(`/api/projects/${id}`)
+);
+
+api.createMember = body => (
+  callApi(`/api/has-project`, {
+    method: 'POST',
+    body
+  })
+);
+
 // Leave
 
 api.createLeave = body => (
@@ -246,14 +263,122 @@ api.fetchTimesheet = id => (
   callApi(`/api/timesheets/?id=${id}`)
 );
 
+// Applicant
+api.fetchApplicant = () => (
+  callApi('/api/applicants')
+);
+
+api.fetchTestStatus = rowId => (
+  callApi('api/applicants/get-test-status', {
+    method: 'POST',
+    body: {
+      rowId,
+    }
+  })
+);
+
 // Recruitment
-// 456
-api.fetchAllRecruitment = () => (
-  callApi(`/api/recruitments`)
+api.fetchRecruitment = () => (
+  callApi('/api/applicants')
 );
 
-api.checkUserStatus = (id, testDate) => (
-  callApi(`/api/recruitments/checkUserStatus/`, {
+api.fetchPositionRecruitment = () => (
+  callApi('/api/positions')
+);
+
+api.changeRecruitmentStatus = body => (
+  callApi('api/applicants/update-status', {
+    method: 'PUT',
+    body
+  })
+);
+
+api.updateRecruitmentInterviewDateTime = body => (
+  callApi('api/applicants/update-interview-datetime', {
+    method: 'PUT',
+    body
+  })
+);
+
+api.updateRecruitmentExamDateTime = body => (
+  callApi('api/applicants/update-exam-datetime', {
+    method: 'PUT',
+    body
+  })
+);
+
+api.updateRecruitmentSignDateTime = body => (
+  callApi('api/applicants/update-sign-datetime', {
+    method: 'PUT',
+    body
+  })
+);
+
+api.updateRecruitmentCompleteDateTime = body => (
+  callApi('api/applicants/update-first-date', {
+    method: 'PUT',
+    body
+  })
+);
+
+api.updateRecruitmentRejectDate = body => (
+  callApi('api/applicants/update-reject-date', {
+    method: 'PUT',
+    body
+  })
+);
+
+api.updateRecruitmentCancelDate = body => (
+  callApi('api/applicants/update-cancel-date', {
+    method: 'PUT',
+    body
+  })
+);
+
+api.updateRecruitmentBlacklistDate = body => (
+  callApi('api/applicants/update-blacklist-date', {
+    method: 'PUT',
+    body
+  })
+);
+
+api.updateRecruitmentNote = body => (
+  callApi('api/applicants/update-note', {
+    method: 'PUT',
+    body
+  })
+);
+
+api.updateRecruitmentInterviewResult = body => (
+  callApi('api/applicants/update-interview-result', {
+    method: 'PUT',
+    body
+  })
+);
+
+api.updateRecruitmentSignedPosition = body => (
+  callApi('api/applicants/update-signed-position', {
+    method: 'PUT',
+    body
+  })
+);
+
+api.fetchRecruitmentProfile = rowId => (
+  callApi(`../api/applicants/applicant-info/?id=${rowId}`)
+);
+
+api.fetchRecruitmentFile = rowId => (
+  callApi(`../api/applicants/applicant-file/?id=${rowId}`)
+);
+
+// Recruitment : Basic API
+
+api.getExamDate = citizenId => (
+  callApi(`/api/applicants/getExamDate/?citizenId=${citizenId}`)
+);
+
+api.getRecruitmentRowId = (id, testDate) => (
+  callApi(`/api/applicants/getRowId`, {
     method: 'POST',
     body: {
       id,
@@ -262,46 +387,25 @@ api.checkUserStatus = (id, testDate) => (
   })
 );
 
-api.activateUser = (id, testDate, lifetimes) => (
-  callApi(`/api/recruitments/activateUser/`, {
-    method: 'POST',
-    body: {
-      id,
-      testDate,
-      lifetimes,
-    }
-  })
+// Recruitment : Grading
+
+api.fetchGradingExam = rowId => (
+  callApi(`/api/applicants/fetchGradingExam/?rowId=${rowId}`)
 );
 
-api.uploadRandomExIdList = (id, testDate, randomExIdList) => (
-  callApi(`/api/recruitments/uploadRandomExIdList/`, {
+api.uploadRandomExIdList = (rowId, randomExIdList) => (
+  callApi(`/api/applicants/uploadRandomExIdList/`, {
     method: 'POST',
     body: {
-      id,
-      testDate,
+      rowId,
       randomExIdList,
     }
   })
 );
 
-api.getTestDate = id => (
-  callApi(`/api/recruitments/getTestDate/?id=${id}`)
-);
-
-// Recruitment : Grading Part
-
-api.fetchGradingExam = (id, testDate) => (
-  callApi(`/api/recruitments/fetchGradingExam`, {
-    method: 'POST',
-    body: {
-      id,
-      testDate,
-    }
-  })
-);
 
 api.uploadGradeProgress = gradingList => (
-  callApi(`/api/recruitments/uploadGradeProgress`, {
+  callApi(`/api/applicants/uploadGradeProgress`, {
     method: 'POST',
     body: {
       gradingList,
@@ -309,14 +413,59 @@ api.uploadGradeProgress = gradingList => (
   })
 );
 
-api.changeStatus = (id, status) => (
-  callApi(`/api/recruitments/changeStatus`, {
+// Recruitment
+
+api.getExamUser = body => (
+  callApi('api/applicants/get-exam-user', {
+    method: 'POST',
+    body
+  })
+);
+
+api.activateExamUser = body => (
+  callApi('api/applicants/activate-exam-user', {
+    method: 'POST',
+    body
+  })
+);
+
+api.updateRecruitmentTestStatus = body => (
+  callApi('api/applicants/update-test-status', {
+    method: 'POST',
+    body
+  })
+);
+
+api.changeInterviewStatus = body => (
+  callApi('/api/applicants/change-test-status', {
+    method: 'PUT',
+    body
+  })
+);
+
+api.fetchEPRList = id => (
+  callApi(`/api/applicants/fetchEPRList/?id=${id}`)
+);
+
+api.fetchExamId = () => (
+  callApi(`/api/applicants/fetchExamId`)
+);
+
+// this is a same method as changeStatus
+// but this stand for recruitment page
+// cause recruitment and take-exam pages use dif. token
+api.changeTestStatus = (rowId, status) => (
+  callApi(`/api/applicants/changeTestStatus/`, {
     method: 'POST',
     body: {
-      id,
+      rowId,
       status,
     }
   })
+);
+
+api.checkApproveStatus = rowId => (
+  callApi(`/api/applicants/checkApproveStatus/?rowId=${rowId}`)
 );
 
 // Exam
@@ -394,20 +543,11 @@ api.sendMailFinishExam = (id, currentTime, needCheck) => (
   })
 );
 
-api.fetchEPRList = id => (
-  callApi(`/api/takeExam/fetchEPRList/?id=${id}`)
-);
-
-api.fetchExamId = () => (
-  callApi(`/api/takeExam/fetchExamId`)
-);
-
-api.fetchRandomExIdList = (id, testDate) => (
+api.fetchRandomExIdList = rowId => (
   callApi(`/api/takeExam/fetchRandomExIdList/`, {
     method: 'POST',
     body: {
-      id,
-      testDate,
+      rowId,
     }
   })
 );
@@ -421,10 +561,11 @@ api.fetchExamSpecifyId = idList => (
   })
 );
 
-api.checkProgress = (id, testDate, startTime, answerList) => (
+api.checkProgress = (rowId, id, testDate, startTime, answerList) => (
   callApi(`/api/takeExam/checkProgress/`, {
     method: 'POST',
     body: {
+      rowId,
       id,
       testDate,
       startTime,
@@ -433,41 +574,49 @@ api.checkProgress = (id, testDate, startTime, answerList) => (
   })
 );
 
-api.uploadAnswer = (id, answerList, testDate) => {
-  console.log(testDate);
-  return callApi(`/api/takeExam/uploadAnswer/`, {
+api.uploadAnswer = (rowId, answerList, id, testDate) => (
+  callApi(`/api/takeExam/uploadAnswer/`, {
     method: 'POST',
     body: {
-      id,
+      rowId,
       answerList,
-      testDate,
-    }
-  });
-};
-
-api.updateSubmittedTime = (id, time, testDate) => (
-  callApi(`/api/takeExam/updateSubmittedTime`, {
-    method: 'POST',
-    body: {
       id,
-      time,
       testDate,
     }
   })
 );
 
-api.deActivate = (id, status) => (
+api.updateSubmittedTime = (rowId, time) => (
+  callApi(`/api/takeExam/updateSubmittedTime`, {
+    method: 'POST',
+    body: {
+      rowId,
+      time,
+    }
+  })
+);
+
+api.deActivate = (rowId, status) => (
   callApi(`/api/takeExam/deActivate`, {
     method: 'POST',
     body: {
-      id,
+      rowId,
       status,
     }
   })
 );
 
-api.grading = (id, testDate) => (
-  callApi(`/api/takeExam/grading/`, {
+api.grading = rowId => (
+  callApi(`/api/takeExam/grading`, {
+    method: 'POST',
+    body: {
+      rowId,
+    }
+  })
+);
+
+api.getRowId = (id, testDate) => (
+  callApi(`/api/takeExam/getRowId`, {
     method: 'POST',
     body: {
       id,

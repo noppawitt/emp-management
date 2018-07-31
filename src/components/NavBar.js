@@ -7,7 +7,7 @@ import bigLogo from '../images/big-logo.jpg';
 const Navbar = ({ username, onLogout }) => (
   <div>
     <Image src={bigLogo} />
-    <Menu attached borderless inverted size="huge">
+    <Menu stackable attached borderless inverted size="huge">
       <Container>
         <Menu.Item as={NavLink} to="/timesheet" name="timesheet">
           Timesheet
@@ -27,7 +27,7 @@ const Navbar = ({ username, onLogout }) => (
         <Menu.Item as={NavLink} to="/exam/" name="exam">
           Exam
         </Menu.Item>
-        <Menu.Item as={NavLink} to="/recruitment/" name="recruitment">
+        <Menu.Item as={NavLink} to="/recruitment" name="recruitment">
           Recruitment
         </Menu.Item>
         <Menu.Menu position="right">

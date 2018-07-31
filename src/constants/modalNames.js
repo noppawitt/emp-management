@@ -7,7 +7,7 @@ export const EDIT_ASSET_PROFILE = 'EDIT_ASSET_PROFILE';
 export const ADD_EDUCATION_PROFILE = 'ADD_EDUCATION_PROFILE';
 export const ADD_CERTIFICATE_PROFILE = 'ADD_CERTIFICATE_PROFILE';
 export const ADD_ASSET_PROFILE = 'ADD_ASSET_PROFILE';
-export const EDIT_PROFILE_PICTURE = 'EDIT_PROFILE_PICTURE';
+export const PROFILE_PICTURE = 'PROFILE_PICTURE';
 
 // Employee
 export const ADD_EMPLOYEE = 'ADD_EMPLOYEE';
@@ -18,17 +18,15 @@ export const ADD_PROJECT = 'ADD_PROJECT';
 // Leave
 export const CREATE_LEAVE_REQUEST = 'CREATE_LEAVE_REQUEST';
 
+// Other
+export const CONFIRM = 'CONFIRM';
+
 // Exam
 export const ADD_NEW_EXAM = 'ADD_NEW_EXAM';
 export const EDIT_EXAM = 'EDIT_EXAM';
 export const VIEW_EXAM = 'VIEW_EXAM';
 
-// Grading Exam
-export const GRADING_EXAM = 'GRADING_EXAM';
-export const VIEW_RESULT = 'VIEW_RESULT';
-
 // Recruitment
-export const ACTIVATE = 'ACTIVATE';
-
-// Other
-export const CONFIRM = 'CONFIRM';
+export const EDIT_RECRUITMENT = 'EDIT_RECRUITMENT';
+export const ACTIVE_EXAM_USER = 'ACTIVE_EXAM_USER';
+export const GRADING_EXAM = 'GRADING_EXAM';

@@ -1,4 +1,3 @@
-import 'react-day-picker/lib/style.css';
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';

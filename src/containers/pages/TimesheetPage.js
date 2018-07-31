@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import { fetchTimesheetRequest } from '../../actions/timesheet';
+import Timesheet from '../../components/Timesheet';
 
 const TimesheetPage = ({ timesheets }) => (
-  <div>
-    {timesheets.map(t => t)}
-  </div>
+  <Timesheet timesheets={timesheets} />
 );
 
 TimesheetPage.propTypes = {

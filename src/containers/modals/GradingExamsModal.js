@@ -27,6 +27,7 @@ const GradingExamsModal = ({
   onClickSave,
   onClickSend,
   updateScoreStatus,
+  modalWarningExIdList,
 }) => (
   <SUIModal
     dimmer="blurring"
@@ -48,6 +49,7 @@ const GradingExamsModal = ({
         onClickSave={onClickSave}
         onClickSend={onClickSend}
         updateScoreStatus={updateScoreStatus}
+        modalWarningExIdList={modalWarningExIdList}
       />
     </SUIModal.Content>
   </SUIModal>
@@ -65,6 +67,7 @@ GradingExamsModal.propTypes = {
   onClickSave: PropTypes.func.isRequired,
   onClickSend: PropTypes.func.isRequired,
   updateScoreStatus: PropTypes.func.isRequired,
+  modalWarningExIdList: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -84,9 +87,9 @@ const mapDispatchToProps = dispatch => ({
   onScoreChange: (e, exId) => dispatch(onScoreModalChange(e.target.value, exId)),
   onFullScoreChange: (e, exId) => dispatch(onFullScoreModalChange(e.target.value, exId)),
   onClose: () => dispatch(closeModal()),
-  onClickSave: gradingList => dispatch(saveGradingListRequest(gradingList)),
-  onClickSend: gradingList => dispatch(sendGradingListRequest(gradingList)),
-  updateScoreStatus: (scoreStatus, exId) => dispatch(scoreStatusHandle(scoreStatus, exId)),
+  onClickSave: (gradingList, rowId, modalWarningExIdList, id) => dispatch(saveGradingListRequest(gradingList, rowId, modalWarningExIdList, id)),
+  onClickSend: (gradingList, rowId, modalWarningExIdList, id) => dispatch(sendGradingListRequest(gradingList, rowId, modalWarningExIdList, id)),
+  updateScoreStatus: (scoreStatus, exId, gradingList, modalWarningExIdList) => dispatch(scoreStatusHandle(scoreStatus, exId, gradingList, modalWarningExIdList)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GradingExamsModal);

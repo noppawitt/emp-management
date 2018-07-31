@@ -23,15 +23,15 @@ for (let y = 2018; y <= 2118; y += 1) {
   years.push({ key: y, value: y, text: y });
 }
 
-const Leave = ({ leaves, onAddClick, onCancelClick }) => (
+const Leave = ({ leaves, onAddClick, onCancelClick, userId, onFilterChange }) => (
   <Segment.Group raised>
     <Segment>
       <Grid>
         <Grid.Column width={3}>
-          <Select placeholder="Year" options={years} />
+          <Select placeholder="Year" defaultValue={0} options={years} onChange={(e, { value }) => onFilterChange('year', value)} />
         </Grid.Column>
         <Grid.Column width={3}>
-          <Select placeholder="Month" options={months} />
+          <Select placeholder="Month" defaultValue={0} options={months} onChange={(e, { value }) => onFilterChange('month', value)} />
         </Grid.Column>
         <Grid.Column width={10}>
           <Button icon floated="right" onClick={onAddClick}>
@@ -63,7 +63,7 @@ const Leave = ({ leaves, onAddClick, onCancelClick }) => (
               <Table.Cell>{leave.purpose}</Table.Cell>
               <Table.Cell>{leave.total}</Table.Cell>
               <Table.Cell>{leave.status}</Table.Cell>
-              <Table.Cell><Button inverted color="red" onClick={onCancelClick}>Cancel</Button></Table.Cell>
+              <Table.Cell><Button inverted color="red" onClick={() => onCancelClick(userId, leave, 'Cancel')}>Cancel</Button></Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
@@ -94,7 +94,9 @@ const Leave = ({ leaves, onAddClick, onCancelClick }) => (
 Leave.propTypes = {
   leaves: PropTypes.array.isRequired,
   onAddClick: PropTypes.func.isRequired,
-  onCancelClick: PropTypes.func.isRequired
+  onCancelClick: PropTypes.func.isRequired,
+  userId: PropTypes.number.isRequired,
+  onFilterChange: PropTypes.func.isRequired
 };
 
 export default Leave;

@@ -4,36 +4,33 @@ import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import {
   fetchRecruitmentRequest,
-  sortRecruitment,
+  changeActiveItemRequest,
   filterRecruitment,
-  filterStartDateRecruitment,
-  filterEndDateRecruitment,
-  checkUserStatusRequest,
-  fetchGradingRequest,
-  viewResult,
-} from '../../actions/recruitment';
+  sortRecruitment,
+  changeStatus,
+  clearStatus,
+  fetchGradingRequest, } from '../../actions/recruitment';
 import Recruitment from '../../components/Recruitment';
 import Loader from '../../components/Loader';
+import { getVisibleRecruitment } from '../../selectors/recruitment';
 import { openModal } from '../../actions/modal';
 import * as modalNames from '../../constants/modalNames';
-import { getVisibleRecruitment } from '../../selectors/recruitment';
 
 const RecruitmentPage = ({
   isFetching,
-  recruitments,
+  activeItem,
+  changeActiveItem,
+  data,
   onSearchChange,
-  sortByKey,
   sortKey,
+  sortByKey,
   direction,
-  onStartDateChange,
-  onEndDateChange,
-  startDate,
-  endDate,
-  onClickActivate,
-  alivePassword,
+  onConfirm,
+  checkStatus,
+  changedStatus,
+  clearedStatus,
   onClickGrade,
-  onClickViewResult,
-  today,
+  modalWarningExIdList,
 }) => {
   const handleSort = (key) => {
     if (sortKey !== key) {
@@ -48,67 +45,74 @@ const RecruitmentPage = ({
       {isFetching ?
         <Loader /> :
         <Recruitment
-          recruitments={recruitments}
+          activeItem={activeItem}
+          changeActiveItem={changeActiveItem}
+          data={data}
           onSearchChange={onSearchChange}
-          handleSort={handleSort}
           sortKey={sortKey}
           direction={direction}
-          onStartDateChange={onStartDateChange}
-          onEndDateChange={onEndDateChange}
-          startDate={startDate}
-          endDate={endDate}
-          onClickActivate={onClickActivate}
-          alivePassword={alivePassword}
+          handleSort={handleSort}
+          onConfirm={onConfirm}
+          checkStatus={checkStatus}
+          changeStatus={changedStatus}
+          clearStatus={clearedStatus}
           onClickGrade={onClickGrade}
-          onClickViewResult={onClickViewResult}
-          today={today}
-        />}
+          modalWarningExIdList={modalWarningExIdList}
+        />
+      }
     </div>
   );
 };
 
+RecruitmentPage.defaultProps = {
+  isFetching: true,
+  activeItem: 'all',
+  data: [],
+  checkStatus: {},
+};
+
 RecruitmentPage.propTypes = {
-  isFetching: PropTypes.bool.isRequired,
-  recruitments: PropTypes.array.isRequired,
-  direction: PropTypes.string.isRequired,
+  isFetching: PropTypes.bool,
+  activeItem: PropTypes.string,
+  changeActiveItem: PropTypes.func.isRequired,
+  data: PropTypes.array,
+  onSearchChange: PropTypes.func.isRequired,
   sortKey: PropTypes.string.isRequired,
   sortByKey: PropTypes.func.isRequired,
-  onSearchChange: PropTypes.func.isRequired,
-  onStartDateChange: PropTypes.func.isRequired,
-  onEndDateChange: PropTypes.func.isRequired,
-  startDate: PropTypes.string.isRequired,
-  endDate: PropTypes.string.isRequired,
-  onClickActivate: PropTypes.func.isRequired,
-  alivePassword: PropTypes.func.isRequired,
+  direction: PropTypes.string.isRequired,
+  onConfirm: PropTypes.func.isRequired,
+  checkStatus: PropTypes.object,
+  changedStatus: PropTypes.func.isRequired,
+  clearedStatus: PropTypes.func.isRequired,
   onClickGrade: PropTypes.func.isRequired,
-  onClickViewResult: PropTypes.func.isRequired,
-  today: PropTypes.string.isRequired,
+  modalWarningExIdList: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
   isFetching: state.recruitment.isFetching,
-  recruitments: getVisibleRecruitment(state),
-  direction: state.recruitment.direction,
+  activeItem: state.recruitment.activeItem,
+  tableHeader: state.recruitment.tableHeader,
+  data: getVisibleRecruitment(state),
   sortKey: state.recruitment.sortKey,
-  startDate: state.startDate,
-  endDate: state.endDate,
-  alivePassword: state.recruitment.alivePassword,
-  today: state.recruitment.today,
+  direction: state.recruitment.direction,
+  checkStatus: state.recruitment.checkStatus,
+  date: state.recruitment.date,
+  time: state.recruitment.time,
+  modalWarningExIdList: state.recruitment.modalWarningExIdList,
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchRecruitment: () => dispatch(fetchRecruitmentRequest()),
-  sortByKey: (key, direction) => dispatch(sortRecruitment(key, direction)),
+  changeActiveItem: activeItem => dispatch(changeActiveItemRequest(activeItem)),
   onSearchChange: e => dispatch(filterRecruitment(e.target.value)),
-  onStartDateChange: date => dispatch(filterStartDateRecruitment(date)),
-  onEndDateChange: date => dispatch(filterEndDateRecruitment(date)),
-  onClickActivate: cid => compose(
-    dispatch(checkUserStatusRequest(cid)),
-    dispatch(openModal(modalNames.ACTIVATE)),
-  ),
-  // build & fix Grade function
-  onClickGrade: (id, testDate) => dispatch(fetchGradingRequest(id, testDate)),
-  onClickViewResult: (id, testDate) => dispatch(viewResult(id, testDate)),
+  sortByKey: (key, direction) => dispatch(sortRecruitment(key, direction)),
+  onConfirm: () => {
+    dispatch(openModal(modalNames.EDIT_RECRUITMENT));
+  },
+  changedStatus: (key, status) => dispatch(changeStatus(key, status)),
+  clearedStatus: () => dispatch(clearStatus()),
+  // 456 : onClickActivate function
+  onClickGrade: (rowId, modalWarningExIdList, id) => dispatch(fetchGradingRequest(rowId, modalWarningExIdList, id, false)),
 });
 
 const enhance = compose(
