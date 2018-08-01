@@ -24,20 +24,20 @@ const ProjectDetailPage = ({
   handleUploadFile,
   handleDeleteFile
 }) => (
-    <div>
-      {isFetching ?
-        <Loader /> :
-        <ProjectDetail
-          projectDetail={projectDetail}
-          onEditClick={onEditClick}
-          onAddMemberClick={onAddMemberClick}
-          onDeleteMemberClick={onDeleteMemberClick}
-          handleDownloadFile={handleDownloadFile}
-          handleUploadFile={handleUploadFile}
-          handleDeleteFile={handleDeleteFile}
-        />}
-    </div>
-  );
+  <div>
+    {isFetching ?
+      <Loader /> :
+      <ProjectDetail
+        projectDetail={projectDetail}
+        onEditClick={onEditClick}
+        onAddMemberClick={onAddMemberClick}
+        onDeleteMemberClick={onDeleteMemberClick}
+        handleDownloadFile={handleDownloadFile}
+        handleUploadFile={handleUploadFile}
+        handleDeleteFile={handleDeleteFile}
+      />}
+  </div>
+);
 
 ProjectDetailPage.defaultProps = {
   isFetching: true,
