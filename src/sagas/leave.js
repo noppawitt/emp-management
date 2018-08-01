@@ -82,7 +82,7 @@ function* fetchLeaveHistoryTask(action) {
   }
 }
 
-function* fetchLeaveAllTask(action) {
+function* fetchLeaveAllTask() {
   try {
     const leaves = yield call(api.fetchLeaveAll);
     yield put(fetchLeaveAllSuccess(leaves));

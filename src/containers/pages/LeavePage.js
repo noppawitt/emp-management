@@ -59,7 +59,7 @@ const mapStateToProps = state => ({
   isFetching: state.leave.isFetching,
   isHistoryFetching: state.leave.isHistoryFetching,
   leaveHistory: state.leave.leaveHistory,
-  leaves: state.leave.lists,
+  leaves: getVisibleLeaves(state),
   userId: state.auth.id,
   year: state.leave.year,
   month: state.leave.month,
