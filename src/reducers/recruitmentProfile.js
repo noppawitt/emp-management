@@ -5,7 +5,7 @@ const initialState = {
   data: [],
   currentCategory: 'overall',
   currentPage: 1,
-  category: [],
+  categoryList: [],
 };
 
 const recruitmentProfile = (state = initialState, action) => {
@@ -21,7 +21,7 @@ const recruitmentProfile = (state = initialState, action) => {
         isFetching: false,
         data: action.payload.data,
         result: action.payload.result,
-        category: action.payload.category,
+        categoryList: action.payload.category,
       };
     case actionTypes.RECRUITMENT_PROFILE_FETCH_FAILURE:
       return {
@@ -33,6 +33,7 @@ const recruitmentProfile = (state = initialState, action) => {
       return {
         ...state,
         currentCategory: action.payload.newCategory,
+        // currentPage: 1,
       };
     case actionTypes.RECRUITMENT_PROFILE_MODAL_PAGE_CHANGE:
       return {

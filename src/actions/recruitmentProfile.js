@@ -23,7 +23,7 @@ export const fetchRecruitmentProfileFailure = message => ({
   }
 });
 
-export const categoryChange = newCategory => ({
+export const categoryModalChange = newCategory => ({
   type: actionTypes.RECRUITMENT_PROFILE_MODAL_CATEGORY_CHANGE,
   payload: {
     newCategory,
@@ -31,7 +31,7 @@ export const categoryChange = newCategory => ({
 });
 
 export const pageModalChange = newPage => ({
-  tpye: actionTypes.RECRUITMENT_PROFILE_MODAL_PAGE_CHANGE,
+  type: actionTypes.RECRUITMENT_PROFILE_MODAL_PAGE_CHANGE,
   payload: {
     newPage,
   },
