@@ -5,7 +5,10 @@ const initialState = {
   lists: [],
   leaveHistory: {},
   year: moment().format('YYYY'),
-  month: moment().format('MM')
+  month: moment().format('MM'),
+  currentPage: 1,
+  sortKey: null,
+  direction: null
 };
 
 const leave = (state = initialState, action) => {
@@ -18,8 +21,7 @@ const leave = (state = initialState, action) => {
     case actionTypes.LEAVE_CREATE_SUCCESS:
       return {
         ...state,
-        lists: action.payload.leaves,
-        leaveHistory: action.payload.leave
+        lists: action.payload.leaves
       };
     case actionTypes.LEAVE_CREATE_FAILURE:
       return {
@@ -88,6 +90,17 @@ const leave = (state = initialState, action) => {
         ...state,
         isFetching: false,
         lists: action.payload.leaves
+      };
+    case actionTypes.CHANGE_LEAVE_PAGE:
+      return {
+        ...state,
+        currentPage: action.payload.page
+      };
+    case actionTypes.SORT_LEAVE:
+      return {
+        ...state,
+        sortKey: action.payload.sortKey,
+        direction: action.payload.direction
       };
     default:
       return state;

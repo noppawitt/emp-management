@@ -100,3 +100,18 @@ export const fetchLeaveAllSuccess = leaves => ({
     leaves
   }
 });
+
+export const changeLeavePage = page => ({
+  type: actionTypes.CHANGE_LEAVE_PAGE,
+  payload: {
+    page
+  }
+});
+
+export const sortLeave = (sortKey, direction) => ({
+  type: actionTypes.SORT_LEAVE,
+  payload: {
+    sortKey,
+    direction
+  }
+});

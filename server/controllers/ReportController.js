@@ -538,9 +538,6 @@ const writeAvailableDate = (worksheet, excelType, column) => new Promise(async (
 const writeSummaryTimesheetMonth = (timesheets, worksheet, project) => new Promise(async (resolve, reject) => {
   try {
     let row = 7;
-    // if (project.paymentType === 'Man-month') {
-    //   const 
-    // }
     if (project.paymentType === 'Man-day') {
       await timesheets.forEach((timesheet) => {
         worksheet.getCell(`D${row}`).value = `${timesheet.userId} ${timesheet.name}`;
@@ -563,6 +560,11 @@ const writeSummaryTimesheetMonth = (timesheets, worksheet, project) => new Promi
         bottom: { style: 'double' }
       };
     }
+    // else if (project.paymentType === 'Man-month') {
+    //   await timesheets.forEach((timesheet) => {
+
+    //   });
+    // }
     resolve(worksheet);
   }
   catch (error) {
