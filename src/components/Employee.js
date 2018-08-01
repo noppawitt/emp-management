@@ -4,6 +4,7 @@ import { Grid, Item, Segment, Input, Button, Icon, Select } from 'semantic-ui-re
 import PageHeader from './PageHeader';
 import history from '../history';
 import { masterTableToOptions } from '../utils/helper';
+import Can from '../containers/Can';
 
 const items = employee => (
   <Grid.Column width={8}>
@@ -29,10 +30,12 @@ const Employee = ({ employees, onChange, onClick, departments, onDepartmentChang
       <Segment>
         <Input icon="search" placeholder="Search employees..." defaultValue={filter} onChange={onChange} />
         <Select placeholder="Department" defaultValue={departmentId} options={[{ key: 'all', value: 0, text: 'All' }, ...masterTableToOptions(departments)]} onChange={onDepartmentChange} />
-        <Button icon labelPosition="left" color="blue" floated="right" onClick={onClick}>
-          <Icon name="add user" />
-          Add new employee
-        </Button>
+        <Can activity="userAdd">
+          <Button icon labelPosition="left" color="blue" floated="right" onClick={onClick}>
+            <Icon name="add user" />
+            Add new employee
+          </Button>
+        </Can>
       </Segment>
       <Segment>
         <Grid>

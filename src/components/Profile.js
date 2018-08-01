@@ -6,7 +6,7 @@ import GeneralProfileBox from '../containers/GeneralProfileBox';
 import WorkProfileBox from '../containers/WorkProfileBox';
 import WorkExperienceProfileBox from '../containers/WorkExperienceProfileBox';
 import EducationProfileBox from '../containers/EducationProfileBox';
-import CertificateProfilxBox from '../containers/CertificateProfileBox';
+import CertificateProfileBox from '../containers/CertificateProfileBox';
 import AssetProfileBox from '../containers/AssetProfileBox';
 import EvaProfileBox from '../containers/EvaProfileBox';
 import Can from '../containers/Can';
@@ -29,7 +29,7 @@ const Profile = ({profile, type, id, profileId, can}) => (
         <Can activity="educateView">
           <EducationProfileBox educationsProfile={profile.educations} />
         </Can>
-        <CertificateProfilxBox certificatesProfile={profile.certificates} />
+        <CertificateProfileBox certificatesProfile={profile.certificates} />
         <AssetProfileBox assetsProfile={profile.assets} />
       </Grid.Column>
     </Grid>

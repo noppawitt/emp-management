@@ -36,11 +36,14 @@ LeaveRequest.update = (leaveRequest, id) => (
 );
 
 LeaveRequest.findByUserId = userId => (
-  db.manyOrNone('SELECT DISTINCT (leave_from), (leave_to), (code), user_id, purpose, leave_type, status FROM leave_requests WHERE user_id = $1 AND status != $2', [userId, 'Cancel'])
+  db.manyOrNone('SELECT DISTINCT (leave_from), (leave_to), (code), user_id, purpose, leave_type, status FROM leave_requests WHERE user_id = $1 AND (status = $2 OR status = $3)', [userId, 'Approve', 'Pending'])
 );
 
 LeaveRequest.findAll = () => (
-  db.manyOrNone('SELECT DISTINCT (leave_from), (leave_to), user_id, purpose, leave_type, code, status FROM leave_requests WHERE status = $1', ['Pending'])
+  db.manyOrNone(`SELECT DISTINCT (leave_from), (leave_to), leave_requests.user_id, purpose, leave_type, code, status, 
+  CONCAT(employee_info.first_name, ' ', employee_info.last_name) AS name
+  FROM leave_requests INNER JOIN employee_info ON leave_requests.user_id = employee_info.user_id  
+  WHERE status = $1`, ['Pending'])
 );
 
 LeaveRequest.findByLeave = (leaveFrom, leaveTo, userId) => (

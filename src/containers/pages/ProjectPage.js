@@ -75,6 +75,7 @@ ProjectPage.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  userId: state.auth.id,
   isFetching: state.project.isFetching,
   projects: getVisibleProjects(state),
   sortKey: state.project.sortKey,
@@ -99,8 +100,8 @@ const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
-      const { fetchProject } = this.props;
-      fetchProject(10001);
+      const { fetchProject, userId } = this.props;
+      fetchProject(userId);
     }
   })
 );

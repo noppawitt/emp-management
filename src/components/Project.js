@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Segment, Input, Table, Button, Icon, Pagination, Checkbox } from 'semantic-ui-react';
 import history from '../history';
 import PageHeader from './PageHeader';
+import Can from '../containers/Can';
 
 const Project = ({
   projects,
@@ -24,10 +25,12 @@ const Project = ({
       <Segment>
         <Input icon="search" placeholder="Search projects..." defaultValue={searchText} onChange={onSearchChange} />
         <Checkbox toggle label="PO No." defaultChecked={hasPoNumber} onChange={handleHasPoNumberChange} />
-        <Button icon labelPosition="left" floated="right" onClick={onAddClick} color="blue" >
-          <Icon name="add" />
-          Add New Project
-        </Button>
+        <Can activity="projectAdd">
+          <Button icon labelPosition="left" floated="right" onClick={onAddClick} color="blue" >
+            <Icon name="add" />
+            Add New Project
+          </Button>
+        </Can>
       </Segment>
       <Segment>
         <Table fixed striped sortable selectable celled>

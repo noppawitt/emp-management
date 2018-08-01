@@ -290,8 +290,8 @@ api.fetchEmployee = () => (
 
 // Project
 
-api.fetchProject = () => (
-  callApi('/api/projects')
+api.fetchProject = userId => (
+  callApi(`/api/projects?userId=${userId}`)
 );
 
 api.createProject = body => (
@@ -357,6 +357,10 @@ api.createLeave = body => (
 
 api.fetchLeave = (userId, year, month) => (
   callApi(`/api/leave-request?userId=${userId}&year=${year}&month=${month}`)
+);
+
+api.fetchLeaveAll = () => (
+  callApi('/api/leave-request')
 );
 
 api.updateLeave = body => (
