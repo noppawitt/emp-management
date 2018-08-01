@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Segment, Grid, Header, Icon } from 'semantic-ui-react';
-// import { openModal } from '../../actions/modal';
-// import * as modalNames from '../../constants/modalNames';
+import { openModal } from '../../actions/modal';
+import * as modalNames from '../../constants/modalNames';
 
-const ExamProfile = ({ examProfile, onClick }) => (
+const ExamProfile = ({ examProfile, viewResultModal, result }) => (
   <Segment.Group raised size="large">
     <Segment padded>
       <Grid>
@@ -26,7 +26,7 @@ const ExamProfile = ({ examProfile, onClick }) => (
             <Header size="small">Exam Date <Icon name="calendar outline" />: {examProfile.examDate !== null ? examProfile.examDate : '-'}</Header>
           </Grid.Column>
           <Grid.Column width={6}>
-            <Header size="small">Exam : <Icon name="file pdf outline" onClick={() => onClick()} /></Header>
+            <Header size="small">Exam : <Icon name="file pdf outline" onClick={() => viewResultModal(result)} /></Header>
             <Header size="small">Interview Result Note <Icon name="handshake outline" />:
               {
                 examProfile.interviewResult !== null ?
@@ -42,11 +42,16 @@ const ExamProfile = ({ examProfile, onClick }) => (
 
 ExamProfile.propTypes = {
   examProfile: PropTypes.object.isRequired,
-  onClick: PropTypes.func.isRequired,
+  viewResultModal: PropTypes.func.isRequired,
+  result: PropTypes.array.isRequired,
 };
 
-const mapDispatchToProps = dispatch => ({
-  onClick: () => dispatch(),
+const mapStateToProps = state => ({
+  result: state.recruitmentProfile.result,
 });
 
-export default connect(null, mapDispatchToProps)(ExamProfile);
+const mapDispatchToProps = dispatch => ({
+  viewResultModal: result => dispatch(openModal(modalNames.VIEW_RESULT, result)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExamProfile);

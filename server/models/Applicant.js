@@ -380,4 +380,8 @@ Applicant.checkApproveStatus = rowId => (
   db.oneOrNone('SELECT 1 as is_exist FROM applicants WHERE row_id = $1 AND interview_done = true AND test_status = \'Finish\'', [rowId])
 );
 
+Applicant.fetchViewResult = rowId => (
+  db.manyOrNone('SELECT * FROM exam_result WHERE row_id = $1', [rowId])
+);
+
 module.exports = Applicant;

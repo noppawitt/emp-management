@@ -75,4 +75,6 @@ router.post('/changeTestStatus', ApplicantController.changeStatus);
 
 router.get('/checkApproveStatus', ApplicantController.checkApproveStatus);
 
+router.get('/fetchViewResult', ApplicantController.fetchViewResult);
+
 module.exports = router;

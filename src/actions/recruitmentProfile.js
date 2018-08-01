@@ -7,10 +7,12 @@ export const fetchRecruitmentProfileRequest = id => ({
   }
 });
 
-export const fetchRecruitmentProfileSuccess = data => ({
+export const fetchRecruitmentProfileSuccess = (data, result, category) => ({
   type: actionTypes.RECRUITMENT_PROFILE_FETCH_SUCCESS,
   payload: {
-    data
+    data,
+    result,
+    category,
   }
 });
 
@@ -19,4 +21,18 @@ export const fetchRecruitmentProfileFailure = message => ({
   payload: {
     message
   }
+});
+
+export const categoryChange = newCategory => ({
+  type: actionTypes.RECRUITMENT_PROFILE_MODAL_CATEGORY_CHANGE,
+  payload: {
+    newCategory,
+  }
+});
+
+export const pageModalChange = newPage => ({
+  tpye: actionTypes.RECRUITMENT_PROFILE_MODAL_PAGE_CHANGE,
+  payload: {
+    newPage,
+  },
 });

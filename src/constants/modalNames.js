@@ -41,3 +41,4 @@ export const VIEW_EXAM = 'VIEW_EXAM';
 export const EDIT_RECRUITMENT = 'EDIT_RECRUITMENT';
 export const ACTIVE_EXAM_USER = 'ACTIVE_EXAM_USER';
 export const GRADING_EXAM = 'GRADING_EXAM';
+export const VIEW_RESULT = 'VIEW_RESULT';

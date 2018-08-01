@@ -457,3 +457,11 @@ exports.checkApproveStatus = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.fetchViewResult = (req, res, next) => {
+  Applicant.fetchViewResult(req.query.id)
+    .then((retval) => {
+      res.json(retval);
+    })
+    .catch(next);
+};

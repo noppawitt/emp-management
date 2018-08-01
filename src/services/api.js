@@ -547,6 +547,10 @@ api.fetchRecruitmentFile = rowId => (
   callApi(`../api/applicants/applicant-file/?id=${rowId}`)
 );
 
+api.fetchViewResult = rowId => (
+  callApi(`/api/applicants/fetchViewResult/?id=${rowId}`)
+);
+
 // Recruitment : Basic API
 
 api.getExamDate = citizenId => (
