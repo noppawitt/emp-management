@@ -5,14 +5,16 @@ import { compose, lifecycle } from 'recompose';
 import {
   fetchLeaveRequest,
   updateLeaveRequest,
-  fetchLeaveHistoryRequest
+  fetchLeaveHistoryRequest,
+  changeLeavePage
 } from '../../actions/leave';
 import { openModal } from '../../actions/modal';
 import * as modalNames from '../../constants/modalNames';
 import Leave from '../../components/Leave';
 import Loader from '../../components/Loader';
+import { getTotalPages, getVisibleLeaves } from '../../selectors/leave';
 
-const LeavePage = ({ isFetching, isHistoryFetching, leaves, onAddClick, onCancelClick, userId, year, month, fetchLeave, leaveHistory }) => (
+const LeavePage = ({ isFetching, isHistoryFetching, leaves, onAddClick, onCancelClick, userId, year, month, fetchLeave, leaveHistory, currentPage, totalPages, handlePageChange }) => (
   <div>
     {(isFetching || isHistoryFetching) ?
       <Loader /> :
@@ -25,6 +27,9 @@ const LeavePage = ({ isFetching, isHistoryFetching, leaves, onAddClick, onCancel
         fetchLeave={fetchLeave}
         year={year}
         month={month}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        handlePageChange={handlePageChange}
       />}
   </div>
 );
@@ -44,7 +49,10 @@ LeavePage.propTypes = {
   userId: PropTypes.number.isRequired,
   fetchLeave: PropTypes.func.isRequired,
   year: PropTypes.string.isRequired,
-  month: PropTypes.string.isRequired
+  month: PropTypes.string.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  handlePageChange: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -54,7 +62,9 @@ const mapStateToProps = state => ({
   leaves: state.leave.lists,
   userId: state.auth.id,
   year: state.leave.year,
-  month: state.leave.month
+  month: state.leave.month,
+  currentPage: state.leave.currentPage,
+  totalPages: getTotalPages(state)
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -65,7 +75,8 @@ const mapDispatchToProps = dispatch => ({
     header: 'Cancel Confirmation',
     description: 'Are you sure to cancel this leave request ?',
     onConfirm: () => dispatch(updateLeaveRequest(userId, { ...leave, status: 'Cancel' }))
-  }))
+  })),
+  handlePageChange: (e, { activePage }) => dispatch(changeLeavePage(activePage))
 });
 
 const enhance = compose(

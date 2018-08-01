@@ -100,3 +100,10 @@ export const fetchLeaveAllSuccess = leaves => ({
     leaves
   }
 });
+
+export const changeLeavePage = page => ({
+  type: actionTypes.CHANGE_LEAVE_PAGE,
+  payload: {
+    page
+  }
+});

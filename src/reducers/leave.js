@@ -5,7 +5,8 @@ const initialState = {
   lists: [],
   leaveHistory: {},
   year: moment().format('YYYY'),
-  month: moment().format('MM')
+  month: moment().format('MM'),
+  currentPage: 1
 };
 
 const leave = (state = initialState, action) => {
@@ -88,6 +89,11 @@ const leave = (state = initialState, action) => {
         ...state,
         isFetching: false,
         lists: action.payload.leaves
+      };
+    case actionTypes.CHANGE_LEAVE_PAGE:
+      return {
+        ...state,
+        currentPage: action.payload.page
       };
     default:
       return state;

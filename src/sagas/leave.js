@@ -54,7 +54,7 @@ function* updateLeaveTask(action) {
       }]
     });
     if (action.payload.leave.status === 'Cancel') {
-      const leaves = yield call(api.fetchLeave, action.payload.userId, moment(action.payload.leaveFrom).format('YYYY'), moment(action.payload.leaveFrom).format('MM'));
+      const leaves = yield call(api.fetchLeave, action.payload.userId, moment(action.payload.leave.leaveFrom).format('YYYY'), moment(action.payload.leave.leaveFrom).format('MM'));
       yield put(updateLeaveSuccess(leaves));
       const leaveHistory = yield call(api.fetchLeaveHistory, action.payload.userId, moment().format('YYYY'));
       yield put(fetchLeaveHistorySuccess(leaveHistory));

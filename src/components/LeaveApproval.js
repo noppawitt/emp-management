@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Segment, Button, Icon, Table, Menu, Grid } from 'semantic-ui-react';
+import { Segment, Button, Table, Grid, Pagination } from 'semantic-ui-react';
 import PageHeader from './PageHeader';
 
-const LeaveApproval = ({ leaves, onAcceptClick, onRejectClick }) => (
+const LeaveApproval = ({ leaves, onAcceptClick, onRejectClick, currentPage, totalPages, handlePageChange }) => (
   <div>
     <PageHeader text="Leave Approval" icon="calendar check outline" />
     <Grid>
@@ -25,7 +25,7 @@ const LeaveApproval = ({ leaves, onAcceptClick, onRejectClick }) => (
 
               <Table.Body>
                 {leaves.map(leave => (
-                  <Table.Row key={`${leave.code}${leave.leaveFrom}${leave.leaveTo}`}>
+                  <Table.Row key={`${leave.code}${leave.leaveFrom}${leave.leaveTo}${leave.leaveDate}`}>
                     <Table.Cell>{`${leave.userId} ${leave.name}`}</Table.Cell>
                     <Table.Cell>{leave.leaveType}</Table.Cell>
                     <Table.Cell>{leave.leaveFrom}</Table.Cell>
@@ -47,18 +47,7 @@ const LeaveApproval = ({ leaves, onAcceptClick, onRejectClick }) => (
               <Table.Footer>
                 <Table.Row>
                   <Table.HeaderCell colSpan="7">
-                    <Menu floated="right" pagination>
-                      <Menu.Item as="a" icon>
-                        <Icon name="chevron left" />
-                      </Menu.Item>
-                      <Menu.Item as="a">1</Menu.Item>
-                      <Menu.Item as="a">2</Menu.Item>
-                      <Menu.Item as="a">3</Menu.Item>
-                      <Menu.Item as="a">4</Menu.Item>
-                      <Menu.Item as="a" icon>
-                        <Icon name="chevron right" />
-                      </Menu.Item>
-                    </Menu>
+                    <Pagination activePage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
                   </Table.HeaderCell>
                 </Table.Row>
               </Table.Footer>
@@ -73,7 +62,10 @@ const LeaveApproval = ({ leaves, onAcceptClick, onRejectClick }) => (
 LeaveApproval.propTypes = {
   leaves: PropTypes.array.isRequired,
   onAcceptClick: PropTypes.func.isRequired,
-  onRejectClick: PropTypes.func.isRequired
+  onRejectClick: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  handlePageChange: PropTypes.func.isRequired
 };
 
 export default LeaveApproval;
