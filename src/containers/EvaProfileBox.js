@@ -59,7 +59,6 @@ const EvaProfileBox = ({clear, can, performanceProfile, evaProfile, selfProfile,
 
   for (let i = 0; i < evaProfile.length; i++) {
     if (i == evaProfile.length - 1) {
-      console.log()
       optionsPro.push({ text: 'Probation', onClick: () => { fetchProbation(profileId, evaProfile[i].id); openProbationModal(); } })
     }
     else optionsPro.push({ text: 'Continued Probation ' + (evaProfile.length - i - 1), onClick: () => { fetchProbation(profileId, evaProfile[i].id); openProbationModal(); } })

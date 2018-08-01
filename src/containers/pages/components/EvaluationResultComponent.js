@@ -51,7 +51,6 @@ class EvaluationResultComponent extends React.Component {
             otherAllowance: props.otherAllowance
         })
 
-        console.log(this.state);
     }
 
     updateParentComponent() {
@@ -204,12 +203,9 @@ class EvaluationResultComponent extends React.Component {
                                     }} /> */}
                                     <DatePicker selected={moment(this.state.passProDate)}
                                         onChangeRaw={(event) => {
-                                            console.log("test1");
-                                            console.log(event.target.value);
                                             event.target.value = moment(this.state.passProDate).format('DD/MM/YYYY');
                                         }}
                                         onChange={(date) => {
-                                            console.log(this.state.endProbationDate)
                                             this.state = {
                                                 ...this.state,
                                                 passProDate: date.format('YYYY-MM-DD')
@@ -373,12 +369,9 @@ class EvaluationResultComponent extends React.Component {
                                                         // }} disabled={this.state.continued} />
                                                         <DatePicker selected={this.state.terminationDate ? moment(this.state.terminationDate) : null}
                                                             onChangeRaw={(event) => {
-                                                                console.log("test1");
-                                                                console.log(event.target.value);
                                                                 event.target.value = moment(this.state.terminationDate).format('DD/MM/YYYY');
                                                             }}
                                                             onChange={(date) => {
-                                                                console.log(this.state.endProbationDate)
                                                                 this.state = {
                                                                     ...this.state,
                                                                     terminationDate: date.format('YYYY-MM-DD')
@@ -415,12 +408,9 @@ class EvaluationResultComponent extends React.Component {
                                                         // }} disabled={!this.state.continued} />
                                                         <DatePicker selected={this.state.continuedDate ? moment(this.state.continuedDate) : null}
                                                             onChangeRaw={(event) => {
-                                                                console.log("test1");
-                                                                console.log(event.target.value);
                                                                 event.target.value = moment(this.state.continuedDate).format('DD/MM/YYYY');
                                                             }}
                                                             onChange={(date) => {
-                                                                console.log(this.state.endProbationDate)
                                                                 this.state = {
                                                                     ...this.state,
                                                                     continuedDate: date.format('YYYY-MM-DD')

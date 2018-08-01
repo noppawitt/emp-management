@@ -73,12 +73,9 @@ class EmployeeInfo extends React.Component {
                             <td>{this.state.showEndProDate ?
                                 <DatePicker selected={moment(this.state.endProbationDate)}
                                     onChangeRaw={(event) => {
-                                        console.log("test1");
-                                        console.log(event.target.value);
                                         event.target.value = moment(this.state.endProbationDate).format('DD/MM/YYYY');
                                     }}
                                     onChange={(date) => {
-                                        console.log(this.state.endProbationDate)
                                         if (date == null) {
                                             this.props.onChange(null);
                                         } else this.props.onChange(date.format('YYYY-MM-DD'));
