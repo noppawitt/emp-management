@@ -19,9 +19,11 @@ function* createLeaveTask(action) {
   try {
     yield call(api.createLeave, { leaveRequest: action.payload.form });
     const { userId } = action.payload.form;
-    const leaves = yield call(api.fetchLeave, action.payload.form.userId, moment(action.payload.form.leaveFrom).format('YYYY'), moment(action.payload.form.leaveFrom).format('MM'));
+    const [leaves, leaveHistory] = yield all([
+      call(api.fetchLeave, action.payload.form.userId, moment(action.payload.form.leaveFrom).format('YYYY'), moment(action.payload.form.leaveFrom).format('MM')),
+      call(api.fetchLeaveHistory, userId, moment().format('YYYY'))
+    ]);
     yield put(createLeaveSuccess(leaves));
-    const leaveHistory = yield call(api.fetchLeaveHistory, userId, moment().format('YYYY'));
     yield put(fetchLeaveHistorySuccess(leaveHistory));
     yield put(closeModal());
     action.payload.resolve();

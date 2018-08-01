@@ -21,6 +21,17 @@ class ProgressBar extends React.Component {
     this.increase();
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.percent !== this.props.percent) {
+      this.state.percent = 0;
+      this.state.increase = 0;
+      this.state.increase = (this.props.percent / this.props.max);
+      this.state.day = Math.floor(this.props.percent / 8);
+      this.state.hour = this.props.percent % 8;
+      this.increase();
+    }
+  }
+
   increase() {
     const percent = this.state.percent + this.state.increase;
     if (percent >= this.props.percent * 100 / this.props.max) {
