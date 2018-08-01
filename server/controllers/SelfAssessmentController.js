@@ -3,7 +3,6 @@ const EmployeeInfo = require('../models/EmployeeInfo')
 const mail = require('../mail');
 
 exports.check = (req,res,next) => {
-  console.log('check self');
   SelfAssessment.checkExist(req.query.id)
     .then( exist => {
       res.json(exist)
@@ -21,7 +20,6 @@ exports.find = (req,res,next) => {
 
 exports.create = (req,res,next) => {
   const newSelfAssessment = req.body.selfAssessmentInfo;
-  console.log('create self');
   SelfAssessment.insertSelfAssessment(newSelfAssessment, req.user.id)
     .then(()=>{
       SelfAssessment.checkExist(req.body.selfAssessmentInfo.employeeID)
@@ -65,7 +63,6 @@ exports.submit = (req,res,next) => {
       }
     });
   })
-  console.log(req.user.id);
   SelfAssessment.submitSelfAssessment(req.user.id)
     .then(()=>{
       SelfAssessment.checkExist(req.user.id)

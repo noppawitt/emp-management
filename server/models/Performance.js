@@ -4,7 +4,7 @@ const moment = require('moment');
 const Performance = {};
 
 Performance.checkExist = (id) => (
-  db.manyOrNone("SELECT extract(year from created_date) as year FROM Performance WHERE user_id=$1 ORDER BY created_date DESC",[id])
+  db.manyOrNone("SELECT extract(year from created_date) as year, sup_sign_date ,md_sign_date FROM Performance WHERE user_id=$1 ORDER BY created_date DESC",[id])
 )
 
 Performance.findById = (id,year) => (

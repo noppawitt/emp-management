@@ -5,7 +5,7 @@ const moment = require('moment');
 const Probation = {};
 
 Probation.checkExist = (id) => (
-  db.manyOrNone("SELECT id, pass_pro, continued, continued_date, md_sign_date FROM Probation WHERE user_id=$1 ORDER BY id DESC",[id])
+  db.manyOrNone("SELECT id, pass_pro, continued, continued_date,sup_sign_date, md_sign_date FROM Probation WHERE user_id=$1 ORDER BY id DESC",[id])
 )
 
 Probation.findProById = (id,proId) => (

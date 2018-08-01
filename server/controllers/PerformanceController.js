@@ -1,7 +1,7 @@
 const Performance = require('../models/Performance');
+const mail = require('../mail');
 
 exports.check = (req,res,next) => {
-  console.log('check');
   Performance.checkExist(req.query.id)
     .then((exist)=>{
       console.log(exist)
@@ -11,7 +11,6 @@ exports.check = (req,res,next) => {
 };
 
 exports.find = (req,res,next) => {
-  console.log('fetch perf')
   Performance.findById(req.query.id,req.query.year)
     .then((performance) => {
         res.json(performance);
@@ -20,28 +19,51 @@ exports.find = (req,res,next) => {
 };
 
 exports.create = (req,res,next) => {
-  console.log('create perf')
   const newPerformanceInfo = req.body.performanceInfo;
   Performance.insertPerformance(newPerformanceInfo, req.user.id)
     .then(() => {
         Performance.checkExist(req.body.performanceInfo.employeeID)
-          .then((performance)=>{
-            res.json(performance)
+          .then((performances)=>{
+            if(performances[0].supSignDate!=null && performances[0].mdSignDate == null){
+              performanceMailer(req);
+            }
+            res.json(performances)
           });
     })
     .catch(next);
 };
 
 exports.update = (req,res,next) => {
-  console.log('update performance');
     const newPerformanceInfo = req.body.performanceInfo;
     Performance.updatePerformance(newPerformanceInfo, req.user.id)
       .then(() => {
-        console.log("Test Probation");
         Performance.checkExist(req.body.performanceInfo.employeeID)
-          .then((performance)=>{
-            res.json(performance)
+          .then((performances)=>{
+            if(performances[0].supSignDate!=null && performances[0].mdSignDate == null){
+              performanceMailer(req);
+            }
+            res.json(performances)
           });
       })
       .catch(next);
+};
+
+const performanceMailer = (req) => {
+  const mailOptions = {
+    from: process.env.MAIL_USER,
+    to: 'ruby.pwn@hotmail.com',
+    subject: 'Performance',
+    html:
+      `
+        <p>Performance of ${req.body.performanceInfo.name} already sumitted</p>
+      `
+  };
+  mail.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      console.log(info);
+    }
+  });
 };
