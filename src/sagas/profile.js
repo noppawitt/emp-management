@@ -21,7 +21,7 @@ import { getAccessControl } from '../selectors/accessControl';
 import api from '../services/api';
 import jwt from 'jsonwebtoken';
 
-const token = jwt.decode(localStorage.getItem('token'));
+const token = jwt.decode(localStorage.accessToken);
 
 export function* fetchSelfAssessmentTask(action){
   try{
@@ -86,7 +86,8 @@ function* fetchProfileTask(action) {
       workExperiences,
       educations
     };
-    if(can.evaViewOwn){
+    console.log(token)
+    if(can.evaViewAll || token.id == action.payload.userId){
       profile.eva = yield call(api.checkProbation, action.payload.userId);
       profile.perf = yield call(api.checkPerformance, action.payload.userId);
       profile.self = yield call(api.checkSelfAssessment, action.payload.userId);
@@ -182,6 +183,10 @@ function* updateProfileTask(action) {
   }
   catch (error) {
     yield put(updateProfileFailure(error));
+    if(error=== "Employee already accept"){
+      alert(error);
+      yield put(closeModal());
+    }
     action.payload.reject();
   }
 }

@@ -3,6 +3,10 @@ const moment = require('moment');
 
 const Performance = {};
 
+Performance.checkStatus = (performanceInfo,id) => (
+  db.one("SELECT em_sign_date as can_edit FROM Performance WHERE id=$1", [performanceInfo.performanceId])
+)
+
 Performance.checkExist = (id) => (
   db.manyOrNone("SELECT extract(year from created_date) as year, sup_sign_date ,md_sign_date FROM Performance WHERE user_id=$1 ORDER BY created_date DESC",[id])
 )
@@ -49,4 +53,19 @@ Performance.updatePerformance = (performanceInfo,id) =>(
       performanceInfo.performanceId
     ])
 )
+
+Performance.empSignPerformance = (performanceInfo, id) => (
+  db.none(
+    "UPDATE Performance SET em_sign_date=$1, em_sign_name=$2, updated_user=$3, updated_date=$4 WHERE user_id=$5 AND id=$6",
+    [
+      performanceInfo.employeeSignDate,
+      performanceInfo.employeeSignName,
+      id,
+      moment().format('YYYY-MM-DD HH:mm:ss'),
+      performanceInfo.employeeID,
+      performanceInfo.performanceId
+    ]
+  )
+)
+
 module.exports = Performance;
