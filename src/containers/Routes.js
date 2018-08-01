@@ -10,7 +10,15 @@ import ProfilePage from './pages/ProfilePage';
 import EmployeePage from './pages/EmployeePage';
 import ReportPage from './pages/ReportPage';
 import AddTaskPage from './pages/AddTaskPage';
-import ManageLeave from './pages/ManageLeave';
+// import ManageLeave from './pages/ManageLeave';
+import ErpPage from './pages/ErpPage';
+import ErpApprovePage from './pages/ErpApprovePage';
+import ErpAddPage from './pages/ErpAddPage';
+import ErpBillRecord from './forms/EditBillRecord';
+import ManageLeave from './pages/ManageLeavePage';
+import HolidayPage from './pages/HolidayPage';
+import LeaveApprovalPage from './pages/LeaveApprovalPage';
+import Can from './Can';
 
 const Routes = () => (
   <Switch>
@@ -25,6 +33,14 @@ const Routes = () => (
     <PrivateRoute path="/employee" component={EmployeePage} />
     <PrivateRoute path="/report" component={ReportPage} />
     <PrivateRoute path="/manageleave" component={ManageLeave} />
+    <PrivateRoute exact path="/erp" component={ErpPage} />
+    <PrivateRoute path="/erp/:id" component={ErpBillRecord} />
+    <PrivateRoute path="/erpApprove" component={ErpApprovePage} />
+    <PrivateRoute path="/add" component={ErpAddPage} />
+    <PrivateRoute path="/holiday" component={HolidayPage} />
+    <Can activity="leaveRequestApprove">
+      <PrivateRoute path="/leave-approval" component={LeaveApprovalPage} />
+    </Can>
   </Switch>
 );
 

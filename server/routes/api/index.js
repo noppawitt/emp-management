@@ -29,6 +29,13 @@ const workExperience = require('./workExperience');
 const leaveHistory = require('./leaveHistory');
 const toeic = require('./toeic');
 const promoteHistory = require('./promoteHistory');
+const line = require('./line');
+const billrecordcontrol = require('./billrecordcontrol');
+const billrecordimg = require('./billrecordimg');
+const billrecordeditconrtol = require('./billrecordeditcontrol');
+const billrecordcreateeditconrtol = require('./billrecordcreateeditcontrol');
+const approverecordcontrol = require('./approvebillrecord');
+const billxlsxcontrol = require('./billxlsxcontrol');
 
 router.use('/employee-info', employeeInfo);
 
@@ -89,5 +96,19 @@ router.use('/leave-history', leaveHistory);
 router.use('/toeic', toeic);
 
 router.use('/promote-history', promoteHistory);
+
+router.use('/line', line);
+
+router.use('/billrecords-control', billrecordcontrol);
+
+router.use('/billrecords-imgupload', billrecordimg);
+
+router.use('/billrecords-editcontrol', billrecordeditconrtol);
+
+router.use('/billrecords-createeditcontrol', billrecordcreateeditconrtol);
+
+router.use('/approverecords-control', approverecordcontrol);
+
+router.use('/billxlsx-control', billxlsxcontrol);
 
 module.exports = router;

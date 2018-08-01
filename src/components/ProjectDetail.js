@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Segment, Grid, Header, Icon, Table, Button } from 'semantic-ui-react';
+import moment from 'moment';
+import { Segment, Grid, Header, Icon, Table, Button, List } from 'semantic-ui-react';
+import UploadFile from '../components/UploadFile';
 
 const membersDetail = (memberDetail, projectId, onDeleteClick) => (
   <Table.Row key={memberDetail.userId}>
@@ -8,6 +10,8 @@ const membersDetail = (memberDetail, projectId, onDeleteClick) => (
     <Table.Cell>{memberDetail.firstName || '-'}{' '}{memberDetail.lastName || '-'}</Table.Cell>
     <Table.Cell>{memberDetail.name || '-'}</Table.Cell>
     <Table.Cell>{memberDetail.role || '-'}</Table.Cell>
+    <Table.Cell>{memberDetail.startDate ? moment(memberDetail.startDate).format('DD/MM/YYYY') : '-'}</Table.Cell>
+    <Table.Cell>{memberDetail.endDate ? moment(memberDetail.endDate).format('DD/MM/YYYY') : '-'}</Table.Cell>
     <Table.Cell>
       <Button animated="fade" style={{ borderStyle: 'solid', borderColor: '#FF0000', backgroundColor: 'white', borderWidth: '1px' }} onClick={() => onDeleteClick(memberDetail.userId, projectId)}>
         <Button.Content visible><font color="#FF0000" >Delete</font></Button.Content>
@@ -17,7 +21,7 @@ const membersDetail = (memberDetail, projectId, onDeleteClick) => (
   </Table.Row>
 );
 
-const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteMemberClick }) => (
+const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteMemberClick, handleDownloadFile, handleUploadFile, handleDeleteFile }) => (
   <Segment.Group raised size="large" >
     <Segment>
       <Grid padded>
@@ -57,7 +61,7 @@ const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteM
         <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>Amount :</b></font></Grid.Column>
         <Grid.Column computer={11} tablet={11} mobile={16}>{projectDetail.amount || '-'}</Grid.Column>
         <Grid.Column width={1} only="large screen" />
-        <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>Form :</b></font></Grid.Column>
+        <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>From :</b></font></Grid.Column>
         <Grid.Column computer={11} tablet={11} mobile={16}>{projectDetail.startDate || '-'}</Grid.Column>
         <Grid.Column width={1} only="large screen" />
         <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>To :</b></font></Grid.Column>
@@ -70,7 +74,17 @@ const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteM
         <Grid.Column computer={11} tablet={11} mobile={16}>{projectDetail.status || '-'}</Grid.Column>
         <Grid.Column width={1} only="large screen" />
         <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>File :</b></font></Grid.Column>
-        <Grid.Column computer={11} tablet={11} mobile={16}>Requirment</Grid.Column>
+        <Grid.Column computer={11} tablet={11} mobile={16}>
+          <List>
+            {projectDetail.files.map(file => (
+              <List.Item key={file.id}>
+                <a href onClick={() => handleDownloadFile(file.id, file.name)}>{`${file.name} `}</a>
+                <a href onClick={() => handleDeleteFile(file.id)}>[delete]</a>
+              </List.Item>
+            ))}
+          </List>
+          <UploadFile onUploadSubmit={handleUploadFile} args={[projectDetail.projectId]} />
+        </Grid.Column>
       </Grid>
     </Segment>
     <Segment>
@@ -98,6 +112,8 @@ const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteM
             <Table.HeaderCell>Name</Table.HeaderCell>
             <Table.HeaderCell>Position</Table.HeaderCell>
             <Table.HeaderCell>Role</Table.HeaderCell>
+            <Table.HeaderCell>Start Date</Table.HeaderCell>
+            <Table.HeaderCell>End Date</Table.HeaderCell>
             <Table.HeaderCell />
           </Table.Row>
         </Table.Header>
@@ -113,7 +129,10 @@ ProjectDetail.propTypes = {
   projectDetail: PropTypes.object.isRequired,
   onEditClick: PropTypes.func.isRequired,
   onAddMemberClick: PropTypes.func.isRequired,
-  onDeleteMemberClick: PropTypes.func.isRequired
+  onDeleteMemberClick: PropTypes.func.isRequired,
+  handleDownloadFile: PropTypes.func.isRequired,
+  handleUploadFile: PropTypes.func.isRequired,
+  handleDeleteFile: PropTypes.func.isRequired
 };
 
 export default ProjectDetail;

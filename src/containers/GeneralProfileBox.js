@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { Segment, Grid, Header, Icon } from 'semantic-ui-react';
 import { openModal } from '../actions/modal';
@@ -35,8 +36,8 @@ const GeneralProfileBox = ({ generalProfile, onEditClick, onProfilePictureClick,
       <Can activity="employeeInfoViewAll">
         <Header size="small">Citizen ID: {generalProfile.citizenId}</Header>
       </Can>
-      <Can activity="employeeViewAll">
-        <Header size="small">Birth date: {generalProfile.birthday}</Header>
+      <Can activity="employeeInfoViewAll">
+        <Header size="small">Birth date: {moment(generalProfile.birthday).format('DD/MM/YYYY')}</Header>
       </Can>
       <Header size="small">Mobile No: {generalProfile.mobileNumber}</Header>
       <Header size="small">Email: {generalProfile.email}</Header>

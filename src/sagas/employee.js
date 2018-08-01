@@ -9,7 +9,7 @@ import {
 import { closeModal } from '../actions/modal';
 import api from '../services/api';
 
-export function* fetchEmployeeTask() {
+function* fetchEmployeeTask() {
   try {
     const employees = yield call(api.fetchEmployee);
     yield put(fetchEmployeeSuccess(employees));
@@ -19,7 +19,7 @@ export function* fetchEmployeeTask() {
   }
 }
 
-export function* createEmployeeTask(action) {
+function* createEmployeeTask(action) {
   try {
     yield call(api.createEmployee, {
       user: action.payload.form
@@ -34,11 +34,11 @@ export function* createEmployeeTask(action) {
   }
 }
 
-export function* watchFetchEmployeeRequest() {
+function* watchFetchEmployeeRequest() {
   yield takeEvery(actionTypes.EMPLOYEE_FETCH_REQUEST, fetchEmployeeTask);
 }
 
-export function* watchCreateEmployeeRequest() {
+function* watchCreateEmployeeRequest() {
   yield takeEvery(actionTypes.EMPLOYEE_CREATE_REQUEST, createEmployeeTask);
 }
 

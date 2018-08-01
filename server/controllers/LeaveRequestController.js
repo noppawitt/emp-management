@@ -2,6 +2,7 @@ const LeaveRequest = require('../models/LeaveRequest');
 const Holiday = require('../models/Holiday');
 const moment = require('moment');
 const mail = require('../mail');
+const hash = require('object-hash');
 
 const calTotalHours = (timeIn, timeOut) => new Promise((resolve, reject) => {
   try {
@@ -75,9 +76,10 @@ const createLeaveRequest = (newLeaveRequest, holidays, id) => new Promise(async 
       if (m.isoWeekday() !== 6 && m.isoWeekday() !== 7) {
         if (!isHoliday(holidays, m)) {
           const totalhours = await calTotalHours(newLeaveRequest.startTime, newLeaveRequest.endTime);
+          const code = `${newLeaveRequest.userId}-${moment()}`;
+          newLeaveRequest.code = hash(code);
           newLeaveRequest.leaveDate = m.format('YYYY-MM-DD');
           newLeaveRequest.totalhours = totalhours;
-          newLeaveRequest.code = 'playtorium';
           LeaveRequest.create(newLeaveRequest, id);
         }
       }
@@ -92,31 +94,86 @@ const createLeaveRequest = (newLeaveRequest, holidays, id) => new Promise(async 
 exports.create = (req, res, next) => {
   const newLeaveRequest = req.body.leaveRequest;
   const holidays = Holiday.findByYear(moment().format('YYYY'));
-  createLeaveRequest(newLeaveRequest, holidays, req.user.id)
-    .then(() => {
-      const mailOptions = {
-        from: process.env.MAIL_USER,
-        to: 'tmarks.thanapon@gmail.com',
-        subject: 'Hello',
-        html: `<p>Good Morning</p>`
-      };
-      mail.sendMail(mailOptions, (err, info) => {
-        if (err) {
-          console.log(err);
-        }
-        else {
-          console.log(info);
-        }
+  if (req.accessControl.leaveRequestAddAll) {
+    createLeaveRequest(newLeaveRequest, holidays, req.user.id)
+      .then(() => {
+        const mailOptions = {
+          from: process.env.MAIL_USER,
+          to: 'tmarks.thanapon@gmail.com',
+          subject: 'Hello',
+          html: `<p>Good Morning</p>`
+        };
+        mail.sendMail(mailOptions, (err, info) => {
+          if (err) {
+            console.log(err);
+          }
+          else {
+            console.log(info);
+          }
+        });
+        res.json('Create Finish!');
       });
-      res.json('Create Finish!');
-    });
+  }
+  else if (req.accessControl.leaveRequestAddOwn) {
+    if (newLeaveRequest.userId === req.user.id) {
+      createLeaveRequest(newLeaveRequest, holidays, req.user.id)
+        .then(() => {
+          const mailOptions = {
+            from: process.env.MAIL_USER,
+            to: 'tmarks.thanapon@gmail.com',
+            subject: 'Hello',
+            html: `<p>Good Morning</p>`
+          };
+          mail.sendMail(mailOptions, (err, info) => {
+            if (err) {
+              console.log(err);
+            }
+            else {
+              console.log(info);
+            }
+          });
+          res.json('Create Finish!');
+        });
+    }
+    else {
+      res.status(401).json({
+        message: `You don't have permission to do this.`
+      });
+    }
+  }
 };
 
 exports.update = (req, res, next) => {
   const leaveRequestArray = req.body.leaveRequests;
-  Promise.all(leaveRequestArray.map(leaveRequest => LeaveRequest.update(leaveRequest, req.user.id)))
-    .then(() => res.json('Update Finish!'))
-    .catch(next);
+  if (leaveRequestArray[0].status === 'Cancel') {
+    if (req.accessControl.leaveRequestCancelOwn && leaveRequestArray[0].userId === req.user.id) {
+      Promise.all(leaveRequestArray.map(leaveRequest => LeaveRequest.update(leaveRequest, req.user.id)))
+        .then(() => res.json('Update Finish!'))
+        .catch(next);
+    }
+    else {
+      res.status(401).json({
+        message: `You don't have permission to do this.`
+      });
+    }
+  }
+  else if (leaveRequestArray[0].status === 'Approve' || leaveRequestArray[0].status === 'Reject') {
+    if (req.accessControl.leaveRequestApprove) {
+      Promise.all(leaveRequestArray.map(leaveRequest => LeaveRequest.update(leaveRequest, req.user.id)))
+        .then(() => res.json('Update Finish!'))
+        .catch(next);
+    }
+    else {
+      res.status(401).json({
+        message: `You don't have permission to do this.`
+      });
+    }
+  }
+  else {
+    res.status(401).json({
+      message: `You don't have permission to do this.`
+    });
+  }
 };
 
 exports.findLeaveRequest = (req, res, next) => {

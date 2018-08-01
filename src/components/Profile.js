@@ -4,8 +4,9 @@ import { Grid } from 'semantic-ui-react';
 import PageHeader from './PageHeader';
 import GeneralProfileBox from '../containers/GeneralProfileBox';
 import WorkProfileBox from '../containers/WorkProfileBox';
+import WorkExperienceProfileBox from '../containers/WorkExperienceProfileBox';
 import EducationProfileBox from '../containers/EducationProfileBox';
-import CertificateProfilxBox from '../containers/CertificateProfileBox';
+import CertificateProfileBox from '../containers/CertificateProfileBox';
 import AssetProfileBox from '../containers/AssetProfileBox';
 import Can from '../containers/Can';
 
@@ -16,10 +17,13 @@ const Profile = ({ profile }) => (
       <Grid.Column computer={12} mobile={16}>
         <GeneralProfileBox generalProfile={profile.general} />
         <WorkProfileBox workProfile={profile.work} />
+        <Can activity="workExperienceView">
+          <WorkExperienceProfileBox workExperienceProfile={profile.workExperiences} />
+        </Can>
         <Can activity="educateView">
           <EducationProfileBox educationsProfile={profile.educations} />
         </Can>
-        <CertificateProfilxBox certificatesProfile={profile.certificates} />
+        <CertificateProfileBox certificatesProfile={profile.certificates} />
         <AssetProfileBox assetsProfile={profile.assets} />
       </Grid.Column>
     </Grid>

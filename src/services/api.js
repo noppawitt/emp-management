@@ -1,15 +1,28 @@
-const token = localStorage.getItem('token');
+let token;
 
 const callApi = (endpoint, request) => {
+  let isFormData;
+
   if (request && request.body) {
-    request.body = request.body instanceof FormData ? request.body : JSON.stringify(request.body);
+    if (request.body instanceof FormData) isFormData = true;
+    request.body = isFormData ? request.body : JSON.stringify(request.body);
   }
 
-  const headers = {
-    Authorization: `Bearer ${token}`,
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  };
+  token = localStorage.getItem('accessToken');
+
+  let headers;
+  if (isFormData) {
+    headers = {
+      Authorization: `Bearer ${token}`
+    };
+  }
+  else {
+    headers = {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+  }
 
   const requestWithHeaders = {
     ...{ headers },
@@ -30,6 +43,8 @@ const download = (endpoint, request) => {
   if (request && request.body) {
     request.body = JSON.stringify(request.body);
   }
+
+  token = localStorage.getItem('accessToken');
 
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -58,6 +73,13 @@ api.login = form => (
   callApi('/auth/login', {
     method: 'POST',
     body: form
+  })
+);
+
+api.refreshToken = body => (
+  callApi('/auth/token', {
+    method: 'POST',
+    body
   })
 );
 
@@ -148,6 +170,10 @@ api.fetchAssetProfile = userId => (
   callApi(`/api/has-assets?userId=${userId}`)
 );
 
+api.fetchWorkExperience = userId => (
+  callApi(`/api/work-experience?userId=${userId}`)
+);
+
 api.updateGeneralProfile = body => (
   callApi('/api/employee-info', {
     method: 'PUT',
@@ -179,6 +205,13 @@ api.updateCertificateProfile = body => (
 api.updateAssetProfile = body => (
   callApi('/api/has-assets', {
     method: 'PUT',
+    body
+  })
+);
+
+api.createWorkExperienceProfile = body => (
+  callApi('/api/work-experience', {
+    method: 'POST',
     body
   })
 );
@@ -235,6 +268,13 @@ api.deleteAssetProfile = body => (
   })
 );
 
+api.deleteWorkExperienceProfile = body => (
+  callApi('/api/work-experience', {
+    method: 'DELETE',
+    body
+  })
+);
+
 // Employee
 
 api.createEmployee = body => (
@@ -250,8 +290,8 @@ api.fetchEmployee = () => (
 
 // Project
 
-api.fetchProject = () => (
-  callApi('/api/projects')
+api.fetchProject = userId => (
+  callApi(`/api/projects?userId=${userId}`)
 );
 
 api.createProject = body => (
@@ -288,6 +328,24 @@ api.deleteMember = body => (
   })
 );
 
+api.downloadFile = fileId => (
+  download(`/api/files/download?fileId=${fileId}`)
+);
+
+api.uploadFile = body => (
+  callApi(`/api/files`, {
+    method: 'POST',
+    body
+  })
+);
+
+api.deleteFile = body => (
+  callApi(`/api/files`, {
+    method: 'DELETE',
+    body
+  })
+);
+
 // Leave
 
 api.createLeave = body => (
@@ -299,6 +357,10 @@ api.createLeave = body => (
 
 api.fetchLeave = (userId, year, month) => (
   callApi(`/api/leave-request?userId=${userId}&year=${year}&month=${month}`)
+);
+
+api.fetchLeaveAll = () => (
+  callApi('/api/leave-request')
 );
 
 api.updateLeave = body => (
@@ -338,15 +400,34 @@ api.deleteTimesheet = body => (
   })
 );
 
-api.fetchHolidays = (year, month) => (
-  callApi(`/api/holidays?year=${year}&month=${month}`)
+// Holiday
+api.fetchHolidays = (year, month = null) => {
+  if (month) return callApi(`/api/holidays?year=${year}&month=${month}`);
+  return callApi(`/api/holidays?year=${year}`);
+};
+api.deleteHoliday = body => (
+  callApi('/api/holidays', {
+    method: 'DELETE',
+    body
+  })
+);
+api.addHoliday = body => (
+  callApi('/api/holidays', {
+    method: 'POST',
+    body
+  })
+);
+
+api.fetchTimesheetProject = userId => (
+  callApi(`/api/has-projects?userId=${userId}`)
 );
 
 // Report
 
-api.fetchOwnProject = (userId, year, month) => (
-  callApi(`/api/projects?userId=${userId}&year=${year}&month=${month}`)
-);
+api.fetchOwnProject = (userId, year, month) => {
+  if (userId) return callApi(`/api/projects?userId=${userId}&year=${year}&month=${month}`);
+  return callApi(`/api/projects?year=${year}&month=${month}`);
+};
 
 api.downloadReport = (reportType, template, userId, projectId, year, month) => (
   download(`/api/report?reportType=${reportType}&template=${template}&userId=${userId}&projectId=${projectId}&year=${year}&month=${month}`)
@@ -356,6 +437,72 @@ api.downloadReport = (reportType, template, userId, projectId, year, month) => (
 
 api.fetchAccessControl = () => (
   callApi(`/api/access-control`)
+);
+
+// Erp
+api.createErp = body => (
+  callApi('/api/billrecords-control', {
+    method: 'POST',
+    body
+  })
+);
+
+api.fetchErp = () => (
+  callApi(`/api/billrecords-control/`)
+);
+
+api.fetchErpDetail = body => (
+  callApi(`/api/billrecords-editcontrol/`, {
+    method: 'POST',
+    body
+  })
+);
+
+api.createErpDetail = body => (
+  callApi(`/api/billrecords-createeditcontrol/`, {
+    method: 'POST',
+    body
+  })
+);
+
+api.deleteErp = body => (
+  callApi(`/api/billrecords-control/`, {
+    method: 'DELETE',
+    body
+  })
+);
+
+
+api.uploadErp = body => (
+  callApi(`/api/billrecords-imgupload/upload`, {
+    headers: {
+      Authorization: ('Bearer ').concat(localStorage.getItem('token'))
+    },
+    method: 'POST',
+    body
+  })
+);
+
+api.updateUploadImage = body => (
+  callApi(`/api/billrecords-imgupload/`, {
+    method: 'POST',
+    body
+  })
+);
+
+api.fetchApprove = () => (
+  callApi(`/api/approverecords-control/`)
+);
+
+api.getExcel = id => (
+  download(`/api/billxlsx-control/?id=${id}`)
+);
+
+api.approveUpdate = body => (
+  callApi(`/api/approverecords-control/`, {
+    method: 'POST',
+    body
+  })
 );
 
 export default api;

@@ -1,15 +1,16 @@
 import jwt from 'jsonwebtoken';
 import * as actionTypes from '../constants/actionTypes';
+import { isExpired } from '../utils/helper';
 
 let initialState;
-const token = localStorage.getItem('token');
-if (token) {
-  const user = jwt.decode(token);
+const accessToken = localStorage.getItem('accessToken');
+if (accessToken) {
+  const { id, username } = jwt.decode(accessToken);
   initialState = {
     isFetching: false,
-    isAuthenticated: true,
-    id: user.id,
-    username: user.username
+    isAuthenticated: !isExpired(accessToken),
+    id,
+    username
   };
 }
 else {
@@ -63,8 +64,7 @@ const auth = (state = initialState, action) => {
       };
     case actionTypes.LOGOUT:
       return {
-        ...state,
-        isAuthenticated: false
+        initialState
       };
     default:
       return state;

@@ -9,16 +9,20 @@ import {
   updateLeaveFailure,
   updateLeaveSuccess,
   fetchLeaveHistoryFailure,
-  fetchLeaveHistorySuccess
+  fetchLeaveHistorySuccess,
+  fetchLeaveAllSuccess
 } from '../actions/leave';
 import { closeModal } from '../actions/modal';
 import api from '../services/api';
 
-export function* createLeaveTask(action) {
+function* createLeaveTask(action) {
   try {
     yield call(api.createLeave, { leaveRequest: action.payload.form });
+    const { userId } = action.payload.form;
     const leaves = yield call(api.fetchLeave, action.payload.form.userId, moment(action.payload.form.leaveFrom).format('YYYY'), moment(action.payload.form.leaveFrom).format('MM'));
     yield put(createLeaveSuccess(leaves));
+    const leaveHistory = yield call(api.fetchLeaveHistory, userId, moment().format('YYYY'));
+    yield put(fetchLeaveHistorySuccess(leaveHistory));
     yield put(closeModal());
     action.payload.resolve();
   }
@@ -28,7 +32,7 @@ export function* createLeaveTask(action) {
   }
 }
 
-export function* fetchLeaveTask(action) {
+function* fetchLeaveTask(action) {
   try {
     const leaves = yield call(api.fetchLeave, action.payload.userId, action.payload.year, action.payload.month);
     yield put(fetchLeaveSuccess(leaves));
@@ -38,18 +42,27 @@ export function* fetchLeaveTask(action) {
   }
 }
 
-export function* updateLeaveTask(action) {
+function* updateLeaveTask(action) {
   try {
     yield call(api.updateLeave, {
       leaveRequests: [{
         userId: action.payload.userId,
         status: action.payload.leave.status,
         leaveFrom: action.payload.leave.leaveFrom,
-        leaveTo: action.payload.leave.leaveTo
+        leaveTo: action.payload.leave.leaveTo,
+        code: action.payload.leave.code
       }]
     });
-    const leaves = yield call(api.fetchLeave, action.payload.userId, moment(action.payload.leaveFrom).format('YYYY'), moment(action.payload.leaveFrom).format('MM'));
-    yield put(updateLeaveSuccess(leaves));
+    if (action.payload.leave.status === 'Cancel') {
+      const leaves = yield call(api.fetchLeave, action.payload.userId, moment(action.payload.leaveFrom).format('YYYY'), moment(action.payload.leaveFrom).format('MM'));
+      yield put(updateLeaveSuccess(leaves));
+      const leaveHistory = yield call(api.fetchLeaveHistory, action.payload.userId, moment().format('YYYY'));
+      yield put(fetchLeaveHistorySuccess(leaveHistory));
+    }
+    else if (action.payload.leave.status === 'Approve' || action.payload.leave.status === 'Reject') {
+      const leaves = yield call(api.fetchLeaveAll);
+      yield put(fetchLeaveAllSuccess(leaves));
+    }
     yield put(closeModal());
   }
   catch (error) {
@@ -57,7 +70,7 @@ export function* updateLeaveTask(action) {
   }
 }
 
-export function* fetchLeaveHistoryTask(action) {
+function* fetchLeaveHistoryTask(action) {
   try {
     const leaves = yield call(api.fetchLeaveHistory, action.payload.userId, action.payload.year);
     yield put(fetchLeaveHistorySuccess(leaves));
@@ -67,20 +80,34 @@ export function* fetchLeaveHistoryTask(action) {
   }
 }
 
-export function* watchCreateLeaveRequest() {
+function* fetchLeaveAllTask(action) {
+  try {
+    const leaves = yield call(api.fetchLeaveAll);
+    yield put(fetchLeaveAllSuccess(leaves));
+  }
+  catch (error) {
+    yield put(fetchLeaveFailure(error));
+  }
+}
+
+function* watchCreateLeaveRequest() {
   yield takeEvery(actionTypes.LEAVE_CREATE_REQUEST, createLeaveTask);
 }
 
-export function* watchFetchLeaveRequest() {
+function* watchFetchLeaveRequest() {
   yield takeEvery(actionTypes.LEAVE_FETCH_REQUEST, fetchLeaveTask);
 }
 
-export function* watchUpdateLeaveRequest() {
+function* watchUpdateLeaveRequest() {
   yield takeEvery(actionTypes.LEAVE_UPDATE_REQUEST, updateLeaveTask);
 }
 
-export function* watchFetchLeaveHistoryRequest() {
+function* watchFetchLeaveHistoryRequest() {
   yield takeEvery(actionTypes.LEAVE_HISTORY_FETCH_REQUEST, fetchLeaveHistoryTask);
+}
+
+function* watchFetchLeaveAllRequest() {
+  yield takeEvery(actionTypes.LEAVE_FETCH_ALL_REQUEST, fetchLeaveAllTask);
 }
 
 export default function* leaveSaga() {
@@ -88,6 +115,7 @@ export default function* leaveSaga() {
     watchCreateLeaveRequest(),
     watchFetchLeaveRequest(),
     watchUpdateLeaveRequest(),
-    watchFetchLeaveHistoryRequest()
+    watchFetchLeaveHistoryRequest(),
+    watchFetchLeaveAllRequest()
   ]);
 }

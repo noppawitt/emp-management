@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import auth from './auth';
-import todo from './todo';
 import modal from './modal';
 import profile from './profile';
 import masterTable from './masterTable';
@@ -13,11 +12,14 @@ import timesheet from './timesheet';
 import holiday from './holiday';
 import report from './report';
 import accessControl from './accessControl';
+import erp from './erp';
+import addrow from './addrow';
+import erpdetail from './erpdetail';
+import erpapprove from './erpapprove';
 
 export default combineReducers({
   form: formReducer,
   auth,
-  todo,
   modal,
   profile,
   masterTable,
@@ -28,5 +30,9 @@ export default combineReducers({
   timesheet,
   holiday,
   report,
-  accessControl
+  accessControl,
+  erp,
+  addrow,
+  erpdetail,
+  erpapprove,
 });

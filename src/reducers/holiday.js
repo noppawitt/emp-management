@@ -1,7 +1,10 @@
+import moment from 'moment';
 import * as actionTypes from '../constants/actionTypes';
 
 const initialState = {
-  lists: []
+  lists: [],
+  year: moment().format('YYYY'),
+  isFetching: true
 };
 
 const holiday = (state = initialState, action) => {
@@ -9,18 +12,39 @@ const holiday = (state = initialState, action) => {
     case actionTypes.HOLIDAY_FETCH_REQUEST:
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
+        year: action.payload.year
       };
     case actionTypes.HOLIDAY_FETCH_SUCCESS:
       return {
         ...state,
         isFetching: false,
-        lists: action.payload.holiday
+        lists: action.payload.holidays
       };
     case actionTypes.HOLIDAY_FETCH_FAILURE:
       return {
         ...state,
         isFetching: false,
+        message: action.payload.message
+      };
+    case actionTypes.HOLIDAY_DELETE_SUCCESS:
+      return {
+        ...state,
+        lists: action.payload.holidays
+      };
+    case actionTypes.HOLIDAY_DELETE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
+    case actionTypes.HOLIDAY_CREATE_SUCCESS:
+      return {
+        ...state,
+        lists: action.payload.holidays
+      };
+    case actionTypes.HOLIDAY_CREATE_FAILURE:
+      return {
+        ...state,
         message: action.payload.message
       };
     default:
