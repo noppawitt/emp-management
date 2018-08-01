@@ -140,11 +140,4 @@ billrecord.getImage = rec_id => (
   db.manyOrNone('SELECT * FROM billimageupload WHERE bill_record_id=$1', [rec_id])
 );
 
-billrecord.createChildUserBill = (parent, child_id) => (
-  db.one(
-    'INSERT INTO public.childusersbill(parent, priority, created_date, created_user, child_id) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-    [parent, 0, moment().format('YYYY-MM-DD HH:mm:ss'), child_id,child_id]
-  )
-);
-
 module.exports = billrecord;

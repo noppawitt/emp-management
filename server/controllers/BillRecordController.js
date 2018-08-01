@@ -154,11 +154,3 @@ exports.findAllRecordErp = (req, res, next) => {
     })
     .catch(next);
 };
-
-exports.createChildUser = (req, res, next) => {
-  BillRecordControl.createChildUserBill(req.body.parent, req.body.child)
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((error) => { console.log(error); });
-};

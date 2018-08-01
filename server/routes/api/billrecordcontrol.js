@@ -9,9 +9,4 @@ router.post('/', BillRecord.create);
 
 router.delete('/', BillRecord.deleteByBillId);
 
-router.post('/createchild', BillRecord.createChildUser);
-// router.put('/', AssetTypeController.update);
-
-// router.get('/', AssetTypeController.findAll);
-
 module.exports = router;
