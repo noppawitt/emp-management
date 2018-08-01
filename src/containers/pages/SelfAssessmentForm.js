@@ -113,7 +113,6 @@ class SelfAssessmentForm extends React.Component {
     }
 
     animateChangePage(nextPage) {
-      console.log(this.state.currentPage)
         document.getElementsByClassName('pages-contrainer')[0].style.left = nextPage * (-100) + '%';
     }
 
@@ -151,7 +150,6 @@ class SelfAssessmentForm extends React.Component {
                 }
             }
         }
-        console.log(!arrayCheck)
         return (
             nextState.majorResponsibilities != this.state.majorResponsibilities ||
             nextState.significantAccomplishments != this.state.significantAccomplishments ||

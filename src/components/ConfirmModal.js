@@ -19,10 +19,6 @@ class ConfirmModal extends React.Component{
   closeModal(){
     this.setState({open: false});
   }
-  componentWillMount(){
-    console.log('asdasdasd  '+ this.props.button);
-    console.log('')
-  }
   componentWillReceiveProps(nextProps) {
     if(nextProps.confirmed){
       this.setState({open: false})

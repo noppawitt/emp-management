@@ -13,9 +13,6 @@ class AddSelfAssessment extends React.Component {
     this.state = props;
     this.type = (this.props.profile.selfInfo == null ? 'addProbation' : 'updateProbation')
   }
-  componentDidMount() {
-    console.log(this.state.edited);
-  }
   render() {
     return (
       <div>

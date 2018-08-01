@@ -13,9 +13,6 @@ class AddProbation extends React.Component{
     this.state = props;
     this.type = (this.props.profile.evaInfo == null ? 'addProbation':'updateProbation')
   }
-  componentDidMount(){
-    console.log(this.state.edited);
-  }
   render(){
     return(
       <div>

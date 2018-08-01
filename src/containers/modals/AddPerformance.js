@@ -13,9 +13,7 @@ class AddPerformance extends React.Component{
     super(props);
     this.state = props;
   }
-  componentDidMount(){
-    console.log(this.state.submitting);
-  }
+
   render(){
     return(
       <div>
