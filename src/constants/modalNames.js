@@ -29,6 +29,9 @@ export const ADD_HOLIDAY = 'ADD_HOLIDAY';
 export const ADD_TIMESHEET = 'CREATE_TIMESHEET';
 export const EDIT_TIMESHEET = 'EDIT_TIMESHEET';
 
+// ERP
+export const ERPAPPROVE_REJECT = 'ERPAPPROVE_REJECT';
+
 // Other
 export const CONFIRM = 'CONFIRM';
 

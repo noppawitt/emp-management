@@ -446,6 +446,14 @@ api.deleteTimesheet = body => (
   })
 );
 
+// Erp
+api.createErp = body => (
+  callApi('/api/billrecords-control', {
+    method: 'POST',
+    body
+  })
+);
+
 api.checkProbation = id => (
   callApi(`/api/probation/check?id=${id}`)
 )
@@ -518,4 +526,62 @@ api.submitSelfAssessment = body => (
     body
   })
 )
+api.fetchErp = () => (
+  callApi(`/api/billrecords-control/`)
+);
+
+api.fetchErpDetail = body => (
+  callApi(`/api/billrecords-editcontrol/`, {
+    method: 'POST',
+    body
+  })
+);
+
+api.createErpDetail = body => (
+  callApi(`/api/billrecords-createeditcontrol/`, {
+    method: 'POST',
+    body
+  })
+);
+
+api.deleteErp = body => (
+  callApi(`/api/billrecords-control/`, {
+    method: 'DELETE',
+    body
+  })
+);
+
+
+api.uploadErp = body => (
+  callApi(`/api/billrecords-imgupload/upload`, {
+    headers: {
+      Authorization: ('Bearer ').concat(localStorage.getItem('token'))
+    },
+    method: 'POST',
+    body
+  })
+);
+
+api.updateUploadImage = body => (
+  callApi(`/api/billrecords-imgupload/`, {
+    method: 'POST',
+    body
+  })
+);
+
+api.fetchApprove = () => (
+  callApi(`/api/approverecords-control/`)
+);
+
+api.getExcel = id => (
+  download(`/api/billxlsx-control/?id=${id}`)
+);
+
+api.approveUpdate = body => (
+  callApi(`/api/approverecords-control/`, {
+    method: 'POST',
+    body
+  })
+);
+
 export default api;

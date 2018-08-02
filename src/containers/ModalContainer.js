@@ -22,6 +22,8 @@ import AddWorkExperienceProfileModal from './modals/AddWorkExperienceProfileModa
 import AddProbation from './modals/AddProbation';
 import AddPerformance from './modals/AddPerformance';
 import AddSelfAssessment from './modals/AddSelfAssessment';
+import ApproveRejectModal from './modals/ApproveRejectModal';
+// import CreateErpRequestModal from './modals/CreateErpRequestModal';
 import AddHolidayModal from './modals/AddHolidayModal';
 
 const renderModal = ({ name, props }) => {
@@ -70,6 +72,10 @@ const renderModal = ({ name, props }) => {
       return <AddSelfAssessment {...props} />;
     case modalNames.EDIT_PROFILE_PICTURE:
       return <EditProfilePictureModal {...props} />;
+    case modalNames.ERPAPPROVE_REJECT:
+      return <ApproveRejectModal {...props} />;
+    // case modalNames.CREATE_ERP_REQUEST:
+    //   return <CreateErpRequestModal {...props} />;
     case modalNames.ADD_HOLIDAY:
       return <AddHolidayModal />;
     default:

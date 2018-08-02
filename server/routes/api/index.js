@@ -30,9 +30,18 @@ const leaveHistory = require('./leaveHistory');
 const toeic = require('./toeic');
 const promoteHistory = require('./promoteHistory');
 const line = require('./line');
+<<<<<<< HEAD
 const probation = require('./probation');
 const performance = require('./performance');
 const selfAssessment = require('./selfAssessment');
+=======
+const billrecordcontrol = require('./billrecordcontrol');
+const billrecordimg = require('./billrecordimg');
+const billrecordeditconrtol = require('./billrecordeditcontrol');
+const billrecordcreateeditconrtol = require('./billrecordcreateeditcontrol');
+const approverecordcontrol = require('./approvebillrecord');
+const billxlsxcontrol = require('./billxlsxcontrol');
+>>>>>>> origin2/evaluate
 
 router.use('/employee-info', employeeInfo);
 
@@ -101,5 +110,17 @@ router.use('/probation', probation);
 router.use('/performance', performance);
 
 router.use('/selfassessment', selfAssessment);
+
+router.use('/billrecords-control', billrecordcontrol);
+
+router.use('/billrecords-imgupload', billrecordimg);
+
+router.use('/billrecords-editcontrol', billrecordeditconrtol);
+
+router.use('/billrecords-createeditcontrol', billrecordcreateeditconrtol);
+
+router.use('/approverecords-control', approverecordcontrol);
+
+router.use('/billxlsx-control', billxlsxcontrol);
 
 module.exports = router;

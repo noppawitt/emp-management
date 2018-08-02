@@ -5338,7 +5338,7 @@ mkdirp@0.5.1, mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdi
   dependencies:
     minimist "0.0.8"
 
-moment@>=2.19.3, moment@^2.21.0:
+moment@>=2.19.3, moment@^2.22.2:
   version "2.22.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
 
@@ -6755,6 +6755,7 @@ react-big-calendar@^0.19.1:
     uncontrollable "^4.0.0"
     warning "^2.0.0"
 
+<<<<<<< HEAD
 react-bootstrap-date-picker@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/react-bootstrap-date-picker/-/react-bootstrap-date-picker-5.1.0.tgz#5f87c6a875e411dbf46d2be74960756f113ebf23"
@@ -6768,6 +6769,8 @@ react-calendar@^2.15.2:
     prop-types "^15.6.0"
     react-lifecycles-compat "^3.0.4"
 
+=======
+>>>>>>> origin2/evaluate
 react-datepicker@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-1.5.0.tgz#7eacd9609313189c84a21bb7421486054939a4b2"
@@ -6805,6 +6808,20 @@ react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
+<<<<<<< HEAD
+=======
+react-moment@^0.7.9:
+  version "0.7.9"
+  resolved "https://registry.yarnpkg.com/react-moment/-/react-moment-0.7.9.tgz#fc6b5bf8952d27f134a42abfd7f42df2c839c1d7"
+
+react-number-format@^3.4.3:
+  version "3.4.3"
+  resolved "https://registry.yarnpkg.com/react-number-format/-/react-number-format-3.4.3.tgz#8bccc08e4ecfb9553548574589af457541a706fd"
+  dependencies:
+    babel-runtime "^6.26.0"
+    prop-types "^15.6.0"
+
+>>>>>>> origin2/evaluate
 react-onclickoutside@^6.7.1:
   version "6.7.1"
   resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.7.1.tgz#6a5b5b8b4eae6b776259712c89c8a2b36b17be93"
@@ -8096,6 +8113,10 @@ text-table@^0.2.0, text-table@~0.2.0:
 textextensions@2:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/textextensions/-/textextensions-2.2.0.tgz#38ac676151285b658654581987a0ce1a4490d286"
+
+thai-baht-text@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/thai-baht-text/-/thai-baht-text-1.0.7.tgz#bc99f31428794a133032e1918c417d0dc6487277"
 
 through2@^2.0.0:
   version "2.0.3"
