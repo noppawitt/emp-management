@@ -70,8 +70,6 @@ const renderModal = ({ name, props }) => {
       return <AddPerformance {...props} />;
     case modalNames.ADD_SELFASSESSMENT:
       return <AddSelfAssessment {...props} />;
-    case modalNames.EDIT_PROFILE_PICTURE:
-      return <EditProfilePictureModal {...props} />;
     case modalNames.ERPAPPROVE_REJECT:
       return <ApproveRejectModal {...props} />;
     // case modalNames.CREATE_ERP_REQUEST:
