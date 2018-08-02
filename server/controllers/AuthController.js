@@ -6,7 +6,6 @@ const EmployeeInfo = require('../models/EmployeeInfo');
 const jwtSecret = process.env.JWT_SECRET;
 
 exports.signin = (req, res, next) => {
-  console.log(req.body);
   User.findByUsername(req.body.username)
     .then((user) => {
       if (user) {

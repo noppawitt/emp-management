@@ -99,7 +99,7 @@ const EvaProfileBox = ({
               canCreatePerformance ? 'green' : 'blue'
             }
           >
-            <Dropdown trigger={AngleDownButton} options={optionsPerf} disabled={cantClickPerformance} />
+            <Dropdown trigger={AngleDownButton} scrolling options={optionsPerf} disabled={cantClickPerformance} />
             <Button
               onClick={() => { clear(); if (!canCreatePerformance) fetchPerformance(profileId, (new Date()).getFullYear()); openPerformanceModal(); }}
               disabled={cantClickPerformance}
