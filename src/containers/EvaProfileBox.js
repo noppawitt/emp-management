@@ -12,7 +12,7 @@ const AngleDownButton = (
   <Button icon="angle down" ></Button>
 )
 
-const EvaProfileBox = ({clear, can, performanceProfile, evaProfile, selfProfile, openProbationModal, openPerformanceModal, type, fetchProbation, profileId, fetchPerformance, openSelfAssessmentModal, fetchSelfAssessment, id }) => {
+const EvaProfileBox = ({ clear, can, performanceProfile, evaProfile, selfProfile, openProbationModal, openPerformanceModal, type, fetchProbation, profileId, fetchPerformance, openSelfAssessmentModal, fetchSelfAssessment, id }) => {
 
   const optionsPerf = [
     {
@@ -80,6 +80,8 @@ const EvaProfileBox = ({clear, can, performanceProfile, evaProfile, selfProfile,
         </Grid>
       </Segment>
       <Segment raised padded size="large">
+
+        {/* Performance */}
         <div className="buttonGroup">
           <Button.Group
             color={
@@ -87,12 +89,14 @@ const EvaProfileBox = ({clear, can, performanceProfile, evaProfile, selfProfile,
             }
           >
             <Dropdown trigger={AngleDownButton} options={optionsPerf} disabled={cantClickPerformance} />
-            <Button onClick={() => {clear(); if (!canCreatePerformance) fetchPerformance(profileId, (new Date()).getFullYear()); openPerformanceModal(); }}
+            <Button onClick={() => { clear(); if (!canCreatePerformance) fetchPerformance(profileId, (new Date()).getFullYear()); openPerformanceModal(); }}
               disabled={cantClickPerformance}>
               {canCreatePerformance ? 'Create Performance' : 'Performance'}
             </Button>
           </Button.Group>
         </div>
+
+        {/* Probation */}
         <div className="buttonGroup">
           <Button.Group
             color={
@@ -116,10 +120,12 @@ const EvaProfileBox = ({clear, can, performanceProfile, evaProfile, selfProfile,
             </Button>
           </Button.Group>
         </div>
+
+        {/* Self Assessment */}
         <Button icon labelPosition='left' icon={'angle right'}
           disabled={((profileId != id) && (!selfProfile || !selfProfile.submited))}
           content={selfProfile || profileId != id ? 'Self Assessment' : 'Create Self Assessment'}
-          onClick={() => {clear(); if (selfProfile != null) fetchSelfAssessment(profileId); openSelfAssessmentModal() }}
+          onClick={() => { clear(); if (selfProfile != null) fetchSelfAssessment(profileId); openSelfAssessmentModal() }}
           color={selfProfile || profileId != id ? 'yellow' : 'green'} />
 
       </Segment>
@@ -136,8 +142,21 @@ EvaProfileBox.defaultProps = {
 
 EvaProfileBox.propTypes = {
   evaProfile: PropTypes.array,
-  openProbationModal: PropTypes.func.isRequired
+  clear: PropTypes.func.isRequired,
+  can: PropTypes.array.isRequired,
+  performanceProfile: PropTypes.object.isRequired,
+  evaProfile: PropTypes.object.isRequired,
+  selfProfile: PropTypes.object.isRequired,
+  openProbationModal: PropTypes.func.isRequired,
+  openPerformanceModal: PropTypes.func.isRequired,
+  openSelfAssessmentModal: PropTypes.func.isRequired,
+  fetchProbation: PropTypes.func.isRequired,
+  fetchPerformance: PropTypes.func.isRequired,
+  fetchSelfAssessment: PropTypes.func.isRequired,
+  profileId: PropTypes.number.isRequired,
+  id: PropTypes.number.isRequired
 };
+
 // <Button icon labelPosition='left' disabled={type!='admin' && !evaProfile} icon={evaProfile==null ? 'plus':'angle right'} content={!evaProfile && type=='admin' ? 'Create Probation':'View Probation'} onClick={()=>{fetchProbation(profileId);openProbationModal()}} color={!evaProfile && type=='admin' ? 'green':'blue'}/>
 const mapStateToProps = state => ({
   profileId: state.profile.userId,

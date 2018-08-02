@@ -13,7 +13,7 @@ import Can from '../containers/Can';
 import { connect } from 'react-redux';
 
 
-const Profile = ({profile, type, id, profileId, can}) => (
+const Profile = ({profile, id, profileId, can}) => (
   <div>
     <PageHeader icon="user" text="Profile" />
     <Grid centered>
@@ -43,7 +43,6 @@ Profile.propTypes = {
 const mapStateToProps = state =>({
   profileId: state.profile.userId,
   id: state.auth.id,
-  type: state.auth.type,
   can: state.accessControl.can
 });
 
