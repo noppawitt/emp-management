@@ -25,6 +25,9 @@ import AddMemberModal from './modals/AddMemberModal';
 import AddTimesheetModal from './modals/AddTimesheetModal';
 import EditTimesheetModal from './modals/EditTimesheetModal';
 import AddWorkExperienceProfileModal from './modals/AddWorkExperienceProfileModal';
+import AddProbation from './modals/AddProbation';
+import AddPerformance from './modals/AddPerformance';
+import AddSelfAssessment from './modals/AddSelfAssessment';
 import ApproveRejectModal from './modals/ApproveRejectModal';
 // import CreateErpRequestModal from './modals/CreateErpRequestModal';
 import AddHolidayModal from './modals/AddHolidayModal';
@@ -82,6 +85,12 @@ const renderModal = ({ name, props }) => {
       return <EditTimesheetModal {...props} />;
     case modalNames.ADD_WORK_EXPERIENCE_PROFILE:
       return <AddWorkExperienceProfileModal />;
+    case modalNames.ADD_PROBATION:
+      return <AddProbation {...props} />;
+    case modalNames.ADD_PERFORMANCE:
+      return <AddPerformance {...props} />;
+    case modalNames.ADD_SELFASSESSMENT:
+      return <AddSelfAssessment {...props} />;
     case modalNames.ERPAPPROVE_REJECT:
       return <ApproveRejectModal {...props} />;
     // case modalNames.CREATE_ERP_REQUEST:

@@ -119,7 +119,7 @@ const ApproveTable = ({
         </Table>
       </div>
     </div>
-  );
+);
 
 const mapStateToProps = state => ({
   date: state.recruitment.date,

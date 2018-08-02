@@ -27,7 +27,10 @@
         "class-methods-use-this": "off",
         "no-await-in-loop": "off",
         "no-nested-ternary": "off",
-        "no-restricted-globals": "off"
+        "no-restricted-globals": "off",
+        "no-case-declarations": "off",
+        "no-underscore-dangle": "off",
+        "function-paren-newline": "off"
     },
     "plugins": [
         "import",

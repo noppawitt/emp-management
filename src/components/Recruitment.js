@@ -218,7 +218,7 @@ const Recruitment = ({
         </Grid.Row>
       </Grid>
     </Segment>
-  );
+);
 
 Recruitment.propTypes = {
   changeActiveItem: PropTypes.func.isRequired,
