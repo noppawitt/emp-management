@@ -12,12 +12,12 @@ exports.signin = (req, res, next) => {
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
           EmployeeInfo.findOwnByUserId(user.id)
-            .then((info)=>{
+            .then((info) => {
               const accessToken = jwt.sign({
                 id: user.id,
                 username: user.username,
                 type: user.type,
-                name: info.firstName + ' ' + info.lastName,
+                name: `${info.firstName} ${info.lastName}`,
               }, jwtSecret, { expiresIn: 3600 });
               const refreshToken = jwt.sign({
                 id: user.id,
@@ -30,7 +30,7 @@ exports.signin = (req, res, next) => {
                   accessToken,
                   refreshToken,
                   type: user.type,
-                  name: info.firstName + ' ' + info.lastName,
+                  name: `${info.firstName} ${info.lastName}`,
                 }))
                 .catch(next);
             })

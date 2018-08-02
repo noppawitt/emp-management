@@ -100,17 +100,19 @@ class EmployeeInfo extends React.Component {
 }
 
 EmployeeInfo.defaultProps = {
-  showEndProDate: false,
-  addSelf: false
+  showEndProDate: 'false',
+  addSelf: false,
+  onChange: null,
+  endProbationDate: null
 };
 
 EmployeeInfo.propTypes = {
   startDate: PropTypes.string.isRequired,
-  endProbationDate: PropTypes.string.isRequired,
-  showEndProDate: PropTypes.bool,
+  endProbationDate: PropTypes.string,
+  showEndProDate: PropTypes.string,
   addSelf: PropTypes.bool,
   mode: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func
 };
 
 export default EmployeeInfo;

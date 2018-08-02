@@ -157,19 +157,25 @@ class ScoreTableManager extends React.Component {
   }
 }
 
+ScoreTableManager.defaultProps = {
+  numOfElements: 5,
+  expectedScore: [3, 3, 3, 3, 3, 3, 3],
+  score: [3, 3, 3, 3, 3, 3, 3]
+};
+
 ScoreTableManager.propTypes = {
-  numOfElements: PropTypes.number.isRequired,
+  numOfElements: PropTypes.number,
   questions: PropTypes.array.isRequired,
   mode: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  expectedScore: PropTypes.array.isRequired,
-  score: PropTypes.array.isRequired,
+  expectedScore: PropTypes.array,
+  score: PropTypes.array,
   weight: PropTypes.array.isRequired,
   numOfQuestion: PropTypes.number.isRequired
 };
 
 DropDown.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   value: PropTypes.number.isRequired,
   numOfElements: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,

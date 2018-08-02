@@ -21,8 +21,13 @@ class SupervisorCommentComponent extends React.Component {
     );
   }
 }
+
+SupervisorCommentComponent.defaultProps = {
+  supervisorComment: null
+};
+
 SupervisorCommentComponent.propTypes = {
-  supervisorComment: PropTypes.string.isRequired,
+  supervisorComment: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   mode: PropTypes.string.isRequired
 

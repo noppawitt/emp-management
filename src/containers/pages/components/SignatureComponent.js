@@ -158,13 +158,22 @@ class SignatureComponent extends React.Component {
   }
 }
 
+SignatureComponent.defaultProps = {
+  employeeSignName: null,
+  supervisorSignName: null,
+  MDSignName: null,
+  employeeSignDate: null,
+  supervisorSignDate: null,
+  MDSignDate: null,
+};
+
 SignatureComponent.propTypes = {
-  employeeSignName: PropTypes.string.isRequired,
-  supervisorSignName: PropTypes.string.isRequired,
-  MDSignName: PropTypes.string.isRequired,
-  employeeSignDate: PropTypes.string.isRequired,
-  supervisorSignDate: PropTypes.string.isRequired,
-  MDSignDate: PropTypes.string.isRequired,
+  employeeSignName: PropTypes.string,
+  supervisorSignName: PropTypes.string,
+  MDSignName: PropTypes.string,
+  employeeSignDate: PropTypes.string,
+  supervisorSignDate: PropTypes.string,
+  MDSignDate: PropTypes.string,
   role: PropTypes.object.isRequired,
   authName: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired

@@ -501,19 +501,28 @@ confirmed: true,
   }
 }
 
+EvaluationResultComponent.defaultProps = {
+  terminationDate: null,
+  continuedDate: null,
+  basedSalary: null,
+  mobile: null,
+  transporationAllowance: null,
+  otherAllowance: null
+};
+
 EvaluationResultComponent.propTypes = {
   passPro: PropTypes.bool.isRequired,
   notPassPro: PropTypes.bool.isRequired,
   confirmed: PropTypes.bool.isRequired,
   continued: PropTypes.bool.isRequired,
   endProbationDate: PropTypes.string.isRequired,
-  terminationDate: PropTypes.string.isRequired,
-  continuedDate: PropTypes.string.isRequired,
+  terminationDate: PropTypes.string,
+  continuedDate: PropTypes.string,
   mode: PropTypes.string.isRequired,
-  basedSalary: PropTypes.number.isRequired,
-  mobile: PropTypes.number.isRequired,
-  transporationAllowance: PropTypes.number.isRequired,
-  otherAllowance: PropTypes.number.isRequired,
+  basedSalary: PropTypes.number,
+  mobile: PropTypes.number,
+  transporationAllowance: PropTypes.number,
+  otherAllowance: PropTypes.number,
   onChange: PropTypes.func.isRequired
 };
 

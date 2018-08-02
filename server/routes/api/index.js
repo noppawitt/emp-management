@@ -45,6 +45,7 @@ const billrecordeditconrtol = require('./billrecordeditcontrol');
 const billrecordcreateeditconrtol = require('./billrecordcreateeditcontrol');
 const approverecordcontrol = require('./approvebillrecord');
 const billxlsxcontrol = require('./billxlsxcontrol');
+const applyPosition = require('./applyPosition');
 
 router.use('/employee-info', employeeInfo);
 
@@ -130,5 +131,7 @@ router.use('/billrecords-createeditcontrol', billrecordcreateeditconrtol);
 router.use('/approverecords-control', approverecordcontrol);
 
 router.use('/billxlsx-control', billxlsxcontrol);
+
+router.use('/apply-positions', applyPosition);
 
 module.exports = router;
