@@ -30,6 +30,7 @@ const leaveHistory = require('./leaveHistory');
 const toeic = require('./toeic');
 const promoteHistory = require('./promoteHistory');
 const line = require('./line');
+const applyPosition = require('./applyPosition');
 
 router.use('/employee-info', employeeInfo);
 
@@ -92,5 +93,7 @@ router.use('/toeic', toeic);
 router.use('/promote-history', promoteHistory);
 
 router.use('/line', line);
+
+router.use('/apply-positions', applyPosition);
 
 module.exports = router;
