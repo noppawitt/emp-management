@@ -44,7 +44,7 @@ exports.updateInterviewDateTime = (req, res, next) => {
     if (!(selectApplicant.interviewDate === null && selectApplicant.interviewTime === null)) {
       const mailOptions = {
         from: 'masaru39@playtorium.co.th',
-        to: 'love_masachi4855@hotmail.com',
+        to: `${selectApplicant.email}`,
         subject: 'HR Playtorium : Interview Appointment เปลี่ยนวัน',
         html: `<p>Dear Khun  ${selectApplicant.firstName} ,</p>
         <p>Playtorium Solutions Company Limited would like to make an appointment</p>
@@ -82,7 +82,7 @@ exports.updateInterviewDateTime = (req, res, next) => {
     else {
       const mailOptions = {
         from: 'masaru39@playtorium.co.th',
-        to: 'love_masachi4855@hotmail.com',
+        to: `${selectApplicant.email}`,
         subject: 'HR Playtorium : Interview Appointment',
         html: `<p>Dear Khun  ${selectApplicant.firstName} ,</p>
             <p>Playtorium Solutions Company Limited would like to make an appointment</p>
@@ -142,10 +142,27 @@ exports.updateSignDateTime = (req, res, next) => {
     if (!(selectApplicant.signDate === null && selectApplicant.signTime === null)) {
       const mailOptions = {
         from: 'masaru39@playtorium.co.th',
-        to: 'love_masachi4855@hotmail.com',
-        subject: 'HR Playtorium : เซ็นสัญญา เปลี่ยนสักอย่าง',
+        to: `${selectApplicant.email}`,
+        subject: `HR Playtorium : Employment Contract Appointment for ${selectApplicant.signedPosition} (Change)`,
         html: `<p>Dear Khun  ${selectApplicant.firstName} ,</p>
-        
+        <p> Congratulations! We are pleased to offer you an employment with Playtorium and welcome you to an exciting career and personal development. </p>
+        <p> Confirmation for signing an employment agreement :${selectApplicant.signDate} (${selectApplicant.signTime}) </p>
+        <p> In order to facilitate the employment process, we kindly ask you to bring the following documents on these day you come to our office to sign the agreement: </p>
+        <p> 1.    One-inch photo  (1 photo)
+            2.    Your resume
+            3.    A copy of your Identification Card
+            4.    A copy of your House Registration
+            5.    A copy of your transcript (in case you hold a Master’s Degree or above, please provide all transcripts)
+            6.  Toeic test score (if any)
+            7.  A Copy of latest Pay Slip or Confirmation letter from latest company (หนังสือรับรองรายได้จากที่ทำงานล่าสุดหรือสำเนาสลิปเดือน)
+            8.  Evidence of Military Exemption (if any)
+            9.  A copy of  the first page of your Bangkok Bank Passbook with your Name and Account number (for salary payment)</p>
+        <p> If you need any further information please contact to me. </p>
+        <p> We look forward to meeting you soon, </p>
+        <p>Suphattra Trairatwarakorn</p>
+        <p>Account Manager</p>
+        <p>Playtorium Solutions Company Limited</p>
+        <p>Mobile : 0819222562</p>
         `,
         attachments: [{
           filename: 'play_map.jpg',
@@ -165,10 +182,27 @@ exports.updateSignDateTime = (req, res, next) => {
     else {
       const mailOptions = {
         from: 'masaru39@playtorium.co.th',
-        to: 'love_masachi4855@hotmail.com',
-        subject: 'HR Playtorium : เซ็นสัญญา',
+        to: `${selectApplicant.email}`,
+        subject: `HR Playtorium : Employment Contract Appointment for ${selectApplicant.signedPosition}`,
         html: `<p>Dear Khun  ${selectApplicant.firstName} ,</p>
-        
+        <p> Congratulations! We are pleased to offer you an employment with Playtorium and welcome you to an exciting career and personal development. </p>
+        <p> Confirmation for signing an employment agreement :${selectApplicant.signDate} (${selectApplicant.signTime}) </p>
+        <p> In order to facilitate the employment process, we kindly ask you to bring the following documents on these day you come to our office to sign the agreement: </p>
+        <p> 1.    One-inch photo  (1 photo)
+            2.    Your resume
+            3.    A copy of your Identification Card
+            4.    A copy of your House Registration
+            5.    A copy of your transcript (in case you hold a Master’s Degree or above, please provide all transcripts)
+            6.  Toeic test score (if any)
+            7.  A Copy of latest Pay Slip or Confirmation letter from latest company (หนังสือรับรองรายได้จากที่ทำงานล่าสุดหรือสำเนาสลิปเดือน)
+            8.  Evidence of Military Exemption (if any)
+            9.  A copy of  the first page of your Bangkok Bank Passbook with your Name and Account number (for salary payment)</p>
+        <p> If you need any further information please contact to me. </p>
+        <p> We look forward to meeting you soon, </p>
+        <p>Suphattra Trairatwarakorn</p>
+        <p>Account Manager</p>
+        <p>Playtorium Solutions Company Limited</p>
+        <p>Mobile : 0819222562</p>
         `,
         attachments: [{
           filename: 'play_map.jpg',
@@ -235,7 +269,7 @@ exports.updateExamDate = (req, res, next) => {
     if (!(selectApplicant.examDate === null && selectApplicant.examTime === null)) {
       const mailOptions = {
         from: 'masaru39@playtorium.co.th',
-        to: 'love_masachi4855@hotmail.com',
+        to: `${selectApplicant.email}`,
         subject: 'HR Playtorium : Interview Appointment เปลี่ยนสอบ',
         html: `<p>Dear Khun  ${selectApplicant.firstName} ,</p>
         <p>Playtorium Solutions Company Limited would like to make an appointment</p>
