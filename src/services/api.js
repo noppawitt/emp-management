@@ -439,6 +439,13 @@ api.fetchAccessControl = () => (
   callApi(`/api/access-control`)
 );
 
+api.deleteTimesheet = body => (
+  callApi('/api/timesheets', {
+    method: 'DELETE',
+    body
+  })
+);
+
 // Erp
 api.createErp = body => (
   callApi('/api/billrecords-control', {
@@ -447,6 +454,78 @@ api.createErp = body => (
   })
 );
 
+api.checkProbation = id => (
+  callApi(`/api/probation/check?id=${id}`)
+)
+
+api.checkPerformance = id => (
+  callApi(`/api/performance/check?id=${id}`)
+)
+
+api.checkSelfAssessment = id => (
+  callApi(`/api/selfassessment/check?id=${id}`)
+)
+
+api.fetchProbation = data => (
+  callApi(`/api/probation/?id=${data[0]}&proId=${data[1]}`)
+)
+
+api.fetchPerformance = data => (
+  callApi(`/api/performance/?id=${data[0]}&year=${data[1]}`)
+)
+
+api.fetchSelfAssessment = id => (
+  callApi(`/api/selfassessment/?id=${id}`)
+)
+
+api.addProbation = body => (
+  callApi('/api/probation', {
+    method: 'POST',
+    body
+  })
+)
+
+api.updateProbation = body => (
+  callApi('/api/probation', {
+    method: 'PUT',
+    body
+  })
+)
+
+api.addPerformance = body => (
+  callApi('/api/performance', {
+    method: 'POST',
+    body
+  })
+)
+
+api.updatePerformance = body => (
+  callApi('/api/performance', {
+    method: 'PUT',
+    body
+  })
+)
+
+api.addSelfAssessment = body => (
+  callApi('/api/selfassessment', {
+    method: 'POST',
+    body
+  })
+)
+
+api.updateSelfAssessment = body => (
+  callApi('/api/selfassessment', {
+    method: 'PUT',
+    body
+  })
+)
+
+api.submitSelfAssessment = body => (
+  callApi('/api/selfassessment/submit', {
+    method: 'PUT',
+    body
+  })
+)
 api.fetchErp = () => (
   callApi(`/api/billrecords-control/`)
 );

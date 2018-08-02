@@ -34,3 +34,8 @@ export const ERPAPPROVE_REJECT = 'ERPAPPROVE_REJECT';
 
 // Other
 export const CONFIRM = 'CONFIRM';
+
+//Probation
+export const ADD_PROBATION = 'ADD_PROBATION';
+export const ADD_PERFORMANCE = 'ADD_PERFORMANCE';
+export const ADD_SELFASSESSMENT = 'ADD_SELFASSESSMENT';

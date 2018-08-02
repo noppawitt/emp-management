@@ -30,6 +30,9 @@ const leaveHistory = require('./leaveHistory');
 const toeic = require('./toeic');
 const promoteHistory = require('./promoteHistory');
 const line = require('./line');
+const probation = require('./probation');
+const performance = require('./performance');
+const selfAssessment = require('./selfAssessment');
 const billrecordcontrol = require('./billrecordcontrol');
 const billrecordimg = require('./billrecordimg');
 const billrecordeditconrtol = require('./billrecordeditcontrol');
@@ -98,6 +101,12 @@ router.use('/toeic', toeic);
 router.use('/promote-history', promoteHistory);
 
 router.use('/line', line);
+
+router.use('/probation', probation);
+
+router.use('/performance', performance);
+
+router.use('/selfassessment', selfAssessment);
 
 router.use('/billrecords-control', billrecordcontrol);
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Segment, Button, Icon, Table, Menu, Grid, Select, Image } from 'semantic-ui-react';
+import { Segment, Button, Icon, Table, Grid, Select, Image, Pagination } from 'semantic-ui-react';
 import PageHeader from './PageHeader';
 import ProgressBar from './ProgressBar';
 import { getMonthOptions, getYearOptions } from '../utils/options';
@@ -8,7 +8,7 @@ import holidayIcon from '../images/holiday.png';
 import history from '../history';
 
 
-const Leave = ({ leaves, leaveHistory, onAddClick, onCancelClick, userId, fetchLeave, year, month }) => (
+const Leave = ({ leaves, leaveHistory, onAddClick, onCancelClick, userId, fetchLeave, year, month, currentPage, totalPages, handlePageChange }) => (
   <div>
     <PageHeader text="Leave Request" icon="envelope" />
     <Grid>
@@ -72,7 +72,7 @@ const Leave = ({ leaves, leaveHistory, onAddClick, onCancelClick, userId, fetchL
 
               <Table.Body>
                 {leaves.map(leave => (
-                  <Table.Row key={`${leave.leaveFrom}${leave.leaveTo}`}>
+                  <Table.Row key={`${leave.leaveFrom}${leave.leaveTo}${leave.code}`}>
                     <Table.Cell>{leave.leaveType}</Table.Cell>
                     <Table.Cell>{leave.leaveFrom}</Table.Cell>
                     <Table.Cell>{leave.leaveTo}</Table.Cell>
@@ -92,18 +92,7 @@ const Leave = ({ leaves, leaveHistory, onAddClick, onCancelClick, userId, fetchL
               <Table.Footer>
                 <Table.Row>
                   <Table.HeaderCell colSpan="7">
-                    <Menu floated="right" pagination>
-                      <Menu.Item as="a" icon>
-                        <Icon name="chevron left" />
-                      </Menu.Item>
-                      <Menu.Item as="a">1</Menu.Item>
-                      <Menu.Item as="a">2</Menu.Item>
-                      <Menu.Item as="a">3</Menu.Item>
-                      <Menu.Item as="a">4</Menu.Item>
-                      <Menu.Item as="a" icon>
-                        <Icon name="chevron right" />
-                      </Menu.Item>
-                    </Menu>
+                    <Pagination activePage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
                   </Table.HeaderCell>
                 </Table.Row>
               </Table.Footer>
@@ -123,7 +112,10 @@ Leave.propTypes = {
   userId: PropTypes.number.isRequired,
   fetchLeave: PropTypes.func.isRequired,
   year: PropTypes.string.isRequired,
-  month: PropTypes.string.isRequired
+  month: PropTypes.string.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  handlePageChange: PropTypes.func.isRequired
 };
 
 export default Leave;
