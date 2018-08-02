@@ -26,7 +26,8 @@
         "no-continue": "off",
         "class-methods-use-this": "off",
         "no-await-in-loop": "off",
-        "no-nested-ternary": "off"
+        "no-nested-ternary": "off",
+        "no-restricted-globals": "off"
     },
     "plugins": [
         "import",

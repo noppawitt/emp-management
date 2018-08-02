@@ -41,7 +41,7 @@ const EditRecruitmentModal = ({
         {confirm && <Button loading={submitting} disabled={submitting} onClick={onClose}>No</Button>}
       </SUIModal.Actions>
     </SUIModal>
-  );
+);
 
 EditRecruitmentModal.defaultProps = {
   confirm: false,
