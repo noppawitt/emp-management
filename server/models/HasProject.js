@@ -62,4 +62,8 @@ HasProject.findWorkProjectDate = (year, month, userId) => (
     WHERE users.id = $3 ORDER BY projects.start_date, projects.end_date`, [year, month, userId])
 );
 
+HasProject.findByProjectIdAndUserId = (projectId, userId) => (
+  db.one('SELECT * FROM has_projects WHERE project_id = $1 AND user_id = $2', [projectId, userId])
+);
+
 module.exports = HasProject;

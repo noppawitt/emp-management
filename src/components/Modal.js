@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Modal as SUIModal, Button } from 'semantic-ui-react';
 
@@ -43,4 +44,8 @@ Modal.propTypes = {
   onDelete: PropTypes.func
 };
 
-export default Modal;
+const mapStateToProps = state => ({
+  note: state.form,
+});
+
+export default connect(mapStateToProps)(Modal);

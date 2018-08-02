@@ -83,7 +83,7 @@ const Leave = ({ leaves, leaveHistory, onAddClick, onCancelClick, userId, fetchL
                       <Button animated="fade" style={{ borderStyle: 'solid', borderColor: '#FF0000', backgroundColor: 'white', borderWidth: '1px' }} onClick={() => onCancelClick(userId, leave)}>
                         <Button.Content visible><font color="#FF0000" >Cancel</font></Button.Content>
                         <Button.Content hidden > <Icon color="red" name="x" /> </Button.Content>
-                      </Button> }
+                      </Button>}
                     </Table.Cell>
                   </Table.Row>
                 ))}

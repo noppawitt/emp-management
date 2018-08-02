@@ -7,6 +7,12 @@ import projectSaga from './project';
 import projectDetailSaga from './projectDetail';
 import leaveSaga from './leave';
 import timesheetSaga from './timesheet';
+import recruitmentSaga from './recruitment';
+import recruitmentProfileSaga from './recruitmentProfile';
+import examSaga from './exam';
+import examAuthSaga from './examAuth';
+import takeExamSaga from './takeExam';
+import takeExamAgreementSaga from './takeExamAgreement';
 import holidaySaga from './holiday';
 import reportSaga from './report';
 import accessControlSaga from './accessControl';
@@ -21,6 +27,12 @@ export default function* rootSaga() {
     projectDetailSaga(),
     leaveSaga(),
     timesheetSaga(),
+    recruitmentSaga(),
+    recruitmentProfileSaga(),
+    examSaga(),
+    examAuthSaga(),
+    takeExamSaga(),
+    takeExamAgreementSaga(),
     holidaySaga(),
     reportSaga(),
     authSaga(),

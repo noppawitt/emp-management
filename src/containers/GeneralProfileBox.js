@@ -25,11 +25,11 @@ const GeneralProfileBox = ({ generalProfile, onEditClick, onProfilePictureClick,
     </Segment>
     <Segment padded textAlign="center">
       {userId === profileId &&
-      <Grid>
-        <Grid.Column floated="right" computer={1} mobile={2}>
-          <Icon name="edit" onClick={onEditClick} link size="large" />
-        </Grid.Column>
-      </Grid>}
+        <Grid>
+          <Grid.Column floated="right" computer={1} mobile={2}>
+            <Icon name="edit" onClick={onEditClick} link size="large" />
+          </Grid.Column>
+        </Grid>}
       <Header size="huge">{generalProfile.firstName} {generalProfile.lastName} ({generalProfile.nickName})<Icon color={generalProfile.gender === 'Male' ? 'blue' : 'pink'} name={generalProfile.gender === 'Male' ? 'mars' : 'venus'} /></Header>
       <Header size="huge">{generalProfile.firstNameTh} {generalProfile.lastNameTh}</Header>
       <Header size="small">ID: {generalProfile.userId}</Header>
