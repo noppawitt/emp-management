@@ -77,4 +77,8 @@ router.get('/checkApproveStatus', ApplicantController.checkApproveStatus);
 
 router.get('/fetchViewResult', ApplicantController.fetchViewResult);
 
+router.get('/fetchGradedExam', ApplicantController.fetchGradedExam);
+
+router.post('/fetchWeight', ApplicantController.fetchWeight);
+
 module.exports = router;

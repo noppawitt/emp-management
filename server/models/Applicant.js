@@ -1,8 +1,6 @@
 const db = require('../db');
 const moment = require('moment');
-// const moment = require('moment');
 
-// utility function to shuffle array
 const shuffle = (a) => {
   for (let i = a.length - 1; i >= 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -259,11 +257,7 @@ Applicant.getAndUpdateRequiredExam = (rowId, testDate, lifetime) => (
 );
 
 Applicant.updateTestStatus = (rowId, testStatus) => (
-  db.none(
-    'UPDATE applicants SET test_status = $1 WHERE row_id = $2'
-    , [testStatus, rowId]
-  )
-
+  db.none('UPDATE applicants SET test_status = $1 WHERE row_id = $2', [testStatus, rowId])
 );
 
 Applicant.getTestStatus = rowId => (
@@ -318,16 +312,43 @@ Applicant.fetchGradingExam = rowId => (
   )
 );
 
+Applicant.fetchGradedExam = rowId => (
+  db.manyOrNone(
+    'SELECT'
+    + ' exam_result.cd_id AS cd_id,'
+    + ' exam_result.ex_id AS ex_id,'
+    + ' exam_result.test_date AS test_date,'
+    + ' exam_result.cd_answer AS cd_answer,'
+    + ' exam_result.point AS point,'
+    + ' exam_result.status AS status,'
+    + ' exam_result.comment AS comment,'
+    + ' exams.ex_type AS ex_type,'
+    + ' exams.ex_choice AS ex_choices,'
+    + ' exams.ex_answer AS ex_correct,'
+    + ' exams.ex_question AS ex_question,'
+    + ' exams.ex_category AS ex_category,'
+    + ' exams.ex_subcategory AS ex_sub_category,'
+    + ' ARRAY_LENGTH(exams.ex_answer, 1) AS ex_answer_length '
+    + ' FROM exam_result, exams'
+    + ' WHERE exam_result.ex_id = exams.ex_id'
+    + ' AND exam_result.row_id = $1',
+    [rowId]
+  )
+);
+
 Applicant.fetchEPRList = id => (
-  db.manyOrNone('SELECT'
-  + ' epr_ex_category as category'
-  + ', epr_ex_subcategory as subcategory'
-  + ', epr_ex_type as type'
-  + ', epr_requirednumber as required_number'
-  + ' FROM applicants a'
-  + ' JOIN exams_position_required epr'
-  + ' ON epr.epr_position = ANY( a.position )'
-  + ' WHERE a.row_id = $1', [id])
+  db.manyOrNone(
+    'SELECT'
+    + ' epr_ex_category as category'
+    + ', epr_ex_subcategory as subcategory'
+    + ', epr_ex_type as type'
+    + ', epr_requirednumber as required_number'
+    + ' FROM applicants a'
+    + ' JOIN exams_position_required epr'
+    + ' ON epr.epr_position = ANY( a.position )'
+    + ' WHERE a.row_id = $1',
+    [id]
+  )
 );
 
 Applicant.fetchExamId = () => (
@@ -383,5 +404,34 @@ Applicant.checkApproveStatus = rowId => (
 Applicant.fetchViewResult = rowId => (
   db.manyOrNone('SELECT * FROM exam_result WHERE row_id = $1', [rowId])
 );
+
+Applicant.fetchWeight = (categoryList, positionList) => {
+  db.tx((t) => {
+    const list = [];
+    categoryList.map((category) => {
+      console.log(category[0], category[1], category[2]);
+      t.manyOrNone(
+        'SELECT'
+        + ' epr_ex_category AS category,'
+        + ' epr_ex_subcategory AS subcategory,'
+        + ' epr_scoreweight AS weight,'
+        + ' epr_requirednumber AS required_number'
+        + ' FROM exams_position_required'
+        + ' WHERE lower(epr_ex_category) = $1'
+        + ' AND lower(epr_ex_subcategory) = $2'
+        + ' AND epr_ex_type = $3'
+        + ' AND epr_position = ANY ($4)',
+        [category[0], category[1], category[2], positionList]
+      ).then((queryResult) => {
+        console.log(queryResult);
+        if (!queryResult) {
+          list.push(queryResult);
+        }
+      });
+    });
+    console.log('list', list);
+    return list;
+  });
+};
 
 module.exports = Applicant;

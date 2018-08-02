@@ -551,6 +551,18 @@ api.fetchViewResult = rowId => (
   callApi(`/api/applicants/fetchViewResult/?id=${rowId}`)
 );
 
+api.fetchGradedExam = rowId => (
+  callApi(`/api/applicants/fetchGradedExam/?rowId=${rowId}`)
+);
+
+api.fetchWeight = categoryList => (
+  callApi(`/api/applicants/fetchWeight`, {
+    method: 'POST',
+    body: {
+      categoryList,
+    }
+  })
+);
 // Recruitment : Basic API
 
 api.getExamDate = citizenId => (

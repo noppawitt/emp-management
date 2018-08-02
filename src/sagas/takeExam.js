@@ -56,18 +56,13 @@ const countTheCategory = (examList) => {
 export function* fetchTestExamTask(action) {
   try {
     const startTime = moment();
-    console.log(action.payload);
     const returnObject = yield call(api.getRowId, action.payload.id, startTime.format('YYYY-MM-DD'));
-    console.log('is this row id:', returnObject.rowId);
     const randomExIdList = yield call(api.fetchRandomExIdList, returnObject.rowId);
-    console.log(randomExIdList);
     const examList = yield call(api.fetchExamSpecifyId, randomExIdList);
-    console.log(examList);
     const object = countTheCategory(examList);
     yield put(fetchCategory(object.examAmountPerCategory));
     yield put(fetchSubCategory(object.examAmountPerSubCategory));
 
-    // 123
     const initialAnswerList = [];
     for (let i = 0; i < randomExIdList.randomExIdList.length; i += 1) {
       initialAnswerList.push(JSON.stringify({ answer: [], question: randomExIdList.randomExIdList[i] }));

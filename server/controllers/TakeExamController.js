@@ -5,7 +5,6 @@ const moment = require('moment');
 exports.fetchRandomExIdList = (req, res, next) => {
   TakeExam.fetchRandomExIdList(req.body.rowId.toString())
     .then((List) => {
-      console.log(List);
       res.json(List);
     })
     .catch(next);

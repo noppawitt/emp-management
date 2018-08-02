@@ -7,12 +7,13 @@ export const fetchRecruitmentProfileRequest = id => ({
   }
 });
 
-export const fetchRecruitmentProfileSuccess = (data, result, category) => ({
+export const fetchRecruitmentProfileSuccess = (data, result, category, overall) => ({
   type: actionTypes.RECRUITMENT_PROFILE_FETCH_SUCCESS,
   payload: {
     data,
     result,
     category,
+    overall,
   }
 });
 

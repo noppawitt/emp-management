@@ -11,7 +11,7 @@ import {
   Radio,
   Checkbox,
   TextArea,
-  Input,
+  Table,
 } from 'semantic-ui-react';
 import { closeModal } from '../../actions/modal';
 import { categoryModalChange, pageModalChange } from '../../actions/recruitmentProfile';
@@ -63,7 +63,8 @@ const ViewResultModal = ({
   onClose,
   changeCategory,
   changePage,
-  categoryList, }) => (
+  categoryList,
+  overall, }) => (
     <div>
       <SUIModal
         dimmer="blurring"
@@ -100,7 +101,37 @@ const ViewResultModal = ({
                 </Menu>
               </Grid.Column>
               <Grid.Column width={12}>
-                {result
+                {overall && currentCategory === 'overall' &&
+                  <Table>
+                    <Table.Header>
+                      <Table.Row>
+                        <Table.Cell width={2}>#</Table.Cell>
+                        <Table.Cell>Category</Table.Cell>
+                        <Table.Cell>Sub Category</Table.Cell>
+                        <Table.Cell>Exam Type</Table.Cell>
+                        <Table.Cell>Score</Table.Cell>
+                        <Table.Cell>Full Score</Table.Cell>
+                        <Table.Cell>Weight</Table.Cell>
+                        <Table.Cell>Product</Table.Cell>
+                      </Table.Row>
+                    </Table.Header>
+                    {overall.map((item, i) => (
+                      <Table.Row>
+                        <Table.Cell>{i + 1}</Table.Cell>
+                        <Table.Cell>{item.category}</Table.Cell>
+                        <Table.Cell>{item.subcategory}</Table.Cell>
+                        <Table.Cell>{item.type}</Table.Cell>
+                        <Table.Cell>{item.score}</Table.Cell>
+                        <Table.Cell>{item.fullscore}</Table.Cell>
+                        <Table.Cell>{item.weight ? item.weight : 'n/a'}</Table.Cell>
+                        <Table.Cell>{item.weight ? item.weight * item.score : 'n/a'}</Table.Cell>
+                      </Table.Row>
+                    ))}
+                  </Table>
+                }
+                {
+                  result
+                  && currentCategory !== 'overall'
                   && filterExam(result, currentCategory).length > 0
                   && filterExam(result, currentCategory).map((row, i) => (
                     i === currentPage - 1 ?
@@ -150,66 +181,20 @@ const ViewResultModal = ({
                   ))}
                 {!result && <h1>Fetch fail somewhere!</h1>}
                 <br />
-                {result && filterExam(result, currentCategory).length > 0
-                  && filterExam(result, currentCategory).map((row, i) => (
-                    i === currentPage - 1 ?
-                      row.exType === 'Choices' ?
-                        <div>Point : {row.exType === 'Choices' && row.point[0]} / {row.exType === 'Choices' && row.point[1]}</div> :
-                        <Grid>
-                          <Grid.Row>
-                            <Grid.Column width={2}>Point</Grid.Column>
-                            <Grid.Column width={14}>
-                              <Input
-                                placeholder="Score.."
-                                value={row.point[0] === 'UNKNOWN' || row.point[0] === '' ? '' : row.point[0]}
-                                onChange={(e) => {
-                                  onScoreChange(e, row.exId);
-                                  const scoreStatus = scoreHandle(e.target.value, row.point[1]);
-                                  updateScoreStatus(scoreStatus, row.exId, result, modalWarningExIdList);
-                                }}
-                              />&nbsp;
-                              {((row.scoreWarning && row.scoreWarning !== ' ') || row.point[0] === 'UNKNOWN') &&
-                                <Label basic color="red" pointing="left">
-                                  {row.scoreWarning}
-                                </Label>
-                              }
-                            </Grid.Column>
-                          </Grid.Row>
-                          <Grid.Row>
-                            <Grid.Column width={2}>Full Point</Grid.Column>
-                            <Grid.Column width={14}>
-                              <Input
-                                placeholder="Full Score.."
-                                value={row.point[1] === 'UNKNOWN' || row.point[1] === '' ? '' : row.point[1]}
-                                onChange={(e) => {
-                                  onFullScoreChange(e, row.exId);
-                                  const scoreStatus = scoreHandle(row.point[0], e.target.value);
-                                  updateScoreStatus(scoreStatus, row.exId, result, modalWarningExIdList);
-                                }}
-                              />&nbsp;
-                              {((row.fullScoreWarning && row.fullScoreWarning !== ' ') || row.point[1] === 'UNKNOWN') &&
-                                <Label basic color="red" pointing="left">
-                                  {row.fullScoreWarning}
-                                </Label>
-                              }
-                            </Grid.Column>
-                          </Grid.Row>
-                        </Grid>
-                      : <div />
-                ))}
-                <Pagination
-                  floated="right"
-                  onPageChange={(e, object) => changePage(object.activePage)}
-                  activePage={currentPage}
-                  boundaryRange={1}
-                  siblingRange={1}
-                  ellipsisItem={{ content: <Icon name="ellipsis horizontal" />, icon: true }}
-                  firstItem={{ content: <Icon name="angle double left" />, icon: true }}
-                  lastItem={{ content: <Icon name="angle double right" />, icon: true }}
-                  prevItem={{ content: <Icon name="angle left" />, icon: true }}
-                  nextItem={{ content: <Icon name="angle right" />, icon: true }}
-                  totalPages={(result && categoryLengthCalculate(result, currentCategory)) || (!result && 5)}
-                />
+                {currentCategory !== 'overall' &&
+                  <Pagination
+                    floated="right"
+                    onPageChange={(e, object) => changePage(object.activePage)}
+                    activePage={currentPage}
+                    boundaryRange={1}
+                    siblingRange={1}
+                    ellipsisItem={{ content: <Icon name="ellipsis horizontal" />, icon: true }}
+                    firstItem={{ content: <Icon name="angle double left" />, icon: true }}
+                    lastItem={{ content: <Icon name="angle double right" />, icon: true }}
+                    prevItem={{ content: <Icon name="angle left" />, icon: true }}
+                    nextItem={{ content: <Icon name="angle right" />, icon: true }}
+                    totalPages={(result && categoryLengthCalculate(result, currentCategory)) || (!result && 5)}
+                  />}
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -227,6 +212,7 @@ ViewResultModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   changePage: PropTypes.func.isRequired,
   categoryList: PropTypes.array.isRequired,
+  overall: PropTypes.array.isRequired,
 };
 const mapStateToProps = state => ({
   person: {
@@ -237,6 +223,7 @@ const mapStateToProps = state => ({
   currentCategory: state.recruitmentProfile.currentCategory,
   currentPage: state.recruitmentProfile.currentPage,
   result: state.recruitmentProfile.result,
+  overall: state.recruitmentProfile.overall,
 });
 
 const mapDispatchToProps = dispatch => ({

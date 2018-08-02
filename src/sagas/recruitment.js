@@ -406,8 +406,6 @@ export function* randomExamTask(action) {
     const EPRList = yield call(api.fetchEPRList, action.payload.rowId);
     const rawExamList = yield call(api.fetchExamId);
     const randomExIdList = [];
-    console.log('EPRList', EPRList);
-    console.log('rawExamList', rawExamList);
     for (let i = 0; i < EPRList.length; i += 1) {
       for (let j = 0; j < rawExamList.length; j += 1) {
         if (rawExamList[j].category.toLowerCase() === EPRList[i].category.toLowerCase()
@@ -421,9 +419,7 @@ export function* randomExamTask(action) {
         }
       }
     }
-    console.log('before upload', randomExIdList);
     yield call(api.uploadRandomExIdList, action.payload.rowId, randomExIdList);
-    console.log('after that');
   }
   catch (error) {
     console.log('random exam error:', error);

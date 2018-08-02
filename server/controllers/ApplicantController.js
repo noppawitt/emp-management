@@ -332,7 +332,6 @@ exports.getPosition = (req, res, next) => {
 exports.getExamUser = (req, res, next) => {
   Applicant.getExamUser(req.body.rowId.toString(), req.body.testDate, req.body.citizenId)
     .then((user) => {
-      console.log('* from user:', user);
       res.json(user);
     })
     .catch(next);
@@ -361,7 +360,7 @@ exports.updateTestStatus = (req, res, next) => {
 };
 
 exports.getTestStatus = (req, res, next) => {
-  Applicant.getTestStatus(req.body.rowId, /* req.body.registerDate */)
+  Applicant.getTestStatus(req.body.rowId)
     .then((testStatus) => {
       res.json(testStatus);
     })
@@ -403,10 +402,8 @@ exports.fetchGradingExam = (req, res, next) => {
 };
 
 exports.fetchEPRList = (req, res, next) => {
-  console.log(req.query.id);
   Applicant.fetchEPRList(req.query.id)
     .then((EPRList) => {
-      console.log(EPRList);
       res.json(EPRList);
     })
     .catch(next);
@@ -460,6 +457,23 @@ exports.checkApproveStatus = (req, res, next) => {
 
 exports.fetchViewResult = (req, res, next) => {
   Applicant.fetchViewResult(req.query.id)
+    .then((retval) => {
+      res.json(retval);
+    })
+    .catch(next);
+};
+
+
+exports.fetchGradedExam = (req, res, next) => {
+  Applicant.fetchGradedExam(req.query.rowId)
+    .then((exam) => {
+      res.json(exam);
+    })
+    .catch(next);
+};
+
+exports.fetchWeight = (req, res, next) => {
+  Applicant.fetchWeight(req.body.categoryList)
     .then((retval) => {
       res.json(retval);
     })
