@@ -35,11 +35,11 @@ const stylecon = {
 const ProfilePicture = ({ image, isHover, onMouseEnter, onMouseLeave, onProfilePictureClick, onEditProfilePictureClick, editted }) => (
   <div style={wrapper} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
     {editted &&
-    <Transition visible={isHover} animation="fade" duration={500}>
-      <div style={overlay}>
-        <Icon style={stylecon} name="photo" onClick={onEditProfilePictureClick}>&nbsp; Update Picture</Icon>
-      </div>
-    </Transition>}
+      <Transition visible={isHover} animation="fade" duration={500}>
+        <div style={overlay}>
+          <Icon style={stylecon} name="photo" onClick={onEditProfilePictureClick}>&nbsp; Update Picture</Icon>
+        </div>
+      </Transition>}
     <Image style={{ display: 'block' }} src={image} size="small" centered onClick={onProfilePictureClick} />
   </div>
 );

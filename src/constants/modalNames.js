@@ -34,3 +34,14 @@ export const ERPAPPROVE_REJECT = 'ERPAPPROVE_REJECT';
 
 // Other
 export const CONFIRM = 'CONFIRM';
+
+// Exam
+export const ADD_NEW_EXAM = 'ADD_NEW_EXAM';
+export const EDIT_EXAM = 'EDIT_EXAM';
+export const VIEW_EXAM = 'VIEW_EXAM';
+
+// Recruitment
+export const EDIT_RECRUITMENT = 'EDIT_RECRUITMENT';
+export const ACTIVE_EXAM_USER = 'ACTIVE_EXAM_USER';
+export const GRADING_EXAM = 'GRADING_EXAM';
+export const VIEW_RESULT = 'VIEW_RESULT';

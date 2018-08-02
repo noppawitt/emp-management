@@ -13,6 +13,12 @@ import AddProjectModal from './modals/AddProjectModal';
 import CreateLeaveRequestModal from './modals/CreateLeaveRequestModal';
 import ConfirmModal from './modals/ConfirmModal';
 import ProfilePictureModal from './modals/ProfilePictureModal';
+import EditRecruitmentModal from './modals/EditRecruitmentModal';
+import AddExamModal from './modals/AddExamModal';
+import EditExamModal from './modals/EditExamModal';
+import ExamFullViewModal from './modals/ExamFullViewModal';
+import ActiveExamUserModal from './modals/ActiveExamUserModal';
+import GradingExamsModal from './modals/GradingExamsModal';
 import EditProfilePictureModal from './modals/EditProfilePictureModal';
 import EditProjectModal from './modals/EditProjectModal';
 import AddMemberModal from './modals/AddMemberModal';
@@ -22,6 +28,7 @@ import AddWorkExperienceProfileModal from './modals/AddWorkExperienceProfileModa
 import ApproveRejectModal from './modals/ApproveRejectModal';
 // import CreateErpRequestModal from './modals/CreateErpRequestModal';
 import AddHolidayModal from './modals/AddHolidayModal';
+import ViewResultModal from './modals/ViewResultModal';
 
 const renderModal = ({ name, props }) => {
   switch (name) {
@@ -31,6 +38,8 @@ const renderModal = ({ name, props }) => {
       return <EditWorkProfileModal {...props} />;
     case modalNames.EDIT_EDUCATION_PROFILE:
       return <EditEducationProfileModal {...props} />;
+    case modalNames.EDIT_RECRUITMENT:
+      return <EditRecruitmentModal {...props} />;
     case modalNames.ADD_EDUCATION_PROFILE:
       return <AddEducationProfileModal {...props} />;
     case modalNames.ADD_CERTIFICATE_PROFILE:
@@ -49,6 +58,18 @@ const renderModal = ({ name, props }) => {
       return <CreateLeaveRequestModal {...props} />;
     case modalNames.CONFIRM:
       return <ConfirmModal {...props} />;
+    case modalNames.PROFILE_PICTURE:
+      return <ProfilePictureModal {...props} />;
+    case modalNames.ACTIVE_EXAM_USER:
+      return <ActiveExamUserModal {...props} />;
+    case modalNames.ADD_NEW_EXAM:
+      return <AddExamModal {...props} />;
+    case modalNames.EDIT_EXAM:
+      return <EditExamModal {...props} />;
+    case modalNames.VIEW_EXAM:
+      return <ExamFullViewModal {...props} />;
+    case modalNames.GRADING_EXAM:
+      return <GradingExamsModal {...props} />;
     case modalNames.VIEW_PROFILE_PICTURE:
       return <ProfilePictureModal {...props} />;
     case modalNames.EDIT_ASSET_PROFILE:
@@ -67,6 +88,8 @@ const renderModal = ({ name, props }) => {
     //   return <CreateErpRequestModal {...props} />;
     case modalNames.ADD_HOLIDAY:
       return <AddHolidayModal />;
+    case modalNames.VIEW_RESULT:
+      return <ViewResultModal {...props} />;
     default:
       return <div />;
   }

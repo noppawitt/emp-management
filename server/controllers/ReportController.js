@@ -447,15 +447,18 @@ const findEachAvailableDate = (excelType, userId) => new Promise(async (resolve,
           //       avialableDate += `${moment(`${excelType.year}-${excelType.month}-1`).format('DD/MM/YY')} ${moment(`${excelType.year}-12-31`).format('DD/MM/YY')}`;
           //     }
           //     else if (moment(hasProjects[i].endDate).format('YYYY-MM-DD') !== moment(`${excelType.year}-12-31`).format('YYYY-MM-DD')) {
-          //       avialableDate += `${moment(`${excelType.year}-${excelType.month}-1`).format('DD/MM/YY')} ${moment(hasProjects[i].endDate).add(1, 'days').format('DD/MM/YY')}-${moment(`${excelType.year}-12-31`).format('DD/MM/YY')}`;
+          //       avialableDate += `${moment(`${excelType.year}-${excelType.month}-1`)
+          //    .format('DD/MM/YY')} ${moment(hasProjects[i].endDate).add(1, 'days').format('DD/MM/YY')}-${moment(`${excelType.year}-12-31`).format('DD/MM/YY')}`;
           //     }
           //   }
           //   else if (moment(hasProjects[i].startDate).format('YYYY-MM-DD') >= moment(`${excelType.year}-${excelType.month}-03`).format('YYYY-MM-DD')) {
           //     if (moment(hasProjects[i].endDate).format('YYYY-MM-DD') === moment(`${excelType.year}-12-30`).format('YYYY-MM-DD')) {
-          //       avialableDate += `${moment(`${excelType.year}-${excelType.month}-1`).format('DD/MM/YY')}-${moment(hasProjects[i].startDate).add(-1, 'days').format('DD/MM/YY')} ${moment(`${excelType.year}-${excelType.month}-1`).format('DD/MM/YY')} ${moment(`${excelType.year}-12-31`).format('DD/MM/YY')}`;
+          //       avialableDate += `${moment(`${excelType.year}-${excelType.month}-1`).format('DD/MM/YY')}-${moment(hasProjects[i].startDate)
+          //     .add(-1, 'days').format('DD/MM/YY')} ${moment(`${excelType.year}-${excelType.month}-1`).format('DD/MM/YY')} ${moment(`${excelType.year}-12-31`).format('DD/MM/YY')}`;
           //     }
           //     else if (moment(hasProjects[i].endDate).format('YYYY-MM-DD') !== moment(`${excelType.year}-12-31`).format('YYYY-MM-DD')) {
-          //       avialableDate += `${moment(`${excelType.year}-${excelType.month}-1`).format('DD/MM/YY')}-${moment(hasProjects[i].startDate).add(-1, 'days').format('DD/MM/YY')} ${moment(hasProjects[i].endDate).add(1, 'days').format('DD/MM/YY')}-${moment(`${excelType.year}-12-31`).format('DD/MM/YY')}`;
+          //       avialableDate += `${moment(`${excelType.year}-${excelType.month}-1`).format('DD/MM/YY')}-${moment(hasProjects[i].startDate).add(-1, 'days')
+          //      .format('DD/MM/YY')} ${moment(hasProjects[i].endDate).add(1, 'days').format('DD/MM/YY')}-${moment(`${excelType.year}-12-31`).format('DD/MM/YY')}`;
           //     }
           //   }
           // }
@@ -481,7 +484,8 @@ const findEachAvailableDate = (excelType, userId) => new Promise(async (resolve,
           //   }
           // }
           // else if (i !== 0 && i !== hasProjects.length - 1) {
-          //   if (moment(hasProjects[i].startDate).format('YYYY-MM-DD') <= moment(end).format('YYYY-MM-DD') && moment(hasProjects[i].endDate).format('YYYY-MM-DD') >= moment(end).format('YYYY-MM-DD')) {
+          //   if (moment(hasProjects[i].startDate).format('YYYY-MM-DD') <= moment(end).format('YYYY-MM-DD') && moment(hasProjects[i].endDate)
+          //     .format('YYYY-MM-DD') >= moment(end).format('YYYY-MM-DD')) {
           //     end = hasProjects[i].endDate;
           //   }
           //   else if (moment(hasProjects[i].startDate).format('YYYY-MM-DD') > moment(end).format('YYYY-MM-DD')) {

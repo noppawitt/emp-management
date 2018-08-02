@@ -107,3 +107,11 @@ export const changeLeavePage = page => ({
     page
   }
 });
+
+export const sortLeave = (sortKey, direction) => ({
+  type: actionTypes.SORT_LEAVE,
+  payload: {
+    sortKey,
+    direction
+  }
+});

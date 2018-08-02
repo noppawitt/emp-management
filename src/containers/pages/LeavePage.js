@@ -10,6 +10,7 @@ import {
 } from '../../actions/leave';
 import { openModal } from '../../actions/modal';
 import * as modalNames from '../../constants/modalNames';
+import { getVisibilityLeaves } from '../../selectors/leave';
 import Leave from '../../components/Leave';
 import Loader from '../../components/Loader';
 import { getTotalPages, getVisibleLeaves } from '../../selectors/leave';
@@ -59,7 +60,7 @@ const mapStateToProps = state => ({
   isFetching: state.leave.isFetching,
   isHistoryFetching: state.leave.isHistoryFetching,
   leaveHistory: state.leave.leaveHistory,
-  leaves: state.leave.lists,
+  leaves: getVisibleLeaves(state),
   userId: state.auth.id,
   year: state.leave.year,
   month: state.leave.month,
@@ -86,15 +87,6 @@ const enhance = compose(
       const { fetchLeave, fetchLeaveHistory, userId, year, month } = this.props;
       fetchLeave(userId, year, month);
       fetchLeaveHistory(userId, year);
-    },
-    componentDidUpdate(prevProps) {
-      const { fetchLeaveHistory, userId, year } = this.props;
-      if (prevProps.leaveHistory.annualLeaveRemain !== this.props.leaveHistory.annualLeaveRemain
-        || prevProps.leaveHistory.personalLeaveRemain !== this.props.leaveHistory.personalLeaveRemain
-        || prevProps.leaveHistory.sickLeaveRemain !== this.props.leaveHistory.sickLeaveRemain
-        || prevProps.leaveHistory.ordinationLeaveRemain !== this.props.leaveHistory.ordinationLeaveRemain) {
-        fetchLeaveHistory(userId, year);
-      }
     }
   })
 );

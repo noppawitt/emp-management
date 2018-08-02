@@ -24,6 +24,12 @@ const timesheet = require('./timesheet');
 const leaveRequest = require('./leaveRequest');
 const accessControl = require('./accessControl');
 const report = require('./report');
+const applicant = require('./applicant');
+const exam = require('./exam');
+const takeExam = require('./takeExam');
+const takeExamAgreement = require('./takeExamAgreement');
+
+router.use('/applicants', applicant);
 const masterATable = require('./masterTable');
 const workExperience = require('./workExperience');
 const leaveHistory = require('./leaveHistory');
@@ -87,6 +93,11 @@ router.use('/access-control', accessControl);
 
 router.use('/report', report);
 
+router.use('/exam', exam);
+
+router.use('/takeExam', takeExam);
+
+router.use('/takeexamagreement', takeExamAgreement);
 router.use('/master-table', masterATable);
 
 router.use('/work-experience', workExperience);

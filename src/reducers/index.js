@@ -9,6 +9,12 @@ import project from './project';
 import projectDetail from './projectDetail';
 import leave from './leave';
 import timesheet from './timesheet';
+import recruitment from './recruitment';
+import recruitmentProfile from './recruitmentProfile';
+import exam from './exam';
+import examAuth from './examAuth';
+import takeExamAgreement from './takeExamAgreement';
+import takeExam from './takeExam';
 import holiday from './holiday';
 import report from './report';
 import accessControl from './accessControl';
@@ -28,6 +34,12 @@ export default combineReducers({
   projectDetail,
   leave,
   timesheet,
+  recruitment,
+  recruitmentProfile,
+  exam,
+  examAuth,
+  takeExamAgreement,
+  takeExam,
   holiday,
   report,
   accessControl,

@@ -19,7 +19,7 @@ function* fetchEmployeeTask() {
   }
 }
 
-function* createEmployeeTask(action) {
+export function* createEmployeeTask(action) {
   try {
     yield call(api.createEmployee, {
       user: action.payload.form
