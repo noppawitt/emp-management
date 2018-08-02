@@ -39,7 +39,7 @@ export function* rejectMethodTask(action) {
     const approvefail = yield call(api.approveUpdate, {
       id: action.payload.approveId.id,
       comment: action.payload.approveId.comment,
-      type: action.payload.type,
+      type: action.payload.approveId.type,
       approvement: 2
     });
     yield put(fetchErpApproveSuccess(approvefail));

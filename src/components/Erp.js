@@ -82,8 +82,8 @@ const Erp = ({ erps, onDeleteClick, onSearchChange, activePage, handlePagination
                   {i.statusapproveid === 0 && <Icon name="edit" size="big" onClick={() => history.push(`/erp/${i.id}`)} /> }
                 </Table.Cell>
                 <Table.Cell>
-                  {/* {i.statusapproveid === 0 && <Icon name="delete" color="red" onClick={() => onDeleteClick(i.id)} /> } */}
-                  <Icon name="delete" color="red" onClick={() => onDeleteClick(i.id)} />
+                  {i.statusapproveid === 0 && <Icon name="delete" color="red" onClick={() => onDeleteClick(i.id)} /> }
+                  {/* <Icon name="delete" color="red" onClick={() => onDeleteClick(i.id)} /> */}
                 </Table.Cell>
               </Table.Row>
             ))}

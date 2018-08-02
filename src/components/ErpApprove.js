@@ -73,8 +73,7 @@ const ErpApprove = ({ erpApprove, onApproveClick, onRejectClick, genExcel, activ
             <Table.HeaderCell />
           </Table.Row>
         </Table.Header>
-        {/* approvement2 is 1 = decided or 2 = not yet
-        approvement1 is 1 = approved or 2 = rejected */}
+
         <Table.Body>
           {erpApprove.map((i, index) => activePage === Math.ceil((index + 1) / 20) && (
             <Table.Row key={i.id}>
@@ -113,18 +112,24 @@ const ErpApprove = ({ erpApprove, onApproveClick, onRejectClick, genExcel, activ
                         Waiting for Supervisor
                       </div>
                       :
-                      (i.approvement2 === 0 ?
+                      (i.approvement1 === 2 ?
+                        <div>
+                          Rejected by Supervisor
+                        </div>
+                        :
+                        (i.approvement2 === 0 ?
                         <div>
                           <Button inverted color="green" onClick={() => onApproveClick(i.id, '', 1)}>Approve</Button>
                           <Button inverted color="red" onClick={() => onRejectClick(i.id, 1)} >Reject</Button>
                         </div> :
                         <div>
-                          {i.approvement1 === 1 && 'Approved On '}
-                          {i.approvement1 === 2 && 'Rejected On '}
+                          {i.approvement2 === 1 && 'Approved On '}
+                          {i.approvement2 === 2 && 'Rejected On '}
                           <Moment format="YYYY-MM-DD HH:mm" date={i.updatedDate} />
                         </div>
                       )
                     )
+                  )
 
                   )
                   // not md
@@ -132,12 +137,19 @@ const ErpApprove = ({ erpApprove, onApproveClick, onRejectClick, genExcel, activ
                     <Button inverted color="green" onClick={() => onApproveClick(i.id, '', 0)}>Approve</Button>
                     <Button inverted color="red" onClick={() => onRejectClick(i.id, 0)} >Reject</Button>
                   </div> :
+                   (i.approvement2 === 0 ?
                     <div>
                       {i.approvement1 === 1 && 'Approved On '}
                       {i.approvement1 === 2 && 'Rejected On '}
                       <Moment format="YYYY-MM-DD HH:mm" date={i.updatedDate} />
                     </div>
+                    :
+                    <div>
+                      {'Updated by MD on '}
+                      <Moment format="YYYY-MM-DD HH:mm" date={i.updatedDate} />
+                    </div>
                   )
+                )
                 }
 
                 {/* <div>
