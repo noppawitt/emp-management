@@ -154,15 +154,15 @@ const EvaProfileBox = ({
 };
 
 EvaProfileBox.defaultProps = {
-
+  selfProfile: null
 };
 
 EvaProfileBox.propTypes = {
   clear: PropTypes.func.isRequired,
   can: PropTypes.object.isRequired,
-  performanceProfile: PropTypes.object.isRequired,
-  evaProfile: PropTypes.object.isRequired,
-  selfProfile: PropTypes.object.isRequired,
+  performanceProfile: PropTypes.array.isRequired,
+  evaProfile: PropTypes.array.isRequired,
+  selfProfile: PropTypes.object,
   openProbationModal: PropTypes.func.isRequired,
   openPerformanceModal: PropTypes.func.isRequired,
   openSelfAssessmentModal: PropTypes.func.isRequired,

@@ -26,7 +26,7 @@ const Navbar = ({ userId, username, onLogout }) => (
           Employee
         </Menu.Item>
         <Menu.Item as={NavLink} to="/erp" name="erp">
-          Erp
+          ERP
         </Menu.Item>
         <Menu.Item as={NavLink} to="/exam/" name="exam">
           Exam
