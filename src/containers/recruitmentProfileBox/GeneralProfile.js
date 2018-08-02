@@ -15,7 +15,7 @@ const imgPart = (element) => {
     otherSrc = `http://localhost:3000/static${element.filePath}${element.fileName}`;
   }
   return (
-    <div key={element.fileName} style={{ marginBottom: '10px' }} >
+    <div key={element.fileName} >
       {/* {cvSrc && <a href={cvSrc} rel="noopener noreferrer" target="_blank"><embed src={cvSrc} height="100" width="300" /><br /><Icon name="zoom" />View CV</a>} */}
       {cvSrc && <a href={cvSrc} rel="noopener noreferrer" target="_blank"><Popup trigger={<Header size="small"><Icon name="zoom" />View CV</Header>} content={<embed src={cvSrc} height="500" width="300" />} /></a>}
       {otherSrc && <a href={otherSrc} rel="noopener noreferrer" target="_blank"><Popup trigger={<Header size="small"><Icon name="zoom" />View Other</Header>} content={<embed src={otherSrc} height="500" width="300" />} /></a>}

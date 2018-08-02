@@ -211,7 +211,7 @@ class SelfAssessmentForm extends React.Component {
                         tabIndex="-1"
                         disabled={this.props.mode === 'view'}
                         onChange={(event) => {
-                                        this.setState({ significhrefantAccomplishments: event.target.value });
+                                        this.setState({ significantAccomplishments: event.target.value });
                                     }}
                       >{this.state.significantAccomplishments}
                       </textarea>

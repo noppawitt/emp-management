@@ -91,8 +91,8 @@ function* fetchProfileTask(action) {
       profile.eva = yield call(api.checkProbation, action.payload.userId);
       profile.perf = yield call(api.checkPerformance, action.payload.userId);
       profile.self = yield call(api.checkSelfAssessment, action.payload.userId);
-      yield put(fetchProfileSuccess(profile));
     }
+    yield put(fetchProfileSuccess(profile));
   }
   catch (error) {
     yield put(fetchProfileFailure(error));

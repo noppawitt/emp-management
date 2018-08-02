@@ -6,7 +6,6 @@ import { Modal as SUIModal, Button } from 'semantic-ui-react';
 const Modal = ({ header, buttonName, onClose, onClick, submitting, children, confirm, deleted, onDelete }) => (
   <SUIModal
     dimmer="blurring"
-    size={size}
     closeIcon
     open
     onClose={onClose}
@@ -27,7 +26,6 @@ const Modal = ({ header, buttonName, onClose, onClick, submitting, children, con
 
 Modal.defaultProps = {
   buttonName: 'Save',
-  disable: false,
   confirm: false,
   deleted: false,
   onDelete: undefined
