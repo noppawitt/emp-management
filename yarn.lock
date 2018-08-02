@@ -6755,7 +6755,6 @@ react-big-calendar@^0.19.1:
     uncontrollable "^4.0.0"
     warning "^2.0.0"
 
-<<<<<<< HEAD
 react-bootstrap-date-picker@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/react-bootstrap-date-picker/-/react-bootstrap-date-picker-5.1.0.tgz#5f87c6a875e411dbf46d2be74960756f113ebf23"
@@ -6769,8 +6768,6 @@ react-calendar@^2.15.2:
     prop-types "^15.6.0"
     react-lifecycles-compat "^3.0.4"
 
-=======
->>>>>>> origin2/evaluate
 react-datepicker@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-1.5.0.tgz#7eacd9609313189c84a21bb7421486054939a4b2"
@@ -6808,8 +6805,6 @@ react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-<<<<<<< HEAD
-=======
 react-moment@^0.7.9:
   version "0.7.9"
   resolved "https://registry.yarnpkg.com/react-moment/-/react-moment-0.7.9.tgz#fc6b5bf8952d27f134a42abfd7f42df2c839c1d7"
@@ -6821,7 +6816,6 @@ react-number-format@^3.4.3:
     babel-runtime "^6.26.0"
     prop-types "^15.6.0"
 
->>>>>>> origin2/evaluate
 react-onclickoutside@^6.7.1:
   version "6.7.1"
   resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.7.1.tgz#6a5b5b8b4eae6b776259712c89c8a2b36b17be93"

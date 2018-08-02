@@ -15,7 +15,6 @@ import ErpPage from './pages/ErpPage';
 import ErpApprovePage from './pages/ErpApprovePage';
 import ErpAddPage from './pages/ErpAddPage';
 import ErpBillRecord from './forms/EditBillRecord';
-import ManageLeave from './pages/ManageLeavePage';
 import HolidayPage from './pages/HolidayPage';
 import LeaveApprovalPage from './pages/LeaveApprovalPage';
 import Can from './Can';
@@ -32,7 +31,6 @@ const Routes = () => (
     <PrivateRoute path="/profile/:id" component={ProfilePage} />
     <PrivateRoute path="/employee" component={EmployeePage} />
     <PrivateRoute path="/report" component={ReportPage} />
-    <PrivateRoute path="/manageleave" component={ManageLeave} />
     <PrivateRoute exact path="/erp" component={ErpPage} />
     <PrivateRoute path="/erp/:id" component={ErpBillRecord} />
     <PrivateRoute path="/erpApprove" component={ErpApprovePage} />
