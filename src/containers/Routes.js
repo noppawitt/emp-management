@@ -17,7 +17,6 @@ import TakeExamAgreementPage from './pages/TakeExamAgreementPage';
 import TakeExamPage from './pages/TakeExamPage';
 import ReportPage from './pages/ReportPage';
 import AddTaskPage from './pages/AddTaskPage';
-import ManageLeave from './pages/ManageLeavePage';
 import HolidayPage from './pages/HolidayPage';
 import LeaveApprovalPage from './pages/LeaveApprovalPage';
 import Can from './Can';
@@ -40,7 +39,6 @@ const Routes = () => (
     <PrivateRoute path="/profile/:id" component={ProfilePage} />
     <PrivateRoute path="/employee" component={EmployeePage} />
     <PrivateRoute path="/report" component={ReportPage} />
-    <PrivateRoute path="/manageleave" component={ManageLeave} />
     <PrivateRoute path="/holiday" component={HolidayPage} />
     <Can activity="leaveRequestApprove">
       <PrivateRoute path="/leave-approval" component={LeaveApprovalPage} />

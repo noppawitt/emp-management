@@ -5,20 +5,22 @@ import { compose, lifecycle } from 'recompose';
 import { fetchAccessControlRequest } from '../actions/accessControl';
 
 const Can = ({ activity, can, conditions, isFetching, children }) => {
-  if (isFetching) return <div />;
+  if (isFetching || !can) return <div />;
   else if (can[activity] && conditions.every(c => c)) return children;
   return <div />;
 };
 
 Can.defaultProps = {
+  isFetching: true,
+  can: null,
   conditions: []
 };
 
 Can.propTypes = {
   activity: PropTypes.string.isRequired,
-  can: PropTypes.object.isRequired,
+  can: PropTypes.object,
   conditions: PropTypes.array,
-  isFetching: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool,
   children: PropTypes.any.isRequired
 };
 
@@ -36,8 +38,8 @@ const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
-      const { fetchAccessControl, fetched } = this.props;
-      if (!fetched) fetchAccessControl();
+      const { fetchAccessControl, isFetching, fetched } = this.props;
+      if (!isFetching && !fetched) fetchAccessControl();
     }
   })
 );

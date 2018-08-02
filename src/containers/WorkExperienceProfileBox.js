@@ -56,8 +56,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onAddClick: () => dispatch(openModal(modalNames.ADD_WORK_EXPERIENCE_PROFILE)),
   onDeleteClick: profileId => dispatch(openModal(modalNames.CONFIRM, {
-    header: 'Delete confirmation',
-    description: 'Are you sure to delete work experience profile?',
+    header: 'Delete Confirmation',
+    description: 'Are you sure to delete work experience profile ?',
     onConfirm: () => dispatch(deleteProfileRequest('workExperience', profileId))
   }))
 });
