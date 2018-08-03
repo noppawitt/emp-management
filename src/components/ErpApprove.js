@@ -94,6 +94,12 @@ const ErpApprove = ({ erpApprove, onApproveClick, onRejectClick, genExcel, activ
                         <Button inverted color="green" onClick={() => onApproveClick(i.id, '', 0)}>Approve</Button>
                         <Button inverted color="red" onClick={() => onRejectClick(i.id, 0)} >Reject</Button>
                       </div> :
+                      (i.approvement1 === 2 ?
+                        <div>
+                          {i.approvement1 === 2 && 'Rejected On '}
+                          <Moment format="YYYY-MM-DD HH:mm" date={i.updatedDate} />
+                        </div>
+                        :
                       (i.approvement2 === 0 ?
                         <div>
                           <Button inverted color="green" onClick={() => onApproveClick(i.id, '', 1)}>Approve</Button>
@@ -105,6 +111,7 @@ const ErpApprove = ({ erpApprove, onApproveClick, onRejectClick, genExcel, activ
                           <Moment format="YYYY-MM-DD HH:mm" date={i.updatedDate} />
                         </div>
                       )
+                    )
                     ) :
                     // md only
                     (i.approvement1 === 0 ?
