@@ -100,7 +100,7 @@ class EmployeeInfo extends React.Component {
 }
 
 EmployeeInfo.defaultProps = {
-  showEndProDate: 'false',
+  showEndProDate: null,
   addSelf: false,
   onChange: null,
   endProbationDate: null
