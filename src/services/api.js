@@ -518,7 +518,7 @@ api.fetchApplicant = () => (
 );
 
 api.fetchTestStatus = rowId => (
-  callApi('api/applicants/get-test-status', {
+  callApi('/api/applicants/get-test-status', {
     method: 'POST',
     body: {
       rowId,
@@ -536,77 +536,77 @@ api.fetchPositionRecruitment = () => (
 );
 
 api.changeRecruitmentStatus = body => (
-  callApi('api/applicants/update-status', {
+  callApi('/api/applicants/update-status', {
     method: 'PUT',
     body
   })
 );
 
 api.updateRecruitmentInterviewDateTime = body => (
-  callApi('api/applicants/update-interview-datetime', {
+  callApi('/api/applicants/update-interview-datetime', {
     method: 'PUT',
     body
   })
 );
 
 api.updateRecruitmentExamDateTime = body => (
-  callApi('api/applicants/update-exam-datetime', {
+  callApi('/api/applicants/update-exam-datetime', {
     method: 'PUT',
     body
   })
 );
 
 api.updateRecruitmentSignDateTime = body => (
-  callApi('api/applicants/update-sign-datetime', {
+  callApi('/api/applicants/update-sign-datetime', {
     method: 'PUT',
     body
   })
 );
 
 api.updateRecruitmentCompleteDateTime = body => (
-  callApi('api/applicants/update-first-date', {
+  callApi('/api/applicants/update-first-date', {
     method: 'PUT',
     body
   })
 );
 
 api.updateRecruitmentRejectDate = body => (
-  callApi('api/applicants/update-reject-date', {
+  callApi('/api/applicants/update-reject-date', {
     method: 'PUT',
     body
   })
 );
 
 api.updateRecruitmentCancelDate = body => (
-  callApi('api/applicants/update-cancel-date', {
+  callApi('/api/applicants/update-cancel-date', {
     method: 'PUT',
     body
   })
 );
 
 api.updateRecruitmentBlacklistDate = body => (
-  callApi('api/applicants/update-blacklist-date', {
+  callApi('/api/applicants/update-blacklist-date', {
     method: 'PUT',
     body
   })
 );
 
 api.updateRecruitmentNote = body => (
-  callApi('api/applicants/update-note', {
+  callApi('/api/applicants/update-note', {
     method: 'PUT',
     body
   })
 );
 
 api.updateRecruitmentInterviewResult = body => (
-  callApi('api/applicants/update-interview-result', {
+  callApi('/api/applicants/update-interview-result', {
     method: 'PUT',
     body
   })
 );
 
 api.updateRecruitmentSignedPosition = body => (
-  callApi('api/applicants/update-signed-position', {
+  callApi('/api/applicants/update-signed-position', {
     method: 'PUT',
     body
   })
@@ -681,21 +681,21 @@ api.uploadGradeProgress = gradingList => (
 // Recruitment
 
 api.getExamUser = body => (
-  callApi('api/applicants/get-exam-user', {
+  callApi('/api/applicants/get-exam-user', {
     method: 'POST',
     body
   })
 );
 
 api.activateExamUser = body => (
-  callApi('api/applicants/activate-exam-user', {
+  callApi('/api/applicants/activate-exam-user', {
     method: 'POST',
     body
   })
 );
 
 api.updateRecruitmentTestStatus = body => (
-  callApi('api/applicants/update-test-status', {
+  callApi('/api/applicants/update-test-status', {
     method: 'POST',
     body
   })
