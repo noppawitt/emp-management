@@ -167,7 +167,7 @@ class SelfAssessmentForm extends React.Component {
                     click
                 </button> */}
         <img className="logo_back" src={logoBack} alt="logoBack" />
-        <div style={{ textAlign: 'center', marginBottom: '30px', padding: '0px 10px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '30px', padding: '0px 20px' }}>
           <img className="logo" src={logo} alt="logo" />
           <h1 style={{ marginBottom: '50px' }}>Self Assessment Form</h1>
           <EmployeeInfo {...this.state} addSelf="true" mode={this.props.mode} />
@@ -177,7 +177,7 @@ class SelfAssessmentForm extends React.Component {
           <tr>
             {/* Page One */}
             <td>
-              <div className="table-div" style={{ padding: '0px 10px' }}>
+              <div className="table-div" style={{ padding: '0px 20px' }}>
                 <table className="major-respon-table">
                   <tr>
                     <th><span className="header-self-text">Major Responsibilities</span>
@@ -198,7 +198,7 @@ class SelfAssessmentForm extends React.Component {
                   </tr>
                 </table>
               </div>
-              <div className="table-div" style={{ padding: '0px 10px' }}>
+              <div className="table-div" style={{ padding: '0px 20px' }}>
                 <table className="sign-accom-table">
                   <tr>
                     <th><span className="header-self-text">Significant Accomplishments</span>
@@ -219,7 +219,7 @@ class SelfAssessmentForm extends React.Component {
                   </tr>
                 </table>
               </div>
-              <div className="table-div" style={{ padding: '0px 10px' }}>
+              <div className="table-div" style={{ padding: '0px 20px' }}>
                 <table className="con-com-table">
                   <tr>
                     <th><span className="header-self-text">Contribution/ Company Activities</span>
@@ -240,7 +240,7 @@ class SelfAssessmentForm extends React.Component {
                   </tr>
                 </table>
               </div>
-              <div className="table-div" style={{ padding: '0px 10px' }}>
+              <div className="table-div" style={{ padding: '0px 20px' }}>
                 <table className="str-improve-table">
                   <tr>
                     <th colSpan="2"><span className="header-self-text">Strengths/ Improvements</span></th>
@@ -277,21 +277,21 @@ class SelfAssessmentForm extends React.Component {
 
             {/* Page Two */}
             <td>
-              <div style={{ padding: '0px 10px' }}>
+              <div style={{ padding: '0px 20px' }}>
                 <GoalComponent header="Goal 1 The Most Important * เป้าหมายสำคัญอันดับที่ 1" goal={this.state.goal1} onChange={this.goalOneHandler} require mode={this.props.mode} />
               </div>
             </td>
 
             {/* Page Three */}
             <td>
-              <div style={{ padding: '0px 10px' }}>
+              <div style={{ padding: '0px 20px' }}>
                 <GoalComponent header="Goal 2 More Important * เป้าหมายสำคัญอันดับที่ 2" goal={this.state.goal2} onChange={this.goalTwoHandler} mode={this.props.mode} />
               </div>
             </td>
 
             {/* Page Four */}
             <td>
-              <div style={{ padding: '0px 10px' }}>
+              <div style={{ padding: '0px 20px' }}>
                 <GoalComponent header="Goal 3 Less Important * เป้าหมายสำคัญอันดับที่ 3" goal={this.state.goal3} onChange={this.goalThreeHandler} mode={this.props.mode} />
               </div>
             </td>

@@ -64,7 +64,7 @@ exports.submit = (req, res, next) => {
       const mailOptions = {
         from: 'i.plas.sa.tic@gmail.com',
         to: 'ruby.pwn@hotmail.com',
-        subject: 'Probation',
+        subject: 'Self Assessment',
         html:
           `
           <p>SelfAssessment of ${empInfo.firstName} ${empInfo.lastName} already submitted</p>

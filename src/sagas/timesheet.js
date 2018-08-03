@@ -64,7 +64,7 @@ function* deleteTimesheetTask(action) {
   try {
     yield call(api.deleteTimesheet, { id: action.payload.timesheetId });
     yield put(deleteTimesheetSuccess(action.payload.timesheetId));
-    yield put(clearModal());
+    yield put(closeModal());
   }
   catch (error) {
     yield put(deleteTimesheetFailure(error));

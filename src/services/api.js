@@ -483,7 +483,7 @@ api.deleteErp = body => (
 api.uploadErp = body => (
   callApi(`/api/billrecords-imgupload/upload`, {
     headers: {
-      Authorization: ('Bearer ').concat(localStorage.getItem('token'))
+      Authorization: ('Bearer ').concat(localStorage.getItem('accessToken'))
     },
     method: 'POST',
     body
