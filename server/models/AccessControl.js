@@ -3,7 +3,7 @@ const db = require('../db');
 const AccessControl = {};
 
 AccessControl.create = (accessControl, id) => (
-  db.one(
+  db.none(
     `INSERT INTO access_control 
     (
       name, 

@@ -31,3 +31,12 @@ export const EDIT_TIMESHEET = 'EDIT_TIMESHEET';
 
 // Other
 export const CONFIRM = 'CONFIRM';
+
+// ERP
+export const ERPAPPROVE_REJECT = 'ERPAPPROVE_REJECT';
+
+// Probation
+export const ADD_PROBATION = 'ADD_PROBATION';
+export const ADD_PERFORMANCE = 'ADD_PERFORMANCE';
+export const ADD_SELFASSESSMENT = 'ADD_SELFASSESSMENT';
+

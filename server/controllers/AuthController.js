@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt-nodejs');
 const User = require('../models/User');
+const EmployeeInfo = require('../models/EmployeeInfo');
 
 const jwtSecret = process.env.JWT_SECRET;
 
@@ -9,21 +10,29 @@ exports.signin = (req, res, next) => {
     .then((user) => {
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
-          const accessToken = jwt.sign({
-            id: user.id,
-            username: user.username
-          }, jwtSecret, { expiresIn: 3600 });
-          const refreshToken = jwt.sign({
-            id: user.id,
-            username: user.username
-          }, jwtSecret);
-          User.updateRefreshToken(user.id, refreshToken)
-            .then(() => res.json({
-              id: user.id,
-              username: user.username,
-              accessToken,
-              refreshToken
-            }))
+          EmployeeInfo.findOwnByUserId(user.id)
+            .then((info) => {
+              const accessToken = jwt.sign({
+                id: user.id,
+                username: user.username,
+                type: user.type,
+                name: `${info.firstName} ${info.lastName}`
+              }, jwtSecret, { expiresIn: 3600 });
+              const refreshToken = jwt.sign({
+                id: user.id,
+                username: user.username
+              }, jwtSecret);
+              User.updateRefreshToken(user.id, refreshToken)
+                .then(() => res.json({
+                  id: user.id,
+                  username: user.username,
+                  accessToken,
+                  refreshToken,
+                  type: user.type,
+                  name: `${info.firstName} ${info.lastName}`
+                }))
+                .catch(next);
+            })
             .catch(next);
         }
         else {
@@ -64,13 +73,15 @@ exports.signup = (req, res, next) => {
 
 exports.refreshToken = (req, res, next) => {
   const { refreshToken } = req.body;
-  const { id, username } = jwt.decode(refreshToken);
+  const { id, username, type, name } = jwt.decode(refreshToken);
   User.getRefreshToken(id)
     .then((data) => {
       if (data.refreshToken === refreshToken) {
         const accessToken = jwt.sign({
           id,
-          username
+          username,
+          type,
+          name
         }, jwtSecret, { expiresIn: 3600 });
         res.json({
           accessToken

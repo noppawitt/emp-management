@@ -89,3 +89,80 @@ export const updateProfilePictureFailure = message => ({
     message
   }
 });
+
+export const fetchProbationRequest = (id, probationId) => ({
+  type: actionTypes.PROBATION_FETCH_REQUEST,
+  payload: {
+    id,
+    probationId
+  }
+});
+
+export const fetchProbationSuccess = profile => ({
+  type: actionTypes.PROBATION_FETCH_SUCCESS,
+  payload: {
+    profile
+  }
+});
+
+export const fetchProbationFailure = message => ({
+  type: actionTypes.PROBATION_FETCH_FAILURE,
+  payload: {
+    message
+  }
+});
+
+export const fetchPerformanceRequest = (id, year) => ({
+  type: actionTypes.PERFORMANCE_FETCH_REQUEST,
+  payload: {
+    id,
+    year
+  }
+});
+
+export const fetchPerformanceSuccess = profile => ({
+  type: actionTypes.PERFORMANCE_FETCH_SUCCESS,
+  payload: {
+    profile
+  }
+});
+
+export const fetchPerformanceFailure = message => ({
+  type: actionTypes.PERFORMANCE_FETCH_FAILURE,
+  payload: {
+    message
+  }
+});
+
+export const fetchSelfAssessmentRequest = id => ({
+  type: actionTypes.SELFASSESSMENT_FETCH_REQUEST,
+  payload: {
+    id
+  }
+});
+
+export const fetchSelfAssessmentSuccess = profile => ({
+  type: actionTypes.SELFASSESSMENT_FETCH_SUCCESS,
+  payload: {
+    profile
+  }
+});
+
+export const fetchSelfAssessmentFailure = message => ({
+  type: actionTypes.SELFASSESSMENT_FETCH_FAILURE,
+  payload: {
+    message
+  }
+});
+
+export const clearProbationStore = () => ({
+  type: actionTypes.CLEAR_PROBATION_STORE,
+});
+
+export const updateProbationStore = (item, type) => ({
+  type: actionTypes.UPDATE_PROBATION_STORE,
+  payload: {
+    item,
+    type
+  }
+});

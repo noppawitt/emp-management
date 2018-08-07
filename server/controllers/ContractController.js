@@ -13,7 +13,7 @@ exports.update = (req, res, next) => {
   const editContract = req.body.contract;
   Contract.update(editContract, req.user.id)
     .then((updatedContract) => {
-      req.json(updatedContract);
+      res.json(updatedContract);
     })
     .catch(next);
 };
