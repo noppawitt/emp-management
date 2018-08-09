@@ -25,6 +25,10 @@ const accessControl = (state = initialState, action) => {
         isFetching: false,
         message: action.payload.message
       };
+    case actionTypes.LOGOUT:
+      return {
+        initialState
+      };
     default:
       return state;
   }

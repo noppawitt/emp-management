@@ -34,7 +34,8 @@ Faculty.findByUniversityId = universityId => (
 );
 
 Faculty.findAll = () => (
-  db.manyOrNone('SELECT * FROM faculties')
+  db.manyOrNone(`SELECT faculties.*, universities.name AS university_name FROM faculties INNER JOIN universities ON
+  faculties.university_id = universities.id`)
 );
 
 module.exports = Faculty;

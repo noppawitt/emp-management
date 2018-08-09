@@ -32,6 +32,7 @@ import ApproveRejectModal from './modals/ApproveRejectModal';
 // import CreateErpRequestModal from './modals/CreateErpRequestModal';
 import AddHolidayModal from './modals/AddHolidayModal';
 import ViewResultModal from './modals/ViewResultModal';
+import AddToeicProfileModal from './modals/AddToeicProfileModal';
 
 const renderModal = ({ name, props }) => {
   switch (name) {
@@ -99,6 +100,8 @@ const renderModal = ({ name, props }) => {
       return <AddHolidayModal />;
     case modalNames.VIEW_RESULT:
       return <ViewResultModal {...props} />;
+    case modalNames.ADD_TOEIC_PROFILE:
+      return <AddToeicProfileModal {...props} />;
     default:
       return <div />;
   }

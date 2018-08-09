@@ -34,7 +34,9 @@ Major.findByFacultyId = facultyId => (
 );
 
 Major.findAll = () => (
-  db.manyOrNone('SELECT * FROM majors')
+  db.manyOrNone(`SELECT majors.*, faculties.name AS faculty_name, universities.name AS university_name 
+  FROM majors INNER JOIN faculties ON majors.faculty_id = faculties.id INNER JOIN universities ON
+  faculties.university_id = universities.id`)
 );
 
 module.exports = Major;

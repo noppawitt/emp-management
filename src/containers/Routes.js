@@ -23,6 +23,7 @@ import ErpAddPage from './pages/ErpAddPage';
 import ErpBillRecord from './forms/EditBillRecord';
 import HolidayPage from './pages/HolidayPage';
 import LeaveApprovalPage from './pages/LeaveApprovalPage';
+import MasterTablePage from './pages/MasterTablePage';
 import Can from './Can';
 
 const Routes = () => (
@@ -48,6 +49,7 @@ const Routes = () => (
     <PrivateRoute path="/erpApprove" component={ErpApprovePage} />
     <PrivateRoute path="/add" component={ErpAddPage} />
     <PrivateRoute path="/holiday" component={HolidayPage} />
+    <PrivateRoute path="/master-table" component={MasterTablePage} />
     <Can activity="leaveRequestApprove">
       <PrivateRoute path="/leave-approval" component={LeaveApprovalPage} />
     </Can>

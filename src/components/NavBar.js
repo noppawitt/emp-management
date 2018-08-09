@@ -38,6 +38,9 @@ const Navbar = ({ userId, username, onLogout }) => (
           <Dropdown item pointing text={username}>
             <Dropdown.Menu>
               <Dropdown.Item text="Profile" as={Link} to={`/profile/${userId}`} />
+              <Can activity="masterTableManage">
+                <Dropdown.Item text="Master Table" as={Link} to="/master-table" />
+              </Can>
               <Can activity="leaveRequestApprove">
                 <Dropdown.Item text="Leave Approval" as={Link} to="/leave-approval" />
               </Can>

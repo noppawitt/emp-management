@@ -8,41 +8,39 @@ import { deleteProfileRequest } from '../actions/profile';
 import * as modalNames from '../constants/modalNames';
 import Can from './Can';
 
-const CertificateProfileBox = ({ certificatesProfile, onAddClick, onDeleteClick, can }) => (
+const ToeicProfileBox = ({ toeicsProfile, onAddClick, onDeleteClick, can }) => (
   <Segment.Group raised size="large">
     <Segment padded>
       <Grid>
         <Grid.Column>
           <Header as="h2">
-            <Icon name="certificate" />
+            <Icon name="flag" />
             <Header.Content>
-              Certificate
+              Toeic
             </Header.Content>
           </Header>
         </Grid.Column>
-        <Can activity="hasCertificateAdd">
+        <Can activity="toeicAdd">
           <Grid.Column floated="right" computer={1} mobile={2}>
             <Icon name="add" link size="large" onClick={onAddClick} />
           </Grid.Column>
         </Can>
       </Grid>
     </Segment>
-    {certificatesProfile.map(p => (<ProfileBox
+    {toeicsProfile.map(p => (<ProfileBox
       key={p.id}
       lists={[
-        { key: 'name', title: 'Name', value: p.name },
-        { key: 'institute', title: 'Institute', value: p.institute },
-        { key: 'certificateDate', title: 'Certificate date', value: p.certificateDate },
-        { key: 'score', title: 'Score', value: p.score }
+        { key: 'score', title: 'Score', value: p.score },
+        { key: 'date', title: 'Date', value: p.date }
       ]}
       onDeleteClick={() => onDeleteClick(p.id)}
-      deleted={can.hasCertificateDelete}
+      deleted={can.toeicDelete}
     />))}
   </Segment.Group>
 );
 
-CertificateProfileBox.propTypes = {
-  certificatesProfile: PropTypes.array.isRequired,
+ToeicProfileBox.propTypes = {
+  toeicsProfile: PropTypes.array.isRequired,
   onAddClick: PropTypes.func.isRequired,
   onDeleteClick: PropTypes.func.isRequired,
   can: PropTypes.object.isRequired
@@ -53,12 +51,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onAddClick: () => dispatch(openModal(modalNames.ADD_CERTIFICATE_PROFILE)),
+  onAddClick: () => dispatch(openModal(modalNames.ADD_TOEIC_PROFILE)),
   onDeleteClick: profileId => dispatch(openModal(modalNames.CONFIRM, {
     header: 'Delete Confirmation',
-    description: 'Are you sure to delete certification profile ?',
-    onConfirm: () => dispatch(deleteProfileRequest('certificates', profileId))
+    description: 'Are you sure to delete toeic profile ?',
+    onConfirm: () => dispatch(deleteProfileRequest('toeics', profileId))
   }))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CertificateProfileBox);
+export default connect(mapStateToProps, mapDispatchToProps)(ToeicProfileBox);
