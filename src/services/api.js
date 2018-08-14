@@ -1,4 +1,4 @@
-import { call } from "../../node_modules/redux-saga/effects";
+import { call } from '../../node_modules/redux-saga/effects';
 
 let token;
 
@@ -465,12 +465,6 @@ api.deleteTimesheet = body => (
     body
   })
 );
-
-// Toeic
-
-
-
-api.addToeic = 
 
 // Erp
 api.createErp = body => (
