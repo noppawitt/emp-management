@@ -34,14 +34,18 @@ function* fetchProfileTask(action) {
     if (can.educateView) {
       yield calls.push(call(api.fetchEducationProfile, action.payload.userId));
     }
-    const [general, work, certificates, assets, workExperiences, educations] = yield all(calls);
+    if (can.toeicView) {
+      yield calls.push(call(api.fetchToeicProfile, action.payload.userId));
+    }
+    const [general, work, certificates, assets, workExperiences, educations, toeics] = yield all(calls);
     const profile = {
       general,
       work,
       certificates,
       assets,
       workExperiences,
-      educations
+      educations,
+      toeics
     };
     yield put(fetchProfileSuccess(profile));
   }
@@ -90,6 +94,11 @@ function* updateProfileTask(action) {
       case 'profilePicture':
         profile.general.picture = yield call(api.uploadProfilePicture, action.payload.form);
         break;
+      case 'addToeicProfile':
+        profile.toeics = yield call(api.createToeicProfile, {
+          toeic: action.payload.form
+        });
+        break;
       default:
         action.payload.reject();
     }
@@ -124,6 +133,11 @@ function* deleteProfileTask(action) {
         break;
       case 'workExperience':
         profile = yield call(api.deleteWorkExperienceProfile, {
+          id: action.payload.profileId
+        });
+        break;
+      case 'toeics':
+        profile = yield call(api.deleteToeicProfile, {
           id: action.payload.profileId
         });
         break;

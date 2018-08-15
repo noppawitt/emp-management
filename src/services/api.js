@@ -166,6 +166,10 @@ api.fetchCertificateProfile = userId => (
   callApi(`/api/has-certificates?userId=${userId}`)
 );
 
+api.fetchToeicProfile = userId => (
+  callApi(`/api/toeic?userId=${userId}`)
+);
+
 api.fetchAssetProfile = userId => (
   callApi(`/api/has-assets?userId=${userId}`)
 );
@@ -230,6 +234,13 @@ api.createCertificateProfile = body => (
   })
 );
 
+api.createToeicProfile = body => (
+  callApi('/api/toeic', {
+    method: 'POST',
+    body
+  })
+);
+
 api.createAssetProfile = body => (
   callApi('/api/has-assets', {
     method: 'POST',
@@ -256,6 +267,13 @@ api.deleteEducationProfile = body => (
 
 api.deleteCertificateProfile = body => (
   callApi('/api/has-certificates', {
+    method: 'DELETE',
+    body
+  })
+);
+
+api.deleteToeicProfile = body => (
+  callApi('/api/toeic', {
     method: 'DELETE',
     body
   })

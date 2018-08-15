@@ -20,6 +20,7 @@ import AddTimesheetModal from './modals/AddTimesheetModal';
 import EditTimesheetModal from './modals/EditTimesheetModal';
 import AddWorkExperienceProfileModal from './modals/AddWorkExperienceProfileModal';
 import AddHolidayModal from './modals/AddHolidayModal';
+import AddToeicProfileModal from './modals/AddToeicProfileModal';
 
 const renderModal = ({ name, props }) => {
   switch (name) {
@@ -61,6 +62,8 @@ const renderModal = ({ name, props }) => {
       return <AddWorkExperienceProfileModal />;
     case modalNames.ADD_HOLIDAY:
       return <AddHolidayModal />;
+    case modalNames.ADD_TOEIC_PROFILE:
+      return <AddToeicProfileModal {...props} />;
     default:
       return <div />;
   }

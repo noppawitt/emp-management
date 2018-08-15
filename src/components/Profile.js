@@ -7,6 +7,7 @@ import WorkProfileBox from '../containers/WorkProfileBox';
 import WorkExperienceProfileBox from '../containers/WorkExperienceProfileBox';
 import EducationProfileBox from '../containers/EducationProfileBox';
 import CertificateProfileBox from '../containers/CertificateProfileBox';
+import ToeicProfileBox from '../containers/ToeicProfileBox';
 import AssetProfileBox from '../containers/AssetProfileBox';
 import Can from '../containers/Can';
 
@@ -24,6 +25,9 @@ const Profile = ({ profile }) => (
           <EducationProfileBox educationsProfile={profile.educations} />
         </Can>
         <CertificateProfileBox certificatesProfile={profile.certificates} />
+        <Can activity="toeicView">
+          <ToeicProfileBox toeicsProfile={profile.toeics} />
+        </Can>
         <AssetProfileBox assetsProfile={profile.assets} />
       </Grid.Column>
     </Grid>
