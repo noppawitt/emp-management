@@ -9,10 +9,10 @@ const imgPart = (element) => {
   let cvSrc = ``;
   let otherSrc = ``;
   if (element.type === 'cv') {
-    cvSrc = `http://localhost:3000/static${element.filePath}${element.fileName}`;
+    cvSrc = `/static${element.filePath}${element.fileName}`;
   }
   else {
-    otherSrc = `http://localhost:3000/static${element.filePath}${element.fileName}`;
+    otherSrc = `/static${element.filePath}${element.fileName}`;
   }
   return (
     <div key={element.fileName} >

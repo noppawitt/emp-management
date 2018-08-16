@@ -27,7 +27,7 @@ const ModalBasicExample = ({ open }) => (
 const EvaluationModal = ({ header, buttonName, onClose, onClick, submitting, children, confirm, size, disable, onChangePage, navButton, currentPage, totalPage, submit, onSubmit, disableSubmit }) => (
   <Modal
     dimmer="blurring"
-    size="small"
+    // size="small"
     size={size}
     closeIcon
     open
@@ -69,7 +69,10 @@ EvaluationModal.propTypes = {
   onClick: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
   children: PropTypes.element.isRequired,
-  confirm: PropTypes.bool
+  confirm: PropTypes.bool,
+  disable: PropTypes.bool,
+  size: PropTypes.string,
+  onChangePage: PropTypes.func.isRequired
 };
 
 export default EvaluationModal;
