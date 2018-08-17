@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button, Icon } from 'semantic-ui-react';
 import ConfirmModal from './ConfirmModal';
-import SavedModal from './SavedModal';
 import './css/ConfirmModal.css';
 
 const ModalBasicExample = ({ open }) => (

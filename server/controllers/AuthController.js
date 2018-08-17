@@ -36,13 +36,13 @@ exports.signin = (req, res, next) => {
             .catch(next);
         }
         else {
-          const err = new Error('Incorrect password');
-          err.status = 401;
+          const err = new Error('Incorrect Username or Password');
+          err.status = 404;
           next(err);
         }
       }
       else {
-        const err = new Error('User not found');
+        const err = new Error('Incorrect Username or Password');
         err.status = 404;
         next(err);
       }

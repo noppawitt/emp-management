@@ -46,19 +46,19 @@ const Routes = () => (
     <PrivateRoute path="/erpApprove" component={ErpApprovePage} />
     <PrivateRoute path="/add" component={ErpAddPage} />
     <PrivateRoute path="/holiday" component={HolidayPage} />
-    <Can activity="recruitmentManage">
+    {/* <Can activity="recruitmentManage"> */}
       <PrivateRoute exact path="/recruitment" component={RecruitmentPage} />
       <PrivateRoute path="/recruitment/:id" component={RecruitmentDetailPage} />
-    </Can>
-    <Can activity="examManage">
+    {/* </Can>
+    <Can activity="examManage"> */}
       <PrivateRoute path="/exam" component={ExamPage} />
-    </Can>
-    <Can activity="masterTableManage">
+    {/* </Can>
+    <Can activity="masterTableManage"> */}
       <PrivateRoute path="/master-table" component={MasterTablePage} />
-    </Can>
-    <Can activity="leaveRequestApprove">
+    {/* </Can>
+    <Can activity="leaveRequestApprove"> */}
       <PrivateRoute path="/leave-approval" component={LeaveApprovalPage} />
-    </Can>
+    {/* </Can> */}
   </Switch>
 );
 

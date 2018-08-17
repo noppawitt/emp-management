@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, Icon, Modal } from 'semantic-ui-react';
 import { closeModal } from '../actions/modal';
