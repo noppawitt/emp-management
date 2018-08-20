@@ -54,3 +54,15 @@ export const ADD_SELFASSESSMENT = 'ADD_SELFASSESSMENT';
 
 // Asset Type
 export const ADD_ASSET_TYPE = 'ADD_ASSET_TYPE';
+
+// Certificate
+export const ADD_CERTIFICATE = 'ADD_CERTIFICATE';
+
+// Contract
+export const ADD_CONTRACT = 'ADD_CONTRACT';
+
+// Degree
+export const ADD_DEGREE = 'ADD_DEGREE';
+
+// Department
+export const ADD_DEPARTMENT = 'ADD_DEPARTMENT';

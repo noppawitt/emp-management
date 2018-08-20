@@ -5,7 +5,7 @@ const Certificate = {};
 
 Certificate.create = (certificate, id) => (
   db.one(
-    'INSERT INTO certificates (name, description, institute, created_user, updated_user) VALUES ($1, $2, $3, $4, $5) RETURNING 1',
+    'INSERT INTO certificates (name, description, institute, created_user, updated_user) VALUES ($1, $2, $3, $4, $5) RETURNING id',
     [
       certificate.name,
       certificate.description,
@@ -28,6 +28,10 @@ Certificate.update = (certificate, id) => (
       certificate.id
     ]
   )
+);
+
+Certificate.findById = id => (
+  db.one('SELECT * FROM certificates WHERE id = $1', [id])
 );
 
 Certificate.findAll = () => (

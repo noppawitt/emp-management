@@ -159,6 +159,40 @@ api.addAssetType = body => (
   })
 );
 
+// Certificate
+
+api.addCertificate = body => (
+  callApi('/api/certificates', {
+    method: 'POST',
+    body
+  })
+);
+
+// Contract
+
+api.addContract = body => (
+  callApi('/api/contracts', {
+    method: 'POST',
+    body
+  })
+);
+
+// Degree
+api.addDegree = body => (
+  callApi('/api/degrees', {
+    method: 'POST',
+    body
+  })
+);
+
+// Department
+api.addDepartment = body => (
+  callApi('/api/departments', {
+    method: 'POST',
+    body
+  })
+);
+
 // Profile
 
 api.fetchGeneralProfile = userId => (

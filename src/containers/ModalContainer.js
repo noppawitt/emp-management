@@ -34,6 +34,10 @@ import AddHolidayModal from './modals/AddHolidayModal';
 import ViewResultModal from './modals/ViewResultModal';
 import AddToeicProfileModal from './modals/AddToeicProfileModal';
 import AddAssetTypeModal from './modals/AddAssetTypeModal';
+import AddCertificateModal from './modals/AddCertificateModal';
+import AddContractModal from './modals/AddContractModal';
+import AddDegreeModal from './modals/AddDegreeModal';
+import AddDepartmentModal from './modals/AddDepartmentModal';
 
 const renderModal = ({ name, props }) => {
   switch (name) {
@@ -105,6 +109,14 @@ const renderModal = ({ name, props }) => {
       return <AddToeicProfileModal {...props} />;
     case modalNames.ADD_ASSET_TYPE:
       return <AddAssetTypeModal />;
+    case modalNames.ADD_CERTIFICATE:
+      return <AddCertificateModal />;
+    case modalNames.ADD_CONTRACT:
+      return <AddContractModal />;
+    case modalNames.ADD_DEGREE:
+      return <AddDegreeModal />;
+    case modalNames.ADD_DEPARTMENT:
+      return <AddDepartmentModal />;
     default:
       return <div />;
   }

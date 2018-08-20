@@ -5,10 +5,9 @@ const Contract = {};
 
 Contract.create = (contract, id) => (
   db.one(
-    'INSERT INTO contracts (name, status, description, created_user, updated_user) VALUES ($1, $2, $3, $4, $5) RETURNING 1',
+    'INSERT INTO contracts (name, description, created_user, updated_user) VALUES ($1, $2, $3, $4) RETURNING id',
     [
       contract.name,
-      contract.status,
       contract.description,
       id,
       id

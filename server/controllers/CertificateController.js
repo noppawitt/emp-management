@@ -3,8 +3,12 @@ const Certificate = require('../models/Certificate');
 exports.create = (req, res, next) => {
   const newCertificate = req.body.certificate;
   Certificate.create(newCertificate, req.user.id)
-    .then((createdCertificate) => {
-      res.json(createdCertificate);
+    .then((result) => {
+      Certificate.findById(result.id)
+        .then((certificate) => {
+          res.json(certificate);
+        })
+        .catch(next);
     })
     .catch(next);
 };

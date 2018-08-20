@@ -3,8 +3,12 @@ const AssetType = require('../models/AssetType');
 exports.create = (req, res, next) => {
   const newAssetType = req.body.assetType;
   AssetType.create(newAssetType, req.user.id)
-    .then((createdAssetType) => {
-      res.json(createdAssetType);
+    .then((result) => {
+      AssetType.findById(result.id)
+        .then((assetType) => {
+          res.json(assetType);
+        })
+        .catch(next);
     })
     .catch(next);
 };

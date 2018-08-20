@@ -2,7 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Table, Tab, Grid, Button } from 'semantic-ui-react';
 
-const panes = ({ masterTable, onAddAssetTypeClick }) => [
+const panes = ({ masterTable,
+  onAddAssetTypeClick,
+  onAddCertificateClick,
+  onAddContractClick,
+  onAddDegreeClick,
+  onAddDepartmentClick }) => [
   { menuItem: 'Asset Type',
     render: () => (
       <div>
@@ -35,6 +40,7 @@ const panes = ({ masterTable, onAddAssetTypeClick }) => [
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Name</Table.HeaderCell>
+            <Table.HeaderCell>Type</Table.HeaderCell>
             <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
             <Table.HeaderCell>Own Flag</Table.HeaderCell>
             <Table.HeaderCell >Serial Number</Table.HeaderCell>
@@ -45,6 +51,7 @@ const panes = ({ masterTable, onAddAssetTypeClick }) => [
           {masterTable.assets.map(asset => (
             <Table.Row key={`${asset.id}`}>
               <Table.Cell>{`${asset.name}`}</Table.Cell>
+              <Table.Cell>{`${asset.assetTypeName}`}</Table.Cell>
               <Table.Cell colSpan="3">{asset.description || '-'}</Table.Cell>
               <Table.Cell>{`${asset.ownFlag}`}</Table.Cell>
               <Table.Cell>{`${asset.serialNumber}`}</Table.Cell>
@@ -56,87 +63,108 @@ const panes = ({ masterTable, onAddAssetTypeClick }) => [
   },
   { menuItem: 'Certificate',
     render: () => (
-      <Table celled padded>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell colSpan="2">Institute</Table.HeaderCell>
-            <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          {masterTable.certificates.map(certificate => (
-            <Table.Row key={`${certificate.id}`}>
-              <Table.Cell>{`${certificate.name}`}</Table.Cell>
-              <Table.Cell colSpan="2">{certificate.institute}</Table.Cell>
-              <Table.Cell colSpan="3">{certificate.description || '-'}</Table.Cell>
-
+      <div>
+        <Grid.Column floated="right" width={3}>
+          <Button onClick={onAddCertificateClick}>Add</Button>
+        </Grid.Column>
+        <Table celled padded>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell colSpan="2">Institute</Table.HeaderCell>
+              <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
             </Table.Row>
+          </Table.Header>
+
+          <Table.Body>
+            {masterTable.certificates.map(certificate => (
+              <Table.Row key={`${certificate.id}`}>
+                <Table.Cell>{`${certificate.name}`}</Table.Cell>
+                <Table.Cell colSpan="2">{certificate.institute}</Table.Cell>
+                <Table.Cell colSpan="3">{certificate.description || '-'}</Table.Cell>
+
+              </Table.Row>
       ))}
-        </Table.Body>
-      </Table>
+          </Table.Body>
+        </Table>
+      </div>
+
     )
   },
   { menuItem: 'Contract',
     render: () => (
-      <Table celled padded>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          {masterTable.contracts.map(contract => (
-            <Table.Row key={`${contract.id}`}>
-              <Table.Cell>{`${contract.name}`}</Table.Cell>
-              <Table.Cell colSpan="3">{contract.description || '-'}</Table.Cell>
+      <div>
+        <Grid.Column floated="right" width={3}>
+          <Button onClick={onAddContractClick}>Add</Button>
+        </Grid.Column>
+        <Table celled padded>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
             </Table.Row>
+          </Table.Header>
+
+          <Table.Body>
+            {masterTable.contracts.map(contract => (
+              <Table.Row key={`${contract.id}`}>
+                <Table.Cell>{`${contract.name}`}</Table.Cell>
+                <Table.Cell colSpan="3">{contract.description || '-'}</Table.Cell>
+              </Table.Row>
       ))}
-        </Table.Body>
-      </Table>
+          </Table.Body>
+        </Table>
+      </div>
     )
   },
   { menuItem: 'Degree',
     render: () => (
-      <Table celled padded>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          {masterTable.degrees.map(degree => (
-            <Table.Row key={`${degree.id}`}>
-              <Table.Cell>{`${degree.name}`}</Table.Cell>
-              <Table.Cell colSpan="3">{degree.description || '-'}</Table.Cell>
+      <div>
+        <Grid.Column floated="right" width={3}>
+          <Button onClick={onAddDegreeClick}>Add</Button>
+        </Grid.Column>
+        <Table celled padded>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
             </Table.Row>
+          </Table.Header>
+
+          <Table.Body>
+            {masterTable.degrees.map(degree => (
+              <Table.Row key={`${degree.id}`}>
+                <Table.Cell>{`${degree.name}`}</Table.Cell>
+                <Table.Cell colSpan="3">{degree.description || '-'}</Table.Cell>
+              </Table.Row>
       ))}
-        </Table.Body>
-      </Table>
+          </Table.Body>
+        </Table>
+      </div>
     )
   },
   { menuItem: 'Department',
     render: () => (
-      <Table celled padded>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          {masterTable.departments.map(department => (
-            <Table.Row key={`${department.id}`}>
-              <Table.Cell>{`${department.name}`}</Table.Cell>
+      <div>
+        <Grid.Column floated="right" width={3}>
+          <Button onClick={onAddDepartmentClick}>Add</Button>
+        </Grid.Column>
+        <Table celled padded>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Name</Table.HeaderCell>
             </Table.Row>
+          </Table.Header>
+
+          <Table.Body>
+            {masterTable.departments.map(department => (
+              <Table.Row key={`${department.id}`}>
+                <Table.Cell>{`${department.name}`}</Table.Cell>
+              </Table.Row>
       ))}
-        </Table.Body>
-      </Table>
+          </Table.Body>
+        </Table>
+      </div>
     )
   },
   { menuItem: 'Faculty',
@@ -254,10 +282,23 @@ const panes = ({ masterTable, onAddAssetTypeClick }) => [
   }
 ];
 
-const MasterTable = ({ masterTable, onAddAssetTypeClick }) => (
-  <div>
-    <Tab menu={{ secondary: true, pointing: true }} panes={panes({ masterTable, onAddAssetTypeClick })} />
-  </div>
+const MasterTable = ({ masterTable,
+  onAddAssetTypeClick,
+  onAddCertificateClick,
+  onAddContractClick,
+  onAddDegreeClick,
+  onAddDepartmentClick }) => (
+    <div>
+      <Tab
+        menu={{ secondary: true, pointing: true }}
+        panes={panes({ masterTable,
+          onAddAssetTypeClick,
+          onAddCertificateClick,
+          onAddContractClick,
+          onAddDegreeClick,
+          onAddDepartmentClick })}
+      />
+    </div>
 );
 
 MasterTable.propTypes = {

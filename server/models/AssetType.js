@@ -5,7 +5,7 @@ const AssetType = {};
 
 AssetType.create = (assetType, id) => (
   db.one(
-    'INSERT INTO asset_types (name, description, created_user, updated_user) VALUES ($1, $2, $3, $4) RETURNING 1',
+    'INSERT INTO asset_types (name, description, created_user, updated_user) VALUES ($1, $2, $3, $4) RETURNING id',
     [
       assetType.name,
       assetType.description,
@@ -27,6 +27,10 @@ AssetType.update = (assetType, id) => (
       assetType.id
     ]
   )
+);
+
+AssetType.findById = id => (
+  db.one('SELECT * FROM asset_types WHERE id = $1', [id])
 );
 
 AssetType.findAll = () => (

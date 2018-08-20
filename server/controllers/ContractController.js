@@ -3,8 +3,12 @@ const Contract = require('../models/Contract');
 exports.create = (req, res, next) => {
   const newContract = req.body.contract;
   Contract.create(newContract, req.user.id)
-    .then((createdContract) => {
-      res.json(createdContract);
+    .then((result) => {
+      Contract.findById(result.id)
+        .then((contract) => {
+          res.json(contract);
+        })
+        .catch(next);
     })
     .catch(next);
 };
