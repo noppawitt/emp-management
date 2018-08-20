@@ -51,3 +51,6 @@ export const VIEW_RESULT = 'VIEW_RESULT';
 export const ADD_PROBATION = 'ADD_PROBATION';
 export const ADD_PERFORMANCE = 'ADD_PERFORMANCE';
 export const ADD_SELFASSESSMENT = 'ADD_SELFASSESSMENT';
+
+// Asset Type
+export const ADD_ASSET_TYPE = 'ADD_ASSET_TYPE';

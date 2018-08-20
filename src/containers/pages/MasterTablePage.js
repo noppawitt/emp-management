@@ -7,11 +7,14 @@ import {
 } from '../../actions/masterTable';
 import Loader from '../../components/Loader';
 import MasterTable from '../../components/MasterTable';
+import { openModal } from '../../actions/modal';
+import * as modalNames from '../../constants/modalNames';
 
-const MasterTablePage = ({ isFetching, masterTable }) => (
+const MasterTablePage = ({ isFetching, masterTable, onAddAssetTypeClick }) => (
   <div>
     {isFetching ? <Loader /> : <MasterTable
       masterTable={masterTable}
+      onAddAssetTypeClick={onAddAssetTypeClick}
     />}
   </div>
 );
@@ -22,17 +25,18 @@ MasterTablePage.defaultProps = {
 
 MasterTablePage.propTypes = {
   isFetching: PropTypes.bool,
-  masterTable: PropTypes.object.isRequired
+  masterTable: PropTypes.object.isRequired,
+  onAddAssetTypeClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   isFetching: state.masterTable.isFetching,
-  masterTable: state.masterTable,
-  selected: state.masterTable.selected
+  masterTable: state.masterTable
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchMasterTable: () => dispatch(fetchMasterTableRequest())
+  fetchMasterTable: () => dispatch(fetchMasterTableRequest()),
+  onAddAssetTypeClick: () => dispatch(openModal(modalNames.ADD_ASSET_TYPE, { }))
 });
 
 const enhance = compose(

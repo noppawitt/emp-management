@@ -33,6 +33,7 @@ import ApproveRejectModal from './modals/ApproveRejectModal';
 import AddHolidayModal from './modals/AddHolidayModal';
 import ViewResultModal from './modals/ViewResultModal';
 import AddToeicProfileModal from './modals/AddToeicProfileModal';
+import AddAssetTypeModal from './modals/AddAssetTypeModal';
 
 const renderModal = ({ name, props }) => {
   switch (name) {
@@ -102,6 +103,8 @@ const renderModal = ({ name, props }) => {
       return <ViewResultModal {...props} />;
     case modalNames.ADD_TOEIC_PROFILE:
       return <AddToeicProfileModal {...props} />;
+    case modalNames.ADD_ASSET_TYPE:
+      return <AddAssetTypeModal />;
     default:
       return <div />;
   }

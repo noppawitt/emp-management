@@ -1,25 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table, Tab } from 'semantic-ui-react';
+import { Table, Tab, Grid, Button } from 'semantic-ui-react';
 
-const panes = masterTable => [
+const panes = ({ masterTable, onAddAssetTypeClick }) => [
   { menuItem: 'Asset Type',
     render: () => (
-      <Table celled padded>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          {masterTable.assetTypes.map(assetType => (
-            <Table.Row key={`${assetType.id}`}>
-              <Table.Cell>{`${assetType.name}`}</Table.Cell>
+      <div>
+        <Grid.Column floated="right" width={3}>
+          <Button onClick={onAddAssetTypeClick}>Add</Button>
+        </Grid.Column>
+        <Table celled padded>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Description</Table.HeaderCell>
             </Table.Row>
+          </Table.Header>
+
+          <Table.Body>
+            {masterTable.assetTypes.map(assetType => (
+              <Table.Row key={`${assetType.id}`}>
+                <Table.Cell>{`${assetType.name}`}</Table.Cell>
+                <Table.Cell>{assetType.description || '-'}</Table.Cell>
+              </Table.Row>
       ))}
-        </Table.Body>
-      </Table>
+          </Table.Body>
+        </Table>
+      </div>
     )
   },
   { menuItem: 'Asset',
@@ -247,14 +254,15 @@ const panes = masterTable => [
   }
 ];
 
-const MasterTable = ({ masterTable }) => (
+const MasterTable = ({ masterTable, onAddAssetTypeClick }) => (
   <div>
-    <Tab menu={{ secondary: true, pointing: true }} panes={panes(masterTable)} />
+    <Tab menu={{ secondary: true, pointing: true }} panes={panes({ masterTable, onAddAssetTypeClick })} />
   </div>
 );
 
 MasterTable.propTypes = {
-  masterTable: PropTypes.object.isRequired
+  masterTable: PropTypes.object.isRequired,
+  onAddAssetTypeClick: PropTypes.func.isRequired
 };
 
 export default MasterTable;

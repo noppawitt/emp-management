@@ -17,3 +17,28 @@ export const fetchMasterTableFailure = message => ({
     message
   }
 });
+
+// Asset Type
+
+export const createAssetTypeRequest = (form, resolve, reject) => ({
+  type: actionTypes.ASSET_TYPE_CREATE_REQUEST,
+  payload: {
+    form,
+    resolve,
+    reject
+  }
+});
+
+export const createAssetTypeSuccess = assetType => ({
+  type: actionTypes.ASSET_TYPE_CREATE_SUCCESS,
+  payload: {
+    assetType
+  }
+});
+
+export const createAssetTypeFailure = message => ({
+  type: actionTypes.ASSET_TYPE_CREATE_FAILURE,
+  payload: {
+    message
+  }
+});

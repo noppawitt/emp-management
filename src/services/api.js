@@ -150,6 +150,15 @@ api.fetchAcessTypes = () => (
   callApi('/api/access-control')
 );
 
+// Asset Type
+
+api.addAssetType = body => (
+  callApi('/api/asset-types', {
+    method: 'POST',
+    body
+  })
+);
+
 // Profile
 
 api.fetchGeneralProfile = userId => (
