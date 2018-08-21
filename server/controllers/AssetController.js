@@ -6,8 +6,12 @@ exports.create = (req, res, next) => {
     newAsset.picture = `/server/storage/private/asset/${req.file.filename}`;
   }
   Asset.create(newAsset, req.user.id)
-    .then((createdAsset) => {
-      res.json(createdAsset);
+    .then((result) => {
+      Asset.findById(result.id)
+        .then((asset) => {
+          res.json(asset);
+        })
+        .catch(next);
     })
     .catch(next);
 };

@@ -55,6 +55,9 @@ export const ADD_SELFASSESSMENT = 'ADD_SELFASSESSMENT';
 // Asset Type
 export const ADD_ASSET_TYPE = 'ADD_ASSET_TYPE';
 
+// Asset
+export const ADD_ASSET = 'ADD_ASSET';
+
 // Certificate
 export const ADD_CERTIFICATE = 'ADD_CERTIFICATE';
 

@@ -159,6 +159,15 @@ api.addAssetType = body => (
   })
 );
 
+// Asset
+
+api.addAsset = body => (
+  callApi('/api/assets', {
+    method: 'POST',
+    body
+  })
+);
+
 // Certificate
 
 api.addCertificate = body => (

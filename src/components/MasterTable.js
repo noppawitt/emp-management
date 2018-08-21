@@ -4,6 +4,7 @@ import { Table, Tab, Grid, Button } from 'semantic-ui-react';
 
 const panes = ({ masterTable,
   onAddAssetTypeClick,
+  onAddAssetClick,
   onAddCertificateClick,
   onAddContractClick,
   onAddDegreeClick,
@@ -41,29 +42,34 @@ const panes = ({ masterTable,
   },
   { menuItem: 'Asset',
     render: () => (
-      <Table celled padded>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell>Type</Table.HeaderCell>
-            <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
-            <Table.HeaderCell>Own Flag</Table.HeaderCell>
-            <Table.HeaderCell >Serial Number</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          {masterTable.assets.map(asset => (
-            <Table.Row key={`${asset.id}`}>
-              <Table.Cell>{`${asset.name}`}</Table.Cell>
-              <Table.Cell>{`${asset.assetTypeName}`}</Table.Cell>
-              <Table.Cell colSpan="3">{asset.description || '-'}</Table.Cell>
-              <Table.Cell>{`${asset.ownFlag}`}</Table.Cell>
-              <Table.Cell>{`${asset.serialNumber}`}</Table.Cell>
+      <div>
+        <Grid.Column floated="right" width={3}>
+          <Button onClick={onAddAssetClick}>Add</Button>
+        </Grid.Column>
+        <Table celled padded>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Type</Table.HeaderCell>
+              <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
+              <Table.HeaderCell>Own Flag</Table.HeaderCell>
+              <Table.HeaderCell >Serial Number</Table.HeaderCell>
             </Table.Row>
+          </Table.Header>
+
+          <Table.Body>
+            {masterTable.assets.map(asset => (
+              <Table.Row key={`${asset.id}`}>
+                <Table.Cell>{`${asset.name}`}</Table.Cell>
+                <Table.Cell>{`${asset.assetTypeName}`}</Table.Cell>
+                <Table.Cell colSpan="3">{asset.description || '-'}</Table.Cell>
+                <Table.Cell>{`${asset.ownFlag}`}</Table.Cell>
+                <Table.Cell>{`${asset.serialNumber}`}</Table.Cell>
+              </Table.Row>
       ))}
-        </Table.Body>
-      </Table>
+          </Table.Body>
+        </Table>
+      </div>
     )
   },
   { menuItem: 'Certificate',
@@ -314,6 +320,7 @@ const panes = ({ masterTable,
 
 const MasterTable = ({ masterTable,
   onAddAssetTypeClick,
+  onAddAssetClick,
   onAddCertificateClick,
   onAddContractClick,
   onAddDegreeClick,
@@ -328,6 +335,7 @@ const MasterTable = ({ masterTable,
         menu={{ secondary: true, pointing: true }}
         panes={panes({ masterTable,
           onAddAssetTypeClick,
+          onAddAssetClick,
           onAddCertificateClick,
           onAddContractClick,
           onAddDegreeClick,
@@ -344,6 +352,7 @@ const MasterTable = ({ masterTable,
 MasterTable.propTypes = {
   masterTable: PropTypes.object.isRequired,
   onAddAssetTypeClick: PropTypes.func.isRequired,
+  onAddAssetClick: PropTypes.func.isRequired,
   onAddCertificateClick: PropTypes.func.isRequired,
   onAddContractClick: PropTypes.func.isRequired,
   onAddDegreeClick: PropTypes.func.isRequired,

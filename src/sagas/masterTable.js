@@ -5,6 +5,8 @@ import { fetchMasterTableRequest,
   fetchMasterTableFailure,
   createAssetTypeSuccess,
   createAssetTypeFailure,
+  createAssetSuccess,
+  createAssetFailure,
   createCertificateSuccess,
   createCertificateFailure,
   createContractSuccess,
@@ -47,6 +49,19 @@ function* addAssetTypeTask(action) {
   }
   catch (error) {
     yield put(createAssetTypeFailure(error));
+    action.payload.reject();
+  }
+}
+
+function* addAssetTask(action) {
+  try {
+    const asset = yield call(api.addAsset, { asset: { assetTypeId: action.payload.form.assetTypeId, name: action.payload.form.name, serialNumber: action.payload.form.serialNumber, description: action.payload.form.description, ownFlag: 'Company' } });
+    yield put(createAssetSuccess(asset));
+    yield put(closeModal());
+    action.payload.resolve();
+  }
+  catch (error) {
+    yield put(createAssetFailure(error));
     action.payload.reject();
   }
 }
@@ -186,6 +201,10 @@ function* watchAddAssetTypeRequest() {
   yield takeEvery(actionTypes.ASSET_TYPE_CREATE_REQUEST, addAssetTypeTask);
 }
 
+function* watchAddAssetRequest() {
+  yield takeEvery(actionTypes.ASSET_CREATE_REQUEST, addAssetTask);
+}
+
 function* watchAddCertificateRequest() {
   yield takeEvery(actionTypes.CERTIFICATE_CREATE_REQUEST, addCertificateTask);
 }
@@ -227,6 +246,7 @@ export default function* profileSaga() {
     watchFetchMasterTableRequest(),
     watchFetchMasterTable(),
     watchAddAssetTypeRequest(),
+    watchAddAssetRequest(),
     watchAddCertificateRequest(),
     watchAddContractRequest(),
     watchAddDegreeRequest(),

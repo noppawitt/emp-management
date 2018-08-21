@@ -43,6 +43,31 @@ export const createAssetTypeFailure = message => ({
   }
 });
 
+// Asset
+
+export const createAssetRequest = (form, resolve, reject) => ({
+  type: actionTypes.ASSET_CREATE_REQUEST,
+  payload: {
+    form,
+    resolve,
+    reject
+  }
+});
+
+export const createAssetSuccess = asset => ({
+  type: actionTypes.ASSET_CREATE_SUCCESS,
+  payload: {
+    asset
+  }
+});
+
+export const createAssetFailure = message => ({
+  type: actionTypes.ASSET_CREATE_FAILURE,
+  payload: {
+    message
+  }
+});
+
 // Certificate
 
 export const createCertificateRequest = (form, resolve, reject) => ({

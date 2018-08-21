@@ -13,6 +13,7 @@ import * as modalNames from '../../constants/modalNames';
 const MasterTablePage = ({ isFetching,
   masterTable,
   onAddAssetTypeClick,
+  onAddAssetClick,
   onAddCertificateClick,
   onAddContractClick,
   onAddDegreeClick,
@@ -26,6 +27,7 @@ const MasterTablePage = ({ isFetching,
       {isFetching ? <Loader /> : <MasterTable
         masterTable={masterTable}
         onAddAssetTypeClick={onAddAssetTypeClick}
+        onAddAssetClick={onAddAssetClick}
         onAddCertificateClick={onAddCertificateClick}
         onAddContractClick={onAddContractClick}
         onAddDegreeClick={onAddDegreeClick}
@@ -47,6 +49,7 @@ MasterTablePage.propTypes = {
   isFetching: PropTypes.bool,
   masterTable: PropTypes.object.isRequired,
   onAddAssetTypeClick: PropTypes.func.isRequired,
+  onAddAssetClick: PropTypes.func.isRequired,
   onAddCertificateClick: PropTypes.func.isRequired,
   onAddContractClick: PropTypes.func.isRequired,
   onAddDegreeClick: PropTypes.func.isRequired,
@@ -66,6 +69,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchMasterTable: () => dispatch(fetchMasterTableRequest()),
   onAddAssetTypeClick: () => dispatch(openModal(modalNames.ADD_ASSET_TYPE, { })),
+  onAddAssetClick: () => dispatch(openModal(modalNames.ADD_ASSET, { })),
   onAddCertificateClick: () => dispatch(openModal(modalNames.ADD_CERTIFICATE, { })),
   onAddContractClick: () => dispatch(openModal(modalNames.ADD_CONTRACT, { })),
   onAddDegreeClick: () => dispatch(openModal(modalNames.ADD_DEGREE, { })),

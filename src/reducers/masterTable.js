@@ -26,6 +26,16 @@ const masterTable = (state = {}, action) => {
         ...state,
         message: action.payload.message
       };
+    case actionTypes.ASSET_CREATE_SUCCESS:
+      return {
+        ...state,
+        assets: [...state.assets, action.payload.asset]
+      };
+    case actionTypes.ASSET_CREATE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
     case actionTypes.CERTIFICATE_CREATE_SUCCCESS:
       return {
         ...state,
