@@ -29,7 +29,7 @@ Degree.update = (degree, id) => (
 );
 
 Degree.findById = id => (
-  db.one('SELECT * FROM degrees WHERE id = $1', [id])
+  db.oneOrNone('SELECT * FROM degrees WHERE id = $1', [id])
 );
 
 Degree.findAll = () => (

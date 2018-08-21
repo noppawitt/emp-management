@@ -142,3 +142,127 @@ export const createDepartmentFailure = message => ({
     message
   }
 });
+
+// Faculty
+
+export const createFacultyRequest = (form, resolve, reject) => ({
+  type: actionTypes.FACULTY_CREATE_REQUEST,
+  payload: {
+    form,
+    resolve,
+    reject
+  }
+});
+
+export const createFacultySuccess = faculty => ({
+  type: actionTypes.FACULTY_CREATE_SUCCESS,
+  payload: {
+    faculty
+  }
+});
+
+export const createFacultyFailure = message => ({
+  type: actionTypes.FACULTY_CREATE_FAILURE,
+  payload: {
+    message
+  }
+});
+
+// Level
+
+export const createLevelRequest = (form, resolve, reject) => ({
+  type: actionTypes.LEVEL_CREATE_REQUEST,
+  payload: {
+    form,
+    resolve,
+    reject
+  }
+});
+
+export const createLevelSuccess = level => ({
+  type: actionTypes.LEVEL_CREATE_SUCCESS,
+  payload: {
+    level
+  }
+});
+
+export const createLevelFailure = message => ({
+  type: actionTypes.LEVEL_CREATE_FAILURE,
+  payload: {
+    message
+  }
+});
+
+// Major
+export const createMajorRequest = (form, resolve, reject) => ({
+  type: actionTypes.MAJOR_CREATE_REQUEST,
+  payload: {
+    form,
+    resolve,
+    reject
+  }
+});
+
+export const createMajorSuccess = major => ({
+  type: actionTypes.MAJOR_CREATE_SUCCESS,
+  payload: {
+    major
+  }
+});
+
+export const createMajorFailure = message => ({
+  type: actionTypes.MAJOR_CREATE_FAILURE,
+  payload: {
+    message
+  }
+});
+
+// Position
+
+export const createPositionRequest = (form, resolve, reject) => ({
+  type: actionTypes.POSITION_CREATE_REQUEST,
+  payload: {
+    form,
+    resolve,
+    reject
+  }
+});
+
+export const createPositionSuccess = position => ({
+  type: actionTypes.POSITION_CREATE_SUCCESS,
+  payload: {
+    position
+  }
+});
+
+export const createPositionFailure = message => ({
+  type: actionTypes.POSITION_CREATE_FAILURE,
+  payload: {
+    message
+  }
+});
+
+// University
+
+export const createUniversityRequest = (form, resolve, reject) => ({
+  type: actionTypes.UNIVERSITY_CREATE_REQUEST,
+  payload: {
+    form,
+    resolve,
+    reject
+  }
+});
+
+export const createUniversitySuccess = university => ({
+  type: actionTypes.UNIVERSITY_CREATE_SUCCESS,
+  payload: {
+    university
+  }
+});
+
+export const createUniversityFailure = message => ({
+  type: actionTypes.UNIVERSITY_CREATE_FAILURE,
+  payload: {
+    message
+  }
+});

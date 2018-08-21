@@ -193,6 +193,50 @@ api.addDepartment = body => (
   })
 );
 
+// Faculty
+api.addFaculty = body => (
+  callApi('/api/faculties', {
+    method: 'POST',
+    body
+  })
+);
+
+// Level
+
+api.addLevel = body => (
+  callApi('/api/levels', {
+    method: 'POST',
+    body
+  })
+);
+
+// Major
+
+api.addMajor = body => (
+  callApi('/api/majors', {
+    method: 'POST',
+    body
+  })
+);
+
+// Position
+
+api.addPosition = body => (
+  callApi('/api/positions', {
+    method: 'POST',
+    body
+  })
+);
+
+// University
+
+api.addUniversity = body => (
+  callApi('/api/universities', {
+    method: 'POST',
+    body
+  })
+);
+
 // Profile
 
 api.fetchGeneralProfile = userId => (

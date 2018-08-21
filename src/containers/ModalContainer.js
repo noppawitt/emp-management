@@ -38,6 +38,11 @@ import AddCertificateModal from './modals/AddCertificateModal';
 import AddContractModal from './modals/AddContractModal';
 import AddDegreeModal from './modals/AddDegreeModal';
 import AddDepartmentModal from './modals/AddDepartmentModal';
+import AddFacultyModal from './modals/AddFacultyModal';
+import AddLevelModal from './modals/AddLevelModal';
+import AddMajorModal from './modals/AddMajorModal';
+import AddPositionModal from './modals/AddPositionModal';
+import AddUniversityModal from './modals/AddUniversityModal';
 
 const renderModal = ({ name, props }) => {
   switch (name) {
@@ -117,6 +122,16 @@ const renderModal = ({ name, props }) => {
       return <AddDegreeModal />;
     case modalNames.ADD_DEPARTMENT:
       return <AddDepartmentModal />;
+    case modalNames.ADD_FACULTY:
+      return <AddFacultyModal />;
+    case modalNames.ADD_LEVEL:
+      return <AddLevelModal />;
+    case modalNames.ADD_MAJOR:
+      return <AddMajorModal />;
+    case modalNames.ADD_POSITION:
+      return <AddPositionModal />;
+    case modalNames.ADD_UNIVERSITY:
+      return <AddUniversityModal />;
     default:
       return <div />;
   }

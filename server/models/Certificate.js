@@ -31,7 +31,7 @@ Certificate.update = (certificate, id) => (
 );
 
 Certificate.findById = id => (
-  db.one('SELECT * FROM certificates WHERE id = $1', [id])
+  db.oneOrNone('SELECT * FROM certificates WHERE id = $1', [id])
 );
 
 Certificate.findAll = () => (

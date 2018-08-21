@@ -66,6 +66,56 @@ const masterTable = (state = {}, action) => {
         ...state,
         message: action.payload.message
       };
+    case actionTypes.FACULTY_CREATE_SUCCESS:
+      return {
+        ...state,
+        faculties: [...state.faculties, action.payload.faculty]
+      };
+    case actionTypes.FACULTY_CREATE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
+    case actionTypes.LEVEL_CREATE_SUCCESS:
+      return {
+        ...state,
+        levels: [...state.levels, action.payload.level]
+      };
+    case actionTypes.LEVEL_CREATE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
+    case actionTypes.MAJOR_CREATE_SUCCESS:
+      return {
+        ...state,
+        majors: [...state.majors, action.payload.major]
+      };
+    case actionTypes.MAJOR_CREATE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
+    case actionTypes.POSITION_CREATE_SUCCESS:
+      return {
+        ...state,
+        positions: [...state.positions, action.payload.position]
+      };
+    case actionTypes.POSITION_CREATE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
+    case actionTypes.UNIVERSITY_CREATE_SUCCESS:
+      return {
+        ...state,
+        universities: [...state.universities, action.payload.university]
+      };
+    case actionTypes.UNIVERSITY_CREATE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
     default:
       return state;
   }

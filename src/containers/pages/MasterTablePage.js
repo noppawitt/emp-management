@@ -16,7 +16,12 @@ const MasterTablePage = ({ isFetching,
   onAddCertificateClick,
   onAddContractClick,
   onAddDegreeClick,
-  onAddDepartmentClick }) => (
+  onAddDepartmentClick,
+  onAddFacultyClick,
+  onAddLevelClick,
+  onAddMajorClick,
+  onAddPositionClick,
+  onAddUniversityClick }) => (
     <div>
       {isFetching ? <Loader /> : <MasterTable
         masterTable={masterTable}
@@ -25,6 +30,11 @@ const MasterTablePage = ({ isFetching,
         onAddContractClick={onAddContractClick}
         onAddDegreeClick={onAddDegreeClick}
         onAddDepartmentClick={onAddDepartmentClick}
+        onAddFacultyClick={onAddFacultyClick}
+        onAddLevelClick={onAddLevelClick}
+        onAddMajorClick={onAddMajorClick}
+        onAddPositionClick={onAddPositionClick}
+        onAddUniversityClick={onAddUniversityClick}
       />}
     </div>
 );
@@ -40,7 +50,12 @@ MasterTablePage.propTypes = {
   onAddCertificateClick: PropTypes.func.isRequired,
   onAddContractClick: PropTypes.func.isRequired,
   onAddDegreeClick: PropTypes.func.isRequired,
-  onAddDepartmentClick: PropTypes.func.isRequired
+  onAddDepartmentClick: PropTypes.func.isRequired,
+  onAddFacultyClick: PropTypes.func.isRequired,
+  onAddLevelClick: PropTypes.func.isRequired,
+  onAddMajorClick: PropTypes.func.isRequired,
+  onAddPositionClick: PropTypes.func.isRequired,
+  onAddUniversityClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -54,7 +69,12 @@ const mapDispatchToProps = dispatch => ({
   onAddCertificateClick: () => dispatch(openModal(modalNames.ADD_CERTIFICATE, { })),
   onAddContractClick: () => dispatch(openModal(modalNames.ADD_CONTRACT, { })),
   onAddDegreeClick: () => dispatch(openModal(modalNames.ADD_DEGREE, { })),
-  onAddDepartmentClick: () => dispatch(openModal(modalNames.ADD_DEPARTMENT, { }))
+  onAddDepartmentClick: () => dispatch(openModal(modalNames.ADD_DEPARTMENT, { })),
+  onAddFacultyClick: () => dispatch(openModal(modalNames.ADD_FACULTY, { })),
+  onAddLevelClick: () => dispatch(openModal(modalNames.ADD_LEVEL, { })),
+  onAddMajorClick: () => dispatch(openModal(modalNames.ADD_MAJOR, { })),
+  onAddPositionClick: () => dispatch(openModal(modalNames.ADD_POSITION, { })),
+  onAddUniversityClick: () => dispatch(openModal(modalNames.ADD_UNIVERSITY, { }))
 });
 
 const enhance = compose(

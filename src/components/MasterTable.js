@@ -7,7 +7,12 @@ const panes = ({ masterTable,
   onAddCertificateClick,
   onAddContractClick,
   onAddDegreeClick,
-  onAddDepartmentClick }) => [
+  onAddDepartmentClick,
+  onAddFacultyClick,
+  onAddLevelClick,
+  onAddMajorClick,
+  onAddPositionClick,
+  onAddUniversityClick, }) => [
   { menuItem: 'Asset Type',
     render: () => (
       <div>
@@ -169,115 +174,140 @@ const panes = ({ masterTable,
   },
   { menuItem: 'Faculty',
     render: () => (
-      <Table celled padded>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell colSpan="2">University</Table.HeaderCell>
-            <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          {masterTable.faculties.map(faculty => (
-            <Table.Row key={`${faculty.id}`}>
-              <Table.Cell>{`${faculty.name}`}</Table.Cell>
-              <Table.Cell colSpan="2">{`${faculty.universityName}`}</Table.Cell>
-              <Table.Cell colSpan="3">{faculty.description || '-'}</Table.Cell>
+      <div>
+        <Grid.Column floated="right" width={3}>
+          <Button onClick={onAddFacultyClick}>Add</Button>
+        </Grid.Column>
+        <Table celled padded>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell colSpan="2">University</Table.HeaderCell>
+              <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
             </Table.Row>
+          </Table.Header>
+
+          <Table.Body>
+            {masterTable.faculties.map(faculty => (
+              <Table.Row key={`${faculty.id}`}>
+                <Table.Cell>{`${faculty.name}`}</Table.Cell>
+                <Table.Cell colSpan="2">{`${faculty.universityName}`}</Table.Cell>
+                <Table.Cell colSpan="3">{faculty.description || '-'}</Table.Cell>
+              </Table.Row>
       ))}
-        </Table.Body>
-      </Table>
+          </Table.Body>
+        </Table>
+      </div>
     )
   },
   { menuItem: 'Level',
     render: () => (
-      <Table celled padded>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
-            <Table.HeaderCell>Annual Leave</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          {masterTable.levels.map(level => (
-            <Table.Row key={`${level.id}`}>
-              <Table.Cell>{`${level.name}`}</Table.Cell>
-              <Table.Cell colSpan="3">{level.description || '-'}</Table.Cell>
-              <Table.Cell>{`${level.annualLeave}`}</Table.Cell>
+      <div>
+        <Grid.Column floated="right" width={3}>
+          <Button onClick={onAddLevelClick}>Add</Button>
+        </Grid.Column>
+        <Table celled padded>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
+              <Table.HeaderCell>Annual Leave</Table.HeaderCell>
             </Table.Row>
+          </Table.Header>
+
+          <Table.Body>
+            {masterTable.levels.map(level => (
+              <Table.Row key={`${level.id}`}>
+                <Table.Cell>{`${level.name}`}</Table.Cell>
+                <Table.Cell colSpan="3">{level.description || '-'}</Table.Cell>
+                <Table.Cell>{`${level.annualLeave}`}</Table.Cell>
+              </Table.Row>
       ))}
-        </Table.Body>
-      </Table>
+          </Table.Body>
+        </Table>
+      </div>
     )
   },
   { menuItem: 'Major',
     render: () => (
-      <Table celled padded>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell>Faculty</Table.HeaderCell>
-            <Table.HeaderCell colSpan="2">University</Table.HeaderCell>
-            <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          {masterTable.majors.map(major => (
-            <Table.Row key={`${major.id}`}>
-              <Table.Cell>{`${major.name}`}</Table.Cell>
-              <Table.Cell>{`${major.facultyName}`}</Table.Cell>
-              <Table.Cell colSpan="2">{major.universityName}</Table.Cell>
-              <Table.Cell colSpan="3">{major.description || '-'}</Table.Cell>
+      <div>
+        <Grid.Column floated="right" width={3}>
+          <Button onClick={onAddMajorClick}>Add</Button>
+        </Grid.Column>
+        <Table celled padded>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Faculty</Table.HeaderCell>
+              <Table.HeaderCell colSpan="2">University</Table.HeaderCell>
+              <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
             </Table.Row>
+          </Table.Header>
+
+          <Table.Body>
+            {masterTable.majors.map(major => (
+              <Table.Row key={`${major.id}`}>
+                <Table.Cell>{`${major.name}`}</Table.Cell>
+                <Table.Cell>{`${major.facultyName}`}</Table.Cell>
+                <Table.Cell colSpan="2">{major.universityName}</Table.Cell>
+                <Table.Cell colSpan="3">{major.description || '-'}</Table.Cell>
+              </Table.Row>
       ))}
-        </Table.Body>
-      </Table>
+          </Table.Body>
+        </Table>
+      </div>
     )
   },
   { menuItem: 'Position',
     render: () => (
-      <Table celled padded>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          {masterTable.positions.map(position => (
-            <Table.Row key={`${position.id}`}>
-              <Table.Cell>{`${position.name}`}</Table.Cell>
-              <Table.Cell colSpan="3">{position.description || '-'}</Table.Cell>
+      <div>
+        <Grid.Column floated="right" width={3}>
+          <Button onClick={onAddPositionClick}>Add</Button>
+        </Grid.Column>
+        <Table celled padded>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
             </Table.Row>
+          </Table.Header>
+
+          <Table.Body>
+            {masterTable.positions.map(position => (
+              <Table.Row key={`${position.id}`}>
+                <Table.Cell>{`${position.name}`}</Table.Cell>
+                <Table.Cell colSpan="3">{position.description || '-'}</Table.Cell>
+              </Table.Row>
       ))}
-        </Table.Body>
-      </Table>
+          </Table.Body>
+        </Table>
+      </div>
     )
   },
   { menuItem: 'University',
     render: () => (
-      <Table celled padded>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          {masterTable.universities.map(university => (
-            <Table.Row key={`${university.id}`}>
-              <Table.Cell>{`${university.name}`}</Table.Cell>
-              <Table.Cell colSpan="3">{university.description || '-'}</Table.Cell>
+      <div>
+        <Grid.Column floated="right" width={3}>
+          <Button onClick={onAddUniversityClick}>Add</Button>
+        </Grid.Column>
+        <Table celled padded>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
             </Table.Row>
+          </Table.Header>
+
+          <Table.Body>
+            {masterTable.universities.map(university => (
+              <Table.Row key={`${university.id}`}>
+                <Table.Cell>{`${university.name}`}</Table.Cell>
+                <Table.Cell colSpan="3">{university.description || '-'}</Table.Cell>
+              </Table.Row>
       ))}
-        </Table.Body>
-      </Table>
+          </Table.Body>
+        </Table>
+      </div>
     )
   }
 ];
@@ -287,7 +317,12 @@ const MasterTable = ({ masterTable,
   onAddCertificateClick,
   onAddContractClick,
   onAddDegreeClick,
-  onAddDepartmentClick }) => (
+  onAddDepartmentClick,
+  onAddFacultyClick,
+  onAddLevelClick,
+  onAddMajorClick,
+  onAddPositionClick,
+  onAddUniversityClick }) => (
     <div>
       <Tab
         menu={{ secondary: true, pointing: true }}
@@ -296,14 +331,28 @@ const MasterTable = ({ masterTable,
           onAddCertificateClick,
           onAddContractClick,
           onAddDegreeClick,
-          onAddDepartmentClick })}
+          onAddDepartmentClick,
+          onAddFacultyClick,
+          onAddLevelClick,
+          onAddMajorClick,
+          onAddPositionClick,
+          onAddUniversityClick })}
       />
     </div>
 );
 
 MasterTable.propTypes = {
   masterTable: PropTypes.object.isRequired,
-  onAddAssetTypeClick: PropTypes.func.isRequired
+  onAddAssetTypeClick: PropTypes.func.isRequired,
+  onAddCertificateClick: PropTypes.func.isRequired,
+  onAddContractClick: PropTypes.func.isRequired,
+  onAddDegreeClick: PropTypes.func.isRequired,
+  onAddDepartmentClick: PropTypes.func.isRequired,
+  onAddFacultyClick: PropTypes.func.isRequired,
+  onAddLevelClick: PropTypes.func.isRequired,
+  onAddMajorClick: PropTypes.func.isRequired,
+  onAddPositionClick: PropTypes.func.isRequired,
+  onAddUniversityClick: PropTypes.func.isRequired
 };
 
 export default MasterTable;

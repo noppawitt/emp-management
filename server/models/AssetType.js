@@ -30,7 +30,7 @@ AssetType.update = (assetType, id) => (
 );
 
 AssetType.findById = id => (
-  db.one('SELECT * FROM asset_types WHERE id = $1', [id])
+  db.oneOrNone('SELECT * FROM asset_types WHERE id = $1', [id])
 );
 
 AssetType.findAll = () => (

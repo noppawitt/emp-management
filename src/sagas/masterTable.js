@@ -12,7 +12,17 @@ import { fetchMasterTableRequest,
   createDegreeSuccess,
   createDegreeFailure,
   createDepartmentSuccess,
-  createDepartmentFailure
+  createDepartmentFailure,
+  createLevelSuccess,
+  createLevelFailure,
+  createMajorSuccess,
+  createMajorFailure,
+  createPositionSuccess,
+  createPositionFailure,
+  createUniversitySuccess,
+  createUniversityFailure,
+  createFacultySuccess,
+  createFacultyFailure
 } from '../actions/masterTable';
 import { getMasterTable } from '../selectors/masterTable';
 import api from '../services/api';
@@ -93,6 +103,71 @@ function* addDepartmentTask(action) {
   }
 }
 
+function* addFacultyTask(action) {
+  try {
+    const faculty = yield call(api.addFaculty, { faculty: { universityId: action.payload.form.universityId, name: action.payload.form.name, description: action.payload.form.description } });
+    yield put(createFacultySuccess(faculty));
+    yield put(closeModal());
+    action.payload.resolve();
+  }
+  catch (error) {
+    yield put(createFacultyFailure(error));
+    action.payload.reject();
+  }
+}
+
+function* addLevelTask(action) {
+  try {
+    const level = yield call(api.addLevel, { level: { name: action.payload.form.name, description: action.payload.form.description, annualLeave: action.payload.form.annualLeave } });
+    yield put(createLevelSuccess(level));
+    yield put(closeModal());
+    action.payload.resolve();
+  }
+  catch (error) {
+    yield put(createLevelFailure(error));
+    action.payload.reject();
+  }
+}
+
+function* addMajorTask(action) {
+  try {
+    const major = yield call(api.addMajor, { major: { facultyId: action.payload.form.facultyId, name: action.payload.form.name, description: action.payload.form.description } });
+    yield put(createMajorSuccess(major));
+    yield put(closeModal());
+    action.payload.resolve();
+  }
+  catch (error) {
+    yield put(createMajorFailure(error));
+    action.payload.reject();
+  }
+}
+
+function* addPositionTask(action) {
+  try {
+    const position = yield call(api.addPosition, { position: { name: action.payload.form.name, description: action.payload.form.description } });
+    yield put(createPositionSuccess(position));
+    yield put(closeModal());
+    action.payload.resolve();
+  }
+  catch (error) {
+    yield put(createPositionFailure(error));
+    action.payload.reject();
+  }
+}
+
+function* addUniversityTask(action) {
+  try {
+    const university = yield call(api.addUniversity, { university: { name: action.payload.form.name, description: action.payload.form.description } });
+    yield put(createUniversitySuccess(university));
+    yield put(closeModal());
+    action.payload.resolve();
+  }
+  catch (error) {
+    yield put(createUniversityFailure(error));
+    action.payload.reject();
+  }
+}
+
 function* watchFetchMasterTableRequest() {
   yield takeEvery(actionTypes.MASTER_TABLE_FETCH_REQUEST, fetchMasterTableTask);
 }
@@ -127,6 +202,26 @@ function* watchAddDepartmentRequest() {
   yield takeEvery(actionTypes.DEPARTMENT_CREATE_REQUEST, addDepartmentTask);
 }
 
+function* watchAddFacultyRequest() {
+  yield takeEvery(actionTypes.FACULTY_CREATE_REQUEST, addFacultyTask);
+}
+
+function* watchAddLevelRequest() {
+  yield takeEvery(actionTypes.LEVEL_CREATE_REQUEST, addLevelTask);
+}
+
+function* watchAddMajorRequest() {
+  yield takeEvery(actionTypes.MAJOR_CREATE_REQUEST, addMajorTask);
+}
+
+function* watchAddPositionRequest() {
+  yield takeEvery(actionTypes.POSITION_CREATE_REQUEST, addPositionTask);
+}
+
+function* watchAddUniversityRequest() {
+  yield takeEvery(actionTypes.UNIVERSITY_CREATE_REQUEST, addUniversityTask);
+}
+
 export default function* profileSaga() {
   yield all([
     watchFetchMasterTableRequest(),
@@ -135,6 +230,11 @@ export default function* profileSaga() {
     watchAddCertificateRequest(),
     watchAddContractRequest(),
     watchAddDegreeRequest(),
-    watchAddDepartmentRequest()
+    watchAddDepartmentRequest(),
+    watchAddFacultyRequest(),
+    watchAddLevelRequest(),
+    watchAddMajorRequest(),
+    watchAddPositionRequest(),
+    watchAddUniversityRequest()
   ]);
 }

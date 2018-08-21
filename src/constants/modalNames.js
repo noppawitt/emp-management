@@ -66,3 +66,18 @@ export const ADD_DEGREE = 'ADD_DEGREE';
 
 // Department
 export const ADD_DEPARTMENT = 'ADD_DEPARTMENT';
+
+// Faculty
+export const ADD_FACULTY = 'ADD_FACULTY';
+
+// Level
+export const ADD_LEVEL = 'ADD_LEVEL';
+
+// Major
+export const ADD_MAJOR = 'ADD_MAJOR';
+
+// Position
+export const ADD_POSITION = 'ADD_POSITION';
+
+// University
+export const ADD_UNIVERSITY = 'ADD_UNIVERSITY';
