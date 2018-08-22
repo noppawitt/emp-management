@@ -37,4 +37,8 @@ AssetType.findAll = () => (
   db.manyOrNone('SELECT * FROM asset_types WHERE status = $1', ['Active'])
 );
 
+AssetType.delete = id => (
+  db.none('DELETE FROM asset_types WHERE id = $1', [id])
+);
+
 module.exports = AssetType;

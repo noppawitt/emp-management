@@ -29,3 +29,15 @@ exports.findAll = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.delete = (req, res, next) => {
+  Certificate.delete(req.body.id)
+    .then(() => {
+      Certificate.findAll()
+        .then((certificates) => {
+          res.json(certificates);
+        })
+        .catch(next);
+    })
+    .catch(next);
+};

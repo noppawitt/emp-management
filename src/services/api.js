@@ -159,11 +159,25 @@ api.addAssetType = body => (
   })
 );
 
+api.deleteAssetType = body => (
+  callApi('/api/asset-types', {
+    method: 'DELETE',
+    body
+  })
+);
+
 // Asset
 
 api.addAsset = body => (
   callApi('/api/assets', {
     method: 'POST',
+    body
+  })
+);
+
+api.deleteAsset = body => (
+  callApi('/api/assets', {
+    method: 'DELETE',
     body
   })
 );
@@ -177,11 +191,25 @@ api.addCertificate = body => (
   })
 );
 
+api.deleteCertificate = body => (
+  callApi('/api/certificates', {
+    method: 'DELETE',
+    body
+  })
+);
+
 // Contract
 
 api.addContract = body => (
   callApi('/api/contracts', {
     method: 'POST',
+    body
+  })
+);
+
+api.deleteContract = body => (
+  callApi('/api/contracts', {
+    method: 'DELETE',
     body
   })
 );

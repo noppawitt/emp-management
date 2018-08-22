@@ -5,12 +5,20 @@ import { fetchMasterTableRequest,
   fetchMasterTableFailure,
   createAssetTypeSuccess,
   createAssetTypeFailure,
+  deleteAssetTypeSuccess,
+  deleteAssetTypeFailure,
   createAssetSuccess,
   createAssetFailure,
+  deleteAssetSuccess,
+  deleteAssetFailure,
   createCertificateSuccess,
   createCertificateFailure,
+  deleteCertificateSuccess,
+  deleteCertificateFailure,
   createContractSuccess,
   createContractFailure,
+  deleteContractSuccess,
+  deleteContractFailure,
   createDegreeSuccess,
   createDegreeFailure,
   createDepartmentSuccess,
@@ -53,6 +61,17 @@ function* addAssetTypeTask(action) {
   }
 }
 
+function* deleteAssetTypeTask(action) {
+  try {
+    const assetTypes = yield call(api.deleteAssetType, { id: action.payload.id });
+    yield put(deleteAssetTypeSuccess(assetTypes));
+    yield put(closeModal());
+  }
+  catch (error) {
+    yield put(deleteAssetTypeFailure(error));
+  }
+}
+
 function* addAssetTask(action) {
   try {
     const asset = yield call(api.addAsset, { asset: { assetTypeId: action.payload.form.assetTypeId, name: action.payload.form.name, serialNumber: action.payload.form.serialNumber, description: action.payload.form.description, ownFlag: 'Company' } });
@@ -63,6 +82,17 @@ function* addAssetTask(action) {
   catch (error) {
     yield put(createAssetFailure(error));
     action.payload.reject();
+  }
+}
+
+function* deleteAssetTask(action) {
+  try {
+    const assets = yield call(api.deleteAsset, { id: action.payload.id });
+    yield put(deleteAssetSuccess(assets));
+    yield put(closeModal());
+  }
+  catch (error) {
+    yield put(deleteAssetFailure(error));
   }
 }
 
@@ -79,6 +109,17 @@ function* addCertificateTask(action) {
   }
 }
 
+function* deleteCertificateTask(action) {
+  try {
+    const certificates = yield call(api.deleteCertificate, { id: action.payload.id });
+    yield put(deleteCertificateSuccess(certificates));
+    yield put(closeModal());
+  }
+  catch (error) {
+    yield put(deleteCertificateFailure(error));
+  }
+}
+
 function* addContractTask(action) {
   try {
     const contract = yield call(api.addContract, { contract: { name: action.payload.form.name, description: action.payload.form.description } });
@@ -89,6 +130,17 @@ function* addContractTask(action) {
   catch (error) {
     yield put(createContractFailure(error));
     action.payload.reject();
+  }
+}
+
+function* deleteContractTask(action) {
+  try {
+    const contracts = yield call(api.deleteContract, { id: action.payload.id });
+    yield put(deleteContractSuccess(contracts));
+    yield put(closeModal());
+  }
+  catch (error) {
+    yield put(deleteContractFailure(error));
   }
 }
 
@@ -201,16 +253,32 @@ function* watchAddAssetTypeRequest() {
   yield takeEvery(actionTypes.ASSET_TYPE_CREATE_REQUEST, addAssetTypeTask);
 }
 
+function* watchDeleteAssetTypeRequest() {
+  yield takeEvery(actionTypes.ASSET_TYPE_DELETE_REQUEST, deleteAssetTypeTask);
+}
+
 function* watchAddAssetRequest() {
   yield takeEvery(actionTypes.ASSET_CREATE_REQUEST, addAssetTask);
+}
+
+function* watchDeleteAssetRequest() {
+  yield takeEvery(actionTypes.ASSET_DELETE_REQUEST, deleteAssetTask);
 }
 
 function* watchAddCertificateRequest() {
   yield takeEvery(actionTypes.CERTIFICATE_CREATE_REQUEST, addCertificateTask);
 }
 
+function* watchDeleteCertificateRequest() {
+  yield takeEvery(actionTypes.CERTIFICATE_DELETE_REQUEST, deleteCertificateTask);
+}
+
 function* watchAddContractRequest() {
   yield takeEvery(actionTypes.CONTRACT_CREATE_REQUEST, addContractTask);
+}
+
+function* watchDeleteContractRequest() {
+  yield takeEvery(actionTypes.CONTRACT_DELETE_REQUEST, deleteContractTask);
 }
 
 function* watchAddDegreeRequest() {
@@ -246,9 +314,13 @@ export default function* profileSaga() {
     watchFetchMasterTableRequest(),
     watchFetchMasterTable(),
     watchAddAssetTypeRequest(),
+    watchDeleteAssetTypeRequest(),
     watchAddAssetRequest(),
+    watchDeleteAssetRequest(),
     watchAddCertificateRequest(),
+    watchDeleteCertificateRequest(),
     watchAddContractRequest(),
+    watchDeleteContractRequest(),
     watchAddDegreeRequest(),
     watchAddDepartmentRequest(),
     watchAddFacultyRequest(),

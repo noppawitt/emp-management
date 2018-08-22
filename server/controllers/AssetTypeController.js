@@ -29,3 +29,15 @@ exports.findAll = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.delete = (req, res, next) => {
+  AssetType.delete(req.body.id)
+    .then(() => {
+      AssetType.findAll()
+        .then((assetTypes) => {
+          res.json(assetTypes);
+        })
+        .catch(next);
+    })
+    .catch(next);
+};

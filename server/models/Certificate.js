@@ -38,4 +38,8 @@ Certificate.findAll = () => (
   db.manyOrNone('SELECT * FROM certificates')
 );
 
+Certificate.delete = id => (
+  db.none('DELETE FROM certificates WHERE id = $1', [id])
+);
+
 module.exports = Certificate;

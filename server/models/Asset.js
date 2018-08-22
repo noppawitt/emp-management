@@ -43,7 +43,11 @@ Asset.findById = id => (
 
 Asset.findAll = () => (
   db.manyOrNone(`SELECT asset_types.name AS asset_type_name, assets.* FROM assets INNER JOIN asset_types 
-  ON assets.asset_type_id = asset_types.id WHERE own_flag = $1`, ['Company'])
+  ON assets.asset_type_id = asset_types.id WHERE assets.own_flag = $1 AND assets.status = $2`, ['Company', 'Active'])
+);
+
+Asset.delete = id => (
+  db.none('DELETE FROM assets WHERE id = $1', [id])
 );
 
 module.exports = Asset;

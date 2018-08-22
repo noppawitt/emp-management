@@ -43,6 +43,27 @@ export const createAssetTypeFailure = message => ({
   }
 });
 
+export const deleteAssetTypeRequest = id => ({
+  type: actionTypes.ASSET_TYPE_DELETE_REQUEST,
+  payload: {
+    id
+  }
+});
+
+export const deleteAssetTypeSuccess = assetTypes => ({
+  type: actionTypes.ASSET_TYPE_DELETE_SUCCESS,
+  payload: {
+    assetTypes
+  }
+});
+
+export const deleteAssetTypeFailure = message => ({
+  type: actionTypes.ASSET_TYPE_DELETE_FAILURE,
+  payload: {
+    message
+  }
+});
+
 // Asset
 
 export const createAssetRequest = (form, resolve, reject) => ({
@@ -63,6 +84,27 @@ export const createAssetSuccess = asset => ({
 
 export const createAssetFailure = message => ({
   type: actionTypes.ASSET_CREATE_FAILURE,
+  payload: {
+    message
+  }
+});
+
+export const deleteAssetRequest = id => ({
+  type: actionTypes.ASSET_DELETE_REQUEST,
+  payload: {
+    id
+  }
+});
+
+export const deleteAssetSuccess = assets => ({
+  type: actionTypes.ASSET_DELETE_SUCCESS,
+  payload: {
+    assets
+  }
+});
+
+export const deleteAssetFailure = message => ({
+  type: actionTypes.ASSET_DELETE_FAILURE,
   payload: {
     message
   }
@@ -93,6 +135,27 @@ export const createCertificateFailure = message => ({
   }
 });
 
+export const deleteCertificateRequest = id => ({
+  type: actionTypes.CERTIFICATE_DELETE_REQUEST,
+  payload: {
+    id
+  }
+});
+
+export const deleteCertificateSuccess = certificates => ({
+  type: actionTypes.CERTIFICATE_DELETE_SUCCESS,
+  payload: {
+    certificates
+  }
+});
+
+export const deleteCertificateFailure = message => ({
+  type: actionTypes.CERTIFICATE_DELETE_FAILURE,
+  payload: {
+    message
+  }
+});
+
 // Contract
 
 export const createContractRequest = (form, resolve, reject) => ({
@@ -113,6 +176,27 @@ export const createContractSuccess = contract => ({
 
 export const createContractFailure = message => ({
   type: actionTypes.CONTRACT_CREATE_FAILURE,
+  payload: {
+    message
+  }
+});
+
+export const deleteContractRequest = id => ({
+  type: actionTypes.CONTRACT_DELETE_REQUEST,
+  payload: {
+    id
+  }
+});
+
+export const deleteContractSuccess = contracts => ({
+  type: actionTypes.CONTRACT_DELETE_SUCCESS,
+  payload: {
+    contracts
+  }
+});
+
+export const deleteContractFailure = message => ({
+  type: actionTypes.CONTRACT_DELETE_FAILURE,
   payload: {
     message
   }

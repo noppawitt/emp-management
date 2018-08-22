@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import {
-  fetchMasterTableRequest
+  fetchMasterTableRequest,
+  deleteAssetTypeRequest,
+  deleteAssetRequest,
+  deleteCertificateRequest,
+  deleteContractRequest
 } from '../../actions/masterTable';
 import Loader from '../../components/Loader';
 import MasterTable from '../../components/MasterTable';
@@ -13,9 +17,13 @@ import * as modalNames from '../../constants/modalNames';
 const MasterTablePage = ({ isFetching,
   masterTable,
   onAddAssetTypeClick,
+  onDeleteAssetTypeClick,
   onAddAssetClick,
+  onDeleteAssetClick,
   onAddCertificateClick,
+  onDeleteCertificateClick,
   onAddContractClick,
+  onDeleteContractClick,
   onAddDegreeClick,
   onAddDepartmentClick,
   onAddFacultyClick,
@@ -27,9 +35,13 @@ const MasterTablePage = ({ isFetching,
       {isFetching ? <Loader /> : <MasterTable
         masterTable={masterTable}
         onAddAssetTypeClick={onAddAssetTypeClick}
+        onDeleteAssetTypeClick={onDeleteAssetTypeClick}
         onAddAssetClick={onAddAssetClick}
+        onDeleteAssetClick={onDeleteAssetClick}
         onAddCertificateClick={onAddCertificateClick}
+        onDeleteCertificateClick={onDeleteCertificateClick}
         onAddContractClick={onAddContractClick}
+        onDeleteContractClick={onDeleteContractClick}
         onAddDegreeClick={onAddDegreeClick}
         onAddDepartmentClick={onAddDepartmentClick}
         onAddFacultyClick={onAddFacultyClick}
@@ -49,9 +61,13 @@ MasterTablePage.propTypes = {
   isFetching: PropTypes.bool,
   masterTable: PropTypes.object.isRequired,
   onAddAssetTypeClick: PropTypes.func.isRequired,
+  onDeleteAssetTypeClick: PropTypes.func.isRequired,
   onAddAssetClick: PropTypes.func.isRequired,
+  onDeleteAssetClick: PropTypes.func.isRequired,
   onAddCertificateClick: PropTypes.func.isRequired,
+  onDeleteCertificateClick: PropTypes.func.isRequired,
   onAddContractClick: PropTypes.func.isRequired,
+  onDeleteContractClick: PropTypes.func.isRequired,
   onAddDegreeClick: PropTypes.func.isRequired,
   onAddDepartmentClick: PropTypes.func.isRequired,
   onAddFacultyClick: PropTypes.func.isRequired,
@@ -69,9 +85,29 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchMasterTable: () => dispatch(fetchMasterTableRequest()),
   onAddAssetTypeClick: () => dispatch(openModal(modalNames.ADD_ASSET_TYPE, { })),
+  onDeleteAssetTypeClick: id => dispatch(openModal(modalNames.CONFIRM, {
+    header: 'Delete Confirmation',
+    description: 'Are you sure to delete this asset type?',
+    onConfirm: () => dispatch(deleteAssetTypeRequest(id))
+  })),
   onAddAssetClick: () => dispatch(openModal(modalNames.ADD_ASSET, { })),
+  onDeleteAssetClick: id => dispatch(openModal(modalNames.CONFIRM, {
+    header: 'Delete Confirmation',
+    description: 'Are you sure to delete this asset?',
+    onConfirm: () => dispatch(deleteAssetRequest(id))
+  })),
   onAddCertificateClick: () => dispatch(openModal(modalNames.ADD_CERTIFICATE, { })),
+  onDeleteCertificateClick: id => dispatch(openModal(modalNames.CONFIRM, {
+    header: 'Delete Confirmation',
+    description: 'Are you sure to delete this certificate?',
+    onConfirm: () => dispatch(deleteCertificateRequest(id))
+  })),
   onAddContractClick: () => dispatch(openModal(modalNames.ADD_CONTRACT, { })),
+  onDeleteContractClick: id => dispatch(openModal(modalNames.CONFIRM, {
+    header: 'DELETE Confirmation',
+    description: 'Are you sure to delete this contract?',
+    onConfirm: () => dispatch(deleteContractRequest(id))
+  })),
   onAddDegreeClick: () => dispatch(openModal(modalNames.ADD_DEGREE, { })),
   onAddDepartmentClick: () => dispatch(openModal(modalNames.ADD_DEPARTMENT, { })),
   onAddFacultyClick: () => dispatch(openModal(modalNames.ADD_FACULTY, { })),

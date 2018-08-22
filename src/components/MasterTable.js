@@ -4,9 +4,13 @@ import { Table, Tab, Grid, Button } from 'semantic-ui-react';
 
 const panes = ({ masterTable,
   onAddAssetTypeClick,
+  onDeleteAssetTypeClick,
   onAddAssetClick,
+  onDeleteAssetClick,
   onAddCertificateClick,
+  onDeleteCertificateClick,
   onAddContractClick,
+  onDeleteContractClick,
   onAddDegreeClick,
   onAddDepartmentClick,
   onAddFacultyClick,
@@ -25,6 +29,7 @@ const panes = ({ masterTable,
             <Table.Row>
               <Table.HeaderCell>Name</Table.HeaderCell>
               <Table.HeaderCell>Description</Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
 
@@ -33,6 +38,9 @@ const panes = ({ masterTable,
               <Table.Row key={`${assetType.id}`}>
                 <Table.Cell>{`${assetType.name}`}</Table.Cell>
                 <Table.Cell>{assetType.description || '-'}</Table.Cell>
+                <Table.Cell>
+                  <Button color="red" onClick={() => onDeleteAssetTypeClick(assetType.id)}>Delete</Button>
+                </Table.Cell>
               </Table.Row>
       ))}
           </Table.Body>
@@ -54,6 +62,7 @@ const panes = ({ masterTable,
               <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
               <Table.HeaderCell>Own Flag</Table.HeaderCell>
               <Table.HeaderCell >Serial Number</Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
 
@@ -65,6 +74,9 @@ const panes = ({ masterTable,
                 <Table.Cell colSpan="3">{asset.description || '-'}</Table.Cell>
                 <Table.Cell>{`${asset.ownFlag}`}</Table.Cell>
                 <Table.Cell>{`${asset.serialNumber}`}</Table.Cell>
+                <Table.Cell>
+                  <Button color="red" onClick={() => onDeleteAssetClick(asset.id)}>Delete</Button>
+                </Table.Cell>
               </Table.Row>
       ))}
           </Table.Body>
@@ -84,6 +96,7 @@ const panes = ({ masterTable,
               <Table.HeaderCell>Name</Table.HeaderCell>
               <Table.HeaderCell colSpan="2">Institute</Table.HeaderCell>
               <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
 
@@ -93,7 +106,9 @@ const panes = ({ masterTable,
                 <Table.Cell>{`${certificate.name}`}</Table.Cell>
                 <Table.Cell colSpan="2">{certificate.institute}</Table.Cell>
                 <Table.Cell colSpan="3">{certificate.description || '-'}</Table.Cell>
-
+                <Table.Cell>
+                  <Button color="red" onClick={() => onDeleteCertificateClick(certificate.id)}>Delete</Button>
+                </Table.Cell>
               </Table.Row>
       ))}
           </Table.Body>
@@ -113,6 +128,7 @@ const panes = ({ masterTable,
             <Table.Row>
               <Table.HeaderCell>Name</Table.HeaderCell>
               <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
 
@@ -121,6 +137,9 @@ const panes = ({ masterTable,
               <Table.Row key={`${contract.id}`}>
                 <Table.Cell>{`${contract.name}`}</Table.Cell>
                 <Table.Cell colSpan="3">{contract.description || '-'}</Table.Cell>
+                <Table.Cell>
+                  <Button color="red" onClick={() => onDeleteContractClick(contract.id)}>Delete</Button>
+                </Table.Cell>
               </Table.Row>
       ))}
           </Table.Body>
@@ -320,9 +339,13 @@ const panes = ({ masterTable,
 
 const MasterTable = ({ masterTable,
   onAddAssetTypeClick,
+  onDeleteAssetTypeClick,
   onAddAssetClick,
+  onDeleteAssetClick,
   onAddCertificateClick,
+  onDeleteCertificateClick,
   onAddContractClick,
+  onDeleteContractClick,
   onAddDegreeClick,
   onAddDepartmentClick,
   onAddFacultyClick,
@@ -335,9 +358,13 @@ const MasterTable = ({ masterTable,
         menu={{ secondary: true, pointing: true }}
         panes={panes({ masterTable,
           onAddAssetTypeClick,
+          onDeleteAssetTypeClick,
           onAddAssetClick,
+          onDeleteAssetClick,
           onAddCertificateClick,
+          onDeleteCertificateClick,
           onAddContractClick,
+          onDeleteContractClick,
           onAddDegreeClick,
           onAddDepartmentClick,
           onAddFacultyClick,
@@ -352,9 +379,13 @@ const MasterTable = ({ masterTable,
 MasterTable.propTypes = {
   masterTable: PropTypes.object.isRequired,
   onAddAssetTypeClick: PropTypes.func.isRequired,
+  onDeleteAssetTypeClick: PropTypes.func.isRequired,
   onAddAssetClick: PropTypes.func.isRequired,
+  onDeleteAssetClick: PropTypes.func.isRequired,
   onAddCertificateClick: PropTypes.func.isRequired,
+  onDeleteCertificateClick: PropTypes.func.isRequired,
   onAddContractClick: PropTypes.func.isRequired,
+  onDeleteContractClick: PropTypes.func.isRequired,
   onAddDegreeClick: PropTypes.func.isRequired,
   onAddDepartmentClick: PropTypes.func.isRequired,
   onAddFacultyClick: PropTypes.func.isRequired,

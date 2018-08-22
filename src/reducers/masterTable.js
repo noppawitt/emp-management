@@ -26,12 +26,32 @@ const masterTable = (state = {}, action) => {
         ...state,
         message: action.payload.message
       };
+    case actionTypes.ASSET_TYPE_DELETE_SUCCESS:
+      return {
+        ...state,
+        assetTypes: action.payload.assetTypes
+      };
+    case actionTypes.ASSET_TYPE_DELETE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
     case actionTypes.ASSET_CREATE_SUCCESS:
       return {
         ...state,
         assets: [...state.assets, action.payload.asset]
       };
     case actionTypes.ASSET_CREATE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
+    case actionTypes.ASSET_DELETE_SUCCESS:
+      return {
+        ...state,
+        assets: action.payload.assets
+      };
+    case actionTypes.ASSET_DELETE_FAILURE:
       return {
         ...state,
         message: action.payload.message
@@ -46,12 +66,32 @@ const masterTable = (state = {}, action) => {
         ...state,
         message: action.payload.message
       };
+    case actionTypes.CERTIFICATE_DELETE_SUCCESS:
+      return {
+        ...state,
+        certificates: action.payload.certificates
+      };
+    case actionTypes.CERTIFICATE_DELETE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
     case actionTypes.CONTRACT_CREATE_SUCCESS:
       return {
         ...state,
         contracts: [...state.contracts, action.payload.contract]
       };
     case actionTypes.CONTRACT_CREATE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
+    case actionTypes.CONTRACT_DELETE_SUCCESS:
+      return {
+        ...state,
+        contracts: action.payload.contracts
+      };
+    case actionTypes.CONTRACT_DELETE_FAILURE:
       return {
         ...state,
         message: action.payload.message

@@ -37,4 +37,8 @@ Contract.findById = id => (
   id ? db.oneOrNone('SELECT * FROM contracts WHERE id = $1', [id]) : ''
 );
 
+Contract.delete = id => (
+  db.none('DELETE FROM contracts WHERE id = $1', [id])
+);
+
 module.exports = Contract;
