@@ -24,7 +24,6 @@ import ErpBillRecord from './forms/EditBillRecord';
 import HolidayPage from './pages/HolidayPage';
 import LeaveApprovalPage from './pages/LeaveApprovalPage';
 import MasterTablePage from './pages/MasterTablePage';
-import Can from './Can';
 
 const Routes = () => (
   <Switch>
@@ -46,16 +45,11 @@ const Routes = () => (
     <PrivateRoute path="/erpApprove" component={ErpApprovePage} />
     <PrivateRoute path="/add" component={ErpAddPage} />
     <PrivateRoute path="/holiday" component={HolidayPage} />
-
-    <PrivateRoute exact path="/recruitment" component={RecruitmentPage} />
-    <PrivateRoute path="/recruitment/:id" component={RecruitmentDetailPage} />
-
-    <PrivateRoute path="/exam" component={ExamPage} />
-
-    <PrivateRoute path="/master-table" component={MasterTablePage} />
-
-    <PrivateRoute path="/leave-approval" component={LeaveApprovalPage} />
-
+    <PrivateRoute exact path="/recruitment" component={RecruitmentPage} can="recruitmentManage" />
+    <PrivateRoute path="/recruitment/:id" component={RecruitmentDetailPage} can="recruitmentManage" />
+    <PrivateRoute path="/exam" component={ExamPage} can="examManage" />
+    <PrivateRoute path="/master-table" component={MasterTablePage} can="masterTableManage" />
+    <PrivateRoute path="/leave-approval" component={LeaveApprovalPage} can="leaveRequestManage" />
   </Switch>
 );
 

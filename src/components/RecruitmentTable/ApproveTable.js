@@ -72,7 +72,7 @@ const ApproveTable = ({
   today,
   modalWarningExIdList, }) => (
     <div>
-      <Input icon="search" placeholder="Search projects..." onChange={onSearchChange} />
+      <Input icon="search" placeholder="Search" onChange={onSearchChange} />
       <div style={{ overflowX: 'auto' }}>
         <Table striped sortable selectable celled >
           <Table.Header>
