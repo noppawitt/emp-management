@@ -14,8 +14,16 @@ const row = (item, { checkStatus, changeStatus, load, preActivateTakeExam, butto
       {`${item.lastName}`}
     </Table.Cell>
     <Table.Cell>{`${item.position.join('\n')}`}</Table.Cell>
-    <Table.Cell>{`${item.interviewDate} ${item.interviewTime}`}</Table.Cell>
-    <Table.Cell>{`${item.examDate} ${item.examTime}`}</Table.Cell>
+    <Table.Cell>
+      {`${moment(item.interviewDate).format('DD/MM/YY')}`}
+      <br />
+      {`${moment(item.interviewTime, 'HH:mm:ss').format('HH:mm')}`}
+    </Table.Cell>
+    <Table.Cell>
+      {`${moment(item.examDate).format('DD/MM/YY')}`}
+      <br />
+      {`${moment(item.examTime, 'HH:mm:ss').format('HH:mm')}`}
+    </Table.Cell>
     <Table.Cell><Button icon="list" size="mini" onClick={() => history.push(`/recruitment/${item.rowId}`)} /></Table.Cell>
     {item.testStatus === 'NotTest' &&
       <Table.Cell>
