@@ -9,8 +9,11 @@ export const createEmployeeRequest = (form, resolve, reject) => ({
   }
 });
 
-export const createEmployeeSuccess = () => ({
-  type: actionTypes.EMPLOYEE_CREATE_SUCCESS
+export const createEmployeeSuccess = employees => ({
+  type: actionTypes.EMPLOYEE_CREATE_SUCCESS,
+  payload: {
+    employees
+  }
 });
 
 export const createEmployeeFailure = message => ({

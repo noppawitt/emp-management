@@ -29,6 +29,7 @@ const AssetProfileBox = ({ assetsProfile, onAddClick, onDeleteClick, can }) => (
       lists={[
         { key: 'assetName', title: 'Name', value: p.assetName },
         { key: 'assetTypeName', title: 'Asset type', value: p.assetTypeName },
+        { key: 'owner', title: 'Owner', value: p.ownFlag },
         { key: 'serialNumber', title: 'Serial No.', value: p.serialNumber },
         { key: 'date', title: 'Date', value: p.assetDate }
       ]}

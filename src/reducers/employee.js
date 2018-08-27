@@ -27,6 +27,16 @@ const employee = (state = initialState, action) => {
         isFetching: false,
         message: action.payload.message
       };
+    case actionTypes.EMPLOYEE_CREATE_SUCCESS:
+      return {
+        ...state,
+        lists: action.payload.employees
+      };
+    case actionTypes.EMPLOYEE_CREATE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
     case actionTypes.FILTER_EMPLOYEE:
       return {
         ...state,

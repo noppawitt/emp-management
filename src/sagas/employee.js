@@ -21,10 +21,10 @@ function* fetchEmployeeTask() {
 
 export function* createEmployeeTask(action) {
   try {
-    yield call(api.createEmployee, {
+    const employees = yield call(api.createEmployee, {
       user: action.payload.form
     });
-    yield put(createEmployeeSuccess());
+    yield put(createEmployeeSuccess(employees));
     yield put(closeModal());
     action.payload.resolve();
   }

@@ -7,6 +7,7 @@ import { Form } from 'semantic-ui-react';
 import Input from '../../components/Input';
 import * as validator from '../../utils/validator';
 import { genderOptions } from '../../utils/options';
+import Can from '../Can';
 
 const EditGeneralProfileForm = ({ handleSubmit, can }) => (
   <Form onSubmit={handleSubmit}>
@@ -49,38 +50,31 @@ const EditGeneralProfileForm = ({ handleSubmit, can }) => (
       label="Nick name"
       validate={validator.required}
     />
-    <Field
-      name="citizenId"
-      component={Input}
-      as={Form.Input}
-      label="Citizen ID"
-      validate={[validator.required, validator.number, validator.digiLength13]}
-    />
-    {can.employeeInfoEditAll &&
-    <Field
-      name="birthday"
-      component={Input}
-      as={Form.Input}
-      type="date"
-      label="Birth date"
-      validate={validator.date}
-    />}
-    <Field
-      name="gender"
-      component={Input}
-      as={Form.Select}
-      label="Gender"
-      options={genderOptions}
-      validate={validator.required}
-    />
-    {can.employeeInfoEditAll &&
-    <Field
-      name="citizenId"
-      component={Input}
-      as={Form.Input}
-      label="Citizen ID"
-      validate={[validator.required, validator.digiLength13]}
-    />}
+    <Can activity="employeeInfoEditAll">
+      <Field
+        name="citizenId"
+        component={Input}
+        as={Form.Input}
+        label="Citizen ID"
+        validate={[validator.required, validator.number, validator.digiLength13]}
+      />
+      <Field
+        name="birthday"
+        component={Input}
+        as={Form.Input}
+        type="date"
+        label="Birth date"
+        validate={validator.date}
+      />
+      <Field
+        name="gender"
+        component={Input}
+        as={Form.Select}
+        label="Gender"
+        options={genderOptions}
+        validate={validator.required}
+      />
+    </Can>
     <Field
       name="mobileNumber"
       component={Input}
@@ -108,13 +102,15 @@ const EditGeneralProfileForm = ({ handleSubmit, can }) => (
       label="Line ID"
       validate={validator.lineId}
     />
-    <Field
-      name="address"
-      component={Input}
-      as={Form.TextArea}
-      autoHeight
-      label="Address"
-    />
+    <Can activity="employeeInfoEditAll">
+      <Field
+        name="address"
+        component={Input}
+        as={Form.TextArea}
+        autoHeight
+        label="Address"
+      />
+    </Can>
   </Form>
 );
 
