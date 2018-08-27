@@ -13,7 +13,7 @@ const validate = (values) => {
   errors.name = validator.required(values.name);
   errors.quotationId = validator.required(values.quotationId);
   errors.customer = validator.required(values.customer);
-  errors.purchasedOrder = validator.required(values.purchasedOrder);
+  // errors.purchasedOrder = validator.required(values.purchasedOrder);
   errors.amount = validator.required(values.amount);
   errors.startDate = validator.dateBefore(values.startDate, values.endDate);
   errors.endDate = validator.dateAfter(values.endDate, values.startDate);
@@ -31,7 +31,7 @@ const EditProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType 
       label="Name"
       placeholder="Name"
       disabled={submitting}
-      validate={validator.maxLength50}
+      validate={validator.maxLength300}
     />
     <Form.Group widths="equal">
       <Field
@@ -42,7 +42,6 @@ const EditProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType 
         placeholder="Quotation No."
         disabled={submitting}
         validate={validator.maxLength25}
-
       />
       <Field
         name="customer"
@@ -61,8 +60,7 @@ const EditProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType 
         component={Input}
         label="PO No."
         placeholder="PO No."
-        disabled={submitting}
-        validate={validator.maxLength25}
+        validate={validator.maxLengthOrNull25}
       />
       <Field
         name="amount"
@@ -131,8 +129,6 @@ const EditProjectForm = ({ handleSubmit, submitting, setWorkingDay, paymentType 
       autoHeight
       label="Description"
       placeholder="Description"
-      disabled={submitting}
-      validate={validator.maxLength100}
     />
   </Form>
 );

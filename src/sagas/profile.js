@@ -153,7 +153,7 @@ function* updateProfileTask(action) {
         });
         break;
       case 'addWorkExperienceProfile':
-        profile.workExperience = yield call(api.createWorkExperienceProfile, {
+        profile.workExperiences = yield call(api.createWorkExperienceProfile, {
           workExperience: action.payload.form
         });
         break;
@@ -219,7 +219,7 @@ function* deleteProfileTask(action) {
           id: action.payload.profileId
         });
         break;
-      case 'workExperience':
+      case 'workExperiences':
         profile = yield call(api.deleteWorkExperienceProfile, {
           id: action.payload.profileId
         });

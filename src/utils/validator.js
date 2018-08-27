@@ -5,13 +5,21 @@ export const digiLength = n => value => (value && value.toString().length === n 
 export const digiLength10 = digiLength(10);
 export const digiLength13 = digiLength(13);
 export const maxLength = n => value => (value && value.toString().length <= n ? undefined : `Must be less than ${n} characters`);
+export const maxLengthOrNull = n => (value) => {
+  if (value) {
+    return value.toString().length <= n ? undefined : `Must be less than ${n} characters`;
+  }
+  return undefined;
+};
+export const maxLengthOrNull25 = maxLengthOrNull(25);
 export const maxLength14 = maxLength(14);
 export const maxLength20 = maxLength(20);
 export const maxLength25 = maxLength(25);
 export const maxLength30 = maxLength(30);
 export const maxLength50 = maxLength(50);
 export const maxLength100 = maxLength(100);
-export const check2Decimal = value => (value && /^(?=.*[1-9])\d*(?:\.\d{1,2})?$/.test(value) ? undefined : 'Decimal must be less than or equal 2 characters');
+export const maxLength300 = maxLength(300);
+export const check2Decimal = value => (value && (/^(?=.*[1-9])\d*(?:\.\d{1,2})?$/.test(value) || /^[0-9]{1,6}$/.test(value)) ? undefined : 'Decimal must be less than or equal 2 characters');
 export const email = value => (
   value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ? 'Invalid email address' : undefined
 );

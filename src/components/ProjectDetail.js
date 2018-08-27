@@ -13,6 +13,9 @@ const membersDetail = (memberDetail, projectId, onDeleteClick) => (
     <Table.Cell>{memberDetail.role || '-'}</Table.Cell>
     <Table.Cell>{memberDetail.startDate ? moment(memberDetail.startDate).format('DD/MM/YYYY') : '-'}</Table.Cell>
     <Table.Cell>{memberDetail.endDate ? moment(memberDetail.endDate).format('DD/MM/YYYY') : '-'}</Table.Cell>
+    <Can activity="hasProjectViewAmount">
+      <Table.Cell>{memberDetail.amount || '-'}</Table.Cell>
+    </Can>
     <Table.Cell>
       <Can activity="hasProjectDelete">
         <Button animated="fade" style={{ borderStyle: 'solid', borderColor: '#FF0000', backgroundColor: 'white', borderWidth: '1px' }} onClick={() => onDeleteClick(memberDetail.userId, projectId)}>
@@ -125,6 +128,9 @@ const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteM
             <Table.HeaderCell>Role</Table.HeaderCell>
             <Table.HeaderCell>Start Date</Table.HeaderCell>
             <Table.HeaderCell>End Date</Table.HeaderCell>
+            <Can activity="hasProjectViewAmount">
+              <Table.HeaderCell>Amount</Table.HeaderCell>
+            </Can>
             <Table.HeaderCell />
           </Table.Row>
         </Table.Header>
