@@ -49,7 +49,7 @@ const Routes = () => (
     <PrivateRoute path="/recruitment/:id" component={RecruitmentDetailPage} can="recruitmentManage" />
     <PrivateRoute path="/exam" component={ExamPage} can="examManage" />
     <PrivateRoute path="/master-table" component={MasterTablePage} can="masterTableManage" />
-    <PrivateRoute path="/leave-approval" component={LeaveApprovalPage} can="leaveRequestManage" />
+    <PrivateRoute path="/leave-approval" component={LeaveApprovalPage} can="leaveRequestApprove" />
   </Switch>
 );
 

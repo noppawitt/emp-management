@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 
 const Can = ({ activity, can, conditions, isFetching, children, page }) => {
-  if (isFetching || !can) return <div />;
+  if (isFetching || !can) return <div style={{ display: 'none' }} />;
   else if (can[activity] && conditions.every(c => c)) return children;
   else if (page) return 'You can not access this page';
-  return <div />;
+  return <div style={{ display: 'none' }} />;
 };
 
 Can.defaultProps = {

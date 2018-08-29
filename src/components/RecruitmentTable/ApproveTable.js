@@ -52,7 +52,7 @@ const row = (item, { checkStatus, changeStatus, load, preActivateTakeExam, butto
       </Table.Cell>
     }
     {item.testStatus === 'Finish' && <Table.Cell><Icon name="check" color="green" /></Table.Cell>}
-    {item.interviewDone === false ? <Table.Cell><Checkbox name="completeInterview" checked={checkStatus[item.rowId] === 'CompleteInterview'} onChange={() => changeStatus(item.rowId, 'CompleteInterview')} /></Table.Cell> : <Table.Cell><Icon name="check" color="green" /></Table.Cell>}
+    {item.interviewDone === false ? <Table.Cell><Checkbox name="completeInterview" checked={checkStatus[item.rowId] === 'Complete Interview'} onChange={() => changeStatus(item.rowId, 'Complete Interview')} /></Table.Cell> : <Table.Cell><Icon name="check" color="green" /></Table.Cell>}
     <Table.Cell><Checkbox name="editInterview" checked={checkStatus[item.rowId] === 'Interview'} onChange={() => { changeStatus(item.rowId, 'Interview'); load(item.interviewDate, item.interviewTime); }} /></Table.Cell>
     <Table.Cell><Checkbox name="editExam" checked={checkStatus[item.rowId] === 'Exam'} onChange={() => { changeStatus(item.rowId, 'Exam'); load(item.examDate, item.examTime); }} /></Table.Cell>
     <Table.Cell><Checkbox name="cancel" checked={checkStatus[item.rowId] === 'Cancel'} onChange={() => changeStatus(item.rowId, 'Cancel')} /></Table.Cell>

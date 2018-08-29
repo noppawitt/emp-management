@@ -65,9 +65,11 @@ const ProjectDetail = ({ projectDetail, onEditClick, onAddMemberClick, onDeleteM
         <Grid.Column width={1} only="large screen" />
         <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>Purchased Order :</b></font></Grid.Column>
         <Grid.Column computer={11} tablet={11} mobile={16}>{projectDetail.purchasedOrder || '-'}</Grid.Column>
-        <Grid.Column width={1} only="large screen" />
-        <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>Amount :</b></font></Grid.Column>
-        <Grid.Column computer={11} tablet={11} mobile={16}>{projectDetail.amount || '-'}</Grid.Column>
+        <Can activity="projectViewAll">
+          <Grid.Column width={1} only="large screen" />
+          <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>Amount :</b></font></Grid.Column>
+          <Grid.Column computer={11} tablet={11} mobile={16}>{projectDetail.amount || '-'}</Grid.Column>
+        </Can>
         <Grid.Column width={1} only="large screen" />
         <Grid.Column computer={4} tablet={4} mobile={16} ><font size="4"><b>From :</b></font></Grid.Column>
         <Grid.Column computer={11} tablet={11} mobile={16}>{projectDetail.startDate || '-'}</Grid.Column>

@@ -158,7 +158,7 @@ const mapDispatchToProps = dispatch => ({
             break;
           // case 'In Progress':
           //   break;
-          case 'CompleteInterview': {
+          case 'Complete Interview': {
             console.log(key, typeof key);
             const status = data.filter(row => row.rowId.toString() === key);
             console.log('=======', status[0].testStatus);
