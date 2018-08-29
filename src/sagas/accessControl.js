@@ -1,7 +1,6 @@
-import { call, put, takeEvery, all, select, take } from 'redux-saga/effects';
+import { call, put, takeEvery, all } from 'redux-saga/effects';
 import * as actionTypes from '../constants/actionTypes';
-import { fetchAccessControlRequest, fetchAccessControlSuccess, fetchAccessControlFailure } from '../actions/accessControl';
-import { getAccessControl } from '../selectors/accessControl';
+import { fetchAccessControlSuccess, fetchAccessControlFailure } from '../actions/accessControl';
 import api from '../services/api';
 
 function* fetchAccessControlTask() {
@@ -15,22 +14,11 @@ function* fetchAccessControlTask() {
 }
 
 function* watchFetchAccessControlTask() {
-  yield takeEvery(actionTypes.ACCESS_CONTROL_FETCH_REQUEST, fetchAccessControlTask);
-}
-
-function* watchAccessControl() {
-  while (true) {
-    const { can } = yield select(getAccessControl);
-    yield take(actionTypes.BOOTSTRAP);
-    if (!can) {
-      yield put(fetchAccessControlRequest());
-    }
-  }
+  yield takeEvery([actionTypes.BOOTSTRAP, actionTypes.ACCESS_CONTROL_FETCH_REQUEST], fetchAccessControlTask);
 }
 
 export default function* accessControlSaga() {
   yield all([
-    watchFetchAccessControlTask(),
-    watchAccessControl()
+    watchFetchAccessControlTask()
   ]);
 }

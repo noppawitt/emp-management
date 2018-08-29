@@ -19,7 +19,7 @@ const accessControl = (state = initialState, action) => {
         ...state,
         isFetching: false,
         can: {
-          ...state.can,
+          view: true,
           ...action.payload.accessControl
         },
         fetched: true

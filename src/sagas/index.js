@@ -19,6 +19,7 @@ import accessControlSaga from './accessControl';
 import erpSaga from './erp';
 import erpDetailSaga from './erpdetail';
 import erpApproveSaga from './erpapprove';
+import notificationSaga from './notification';
 
 export default function* rootSaga() {
   yield all([
@@ -42,5 +43,6 @@ export default function* rootSaga() {
     erpDetailSaga(),
     erpApproveSaga(),
     authSaga(),
+    notificationSaga()
   ]);
 }

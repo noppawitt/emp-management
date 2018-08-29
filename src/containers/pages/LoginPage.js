@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { Grid, Form, Button, Feed, Image } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { loginRequest } from '../../actions/auth';
+import Notification from '../../components/Notification';
 import image from '../../images/Timesheet_Home.jpg';
 import TelIcon from '../../images/TelIcon.jpg';
 import MailIcon from '../../images/MailIcon.jpg';
 import GPSIcon from '../../images/GPSIcon.jpg';
 
-const LoginPage = ({ dispatch }) => {
+const LoginPage = ({ dispatch, error }) => {
   let username;
   let password;
 
@@ -85,12 +86,22 @@ const LoginPage = ({ dispatch }) => {
           </Grid.Column>
         </Grid.Row>
       </Grid>
+      {error && <Notification error message={error} />}
     </div>
   );
 };
 
-LoginPage.propTypes = {
-  dispatch: PropTypes.func.isRequired
+LoginPage.defaultProps = {
+  error: ''
 };
 
-export default connect()(LoginPage);
+LoginPage.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  error: PropTypes.string
+};
+
+const mapStateToProps = state => ({
+  error: state.auth.error
+});
+
+export default connect(mapStateToProps)(LoginPage);

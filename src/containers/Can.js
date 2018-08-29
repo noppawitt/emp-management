@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { compose, lifecycle } from 'recompose';
-import { fetchAccessControlRequest } from '../actions/accessControl';
+import { compose } from 'recompose';
 
 const Can = ({ activity, can, conditions, isFetching, children, page }) => {
   if (isFetching || !can) return <div />;
@@ -33,18 +32,8 @@ const mapStateToProps = state => ({
   can: state.accessControl.can
 });
 
-const mapDispatchToProps = dispatch => ({
-  fetchAccessControl: () => dispatch(fetchAccessControlRequest())
-});
-
 const enhance = compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  lifecycle({
-    componentDidMount() {
-      const { fetchAccessControl, isFetching, fetched } = this.props;
-      if (!isFetching && !fetched) fetchAccessControl();
-    }
-  })
+  connect(mapStateToProps)
 );
 
 export default enhance(Can);

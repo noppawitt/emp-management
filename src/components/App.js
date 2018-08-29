@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Container } from 'semantic-ui-react';
 import NavBarContainer from '../containers/NavBarContainer';
 import ModalContainer from '../containers/ModalContainer';
+import Notification from './Notification';
 
 const App = ({ children }) => (
   <div>
@@ -12,6 +13,7 @@ const App = ({ children }) => (
       {children}
     </Container>
     <ModalContainer />
+    <Notification />
   </div>
 );
 

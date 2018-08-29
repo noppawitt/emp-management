@@ -22,6 +22,7 @@ import erp from './erp';
 import addrow from './addrow';
 import erpdetail from './erpdetail';
 import erpapprove from './erpapprove';
+import notification from './notification';
 
 export default combineReducers({
   form: formReducer,
@@ -47,4 +48,5 @@ export default combineReducers({
   addrow,
   erpdetail,
   erpapprove,
+  notification
 });
