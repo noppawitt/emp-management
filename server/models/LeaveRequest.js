@@ -71,4 +71,9 @@ LeaveRequest.findSummaryLeave = year => (
 //     EXTRACT(month from leave_requests.leave_date) = $3 AND EXTRACT(year from leave_requests.leave_date) = $4`)
 // );
 
+LeaveRequest.findLeaveDate = (year, month, userId) => (
+  db.manyOrNone(`SELECT * FROM leave_requests WHERE user_id = $1 AND EXTRACT(year FROM leave_date) = $2 
+  AND EXTRACT(month FROM leave_date) = $3 AND (status = $4 OR status = $5)`, [userId, year, month, 'Approve', 'Pending'])
+);
+
 module.exports = LeaveRequest;

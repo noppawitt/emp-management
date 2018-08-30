@@ -64,7 +64,7 @@ const calTotalHours = (timeIn, timeOut) => new Promise((resolve, reject) => {
 
 const isHoliday = (holidays, date) => {
   for (let i = 0; i < holidays.length; i += 1) {
-    if (moment(holidays[i].date) === date) {
+    if (moment(holidays[i].date).format('YYYY-MM-DD') === date) {
       return true;
     }
   }
@@ -76,7 +76,7 @@ const createLeaveRequest = (newLeaveRequest, holidays, id) => new Promise(async 
     const code = hash(`${newLeaveRequest.userId}-${moment()}`);
     for (let m = moment(newLeaveRequest.leaveFrom); m.diff(newLeaveRequest.leaveTo, 'days') <= 0; m.add(1, 'days')) {
       if (m.isoWeekday() !== 6 && m.isoWeekday() !== 7) {
-        if (!isHoliday(holidays, m)) {
+        if (!isHoliday(holidays, m.format('YYYY-MM-DD'))) {
           const totalhours = await calTotalHours(newLeaveRequest.startTime, newLeaveRequest.endTime);
           newLeaveRequest.code = code;
           newLeaveRequest.leaveDate = m.format('YYYY-MM-DD');
@@ -97,7 +97,7 @@ const countLeaveHours = (newLeaveRequest, holidays) => new Promise(async (resolv
     let newLeaveHours = 0;
     for (let m = moment(newLeaveRequest.leaveFrom); m.diff(newLeaveRequest.leaveTo, 'days') <= 0; m.add(1, 'days')) {
       if (m.isoWeekday() !== 6 && m.isoWeekday() !== 7) {
-        if (!isHoliday(holidays, m)) {
+        if (!isHoliday(holidays, m.format('YYYY-MM-DD'))) {
           const totalhours = await calTotalHours(newLeaveRequest.startTime, newLeaveRequest.endTime);
           newLeaveHours += totalhours;
         }
@@ -110,57 +110,42 @@ const countLeaveHours = (newLeaveRequest, holidays) => new Promise(async (resolv
   }
 });
 
+const checkLeaveUsedDate = (newLeaveRequest, holidays) => new Promise(async (resolve, reject) => {
+  try {
+    let check = true;
+    const leaves = await LeaveRequest.findLeaveDate(moment(newLeaveRequest.leaveFrom).format('YYYY'), moment(newLeaveRequest.leaveFrom).format('MM'), newLeaveRequest.userId);
+    for (let m = moment(newLeaveRequest.leaveFrom); m.diff(newLeaveRequest.leaveTo, 'days') <= 0; m.add(1, 'days')) {
+      if (check === false) {
+        break;
+      }
+      else if (m.isoWeekday() !== 6 && m.isoWeekday() !== 7) {
+        if (!isHoliday(holidays, m.format('YYYY-MM-DD'))) {
+          for (let i = 0; i < leaves.length; i += 1) {
+            if (leaves[i].leaveDate === m.format('YYYY-MM-DD')) {
+              check = false;
+              console.log('hello');
+              break;
+            }
+          }
+        }
+      }
+    }
+    resolve(check);
+  }
+  catch (error) {
+    reject(error);
+  }
+});
+
 exports.create = async (req, res, next) => {
   const newLeaveRequest = req.body.leaveRequest;
-  const holidays = Holiday.findByYear(moment().format('YYYY'));
+  const holidays = await Holiday.findByYear(moment().format('YYYY'));
   if (req.accessControl.leaveRequestAddAll) {
-    const newLeaveHours = await countLeaveHours(newLeaveRequest, holidays);
-    const leaveRemain = await LeaveHistory.findByUserIdAndYear(newLeaveRequest.userId, moment(newLeaveRequest.leaveFrom).format('YYYY'));
-    let totalLeaveUsed = 0;
-    switch (newLeaveRequest.leaveType) {
-      case 'Annual Leave':
-        totalLeaveUsed = leaveRemain.annualLeaveRemain;
-        break;
-      case 'Personal Leave':
-        totalLeaveUsed = leaveRemain.personalLeaveRemain;
-        break;
-      case 'Sick Leave':
-        totalLeaveUsed = leaveRemain.sickLeaveRemain;
-        break;
-      case 'Ordination Leave':
-        totalLeaveUsed = leaveRemain.ordinationLeaveRemain;
-        break;
-      default:
-        break;
-    }
-    if (newLeaveHours <= totalLeaveUsed) {
-      createLeaveRequest(newLeaveRequest, holidays, req.user.id)
-        .then(() => {
-          const mailOptions = {
-            from: process.env.MAIL_USER,
-            to: 'tmarks.thanapon@gmail.com',
-            subject: 'Hello',
-            html: `<p>Good Morning</p>`
-          };
-          mail.sendMail(mailOptions, (err, info) => {
-            if (err) {
-              console.log(err);
-            }
-            else {
-              console.log(info);
-            }
-          });
-          res.json('Create Finish!');
-        });
-    }
-    else {
-      const err = new Error('Your remain leave is not enough');
-      err.status = 409;
-      next(err);
-    }
-  }
-  else if (req.accessControl.leaveRequestAddOwn) {
-    if (newLeaveRequest.userId === req.user.id) {
+    // check leave date
+    const checkLeaveDate = await checkLeaveUsedDate(newLeaveRequest, holidays);
+    console.log(checkLeaveDate);
+    if (checkLeaveDate) {
+      // check leave remain
       const newLeaveHours = await countLeaveHours(newLeaveRequest, holidays);
       const leaveRemain = await LeaveHistory.findByUserIdAndYear(newLeaveRequest.userId, moment(newLeaveRequest.leaveFrom).format('YYYY'));
       let totalLeaveUsed = 0;
@@ -202,6 +187,70 @@ exports.create = async (req, res, next) => {
       }
       else {
         const err = new Error('Your remain leave is not enough');
+        err.status = 409;
+        next(err);
+      }
+    }
+    else {
+      const err = new Error('Your leave date is already used  ');
+      err.status = 409;
+      next(err);
+    }
+  }
+  else if (req.accessControl.leaveRequestAddOwn) {
+    if (newLeaveRequest.userId === req.user.id) {
+      // check leave date
+      const checkLeaveDate = await checkLeaveUsedDate(newLeaveRequest, holidays);
+      console.log(checkLeaveDate);
+      if (checkLeaveDate) {
+      // check leave remain
+        const newLeaveHours = await countLeaveHours(newLeaveRequest, holidays);
+        const leaveRemain = await LeaveHistory.findByUserIdAndYear(newLeaveRequest.userId, moment(newLeaveRequest.leaveFrom).format('YYYY'));
+        let totalLeaveUsed = 0;
+        switch (newLeaveRequest.leaveType) {
+          case 'Annual Leave':
+            totalLeaveUsed = leaveRemain.annualLeaveRemain;
+            break;
+          case 'Personal Leave':
+            totalLeaveUsed = leaveRemain.personalLeaveRemain;
+            break;
+          case 'Sick Leave':
+            totalLeaveUsed = leaveRemain.sickLeaveRemain;
+            break;
+          case 'Ordination Leave':
+            totalLeaveUsed = leaveRemain.ordinationLeaveRemain;
+            break;
+          default:
+            break;
+        }
+        if (newLeaveHours <= totalLeaveUsed) {
+          createLeaveRequest(newLeaveRequest, holidays, req.user.id)
+            .then(() => {
+              const mailOptions = {
+                from: process.env.MAIL_USER,
+                to: 'tmarks.thanapon@gmail.com',
+                subject: 'Hello',
+                html: `<p>Good Morning</p>`
+              };
+              mail.sendMail(mailOptions, (err, info) => {
+                if (err) {
+                  console.log(err);
+                }
+                else {
+                  console.log(info);
+                }
+              });
+              res.json('Create Finish!');
+            });
+        }
+        else {
+          const err = new Error('Your remain leave is not enough');
+          err.status = 409;
+          next(err);
+        }
+      }
+      else {
+        const err = new Error('Your leave date is already used  ');
         err.status = 409;
         next(err);
       }
