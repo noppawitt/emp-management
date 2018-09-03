@@ -36,4 +36,8 @@ Degree.findAll = () => (
   db.manyOrNone('SELECT * FROM degrees')
 );
 
+Degree.delete = id => (
+  db.none('DELETE FROM degrees WHERE id = $1', [id])
+);
+
 module.exports = Degree;

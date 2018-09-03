@@ -37,3 +37,14 @@ exports.findAll = (req, res, next) => {
     })
     .catch(next);
 };
+exports.delete = (req, res, next) => {
+  Faculty.delete(req.body.id)
+    .then(() => {
+      Faculty.findAll()
+        .then((faculties) => {
+          res.json(faculties);
+        })
+        .catch(next);
+    })
+    .catch(next);
+};

@@ -21,18 +21,33 @@ import { fetchMasterTableRequest,
   deleteContractFailure,
   createDegreeSuccess,
   createDegreeFailure,
+  deleteDegreeSuccess,
+  deleteDegreeFailure,
   createDepartmentSuccess,
   createDepartmentFailure,
+  deleteDepartmentSuccess,
+  deleteDepartmentFailure,
+  createFacultySuccess,
+  createFacultyFailure,
+  deleteFacultySuccess,
+  deleteFacultyFailure,
   createLevelSuccess,
   createLevelFailure,
+  deleteLevelSuccess,
+  deleteLevelFailure,
   createMajorSuccess,
   createMajorFailure,
+  deleteMajorSuccess,
+  deleteMajorFailure,
   createPositionSuccess,
   createPositionFailure,
+  deletePositionSuccess,
+  deletePositionFailure,
   createUniversitySuccess,
   createUniversityFailure,
-  createFacultySuccess,
-  createFacultyFailure
+  deleteUniversitySuccess,
+  deleteUniversityFailure,
+  deleteUniversityRequest
 } from '../actions/masterTable';
 import { getMasterTable } from '../selectors/masterTable';
 import api from '../services/api';
@@ -157,6 +172,17 @@ function* addDegreeTask(action) {
   }
 }
 
+function* deleteDegreeTask(action) {
+  try {
+    const degrees = yield call(api.deleteDegree, { id: action.payload.id });
+    yield put(deleteDegreeSuccess(degrees));
+    yield put(closeModal());
+  }
+  catch (error) {
+    yield put(deleteDegreeFailure(error));
+  }
+}
+
 function* addDepartmentTask(action) {
   try {
     const department = yield call(api.addDepartment, { department: { name: action.payload.form.name } });
@@ -167,6 +193,17 @@ function* addDepartmentTask(action) {
   catch (error) {
     yield put(createDepartmentFailure(error));
     action.payload.reject();
+  }
+}
+
+function* deleteDepartmentTask(action) {
+  try {
+    const departments = yield call(api.deleteDepartment, { id: action.payload.id });
+    yield put(deleteDepartmentSuccess(departments));
+    yield put(closeModal());
+  }
+  catch (error) {
+    yield put(deleteDepartmentFailure(error));
   }
 }
 
@@ -183,6 +220,17 @@ function* addFacultyTask(action) {
   }
 }
 
+function* deleteFacultyTask(action) {
+  try {
+    const faculties = yield call(api.deleteFaculty, { id: action.payload.id });
+    yield put(deleteFacultySuccess(faculties));
+    yield put(closeModal());
+  }
+  catch (error) {
+    yield put(deleteFacultyFailure(error));
+  }
+}
+
 function* addLevelTask(action) {
   try {
     const level = yield call(api.addLevel, { level: { name: action.payload.form.name, description: action.payload.form.description, annualLeave: action.payload.form.annualLeave } });
@@ -193,6 +241,17 @@ function* addLevelTask(action) {
   catch (error) {
     yield put(createLevelFailure(error));
     action.payload.reject();
+  }
+}
+
+function* deleteLevelTask(action) {
+  try {
+    const levels = yield call(api.deleteLevel, { id: action.payload.id });
+    yield put(deleteLevelSuccess(levels));
+    yield put(closeModal());
+  }
+  catch (error) {
+    yield put(deleteLevelFailure(error));
   }
 }
 
@@ -209,6 +268,17 @@ function* addMajorTask(action) {
   }
 }
 
+function* deleteMajorTask(action) {
+  try {
+    const majors = yield call(api.deleteMajor, { id: action.payload.id });
+    yield put(deleteMajorSuccess(majors));
+    yield put(closeModal());
+  }
+  catch (error) {
+    yield put(deleteMajorFailure(error));
+  }
+}
+
 function* addPositionTask(action) {
   try {
     const position = yield call(api.addPosition, { position: { name: action.payload.form.name, description: action.payload.form.description } });
@@ -222,6 +292,17 @@ function* addPositionTask(action) {
   }
 }
 
+function* deletePositionTask(action) {
+  try {
+    const positions = yield call(api.deletePosition, { id: action.payload.id });
+    yield put(deletePositionSuccess(positions));
+    yield put(closeModal());
+  }
+  catch (error) {
+    yield put(deletePositionFailure(error));
+  }
+}
+
 function* addUniversityTask(action) {
   try {
     const university = yield call(api.addUniversity, { university: { name: action.payload.form.name, description: action.payload.form.description } });
@@ -232,6 +313,17 @@ function* addUniversityTask(action) {
   catch (error) {
     yield put(createUniversityFailure(error));
     action.payload.reject();
+  }
+}
+
+function* deleteUniversityTask(action) {
+  try {
+    const universities = yield call(api.deleteUniversity, { id: action.payload.id });
+    yield put(deleteUniversitySuccess(universities));
+    yield put(closeModal(universities));
+  }
+  catch (error) {
+    yield put(deleteUniversityFailure(error));
   }
 }
 
@@ -285,28 +377,56 @@ function* watchAddDegreeRequest() {
   yield takeEvery(actionTypes.DEGREE_CREATE_REQUEST, addDegreeTask);
 }
 
+function* watchDeleteDegreeRequest() {
+  yield takeEvery(actionTypes.DEGREE_DELETE_REQUEST, deleteDegreeTask);
+}
+
 function* watchAddDepartmentRequest() {
   yield takeEvery(actionTypes.DEPARTMENT_CREATE_REQUEST, addDepartmentTask);
+}
+
+function* watchDeleteDepartmentRequest() {
+  yield takeEvery(actionTypes.DEPARTMENT_DELETE_REQUEST, deleteDepartmentTask);
 }
 
 function* watchAddFacultyRequest() {
   yield takeEvery(actionTypes.FACULTY_CREATE_REQUEST, addFacultyTask);
 }
 
+function* watchDeleteFacultyRequest() {
+  yield takeEvery(actionTypes.FACULTY_DELETE_REQUEST, deleteFacultyTask);
+}
+
 function* watchAddLevelRequest() {
   yield takeEvery(actionTypes.LEVEL_CREATE_REQUEST, addLevelTask);
+}
+
+function* watchDeleteLevelRequest() {
+  yield takeEvery(actionTypes.LEVEL_DELETE_REQUEST, deleteLevelTask);
 }
 
 function* watchAddMajorRequest() {
   yield takeEvery(actionTypes.MAJOR_CREATE_REQUEST, addMajorTask);
 }
 
+function* watchDeleteMajorRequest() {
+  yield takeEvery(actionTypes.MAJOR_DELETE_REQUEST, deleteMajorTask);
+}
+
 function* watchAddPositionRequest() {
   yield takeEvery(actionTypes.POSITION_CREATE_REQUEST, addPositionTask);
 }
 
+function* watchDeletePositionRequest() {
+  yield takeEvery(actionTypes.POSITION_DELETE_REQUEST, deletePositionTask);
+}
+
 function* watchAddUniversityRequest() {
   yield takeEvery(actionTypes.UNIVERSITY_CREATE_REQUEST, addUniversityTask);
+}
+
+function* watchDeleteUniversityRequest() {
+  yield takeEvery(actionTypes.UNIVERSITY_DELETE_REQUEST, deleteUniversityTask);
 }
 
 export default function* profileSaga() {
@@ -322,11 +442,18 @@ export default function* profileSaga() {
     watchAddContractRequest(),
     watchDeleteContractRequest(),
     watchAddDegreeRequest(),
+    watchDeleteDegreeRequest(),
     watchAddDepartmentRequest(),
+    watchDeleteDepartmentRequest(),
     watchAddFacultyRequest(),
+    watchDeleteFacultyRequest(),
     watchAddLevelRequest(),
+    watchDeleteLevelRequest(),
     watchAddMajorRequest(),
+    watchDeleteMajorRequest(),
     watchAddPositionRequest(),
-    watchAddUniversityRequest()
+    watchDeletePositionRequest(),
+    watchAddUniversityRequest(),
+    watchDeleteUniversityRequest()
   ]);
 }

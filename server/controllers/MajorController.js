@@ -37,3 +37,15 @@ exports.findAll = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.delete = (req, res, next) => {
+  Major.delete(req.body.id)
+    .then(() => {
+      Major.findAll()
+        .then((majors) => {
+          res.json(majors);
+        })
+        .catch(next);
+    })
+    .catch(next);
+};

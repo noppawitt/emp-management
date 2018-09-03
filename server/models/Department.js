@@ -35,4 +35,8 @@ Department.findById = id => (
   db.oneOrNone('SELECT * FROM departments WHERE id = $1', [id])
 );
 
+Department.delete = id => (
+  db.none('DELETE FROM departments WHERE id = $1', [id])
+);
+
 module.exports = Department;

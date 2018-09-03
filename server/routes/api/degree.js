@@ -7,4 +7,6 @@ router.put('/', DegreeController.update);
 
 router.get('/', DegreeController.findAll);
 
+router.delete('/', DegreeController.delete);
+
 module.exports = router;

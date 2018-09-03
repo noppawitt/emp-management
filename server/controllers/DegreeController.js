@@ -29,3 +29,15 @@ exports.findAll = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.delete = (req, res, next) => {
+  Degree.delete(req.body.id)
+    .then(() => {
+      Degree.findAll()
+        .then((degrees) => {
+          res.json(degrees);
+        })
+        .catch(next);
+    })
+    .catch(next);
+};

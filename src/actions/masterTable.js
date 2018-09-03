@@ -227,6 +227,27 @@ export const createDegreeFailure = message => ({
   }
 });
 
+export const deleteDegreeRequest = id => ({
+  type: actionTypes.DEGREE_DELETE_REQUEST,
+  payload: {
+    id
+  }
+});
+
+export const deleteDegreeSuccess = degrees => ({
+  type: actionTypes.DEGREE_DELETE_SUCCESS,
+  payload: {
+    degrees
+  }
+});
+
+export const deleteDegreeFailure = message => ({
+  type: actionTypes.DEGREE_DELETE_FAILURE,
+  payload: {
+    message
+  }
+});
+
 // Department
 
 export const createDepartmentRequest = (form, resolve, reject) => ({
@@ -247,6 +268,27 @@ export const createDepartmentSuccess = department => ({
 
 export const createDepartmentFailure = message => ({
   type: actionTypes.DEPARTMENT_CREATE_FAILURE,
+  payload: {
+    message
+  }
+});
+
+export const deleteDepartmentRequest = id => ({
+  type: actionTypes.DEPARTMENT_DELETE_REQUEST,
+  payload: {
+    id
+  }
+});
+
+export const deleteDepartmentSuccess = departments => ({
+  type: actionTypes.DEPARTMENT_DELETE_SUCCESS,
+  payload: {
+    departments
+  }
+});
+
+export const deleteDepartmentFailure = message => ({
+  type: actionTypes.DEPARTMENT_DELETE_FAILURE,
   payload: {
     message
   }
@@ -277,6 +319,27 @@ export const createFacultyFailure = message => ({
   }
 });
 
+export const deleteFacultyRequest = id => ({
+  type: actionTypes.FACULTY_DELETE_REQUEST,
+  payload: {
+    id
+  }
+});
+
+export const deleteFacultySuccess = faculties => ({
+  type: actionTypes.FACULTY_DELETE_SUCCESS,
+  payload: {
+    faculties
+  }
+});
+
+export const deleteFacultyFailure = message => ({
+  type: actionTypes.FACULTY_DELETE_FAILURE,
+  payload: {
+    message
+  }
+});
+
 // Level
 
 export const createLevelRequest = (form, resolve, reject) => ({
@@ -302,6 +365,27 @@ export const createLevelFailure = message => ({
   }
 });
 
+export const deleteLevelRequest = id => ({
+  type: actionTypes.LEVEL_DELETE_REQUEST,
+  payload: {
+    id
+  }
+});
+
+export const deleteLevelSuccess = levels => ({
+  type: actionTypes.LEVEL_DELETE_SUCCESS,
+  payload: {
+    levels
+  }
+});
+
+export const deleteLevelFailure = message => ({
+  type: actionTypes.LEVEL_DELETE_FAILURE,
+  payload: {
+    message
+  }
+});
+
 // Major
 export const createMajorRequest = (form, resolve, reject) => ({
   type: actionTypes.MAJOR_CREATE_REQUEST,
@@ -321,6 +405,27 @@ export const createMajorSuccess = major => ({
 
 export const createMajorFailure = message => ({
   type: actionTypes.MAJOR_CREATE_FAILURE,
+  payload: {
+    message
+  }
+});
+
+export const deleteMajorRequest = id => ({
+  type: actionTypes.MAJOR_DELETE_REQUEST,
+  payload: {
+    id
+  }
+});
+
+export const deleteMajorSuccess = majors => ({
+  type: actionTypes.MAJOR_DELETE_SUCCESS,
+  payload: {
+    majors
+  }
+});
+
+export const deleteMajorFailure = message => ({
+  type: actionTypes.MAJOR_DELETE_FAILURE,
   payload: {
     message
   }
@@ -351,6 +456,27 @@ export const createPositionFailure = message => ({
   }
 });
 
+export const deletePositionRequest = id => ({
+  type: actionTypes.POSITION_DELETE_REQUEST,
+  payload: {
+    id
+  }
+});
+
+export const deletePositionSuccess = positions => ({
+  type: actionTypes.POSITION_DELETE_SUCCESS,
+  payload: {
+    positions
+  }
+});
+
+export const deletePositionFailure = message => ({
+  type: actionTypes.POSITION_DELETE_FAILURE,
+  payload: {
+    message
+  }
+});
+
 // University
 
 export const createUniversityRequest = (form, resolve, reject) => ({
@@ -371,6 +497,27 @@ export const createUniversitySuccess = university => ({
 
 export const createUniversityFailure = message => ({
   type: actionTypes.UNIVERSITY_CREATE_FAILURE,
+  payload: {
+    message
+  }
+});
+
+export const deleteUniversityRequest = id => ({
+  type: actionTypes.UNIVERSITY_DELETE_REQUEST,
+  payload: {
+    id
+  }
+});
+
+export const deleteUniversitySuccess = universities => ({
+  type: actionTypes.UNIVERSITY_DELETE_SUCCESS,
+  payload: {
+    universities
+  }
+});
+
+export const deleteUniversityFailure = message => ({
+  type: actionTypes.UNIVERSITY_DELETE_FAILURE,
   payload: {
     message
   }

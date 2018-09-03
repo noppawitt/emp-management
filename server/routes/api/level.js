@@ -7,4 +7,6 @@ router.put('/', LevelController.update);
 
 router.get('/', LevelController.findAll);
 
+router.delete('/', LevelController.delete);
+
 module.exports = router;

@@ -7,7 +7,14 @@ import {
   deleteAssetTypeRequest,
   deleteAssetRequest,
   deleteCertificateRequest,
-  deleteContractRequest
+  deleteContractRequest,
+  deleteDegreeRequest,
+  deleteDepartmentRequest,
+  deleteFacultyRequest,
+  deleteLevelRequest,
+  deleteMajorRequest,
+  deletePositionRequest,
+  deleteUniversityRequest
 } from '../../actions/masterTable';
 import Loader from '../../components/Loader';
 import MasterTable from '../../components/MasterTable';
@@ -25,12 +32,19 @@ const MasterTablePage = ({ isFetching,
   onAddContractClick,
   onDeleteContractClick,
   onAddDegreeClick,
+  onDeleteDegreeClick,
   onAddDepartmentClick,
+  onDeleteDepartmentClick,
   onAddFacultyClick,
+  onDeleteFacultyClick,
   onAddLevelClick,
+  onDeleteLevelClick,
   onAddMajorClick,
+  onDeleteMajorClick,
   onAddPositionClick,
-  onAddUniversityClick }) => (
+  onDeletePositionClick,
+  onAddUniversityClick,
+  onDeleteUniversityClick }) => (
     <div>
       {isFetching ? <Loader /> : <MasterTable
         masterTable={masterTable}
@@ -43,12 +57,19 @@ const MasterTablePage = ({ isFetching,
         onAddContractClick={onAddContractClick}
         onDeleteContractClick={onDeleteContractClick}
         onAddDegreeClick={onAddDegreeClick}
+        onDeleteDegreeClick={onDeleteDegreeClick}
         onAddDepartmentClick={onAddDepartmentClick}
+        onDeleteDepartmentClick={onDeleteDepartmentClick}
         onAddFacultyClick={onAddFacultyClick}
+        onDeleteFacultyClick={onDeleteFacultyClick}
         onAddLevelClick={onAddLevelClick}
+        onDeleteLevelClick={onDeleteLevelClick}
         onAddMajorClick={onAddMajorClick}
+        onDeleteMajorClick={onDeleteMajorClick}
         onAddPositionClick={onAddPositionClick}
+        onDeletePositionClick={onDeletePositionClick}
         onAddUniversityClick={onAddUniversityClick}
+        onDeleteUniversityClick={onDeleteUniversityClick}
       />}
     </div>
 );
@@ -69,12 +90,19 @@ MasterTablePage.propTypes = {
   onAddContractClick: PropTypes.func.isRequired,
   onDeleteContractClick: PropTypes.func.isRequired,
   onAddDegreeClick: PropTypes.func.isRequired,
+  onDeleteDegreeClick: PropTypes.func.isRequired,
   onAddDepartmentClick: PropTypes.func.isRequired,
+  onDeleteDepartmentClick: PropTypes.func.isRequired,
   onAddFacultyClick: PropTypes.func.isRequired,
+  onDeleteFacultyClick: PropTypes.func.isRequired,
   onAddLevelClick: PropTypes.func.isRequired,
+  onDeleteLevelClick: PropTypes.func.isRequired,
   onAddMajorClick: PropTypes.func.isRequired,
+  onDeleteMajorClick: PropTypes.func.isRequired,
   onAddPositionClick: PropTypes.func.isRequired,
-  onAddUniversityClick: PropTypes.func.isRequired
+  onDeletePositionClick: PropTypes.func.isRequired,
+  onAddUniversityClick: PropTypes.func.isRequired,
+  onDeleteUniversityClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -104,17 +132,52 @@ const mapDispatchToProps = dispatch => ({
   })),
   onAddContractClick: () => dispatch(openModal(modalNames.ADD_CONTRACT, { })),
   onDeleteContractClick: id => dispatch(openModal(modalNames.CONFIRM, {
-    header: 'DELETE Confirmation',
+    header: 'Delete Confirmation',
     description: 'Are you sure to delete this contract?',
     onConfirm: () => dispatch(deleteContractRequest(id))
   })),
   onAddDegreeClick: () => dispatch(openModal(modalNames.ADD_DEGREE, { })),
+  onDeleteDegreeClick: id => dispatch(openModal(modalNames.CONFIRM, {
+    header: 'Delete Confirmation',
+    description: 'Are you sure to delete this degree?',
+    onConfirm: () => dispatch(deleteDegreeRequest(id))
+  })),
   onAddDepartmentClick: () => dispatch(openModal(modalNames.ADD_DEPARTMENT, { })),
+  onDeleteDepartmentClick: id => dispatch(openModal(modalNames.CONFIRM, {
+    header: 'Delete Confirmation',
+    description: 'Are you sure to delete this department?',
+    onConfirm: () => dispatch(deleteDepartmentRequest(id))
+  })),
   onAddFacultyClick: () => dispatch(openModal(modalNames.ADD_FACULTY, { })),
+  onDeleteFacultyClick: id => dispatch(openModal(modalNames.CONFIRM, {
+    header: 'Delete Confirmation',
+    description: 'Are you sure to delete this faculty?',
+    onConfirm: () => dispatch(deleteFacultyRequest(id))
+  })),
   onAddLevelClick: () => dispatch(openModal(modalNames.ADD_LEVEL, { })),
+  onDeleteLevelClick: id => dispatch(openModal(modalNames.CONFIRM, {
+    header: 'Delete Confirmation',
+    description: 'Are you sure to delete this level?',
+    onConfirm: () => dispatch(deleteLevelRequest(id))
+  })),
   onAddMajorClick: () => dispatch(openModal(modalNames.ADD_MAJOR, { })),
+  onDeleteMajorClick: id => dispatch(openModal(modalNames.CONFIRM, {
+    header: 'Delete Confirmation',
+    description: 'Are you sure to delete this major?',
+    onConfirm: () => dispatch(deleteMajorRequest(id))
+  })),
   onAddPositionClick: () => dispatch(openModal(modalNames.ADD_POSITION, { })),
-  onAddUniversityClick: () => dispatch(openModal(modalNames.ADD_UNIVERSITY, { }))
+  onDeletePositionClick: id => dispatch(openModal(modalNames.CONFIRM, {
+    header: 'Delete Confirmation',
+    description: 'Are you sure to delete this position?',
+    onConfirm: () => dispatch(deletePositionRequest(id))
+  })),
+  onAddUniversityClick: () => dispatch(openModal(modalNames.ADD_UNIVERSITY, { })),
+  onDeleteUniversityClick: id => dispatch(openModal(modalNames.CONFIRM, {
+    header: 'Delete Confirmation',
+    description: 'Are you sure to delete this university?',
+    onConfirm: () => dispatch(deleteUniversityRequest(id))
+  }))
 });
 
 const enhance = compose(

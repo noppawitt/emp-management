@@ -106,12 +106,32 @@ const masterTable = (state = {}, action) => {
         ...state,
         message: action.payload.message
       };
+    case actionTypes.DEGREE_DELETE_SUCCESS:
+      return {
+        ...state,
+        degrees: action.payload.degrees
+      };
+    case actionTypes.DEGREE_DELETE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
     case actionTypes.DEPARTMENT_CREATE_SUCCESS:
       return {
         ...state,
         departments: [...state.departments, action.payload.department]
       };
     case actionTypes.DEPARTMENT_CREATE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
+    case actionTypes.DEPARTMENT_DELETE_SUCCESS:
+      return {
+        ...state,
+        departments: action.payload.departments
+      };
+    case actionTypes.DEPARTMENT_DELETE_FAILURE:
       return {
         ...state,
         message: action.payload.message
@@ -126,12 +146,32 @@ const masterTable = (state = {}, action) => {
         ...state,
         message: action.payload.message
       };
+    case actionTypes.FACULTY_DELETE_SUCCESS:
+      return {
+        ...state,
+        faculties: action.payload.faculties
+      };
+    case actionTypes.FACULTY_DELETE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
     case actionTypes.LEVEL_CREATE_SUCCESS:
       return {
         ...state,
         levels: [...state.levels, action.payload.level]
       };
     case actionTypes.LEVEL_CREATE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
+    case actionTypes.LEVEL_DELETE_SUCCESS:
+      return {
+        ...state,
+        levels: action.payload.levels
+      };
+    case actionTypes.LEVEL_DELETE_FAILURE:
       return {
         ...state,
         message: action.payload.message
@@ -146,6 +186,16 @@ const masterTable = (state = {}, action) => {
         ...state,
         message: action.payload.message
       };
+    case actionTypes.MAJOR_DELETE_SUCCESS:
+      return {
+        ...state,
+        majors: action.payload.majors
+      };
+    case actionTypes.MAJOR_DELETE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
     case actionTypes.POSITION_CREATE_SUCCESS:
       return {
         ...state,
@@ -156,12 +206,32 @@ const masterTable = (state = {}, action) => {
         ...state,
         message: action.payload.message
       };
+    case actionTypes.POSITION_DELETE_SUCCESS:
+      return {
+        ...state,
+        positions: action.payload.positions
+      };
+    case actionTypes.POSITION_DELETE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
     case actionTypes.UNIVERSITY_CREATE_SUCCESS:
       return {
         ...state,
         universities: [...state.universities, action.payload.university]
       };
     case actionTypes.UNIVERSITY_CREATE_FAILURE:
+      return {
+        ...state,
+        message: action.payload.message
+      };
+    case actionTypes.UNIVERSITY_DELETE_SUCCESS:
+      return {
+        ...state,
+        universities: action.payload.universities
+      };
+    case actionTypes.UNIVERSITY_DELETE_FAILURE:
       return {
         ...state,
         message: action.payload.message

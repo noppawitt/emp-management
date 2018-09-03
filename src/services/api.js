@@ -222,6 +222,13 @@ api.addDegree = body => (
   })
 );
 
+api.deleteDegree = body => (
+  callApi('/api/degrees', {
+    method: 'DELETE',
+    body
+  })
+);
+
 // Department
 api.addDepartment = body => (
   callApi('/api/departments', {
@@ -230,10 +237,24 @@ api.addDepartment = body => (
   })
 );
 
+api.deleteDepartment = body => (
+  callApi('/api/departments', {
+    method: 'DELETE',
+    body
+  })
+);
+
 // Faculty
 api.addFaculty = body => (
   callApi('/api/faculties', {
     method: 'POST',
+    body
+  })
+);
+
+api.deleteFaculty = body => (
+  callApi('/api/faculties', {
+    method: 'DELETE',
     body
   })
 );
@@ -247,11 +268,25 @@ api.addLevel = body => (
   })
 );
 
+api.deleteLevel = body => (
+  callApi('/api/levels', {
+    method: 'DELETE',
+    body
+  })
+);
+
 // Major
 
 api.addMajor = body => (
   callApi('/api/majors', {
     method: 'POST',
+    body
+  })
+);
+
+api.deleteMajor = body => (
+  callApi('/api/majors', {
+    method: 'DELETE',
     body
   })
 );
@@ -265,11 +300,25 @@ api.addPosition = body => (
   })
 );
 
+api.deletePosition = body => (
+  callApi('/api/positions', {
+    method: 'DELETE',
+    body
+  })
+);
+
 // University
 
 api.addUniversity = body => (
   callApi('/api/universities', {
     method: 'POST',
+    body
+  })
+);
+
+api.deleteUniversity = body => (
+  callApi('/api/universities', {
+    method: 'DELETE',
     body
   })
 );

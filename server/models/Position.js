@@ -37,4 +37,8 @@ Position.findById = id => (
   id ? db.oneOrNone('SELECT * FROM positions WHERE id = $1', [id]) : ''
 );
 
+Position.delete = id => (
+  db.none('DELETE FROM positions WHERE id = $1', [id])
+);
+
 module.exports = Position;

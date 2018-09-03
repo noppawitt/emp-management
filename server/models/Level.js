@@ -39,4 +39,8 @@ Level.findById = id => (
   db.oneOrNone('SELECT * FROM levels WHERE id = $1', [id])
 );
 
+Level.delete = id => (
+  db.none('DELETE FROM levels WHERE id = $1', [id])
+);
+
 module.exports = Level;

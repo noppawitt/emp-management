@@ -29,3 +29,15 @@ exports.findAll = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.delete = (req, res, next) => {
+  Level.delete(req.body.id)
+    .then(() => {
+      Level.findAll()
+        .then((levels) => {
+          res.json(levels);
+        })
+        .catch(next);
+    })
+    .catch(next);
+};

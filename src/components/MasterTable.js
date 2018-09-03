@@ -12,12 +12,19 @@ const panes = ({ masterTable,
   onAddContractClick,
   onDeleteContractClick,
   onAddDegreeClick,
+  onDeleteDegreeClick,
   onAddDepartmentClick,
+  onDeleteDepartmentClick,
   onAddFacultyClick,
+  onDeleteFacultyClick,
   onAddLevelClick,
+  onDeleteLevelClick,
   onAddMajorClick,
+  onDeleteMajorClick,
   onAddPositionClick,
-  onAddUniversityClick, }) => [
+  onDeletePositionClick,
+  onAddUniversityClick,
+  onDeleteUniversityClick }) => [
   { menuItem: 'Asset Type',
     render: () => (
       <div>
@@ -158,6 +165,7 @@ const panes = ({ masterTable,
             <Table.Row>
               <Table.HeaderCell>Name</Table.HeaderCell>
               <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
 
@@ -166,6 +174,9 @@ const panes = ({ masterTable,
               <Table.Row key={`${degree.id}`}>
                 <Table.Cell>{`${degree.name}`}</Table.Cell>
                 <Table.Cell colSpan="3">{degree.description || '-'}</Table.Cell>
+                <Table.Cell>
+                  <Button color="red" onClick={() => onDeleteDegreeClick(degree.id)}>Delete</Button>
+                </Table.Cell>
               </Table.Row>
       ))}
           </Table.Body>
@@ -183,6 +194,7 @@ const panes = ({ masterTable,
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
 
@@ -190,6 +202,9 @@ const panes = ({ masterTable,
             {masterTable.departments.map(department => (
               <Table.Row key={`${department.id}`}>
                 <Table.Cell>{`${department.name}`}</Table.Cell>
+                <Table.Cell>
+                  <Button color="red" onClick={() => onDeleteDepartmentClick(department.id)}>Delete</Button>
+                </Table.Cell>
               </Table.Row>
       ))}
           </Table.Body>
@@ -209,6 +224,7 @@ const panes = ({ masterTable,
               <Table.HeaderCell>Name</Table.HeaderCell>
               <Table.HeaderCell colSpan="2">University</Table.HeaderCell>
               <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
 
@@ -218,6 +234,9 @@ const panes = ({ masterTable,
                 <Table.Cell>{`${faculty.name}`}</Table.Cell>
                 <Table.Cell colSpan="2">{`${faculty.universityName}`}</Table.Cell>
                 <Table.Cell colSpan="3">{faculty.description || '-'}</Table.Cell>
+                <Table.Cell>
+                  <Button color="red" onClick={() => onDeleteFacultyClick(faculty.id)}>Delete</Button>
+                </Table.Cell>
               </Table.Row>
       ))}
           </Table.Body>
@@ -237,6 +256,7 @@ const panes = ({ masterTable,
               <Table.HeaderCell>Name</Table.HeaderCell>
               <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
               <Table.HeaderCell>Annual Leave</Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
 
@@ -246,6 +266,9 @@ const panes = ({ masterTable,
                 <Table.Cell>{`${level.name}`}</Table.Cell>
                 <Table.Cell colSpan="3">{level.description || '-'}</Table.Cell>
                 <Table.Cell>{`${level.annualLeave}`}</Table.Cell>
+                <Table.Cell>
+                  <Button color="red" onClick={() => onDeleteLevelClick(level.id)}>Delete</Button>
+                </Table.Cell>
               </Table.Row>
       ))}
           </Table.Body>
@@ -266,6 +289,7 @@ const panes = ({ masterTable,
               <Table.HeaderCell>Faculty</Table.HeaderCell>
               <Table.HeaderCell colSpan="2">University</Table.HeaderCell>
               <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
 
@@ -276,6 +300,9 @@ const panes = ({ masterTable,
                 <Table.Cell>{`${major.facultyName}`}</Table.Cell>
                 <Table.Cell colSpan="2">{major.universityName}</Table.Cell>
                 <Table.Cell colSpan="3">{major.description || '-'}</Table.Cell>
+                <Table.Cell>
+                  <Button color="red" onClick={() => onDeleteMajorClick(major.id)}>Delete</Button>
+                </Table.Cell>
               </Table.Row>
       ))}
           </Table.Body>
@@ -294,6 +321,7 @@ const panes = ({ masterTable,
             <Table.Row>
               <Table.HeaderCell>Name</Table.HeaderCell>
               <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
 
@@ -302,6 +330,9 @@ const panes = ({ masterTable,
               <Table.Row key={`${position.id}`}>
                 <Table.Cell>{`${position.name}`}</Table.Cell>
                 <Table.Cell colSpan="3">{position.description || '-'}</Table.Cell>
+                <Table.Cell>
+                  <Button color="red" onClick={() => onDeletePositionClick(position.id)}>Delete</Button>
+                </Table.Cell>
               </Table.Row>
       ))}
           </Table.Body>
@@ -320,6 +351,7 @@ const panes = ({ masterTable,
             <Table.Row>
               <Table.HeaderCell>Name</Table.HeaderCell>
               <Table.HeaderCell colSpan="3">Description</Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
 
@@ -328,6 +360,9 @@ const panes = ({ masterTable,
               <Table.Row key={`${university.id}`}>
                 <Table.Cell>{`${university.name}`}</Table.Cell>
                 <Table.Cell colSpan="3">{university.description || '-'}</Table.Cell>
+                <Table.Cell>
+                  <Button color="red" onClick={() => onDeleteUniversityClick(university.id)}>Delete</Button>
+                </Table.Cell>
               </Table.Row>
       ))}
           </Table.Body>
@@ -347,12 +382,19 @@ const MasterTable = ({ masterTable,
   onAddContractClick,
   onDeleteContractClick,
   onAddDegreeClick,
+  onDeleteDegreeClick,
   onAddDepartmentClick,
+  onDeleteDepartmentClick,
   onAddFacultyClick,
+  onDeleteFacultyClick,
   onAddLevelClick,
+  onDeleteLevelClick,
   onAddMajorClick,
+  onDeleteMajorClick,
   onAddPositionClick,
-  onAddUniversityClick }) => (
+  onDeletePositionClick,
+  onAddUniversityClick,
+  onDeleteUniversityClick }) => (
     <div>
       <Tab
         menu={{ secondary: true, pointing: true }}
@@ -366,12 +408,19 @@ const MasterTable = ({ masterTable,
           onAddContractClick,
           onDeleteContractClick,
           onAddDegreeClick,
+          onDeleteDegreeClick,
           onAddDepartmentClick,
+          onDeleteDepartmentClick,
           onAddFacultyClick,
+          onDeleteFacultyClick,
           onAddLevelClick,
+          onDeleteLevelClick,
           onAddMajorClick,
+          onDeleteMajorClick,
           onAddPositionClick,
-          onAddUniversityClick })}
+          onDeletePositionClick,
+          onAddUniversityClick,
+          onDeleteUniversityClick })}
       />
     </div>
 );
@@ -387,12 +436,19 @@ MasterTable.propTypes = {
   onAddContractClick: PropTypes.func.isRequired,
   onDeleteContractClick: PropTypes.func.isRequired,
   onAddDegreeClick: PropTypes.func.isRequired,
+  onDeleteDegreeClick: PropTypes.func.isRequired,
   onAddDepartmentClick: PropTypes.func.isRequired,
+  onDeleteDepartmentClick: PropTypes.func.isRequired,
   onAddFacultyClick: PropTypes.func.isRequired,
+  onDeleteFacultyClick: PropTypes.func.isRequired,
   onAddLevelClick: PropTypes.func.isRequired,
+  onDeleteLevelClick: PropTypes.func.isRequired,
   onAddMajorClick: PropTypes.func.isRequired,
+  onDeleteMajorClick: PropTypes.func.isRequired,
   onAddPositionClick: PropTypes.func.isRequired,
-  onAddUniversityClick: PropTypes.func.isRequired
+  onDeletePositionClick: PropTypes.func.isRequired,
+  onAddUniversityClick: PropTypes.func.isRequired,
+  onDeleteUniversityClick: PropTypes.func.isRequired
 };
 
 export default MasterTable;

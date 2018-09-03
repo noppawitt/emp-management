@@ -45,4 +45,8 @@ Major.findAll = () => (
   faculties.university_id = universities.id`)
 );
 
+Major.delete = id => (
+  db.none('DELETE FROM majors WHERE id = $1', [id])
+);
+
 module.exports = Major;
